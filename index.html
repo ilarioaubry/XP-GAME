@@ -2974,12 +2974,12 @@ html:not(#_a):not(#_b) body .xrs .btn{min-width:220px}
 html:not(#_a):not(#_b) body .idopt.xmro{display:grid;grid-template-columns:1fr;gap:0;padding:0}html:not(#_a):not(#_b) body .xmro .xmrb{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;padding:8px 10px;text-align:left;font:inherit;color:var(--text);background:none;border:0;cursor:pointer}html:not(#_a):not(#_b) body .xmrr{display:flex;gap:6px;align-items:center;padding:0 10px 8px 60px;font-size:12px;color:var(--muted)}
 
 html:not(#_a):not(#_b) body .avc-grp{margin:10px 0 6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}html:not(#_a):not(#_b) body .avc-sec .avc-grp:first-of-type{margin-top:2px}
-html:not(#_a):not(#_b) body .obd{position:fixed;inset:0;z-index:400;display:grid;place-items:stretch center;background:var(--bg,#16121c)}
-html:not(#_a):not(#_b) body .obc{width:min(520px,100%);height:100%;display:grid;grid-template-rows:auto 1fr auto;background:var(--bg,#16121c)}
+html:not(#_a):not(#_b) body .obd{position:fixed;inset:0;height:100vh;height:100dvh;z-index:400;display:grid;grid-template-rows:minmax(0,1fr);place-items:stretch center;background:var(--bg,#16121c)}
+html:not(#_a):not(#_b) body .obc{width:min(520px,100%);height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--bg,#16121c)}
 html:not(#_a):not(#_b) body .obtop{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding:12px 14px 6px}
 html:not(#_a):not(#_b) body .obback{display:grid;place-items:center;width:40px;height:40px;padding:0;color:var(--text);background:none;border:2px solid var(--line);cursor:pointer}html:not(#_a):not(#_b) body .obback svg{transform:rotate(90deg)}
 html:not(#_a):not(#_b) body .obdots{display:flex;gap:4px}html:not(#_a):not(#_b) body .obdots i{flex:1;height:5px;background:color-mix(in srgb,var(--muted) 30%,transparent)}html:not(#_a):not(#_b) body .obdots i.on{background:#e0a020}
-html:not(#_a):not(#_b) body .obbody{overflow:auto;padding:8px 18px 18px;display:grid;align-content:start;gap:10px}
+html:not(#_a):not(#_b) body .obbody{overflow:auto;min-height:0;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:8px 18px 18px;display:grid;align-content:start;gap:10px}
 html:not(#_a):not(#_b) body .obbody h2{margin:6px 0 0;font-family:var(--f-pixel);font-size:24px}html:not(#_a):not(#_b) body .oblead{margin:0;color:var(--muted);font-size:14px}
 html:not(#_a):not(#_b) body .obbody h4{display:flex;justify-content:space-between;margin:10px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}html:not(#_a):not(#_b) body .obbody h4 em{font-style:normal;color:#e0a020}
 html:not(#_a):not(#_b) body .obfoot{padding:10px 18px calc(14px + env(safe-area-inset-bottom))}html:not(#_a):not(#_b) body .obnext{width:100%;min-height:52px;font-size:16px}
