@@ -134,7 +134,7 @@ html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-he
 html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
 html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
 html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
-html.fullh .dock{padding-bottom:max(4px,calc(env(safe-area-inset-bottom,0px) - 18px))}
+html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 28px))}
 </style>
 <script>document.documentElement.classList.add("sky");</script>
 <script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
@@ -13230,10 +13230,10 @@ html:not(#_a):not(#_b) body .frl{display:flex;justify-content:space-between;alig
 html:not(#_a):not(#_b) body .frl small{opacity:.6}
 
 html:not(#_a):not(#_b) body #dqBox .rtl.main{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
-html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile{aspect-ratio:1;min-height:0!important;padding:6px 4px!important;gap:3px!important}
+html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile{aspect-ratio:auto!important;min-height:96px!important;padding:6px 4px!important;gap:3px!important}
 html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile .rtic{width:38px!important;height:38px!important}
 html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile .rtic :is(svg,img){width:100%!important;height:100%!important}
-html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile .rtn{font-size:10px!important;line-height:1.1!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile .rtn{font-size:10px!important;line-height:1.1!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:none;min-height:1.1em}
 html:not(#_a):not(#_b) body #dqBox .rtl.main .rtmgo{grid-column:1/-1}
 html:not(#_a):not(#_b) body .dqmorn.dqmbar{border-style:dashed;padding:6px!important}
 html:not(#_a):not(#_b) body .dqmorn.dqmbar .dqmh{pointer-events:none;min-height:0!important;padding:0 4px 6px!important;background:none!important;border:0!important}
@@ -13334,7 +13334,7 @@ html:not(#_a):not(#_b) body #trkBox .trk-b.plus{border-color:var(--gold)!importa
 html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-size:11px;font-weight:800}
 html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}
-html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:1;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:0!important;padding:4px!important;font-size:10px!important;font-weight:800;background:transparent!important;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important}
+html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:10px!important;font-weight:800;background:transparent!important;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo svg{width:26px!important;height:26px!important;color:var(--gold)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo small{display:none}
 html:not(#_a):not(#_b) body .dqmorn.dqmbar{border-radius:0!important;border:2px dashed color-mix(in srgb,var(--gold) 55%,transparent)!important;background:transparent!important}
