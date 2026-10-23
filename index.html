@@ -133,11 +133,11 @@ html:not(#_a):not(#_b):not(#_c) body .rcpl>li:last-child{border-bottom:0}
 html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-height:100%;background:var(--bg)}
 html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
 html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
-html.fullh,html.fullh body{height:var(--apph)!important}
-html.fullh:not(#_a):not(#_b):not(#_c){overflow:visible!important}
+html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
+html.fullh .dock{padding-bottom:max(4px,calc(env(safe-area-inset-bottom,0px) - 18px))}
 </style>
 <script>document.documentElement.classList.add("sky");</script>
-<script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(!st)return;var d=document.documentElement;function f(){try{var h=innerHeight,c=d.clientHeight,bad=(h>c&&h-c<=100)||d.classList.contains("fullh");d.style.setProperty("--apph",h+"px");d.classList.toggle("fullh",bad)}catch(e){}}f();addEventListener("resize",f);addEventListener("orientationchange",function(){setTimeout(f,300)});addEventListener("pageshow",f);document.addEventListener("visibilitychange",f);addEventListener("load",function(){setTimeout(f,400)})}catch(e){}})();</script>
+<script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
 <script>try{var m={name:"Carnet de Quêtes",short_name:"Quêtes",display:"standalone",orientation:"portrait",background_color:"#f8e3ad",theme_color:"#f8e3ad"};var l=document.createElement("link");l.rel="manifest";l.href="data:application/manifest+json,"+encodeURIComponent(JSON.stringify(m));document.head.appendChild(l);["apple-mobile-web-app-capable","apple-mobile-web-app-status-bar-style"].forEach(function(n){var e=document.querySelector('meta[name="'+n+'"]');if(e)document.head.appendChild(e)})}catch(e){}</script>
 <title>Carnet de Quêtes</title>
 <script>try{var ic=localStorage.getItem("cq-icon");if(ic){var a=document.createElement("link");a.rel="apple-touch-icon";a.href=ic;document.head.appendChild(a);var b=document.createElement("link");b.rel="icon";b.type="image/png";b.href=ic;document.head.appendChild(b)}}catch(e){}</script>
@@ -3494,7 +3494,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
 </div>
 
 <script>
-const SCR=(()=>{const fh=()=>document.documentElement.classList.contains("fullh"),R=()=>document.scrollingElement||document.documentElement;return{get scrollTop(){return fh()?R().scrollTop:document.body.scrollTop},set scrollTop(v){if(fh())R().scrollTop=v;else document.body.scrollTop=v},scrollTo(x,y){if(fh())window.scrollTo(x,y);else document.body.scrollTo(x,y)},addEventListener(t,f,o){document.body.addEventListener(t,f,o);window.addEventListener(t,f,o)}}})();
+const SCR=document.body;
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
 const CATS={sport:{label:"Force",c:"var(--c-sport)"},perso:{label:"Talent",c:"var(--c-perso)"},social:{label:"Ami",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
 const BARS={eau:{goal:16,segs:8,unit:"verres",done:"Hydraté !"},nourriture:{goal:40,segs:10,unit:"XP",done:"Rassasié !"}};
