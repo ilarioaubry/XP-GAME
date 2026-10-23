@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Diag">
+<title>Diag</title>
+<style>
+html{background:#0d1028}
+html,body{margin:0;padding:0}
+body{font:15px/1.35 ui-monospace,Menlo,monospace;color:#fff;min-height:100vh}
+#top{position:fixed;top:0;left:0;right:0;height:18px;background:#e53935;z-index:5}
+#bot{position:fixed;bottom:0;left:0;right:0;height:18px;background:#43a047;z-index:5}
+#lft{position:fixed;top:0;bottom:0;left:0;width:6px;background:#fdd835;z-index:5}
+#rgt{position:fixed;top:0;bottom:0;right:0;width:6px;background:#fdd835;z-index:5}
+#pad{padding:calc(env(safe-area-inset-top,0px) + 30px) 18px 140px}
+h1{font-size:20px;margin:0 0 10px}
+pre{white-space:pre-wrap;margin:0;font:inherit}
+#probe{position:absolute;visibility:hidden;padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px)}
+.u{position:absolute;left:-9999px;width:1px}
+#hv{height:100vh}#hd{height:100dvh}#hl{height:100lvh}#hs{height:100svh}
+</style>
+</head>
+<body>
+<div id="top"></div><div id="bot"></div><div id="lft"></div><div id="rgt"></div>
+<div id="probe"></div>
+<div class="u" id="hv"></div><div class="u" id="hd"></div><div class="u" id="hl"></div><div class="u" id="hs"></div>
+<div id="pad"><h1>Diagnostic écran</h1><pre id="out">…</pre></div>
+<script>
+function fmt(n){return Math.round(n*10)/10}
+async function run(){
+  var o=[],cs=getComputedStyle(document.getElementById("probe")),vv=window.visualViewport;
+  var dm=window.matchMedia&&["standalone","fullscreen","minimal-ui","browser"].filter(function(m){return matchMedia("(display-mode: "+m+")").matches})[0];
+  var bot=document.getElementById("bot").getBoundingClientRect(),top=document.getElementById("top").getBoundingClientRect();
+  o.push("mode appli (navigator.standalone): "+navigator.standalone);
+  o.push("display-mode: "+dm);
+  o.push("");
+  o.push("screen: "+screen.width+" x "+screen.height);
+  o.push("innerHeight: "+innerHeight+"   innerWidth: "+innerWidth);
+  o.push("outerHeight: "+outerHeight);
+  o.push("visualViewport: "+(vv?fmt(vv.width)+" x "+fmt(vv.height)+"  décalage "+fmt(vv.offsetTop):"n/a"));
+  o.push("documentElement.clientHeight: "+document.documentElement.clientHeight);
+  o.push("scrollY: "+scrollY);
+  o.push("");
+  o.push("100vh: "+document.getElementById("hv").offsetHeight);
+  o.push("100dvh: "+document.getElementById("hd").offsetHeight);
+  o.push("100lvh: "+document.getElementById("hl").offsetHeight);
+  o.push("100svh: "+document.getElementById("hs").offsetHeight);
+  o.push("");
+  o.push("zones de sécurité haut/bas: "+cs.paddingTop+" / "+cs.paddingBottom);
+  o.push("gauche/droite: "+cs.paddingLeft+" / "+cs.paddingRight);
+  o.push("");
+  o.push("barre rouge (haut) commence à: "+fmt(top.top));
+  o.push("barre verte (bas) finit à: "+fmt(bot.bottom));
+  o.push("=> écart sous la barre verte: "+fmt(screen.height-bot.bottom));
+  try{
+    var r=await fetch("index.html?"+Date.now(),{cache:"no-store"});var t=await r.text();
+    o.push("");o.push("correctif 'vgap' présent dans index.html: "+(t.indexOf("--vgap")>-1));
+  }catch(e){o.push("");o.push("lecture index.html impossible")}
+  document.getElementById("out").textContent=o.join("\n");
+}
+run();addEventListener("resize",run);addEventListener("orientationchange",function(){setTimeout(run,400)});
+</script>
+</body>
+</html>
