@@ -10,3 +10,7 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 - Tous les scripts partagent la portée globale (état `S`, `save()`, `load()`, clé localStorage `carnet-quetes`) ; `js/correctifs.js` est une grosse IIFE de rustines.
 - Tester à largeur iPhone (≈393 px) avec Playwright avant de livrer. iOS en mode appli : la classe `fullh` + `100lvh` corrige la hauteur ; ne pas la retirer.
 - Ne pas casser les données existantes de l'utilisateur (format de sauvegarde localStorage).
+
+## Ponytail
+
+Skills Ponytail installés dans `.claude/skills/` (MIT, github.com/DietrichGebert/ponytail) : `/ponytail` (mode « dev paresseux » : plus petit changement qui résout le problème), `/ponytail-review`, `/ponytail-audit`, `/ponytail-debt`, `/ponytail-gain`, `/ponytail-help`. Niveaux : `/ponytail lite|full|ultra|off`.
