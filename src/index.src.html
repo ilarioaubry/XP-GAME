@@ -1,0 +1,335 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="fr"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style id="bilan2">
+  @@include(css/bilan-cloture.css)@@
+</style>
+<style id="maison">
+  @@include(css/maison-1.css)@@
+</style>
+<style id="maison2">
+  @@include(css/maison-2.css)@@
+</style>
+<style id="maison3">
+  @@include(css/maison-3.css)@@
+</style>
+</head><body>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Carnet de Quêtes">
+<meta name="theme-color" content="#f8e3ad" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120d" media="(prefers-color-scheme: dark)">
+<style>
+html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-height:100%;background:var(--bg)}
+html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
+html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
+html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
+html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 28px))}
+</style>
+<script>document.documentElement.classList.add("sky");</script>
+<script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
+<script>try{var m={name:"Carnet de Quêtes",short_name:"Quêtes",display:"standalone",orientation:"portrait",background_color:"#f8e3ad",theme_color:"#f8e3ad"};var l=document.createElement("link");l.rel="manifest";l.href="data:application/manifest+json,"+encodeURIComponent(JSON.stringify(m));document.head.appendChild(l);["apple-mobile-web-app-capable","apple-mobile-web-app-status-bar-style"].forEach(function(n){var e=document.querySelector('meta[name="'+n+'"]');if(e)document.head.appendChild(e)})}catch(e){}</script>
+<title>Carnet de Quêtes</title>
+<script>try{var ic=localStorage.getItem("cq-icon");if(ic){var a=document.createElement("link");a.rel="apple-touch-icon";a.href=ic;document.head.appendChild(a);var b=document.createElement("link");b.rel="icon";b.type="image/png";b.href=ic;document.head.appendChild(b)}}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+  @@include(css/principal-01.css)@@
+  @@include(css/principal-02.css)@@
+  @@include(css/principal-03.css)@@
+  @@include(css/principal-04.css)@@
+  @@include(css/principal-05.css)@@
+  @@include(css/principal-06.css)@@
+  @@include(css/principal-07.css)@@
+  @@include(css/principal-08.css)@@
+  @@include(css/principal-09.css)@@
+  @@include(css/principal-10.css)@@
+  @@include(css/principal-11.css)@@
+  @@include(css/principal-12.css)@@
+</style>
+
+<div class="wrap">
+  <h1 class="banner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg><span>Carnet de Quêtes</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg></h1>
+
+
+  
+  <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
+  <section data-v="q" class="nightb voff" id="nightBox" aria-label="Bonne nuit"></section>
+  <section data-v="q" class="qxp" aria-label="Ma progression"><button type="button" id="qxpBtn" aria-label="Voir mon profil"><span class="ql" id="qLvlBox">Niv <b id="qLvl">1</b></span><span class="qbar"><i id="qBar"></i></span><span class="qt"><b id="qCur">0</b> / <span id="qNeed">100</span> XP</span><span class="qs" title="Série de jours"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-2.8 7-6.8 0-3.6-2.4-5.6-3.6-8.7-.4 1.9-1.4 3-2.6 3.5C13 6.5 11.6 4 9 2.5c.3 3.4-4 6.2-4 11.3C5 18.6 8 22 12 22z"/></svg><b id="qStreak">0</b></span><span class="qhp" id="qHpRow"></span></button><button type="button" class="qday" id="qDay" aria-label="Récap de l'XP du jour"><span class="qdl">Jour</span><span class="qdbar"><i id="qDayBar"></i></span><b id="qDayT">0 / 150</b></button></section>
+    <style>
+  @@include(css/suivi-du-jour.css)@@
+</style>
+  <section data-v="q" class="rit trkbox" id="trkBox" aria-label="Ton bandeau du jour"></section>
+  <section data-v="q" class="evtoday" id="evToday" aria-label="Aujourd'hui"></section>
+  <script>
+  @@include(js/ma-vie.js)@@
+</script>
+  <section data-v="q" class="specials" id="dqBox" aria-label="Mon moment">
+    <div class="head" id="dqHead"><h2 id="dqTitle">Matin<span class="count" id="spCount">0</span></h2><span class="rsk" id="ritSk" hidden></span><button type="button" class="dqed" id="ritEdBtn" aria-label="Modifier mes rituels"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></button></div>
+    <div class="dql" id="spTrack"></div>
+    <div id="ritLife" class="ritlife dqlife"></div>
+    <div class="bars ritbars dqbars" id="bars"></div>
+  </section>
+  <section data-v="q" class="evmbox voff" id="evmBox" aria-label="Mode événement"></section>
+  <section data-v="q" class="sleepgo voff" id="sleepGo" aria-label="Fin de journée"></section>
+  <section data-v="q" class="wksun voff" id="wkSun" aria-label="Ta semaine"></section>
+  <section data-v="q" class="enbox voff" id="enBox" aria-label="Énergie du matin"></section>
+  <section data-v="q" class="rit fqbox" id="fqBox" aria-label="Aujourd'hui"></section>
+  <section data-v="q" class="plusbox" id="plusBox" aria-label="Plus de quêtes"></section>
+  <section data-v="q" class="nowbox" id="nowBox" aria-label="Maintenant"></section>
+  <section data-v="q" class="rtrbox voff" id="rtrBox" aria-label="Rattrapage"></section>
+  <section data-v="q" class="gbox" id="gameBox" aria-label="Coffres"></section>
+  <section data-v="q" class="xmbox voff" id="xmBox" aria-label="Saison des fêtes"></section>
+  <section data-v="q" class="cbday" id="cbDay" aria-label="Boss du jour"></section>
+  
+  <section data-v="q" class="duobox" id="duoBox" aria-label="Défi à deux"></section>
+  <section data-v="q" class="rit wkbox" id="wkBox" aria-label="Cette semaine"></section>
+  <section data-v="q" class="specials sqsec" id="sqBox" aria-label="Quêtes spéciales">
+    <div class="head" id="sqHead"><h2>Quêtes spéciales<span class="count" id="sqCnt">0</span></h2></div>
+    <div class="track" id="sqTrack"></div>
+  </section>
+  <section data-v="q" class="rit prjbox voff" id="prjBox" aria-label="Projets"></section>
+  <div id="ritBox" hidden><span id="ritCnt"></span><div id="ritList"></div></div>
+
+
+
+
+
+  <section data-v="p" class="prof" id="prof" aria-label="Profil"></section>
+
+
+
+
+
+
+    <nav class="subtabs" data-v="t" role="tablist" aria-label="Sections des quêtes"><button type="button" role="tab" data-sub="q">Quêtes</button><button type="button" role="tab" data-sub="boss">Projets</button></nav>
+  
+  <section data-v="t" data-sub="boss" class="gbox" id="bossBox2" aria-label="Boss"></section>
+  <section class="week" id="weekBox" hidden>
+    <details open><summary>Points faibles du boss <b id="weekCnt">0/3</b></summary><p class="hint" style="margin:6px 0 0">Réussis-les pour frapper le boss : leur XP compte en dégâts.</p>
+      <div id="weekRows"></div><p class="hint" id="weekSum" style="margin:8px 0 0"></p>
+    </details>
+  </section>
+  <section class="gbox" id="sonSeance" aria-label="Séance de son" hidden></section>
+  
+  
+  <section data-v="c" class="char cmp pf" aria-label="Ton personnage">
+    <div class="pf-head"><div class="pf-name"><input id="charName" class="cname-in" maxlength="14" aria-label="Nom du personnage"><button type="button" class="ctitle ctbtn" id="charTitle" aria-expanded="false" aria-controls="pfTPick" title="Changer de titre"></button></div><button type="button" class="me-set" id="meSet" aria-label="Réglages" title="Réglages"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+    <div class="pf-tpick" id="pfTPick" hidden><div class="pph"><b>Choisir un titre <span class="count" id="tiCnt">0</span></b><button type="button" class="ppx" id="pfTClose" aria-label="Fermer"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div id="titleChips"></div></div>
+    <div class="pf-body">
+      <div class="statwrap" id="statWrap"><div class="statlist" id="stats"></div></div>
+      <div class="pf-side"><button type="button" class="avbtn" id="avBtn" aria-label="Mon portrait"><span id="avatarWrap"></span></button><button type="button" class="wallet wrbtn" id="wallet" aria-label="Ouvrir ma garde-robe"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6a2 2 0 1 1 2-2"/><path d="M12 6v2L3 15a1.5 1.5 0 0 0 1 2.6h16a1.5 1.5 0 0 0 1-2.6L12 8"/></svg><b id="walletAmt">Garde-robe</b></button></div>
+    </div>
+    <div class="pf-kpi" id="pfKpi" role="group" aria-label="Stats phares"></div>
+    <div class="pf-xp"><div class="lvl" id="lvlBox"><small>Niv</small><b id="lvl">1</b></div><div class="bar" role="progressbar" aria-label="Progression vers le niveau suivant" aria-valuemin="0" id="barWrap"><i id="bar"></i><span class="bt"><em><span id="cur">0</span> / <span id="need">100</span> XP</em></span></div></div>
+    <div class="pf-hp" id="pfHp"></div>
+    <div class="pf-bdg" id="pfBdg" role="group" aria-label="Badges affichés"></div>
+    <div class="pf-pick" id="pfPick" hidden></div>
+    <div hidden><button type="button" class="cstog" tabindex="-1" id="csTog" aria-expanded="false" aria-controls="statWrap"><span>Caractéristiques</span><span id="csSum"></span><span class="chev" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button></div>
+  </section>
+  
+  
+  <nav class="subtabs four" data-v="c" role="tablist" aria-label="Sections du profil"><button type="button" role="tab" data-sub="vie">Ma vie</button><button type="button" role="tab" data-sub="sons">Domaines</button><button type="button" role="tab" data-sub="wr">Chez moi</button><button type="button" role="tab" data-sub="bilan">Bilan</button></nav>
+  <section data-v="c" data-sub="vie" class="ficheb" id="ficheBox" aria-label="Ma fiche"></section>
+  <section data-v="c" data-sub="sons" class="idbox" id="idBox" aria-label="Ce que tu deviens"></section>
+  
+  <section data-v="c" data-sub="vie" class="vie" id="vieBox" aria-label="Ma vie"></section>
+  <section data-v="c" data-sub="vie" class="rit prjbox" id="prjBox2" aria-label="Mes projets"></section>
+  <section data-v="c" data-sub="vie" class="rit evt" id="evtBox" aria-label="Calendrier">
+    <div class="head"><h2>Calendrier<span class="count" id="evtCnt">0</span></h2><button type="button" class="btn edbtn" id="evtAdd" aria-expanded="false" aria-controls="evtForm" aria-label="Ajouter un événement" title="Ajouter"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <form class="evtform" id="evtForm" hidden><input id="evtName" maxlength="40" placeholder="Ex. Concert de Jul, Soirée chez Lola" aria-label="Nom de l'événement" required><div class="evtrow"><input id="evtDate" type="date" aria-label="Date" required><select id="evtXp" aria-label="XP"><option value="10">+10 XP</option><option value="20" selected>+20 XP</option><option value="30">+30 XP</option><option value="50">+50 XP</option></select><button class="btn primary" type="submit">Ajouter</button></div></form>
+    <div class="evtl" id="evtList"></div>
+  </section>
+  <section data-v="c" data-sub="vie" class="settings" id="setBox" aria-label="Réglages">
+    <div class="set-top"><button type="button" class="btn back" id="setBack" hidden>←</button><h2 id="setTitle">Réglages</h2></div>
+    <div class="set-card">
+      <h3>Progression</h3>
+      <div class="rules">
+        <label>Plafond d'XP par jour <input id="xpCap" type="number" min="0" step="10" inputmode="numeric"> XP</label>
+      </div>
+      <div class="eco" id="ecoBox"></div>
+    </div>
+    <div class="set-card" id="balCard"><h3>Équilibre</h3><div class="balrows"></div></div>
+    <div class="set-card" id="ritEdCard"><h3>Mes rituels</h3>
+      <button type="button" class="btn" id="ritEdOpen" style="width:100%">Ouvrir l'atelier des rituels</button>
+      <div class="rules" style="margin-top:12px"><label>Bonus par moment terminé (XP) <input id="dbXp" type="number" min="0" step="5" inputmode="numeric"></label><label hidden>Bonus (€) <input id="dbEur" type="number" min="0" step="0.5" inputmode="decimal"></label></div>
+    </div>
+    <div class="set-card" hidden><h3>Limite par jour</h3>
+      <p class="hint" style="margin:0 0 8px">Nombre de fois qu'une même bonne action rapporte de l'XP chaque jour (l'eau et la nourriture ne sont pas limitées).</p>
+      <label>Limite<select id="dayLimit"><option value="1">1 fois</option><option value="2">2 fois</option><option value="3">3 fois</option><option value="5">5 fois</option><option value="0">Illimitée</option></select></label>
+    </div>
+    <div class="set-card" id="testCard"><h3>Mode test (admin)</h3>
+      <p class="hint" style="margin:0">Pour essayer les fonctionnalités sans risque : rien n'est enregistré. En quittant le mode test (ou en rechargeant la page), tu retrouves exactement ta vraie progression.</p>
+      <button type="button" class="btn primary" id="testOn" style="width:100%;min-height:44px">Activer le mode test</button>
+      <div id="testTools" hidden>
+        <button type="button" class="btn primary tunlock" data-t="all">Tout débloquer</button>
+        <div class="ttools">
+          <button type="button" class="btn" data-t="xp">+100 XP</button><button type="button" class="btn" data-t="lvl">+1 niveau</button>
+          <button type="button" class="btn" data-t="chest">+3 coffres</button><button type="button" class="btn" data-t="bchest">+1 coffre boss</button>
+          <button type="button" class="btn" data-t="boss">Vaincre le boss</button><button type="button" class="btn" data-t="rit">Finir les rituels</button>
+          <button type="button" class="btn" data-t="day">Passer au lendemain</button><button type="button" class="btn" data-t="skills">Skills +100 XP</button>
+          <button type="button" class="btn" data-t="gear">Tous les objets</button><button type="button" class="btn" data-t="boost">Boost ×2</button>
+        </div>
+        <button type="button" class="btn" id="testOff" style="width:100%;min-height:44px;margin-top:10px">Quitter le mode test (tout est annulé)</button>
+      </div>
+    </div>
+    <div class="set-card"><h3>Apparence</h3>
+      <div class="sndrow"><span>Sons</span><div class="thseg sndseg" role="group" aria-label="Sons"><button type="button" data-snd="1">Activés</button><button type="button" data-snd="0">Coupés</button></div></div>
+      <div class="thseg" role="group" aria-label="Thème"><button type="button" data-th="auto"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span>Auto</span></button><button type="button" data-th="light"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><span>Clair</span></button><button type="button" data-th="dark"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></svg><span>Sombre</span></button></div><p class="hint" style="margin:6px 0 0">Auto suit le réglage de ton iPhone.</p>
+    </div>
+  <div class="set-card" id="setMods"></div>
+  </section>
+  <section data-v="c" data-sub="wr" class="gbox" id="homeBox" aria-label="Chez moi"></section>
+  <section data-v="c" data-sub="wr" class="col wardrobe" aria-label="Armoire">
+    <div class="colh"><h3>Armoire</h3><span class="count" id="wrCnt">0</span></div>
+    <div id="wrChest"></div>
+    <div class="wr-cats" id="wrCats" role="tablist" aria-label="Catégories"></div>
+    <div id="wrBody"></div>
+  </section>
+  <section data-v="c" data-sub="wr" class="col" aria-label="Badges">
+    <div class="colh"><h3>Badges</h3><span class="count" id="bdgCnt">0/0</span></div>
+    <div id="bdgNext"></div>
+    <div id="bdgGrid" class="bfams"></div>
+  </section>
+  <section data-v="c" data-sub="sons" class="gbox" id="lzProf" aria-label="Mes skills"></section>
+  <section data-v="c" data-sub="sons" class="lzs" aria-label="Skills">
+    <div class="head"><h2>Skills<span class="count" id="lzCnt">0</span></h2><button type="button" class="btn edbtn" id="lzEdBtn" aria-expanded="false" aria-label="Choisir mes skills actifs" title="Choisir"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button></div>
+    <div id="lzList" class="lzlist"></div>
+  </section>
+  <section data-v="c" data-sub="sons" class="gbox" id="musBox" aria-label="Défis musique"></section>
+  <section data-v="c" data-sub="sons" class="gbox" id="dzBox" aria-label="Défis des skills"></section>
+
+  <section data-v="c" data-sub="bilan" class="chapbox" id="chapBox" aria-label="Mon bilan"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="pathBox" aria-label="Mon chemin"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="ritStat" aria-label="Mes rituels"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="wkRecap" aria-label="Ma semaine"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="recBox" aria-label="Records"></section>
+    <section data-v="c" data-sub="bilan" class="gbox" id="sleepBox" aria-label="Sommeil"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="jrBox" aria-label="Journal"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="moodBox" aria-label="Humeur de l'année"></section>
+  <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
+    <div class="set-card"><h3>Données</h3>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span></p>
+      <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
+      <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
+      <button type="button" class="btn" id="expBtn" style="width:100%">Copier mes données (sauvegarde)</button>
+      <textarea id="dataBox" rows="4" readonly hidden style="width:100%;margin-top:8px;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px"></textarea>
+      <h3 style="margin-top:16px">Restaurer</h3>
+      <textarea id="impBox" rows="3" placeholder="Colle ici une sauvegarde…" style="width:100%;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px"></textarea>
+      <button type="button" class="btn" id="impBtn" style="width:100%;margin-top:8px">Restaurer</button>
+      <p class="hint" id="impMsg" style="margin:6px 0 0"></p>
+    </div>
+  </section>
+
+  <section data-v="r" class="vie pcbox" id="pcBox" aria-label="Rappels"></section>
+  <section data-v="r" class="rel" aria-label="Relations">
+    <div class="rel-top"><h2>Relations</h2><button type="button" class="addf" id="addFBtn" aria-label="Ajouter un ami" aria-expanded="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><span class="hint" id="relSub"></span></div>
+    <div id="relRemind"></div>
+    <div class="fgbox" id="relGroups"></div>
+    <form class="frform" id="addFForm" hidden style="margin:10px 0"><input id="addFName" maxlength="30" placeholder="Prénom de l'ami" aria-label="Prénom de l'ami" required><button class="btn primary" type="submit">Ajouter</button></form>
+    <ul class="rlist" id="relList"></ul>
+  </section>
+
+
+
+
+
+
+  <section data-v="q" class="fd" data-fk="act" style="display:grid;gap:12px">
+    <div class="head fdh">
+      <h2>Bonnes actions</h2><button type="button" class="btn edbtn" id="actNew" aria-label="Créer une bonne action" title="Créer"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" class="btn edbtn" id="actEdBtn" hidden aria-expanded="false" aria-controls="actEdCard" aria-label="Modifier les bonnes actions" title="Modifier"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button>
+    </div>
+    <div class="actsug" id="actSug"></div>
+    <div class="favs" id="favs" hidden></div>
+    <div id="allActs"><div class="filters" id="filters" role="group" aria-label="Filtrer par catégorie"></div>
+    <div class="grid" id="grid"></div></div>
+    <button type="button" class="btn seeall" id="seeAll" aria-expanded="true" aria-controls="allActs"></button>
+    <div class="set-card edcard" id="actEdCard" hidden>
+      <h3>Modifier les bonnes actions</h3>
+      <ul class="alist" id="actList"></ul>
+      <form class="add" id="addForm">
+      <label>Nouvelle bonne action<input id="addName" maxlength="60" placeholder="ex. Appeler mamie" required></label>
+      <label>Catégorie<select id="addCat"></select></label>
+      <label>XP<select id="addXp"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label>
+      <button class="btn primary" type="submit">Ajouter</button>
+    </form>
+    </div>
+  </section>
+
+
+  <section data-v="q" style="display:grid;gap:12px">
+    <details class="jrn"><summary><h2>Journal</h2><b id="logCnt">0</b></summary>
+    <ul class="log" id="log"></ul></details>
+  </section>
+</div>
+<div class="dock">
+  <div class="strip" id="strip"><span>Aujourd'hui <b id="today">0</b> XP</span><span>Série <b id="streak">0</b> j</span></div>
+  <nav class="tabs" role="tablist" aria-label="Pages">
+    <button type="button" role="tab" id="tabQ" aria-selected="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Aujourd'hui</span></button>
+    <button type="button" role="tab" id="tabT" aria-selected="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6M16 16l4 4M19 21l2-2"/><path d="M14.5 6.5L18 3h3v3l-3.5 3.5"/><path d="M5 14l4 4M7 17l-3 3M3 19l2 2"/></svg><span>Défis</span></button>
+    <button type="button" role="tab" id="tabC" aria-selected="false"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Moi</span></button>
+    <button type="button" role="tab" id="tabR" aria-selected="false"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg><span>Proches</span></button>
+    <button type="button" role="tab" id="tabB" aria-selected="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6a2 2 0 1 1 2-2"/><path d="M12 6v2L3 15a1.5 1.5 0 0 0 1 2.6h16a1.5 1.5 0 0 0 1-2.6L12 8"/></svg><span>Garde-robe</span></button>
+  </nav>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="avc" id="avCreator" role="dialog" aria-modal="true" aria-labelledby="avcT" hidden>
+  <div class="avc-in">
+    <div class="avc-top"><button type="button" class="avc-x" id="avcClose" aria-label="Fermer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button><h2 id="avcT">Mon personnage</h2><button type="button" class="avc-rnd" id="avcRnd" aria-label="Aléatoire" title="Aléatoire"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.4" fill="currentColor"/><circle cx="15" cy="15" r="1.4" fill="currentColor"/><circle cx="15" cy="9" r="1.4" fill="currentColor"/><circle cx="9" cy="15" r="1.4" fill="currentColor"/></svg></button></div>
+    <div class="avc-stage"><canvas id="avcPrev" width="180" height="210" aria-label="Aperçu du personnage"></canvas></div>
+    <div class="avc-steps" role="tablist" id="avcTabs"></div>
+    <div class="avc-pg"><b id="avcPgT"></b><span class="avc-dots" id="avcDots" aria-hidden="true"></span></div>
+    <div class="avc-body" id="avcBody"></div>
+    <div class="avc-foot"><button type="button" class="btn" id="avcBack">Retour</button><button type="button" class="btn primary" id="avcSave">Suivant</button><div class="avc-lk"><button type="button" class="lnk" id="avcNow">Enregistrer maintenant</button><button type="button" class="lnk" id="avcPhoto">Garder ma photo</button></div></div>
+  </div>
+</div>
+
+<script>
+  @@include(js/01-donnees-base.js)@@
+  @@include(js/02-ecussons-icones.js)@@
+  @@include(js/03-repas-barre-de-vie.js)@@
+  @@include(js/04-identites.js)@@
+  @@include(js/05-fetes.js)@@
+  @@include(js/06-creation-profil.js)@@
+  @@include(js/07-rituels-tuiles.js)@@
+  @@include(js/08-ambiance-scene.js)@@
+  @@include(js/09-cloture-soir.js)@@
+  @@include(js/10-evenements.js)@@
+  @@include(js/11-createur-personnage.js)@@
+  @@include(js/12-pixel-clair-moteur.js)@@
+  @@include(js/13-pixel-clair-boss.js)@@
+  @@include(js/14-pixel-clair-integration.js)@@
+  @@include(js/15-reglages-rituels.js)@@
+  @@include(js/16-quetes.js)@@
+  @@include(js/17-spotify-meteo.js)@@
+  @@include(js/18-quetes-pour-toi-histoire.js)@@
+  @@include(js/19-bilan.js)@@
+  @@include(js/20-calendrier-fiche.js)@@
+  @@include(js/21-contenu-collection.js)@@
+  @@include(js/22-icones-unifiees.js)@@
+  @@include(js/23-boss-par-categorie.js)@@
+  @@include(js/24-defis-skill-vie-perso.js)@@
+  @@include(js/25-chez-moi.js)@@
+  @@include(js/26-bibliotheque-badges.js)@@
+  @@include(js/27-garde-robe-quetes-timer.js)@@
+  @@include(js/28-sons-boss.js)@@
+  @@include(js/29-defis-semaine-test-sauvegarde.js)@@
+</script>
+
+
+
+<style id="epure">
+  @@include(css/epure-01.css)@@
+  @@include(css/epure-02.css)@@
+  @@include(css/epure-03.css)@@
+  @@include(css/epure-atelier-rituels.css)@@
+  @@include(css/epure-fiche-personne.css)@@
+  @@include(css/epure-editeur-avatar.css)@@
+  @@include(css/epure-bibliotheque.css)@@
+</style>
+<script>
+  @@include(js/correctifs.js)@@
+</script>
+</body></html>
+</body></html>

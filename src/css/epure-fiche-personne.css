@@ -1,0 +1,64 @@
+/* ===== fiche personne ===== */
+.fp-badges .rk{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 3px;background:var(--surface-2);color:var(--ink)}
+.fp-badges .rk i{display:grid;width:18px;height:18px}
+.fp-badges .rk i svg{width:100%;height:100%}
+.fp-badges .rk.st{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 22%,var(--surface))}
+.pf2{display:grid;gap:10px}
+.pf2 h3{margin:0}
+.pf2 .tagrow .tg{display:inline-flex;align-items:center;gap:6px}
+.pf2 .tagrow .tg[aria-pressed="false"] .tgi{opacity:.55;filter:grayscale(.6)}
+.pf2 .tagrow .tg.grp[aria-pressed="true"]{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 24%,var(--surface))}
+.pf2tog{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
+.pf2tog .fti{width:40px;height:40px;flex:none;display:grid}
+.pf2tog .fti svg{width:100%;height:100%}
+.pf2tog[aria-pressed="false"] .fti{filter:grayscale(1);opacity:.5}
+.pf2tog .pf2t{flex:1;display:grid;gap:2px}
+.pf2tog .pf2t small{opacity:.7;font-size:12px}
+.pf2sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex:none}
+.pf2sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform 120ms}
+.pf2tog[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 16%,var(--surface))}
+.pf2tog[aria-pressed="true"] .pf2sw{background:var(--gold)}
+.pf2tog[aria-pressed="true"] .pf2sw::after{transform:translateX(18px)}
+.pf2sug{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:2px dashed var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--surface))}
+.pf2sug[hidden]{display:none}
+.pf2sug .fti{width:30px;height:30px;flex:none;display:grid}
+.pf2sug .fti svg,.pf2gift .fti svg{width:100%;height:100%}
+.pf2sug .pf2t{flex:1;display:grid}
+.pf2sug small{opacity:.75;font-size:12px}
+.pf2sug button{width:38px;height:38px;border-radius:10px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:inherit;padding:0}
+.pf2sug button svg{width:22px;height:22px}
+.pf2sug .pf2y{border-color:var(--gold)}
+.pf2gift{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:var(--surface);border:2px solid var(--line)}
+.pf2gift .fti{width:36px;height:36px;flex:none;display:grid}
+.pf2gift .pf2t{flex:1;display:grid;gap:4px;min-width:0}
+.pf2gift input{width:100%;min-height:36px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:inherit;font:inherit;padding:0 10px;box-sizing:border-box}
+.pf2bded{display:grid;grid-template-columns:64px minmax(0,1fr) 84px auto;gap:8px;align-items:end;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:2px solid var(--line)}
+.pf2bded[hidden]{display:none}
+.pf2bded label{display:grid;gap:3px;font-size:11px;font-weight:700;opacity:.9}
+.pf2bded input,.pf2bded select{min-height:40px;width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:inherit;font:inherit;padding:0 8px}
+.pf2del{text-align:center;padding:6px 0 18px}
+.pf2del .delf{color:var(--muted);font-size:13px;text-decoration:underline;background:none;border:0;min-height:40px}
+.pf2del #delAsk p{margin:0 0 10px;font-weight:600}
+.grpin2{display:block;width:100%;box-sizing:border-box;background:transparent;border:0;border-bottom:2px dashed color-mix(in srgb,currentColor 35%,transparent);color:inherit;font:inherit;font-size:22px;font-weight:800;padding:2px 0;margin:2px 0 4px}
+.grpcard .grpcols{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.rlk{display:inline-grid;width:18px;height:18px;margin-left:6px;vertical-align:-3px}
+.rlk svg{width:100%;height:100%}
+.rst{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:99px;border:1px solid var(--gold);color:var(--gold)}
+.whob .whs{position:absolute;top:2px;right:2px;width:16px;height:16px}
+.whob .whs svg{width:100%;height:100%}
+.whob{position:relative}
+
+#prof>*{min-width:0;max-width:100%;box-sizing:border-box}
+.pf2 .tagadd input,.pf2gift input{min-width:0}
+html:not(#_a):not(#_b) body .pf2 .tagrow .tg{background:var(--surface-2);color:var(--ink);border:2px solid var(--line);border-radius:999px;min-height:36px;padding:0 12px 0 8px;font-weight:700}
+html:not(#_a):not(#_b) body .pf2 .tagrow .tg[aria-pressed="true"]{background:color-mix(in srgb,var(--gold) 24%,var(--surface));border-color:var(--gold);color:var(--ink)}
+html:not(#_a):not(#_b) body .pf2 .tagrow .tg[aria-pressed="false"]{opacity:.8}
+html:not(#_a):not(#_b) body .pf2 .tagrow .tg.grp[aria-pressed="true"]{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 28%,var(--surface))}
+
+.pf2{grid-template-columns:minmax(0,1fr)}
+html:not(#_a):not(#_b) body .pf2 .fjobs{grid-template-columns:repeat(4,minmax(0,1fr))}
+html:not(#_a):not(#_b) body .pf2 .fjobs .fti{width:44px;height:44px}
+html:not(#_a):not(#_b) body .pf2 .fjobs button{font-size:11px;padding:4px;text-align:center;line-height:1.15}
+
+html:not(#_a):not(#_b) body .grpcard .grpcols .grpc{width:34px;height:34px;flex:none}
+

@@ -1,0 +1,29 @@
+
+html body .clo2{--text:#fff8e6;--muted:rgba(255,248,230,.7);--surface:rgba(16,18,44,.78);--line:rgba(255,255,255,.22)}
+html body .clo2 .cloin{gap:12px;min-height:100vh;align-content:start;grid-template-rows:auto 1fr auto}
+html body .clo2 .qwbody{align-content:start}
+html body .clo2 .qwq{font-size:24px}
+html body .clo2 .clox{font-size:26px;line-height:1}
+html body .clo2 .bswrap{display:flex;flex-wrap:wrap;gap:8px}
+html body .clo2 .bsch{min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:800;color:var(--text);background:var(--surface);border:2px solid var(--line);box-shadow:2px 2px 0 rgba(0,0,0,.5);cursor:pointer}
+html body .clo2 .bsch[aria-pressed="true"],html body .clo2 .bsqb[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 22%,#1a1a3a);color:#fff}
+html body .clo2 .bsq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+html body .clo2 .bsqb{display:flex;align-items:center;gap:10px;min-height:58px;padding:8px 12px;font:inherit;color:var(--text);text-align:left;background:var(--surface);border:2px solid var(--line);box-shadow:3px 3px 0 rgba(0,0,0,.5);cursor:pointer;min-width:0}
+html body .clo2 .bsqb b{font-size:15px;line-height:1.15}
+html body .clo2 .bsqi{width:30px;height:30px;flex:none}html body .clo2 .bsqi svg{width:100%;height:100%}
+html body .clo2 .bsmr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line)}
+html body .clo2 .bsyn{display:flex;gap:6px}html body .clo2 .bsmr .bsch{padding:8px 10px;min-width:76px}html body .clo2 .bsdone{font-size:13px;color:var(--muted)}
+html body .clo2 .bsrow{display:grid;gap:6px;margin-bottom:6px}html body .clo2 .bsrow small{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+html body .clo2 .clomd{display:flex;justify-content:space-between;padding:8px}
+html body .pu{background:#0d0f22}
+html body .pu .puh b{font-family:var(--f-pixel);font-size:26px;font-weight:400;line-height:1.1;text-shadow:none;color:#fff8e6}
+html body .pu .puh small{display:inline-block;margin-top:6px;padding:3px 10px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);color:#ffd75a;font-size:12px;letter-spacing:.04em}
+html body .pu .pupad{border:2px solid rgba(255,255,255,.22);box-shadow:4px 4px 0 rgba(0,0,0,.55);background:rgba(20,22,52,.78)}
+html body .pu .puc,html body .pu .stn,html body .pu .mdt{font-family:var(--f-pixel);font-weight:400;text-shadow:none}
+html body .pu .stn{font-size:34px}
+html body .pu .pub{grid-template-columns:1fr 2fr}html body .pu .pub .btn{min-height:54px}
+html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color:#fff8e6;opacity:.85;font-weight:800;text-decoration:underline}
+html:not(#_a):not(#_b):not(#_c) body #balCard{min-width:0;max-width:100%;box-sizing:border-box}
+html:not(#_a):not(#_b):not(#_c) body #balCard .balviz{grid-template-columns:repeat(auto-fit,minmax(min(100%,96px),1fr));min-width:0;max-width:100%}
+html:not(#_a):not(#_b):not(#_c) body #balCard .balviz .svt{min-width:0;aspect-ratio:auto;min-height:92px;padding:8px 4px;overflow:hidden}
+html:not(#_a):not(#_b):not(#_c) body #balCard h3{max-width:100%;box-sizing:border-box}

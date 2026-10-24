@@ -1,0 +1,24 @@
+
+.hmsvg .an-neon{animation:hmNeon 4s steps(1) infinite}@keyframes hmNeon{0%,100%{opacity:1}46%{opacity:.35}48%{opacity:1}50%{opacity:.5}52%{opacity:1}}
+.hmsvg .an-blink{animation:hmBlink 1.2s steps(1) infinite}@keyframes hmBlink{50%{opacity:.15}}
+.hmsvg .an-tv{animation:hmTv 2.6s steps(3) infinite}@keyframes hmTv{33%{transform:translateX(2px)}66%{transform:translateX(-1px)}}
+.hmsvg .an-steam{animation:hmSteam 2.4s ease-in-out infinite;transform-box:fill-box}@keyframes hmSteam{0%{transform:translateY(2px);opacity:0}30%{opacity:.9}100%{transform:translateY(-6px);opacity:0}}
+.hmsvg .an-steam.d2{animation-delay:1.2s}
+.hmsvg .an-wave{animation:hmWave 1.6s steps(2) infinite;transform-box:fill-box;transform-origin:left center}@keyframes hmWave{50%{transform:scaleX(.7)}}
+.hmsvg .an-spin{animation:hmSpin 1.8s linear infinite;transform-box:fill-box;transform-origin:center}@keyframes hmSpin{to{transform:rotate(360deg)}}
+.hmsvg .an-sway{animation:hmSway 3s ease-in-out infinite;transform-box:fill-box;transform-origin:top center}@keyframes hmSway{50%{transform:rotate(4deg)}}
+.hmsvg .an-smoke,.hmhouse .an-smoke{animation:hmSmoke 3.5s ease-out infinite;transform-box:fill-box}@keyframes hmSmoke{0%{transform:translate(0,0);opacity:.8}100%{transform:translate(4px,-10px);opacity:0}}
+.hmhouse .an-smoke.d2{animation-delay:1.7s}.hmhouse .an-blink{animation:hmBlink 1.6s steps(1) infinite}
+.hmsvg .an-car{animation:hmCar 9s linear infinite}@keyframes hmCar{from{transform:translateX(-12px)}to{transform:translateX(130px)}}
+.hmsvg .an-twk,.hmhouse .an-twk{animation:hmBlink 2.8s steps(1) infinite}
+.hmhouse{position:relative;border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#0d1230}
+.hmhsvg{width:100%;height:auto;display:block}
+.hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}
+.hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}
+.hmslot .hml{left:3px;bottom:3px;padding:2px 5px;border-width:2px}
+.hmslot .hml b{font-size:11px}.hmslot .hml small{font-size:9.5px}
+.hmslot.off .hml{opacity:.85}
+.hmstreet .hml{left:auto;right:6px;bottom:6px}
+.hmslot .hmme{width:22px;height:24px;right:3px;top:3px}
+.hmhsvg .an-smoke{animation:hmSmoke 3.5s ease-out infinite;transform-box:fill-box}.hmhsvg .an-smoke.d2{animation-delay:1.7s}.hmhsvg .an-twk{animation:hmBlink 2.8s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){.hmsvg *,.hmhouse *{animation:none!important}}
