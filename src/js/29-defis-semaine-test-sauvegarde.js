@@ -169,7 +169,7 @@ function migrateActions(d){
   }
   return acts;
 }
-function load(d){if(!d)return;loadCore(d);if(S.g&&!S.g.onb&&(S.xp>0||S.log.length))S.g.onb=1;if(S.g&&S.g.onb){const o=document.querySelector(".obd");if(o)o.remove()}}
+function load(d){if(!d)return;loadCore(d);if(typeof runMig==="function")runMig();if(S.g&&!S.g.onb&&(S.xp>0||S.log.length))S.g.onb=1;if(S.g&&S.g.onb){const o=document.querySelector(".obd");if(o)o.remove()}}
 function loadCore(d){S={xp:+d.xp||0,actions:migrateActions(d),log:Array.isArray(d.log)?d.log.map(e=>({...e})):[],days:Array.isArray(d.days)?[...d.days]:[],
   perLevel:typeof d.perLevel==="number"?d.perLevel:1,qPrice:typeof d.qPrice==="number"?d.qPrice:1,xpCap:typeof d.xpCap==="number"?d.xpCap:300,rankBonus:typeof d.rankBonus==="number"?d.rankBonus:5,
   wishes:Array.isArray(d.wishes)?d.wishes.map(w=>({...w})):STARTER_WISHES.map(w=>({...w})),spent:Array.isArray(d.spent)?d.spent.map(s=>({...s})):[],

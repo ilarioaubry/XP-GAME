@@ -12628,7 +12628,7 @@ function migrateActions(d){
   }
   return acts;
 }
-function load(d){if(!d)return;loadCore(d);if(S.g&&!S.g.onb&&(S.xp>0||S.log.length))S.g.onb=1;if(S.g&&S.g.onb){const o=document.querySelector(".obd");if(o)o.remove()}}
+function load(d){if(!d)return;loadCore(d);if(typeof runMig==="function")runMig();if(S.g&&!S.g.onb&&(S.xp>0||S.log.length))S.g.onb=1;if(S.g&&S.g.onb){const o=document.querySelector(".obd");if(o)o.remove()}}
 function loadCore(d){S={xp:+d.xp||0,actions:migrateActions(d),log:Array.isArray(d.log)?d.log.map(e=>({...e})):[],days:Array.isArray(d.days)?[...d.days]:[],
   perLevel:typeof d.perLevel==="number"?d.perLevel:1,qPrice:typeof d.qPrice==="number"?d.qPrice:1,xpCap:typeof d.xpCap==="number"?d.xpCap:300,rankBonus:typeof d.rankBonus==="number"?d.rankBonus:5,
   wishes:Array.isArray(d.wishes)?d.wishes.map(w=>({...w})):STARTER_WISHES.map(w=>({...w})),spent:Array.isArray(d.spent)?d.spent.map(s=>({...s})):[],
@@ -14831,15 +14831,6 @@ function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||
     <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
 try{const _r=render;render=function(){const r=_r.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}}catch(e){}
 // shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026
-(function(){try{const G=S&&S.g;if(!G||G.dst26)return;G.dst26=1;const a=Date.UTC(2026,9,25,2),b=a+36e5,A="2026-10-25",Z="2026-10-24",win=t=>t>=a&&t<b;
-  const hit=(S.log||[]).filter(e=>e.a==="mb"&&win(e.t)).map(e=>e.name),mb=G.mb||{},D=G.mbd||{},P=G.plt||{};let n=0;
-  ["matin","soir"].forEach(per=>{const ka=A+":"+per,kz=Z+":"+per,whole=mb[ka]&&win(mb[ka].t);
-    MB[per].forEach(([k,l])=>{if(!whole&&!hit.includes(l))return;const s=D[ka];
-      if(s&&s.m&&k in s.m){const t=D[kz]=D[kz]||{m:{},ex:{},w:{}};t.cr=t.cr||{};if(!(k in t.m)){t.m[k]=s.m[k];t.cr[k]=1}delete s.m[k];if(s.cr)delete s.cr[k];n++}
-      if(P[A]&&P[A][k]){(P[Z]=P[Z]||{})[k]=P[A][k];delete P[A][k];n++}});
-    if(whole){if(!mb[kz])mb[kz]=mb[ka];delete mb[ka];n++}});
-  save();if(n){try{render()}catch(e){}}}catch(e){}})();
-try{if(S.g&&S.g.plb){delete S.g.plb;save()}}catch(e){}
 // ---- Icônes d'interface en pixel art (standard « tout en pixel art ») : grilles 12×12, une seule couleur (currentColor),
 // pour garder les couleurs et états actuels des boutons. Remplace ICO() et les anciennes icônes vectorielles au trait.
 const PXUI={
@@ -14889,12 +14880,32 @@ function sqIcons(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.quer
   const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg(RKI[ic]?ic:"etoile");c.appendChild(sp)})}
 {let q=0;const run=()=>{q=0;try{sqIcons()}catch(e){}};new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run)}).observe(document.body,{childList:true,subtree:true});run()}
 // Réparation unique : le titre « Dompteur de boss » devient « Maître des projets » (plus de boss dans l'appli)
-try{const G=S&&S.g;if(G&&!G.voc1){G.voc1=1;if(Array.isArray(G.rt))G.rt=G.rt.map(t=>t==="Dompteur de boss"?"Maître des projets":t);if(S.title==="Dompteur de boss")S.title="Maître des projets";save()}}catch(e){}
 // Choix rapides (menu « … », Pris / Sauté) : petite fenêtre centrée ; toucher à côté la ferme
 document.addEventListener("click",e=>{const t=e.target,stop=()=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()};
   const p=document.querySelector(".mlpop");if(p&&!t.closest(".mlpop")){p.remove();if(!t.closest(".mlp"))stop();return}
   const m=document.querySelector(".epop");if(m&&!t.closest(".epop")){m.remove();stop();return}
   const q=document.querySelector(".fqr.menu");if(q&&!t.closest(".fqno")&&!t.closest(".fqrr")){try{fqMenu="";renderFq()}catch(err){}stop()}},true);
+// ---- Migrations des données : une réparation = une migration numérotée, appliquée une seule fois, dans l'ordre.
+// S.g.ver = nombre de migrations déjà appliquées. Ne jamais modifier ni réordonner une migration existante : en ajouter une à la fin.
+// Les anciens drapeaux (dst26, voc1) restent dans les données : une réparation déjà faite n'est pas refaite.
+const MIG=[
+  // 1 — changement d'heure du 25/10/2026 : repas notés entre 2 h et 3 h rendus à la veille
+  G=>{if(G.dst26)return false;G.dst26=1;const a=Date.UTC(2026,9,25,2),b=a+36e5,A="2026-10-25",Z="2026-10-24",win=t=>t>=a&&t<b;
+  const hit=(S.log||[]).filter(e=>e.a==="mb"&&win(e.t)).map(e=>e.name),mb=G.mb||{},D=G.mbd||{},P=G.plt||{};let n=0;
+  ["matin","soir"].forEach(per=>{const ka=A+":"+per,kz=Z+":"+per,whole=mb[ka]&&win(mb[ka].t);
+    MB[per].forEach(([k,l])=>{if(!whole&&!hit.includes(l))return;const s=D[ka];
+      if(s&&s.m&&k in s.m){const t=D[kz]=D[kz]||{m:{},ex:{},w:{}};t.cr=t.cr||{};if(!(k in t.m)){t.m[k]=s.m[k];t.cr[k]=1}delete s.m[k];if(s.cr)delete s.cr[k];n++}
+      if(P[A]&&P[A][k]){(P[Z]=P[Z]||{})[k]=P[A][k];delete P[A][k];n++}});
+    if(whole){if(!mb[kz])mb[kz]=mb[ka];delete mb[ka];n++}});
+  return n>0},
+  // 2 — vocabulaire : « Dompteur de boss » devient « Maître des projets »
+  G=>{if(G.voc1)return false;G.voc1=1;if(Array.isArray(G.rt))G.rt=G.rt.map(t=>t==="Dompteur de boss"?"Maître des projets":t);if(S.title==="Dompteur de boss")S.title="Maître des projets";return false},
+  // 3 — ancienne clé de l'assiette (boss d'assiette retiré)
+  G=>{if(!G.plb)return false;delete G.plb;return false},
+];
+function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.length)return;// sauvegarde à jour, ou plus récente que l'appli : on ne touche à rien
+  let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}
+runMig();
 </script>
 </body></html>
 </body></html>

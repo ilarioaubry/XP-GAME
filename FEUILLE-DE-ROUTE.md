@@ -23,7 +23,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 - [x] 1.1 (25/10/2026) Export de la sauvegarde en fichier (partage iOS → iCloud Drive / Fichiers) + import depuis un fichier, à la place du copier-coller
 - [-] 1.2 (passé le 25/10/2026, à la demande d'Ilario) Rappel d'export régulier (discret, ton encourageant)
-- [ ] 1.3 Numéro de version dans la sauvegarde + liste de migrations numérotées qui remplace les drapeaux ponctuels (`dst26`, `voc1`) sans casser les données
+- [x] 1.3 (25/10/2026) Numéro de version dans la sauvegarde + liste de migrations numérotées qui remplace les drapeaux ponctuels (`dst26`, `voc1`) sans casser les données
 - [ ] 1.4 `manifest.json` : nom, icône pixel, écran de démarrage, mode appli
 - [ ] 1.5 Service worker : l'appli s'ouvre sans réseau
 - [ ] 1.6 Documenter les 88 clés de `S.g` (fichier `DONNEES.md`)

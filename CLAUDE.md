@@ -59,7 +59,7 @@ Conventions du code existant (à suivre) :
 - **Couleurs** : celles des catégories (`--c-soi`, `--c-sport`, `--c-food`…) ; assiette : féculents jaune `#f0a020`, protéines rouge `#e8473a`, légumes vert `#4fb84a`.
 - **Typo** : `--f-pixel` (Lilita One) pour les titres, `--f-body` (Atkinson Hyperlegible) pour le texte.
 - **Textes** : tutoiement, phrases courtes, vocabulaire simple.
-- **Données** : nouvelles clés dans `S.g`, jamais de renommage ni de changement de format. Réparation ponctuelle = une seule fois, marquée par un drapeau dans `S.g`.
+- **Données** : nouvelles clés dans `S.g`, jamais de renommage ni de changement de format. Réparation ponctuelle = une migration numérotée ajoutée à la fin de `MIG` dans `js/migrations.js` (`S.g.ver` = nombre de migrations appliquées) ; ne jamais modifier ni réordonner une migration existante.
 - **Ajout d'un élément visible** : vérifier qu'aucune règle CSS existante ne le masque (ex. Bilan masque les sections non listées).
 
 ## Ponytail
