@@ -134,7 +134,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 ### Météo et musique
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
-| `wx`, `wxc`, `wxh` | 17, 19, 20 | Météo : réglage, cache, historique — à rebrancher (étape 1.8) | active |
+| `wx`, `wxc`, `wxh` | 17, 19, 20 | Météo (Open-Meteo depuis le 25/10) : `wx.k` = "lat,lon" (un ancien code AccuWeather sans virgule redemande la ville), cache, historique ; codes d'icône gardés dans l'ancienne numérotation | active |
 | `sdj`, `spOn` | 19 | Spotify : titres du jour (encore affichés dans l'historique du Bilan), activé — Spotify retiré à l'étape 1.7 | **héritée** |
 
 ### Héritées (fonctionnalités retirées ou cachées) — à trancher en phase 2

@@ -28,7 +28,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 1.5 (25/10/2026) Service worker : l'appli s'ouvre sans réseau
 - [x] 1.6 (25/10/2026) Documenter les clés de `S.g` (`DONNEES.md` : 148 clés trouvées, pas 88 ; 13 héritées à trancher en phase 2)
 - [x] 1.7 (25/10/2026, choix B) Supprimer le code de synchronisation avec le compte Claude (inutile sur GitHub Pages) et l'enveloppe HTML en double (deux documents imbriqués). Fait aussi : Spotify et les fonctions qui appelaient Claude (Écrire avec Claude, Renouveler, étapes de projet par Claude, arc par Claude → découpage automatique sans Claude) retirés, car ils ne marchent pas hors de Claude
-- [ ] 1.8 Météo : remplacer le connecteur AccuWeather de Claude (ne marche pas sur GitHub Pages) par Open-Meteo, gratuit et sans compte, position gardée sur le téléphone ; d'ici là le bouton « Météo » ne fonctionne pas
+- [x] 1.8 (25/10/2026) Météo : remplacer le connecteur AccuWeather de Claude (ne marche pas sur GitHub Pages) par Open-Meteo, gratuit et sans compte, position gardée sur le téléphone ; d'ici là le bouton « Météo » ne fonctionne pas
 
 ## Phase 2 — Tri et code mort (avec Ilario)
 
@@ -37,6 +37,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [ ] 2.2 Supprimer les 24 déclarations jamais utilisées : FAMILLE, vkind, VK_IC, avcTab, chHeadDx, myCardURL, __picC, SK_XP, MAP_T, ritOpen, PROJ, PJ_XP, PJ_BONUS, pjOpen, pjArm, sellPrice, LOOTVB, bgPrjRev, bgPrjFast, bgSoiDays, LOOTPX, LOOTWAIT, PX1, TALENTS
 - [ ] 2.3 Supprimer ce qui est seulement caché (selon 2.1) : Noël (xmBox, masqué en CSS seulement), vue « t » et barre `qnav`, sous-onglets sons / compétences, weekBox, sections masquées en CSS (ritStat, sleepBox, moodBox)
 - [ ] 2.4 Renommer les fichiers « boss » (13-pixel-clair-boss, 23-boss-par-categorie, 28-sons-boss) et n'en garder que ce qui sert (figurines `BOSS_CAT`, projets `CB_LIST`, sons)
+- [ ] 2.7 Renommer `17-spotify-meteo.js` en fichier météo (Spotify retiré)
 - [ ] 2.5 Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
 - [ ] 2.6 Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
 
@@ -83,6 +84,7 @@ Points d'uniformité restants :
 - [ ] 5.14 Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte
 - [ ] 5.19 Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10
 - [ ] 5.20 Salut « Bonsoir, Ilar » : prénom coupé ? à vérifier
+- [ ] 5.21 Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées
 - [ ] 5.15 Carrousel des quêtes spéciales avec une seule carte : même taille de carte
 
 Lisibilité :
