@@ -109,17 +109,10 @@ function openChest(kind){
     if(taps>=3)setTimeout(reveal,red?0:260)};
   ov.querySelector(".lx-loot button").onclick=()=>{ov.hidden=true;ov.innerHTML="";render()};
 }
-function fmtLeft(ms){const m=Math.max(0,Math.round(ms/60000));return m>=60?Math.floor(m/60)+" h "+String(m%60).padStart(2,"0"):m+" min"}
 function renderGame(){
-  const box=$("gameBox");if(!box)return;const G=S.g,B=G.boss,bi=BOSSES[B.i]||BOSSES[0];
-  const dmg=Math.min(B.max,bossDmg()),hp=B.max-dmg,end=mondayOf(Date.now());end.setDate(end.getDate()+7);const dl=Math.ceil((end-Date.now())/864e5);
-  const hpBar=`<div class="hp" role="progressbar" aria-label="Points de vie du boss" aria-valuemin="0" aria-valuemax="${B.max}" aria-valuenow="${hp}"><i style="width:${B.won?100:hp/B.max*100}%"></i>`;
-  const x2=boostOn()?` · <span class="x2">×2 encore ${fmtLeft(G.boost-Date.now())}</span>`:"";
-  box.innerHTML=`<div class="gcard bline${B.won?" won":""}"><span class="bsp">${spriteSvg(bi[1],bi[2],4)}</span><span class="bmid"><b></b>${hpBar}</div><small>${B.won?"Vaincu !":hp+" PV · "+(dl>1?dl+" j":"dernier jour")}${x2}</small></span>${G.chests>0?`<button type="button" class="chestmini" id="chestBtn" aria-label="Ouvrir un coffre, ${G.chests} disponible${G.chests>1?"s":""}">${CHEST_SVG}<em>${G.chests}</em></button>`:""}</div>`;
-  box.querySelector(".bmid b").textContent=B.name;
-  {const nc=(G.chests||0)+(G.bchests||0);box.innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="chestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";if(0)box.innerHTML=G.chests>0?`<button type="button" class="gcard chestb" id="chestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.chests>1?G.chests+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${boostOn()?"Boost ×2 actif · encore "+fmtLeft(G.boost-Date.now()):"Argent, objet, boost ou titre"}</small></span><span class="go">Ouvrir</span></button>`:boostOn()?`<div class="boostp">Boost XP ×2 actif · encore ${fmtLeft(G.boost-Date.now())}</div>`:""}
+  const box=$("gameBox");if(!box)return;const G=S.g;
+  const nc=(G.chests||0)+(G.bchests||0);box.innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="chestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";
   box.classList.toggle("gempty",!box.innerHTML);
   const cb=$("chestBtn");if(cb)cb.onclick=openChest;
-  return;
 }
 

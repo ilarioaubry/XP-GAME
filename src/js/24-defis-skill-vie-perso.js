@@ -66,37 +66,6 @@ const MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","
 
 
 // ---- Bilan intelligent : ma semaine, sommeil ↔ humeur, conseil
-const Q_TIPS={sport:"10 pompes ou 10 min de marche rapide demain",perso:"une séance au studio, même 20 min",social:"prends des nouvelles d'un ami",famille:"un appel à quelqu'un de ta famille",maison:"10 min de rangement ou une lessive",soi:"20 pages de lecture ou 10 min de méditation",travail:"25 min de travail concentré sans téléphone"};
-function renderWeekRecap(){
-  const box=$("wkRecap");if(!box)return;const DAY=864e5,now=new Date();now.setHours(12,0,0,0);
-  const keys=n=>[...Array(7)].map((_,i)=>dayKey(new Date(now.getTime()-(i+n)*DAY)));
-  const cur=keys(0),prev=keys(7);
-  const xpOf=ks=>S.log.filter(e=>ks.includes(dayKey(e.t))).reduce((a,e)=>a+Math.max(0,e.xp),0);
-  const xpW=xpOf(cur),xpP=xpOf(prev),act=cur.filter(k=>S.log.some(e=>dayKey(e.t)===k&&e.xp>0)).length;
-  const perDay=cur.map(k=>[k,S.log.filter(e=>dayKey(e.t)===k).reduce((a,e)=>a+Math.max(0,e.xp),0)]).sort((a,b)=>b[1]-a[1]);
-  const best=perDay[0]&&perDay[0][1]>0?perDay[0]:null;
-  const byCat={};STAT_KEYS.forEach(k=>byCat[k]=0);S.log.filter(e=>cur.includes(dayKey(e.t))).forEach(e=>{const c=catOf(e);if(c&&c in byCat)byCat[c]+=Math.max(0,e.xp)});
-  const ranked=STAT_KEYS.slice().sort((a,b)=>byCat[b]-byCat[a]),strong=ranked.filter(k=>byCat[k]>0).slice(0,2),weak=ranked.filter(k=>byCat[k]===0);
-  const lab=k=>(CATS[k]||{}).label||k,dname=k=>{const d=new Date(k+"T12:00");return d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})};
-  const trend=xpP?Math.round((xpW-xpP)/xpP*100):null;
-  const G=S.g,pairs=Object.keys(G.mood||{}).filter(k=>G.sleep&&G.sleep[k]&&G.sleep[k].h).map(k=>[G.sleep[k].h,G.mood[k]]);
-  const B=[["< 6 h",0,6],["6-7 h",6,7],["7-8 h",7,8],["8 h +",8,99]].map(([n,a,b])=>{const L=pairs.filter(q=>q[0]>=a&&q[0]<b).map(q=>q[1]);return{n,c:L.length,m:L.length?L.reduce((x,y)=>x+y,0)/L.length:0}});
-  const enough=pairs.length>=3;
-  let tip="";const sl=cur.map(k=>G.sleep&&G.sleep[k]&&G.sleep[k].h).filter(Boolean),slAvg=sl.length?sl.reduce((a,b)=>a+b,0)/sl.length:0;
-  const goodSleep=B.filter(b=>b.c).sort((a,b)=>b.m-a.m)[0];
-  if(act===0)tip="Une seule petite action aujourd'hui suffit pour relancer ta série.";
-  else if(enough&&slAvg&&slAvg<7&&goodSleep&&(goodSleep.n==="7-8 h"||goodSleep.n==="8 h +"))tip=`Ton humeur est meilleure quand tu dors ${goodSleep.n}. Cette semaine tu dors ${fmtH(slAvg)} en moyenne : vise un coucher un peu plus tôt.`;
-  else if(weak.length)tip=`${lab(weak[0])} est à l'arrêt cette semaine : ${Q_TIPS[weak[0]]}.`;
-  else if(trend!==null&&trend<-20)tip="Semaine plus calme que la précédente. Mise sur tes rituels du matin pour reprendre le rythme.";
-  else tip="Belle semaine équilibrée, continue comme ça !";
-  const mf=m=>m?moodFace(Math.max(1,Math.min(5,Math.round(m))),22):'<span class="wk-none">—</span>';
-  box.innerHTML=`<div class="gcard col1 wkr"><div class="bh2"><h3>Ma semaine</h3><span class="hint">7 derniers jours</span></div>
-    <div class="wk-kpi"><div><small>XP</small><b>${xpW}</b>${trend!==null?`<span class="${trend>=0?"up":"down"}">${trend>=0?"▲":"▼"} ${Math.abs(trend)} %</span>`:"<span>&nbsp;</span>"}</div><div><small>Jours actifs</small><b>${act}/7</b><span>&nbsp;</span></div><div><small>Meilleur jour</small><b>${best?best[1]:0}</b><span>${best?esc(dname(best[0])):"—"}</span></div></div>
-    <div class="wk-cats"><div><small>Points forts</small><p>${strong.length?strong.map(k=>`<span class="wkc" style="--c:${CATS[k].c}">${lab(k)}</span>`).join(""):"—"}</p></div><div><small>Délaissées</small><p>${weak.length?weak.map(k=>`<span class="wkc off" style="--c:${CATS[k].c}">${lab(k)}</span>`).join(""):"Aucune"}</p></div></div>
-    <div class="wk-tip"><b>Conseil de la semaine</b><p>${esc(tip)}</p></div></div>
-    <div class="gcard col1 wkr"><div class="bh2"><h3>Sommeil et humeur</h3><span class="hint">${pairs.length} nuit${pairs.length>1?"s":""} notée${pairs.length>1?"s":""}</span></div>
-    ${enough?`<div class="wk-sm">${B.map(b=>`<div class="${b.c?"":"empty"}"><small>${b.n}</small>${mf(b.m)}<span>${b.c?b.c+" nuit"+(b.c>1?"s":""):"pas de données"}</span></div>`).join("")}</div><p class="hint" style="margin:0">Ton humeur moyenne selon tes heures de sommeil.</p>`:`<p class="hint" style="margin:0">Note ta nuit et ton humeur au moins 3 jours pour voir le lien entre les deux.</p>`}</div>`;
-}
 // ---- Vie perso : nuit + humeur
 const MOODS=[["😞","Mal","#d1493f"],["🙁","Bof","#e8873a"],["😐","Moyen","#e0c03a"],["🙂","Bien","#8cc56a"],["😄","Super","#3c9a4f"]];
 const sleepXp=h=>h>=7?15:h>=6?5:0;
@@ -131,31 +100,6 @@ function renderLife(){
     if(!G.sleep[tk].x&&xp){G.sleep[tk].x=boostOn()?xp*2:xp;complete({id:"sleep",cat:"soi",name:"Nuit de "+fmtH(hh),xp},e.submitter||$("slForm"),e,false,{sleep:tk})}else{save();render();toast("Nuit enregistrée : "+fmtH(hh))}});
   if($("mdMod"))$("mdMod").onclick=()=>{moodEdit=true;renderLife()};
   box.querySelectorAll(".mrow button").forEach(b=>b.onclick=()=>{const n=+b.dataset.m;G.mood[tk]=n;moodEdit=false;save();renderLife();renderSpecials();renderMoodYear()});
-}
-function bestStreak(){const d=[...new Set(S.days)].sort();let best=0,c=0,prev=null;d.forEach(k=>{const t=new Date(k+"T12:00");if(prev&&Math.round((t-prev)/864e5)===1)c++;else c=1;if(c>best)best=c;prev=t});return best}
-function renderRecords(){
-  const box=$("recBox");if(!box)return;const G=S.g,days=[...S.days].sort(),first=days[0]||(S.log[0]?dayKey(S.log[0].t):dayKey(Date.now()));
-  const fd=new Date(first+"T12:00"),since=fd.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"2-digit"});
-  const wins=G.bh.filter(b=>b.won).length+(G.boss.won?1:0),B=badgeDefs(),nb=B.filter(b=>S.badges[b.id]).length;
-  const R=[["Aventurier depuis",since,"flame"],["Jours actifs",S.days.length,"check"],["Meilleure série",bestStreak()+" j","flame"],["XP total",S.xp,"spark"],["Sons sortis",Object.keys(G.rel).length,"spark"],["Coffres ouverts",G.opened||0,"check"],["Objets trouvés",G.gear.length,"spark"],["Badges",nb+"/"+B.length,"check"]];
-  box.innerHTML=`<div class="gcard col1"><h3>Records</h3><p class="me-sr" style="margin:0 0 8px">${streakLine()}</p><div class="recs">${R.map(([k,v,ic])=>`<div><small>${k}</small><b>${esc(String(v))}</b></div>`).join("")}</div></div>`;
-}
-function renderSleep(){
-  const box=$("sleepBox");if(!box)return;const G=S.g;
-  const nights=[];for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);nights.push([d,G.sleep[dayKey(d)]])}
-  const done=nights.filter(n=>n[1]);box.classList.toggle("gempty",!done.length);if(!done.length){box.innerHTML="";return}
-  const avg=done.length?done.reduce((a,n)=>a+n[1].h,0)/done.length:0,good=done.filter(n=>n[1].h>=7).length;
-  box.innerHTML=`<div class="gcard col1"><h3>Sommeil · 14 nuits</h3><div class="nights" style="grid-template-columns:repeat(14,1fr)" aria-label="14 dernières nuits">${nights.map(([d,s])=>`<span title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}${s?" : "+fmtH(s.h):""}"><i style="height:${s?Math.min(100,s.h/10*100):0}%;background:${s?s.h>=7?"var(--c-planete)":s.h>=6?"var(--gold)":"var(--c-sport)":"none"}"></i><em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div><p class="hint" style="margin:0">${done.length?`Moyenne ${fmtH(Math.round(avg*4)/4)} · ${good} nuit${good>1?"s":""} de 7 h ou plus`:"Note ta nuit chaque matin dans les rituels."}</p></div>`;
-}
-function renderMoodYear(){
-  const box=$("moodBox");if(!box)return;const G=S.g,now=new Date(),y=now.getFullYear(),m=now.getMonth(),tk=dayKey(Date.now()),pre=y+"-"+String(m+1).padStart(2,"0");
-  const wk=dayKey(Date.now()-7*864e5),canPick=k=>k<tk&&k>=wk&&!G.mood[k];
-  const any=Object.keys(G.mood).some(k=>k.startsWith(pre))||Array.from({length:7},(_,i)=>dayKey(Date.now()-(i+1)*864e5)).some(k=>k.startsWith(pre)&&canPick(k));box.classList.toggle("gempty",!any);if(!any){box.innerHTML="";return}
-  const dim=new Date(y,m+1,0).getDate(),off=(new Date(y,m,1).getDay()+6)%7;let n=0,cells="";
-  for(let i=0;i<off;i++)cells+=`<i class="no"></i>`;
-  for(let d=1;d<=dim;d++){const k=pre+"-"+String(d).padStart(2,"0"),v=G.mood[k];if(v)n++;cells+=`<i class="${k>tk?"fut":""}${k===tk?" td":""}${canPick(k)?" pick":""}"${canPick(k)?` data-k="${k}" role="button" tabindex="0" aria-label="Noter l'humeur du ${d}"`:""}${v?` style="background:${MOODS[v-1][2]}" title="${d} : ${MOODS[v-1][1]}"`:""}>${v?moodFace(v,28):`<span>${d}</span>`}</i>`}
-  box.innerHTML=`<div class="gcard col1"><h3>Humeur de ${MOIS[m]}</h3><div class="mcal">${"LMMJVSD".split("").map(x=>`<b>${x}</b>`).join("")}${cells}</div><div class="leg">${MOODS.map((mo,i)=>`<span>${moodFace(i+1,16)}${mo[1]}</span>`).join("")}</div><p class="hint" style="margin:0">${n} jour${n>1?"s":""} noté${n>1?"s":""} ce mois-ci.${box.__pk?"":""}${[...cells.matchAll(/ pick"/g)].length?" Touche un jour en pointillés pour noter son humeur.":""}</p></div>`;
-  box.querySelectorAll(".mcal i.pick").forEach(c=>{c.onclick=()=>moodPick(c.dataset.k);c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();moodPick(c.dataset.k)}}});
 }
 function moodPick(k){if(document.querySelector(".mdpop"))return;const G=S.g,o=document.createElement("div");o.className="bpop mdpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Humeur");document.body.appendChild(o);
   const dt=new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});o.onclick=e=>{if(e.target===o)o.remove()};

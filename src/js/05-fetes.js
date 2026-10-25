@@ -1,5 +1,5 @@
-// ==== Saison des fêtes : hotte, Avent, Bougonnoël, vœux, ton année, résolutions
-const XM_ST=["Idée","Acheté","Emballé","Offert"],XM_XP=[5,10,5,15],XM_HP=100;
+// ==== Saison des fêtes : hotte, Avent, vœux, ton année, résolutions
+const XM_ST=["Idée","Acheté","Emballé","Offert"],XM_XP=[5,10,5,15];
 const XM_ADV=[
  ["Faire ta liste de Noël","famille",10,"xmscarf"],["Écrire à quelqu'un que tu n'as pas vu depuis longtemps","social",15],["Mettre une playlist de fêtes et ranger 10 min","maison",10],["Boire un chocolat chaud sans écran","soi",10,"xmcane"],
  ["Décorer un coin de chez toi","maison",15],["Regarder un film de Noël","soi",15],["Faire 16 mesures d'un son de saison","perso",20],["Préparer des biscuits ou un dessert de fêtes","nourriture",20,"bgsnow"],
@@ -16,12 +16,9 @@ function xmLeft(){const d=new Date();d.setHours(0,0,0,0);return Math.round((new 
 function xmCanGive(){const d=new Date();return(d.getMonth()===11&&d.getDate()>=24)||(d.getMonth()===0&&d.getDate()<=7)}
 function xmHist(ti,tx,ic){if(!Array.isArray(S.g.xmh))S.g.xmh=[];S.g.xmh.push({t:Date.now(),ti,tx,ic});S.g.xmh=S.g.xmh.slice(-60)}
 function xmGroups(){const L=[{id:"@fam",n:"Famille",c:"var(--c-famille)",m:S.family.slice()}];fgList().forEach(g=>{const m=fgMembers(g.id);if(m.length)L.push({id:g.id,n:g.n,c:g.c||"#9b5de5",m})});return L}
-function xmDmg(){const X=xmS();let d=0;Object.values(X.list).forEach(f=>{if(f.s>=1)d+=3;if(f.s>=2)d+=5;if(f.s>=3)d+=3});Object.values(X.adv).forEach(a=>{if(a&&a.d)d+=5});return Math.min(XM_HP,d)}
-function xmBossCheck(){const X=xmS();if(X.boss.dead||xmPhase()!=="noel"||xmDec()>25)return;if(xmDmg()<XM_HP)return;X.boss.dead=Date.now();const G=S.g;if(!G.gear.includes("fig_bougon"))G.gear.push("fig_bougon");G.chests=(G.chests||0)+1;
-  const prev=levelInfo(S.xp).l;addBonus("Bougonnoël vaincu",50,0,"xmb");xmHist("Bougonnoël vaincu","Il a retrouvé le sourire. Figurine gagnée.","star");save();setTimeout(()=>{render(prev);sfx("level");toast(`Bougonnoël est vaincu ! <span class="p">+50 XP</span>, un coffre et sa figurine`)},400)}
 function xmStep(name,ev,btn){const X=xmS(),f=X.list[name];if(!f||f.s>=4)return;if(f.s===3&&!xmCanGive()){sfx("error");toast("Les cadeaux s'offrent à partir du 24 décembre");return}
   const k=f.s,xp=XM_XP[k];f.s++;const prev=levelInfo(S.xp).l;addBonus(["Idée cadeau","Cadeau acheté","Cadeau emballé","Cadeau offert"][k]+" pour "+name,xp,0,"xm");if(btn&&ev)floatXp(xp,ev,btn);
-  if(f.s===4){xmHist("Cadeau offert",name,"gift");xmGiveFx(name)}else sfx(k===1?"open":"coin");xmBossCheck();save();render(prev)}
+  if(f.s===4){xmHist("Cadeau offert",name,"gift");xmGiveFx(name)}else sfx(k===1?"open":"coin");save();render(prev)}
 function xmGiveFx(name){sfx("level");const o=document.createElement("div");o.className="bpop xmgive";o.innerHTML=`<div class="bpc xmgc"><div class="xmgb">${pxImg("gift",8)}</div><h3>Offert à <span></span></h3><p class="hint">Le plus beau, c'est sa tête quand il ou elle l'ouvre.</p><button type="button" class="btn primary">Continuer</button></div>`;o.querySelector("h3 span").textContent=name;document.body.appendChild(o);
   const close=()=>o.remove();o.querySelector(".primary").onclick=close;o.onclick=e=>{if(e.target===o)close()}}
 function xmSheet(cls){const o=document.createElement("div");o.className="bpop rapop "+cls;o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");document.body.appendChild(o);return o}
@@ -64,7 +61,7 @@ function xmWeek(){return dayKey(mondayOf(Date.now()))}
 function xmAdvOpen(d){const X=xmS(),today=xmDec();if(X.adv[d]||d>today||d>24)return false;if(d<today){const wk=xmWeek();if(X.cu[wk])return false;X.cu[wk]=d}X.adv[d]={o:Date.now()};sfx("open",1);save();return true}
 function xmAdvDone(d,btn,ev){const X=xmS(),a=X.adv[d];if(!a||a.d)return;const[q,cat,xp,it]=XM_ADV[d-1];a.d=Date.now();const G=S.g;let msg="";
   if(it&&!G.gear.includes(it)){G.gear.push(it);const g=GEAR.find(x=>x.id===it);msg=g?` · nouvel objet : <span class="p">${esc(g.n)}</span>`:""}
-  complete({id:"xmadv",cat,name:"Avent, case "+d+" : "+q,xp},btn,ev);xmBossCheck();save();if(msg)setTimeout(()=>toast(`Case ${d} réussie${msg}`),900)}
+  complete({id:"xmadv",cat,name:"Avent, case "+d+" : "+q,xp},btn,ev);save();if(msg)setTimeout(()=>toast(`Case ${d} réussie${msg}`),900)}
 function xmAdvent(){const X=xmS(),o=xmSheet("xmpop xmadvpop");let sel=0;const close=()=>{o.remove();render()};o.onclick=e=>{if(e.target===o)close()};
   const draw=()=>{const today=xmDec(),wkUsed=!!X.cu[xmWeek()];
     o.innerHTML=`<div class="bpc rap xmrap"><div class="raph"><h3>Calendrier de l'Avent</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
@@ -149,13 +146,13 @@ function xmQuests(){const X=xmS(),Q=[],d=xmDec(),m=new Date().getMonth(),dd=new 
 function xmBgGrant(){const d=new Date(),m=d.getMonth(),dd=d.getDate(),G=S.g;const give=(id,msg)=>{if(G.gear.includes(id))return;G.gear.push(id);save();setTimeout(()=>{sfx("badge");toast(msg)},1200)};
   if(m===11&&dd>=24&&dd<=26)give("bgxmas",`Cadeau de Noël : le fond <span class="p">Nuit de Noël</span> est à toi`);
   if((m===11&&dd===31)||(m===0&&dd<=2))give("bgnewyear",`Bonne année : le fond <span class="p">Feu d'artifice</span> est à toi`)}
-function renderXm(){const box=$("xmBox");if(!box||!S.g)return;const ph=xmPhase();box.classList.toggle("voff",!ph);if(!ph){box.innerHTML="";return}const X=xmS();xmBossCheck();xmBgGrant();
+function renderXm(){const box=$("xmBox");if(!box||!S.g)return;const ph=xmPhase();box.classList.toggle("voff",!ph);if(!ph){box.innerHTML="";return}const X=xmS();xmBgGrant();
   const L=Object.values(X.list),ready=L.filter(f=>f.s>=3).length,d=xmDec(),left=xmLeft(),Q=xmQuests();let h="";
-  if(ph==="noel"){const dmg=xmDmg(),hp=XM_HP-dmg,opened=Object.keys(X.adv).length;
+  if(ph==="noel"){const opened=Object.keys(X.adv).length;
     h=`<div class="xmc"><div class="xmt"><span>${pxImg("tree",3)}</span><span><small>Saison des fêtes</small><b>${d<24?`Noël dans ${left} jour${left>1?"s":""}`:d===24?"C'est le réveillon":"Joyeux Noël"}</b></span>${pxImg("snow",3,"xmsn")}</div>
     <div class="xmtiles"><button type="button" class="xmtile" id="xmHot">${pxImg("gift",4)}<span><b>Ma hotte</b><small>${X.sel?`${ready}/${L.length} prêts`:"À préparer"}</small></span></button>
     <button type="button" class="xmtile" id="xmAdvB">${pxImg("star",3)}<span><b>Avent</b><small>${d<=24?(X.adv[d]?`${opened}/24 ouvertes`:`Case ${d} à ouvrir`):`${opened}/24 ouvertes`}</small></span></button></div>
-    <div class="xmboss${X.boss.dead?" dead":""}"><span class="xmbs">${spriteSvg("bougon","#3f8f5a",3)}</span><span class="xmbt"><b>Bougonnoël</b><small>${X.boss.dead?"Vaincu. Il a retrouvé le sourire.":d>25?"Il est reparti bouder ailleurs.":"Chaque cadeau prêt et chaque case réussie le fait reculer."}</small><span class="xmhp"><i style="width:${X.boss.dead?0:Math.round(hp/XM_HP*100)}%"></i></span></span><em>${X.boss.dead?ICO("check",16):hp+" PV"}</em></div>`}
+`}
   else{const y=X.y,dec=d>=31||new Date().getMonth()===0;
     h=`<div class="xmc an"><div class="xmt"><span>${pxImg("star",3)}</span><span><small>Nouvelle année</small><b>${new Date().getMonth()===0?"Bonne année "+(y+1):"Plus que "+(32-d)+" jour"+(32-d>1?"s":"")+" en "+y}</b></span>${pxImg("snow",3,"xmsn")}</div>
     <div class="xmtiles"><button type="button" class="xmtile" id="xmRec">${pxImg("flame",3)}<span><b>Ton année ${y}</b><small>${X.recap?"Revoir":"Découvrir"}</small></span></button>

@@ -83,7 +83,7 @@ const viewDirty={q:true,t:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
   q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList()},
   t:()=>{},
-  c:()=>{renderChap();renderWardrobe();renderCollection();renderWeekRecap();renderRecords();renderShow();renderKpi();renderSleep();renderBilan();renderIdentity();renderPath();renderRitStat();renderJrBox();renderMoodYear();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
+  c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
   

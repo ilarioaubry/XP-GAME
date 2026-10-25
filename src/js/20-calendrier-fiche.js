@@ -97,16 +97,6 @@ function renderFiche(){const box=$("ficheBox");if(!box||!S.g)return;const G=S.g,
 let ficheOpen=false;
 
 {const b=document.getElementById("actNew");if(b)b.onclick=()=>qcOpen("act")}
-function renderRitStat(){const box=$("ritStat");if(!box||!S.g)return;const T=ritTasks().filter(t=>!t.bar&&!t.auto),sk=ritStreak();
-  const D=T.map(t=>{const r=ritRate(t,30),a=ritDays(t,14),b=ritDays(t,28).slice(0,14),rt=L=>{const x=L.filter(v=>v===0||v===1);return x.length?x.filter(v=>v===1).length/x.length:null},ra=rt(a),rb=rt(b);return{t,r,tr:ra!=null&&rb!=null?ra-rb:0}});
-  const ok=D.filter(x=>x.r!=null),best=ok.slice().sort((a,b)=>b.r-a.r)[0],weak=ok.slice().sort((a,b)=>a.r-b.r)[0];
-  const col=r=>r==null?"var(--muted)":r>=.8?"#5fd068":r>=.5?"var(--gold)":"#ff6a5a";
-  box.innerHTML=`<div class="gcard col1 rso"><div class="bh2"><h3>Mes rituels</h3><span class="hint">30 derniers jours${sk?` · essentiels ${sk} j`:""}</span></div>
-    ${best&&weak&&best!==weak?`<div class="rsbw"><span style="--rc:#5fd068"><small>Le plus solide</small><b data-n="b"></b><em>${Math.round(best.r*100)} %</em></span><span style="--rc:#ff6a5a"><small>À renforcer</small><b data-n="w"></b><em>${Math.round(weak.r*100)} %</em></span></div>`:""}
-    ${["matin","soir"].map(p=>{const L=D.filter(x=>ritPer(x.t)===p);return L.length?`<p class="rsh">${p==="matin"?"Matin":"Soir"}</p><ul class="rsl2">${L.map(x=>{const t=x.t,pc=x.r==null?null:Math.round(x.r*100);return`<li><span class="rsn2"><b data-id="${t.id}"></b>${t.core?`<em class="tg">essentiel</em>`:""}${t.ev>1?`<em class="tg">${evLab(t)}</em>`:""}</span><span class="rsbar"><i style="width:${pc||0}%;background:${col(x.r)}"></i></span><span class="rsp" style="color:${col(x.r)}">${pc==null?"–":pc+" %"}</span><span class="rstr ${x.tr>.1?"up":x.tr<-.1?"dn":""}" aria-label="${x.tr>.1?"en progrès":x.tr<-.1?"en baisse":"stable"}">${x.tr>.1?"▲":x.tr<-.1?"▼":"="}</span></li>`}).join("")}</ul>`:""}).join("")}
-    <button type="button" class="btn rsgo">Modifier mes rituels</button></div>`;
-  box.querySelectorAll("b[data-id]").forEach(b=>{const t=T.find(x=>x.id===b.dataset.id);b.textContent=t.name});{const b=box.querySelector('[data-n="b"]');if(b)b.textContent=best.t.name;const w=box.querySelector('[data-n="w"]');if(w)w.textContent=weak.t.name}
-  box.querySelector(".rsgo").onclick=()=>ritAtelier()}
 function dailyBonusCheck(){return;
   const tk=dayKey(Date.now()),T=ritTasks();
   if(!T.length||S.daily.bonusDay===tk||S.daily.day!==tk)return;

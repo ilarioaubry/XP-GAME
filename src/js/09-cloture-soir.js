@@ -52,11 +52,6 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
     toast(first?`Journée close <span class="p">+10 XP</span>${Q.length?` · ${Q.length} ajout${Q.length>1?"s":""}`:""}. Bonne nuit.`:"Bilan mis à jour");
     Q.forEach((f,i)=>setTimeout(()=>{try{f()}catch(e){}},500+i*600))}
   draw()}
-function renderJrBox(){const box=$("jrBox");if(!box||!S.g)return;const G=S.g,J=G.jr||{},ks=Object.keys(J).filter(k=>J[k]&&(J[k].t||J[k].k)).sort().reverse().slice(0,14),tk=dayKey(Date.now());
-  const can=dayH()>=18&&!(J[tk]&&J[tk].at);
-  box.innerHTML=`<div class="gcard col1"><h3>Journal</h3>${can?`<button type="button" class="btn primary jrgo">Faire le bilan de ce soir</button>`:""}${ks.length?`<div class="jrl">${ks.map(k=>{const e=J[k],m=G.mood[k];return`<div class="jre"><span class="jrf">${m?moodFace(m,22):""}</span><span class="jrt"><small>${new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})}</small><b data-k="${k}"></b>${e.k?`<em data-k="${k}"></em>`:""}</span></div>`}).join("")}</div>`:`<p class="hint" style="margin:0">Le soir, clos ta journée : une phrase, ton humeur, un petit kif. Ils s'afficheront ici.</p>`}</div>`;
-  box.querySelectorAll(".jrt b").forEach(b=>b.textContent=J[b.dataset.k].t||"");box.querySelectorAll(".jrt em").forEach(b=>b.textContent="Kif : "+J[b.dataset.k].k);
-  const g=box.querySelector(".jrgo");if(g)g.onclick=()=>closeOpen(0)}
 function rkSnd(k){if(!sfxOn())return;const c=sfxCtx();if(!c)return;const t=c.currentTime+.01;SFX.last=performance.now();
   switch(k){
    case"dents":for(let i=0;i<4;i++)noise(c,t+i*.07,.06,.09,i%2?3800:2600);tone(c,1319,t+.3,.12,"square",.05);break;

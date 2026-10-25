@@ -142,8 +142,6 @@
       box.innerHTML=h;
       {const sm=document.getElementById("setMods");if(sm)sm.innerHTML=`<div id="vie-mods"><h3>${ic("autre",18)}Mes modules</h3><p>Ce qui est coupé disparaît.</p>
         ${MODS.map(m=>`<label class="tg"><span><b>${m[1]}</b><small>${m[2]}</small></span><input type="checkbox" class="sw" data-mod="${m[0]}"${v.off.includes(m[0])?"":" checked"}></label>`).join("")}</div>`}
-      const pcb=document.getElementById("pcBox");if(pcb&&!busy(pcb)){pcb.innerHTML=`<div class="vie-c" id="vie-proches"><h3>${ic("autre",18)}Mes proches</h3><p>Un rappel quand ça fait trop longtemps.</p>
-        ${(()=>{const on=people.filter(n=>v.pf[n]>0),rest=people.filter(n=>!(v.pf[n]>0));return`<div class="pc">${on.map(n=>{const d=lastSeen(n);return`<div class="pc-r"><b>${esc(n)}</b><small>${d?ago(d,tk):""}</small><select data-pf="${esc(n)}">${FREQ.map(f=>`<option value="${f[0]}"${(v.pf[n]||0)===f[0]?" selected":""}>${f[0]?f[1]:"Retirer"}</option>`).join("")}</select></div>`}).join("")}</div>${rest.length?`<label class="vie-l pc-add">${on.length?"Ajouter un proche":"Choisis un proche pour commencer"}<select data-pcadd="1"><option value="">+ Choisir…</option>${rest.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join("")}</select></label>`:""}`})()}</div>`;}
       const ch=()=>{save();rt();try{render()}catch(e){}};
       box.querySelectorAll("[data-seg]").forEach(b=>b.onclick=()=>{v[b.dataset.seg]=+b.dataset.val;ch()});
       box.querySelectorAll("[data-wd]").forEach(b=>b.onclick=()=>{const d=+b.dataset.wd;v.wd=v.wd.includes(d)?v.wd.filter(x=>x!==d):[...v.wd,d];ch()});
@@ -153,8 +151,6 @@
       if(0)box.querySelectorAll("[data-pri]").forEach(b=>b.onclick=()=>{const k=b.dataset.pri;if(v.pri.includes(k))v.pri=v.pri.filter(x=>x!==k);else{if(v.pri.length>=3){try{toast("3 priorités maximum")}catch(e){}return}v.pri=[...v.pri,k]}ch()});
       box.querySelectorAll("[data-trk]").forEach(b=>b.onchange=()=>{v.track[b.dataset.trk]=b.checked;ch()});
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
-      {const a=document.querySelector("#pcBox [data-pcadd]");if(a)a.onchange=()=>{if(!a.value)return;v.pf[a.value]=14;a.blur();save();rt()}}
-      document.querySelectorAll("#pcBox [data-pf]").forEach(s=>s.onchange=()=>{const n=s.dataset.pf,val=+s.value;if(val)v.pf[n]=val;else delete v.pf[n];s.blur();save();rt()});
       bindPer(box);bindLast(box,tk)};
   })();
   
