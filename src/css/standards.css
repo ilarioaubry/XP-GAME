@@ -56,3 +56,5 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond b{
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond small{grid-row:3!important;background:rgba(13,15,34,.78)!important;padding:1px 6px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore{display:grid!important;place-items:center!important;cursor:pointer}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore .wr-plus{width:64px!important;height:64px!important}
+/* frise de la journée (8h → 0h, soleil/lune) retirée d'Aujourd'hui */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#qDay .frise,#qDay){display:none!important}

@@ -10562,11 +10562,9 @@ function badgeDefs(){
   B.push({id:"zen60",name:"Esprit zen",desc:"60 min de méditation dans un même mois",ic:"face",t:2,ok:()=>mx(S.g.md)>=60});
   B.push({id:"book1",name:"Lecteur",desc:"Finir un livre",ic:"book",t:1,ok:()=>(S.g.books||[]).length>=1});
   B.push({id:"book5",name:"Rat de bibliothèque",desc:"Finir 5 livres",ic:"book",t:3,ok:()=>(S.g.books||[]).length>=5});
-  B.push({id:"bossrev",name:"Revanche",desc:"Reprendre un projet resté 2 semaines en plan",ic:"shield",t:2,ok:()=>bgPrjRev()});
   B.push({id:"clean7",name:"Hygiène de vie",desc:"7 jours avec tous tes repas pris",ic:"face",t:2,ok:()=>bgMealDays()>=7});
   B.push({id:"goal7",name:"Objectif tenu",desc:"Atteindre l'objectif du jour 7 fois",ic:"star",t:2,ok:()=>(S.g.goalN||0)>=7});
   // secrets
-  B.push({id:"bossleg",name:"Tueur de légende",desc:"Finir un projet en moins d'une semaine",ic:"trophy",t:3,sec:1,ok:()=>bgPrjFast()});
   B.push({id:"clutch",name:"Sur le fil",desc:"Sauver ta journée avec une action après 21 h",ic:"trophy",t:2,sec:1,ok:()=>bgClutch()});
   B.push({id:"lucky3",name:"Chanceux",desc:"Vivre 3 événements rares",ic:"star",t:2,sec:1,ok:()=>(S.g.rareN||0)>=3});
   B.push({id:"secret1",name:"Chercheur de secrets",desc:"Accomplir une quête secrète",ic:"star",t:2,sec:1,ok:()=>(S.g.secDone||0)>=1});
@@ -10579,8 +10577,6 @@ function badgeDefs(){
   B.push({id:"buy1",name:"Première panoplie",desc:"Compléter une panoplie",ic:"star",t:1,ok:()=>wrSetsDone().length>=1});
   B.push({id:"buy5",name:"Styliste",desc:"25 objets dans ta garde-robe",ic:"star",t:2,ok:()=>wrOwned()>=25});
   B.push({id:"buy15",name:"Grand styliste",desc:"50 objets dans ta garde-robe",ic:"star",t:3,ok:()=>wrOwned()>=50});
-  B.push({id:"boss1",name:"Tueur de boss",desc:"Vaincre le boss final d'un projet",ic:"shield",t:1,ok:()=>bgPrjWon()>=1});
-  B.push({id:"boss4",name:"Chasseur de boss",desc:"Vaincre le boss final de 4 projets",ic:"shield",t:2,ok:()=>bgPrjWon()>=4});
   B.push({id:"chest1",name:"Pilleur",desc:"Ouvrir ton premier coffre",ic:"gift",t:1,ok:()=>S.g.opened>=1});
   B.push({id:"gear4",name:"Collectionneur d'objets",desc:"Posséder 10 objets trouvés",ic:"star",t:2,ok:()=>S.g.gear.filter(id=>(gearOf(id)||{}).s!=="aura").length>=10});
   B.push({id:"legend",name:"Objet légendaire",desc:"Trouver un objet légendaire",ic:"star",t:3,ok:()=>S.g.gear.some(id=>(gearOf(id)||{}).r===3)});
@@ -11758,7 +11754,7 @@ function renderWardrobe(){
     body.innerHTML=`<div class="wr-titles">${all.map(t=>`<button type="button" class="wr-t" data-t="${esc(t)}" aria-pressed="${S.title===t}">${esc(t)}</button>`).join("")}${locked?`<span class="wr-t lock">+ ${locked} titres à trouver</span>`:""}</div><p class="hint">Touche un titre pour l'afficher sous ton nom.</p>`;
     body.querySelectorAll("button.wr-t").forEach(b=>b.onclick=()=>{S.title=S.title===b.dataset.t?"":b.dataset.t;save();render();renderWardrobe()});return}
   if(wrCat==="set"){body.innerHTML=`<div class="wr-sets">${WR_SETS.map(([k,n,t])=>{const L=GEAR.filter(x=>x.set===k),h=L.filter(x=>G.gear.includes(x.id)).length,done=h===L.length;
-      return`<div class="wr-set${done?" done":""}"><div class="wr-sh"><b>${esc(n)}</b><span>${done?"Complète":h+"/"+L.length}</span></div><div class="wr-si">${L.map(x=>`<span class="wr-mini${G.gear.includes(x.id)?"":" lock"}" style="--rc:${RAR[x.r][1]}" title="${G.gear.includes(x.id)?esc(x.n):"???"}">${itemImg(x,40)}</span>`).join("")}</div><small>Bonus : titre « ${esc(t)} »</small></div>`}).join("")}</div>`;return}
+      return`<div class="wr-set${done?" done":""}"><div class="wr-sh"><b>${esc(n)}</b><span>${done?"Complète":h+"/"+L.length}</span></div><div class="wr-si">${L.map(x=>`<span class="wr-mini${G.gear.includes(x.id)?"":" lock"}" style="--rc:${RAR[x.r][1]}" title="${G.gear.includes(x.id)?esc(x.n):"???"}">${itemImg(x,40)}</span>`).join("")}</div></div>`}).join("")}</div>`;return}
   const L=GEAR.filter(x=>x.s===wrCat).sort((a,b)=>(!!a.ex-!!b.ex)||a.r-b.r);
   const lk=L.filter(x=>!G.gear.includes(x.id)),fd=wrCat==="fond";
   body.innerHTML=`<div class="wr-grid${fd?" wr-fonds":""}">${L.map((x,i)=>{const has=G.gear.includes(x.id),on=has&&wrEquipped(x);if(!has)return"";const nm=fd?x.n.replace(/^Fond\s+/i,"").replace(/^./,c=>c.toUpperCase()):x.n;
@@ -13710,6 +13706,14 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plfoods{row-gap:8px}
 html body #undoBar{z-index:250}
 .pxic{vertical-align:-.15em}
+/* assiette en image pixel : taille = 4 × la grille 64 pour des pixels nets, pas de scintillement */
+.plate{width:256px!important;max-width:calc(100vw - 32px)}
+.plate>img.plimg,.pldp img.plimg,.plwk img.plimg{width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+.pldp img.plimg{width:76px;height:76px;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.4))}
+.plwk img.plimg{max-width:44px;aspect-ratio:1;height:auto}
+.plo{transform:translateZ(0);-webkit-overflow-scrolling:touch}
+/* décor en pause tant que la fenêtre de l'assiette est ouverte */
+html.plopen #skyBg *,html.plopen #skyBg *::before,html.plopen #skyBg *::after,html.plopen .scene *{animation-play-state:paused!important}
 /* ---- Standards globaux de l'appli (voir CLAUDE.md) */
 /* jamais de zoom : pas de double-tap, et les champs à 16 px pour qu'iOS ne zoome pas en les touchant */
 html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -13768,6 +13772,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond b{
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond small{grid-row:3!important;background:rgba(13,15,34,.78)!important;padding:1px 6px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore{display:grid!important;place-items:center!important;cursor:pointer}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore .wr-plus{width:64px!important;height:64px!important}
+/* frise de la journée (8h → 0h, soleil/lune) retirée d'Aujourd'hui */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#qDay .frise,#qDay){display:none!important}
 </style>
 <script>
 (function(){
@@ -14622,15 +14628,17 @@ const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite,
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
 // assiette pixel 64×64 : rebord éclairé en haut à gauche ; chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
-function plSvg(lv){const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
+// rendu en image (canvas mis en cache) : net et stable sur iPhone, contrairement à un SVG de mille rectangles
+function plSvg(lv){const key=["f","p","l"].map(k=>Math.min(3,lv[k]||0)).join("");if(PL_IMG[key])return PL_IMG[key];const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
   if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
   else if(d>24.6)col=(-dx-dy)>0?"#b8c4cf":"#e3eaf0";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
     const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.9&&Math.cos((a-b)*Math.PI/180)>0);
     if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0),R=24.6*n/3;
       col=n&&d<=R?(d>R-1.2?S2[3]:((x*7+y*3)%11===0?"#ffffff":(x+2*y)%5===0||(2*x+y)%7===0?S2[3]:S2[2])):"#ffffff"}}
   row.push(col)}rows.push(row)}
-  let r="";rows.forEach((cs,y)=>{let x=0;while(x<N){const col=cs[x];let w=1;while(x+w<N&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
-  return`<svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+  const cv=document.createElement("canvas");cv.width=cv.height=N;const g=cv.getContext("2d");rows.forEach((cs,y)=>cs.forEach((col,x)=>{if(col){g.fillStyle=col;g.fillRect(x,y,1,1)}}));
+  return PL_IMG[key]=`<img class="plimg" src="${cv.toDataURL()}" width="64" height="64" alt="" aria-hidden="true">`}
+const PL_IMG={};
 function plSlots(s,n){const a=PL_A[s],P=[[7,0],[9,-34],[9,34],[4.2,0]];return P.slice(0,n).map(([r,da])=>{const t=(a+da)*Math.PI/180;return[(15.5+r*Math.cos(t))/32*100,(15.5+r*Math.sin(t))/32*100]})}
 
 const plDone=(d,per,k)=>{const key=d+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];return(((b&&b.m)||(dr&&dr.m)||{})[k])===1};
@@ -14668,7 +14676,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[],q=opt.q,u=plUse();
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);
   let step=1,tri=false,add="",addIc="",addName="",naming=false,recName="";
-  const close=()=>{o.remove();document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
+  const close=()=>{o.remove();document.documentElement.classList.remove("plopen");document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
@@ -14710,7 +14718,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
       if(edit){try{render()}catch(e){}toast("Assiette corrigée")}else{try{mealQuick(per,k,btn,1,ev,plXp(lv()),{plk:tk+":"+k,plp:per})}catch(e){}}
       if(water)setTimeout(()=>{try{const t=plWaterRit();if(t)ritTap(t,btn,null)}catch(e){}},900);
       plQuests(m,btn,q)}};
-  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);try{sfx("open")}catch(e){}}
+  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);document.documentElement.classList.add("plopen");try{sfx("open")}catch(e){}}
 // une quête nourriture vérifiable ouvre l'assiette du repas en cours au lieu de se valider d'un coup
 try{const _fd=feedDo;window.__plFd=_fd;feedDo=function(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return _fd.apply(this,arguments)}}catch(e){}
 // rituel Eau du jour (s'il existe et n'est pas fini)

@@ -78,11 +78,9 @@ function badgeDefs(){
   B.push({id:"zen60",name:"Esprit zen",desc:"60 min de méditation dans un même mois",ic:"face",t:2,ok:()=>mx(S.g.md)>=60});
   B.push({id:"book1",name:"Lecteur",desc:"Finir un livre",ic:"book",t:1,ok:()=>(S.g.books||[]).length>=1});
   B.push({id:"book5",name:"Rat de bibliothèque",desc:"Finir 5 livres",ic:"book",t:3,ok:()=>(S.g.books||[]).length>=5});
-  B.push({id:"bossrev",name:"Revanche",desc:"Reprendre un projet resté 2 semaines en plan",ic:"shield",t:2,ok:()=>bgPrjRev()});
   B.push({id:"clean7",name:"Hygiène de vie",desc:"7 jours avec tous tes repas pris",ic:"face",t:2,ok:()=>bgMealDays()>=7});
   B.push({id:"goal7",name:"Objectif tenu",desc:"Atteindre l'objectif du jour 7 fois",ic:"star",t:2,ok:()=>(S.g.goalN||0)>=7});
   // secrets
-  B.push({id:"bossleg",name:"Tueur de légende",desc:"Finir un projet en moins d'une semaine",ic:"trophy",t:3,sec:1,ok:()=>bgPrjFast()});
   B.push({id:"clutch",name:"Sur le fil",desc:"Sauver ta journée avec une action après 21 h",ic:"trophy",t:2,sec:1,ok:()=>bgClutch()});
   B.push({id:"lucky3",name:"Chanceux",desc:"Vivre 3 événements rares",ic:"star",t:2,sec:1,ok:()=>(S.g.rareN||0)>=3});
   B.push({id:"secret1",name:"Chercheur de secrets",desc:"Accomplir une quête secrète",ic:"star",t:2,sec:1,ok:()=>(S.g.secDone||0)>=1});
@@ -95,8 +93,6 @@ function badgeDefs(){
   B.push({id:"buy1",name:"Première panoplie",desc:"Compléter une panoplie",ic:"star",t:1,ok:()=>wrSetsDone().length>=1});
   B.push({id:"buy5",name:"Styliste",desc:"25 objets dans ta garde-robe",ic:"star",t:2,ok:()=>wrOwned()>=25});
   B.push({id:"buy15",name:"Grand styliste",desc:"50 objets dans ta garde-robe",ic:"star",t:3,ok:()=>wrOwned()>=50});
-  B.push({id:"boss1",name:"Tueur de boss",desc:"Vaincre le boss final d'un projet",ic:"shield",t:1,ok:()=>bgPrjWon()>=1});
-  B.push({id:"boss4",name:"Chasseur de boss",desc:"Vaincre le boss final de 4 projets",ic:"shield",t:2,ok:()=>bgPrjWon()>=4});
   B.push({id:"chest1",name:"Pilleur",desc:"Ouvrir ton premier coffre",ic:"gift",t:1,ok:()=>S.g.opened>=1});
   B.push({id:"gear4",name:"Collectionneur d'objets",desc:"Posséder 10 objets trouvés",ic:"star",t:2,ok:()=>S.g.gear.filter(id=>(gearOf(id)||{}).s!=="aura").length>=10});
   B.push({id:"legend",name:"Objet légendaire",desc:"Trouver un objet légendaire",ic:"star",t:3,ok:()=>S.g.gear.some(id=>(gearOf(id)||{}).r===3)});

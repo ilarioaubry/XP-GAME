@@ -35,15 +35,17 @@ const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite,
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
 // assiette pixel 64×64 : rebord éclairé en haut à gauche ; chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
-function plSvg(lv){const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
+// rendu en image (canvas mis en cache) : net et stable sur iPhone, contrairement à un SVG de mille rectangles
+function plSvg(lv){const key=["f","p","l"].map(k=>Math.min(3,lv[k]||0)).join("");if(PL_IMG[key])return PL_IMG[key];const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
   if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
   else if(d>24.6)col=(-dx-dy)>0?"#b8c4cf":"#e3eaf0";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
     const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.9&&Math.cos((a-b)*Math.PI/180)>0);
     if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0),R=24.6*n/3;
       col=n&&d<=R?(d>R-1.2?S2[3]:((x*7+y*3)%11===0?"#ffffff":(x+2*y)%5===0||(2*x+y)%7===0?S2[3]:S2[2])):"#ffffff"}}
   row.push(col)}rows.push(row)}
-  let r="";rows.forEach((cs,y)=>{let x=0;while(x<N){const col=cs[x];let w=1;while(x+w<N&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
-  return`<svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+  const cv=document.createElement("canvas");cv.width=cv.height=N;const g=cv.getContext("2d");rows.forEach((cs,y)=>cs.forEach((col,x)=>{if(col){g.fillStyle=col;g.fillRect(x,y,1,1)}}));
+  return PL_IMG[key]=`<img class="plimg" src="${cv.toDataURL()}" width="64" height="64" alt="" aria-hidden="true">`}
+const PL_IMG={};
 function plSlots(s,n){const a=PL_A[s],P=[[7,0],[9,-34],[9,34],[4.2,0]];return P.slice(0,n).map(([r,da])=>{const t=(a+da)*Math.PI/180;return[(15.5+r*Math.cos(t))/32*100,(15.5+r*Math.sin(t))/32*100]})}
 
 const plDone=(d,per,k)=>{const key=d+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];return(((b&&b.m)||(dr&&dr.m)||{})[k])===1};
@@ -81,7 +83,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[],q=opt.q,u=plUse();
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);
   let step=1,tri=false,add="",addIc="",addName="",naming=false,recName="";
-  const close=()=>{o.remove();document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
+  const close=()=>{o.remove();document.documentElement.classList.remove("plopen");document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
@@ -123,7 +125,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
       if(edit){try{render()}catch(e){}toast("Assiette corrigée")}else{try{mealQuick(per,k,btn,1,ev,plXp(lv()),{plk:tk+":"+k,plp:per})}catch(e){}}
       if(water)setTimeout(()=>{try{const t=plWaterRit();if(t)ritTap(t,btn,null)}catch(e){}},900);
       plQuests(m,btn,q)}};
-  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);try{sfx("open")}catch(e){}}
+  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);document.documentElement.classList.add("plopen");try{sfx("open")}catch(e){}}
 // une quête nourriture vérifiable ouvre l'assiette du repas en cours au lieu de se valider d'un coup
 try{const _fd=feedDo;window.__plFd=_fd;feedDo=function(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return _fd.apply(this,arguments)}}catch(e){}
 // rituel Eau du jour (s'il existe et n'est pas fini)

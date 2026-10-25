@@ -94,3 +94,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plfoods{row-gap:8px}
 html body #undoBar{z-index:250}
 .pxic{vertical-align:-.15em}
+/* assiette en image pixel : taille = 4 × la grille 64 pour des pixels nets, pas de scintillement */
+.plate{width:256px!important;max-width:calc(100vw - 32px)}
+.plate>img.plimg,.pldp img.plimg,.plwk img.plimg{width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+.pldp img.plimg{width:76px;height:76px;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.4))}
+.plwk img.plimg{max-width:44px;aspect-ratio:1;height:auto}
+.plo{transform:translateZ(0);-webkit-overflow-scrolling:touch}
+/* décor en pause tant que la fenêtre de l'assiette est ouverte */
+html.plopen #skyBg *,html.plopen #skyBg *::before,html.plopen #skyBg *::after,html.plopen .scene *{animation-play-state:paused!important}
