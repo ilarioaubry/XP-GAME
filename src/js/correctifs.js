@@ -772,7 +772,7 @@
   // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
   try{const _rl=renderLife;renderLife=function(){const r=_rl.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}}catch(e){}
   try{const _rs=renderSpecials;renderSpecials=function(){try{noBoss();smartQuests()}catch(e){}const r=_rs.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}}catch(e){}
-  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{appIcon()}catch(e){}try{if(view==="q"||view==="t"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
+  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{if(view==="q"||view==="t"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
   // ---- Moi : chaque bloc finit son propre rendu (plus de retouche globale après coup)
   const after=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){const r=o.apply(this,arguments);try{fn()}catch(e){console.warn(name,e)}return r}}catch(e){}};
   const before=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){try{fn()}catch(e){console.warn(name,e)}return o.apply(this,arguments)}}catch(e){}};
@@ -788,19 +788,6 @@
   function sqFinish(){idqCard();idqDress();idqWho();bdDress();natDress();dressQuests();sqMenus();sqEod()}
   function fqFinish(){dressQuests();bdDress();fqExtra();friseViz();fqSlots()}
   window.__sqFinish=sqFinish;window.__fqFinish=fqFinish;window.__friseViz=()=>{friseViz();fqSlots()};
-  // Icône de l'appli = ma tête sur fond vert
-  let icK="";function appIcon(){if(!S||!S.g)return;const cfg={...AV_DEF,...(S.g.avc||{}),nobg:1,main:0};const k=JSON.stringify(cfg);if(k===icK)return;icK=k;
-    try{const px=avDraw(cfg);let top=AVH,l=AVW,r=-1;for(let y=0;y<AVH;y++)for(let x=0;x<AVW;x++)if(px[y*AVW+x]){if(y<top)top=y}
-      const HH=18;for(let y=top;y<top+HH&&y<AVH;y++)for(let x=0;x<AVW;x++)if(px[y*AVW+x]){if(x<l)l=x;if(x>r)r=x}
-      const side=Math.min(AVW,Math.max(r-l+1,HH)+6),cx=(l+r+1)/2,sx=Math.round(cx-side/2),sy=Math.round(top+HH/2-side/2);
-      const N=180,cv=document.createElement("canvas");cv.width=N;cv.height=N;const g=cv.getContext("2d");g.fillStyle="#3fbf6a";g.fillRect(0,0,N,N);const sc=N/side;
-      for(let y=0;y<side;y++)for(let x=0;x<side;x++){const X=sx+x,Y=sy+y;if(X<0||X>=AVW||Y<0||Y>=AVH||Y>=top+HH)continue;const c=px[Y*AVW+X];if(c){g.fillStyle=c;g.fillRect(Math.floor(x*sc),Math.floor(y*sc),Math.ceil(sc),Math.ceil(sc))}}
-      const data=cv.toDataURL("image/png");
-      const set=(rel,extra)=>{let ln=document.querySelector(`link[rel="${rel}"]`);if(!ln){ln=document.createElement("link");ln.rel=rel;document.head.appendChild(ln)}if(extra)Object.assign(ln,extra);ln.href=data};
-      set("apple-touch-icon");set("icon",{type:"image/png"});
-      const m={name:"Carnet de Quêtes",short_name:"Quêtes",display:"standalone",orientation:"portrait",background_color:"#3fbf6a",theme_color:"#f8e3ad",icons:[{src:data,sizes:"180x180",type:"image/png",purpose:"any"}]};
-      const ml=document.querySelector('link[rel="manifest"]');if(ml)ml.href="data:application/manifest+json,"+encodeURIComponent(JSON.stringify(m));
-      try{localStorage.setItem("cq-icon",data)}catch(e){}}catch(e){}}
   function sqEod(){const L=(S.specials||[]).filter(q=>q.sm&&q.eod);if(!L.length)return;const tk=dayKey(Date.now());document.querySelectorAll("#sqBox .sq").forEach(c=>{const n=(c.querySelector(".sqn")||{}).textContent,q=L.find(x=>x.name===n);if(!q)return;const go=c.querySelector(".primary");if(!go||go.dataset.eod)return;go.dataset.eod=1;go.disabled=true;go.removeAttribute("data-tm");
       let st="ce soir";if(q.eod==="cig"){const n0=(S.g.cig||{})[tk]||0;st=n0+" / moins de "+q.eodv}if(q.eod==="bed")st="au coucher";go.textContent=st;go.classList.add("eodb")})}
    // ---- Proches et profil : chaque bloc finit son propre rendu
