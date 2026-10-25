@@ -127,7 +127,7 @@ const COMFORT=[["Une douche chaude, sans te presser","soi"],["10 min allongé·e
 function badDay(){const G=S.g,tk=dayKey(Date.now()),md=(G.mood||{})[tk]|0,sl=(G.sleep||{})[tk];return enOf()===1||(md&&md<=2)||!!(sl&&sl.h&&sl.h<6)}
 function comfortQ(){if(!badDay())return[];const tk=dayKey(Date.now());let h=0;for(const ch of tk)h=(h*31+ch.charCodeAt(0))>>>0;const L=COMFORT.filter(c=>normOk(c[0]));const c=L[h%L.length];return c?[{id:"cf:"+tk,t:c[0],why:"Journée lourde : un moment de réconfort",cat:c[1],xp:10,k:"cf",key:""}]:[]}
 // la carte du quartier : les quêtes dehors la découvrent
-const MAP_N=6,MAP_T=["parc","cafe","banc","fontaine","maison","arbre","boulang","rue","rue","maison","arbre","parc","kiosque","maison"];
+const MAP_N=6;
 function mapOrder(){const c=(MAP_N-1)/2,ix=[];for(let i=0;i<MAP_N*MAP_N;i++)ix.push(i);return ix.sort((a,b)=>{const da=Math.hypot(a%MAP_N-c,Math.floor(a/MAP_N)-c),db=Math.hypot(b%MAP_N-c,Math.floor(b/MAP_N)-c);return da-db||a-b})}
 function isOutQ(name){return/dehors|marche|marcher|balade|parc|forêt|soleil|lumière du matin|coucher du soleil|sortir|quartier|vélo|courir|course|footing|à pied/i.test(String(name||""))}
 function mapReveal(name){const G=S.g;if(!G||!isOutQ(name))return;if(!G.map||typeof G.map!=="object")G.map={n:0,d:{}};const tk=dayKey(Date.now());if((G.map.d[tk]|0)>=2)return;const O=mapOrder();if(G.map.n>=O.length)return;G.map.n++;G.map.d[tk]=(G.map.d[tk]|0)+1;{const ks=Object.keys(G.map.d).sort();while(ks.length>20)delete G.map.d[ks.shift()]}

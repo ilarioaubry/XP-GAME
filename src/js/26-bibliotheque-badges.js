@@ -41,10 +41,7 @@ function libBind(box){const G=S.g,BK=G.books||[],cur=G.book,info=box.querySelect
   box.querySelectorAll(".bk").forEach(g=>{g.onclick=()=>show(g);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g)}}})}
 
 function bgPrjWon(){return((S.g&&S.g.prj)||[]).filter(p=>p.won).length}
-function bgPrjRev(){return((S.g&&S.g.prj)||[]).some(p=>{const T=[p.ct||0,...(p.st||[]).filter(s=>s.d).map(s=>s.d)].filter(Boolean).sort((a,b)=>a-b);for(let i=1;i<T.length;i++)if(T[i]-T[i-1]>=14*864e5)return true;return false})}
-function bgPrjFast(){return((S.g&&S.g.prj)||[]).some(p=>p.won&&p.ct&&p.won-p.ct<7*864e5)}
 function bgClutch(){const F={};for(const e of S.log){if(!(e.xp>0)||e.bonus)continue;const k=dayKey(e.t);if(F[k])continue;F[k]=1;if(new Date(e.t).getHours()>=21)return true}return false}
-function bgSoiDays(){return Object.values((S.g&&S.g.hist)||{}).filter(x=>x&&x.c&&x.c.soi>0).length}
 function bgMealDays(){const G=S.g||{},D=new Set();Object.keys(G.mb||{}).concat(Object.keys(G.mbd||{})).forEach(k=>D.add(k.split(":")[0]));let n=0;D.forEach(d=>{if(["matin","soir"].every(per=>MB[per].every(([k])=>{const b=(G.mb||{})[d+":"+per],dr=(G.mbd||{})[d+":"+per],m=(b&&b.m)||(dr&&dr.m)||{};return m[k]===1})))n++});return n}
 function bgMusic(){const R=/musique|\bsons?\b|beat|instru|guitare|piano|chant|couplet|morceau|studio|jam|freestyle|maquette/i;return S.log.filter(e=>e.xp>0&&(/^son\b/.test(e.lz||"")||R.test(e.name||""))).length}
 function bgPerfect(){if((S.daily&&S.daily.bonusDay)||S.log.some(e=>e.dayb))return true;const T=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz);if(!T.length)return false;return Object.values(ritH()).some(H=>T.every(t=>H[t.id]))}
@@ -154,7 +151,6 @@ function bpxIcon(ic,n){const c=document.createElement("canvas");c.width=c.height
 
 
 // ---- objets et auras en pixel art (même DA que les badges)
-const LOOTPX={},LOOTWAIT={},PX1="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
 
 
 const AURA_PI={xmflakes:"snowflake",flames:"flame",stars:"star",notes:"note",neon:"bolt",goldaura:"sparkle",lotus:"lotus",hello:"bubble"},AURAPX={};

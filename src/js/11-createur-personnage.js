@@ -395,4 +395,4 @@ const AVC_TABS=[["face","Visage",[["skin","Teint","sw"],["size","Taille","th"],[
   ["acc","Accessoires",[["hat","Tête","th"],["glasses","Yeux","th"],["bijou","Bijoux","th"],["main","Objet en main","th"],["accC","Couleur des accessoires","sw"]]],
   ["bg","Fond",[["bgP","Motif","th"],["bgC","Couleur","sw"]]]];
 const HAIR_GRP=[["Court",[0,17,16,13,2,12,18,19,7,1,9]],["Mi-long",[20,21,23,22,4,8,14,6]],["Long",[3,24,26,15,25,5,10,11]]];
-let avcCfg=null,avcTab="face",avcWho="__me";
+let avcCfg=null,avcWho="__me";

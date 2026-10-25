@@ -35,7 +35,7 @@ $("impBtn").onclick=()=>{
 };
 
 // ---- Talents perso
-const SK_NEED=l=>20+10*l,SK_XP=10;
+const SK_NEED=l=>20+10*l;
 const SQ=[["texte","Texte"],["topline","Topline"],["voix","Voix"],["poly","Polyvalence"],["visuel","Visuel"],["prod","Production"],["flow","Flow"],["collab","Collab"]];
 function sndGain(a){
   const n=a.name||"",g={};const all=v=>SQ.forEach(([k])=>g[k]=(g[k]||0)+v);

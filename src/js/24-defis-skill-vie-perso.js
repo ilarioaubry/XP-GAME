@@ -16,8 +16,7 @@ function renderMe(){
   <div class="me-st">${keys.map(k=>{const i=statInfo(S.stats[k]||0),c=CATS[k];return`<div style="--cat:${c.c}"><span>${c.label}</span><i><em style="width:${i.cur/i.need*100}%"></em></i><b>${i.l}</b></div>`}).join("")}</div></div>`;
   box.querySelector(".me-n").textContent=S.name;box.querySelector(".me-t").textContent=titleOf(l.l)+(frameOf()?" · cadre "+frameOf().n:"");
 }
-const SELL=[2,5,10,25],sellPrice=it=>it.ex?15:SELL[it.r];
-const LOOTVB={},WRIC={};
+const WRIC={};
 function itemIcon(it){if(WRIC[it.id])return WRIC[it.id];{const u=itemIconNew(it);if(u)return WRIC[it.id]=u}
   if(it.s==="aura")return null;
   const base={...AV_DEF,skin:1,hairC:0,hair:1,top:0,topC:7,bgC:7,beard:0};

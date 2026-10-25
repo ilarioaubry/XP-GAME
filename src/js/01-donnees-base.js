@@ -25,7 +25,6 @@ const FAMILY=["Papa","Maman","Adri","Ingrid","Tiph","Raph","Gaby","Emy"];
 
 const MUSIC=["dans le style : shatta","dans le style : JUL","dans le style : vidéo club","dans le style : indie","dans le style : trap","dans le style : Lady Gaga","avec Octave"];
 const GROUPS={friends:{list:"friends",done:"friendDone",verb:"Prendre des nouvelles de ",title:"Mes amis",ph:"Ajouter un ami",cat:"social"},music:{list:"music",done:"musicDone",verb:"Faire un son ",title:"Sons",cat:"perso",hidden:true},family:{list:"family",done:"familyDone",verb:"Appeler ",title:"Ma famille",ph:"Ajouter un proche",cat:"famille",hidden:true}};
-const FAMILLE=[["Appeler papa","autres",10],["Appeler maman","autres",10]].map(([name,cat,xp],i)=>({id:"f"+i,name,cat,xp}));
 const HYGIENE=[{id:"h0",name:"Se brosser les dents",cat:"maison",xp:5}];
 const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST];
 

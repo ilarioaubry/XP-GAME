@@ -167,7 +167,7 @@ function ritTap(t,el,ev){
   const a=t.link&&S.actions.find(x=>x.name===t.link);
   if(a&&!(S.dayLimit&&!BARS[a.cat]&&S.log.filter(e=>e.a===a.id&&dayKey(e.t)===tk).length>=S.dayLimit)){complete(a,el,ev)}else if(a&&!t.bar&&c+1>=t.n){noXp({...a},el,ev)}else if(!a&&!t.bar&&c+1>=t.n){complete({id:"rit-"+t.id,cat:/pompe|squat|gainage/i.test(t.name)?"sport":"maison",name:t.name,xp:RIT_XP},el,ev)}else{save();render()}
   dailyBonusCheck()}
-const ritOpen={},RIT_XP=3;
+const RIT_XP=3;
 function renderRituals(){setTimeout(()=>{window.__ritWas=!!document.querySelector("#ritLife")&&!!document.querySelector(".ritdone")},0);
   ritRoll();const tk=dayKey(Date.now());
   const T=ritTasks(),box=$("ritList"),busy=box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT";if(!busy)box.innerHTML="";let done=0;

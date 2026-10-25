@@ -51,7 +51,6 @@ const isFam=n=>S.family.includes(n);
 function hueOf(n){let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))%360;return h}
 
 const TYPES=["Geek","Cinéphile","Musique","Sportif","Artiste","Voyageur","Gourmand","Fêtard","Intello","Nature"];
-const TALENTS=["Sons","Art","Dessin","Écriture","Code","Cuisine","Photo","Chant","Humour","Bricolage","Jeux vidéo","Danse"];
 
 /* ===== Fiche personne : un lien précis, un statut déduit, tout est sur la fiche ===== */
 function rkBust(o){

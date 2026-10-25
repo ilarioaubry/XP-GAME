@@ -39,7 +39,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
   - Noël (xmBox) : garder la saison des fêtes, **supprimer son boss** (« Bougonnoël »)
   - Supprimer : compétences musique (Skills, lzProf, musBox, dzBox, sonSeance), Mon chemin (pathBox), Sommeil (sleepBox), Humeur de l'année (moodBox), Mes rituels (ritStat), Ma semaine / Records / Journal (wkRecap, recBox, jrBox), Rappels (pcBox), ancien Projets (prjBox), weekBox
   - Les données correspondantes restent dans la sauvegarde
-- [ ] 2.2 Supprimer les 24 déclarations jamais utilisées : FAMILLE, vkind, VK_IC, avcTab, chHeadDx, myCardURL, __picC, SK_XP, MAP_T, ritOpen, PROJ, PJ_XP, PJ_BONUS, pjOpen, pjArm, sellPrice, LOOTVB, bgPrjRev, bgPrjFast, bgSoiDays, LOOTPX, LOOTWAIT, PX1, TALENTS
+- [x] 2.2 (25/10/2026) Supprimer les 24 déclarations jamais utilisées (+ 3 devenues inutiles ensuite : SELL, chCardCanvas, __myCard ; plus aucune déclaration inutilisée) : FAMILLE, vkind, VK_IC, avcTab, chHeadDx, myCardURL, __picC, SK_XP, MAP_T, ritOpen, PROJ, PJ_XP, PJ_BONUS, pjOpen, pjArm, sellPrice, LOOTVB, bgPrjRev, bgPrjFast, bgSoiDays, LOOTPX, LOOTWAIT, PX1, TALENTS
 - [ ] 2.3 Supprimer ce qui est seulement caché (selon 2.1) : Noël (xmBox, masqué en CSS seulement), vue « t » et barre `qnav`, sous-onglets sons / compétences, weekBox, sections masquées en CSS (ritStat, sleepBox, moodBox)
 - [ ] 2.4 Renommer les fichiers « boss » (13-pixel-clair-boss, 23-boss-par-categorie, 28-sons-boss) et n'en garder que ce qui sert (figurines `BOSS_CAT`, projets `CB_LIST`, sons)
 - [ ] 2.7 Renommer `17-spotify-meteo.js` en fichier météo (Spotify retiré)

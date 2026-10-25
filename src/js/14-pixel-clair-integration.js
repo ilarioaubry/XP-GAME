@@ -1,7 +1,6 @@
 // ---- Pixel Clair : intégration
 AV_OPT.bot=CH_BOT;AV_OPT.botC=CH_BOTC;AV_OPT.shoe=CH_SHOE;AV_OPT.shoeC=CH_SHOEC;Object.assign(AV_DEF,CH_DEF);
 // portrait (listes, relations, vignettes) : fond choisi + tête de 3/4
-function chHeadDx(H){let a=99,b=-1;for(let y=0;y<H.H-6;y++)for(let x=0;x<H.W;x++)if(H.px[y*H.W+x]){if(x<a)a=x;if(x>b)b=x}return b<0?0:Math.round(H.W/2-(a+b+1)/2)}
 // portrait de face : on découpe la tête et les épaules du personnage en pied
 const __frC={};
 function chCrop(cfg,x0,dy0,W,H){const c={...AV_DEF,...CH_DEF,...(cfg||{}),size:0,main:0},k=JSON.stringify(c)+"|"+x0+"|"+dy0+"|"+W+"|"+H;if(__frC[k])return __frC[k];
@@ -18,13 +17,7 @@ const __chCache={};
 function chURL(cfg,pose,fr,scale){const c={...AV_DEF,...(cfg||{})},k=JSON.stringify(c)+"|"+pose+"|"+fr+"|"+scale;if(__chCache[k])return __chCache[k];const ks=Object.keys(__chCache);if(ks.length>120)ks.slice(0,60).forEach(x=>delete __chCache[x]);
   return __chCache[k]=chCanvas(chDraw(c,pose,fr),scale||2).toDataURL("image/png")}
 // carte du personnage : fond choisi agrandi + corps entier
-function chCardCanvas(cfg,pose,fr){const c={...AV_DEF,...(cfg||{})},bg=avDrawOld({...c,bgonly:1}),px=chDraw(c,pose||"idle",fr||0),W=60,H=70,cv=document.createElement("canvas");cv.width=W*2;cv.height=H*2;const g=cv.getContext("2d");
-  for(let y=0;y<AVH;y++)for(let x=0;x<AVW;x++){const v=bg[y*AVW+x];if(v){g.fillStyle=v;g.fillRect(x*4,y*4,4,4)}}
-  const ox=14,oy=H-CH.H-1;for(let y=0;y<CH.H;y++)for(let x=0;x<CH.W;x++){const v=px[y*CH.W+x];if(v){g.fillStyle=v;g.fillRect((x+ox)*2,(y+oy)*2,2,2)}}return cv}
-let __myCard={k:"",u:""};
-function myCardURL(){const cfg={...AV_DEF,...((S.g&&S.g.avc)||{})},k=JSON.stringify(cfg);if(__myCard.k!==k)__myCard={k,u:chCardCanvas(cfg).toDataURL("image/png")};return __myCard.u}
 // avatars des proches : générés depuis leur config
-const __picC={};
 // gros plan sur la tête : fond de la scène + crop serré du visage
 const __hdC={};
 function headURL(cfg,W,H,x0,dy0,sc){const c={...AV_DEF,...(cfg||{})},k=JSON.stringify(c)+"|"+[W,H,x0,dy0,sc];if(__hdC[k])return __hdC[k];const ks=Object.keys(__hdC);if(ks.length>80)ks.slice(0,40).forEach(q=>delete __hdC[q]);
