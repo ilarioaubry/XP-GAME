@@ -1,20 +1,20 @@
 
-html:not(#_a):not(#_b):not(#_c) body #homeBox{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmcard{--hc:#e8873a;border:2px solid var(--hc)!important;border-color:var(--hc)!important;border-width:2px!important;border-radius:0!important;backdrop-filter:none;background:rgba(12,14,32,.62);padding:12px;display:grid;gap:12px}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmover{padding:0;--hc:#a99cff}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmhouse{border:0;box-shadow:none;border-radius:0}
+
+
+
+
 html:not(#_a):not(#_b):not(#_c) body .hmh2{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:6px;align-items:center}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2{margin:0;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:clamp(13px,4vw,20px)!important;text-transform:uppercase;letter-spacing:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2::before{content:""!important;flex:none;width:12px!important;height:12px!important;background:var(--hc)!important;transform:rotate(45deg)!important}
 html:not(#_a):not(#_b):not(#_c) body .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}
 html:not(#_a):not(#_b):not(#_c) body .hmib:hover,html:not(#_a):not(#_b):not(#_c) body .hmib:focus-visible{border-color:var(--hc,#ffd94a)}.hmib:active{transform:translateY(1px)}
 html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}.hmnext svg{transform:rotate(-90deg)}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmscene{border:0;box-shadow:none;border-radius:0;margin:0 -12px;background:none}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmscene.hmlib{margin:0}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libc{border:0!important;background:none!important;box-shadow:none!important;padding:0!important;margin:0}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libc>.bh2{display:none}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libinfo>.hint{display:none}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background:none;box-shadow:none;padding:0}
+
+
+
+
+
+
 html:not(#_a):not(#_b):not(#_c) body .hminfo:empty{display:none}
 html:not(#_a):not(#_b):not(#_c) body .hmpop h4{margin:0 0 8px;font-family:var(--f-pixel);font-size:20px;line-height:1.2;overflow-wrap:anywhere}
 html:not(#_a):not(#_b):not(#_c) body .hmpop ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}

@@ -1,8 +1,8 @@
 
 html body .clo2{--text:#fff8e6;--muted:rgba(255,248,230,.7);--surface:rgba(16,18,44,.78);--line:rgba(255,255,255,.22)}
 html body .clo2 .cloin{gap:12px;min-height:100vh;align-content:start;grid-template-rows:auto 1fr auto}
-html body .clo2 .qwbody{align-content:start}
-html body .clo2 .qwq{font-size:24px}
+
+
 html body .clo2 .clox{font-size:26px;line-height:1}
 html body .clo2 .bswrap{display:flex;flex-wrap:wrap;gap:8px}
 html body .clo2 .bsch{min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:800;color:var(--text);background:var(--surface);border:2px solid var(--line);box-shadow:2px 2px 0 rgba(0,0,0,.5);cursor:pointer}
@@ -23,7 +23,7 @@ html body .pu .puc,html body .pu .stn,html body .pu .mdt{font-family:var(--f-pix
 html body .pu .stn{font-size:34px}
 html body .pu .pub{grid-template-columns:1fr 2fr}html body .pu .pub .btn{min-height:54px}
 html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color:#fff8e6;opacity:.85;font-weight:800;text-decoration:underline}
-html:not(#_a):not(#_b):not(#_c) body #balCard{min-width:0;max-width:100%;box-sizing:border-box}
-html:not(#_a):not(#_b):not(#_c) body #balCard .balviz{grid-template-columns:repeat(auto-fit,minmax(min(100%,96px),1fr));min-width:0;max-width:100%}
-html:not(#_a):not(#_b):not(#_c) body #balCard .balviz .svt{min-width:0;aspect-ratio:auto;min-height:92px;padding:8px 4px;overflow:hidden}
-html:not(#_a):not(#_b):not(#_c) body #balCard h3{max-width:100%;box-sizing:border-box}
+
+
+
+

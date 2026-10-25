@@ -5,74 +5,74 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(input,textar
 
 /* coins carrés partout (pixel art, et plus de mélange carré dehors / arrondi dedans) ; seuls les vrais ronds restent */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *::before,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *::after{border-radius:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.plwk .plz,.pav.bdp,.pav.fmini,.pav.fpav,.rwr i,.idqw .pav.fmini,.rwt .rwk,.avc-dots i,.cphoto .grpx,.actdots button span,.bni,.pbs .pbi,.aut .aui,.evx,.rkst b,.rkp-steam i,.rkp-puff i,.rkp-ring i,.mdrays,#skyBg .skpt i.snow,.bse,.lx-rays){border-radius:50%!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf2sw::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .aut[aria-pressed="true"]::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .p-pic.editable::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .sw::after{border-radius:50%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.plwk .plz,.pav.fmini,.pav.fpav,.idqw .pav.fmini,.rwt .rwk,.cphoto .grpx,.aut .aui,.evx,.rkst b,.rkp-steam i,.rkp-puff i,.rkp-ring i,.mdrays,.bse,.lx-rays){border-radius:50%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .aut[aria-pressed="true"]::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .sw::after{border-radius:50%!important}
 /* titres de section : tous pareils, sans ombre ni fond */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head h2,.head h2 *,h2.cbh3,.plside h3,.gcard h3){text-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head h2,.head h2 *,h2.cbh3,.gcard h3){text-shadow:none!important}
 /* rattrapage du matin, le soir : pas de cadre en pointillés */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .dqmorn{border:0!important;box-shadow:none!important;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 6px,transparent 6px 10px) top left/100% 2px no-repeat!important;padding-left:0!important;padding-right:0!important}
+
 /* Proches : toutes les fiches ont la même structure (mêmes tailles, mêmes alignements) ;
    nom sur une ligne (… si trop long), barre d'XP pleine largeur avec le niveau au centre */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl{grid-template-columns:52px minmax(0,1fr)!important;grid-template-rows:auto auto!important;grid-template-areas:"av nm" "bar bar"!important;align-items:start!important;column-gap:10px!important;row-gap:12px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rb{align-content:start!important;grid-template-rows:26px 30px!important;row-gap:4px!important;min-width:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;min-width:0!important;height:26px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn b{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn .rlk{flex:none!important;margin:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rwr{justify-self:start!important;align-self:center!important;margin:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rx{position:relative!important;display:block!important;height:22px!important;width:100%!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rbar{display:block!important;width:100%!important;height:22px!important;box-sizing:border-box!important;margin:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rbar i{height:100%!important;box-sizing:border-box!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rl-lv{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;color:#fff!important;text-shadow:0 1px 0 rgba(0,0,0,.85),0 -1px 0 rgba(0,0,0,.85),1px 0 0 rgba(0,0,0,.85),-1px 0 0 rgba(0,0,0,.85)!important;pointer-events:none}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rb{grid-template-columns:auto auto minmax(0,1fr)!important;column-gap:8px!important;align-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn{display:contents!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn b{grid-row:1!important;grid-column:1/-1!important;align-self:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rwr{grid-row:2!important;grid-column:1!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn .rlk{grid-row:2!important;grid-column:2!important;align-self:center!important}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* quêtes spéciales : la carte suivante dépasse un peu (on voit que ça glisse) ; une icône pixel en bas à droite de chaque carte */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq{top:auto!important;bottom:10px!important;right:10px!important;width:32px!important;height:32px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq svg{width:100%!important;height:100%!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq :is(.sqn,.sqk){padding-right:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .sqr{padding-right:40px!important}
+
+
+
+
 /* choix rapide « Avec qui ? » : petite fenêtre centrée */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .whopop{align-items:center!important;align-content:center!important;place-items:center!important}
 /* même catégorie = même taille : boutons d'action des quêtes tous identiques */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{width:84px!important;min-width:84px!important;min-height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-left:4px!important;padding-right:4px!important;box-sizing:border-box!important}
+
 /* le contenu d'un élément encadré est toujours centré */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.plr,.evch,.fqr .fqt,.sq .sqk,.sq .sqn,.plq){text-align:center!important;justify-content:center!important;justify-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta>span,.evch>span){justify-items:center!important;text-align:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .sq .sqr{justify-content:center!important;gap:12px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.plq){text-align:center!important;justify-content:center!important;justify-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta>span){justify-items:center!important;text-align:center!important}
+
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .plq{border:0!important;background:none!important;padding:0!important}
 /* titres de section de Moi : tous sur le modèle de « Mes projets » (police pixel, majuscules, losange) */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,.fgh>b){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,.fgh>b)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
+
+
+
 /* Armoire : toutes les tuiles de la même taille ; « +N » pour ce qui reste à trouver ; fonds en plein cadre, titre en haut */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it b{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden!important;line-height:1.2!important;min-height:2.4em!important;align-self:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .wr-plus{display:grid!important;place-items:center!important;width:56px!important;height:56px!important;font-family:var(--f-pixel)!important;font-size:26px!important;color:var(--gold,#ffd94a)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond{background:var(--fbg) center 22%/cover no-repeat!important;image-rendering:pixelated!important;grid-template-rows:auto 1fr auto!important;align-items:start!important;padding:6px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond b{align-self:start!important;min-height:0!important;background:rgba(13,15,34,.78)!important;padding:2px 6px!important;color:#fff7e6!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond small{grid-row:3!important;background:rgba(13,15,34,.78)!important;padding:1px 6px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore{display:grid!important;place-items:center!important;cursor:pointer}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore .wr-plus{width:64px!important;height:64px!important}
+
+
+
+
+
+
+
+
+
 /* frise de la journée (8h → 0h, soleil/lune) retirée d'Aujourd'hui */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#qDay .frise,#qDay){display:none!important}
 /* Échelle de texte à 4 niveaux : titre de section 20 px · titre de carte 15 px · texte 13 px · petite info 11 px
    (grands chiffres décoratifs ≥ 22 px exceptés). Les champs restent à 16 px pour qu'iOS ne zoome pas. */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(input,textarea,select){font-size:16px!important}
 /* 4 · Bordure colorée = actif / sélectionné, rien d'autre (ni rareté, ni catégorie, ni « disponible ») */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.mlp,.rtile,#relList>li.rl,#wrBody .wr-it,.fsq,.svt){border-color:rgba(255,255,255,.17)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(#wrBody .wr-it.on,.svt[aria-pressed="true"],.svt.on,.mlp[aria-pressed="true"]){border-color:var(--gold,#ffd94a)!important}
+
+
 /* 5 · Une seule étiquette (vers 14 h, NOUVEAU, Ami du mois, nom de pièce…) et un seul compteur (0/3, 15/117, 2/17…) */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqh,.hml,.motk,.bdgnew,.bfnew){font-family:var(--f-body)!important;font-size:11px!important;font-weight:800!important;letter-spacing:.02em!important;text-transform:none!important;line-height:1.3!important;color:#fff7e6!important;background:rgba(10,10,24,.72)!important;border:0!important;box-shadow:none!important;padding:2px 6px!important;text-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bdgnew,.bfnew){color:#ff7a6b!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head .count,.colh .count,h2 .count,h3 .count,.bfam summary>b,#relList .rhd button b,#logCnt){font-family:var(--f-pixel)!important;font-size:15px!important;font-weight:700!important;color:var(--gold,#ffd94a)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin-left:8px!important;min-width:0!important;height:auto!important;line-height:1!important}
+
+
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head .count,h2 .count,h3 .count){font-family:var(--f-pixel)!important;font-size:15px!important;font-weight:700!important;color:var(--gold,#ffd94a)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin-left:8px!important;min-width:0!important;height:auto!important;line-height:1!important}
 /* 6 · Un seul modèle de barre : grande (niveaux : XP, proches) et petite (tout le reste) */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#relList>li.rl .rbar,.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){box-sizing:border-box!important;border:2px solid rgba(255,247,230,.85)!important;background:rgba(0,0,0,.35)!important;box-shadow:none!important;overflow:hidden!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(#relList>li.rl .rbar){height:18px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){height:10px!important;min-height:10px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.rbar,.sb,.idbar,.stbar,.bpr,.bfbar,.wcg)>i{height:100%!important;margin:0!important;top:0!important;box-shadow:none!important}
+
+
+
+
 /* Projets : petite barre standard + compteur d'étapes */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .prbarw{display:flex!important;align-items:center!important;gap:8px!important;margin-top:4px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .prbar{flex:1;display:block;height:10px;box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);overflow:hidden}
@@ -85,33 +85,33 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .xmboss{display:none!impo
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .epop{left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;z-index:215!important;min-width:min(300px,calc(100vw - 32px))!important;box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5)!important;padding:8px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .epop button{text-align:center!important;justify-content:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .mlpop{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;z-index:215!important;width:min(300px,calc(100vw - 32px))!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;padding:16px!important;background:rgba(14,16,36,.96)!important;box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5)!important;margin:0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #plusSheet .ps-in{top:0!important;max-height:none!important;height:100%!important;padding-top:env(safe-area-inset-top,0px)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #plusSheet .ps-h::before{display:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .bpop:has(textarea){padding:0!important;place-items:stretch!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .bpop:has(textarea)>.bpc{width:100%!important;max-width:none!important;height:100%!important;overflow:auto!important;align-content:start!important;padding-top:calc(env(safe-area-inset-top,0px) + 18px)!important;background:#0d0f22!important;box-shadow:none!important;border:0!important}
+
+
+
+
 /* 12 · Messages : un seul emplacement (en haut) et un seul style, pour les toasts comme pour « Annuler » */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast,#undoBar){top:calc(env(safe-area-inset-top,0px) + 10px)!important;bottom:auto!important;left:50%!important;max-width:min(92vw,420px)!important;background:rgba(14,16,36,.96)!important;color:#fff7e6!important;border:2px solid var(--gold,#ffd94a)!important;box-shadow:0 4px 0 #000!important;font-family:var(--f-body)!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;padding:10px 14px!important;z-index:260!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast{transform:translate(-50%,-180%)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast.show{transform:translate(-50%,0)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,62px)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#undoBar){top:calc(env(safe-area-inset-top,0px) + 10px)!important;bottom:auto!important;left:50%!important;max-width:min(92vw,420px)!important;background:rgba(14,16,36,.96)!important;color:#fff7e6!important;border:2px solid var(--gold,#ffd94a)!important;box-shadow:0 4px 0 #000!important;font-family:var(--f-body)!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;padding:10px 14px!important;z-index:260!important}
+
+
+
 /* 13 · États vides : même formule et même style partout (phrase courte centrée, puis le bouton pour agir) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vide{text-align:center!important;font-size:13px!important;color:rgba(255,247,230,.6)!important;margin:10px 0!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .fqr.menu .fqno{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;z-index:215!important;width:min(300px,calc(100vw - 32px))!important;display:grid!important;grid-template-columns:1fr!important;gap:8px!important;padding:16px!important;background:rgba(14,16,36,.96)!important;box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5)!important;margin:0!important}
+
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .prm{border-color:rgba(255,255,255,.17)!important}
 /* 2 · Une seule couleur d'accent, jour et nuit : seul le décor change (la couleur du ciel ne colore plus l'interface) */
 html:root:not(#_a):not(#_b):not(#_c){--skyac:#ffd94a!important;--gold:#ffd94a!important;--accent:#ffd94a!important;--gold-soft:color-mix(in srgb,#ffd94a 35%,transparent)!important}
 /* 1 · Une couleur = un sens : catégorie = sa couleur ; or = action principale, sélection, progression ; rouge = nouveau/alerte ;
    la rareté se lit en étoiles, plus en couleur */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#wrBody .wr-it,.wr-mini){--rc:#8a8f99!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .rst{display:inline-flex!important;gap:1px!important;color:var(--gold,#ffd94a)!important;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wr-mini){--rc:#8a8f99!important}
+
 /* 3 · Trois styles de boutons, une hauteur commune (44 px) :
    principal = jaune plein · secondaire = sombre à bordure neutre · ajout = pointillés. Les liens texte restent des liens. */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr,.addf,.bnv,.dqed){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
+
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .btn.primary{background:var(--gold,#ffd94a)!important;border:2px solid var(--gold,#ffd94a)!important;color:#1a1206!important;min-height:44px!important;box-sizing:border-box!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn.edbtn,.addf,.bnv,.dqed){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{min-height:44px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.evch.evadd,.pbs){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .rtmgo{border:2px solid rgba(255,255,255,.17)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fond) small{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn.edbtn){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
+
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
+
+
 /* pas d'indicateurs dans les boutons (appui long, minuteur, écran) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!important}

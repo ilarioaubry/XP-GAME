@@ -11,7 +11,7 @@ html:not(#_a):not(#_b) body .rwt .rws{position:absolute;top:5px;right:5px;width:
 html:not(#_a):not(#_b) body .rwt .rws svg{width:100%;height:100%}
 html:not(#_a):not(#_b) body .rwt .rwk{position:absolute;top:7px;left:7px;width:10px;height:10px;border-radius:50%;background:#f0a020;border:2px solid #2a1606}
 html:not(#_a):not(#_b) body .rwt.off{opacity:.6;filter:saturate(.5)}
-html:not(#_a):not(#_b) body .rwt.add{--kc:var(--muted);border-style:dashed;background:transparent;box-shadow:none;color:var(--muted);align-content:center}
+
 html:not(#_a):not(#_b) body .rwsk{display:flex;align-items:center;gap:8px;margin:12px 0 0;font-size:15px;color:var(--text)}
 html:not(#_a):not(#_b) body .rwhint{margin:12px 0 0;font-size:13px;color:var(--muted)}
 html:not(#_a):not(#_b) body .rwa .raord{margin-top:18px}
