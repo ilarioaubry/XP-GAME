@@ -11,6 +11,10 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 - Tester à largeur iPhone (≈393 px) avec Playwright avant de livrer. iOS en mode appli : la classe `fullh` + `100lvh` corrige la hauteur ; ne pas la retirer.
 - Ne pas casser les données existantes de l'utilisateur (format de sauvegarde localStorage).
 
+## Feuille de route
+
+`FEUILLE-DE-ROUTE.md` = le plan issu du rapport complet. On le suit étape par étape : présenter l'étape suivante, attendre « go », faire, tester (393 px + capture), Ilario vérifie, cocher avec la date, puis présenter la suivante. Ne rien retirer de la liste sans son accord ; toute nouvelle idée s'y ajoute.
+
 ## Standards de l'appli
 
 Règles données par Ilario (à respecter sans redemander) :
