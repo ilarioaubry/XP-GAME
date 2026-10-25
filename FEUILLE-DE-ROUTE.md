@@ -24,8 +24,8 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 1.1 (25/10/2026) Export de la sauvegarde en fichier (partage iOS → iCloud Drive / Fichiers) + import depuis un fichier, à la place du copier-coller
 - [-] 1.2 (passé le 25/10/2026, à la demande d'Ilario) Rappel d'export régulier (discret, ton encourageant)
 - [x] 1.3 (25/10/2026) Numéro de version dans la sauvegarde + liste de migrations numérotées qui remplace les drapeaux ponctuels (`dst26`, `voc1`) sans casser les données
-- [x] 1.4 (25/10/2026) `manifest.json` : nom « XP », icône pixel, écran de démarrage, mode appli
-- [ ] 1.5 Service worker : l'appli s'ouvre sans réseau
+- [x] 1.4 (25/10/2026) `manifest.json` : nom « XP » (aussi dans l'appli : bannière, accueil), icône pixel, écran de démarrage, mode appli
+- [x] 1.5 (25/10/2026) Service worker : l'appli s'ouvre sans réseau
 - [ ] 1.6 Documenter les 88 clés de `S.g` (fichier `DONNEES.md`)
 - [ ] 1.7 Supprimer le code de synchronisation avec le compte Claude (inutile sur GitHub Pages) et l'enveloppe HTML en double (deux documents imbriqués)
 
@@ -79,6 +79,8 @@ Points d'uniformité restants :
 - [ ] 5.12 Restes : pastilles « 0/10+5 », libellé « Goûter » grisé, tuile « Routine » de taille différente
 - [ ] 5.13 Menus contextuels encore en survol / positionnés au doigt → petite fenêtre centrée
 - [ ] 5.14 Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte
+- [ ] 5.19 Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10
+- [ ] 5.20 Salut « Bonsoir, Ilar » : prénom coupé ? à vérifier
 - [ ] 5.15 Carrousel des quêtes spéciales avec une seule carte : même taille de carte
 
 Lisibilité :

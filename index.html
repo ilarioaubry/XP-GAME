@@ -139,6 +139,7 @@ html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 2
 <script>document.documentElement.classList.add("sky");</script>
 <script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
 <link rel="manifest" href="manifest.json">
+<script>try{if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}catch(e){}</script>
 <title>XP</title>
 <link rel="apple-touch-icon" href="icones/xp-180.png">
 <link rel="icon" type="image/png" href="icones/xp-192.png">
@@ -3004,7 +3005,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
 </style>
 
 <div class="wrap">
-  <h1 class="banner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg><span>Carnet de Quêtes</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg></h1>
+  <h1 class="banner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg><span>XP</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg></h1>
 
 
   
@@ -4143,7 +4144,7 @@ function obStart(){if(!S.g||S.g.onb||document.querySelector(".obd"))return;
   const ok=()=>{const s=st.step;if(s===1)return st.name.trim().length>0;if(s===3)return st.ids.length>0;if(s===4)return st.rit.matin.size+st.rit.soir.size>=2;if(s===5)return st.fam.length>=2;if(s===6)return st.fr.length>=2;return true};
   const need=()=>{const s=st.step;return s===1?"Écris ton prénom":s===3?"Choisis au moins une identité":s===4?"Choisis au moins 2 rituels":s===5?`Encore ${2-st.fam.length} personne${2-st.fam.length>1?"s":""}`:s===6?`Encore ${2-st.fr.length} ami${2-st.fr.length>1?"s":""}`:""};
   const draw=()=>{const s=st.step;let b="";
-    if(s===0)b=`<div class="obhero">${pxImg("chest",7)}<h2>Bienvenue dans ton Carnet de Quêtes</h2><p>Ta vie devient un jeu de rôle. Chaque petit geste compte : bouger, lire, appeler un proche, tenir tes rituels. Tu gagnes de l'XP, tu relèves des défis, et surtout tu vois qui tu deviens.</p><p class="hint">On va créer ton profil ensemble. Ça prend 3 minutes.</p></div>`;
+    if(s===0)b=`<div class="obhero">${pxImg("chest",7)}<h2>Bienvenue dans XP</h2><p>Ta vie devient un jeu de rôle. Chaque petit geste compte : bouger, lire, appeler un proche, tenir tes rituels. Tu gagnes de l'XP, tu relèves des défis, et surtout tu vois qui tu deviens.</p><p class="hint">On va créer ton profil ensemble. Ça prend 3 minutes.</p></div>`;
     if(s===1)b=`<h2>Qui es-tu ?</h2><label class="rdl">Ton prénom<input class="obname" maxlength="14" placeholder="Ton prénom"></label>
       <div class="obav"><img class="obprev" alt="Ton personnage" src="${avUrl()}"><div class="obavo"><small>Teint</small><div class="obsw">${AV_OPT.skin.map((x,i)=>`<button type="button" data-k="skin" data-v="${i}" style="--sw:${x[0]}" aria-pressed="${st.cfg.skin===i}" aria-label="Teint ${i+1}"></button>`).join("")}</div>
       <small>Cheveux</small><div class="obsw">${AV_OPT.hairC.map((x,i)=>`<button type="button" data-k="hairC" data-v="${i}" style="--sw:${x}" aria-pressed="${st.cfg.hairC===i}" aria-label="Couleur ${i+1}"></button>`).join("")}</div>
