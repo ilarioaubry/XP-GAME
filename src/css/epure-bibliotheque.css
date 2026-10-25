@@ -12,8 +12,8 @@
 .libinfo{margin-top:12px;min-height:44px}
 .libinfo .hint{margin:0}
 .libpop{background:var(--surface-2);border:3px solid var(--ink);border-radius:4px;box-shadow:0 3px 0 var(--rpg-shadow,#000);padding:10px 12px}
-.libpop small{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.libpop h4{margin:2px 0 8px;font-family:var(--f-pixel);font-size:18px;line-height:1.2;overflow-wrap:anywhere}
+.libpop small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.libpop h4{margin:2px 0 8px;font-family:var(--f-pixel);font-size:20px;line-height:1.2;overflow-wrap:anywhere}
 .libpop ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .libpop li{display:grid;grid-template-columns:24px 1fr auto;gap:8px;align-items:center;font-size:13px}
 .libpop li i{display:grid;width:24px;height:24px}

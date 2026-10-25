@@ -4,12 +4,12 @@ html:not(#_a):not(#_b) .wrap>#trkBox{order:-28}
 html:not(#_a):not(#_b) .wrap>:is(#sleepGo,#enBox,#nowBox,#evmBox,#wkSun,#rtrBox,#gameBox,#xmBox){order:-26}
 html body .wrap>section.evhide{display:none!important}
 
-html:not(#_a):not(#_b) body .rarec.rare1 b{display:block;font-size:17px;line-height:1.3;padding-right:40px}
+html:not(#_a):not(#_b) body .rarec.rare1 b{display:block;font-size:15px;line-height:1.3;padding-right:40px}
 html:not(#_a):not(#_b) body .rarec.rare1 .rared{font-weight:400;opacity:.85}
 
 html body #fqBox .fqctx,html body #plusBox small,html body .wrap>#prjBox{display:none!important}
 html body #lzProf{display:none!important}
-html:not(#_a):not(#_b) body :is(#dzBox,#musBox) .fdt{color:var(--ink)!important;text-transform:none!important;letter-spacing:0!important;font-size:17px!important}
+html:not(#_a):not(#_b) body :is(#dzBox,#musBox) .fdt{color:var(--ink)!important;text-transform:none!important;letter-spacing:0!important;font-size:15px!important}
 
 html body .xph{display:none!important}
 html body button.xpb{font-size:0!important}
@@ -82,7 +82,7 @@ html:not(#_a):not(#_b) body .wrap>#evtBox{order:0!important}
 html:not(#_a):not(#_b) body .wrap>#evToday{order:-27}
 html body #evToday:empty{display:none}
 html body #evToday .evtd{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--ec,var(--gold));border-radius:14px;padding:12px 14px}
-html body #evToday .evtd b{font-size:16px;flex:1;min-width:0}
+html body #evToday .evtd b{font-size:15px;flex:1;min-width:0}
 html body #evToday .evtd span{font-size:22px}
 html:not(#_a):not(#_b) body #sleepGo,html:not(#_a):not(#_b) body #sleepGo .slgc{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
 
@@ -91,17 +91,17 @@ html body #setMods .tg{padding:8px 0}
 
 html body #ficheBox .fcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
 html body #ficheBox .fch{display:flex;align-items:center;justify-content:space-between;gap:10px}
-html body #ficheBox .fch b{font-family:var(--f-pixel);font-size:18px}
+html body #ficheBox .fch b{font-family:var(--f-pixel);font-size:20px}
 html body #ficheBox .fch .btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:4px 12px}
 html body #ficheBox .fcs,html body #ficheBox .fopts{display:flex;flex-wrap:wrap;gap:6px}
 html body #ficheBox .fchip{border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px}
 html body #ficheBox .fchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:700}
 html body #ficheBox .fnone{color:var(--muted);font-size:13px}
 html body #ficheBox .fr2{display:grid;gap:6px}
-html body #ficheBox .fr2>small{color:var(--muted);font-size:12px}
-html body #ficheBox .fopts button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:700;color:var(--muted);min-height:36px}
+html body #ficheBox .fr2>small{color:var(--muted);font-size:13px}
+html body #ficheBox .fopts button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--muted);min-height:36px}
 html body #ficheBox .fopts button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-html body #ficheBox .fnote{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
+html body #ficheBox .fnote{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
 html body #ficheBox .frow2{grid-template-columns:1fr 1fr}
 html body #ficheBox .frow2 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;font-size:13px}
 html body #pcBox{display:none!important}
@@ -114,36 +114,36 @@ html body #prof .premind .seg button[aria-pressed=true]{background:var(--surface
 
 #actFind{padding:0 16px 12px;display:grid;gap:12px}
 #actFind .afs{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 10px;color:var(--muted)}
-#actFind .afq{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;outline:0;padding:11px 0;-webkit-appearance:none}
+#actFind .afq{flex:1;min-width:0;font:inherit;font-size:15px;color:var(--ink);background:transparent;border:0;outline:0;padding:11px 0;-webkit-appearance:none}
 #actFind .afx{border:0;background:none;color:var(--muted);width:32px;height:32px}
 #actFind .afc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-#actFind .afc button{display:grid;justify-items:center;gap:4px;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--cc);font-size:12.5px;font-weight:700;min-height:64px}
+#actFind .afc button{display:grid;justify-items:center;gap:4px;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--cc);font-size:13px;font-weight:700;min-height:64px}
 #actFind .afc button span{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 #actFind .afc button[aria-pressed=true]{background:var(--cc);border-color:var(--cc);color:#fff}
 #actFind .afc button[aria-pressed=true] span{color:#fff}
 #actFind .afl{display:grid;gap:6px}
-#actFind .afh{color:var(--muted);font-size:12px}
+#actFind .afh{color:var(--muted);font-size:13px}
 #actFind .afr{display:flex;align-items:center;gap:8px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:12px;padding:10px 10px 10px 12px;font:inherit;color:var(--ink);min-height:50px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #actFind .afr .afn{flex:1;min-width:0;font-weight:700;font-size:15px}
-#actFind .afgo{background:var(--gold);color:#1a1210;font-weight:700;border-radius:9px;padding:6px 12px;font-size:14px}
+#actFind .afgo{background:var(--gold);color:#1a1210;font-weight:700;border-radius:9px;padding:6px 12px;font-size:15px}
 #actFind .afnew{border:1px dashed var(--line);background:transparent;border-radius:12px;min-height:44px;font-weight:700;color:var(--muted)}
 
 .qwfind{display:grid;gap:10px;margin:4px 0 8px}
 .qwfind~.qwsub,.qwfind~.qwsug{display:none!important}
 .qwfind .afc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.qwfind .afc button{display:grid;justify-items:center;gap:4px;padding:8px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--cc);font-size:12px;font-weight:700;min-height:58px}
+.qwfind .afc button{display:grid;justify-items:center;gap:4px;padding:8px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--cc);font-size:13px;font-weight:700;min-height:58px}
 .qwfind .afc button span{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .qwfind .afc button[aria-pressed=true]{background:var(--cc);border-color:var(--cc);color:#fff}
 .qwfind .afc button[aria-pressed=true] span{color:#fff}
 .qwfind .afl{display:grid;gap:6px;max-height:40vh;overflow:auto}
-.qwfind .afh{color:var(--muted);font-size:12px}
+.qwfind .afh{color:var(--muted);font-size:13px}
 .qwfind .afr{display:flex;align-items:center;gap:8px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:12px;padding:9px 10px 9px 12px;font:inherit;color:var(--ink);min-height:46px}
-.qwfind .afr .afn{flex:1;min-width:0;font-weight:700;font-size:14.5px}
+.qwfind .afr .afn{flex:1;min-width:0;font-weight:700;font-size:15px}
 .qwfind .afgo{background:var(--gold);color:#1a1210;font-weight:700;border-radius:9px;padding:5px 10px;font-size:13px}
 html body #ficheBox .fchip.fpri{border-color:var(--gold);color:var(--gold);font-weight:700}
 
 .epop{position:fixed;z-index:80;min-width:200px;max-width:min(300px,calc(100vw - 20px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:grid;gap:2px}
-.epop .eph{font-size:12px;color:var(--muted);padding:6px 10px 2px;font-weight:700}
+.epop .eph{font-size:13px;color:var(--muted);padding:6px 10px 2px;font-weight:700}
 .epop button{border:0;background:transparent;text-align:left;font:inherit;font-size:15px;color:var(--ink);padding:11px 12px;border-radius:10px}
 .epop button:active{background:var(--surface-2)}
 .epop button[aria-pressed=true]{background:var(--surface-2);font-weight:700}
@@ -153,13 +153,13 @@ html body #sqBox .sq>.sqx{display:none!important}
 html body #sqBox .sq>.sqm{position:absolute;top:0;right:0;width:44px;height:44px;border:0;background:none;color:var(--muted);display:grid;place-items:center}
 html body #lzEdBtn{display:none!important}
 #actFind .afc{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-#actFind .afc button{min-height:60px!important;font-size:12px!important}
+#actFind .afc button{min-height:60px!important;font-size:13px!important}
 #actFind .aff{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--fc);border-radius:14px;padding:10px 12px}
 #actFind .afft{font-size:15px}
 #actFind .afopts{display:flex;flex-wrap:wrap;gap:6px}
-#actFind .afo{position:relative;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 14px;font:inherit;font-size:14.5px;font-weight:700;min-height:42px;display:inline-flex;align-items:center;gap:6px;transition:transform .15s}
+#actFind .afo{position:relative;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:9px 14px;font:inherit;font-size:15px;font-weight:700;min-height:42px;display:inline-flex;align-items:center;gap:6px;transition:transform .15s}
 #actFind .afo.did{border-color:var(--accent)}
-#actFind .afo em{font-style:normal;font-size:12px;color:var(--accent);font-weight:800}
+#actFind .afo em{font-style:normal;font-size:13px;color:var(--accent);font-weight:800}
 #actFind .afo.pop{animation:afPop .45s ease}
 @keyframes afPop{30%{transform:scale(1.12);background:var(--accent);color:var(--accent-ink)}100%{transform:none}}
 
@@ -170,12 +170,12 @@ html body #lzEdBtn{display:none!important}
 #actFind .afo.fr-r{border-left-color:#e5483a;background:color-mix(in srgb,#e5483a 14%,var(--surface-2))}
 #actFind .afd{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px 14px}
 #actFind .afdh{display:flex;align-items:center;gap:10px}
-#actFind .afdh b{font-family:var(--f-pixel);font-size:19px;line-height:1.15}
+#actFind .afdh b{font-family:var(--f-pixel);font-size:20px;line-height:1.15}
 #actFind .afback{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);display:grid;place-items:center;flex:0 0 auto;transform:scaleX(-1) rotate(-90deg)}
 #actFind .afdr{display:grid;gap:8px}
-#actFind .afdr>small{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+#actFind .afdr>small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 #actFind .afppl,#actFind .afdur{display:flex;flex-wrap:wrap;gap:6px}
-#actFind .afppl button,#actFind .afdur button{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:8px 13px;font:inherit;font-size:14px;font-weight:700;min-height:40px}
+#actFind .afppl button,#actFind .afdur button{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:8px 13px;font:inherit;font-size:15px;font-weight:700;min-height:40px}
 #actFind .afppl button[aria-pressed=true]{background:var(--c-social);border-color:var(--c-social);color:#fff}
 #actFind .afdur button[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#1a1210}
 #actFind .afmore{color:var(--muted)!important}
@@ -194,7 +194,7 @@ html.plusopen #afFab{display:none}
 
 #actFind .afgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #actFind .aft{position:relative;text-align:left;min-height:64px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--fc);background:var(--surface);color:var(--ink);padding:12px 12px;font:inherit;display:flex;align-items:center}
-#actFind .aft b{font-size:15.5px;line-height:1.2;padding-right:22px}
+#actFind .aft b{font-size:15px;line-height:1.2;padding-right:22px}
 #actFind .aft.r{border-left-color:#e5483a}
 #actFind .aft.o{border-left-color:#f0a020}
 #actFind .aft .afor{position:absolute;top:6px;right:8px;min-width:18px;height:18px;border-radius:9px;background:#f0a020;color:#1a1210;font-style:normal;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 4px}
@@ -202,30 +202,30 @@ html.plusopen #afFab{display:none}
 #actFind .aft em{position:absolute;top:6px;right:10px;font-style:normal;color:var(--accent);font-weight:800}
 #actFind .aft.pop{animation:afPop .45s ease}
 #actFind .affh{display:flex;align-items:center;gap:10px}
-#actFind .affh .afft{font-family:var(--f-pixel);font-size:19px}
-#actFind .afopts .afo{font-size:15.5px;min-height:48px;padding:10px 16px}
+#actFind .affh .afft{font-family:var(--f-pixel);font-size:20px}
+#actFind .afopts .afo{font-size:15px;min-height:48px;padding:10px 16px}
 #actFind .afppl button{min-height:46px;font-size:15px;padding:10px 16px}
 #actFind .afppl .afsolo{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #actFind .afdur.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-#actFind .afdur.big button{min-height:60px;font-size:17px;border-radius:14px}
+#actFind .afdur.big button{min-height:60px;font-size:15px;border-radius:14px}
 #actFind .afdur.big button[data-d="0"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #actFind .afd .pop,#actFind .afdur button.pop{animation:afPop .45s ease}
 #actFind .afppl button[aria-pressed=true]{background:var(--c-social)!important;border-color:var(--c-social)!important;color:#fff!important}
-#actFind .afnext{position:sticky;bottom:10px;min-height:52px;font-size:16px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
-html:not(#_a):not(#_b):not(#_c) body #sqBox .sq .btn.primary.eodb{background:transparent!important;border:1px dashed var(--line)!important;color:var(--muted)!important;box-shadow:none!important;font-size:12.5px!important;opacity:1!important}
+#actFind .afnext{position:sticky;bottom:10px;min-height:52px;font-size:15px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+html:not(#_a):not(#_b):not(#_c) body #sqBox .sq .btn.primary.eodb{background:transparent!important;border:1px dashed var(--line)!important;color:var(--muted)!important;box-shadow:none!important;font-size:13px!important;opacity:1!important}
 #actFind .afgrp{border-style:dashed!important}
 #actFind .afgrp[aria-pressed=true]{border-style:solid!important}
 #actFind .afqin{display:flex;gap:8px}
-#actFind .afqin input{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+#actFind .afqin input{flex:1;min-width:0;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 #actFind .aftime{justify-self:start;padding:6px 0;font-size:13px}
 #actFind .afadd{border-style:dashed!important;color:var(--muted)!important;font-size:20px!important;min-width:48px;justify-content:center}
 #actFind .afaddin{display:flex;gap:6px;width:100%}
-#actFind .afaddin input{flex:1;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+#actFind .afaddin input{flex:1;min-width:0;font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
 #actFind .afcu{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-#actFind .afcu small{color:var(--muted);font-size:12px;width:100%}
-#actFind .afcux{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 10px;font-size:12.5px}
+#actFind .afcu small{color:var(--muted);font-size:13px;width:100%}
+#actFind .afcux{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 10px;font-size:13px}
 html body #chapBox .bstory{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;margin-top:10px}
-html body #chapBox .bstory small{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+html body #chapBox .bstory small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 html body #chapBox .bstory p{margin:0;font-size:15px;line-height:1.4}
 
 #actFind.uni{background:var(--uni);border-radius:16px;padding-top:12px;padding-bottom:14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
@@ -272,8 +272,8 @@ html:not(#_a):not(#_b) body .idq .sqr{display:flex;align-items:center;gap:14px;m
 html:not(#_a):not(#_b) body :is(.evtd.bdy,#sqBox .sq.bdq,#fqBox .fqr.bdq){background:var(--bdfl) top center/96px 22px repeat-x,var(--bdconf) center/120px 120px,var(--bdgrad)!important;color:#fff!important;border-color:rgba(255,255,255,.35)!important;border-left-color:#ffd56b!important;position:relative}
 html:not(#_a):not(#_b) body .evtd.bdy{width:100%;box-sizing:border-box;padding:22px 14px 12px!important;gap:12px;text-align:left;box-shadow:0 6px 18px rgba(180,75,224,.35)}
 html:not(#_a):not(#_b) body .evtd.bdy .bdtx{display:flex;flex-direction:column;gap:2px}
-html:not(#_a):not(#_b) body .evtd.bdy b{font-size:16px;color:#fff}
-html:not(#_a):not(#_b) body .evtd.bdy small{font-size:12.5px;color:#ffe9f6;font-weight:600}
+html:not(#_a):not(#_b) body .evtd.bdy b{font-size:15px;color:#fff}
+html:not(#_a):not(#_b) body .evtd.bdy small{font-size:13px;color:#ffe9f6;font-weight:600}
 html:not(#_a):not(#_b) body :is(.evtd.bdy,.sq.bdq,.fqr.bdq) :is(b,small,.sqn,.sqk,.fqw){text-shadow:0 1px 3px rgba(60,0,80,.55)}
 html:not(#_a):not(#_b) body .sq.bdq .sqk svg{color:#ffd56b}
 @keyframes bdbob{50%{transform:translateY(-3px) rotate(-4deg)}}

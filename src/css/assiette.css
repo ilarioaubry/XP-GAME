@@ -10,17 +10,17 @@
 .plit svg{width:100%;height:100%;display:block;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.25))}
 .plit.pop{animation:plpop .28s cubic-bezier(.2,1.6,.4,1) both}
 @keyframes plpop{from{transform:translate(-50%,-50%) scale(.2)}to{transform:translate(-50%,-50%) scale(1)}}
-.plmore{position:absolute;transform:translate(-50%,-50%);font-family:var(--f-pixel);font-size:16px;color:#2a1606;background:#fff;border:2px solid #2a1606;padding:0 5px}
+.plmore{position:absolute;transform:translate(-50%,-50%);font-family:var(--f-pixel);font-size:15px;color:#2a1606;background:#fff;border:2px solid #2a1606;padding:0 5px}
 .plhint{margin:0;text-align:center;font-size:13px;color:rgba(255,247,230,.6)}
 .plsides{display:grid;gap:12px}
-.plside h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:17px;letter-spacing:.03em;color:#fff7e6}
+.plside h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:15px;letter-spacing:.03em;color:#fff7e6}
 .plside h3 i,.pldl i{width:10px;height:10px;background:var(--pc);box-shadow:inset -2px -2px 0 rgba(0,0,0,.25)}
-.plside h3 small{font-size:14px;color:var(--pc)}
+.plside h3 small{font-size:15px;color:var(--pc)}
 .plfoods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .plf{display:grid;justify-items:center;gap:3px;padding:6px 2px;border:0;background:none;color:#fff7e6;cursor:pointer;border-bottom:3px solid transparent}
 .plf span{width:40px;height:40px;display:block}
 .plf span svg{width:100%;height:100%;display:block}
-.plf small{font-size:12px;line-height:1.1}
+.plf small{font-size:13px;line-height:1.1}
 .plf:active{transform:translateY(2px);border-bottom-color:var(--pc)}
 .plbar{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:4px;position:sticky;bottom:0;padding-top:8px;background:linear-gradient(180deg,transparent,#0d0f22 30%)}
 .plxs{display:grid;gap:10px;margin-top:6px}
@@ -28,21 +28,21 @@
 .plx span{width:56px;height:56px;display:block;opacity:.45;filter:grayscale(.7);transition:opacity .15s,filter .15s}
 .plx span svg{width:100%;height:100%;display:block}
 .plx b{font-family:var(--f-pixel);font-size:20px;font-weight:400}
-.plx em{font-style:normal;font-family:var(--f-pixel);font-size:16px;color:rgba(255,247,230,.5);padding:2px 10px;border:2px solid rgba(255,255,255,.2)}
+.plx em{font-style:normal;font-family:var(--f-pixel);font-size:15px;color:rgba(255,247,230,.5);padding:2px 10px;border:2px solid rgba(255,255,255,.2)}
 .plx.on span{opacity:1;filter:none}
 .plx.on em{color:#2a1606;background:var(--gold,#ffd94a);border-color:#2a1606}
 /* Aujourd'hui : l'assiette du jour */
 .pldy{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;margin:6px 0 2px}
 .pldp svg{width:76px;height:76px;display:block;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.4))}
 .pldt{display:grid;gap:5px;min-width:0}
-.pldt b{font-size:14px;color:#fff7e6}
-.pldl{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:rgba(255,247,230,.8)}
+.pldt b{font-size:15px;color:#fff7e6}
+.pldl{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:rgba(255,247,230,.8)}
 .pldl span{display:inline-flex;align-items:center;gap:5px}
 .pldx{display:flex;gap:10px}
 .pldx span{display:inline-flex;align-items:center;gap:2px;opacity:.4}
 .pldx span.on{opacity:1}
 .pldx svg{width:22px;height:22px}
-.pldx em{font-style:normal;font-size:12px;color:#fff7e6}
+.pldx em{font-style:normal;font-size:13px;color:#fff7e6}
 /* Bilan : 7 jours */
 .plwk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:4px 0 8px}
 .plwk span{display:grid;justify-items:center;gap:3px}
@@ -58,7 +58,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plxp{margin:-4px 0 0;text-align:center;font-family:var(--f-pixel);font-size:15px;color:var(--gold,#ffd94a);min-height:1.2em}
 .plxp.full{animation:plglow 1s ease-in-out 2}
 @keyframes plglow{50%{text-shadow:0 0 10px var(--gold,#ffd94a)}}
-.plside.need h3 em{font-style:normal;font-family:var(--f-body);font-size:12px;color:#2a1606;background:var(--pc);padding:1px 6px;margin-left:4px}
+.plside.need h3 em{font-style:normal;font-family:var(--f-body);font-size:13px;color:#2a1606;background:var(--pc);padding:1px 6px;margin-left:4px}
 .plside.need .plfoods{animation:plneed 1.4s ease-in-out 3}
 @keyframes plneed{50%{background:color-mix(in srgb,var(--pc) 18%,transparent)}}
 .pldy{grid-template-columns:76px 1fr}
@@ -66,7 +66,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 @media (prefers-reduced-motion:reduce){.plxp.full,.plside.need .plfoods{animation:none}}
 /* recettes, tri, aliments perso, quête */
 .plhd{gap:8px}.plhd h2{flex:1}
-.pltri{padding:6px 12px;font-size:14px;min-height:0}
+.pltri{padding:6px 12px;font-size:15px;min-height:0}
 .pltri.on{background:var(--gold,#ffd94a);color:#2a1606}
 .plq{margin:0;padding:6px 10px;font-size:13px;color:#fff7e6;border-left:3px solid var(--gold,#ffd94a);background:rgba(255,255,255,.05)}
 .plrec{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0 6px;margin:0 -16px;padding-left:16px;padding-right:16px;scroll-snap-type:x proximity}
@@ -81,7 +81,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plr.plsv{border-bottom-style:dashed}
 .plr[disabled]{opacity:.4}
 .plname{display:grid;grid-template-columns:1fr auto auto;gap:6px}
-.plname input,.plnew input{min-width:0;padding:10px;font-size:16px;border:2px solid rgba(255,255,255,.25);background:#15182e;color:#fff7e6}
+.plname input,.plnew input{min-width:0;padding:10px;font-size:15px;border:2px solid rgba(255,255,255,.25);background:#15182e;color:#fff7e6}
 .plf.hid{opacity:.3;filter:grayscale(1)}
 .plf.hid small{text-decoration:line-through}
 .pladd span{display:grid!important;place-items:center;font-family:var(--f-pixel);font-size:26px;color:var(--pc);border:2px dashed color-mix(in srgb,var(--pc) 60%,transparent);box-sizing:border-box}

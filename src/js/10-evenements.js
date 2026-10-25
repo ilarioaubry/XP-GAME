@@ -22,7 +22,7 @@ function renderEvents(){
   $("evtCnt").textContent=L.length;$("evtCnt").hidden=!L.length;
   box.innerHTML="";
   const evAddRect=()=>{const a=document.createElement("button");a.type="button";a.className="evch evadd";a.innerHTML=`<span class="evci"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="evctx"><b>Ajouter</b><small>un événement</small></span>`;a.onclick=()=>$("evtAdd").click();return a};
-  if(!L.length){const fz=document.createElement("div");fz.className="evfz";fz.appendChild(evAddRect());box.appendChild(fz);box.insertAdjacentHTML("beforeend",'<p class="hint evempty">Rien de prévu.</p>');return}const MO=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+  if(!L.length){const fz=document.createElement("div");fz.className="evfz";fz.appendChild(evAddRect());box.appendChild(fz);box.insertAdjacentHTML("beforeend",'<p class="hint evempty vide">Aucun événement pour l\'instant.</p>');return}const MO=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
   if(evOpen&&!L.some(e=>e.id===evOpen))evOpen=null;
   {const fz=document.createElement("div");fz.className="evfz";fz.setAttribute("role","tablist");fz.setAttribute("aria-label","Prochains événements");
    L.forEach(e=>{const c=document.createElement("button");c.type="button";const gs=e.k==="bd"&&e.inD>=0&&e.inD<=GIFT_DAYS?gfState(e.who):null,gpend=gs&&!gs.given;

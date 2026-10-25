@@ -142,7 +142,7 @@ function ritFiche(t,done){const o=rwSheet("Régler le rituel","rwa rwf");let arm
         <button type="button" data-a="ev"><span>Rythme</span><b>${esc(cap(ritRhTxt(t)))}</b></button>
         <button type="button" data-a="mv"><span>Moment</span><b>${per==="matin"?"Le matin":"Le soir"}</b></button>
         <button type="button" data-a="trg"><span>Déclencheur</span><b>${t.trg?esc(t.trg):"Aucun"}</b></button>
-        <button type="button" data-a="core" aria-pressed="${!!t.core}"><span>Dans le socle</span><b class="rwsw${t.core?" on":""}">${STAR_SVG}</b></button></div>
+        <button type="button" data-a="core" aria-pressed="${!!t.core}"><span>Dans mes essentiels</span><b class="rwsw${t.core?" on":""}">${STAR_SVG}</b></button></div>
         <div class="rwbt"><button type="button" class="btn" data-a="up">${ICO("chev",14)} Plus tôt</button><button type="button" class="btn" data-a="dn">Plus tard ${ICO("chev",14)}</button></div>`:""}
       <div class="rwbt">${t.pz?`<button type="button" class="btn primary" data-a="unpz">Reprendre</button>`:t.auto?`<button type="button" class="btn primary" data-a="back">Réactiver</button>`:`<button type="button" class="btn" data-a="pz">${PZ_IC} Mettre en pause</button>`}<button type="button" class="btn rwdel${armed?" armed":""}" data-a="rm">${armed?"Oui, supprimer":"Supprimer"}</button></div></div>`;
     const nm=o.querySelector(".rwnm");nm.value=t.name;nm.onchange=()=>{const v=nm.value.trim().slice(0,40);if(v){t.name=v;save()}else nm.value=t.name};

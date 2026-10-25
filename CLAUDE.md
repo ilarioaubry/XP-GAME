@@ -35,6 +35,14 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Quêtes spéciales** : carrousel où la carte suivante dépasse un peu (on voit que ça glisse) ; chaque carte a une icône pixel en bas à droite (catégorie par défaut si la quête n'en a pas).
 - **Collections** (armoire, badges…) : on montre ce qui est obtenu, puis une seule tuile « +N » pour ce qui reste à trouver, jamais la liste des éléments verrouillés.
 - **Personnes associées à une action** : on les choisit au moment de « Fait » (fenêtre « Avec qui ? »), jamais suggérées avant.
+- **Bordure colorée = actif / sélectionné**, rien d'autre (ni rareté, ni catégorie, ni « disponible ») ; sinon bordure neutre `rgba(255,255,255,.17)`.
+- **Une seule étiquette** (vers 14 h, NOUVEAU, Ami du mois…) : texte 11 px gras, fond sombre, sans bordure. **Un seul compteur** (0/3, 15/117…) : police pixel 15 px, or, sans fond.
+- **Barres de progression** : un seul modèle (contour crème 2 px, fond sombre), deux tailles : grande 18 px pour les niveaux (XP, proches), petite 10 px pour tout le reste.
+- **Échelle de texte à 4 niveaux** : titre de section 20 px · titre de carte 15 px · texte 13 px · petite info 11 px. Seuls les grands chiffres décoratifs (≥ 22 px) font exception ; les champs restent à 16 px.
+- **Messages** : un seul emplacement (en haut) et un seul style pour les toasts et la barre « Annuler ».
+- **États vides** : classe `vide`, phrase courte centrée du type « Aucun … pour l'instant. », suivie du bouton pour agir s'il existe.
+- **Choix rapides** (menus « … », Pris / Sauté…) : petite fenêtre centrée sur fond assombri ; un toucher à côté la ferme sans rien déclencher derrière.
+- **Vocabulaire** : français et neutre. Pas de « boss », « monstre », « skill » : projet, compétence, essentiels, tri.
 - **Grandes illustrations** (assiette, scène, personnage) : pixel art détaillé, grilles fines (jusqu'à 64×64), pixels nets, mêmes palettes que les icônes.
 
 Conventions du code existant (à suivre) :

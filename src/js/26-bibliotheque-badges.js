@@ -101,7 +101,7 @@ function badgeDefs(){
   B.push({id:"out12",name:"Une année de sons",desc:"Sortir 12 sons",ic:"trophy",t:3,ok:()=>Object.keys(S.g.rel).length>=12});
   B.push({id:"sleep7",name:"Gros dormeur",desc:"7 nuits de 7 h ou plus",ic:"face",t:1,ok:()=>Object.values(S.g.sleep).filter(x=>x.h>=7).length>=7});
   B.push({id:"mood30",name:"Introspection",desc:"Noter ton humeur 30 jours",ic:"face",t:2,ok:()=>Object.keys(S.g.mood||{}).length>=30});
-  B.push({id:"lz5",name:"Passionné",desc:"Un skill au niveau 5",ic:"book",t:2,ok:()=>Object.values(lzState().xp).some(x=>skInfo(x).l>=5)});
+  B.push({id:"lz5",name:"Passionné",desc:"Une compétence au niveau 5",ic:"book",t:2,ok:()=>Object.values(lzState().xp).some(x=>skInfo(x).l>=5)});
   B.push({id:"lz3x3",name:"Touche-à-tout",desc:"3 skills au niveau 3",ic:"star",t:2,ok:()=>Object.values(lzState().xp).filter(x=>skInfo(x).l>=3).length>=3});
   return B.map(b=>b.sec&&!S.badges[b.id]?{...b,name:"???",desc:"Badge secret : continue à jouer pour le découvrir"}:b);
 }
@@ -115,7 +115,7 @@ function checkBadges(){
   if(fresh.length){if(!first)setTimeout(()=>sfx("badge"),400);if(!first){S.g.nb=[...new Set([...(S.g.nb||[]),...fresh.map(b=>b.id)])]}save()}
 }
 
-const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Skills & défis"],["col","Aventure & collection"]];
+const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 function famOf(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;

@@ -13,11 +13,11 @@ html body .clo2 .bsqb b{font-size:15px;line-height:1.15}
 html body .clo2 .bsqi{width:30px;height:30px;flex:none}html body .clo2 .bsqi svg{width:100%;height:100%}
 html body .clo2 .bsmr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line)}
 html body .clo2 .bsyn{display:flex;gap:6px}html body .clo2 .bsmr .bsch{padding:8px 10px;min-width:76px}html body .clo2 .bsdone{font-size:13px;color:var(--muted)}
-html body .clo2 .bsrow{display:grid;gap:6px;margin-bottom:6px}html body .clo2 .bsrow small{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+html body .clo2 .bsrow{display:grid;gap:6px;margin-bottom:6px}html body .clo2 .bsrow small{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 html body .clo2 .clomd{display:flex;justify-content:space-between;padding:8px}
 html body .pu{background:#0d0f22}
 html body .pu .puh b{font-family:var(--f-pixel);font-size:26px;font-weight:400;line-height:1.1;text-shadow:none;color:#fff8e6}
-html body .pu .puh small{display:inline-block;margin-top:6px;padding:3px 10px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);color:#ffd75a;font-size:12px;letter-spacing:.04em}
+html body .pu .puh small{display:inline-block;margin-top:6px;padding:3px 10px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.2);color:#ffd75a;font-size:13px;letter-spacing:.04em}
 html body .pu .pupad{border:2px solid rgba(255,255,255,.22);box-shadow:4px 4px 0 rgba(0,0,0,.55);background:rgba(20,22,52,.78)}
 html body .pu .puc,html body .pu .stn,html body .pu .mdt{font-family:var(--f-pixel);font-weight:400;text-shadow:none}
 html body .pu .stn{font-size:34px}

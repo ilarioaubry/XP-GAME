@@ -138,7 +138,7 @@ function renderRecords(){
   const box=$("recBox");if(!box)return;const G=S.g,days=[...S.days].sort(),first=days[0]||(S.log[0]?dayKey(S.log[0].t):dayKey(Date.now()));
   const fd=new Date(first+"T12:00"),since=fd.toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"2-digit"});
   const wins=G.bh.filter(b=>b.won).length+(G.boss.won?1:0),B=badgeDefs(),nb=B.filter(b=>S.badges[b.id]).length;
-  const R=[["Aventurier depuis",since,"flame"],["Jours actifs",S.days.length,"check"],["Meilleure série",bestStreak()+" j","flame"],["XP total",S.xp,"spark"],["Boss vaincus",wins,"sword"],["Sons sortis",Object.keys(G.rel).length,"spark"],["Coffres ouverts",G.opened||0,"check"],["Objets trouvés",G.gear.length,"spark"],["Badges",nb+"/"+B.length,"check"]];
+  const R=[["Aventurier depuis",since,"flame"],["Jours actifs",S.days.length,"check"],["Meilleure série",bestStreak()+" j","flame"],["XP total",S.xp,"spark"],["Sons sortis",Object.keys(G.rel).length,"spark"],["Coffres ouverts",G.opened||0,"check"],["Objets trouvés",G.gear.length,"spark"],["Badges",nb+"/"+B.length,"check"]];
   box.innerHTML=`<div class="gcard col1"><h3>Records</h3><p class="me-sr" style="margin:0 0 8px">${streakLine()}</p><div class="recs">${R.map(([k,v,ic])=>`<div><small>${k}</small><b>${esc(String(v))}</b></div>`).join("")}</div></div>`;
 }
 function renderSleep(){

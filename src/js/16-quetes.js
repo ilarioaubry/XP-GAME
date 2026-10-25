@@ -149,35 +149,35 @@ function renderWk(){const box=$("wkBox");if(!box||!S.g)return;const L=S.actions.
     b.addEventListener("click",e=>{if(lp===-1){e.stopImmediatePropagation();lp=0}},true)});
   box.querySelector(".wkadd").onclick=()=>qcOpen("act")}
 
-// ---- Projets en étapes (ton propre boss)
+// ---- Projets en étapes
 function prjKind(p){const L=BOSS_CAT[p.cat];let h=0;for(const ch of String(p.id))h=(h*31+ch.charCodeAt(0))>>>0;if(L&&L.length){const b=L[h%L.length];return[b[2],b[3]]}const K=["slime","ghost","shroom","bat"];return[K[h%K.length],["#5fae4f","#3a9ad8","#c86a3a","#8a5ad0"][h%4]]}
 function prjDue(p){if(!p.due)return"";const d=Math.round((new Date(p.due+"T12:00")-new Date(dayKey(Date.now())+"T12:00"))/864e5);return d<0?"en retard":d===0?"aujourd'hui":d===1?"demain":"J-"+d}
 let prjOpenId="",prjArm="";
 function prjCard(p){const C=CATS[p.cat]||{},kd=prjKind(p),N=p.st.length,done=p.st.filter(s=>s.d).length,nx=p.st.findIndex(s=>!s.d),open=prjOpenId===p.id,du=prjDue(p),x=DIFF[p.d||0][1];
-  return`<div class="prc${open?" open":""}" data-id="${p.id}" style="--zc:${C.c||"var(--gold)"}"><button type="button" class="prh" aria-expanded="${open}"><span class="prm">${bossFrames(kd[0],kd[1],3)}</span><span class="prt"><small>${(C.label||"Projet")} · ${p.arc?"arc":"projet"}${du?` · <em class="${du==="en retard"?"late":""}">${du}</em>`:""}</small><b></b>
-    <span class="prhp" aria-label="${N-done} cœurs sur ${N}">${p.st.map(s=>`<i class="${s.d?"":"on"}"></i>`).join("")}</span></span></button>
+  return`<div class="prc${open?" open":""}" data-id="${p.id}" style="--zc:${C.c||"var(--gold)"}"><button type="button" class="prh" aria-expanded="${open}"><span class="prm">${rkSvg((typeof SQ_IC!=="undefined"&&SQ_IC[p.cat])||"dossier")}</span><span class="prt"><small>${(C.label||"Projet")} · ${p.arc?"arc":"projet"}${du?` · <em class="${du==="en retard"?"late":""}">${du}</em>`:""}</small><b></b>
+    <span class="prbarw" aria-label="${done} étapes sur ${N}"><span class="prbar"><i style="width:${Math.round(done/N*100)}%"></i></span><small>${done}/${N}</small></span></span></button>
     ${nx>=0?`<div class="prn"><span><small>Étape ${nx+1}/${N}</small><b class="prnt"></b></span><button type="button" class="btn primary prgo" data-i="${nx}">Fait <small>+${x}</small></button></div>`:""}
     ${open?`<ol class="prl">${p.st.map((s,i)=>`<li class="${s.d?"ok":""}"><button type="button" data-i="${i}" ${s.d?"disabled":""} aria-label="${s.d?"Fait":"Marquer fait"}">${s.d?ICO("check",14):""}</button><span></span></li>`).join("")}</ol>
       <form class="pradd"><input maxlength="60" placeholder="Ajouter une étape" aria-label="Ajouter une étape"><button type="submit" class="btn" aria-label="Ajouter">${ICO("check",16)}</button></form>
-      <div class="prft"><button type="button" class="lnk prdel">${prjArm===p.id?"Vraiment abandonner ?":"Abandonner ce projet"}</button></div>`:""}</div>`}
+      <div class="prft"><button type="button" class="lnk prdel">Abandonner ce projet</button></div>`:""}</div>`}
 function renderPrj(){if(!S.g)return;const P=(S.g.prj||[]),A=P.filter(p=>!p.won),W=P.filter(p=>p.won).length;
   ["prjBox","prjBox2"].forEach(id=>{const box=$(id);if(!box)return;const inBoss=id==="prjBox2";
     if(!A.length&&!inBoss){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
     box.innerHTML=`<div class="head"><h2>${inBoss?"Mes projets":"Projets"}<span class="count">${A.length}</span></h2><button type="button" class="btn edbtn prnew" aria-label="Lancer un projet" title="Lancer un projet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
-    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("sword",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Claude le découpe en chapitres.</small></span></button>`:""}
-    ${A.length?A.map(prjCard).join(""):`<button type="button" class="wkcta prcta">${ICO("plus",18)}<span><b>Lance ton propre boss</b><small>Une grosse tâche en étapes.</small></span></button>`}${W?`<p class="hint prwon">${W} projet${W>1?"s":""} terminé${W>1?"s":""}</p>`:""}`;
+    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("spark",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Claude le découpe en chapitres.</small></span></button>`:""}
+    ${A.length?A.map(prjCard).join(""):`<button type="button" class="wkcta prcta">${ICO("plus",18)}<span><b>Lance un projet</b><small>Une grosse tâche en étapes.</small></span></button>`}${W?`<p class="hint prwon">${W} projet${W>1?"s":""} terminé${W>1?"s":""}</p>`:""}`;
     box.querySelectorAll(".prc").forEach(c=>{const p=P.find(x=>x.id===c.dataset.id);c.querySelector(".prt b").textContent=p.n;const nt=c.querySelector(".prnt");if(nt)nt.textContent=p.st[p.st.findIndex(s=>!s.d)].t;
       c.querySelectorAll(".prl li span").forEach((s,i)=>s.textContent=p.st[i].t);
       c.querySelector(".prh").onclick=()=>{prjOpenId=prjOpenId===p.id?"":p.id;prjArm="";renderPrj()};
       c.querySelectorAll("[data-i]").forEach(b=>b.onclick=ev=>{ev.stopPropagation();prjStep(p,+b.dataset.i,c,b,ev)});
       const f=c.querySelector(".pradd");if(f)f.onsubmit=e=>{e.preventDefault();const v=f.querySelector("input").value.trim();if(!v)return;if(p.st.length>=12){toast("12 étapes maximum");return}p.st.push({t:v.slice(0,60)});save();renderPrj()};
-      const dl=c.querySelector(".prdel");if(dl)dl.onclick=()=>{if(prjArm!==p.id){prjArm=p.id;renderPrj();return}S.g.prj=P.filter(x=>x!==p);prjArm="";save();renderPrj();toast("Projet abandonné")}});
+      const dl=c.querySelector(".prdel");if(dl)dl.onclick=()=>undoAfter("Projet abandonné",()=>{S.g.prj=(S.g.prj||[]).filter(x=>x!==p);save();renderPrj()})});
     box.querySelectorAll(".prnew,.prcta").forEach(b=>b.onclick=()=>qcOpen("prj"));{const a=box.querySelector(".arccta2");if(a)a.onclick=()=>arcAsk()}})}
 function prjStep(p,i,card,btn,ev){if(!p.st[i]||p.st[i].d)return;p.st[i].d=Date.now();const last=p.st.every(s=>s.d);const m=card.querySelector(".prm"),x=DIFF[p.d||0][1];
   if(m&&!matchMedia("(prefers-reduced-motion: reduce)").matches){m.classList.remove("hit");void m.offsetWidth;m.classList.add("hit");const h=card.querySelectorAll(".prhp i.on");const hi=h[h.length-1];if(hi)hi.classList.add("pop")}
   try{sfx("hit")}catch(e){}
   setTimeout(()=>{complete({id:"prj-"+p.id,name:p.n+" · "+p.st[i].t,cat:CATS[p.cat]?p.cat:"soi",xp:x},btn,ev,0,{prj:p.id,ps:i});if(last){p.won=Date.now();S.g.chests=(S.g.chests||0)+1;save();setTimeout(()=>prjWin(p),500)}},380)}
 function prjWin(p){const kd=prjKind(p),bonus=DIFF[p.d||0][1]*2;sfx("open",3);skyCheer(true);const o=document.createElement("div");o.className="bpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Projet terminé");
-  o.innerHTML=`<div class="bpc prwin" style="--tc:var(--gold)"><div class="prwm">${bossSvg(kd[0],kd[1],7)}</div><p class="bph">Projet terminé</p><h3></h3><p class="bpd">${p.st.length} étapes, monstre vaincu. Tu gagnes un coffre et +${bonus} XP.</p><button type="button" class="btn primary">Récupérer</button></div>`;
+  o.innerHTML=`<div class="bpc prwin" style="--tc:var(--gold)"><div class="prwm">${bossSvg(kd[0],kd[1],7)}</div><p class="bph">Projet terminé</p><h3></h3><p class="bpd">${p.st.length} étapes bouclées. Tu gagnes un coffre et +${bonus} XP.</p><button type="button" class="btn primary">Récupérer</button></div>`;
   o.querySelector("h3").textContent=p.n;document.body.appendChild(o);const go=o.querySelector("button");go.focus({preventScroll:true});
   go.onclick=ev=>{o.remove();complete({id:"prjwin-"+p.id,name:"Projet terminé · "+p.n,cat:CATS[p.cat]?p.cat:"soi",xp:bonus},document.querySelector(".qxp")||document.body,ev,0,{prj:p.id,win:1})}}

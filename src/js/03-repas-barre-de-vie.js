@@ -76,7 +76,7 @@ function lateNight(){const m=adjH()*60;return S.g&&S.g.curfew!==false&&(m>=23*60
 function dayPer(){const h=adjH();return h>=8&&h<15?"matin":h>=15||h<4?"soir":"nuit"}
 function ritPer(t){return t.when==="soir"?"soir":"matin"}
 
-const RARE={legend:["Jour légendaire","boss XP ×2 + 1 coffre","#f2c230"],gold:["Coffre doré","objet épique garanti","#f2c230"],x2:["Heure d'or","XP double pendant 1 h","#ff9a3d"],secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
+const RARE={legend:["Jour légendaire","XP ×2 + 1 coffre","#f2c230"],gold:["Coffre doré","objet épique garanti","#f2c230"],x2:["Heure d'or","XP double pendant 1 h","#ff9a3d"],secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
 function vkind(b){const n=(b.dataset.tmn||"").trim();if(!n)return"";if(qSpecial(n))return"scr";if(durOf(n))return"tmr";if(holdable(b))return"hold";return""}
 const VK_IC={scr:'<path d="M8 5l11 7-11 7z" fill="currentColor"/>',tmr:'<path d="M7 3h10M7 21h10M8 3c0 5 8 6 8 9s-8 4-8 9M16 3c0 5-8 6-8 9s8 4 8 9" fill="none" stroke="currentColor" stroke-width="2.4"/>',hold:'<circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="3 2.4"/>'};
 function tagVK(){document.querySelectorAll("[data-tm]").forEach(b=>{const k=vkind(b);const old=b.querySelector(":scope>.vk");if(old&&old.dataset.k===k)return;if(old)old.remove();if(!k)return;const i=document.createElement("i");i.className="vk vk-"+k;i.dataset.k=k;i.setAttribute("aria-hidden","true");i.innerHTML=`<svg viewBox="0 0 24 24" width="11" height="11">${VK_IC[k]}</svg>`;b.appendChild(i)})}

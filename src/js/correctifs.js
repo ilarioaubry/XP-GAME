@@ -244,7 +244,7 @@
     // cigarettes
     {const sum=A=>A.reduce((a,k)=>a+((g.cig||{})[k]||0),0),a=sum(K),b=sum(prevK),nd=K.filter(k=>k in(g.cig||{})).length;if(nd&&b){const pct=Math.round((a-b)/b*100);out.push(pct<0?`Tu as fumé ${-pct} % de moins que la semaine d'avant (${a} cigarettes).`:pct>0?`${a} cigarettes, ${pct} % de plus que la semaine d'avant.`:`${a} cigarettes, comme la semaine d'avant.`)}else if(nd)out.push(`${a} cigarette${a>1?"s":""} cette semaine.`)}
     // skills
-    {const z={};L.forEach(e=>{if(e.lz&&e.lzx){const id=String(e.lz).split(":")[0];z[id]=(z[id]||0)+e.lzx}});const t=Object.entries(z).sort((a,b)=>b[1]-a[1])[0];if(t){const Z=lzOf(t[0]);if(Z)out.push(`Ton skill qui a le plus avancé : ${Z.n} (+${t[1]} XP).`)}}
+    {const z={};L.forEach(e=>{if(e.lz&&e.lzx){const id=String(e.lz).split(":")[0];z[id]=(z[id]||0)+e.lzx}});const t=Object.entries(z).sort((a,b)=>b[1]-a[1])[0];if(t){const Z=lzOf(t[0]);if(Z)out.push(`Ta compétence qui a le plus avancé : ${Z.n} (+${t[1]} XP).`)}}
     // siestes, quêtes
     {const m=K.reduce((a,k)=>a+((g.nap||{})[k]||0),0);if(m)out.push(`${m>=60?Math.round(m/6)/10+" h":m+" min"} de sieste.`)}
     {const q=L.filter(e=>e.sp||e.autoq||e.eod).length;if(q)out.push(`${q} quête${q>1?"s":""} spéciale${q>1?"s":""} réussie${q>1?"s":""}.`)}
@@ -494,7 +494,7 @@
   {const f=document.createElement("button");f.type="button";f.id="afFab";f.dataset.v="q";f.setAttribute("aria-label","Noter une action");f.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';f.onclick=()=>{const b=document.querySelector("#plusBox .plusb");if(b&&!document.documentElement.classList.contains("plusopen"))b.click()};document.body.appendChild(f);try{f.hidden=view!=="q"}catch(e){}}
   // 1. Rituels : appui long sur une tuile
   hold("#dqBox .rtile",(b)=>{const n=(b.querySelector(".rtn")||{}).textContent;const t=ritTasks().find(x=>x.name===n);if(!t)return;
-    pop(b,[{l:ICO("star",14)+(t.core?" Retirer du socle":" Mettre dans le socle"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
+    pop(b,[{l:ICO("star",14)+(t.core?" Retirer des essentiels":" Mettre dans mes essentiels"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
       {l:"⏸ Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
       {l:ICO("edit",14)+" Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
   // 8. Cigarettes : appui long pour masquer
@@ -625,7 +625,7 @@
     const acts=root.querySelector("#pActs");if(acts&&!acts.dataset.vz){acts.dataset.vz=1;acts.classList.add("ractz");acts.querySelectorAll("button").forEach(b=>{const t=b.textContent;if(/appel|vrai/i.test(t))b.addEventListener("click",()=>{const n=profName;setTimeout(()=>{try{kwAsk([n])}catch(e){}},2800)});b.insertAdjacentHTML("afterbegin",`<span class="rai">${vI(/appel/i.test(t)?"tel":/vrai/i.test(t)?"duo":"bulle")}</span>`)})}
     const ul=root.querySelector("#pHist");if(ul){const sig=ul.innerText;let hv=root.querySelector(".histviz");if(!hv||hv.dataset.s!==sig){if(!hv){hv=document.createElement("div");hv.className="histviz";ul.after(hv)}hv.dataset.s=sig;
       const L=[];ul.querySelectorAll("li").forEach(li=>{const tm=(li.querySelector("time")||{}).textContent||"",nm=(li.querySelectorAll("span")[0]||{}).textContent||"",x=(li.querySelector(".x")||{}).textContent||"";const k=tm+"|"+nm,last=L[L.length-1];if(last&&last.k===k){last.n++;last.x+=parseInt(x)||0}else L.push({k,tm,nm,n:1,x:parseInt(x)||0})});
-      hv.innerHTML=L.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${vI((HISTI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.tm.replace(/\.$/,""))}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")||`<p class="hint" style="margin:0">Rien pour l'instant</p>`}}}
+      hv.innerHTML=L.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${vI((HISTI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.tm.replace(/\.$/,""))}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")||`<p class="hint vide">Aucun élément pour l'instant</p>`}}}
   function remindViz(el,name,cur){const l=(S.bondsLast||{})[name]||0,d=l?Math.floor((Date.now()-l)/864e5):null;let bar="";
     if(cur){const left=d==null?0:Math.max(0,cur-d),pc=d==null?0:Math.max(0,Math.min(100,left/cur*100)),col=pc>50?"#6ccf5a":pc>20?"#ffd94a":"#e8473a";bar=`<div class="rmg"><i style="width:${pc}%;background:${col}"></i></div><small>${d==null?"Pas encore de nouvelles":left?"Rappel dans "+left+" j":"C'est le moment"}</small>`}
     return`<div class="rmh"><span class="rmi">${vI("cloche")}</span><div class="rmb"><b>Rappel</b>${bar||"<small>Coupé</small>"}</div></div><div class="rmt">${RF.map(([v,lb])=>`<button type="button" data-rf="${v}" aria-pressed="${cur===v}"><i></i><span>${v?({7:"7 j",14:"14 j",30:"1 mois",90:"3 mois"})[v]:"Off"}</span></button>`).join("")}</div>`}

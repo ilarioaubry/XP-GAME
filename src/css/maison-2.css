@@ -16,7 +16,7 @@
 .hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}
 .hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}
 .hmslot .hml{left:3px;bottom:3px;padding:2px 5px;border-width:2px}
-.hmslot .hml b{font-size:11px}.hmslot .hml small{font-size:9.5px}
+.hmslot .hml b{font-size:11px}.hmslot .hml small{font-size:11px}
 .hmslot.off .hml{opacity:.85}
 .hmstreet .hml{left:auto;right:6px;bottom:6px}
 .hmslot .hmme{width:22px;height:24px;right:3px;top:3px}

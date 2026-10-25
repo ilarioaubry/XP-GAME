@@ -3,13 +3,13 @@
 .avc-stage{padding:2px 0 8px}
 html:not(#_a):not(#_b) body .avc-stage canvas{width:min(48vw,200px);height:auto;aspect-ratio:30/35;image-rendering:pixelated}
 .avc-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:0 12px 6px}
-.avc-steps button{display:grid;justify-items:center;gap:2px;padding:6px 2px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--muted);font:inherit;font-size:10.5px;font-weight:800;min-width:0}
+.avc-steps button{display:grid;justify-items:center;gap:2px;padding:6px 2px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--muted);font:inherit;font-size:11px;font-weight:800;min-width:0}
 .avc-steps button i{display:grid;width:26px;height:26px}
 .avc-steps button i svg{width:100%;height:100%}
 .avc-steps button[aria-selected="false"] i{filter:grayscale(1);opacity:.55}
 .avc-steps button[aria-selected="true"]{background:color-mix(in srgb,var(--gold) 22%,var(--surface));border-color:var(--gold);color:var(--ink)}
 .avc-pg{display:flex;align-items:center;justify-content:space-between;padding:4px 16px 2px}
-.avc-pg b{font-family:var(--f-pixel);font-size:18px;text-transform:uppercase;letter-spacing:.04em}
+.avc-pg b{font-family:var(--f-pixel);font-size:20px;text-transform:uppercase;letter-spacing:.04em}
 .avc-dots{display:flex;gap:6px}
 .avc-dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
 .avc-dots i.done{background:color-mix(in srgb,var(--gold) 55%,var(--line))}
@@ -20,7 +20,7 @@ html:not(#_a):not(#_b) body .avc-stage canvas{width:min(48vw,200px);height:auto;
 html:not(#_a):not(#_b) body .avc-sw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 html:not(#_a):not(#_b) body .avc-sw button{width:100%;height:auto;aspect-ratio:1;border-radius:14px}
 html:not(#_a):not(#_b) body .avc-th{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-html:not(#_a):not(#_b) body .avc-th button{padding:8px 4px;font-size:12px}
+html:not(#_a):not(#_b) body .avc-th button{padding:8px 4px;font-size:13px}
 html:not(#_a):not(#_b) body .avc-th canvas.avt.face{width:84px;height:auto}
 html:not(#_a):not(#_b) body .avc-th canvas.avt.body{width:76px;height:auto}
 html:not(#_a):not(#_b) body .avc-th canvas.avt:not(.face):not(.body){width:76px;height:auto}

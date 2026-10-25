@@ -181,7 +181,7 @@ function renderProfile(force){
   drawTags();
   $("tgForm").onsubmit=e=>{e.preventDefault();const v=$("tgNew").value.trim().slice(0,20);if(!v)return;const a=P.talents||(P.talents=[]);if(!a.includes(v))a.push(v);$("tgNew").value="";save();drawTags()};
   // groupes
-  {const box=$("pGrp");const draw=()=>{const L=fgList();box.innerHTML=L.length?"":`<p class="hint" style="margin:0">Aucun groupe pour l'instant.</p>`;
+  {const box=$("pGrp");const draw=()=>{const L=fgList();box.innerHTML=L.length?"":`<p class="hint vide">Aucun groupe pour l'instant.</p>`;
      L.forEach(g=>{const b=document.createElement("button");b.type="button";b.className="tg grp";b.style.setProperty("--gc",fgCol(g));b.setAttribute("aria-pressed",(P.grp||[]).includes(g.id));b.innerHTML=`<span class="tgi">${rkSvg("duo")}</span>`;b.append(g.n);
        b.onclick=()=>{const a=P.grp||(P.grp=[]),i=a.indexOf(g.id);if(i>=0)a.splice(i,1);else a.push(g.id);save();draw();renderRelations()};box.appendChild(b)})};
    draw();$("pGrpForm").onsubmit=e=>{e.preventDefault();const v=$("pGrpNew").value.trim();if(!v)return;const g=fgAdd(v);g.c=FG_COL[(fgList().length-1)%FG_COL.length];(P.grp||(P.grp=[])).push(g.id);$("pGrpNew").value="";save();draw();renderRelations()}}

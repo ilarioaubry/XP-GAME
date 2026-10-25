@@ -96,7 +96,7 @@ const CLAR=[["photos","Photos","Trier 50 photos : doublons, flous et captures d'
  ["drive","Docs et Drive","Ranger 10 fichiers de ton Drive dans des dossiers",15,[30,60]],
  ["fichiers","Fichiers","Vider les téléchargements et ranger l'app Fichiers",10,[30,60]]];
 function clarLast(k){const C=CLAR.find(x=>x[0]===k);if(!C)return 0;let t=((S.g&&S.g.afLast)||{})["af:clarte:"+C[1]]||0;(S.log||[]).forEach(e=>{if(e.t>t&&(e.name===C[2]||String(e.name||"").startsWith("Tri du téléphone · "+C[1])))t=e.t});return t}
-CLAR.forEach(([k,l,t,xp,fr])=>FQ.push(["t_"+k,t,"maison",xp,[9,23],c=>{const L=clarLast(k);return!L||(Date.now()-L)/864e5>=fr[0]},c=>"Clarté : "+l.toLowerCase(),{in:1,short:1}]));
+CLAR.forEach(([k,l,t,xp,fr])=>FQ.push(["t_"+k,t,"maison",xp,[9,23],c=>{const L=clarLast(k);return!L||(Date.now()-L)/864e5>=fr[0]},c=>"Tri : "+l.toLowerCase(),{in:1,short:1}]));
 function clarWt(id){const k=id.slice(2),L=clarLast(k);return L?Math.min(1.5,(Date.now()-L)/864e5/60):1.5}
 function fqCtx(){const G=S.g,s=sitOf()||{goals:[],pass:[]},w=typeof wxNow==="function"?wxNow():null,tk=dayKey(Date.now()),sl=G.sleep&&G.sleep[tk];
   const g={},p={};(s.goals||[]).forEach(x=>g[x]=1);(s.pass||[]).forEach(x=>p[x]=1);const art=((G.taste&&G.taste.art)||[]);
@@ -152,14 +152,14 @@ function questReact(name,cat){if(Date.now()-__react<400)return;__react=Date.now(
 let arcBusy=false,arcErr="";
 function arcCur(){return(Array.isArray(S.g.prj)?S.g.prj:[]).find(p=>p.arc&&!p.won)||null}
 function arcStep(){const p=arcCur();if(!p)return null;const i=p.st.findIndex(s=>!s.d);return i<0?null:{p,i}}
-function arcFallback(note){return["Décrire ton objectif réussi en une phrase","Lister 3 premières actions concrètes","20 min de recherche sur le sujet","Faire la première action de ta liste","En parler à quelqu'un qui peut t'aider","45 min pour avancer sur le plus dur","Boss final : faire le pas décisif"]}
+function arcFallback(note){return["Décrire ton objectif réussi en une phrase","Lister 3 premières actions concrètes","20 min de recherche sur le sujet","Faire la première action de ta liste","En parler à quelqu'un qui peut t'aider","45 min pour avancer sur le plus dur","Étape finale : faire le pas décisif"]}
 async function arcAsk(){if(arcBusy)return;const G=S.g,s=sitOf();const note=(s&&s.note||"").trim();if(!note){sitSheet();return}
   let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
   arcBusy=true;arcErr="";render();let n=cap(note).slice(0,40),cat="perso",st=null,ai=0;
   if(sample){const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";
     const prompt=`Tu découpes un objectif de vie en arc de quêtes pour une appli de jeu de rôle de la vie réelle. Objectif : « ${note} ». Situation : ${lab("job",s.job)||"?"}, vit ${lab("home",s.home)||"?"}, temps libre en semaine : ${lab("time",s.time)||"?"}.
 Réponds UNIQUEMENT en JSON : {"n": nom court de l'arc (max 32 caractères, sans tutoiement), "cat": une valeur parmi sport|perso|social|famille|maison|soi|travail|nourriture, "st": [6 ou 7 étapes]}.
-Chaque étape : 50 caractères max, au tutoiement implicite, un verbe d'action + un objet + une mesure, faisable en moins de 45 min, dans l'ordre logique. La dernière étape est le boss final : le pas décisif, commence par « Boss final : ». Rien de coûteux ni de dangereux.`;
+Chaque étape : 50 caractères max, au tutoiement implicite, un verbe d'action + un objet + une mesure, faisable en moins de 45 min, dans l'ordre logique. La dernière étape est le pas décisif, commence par « Boss final : ». Rien de coûteux ni de dangereux.`;
     aiTick();try{const r=await sample.json(prompt,{cache:false});if(r&&Array.isArray(r.st)&&r.st.length>=3){st=r.st.slice(0,8).map(x=>String(x).slice(0,60));if(r.n)n=String(r.n).slice(0,40);if(CATS[r.cat])cat=r.cat;ai=1}}
     catch(e){const k=e&&e.code;if(k==="not_granted"||k==="sampling_disabled"||k==="not_declared")arcErr="Claude n'est pas autorisé : j'ai utilisé un découpage simple.";else if(k!=="cancelled")arcErr="Claude n'a pas répondu : j'ai utilisé un découpage simple."}}
   if(!st)st=arcFallback(note);if(!Array.isArray(G.prj))G.prj=[];

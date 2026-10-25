@@ -13,7 +13,7 @@
 .pf2tog .fti svg{width:100%;height:100%}
 .pf2tog[aria-pressed="false"] .fti{filter:grayscale(1);opacity:.5}
 .pf2tog .pf2t{flex:1;display:grid;gap:2px}
-.pf2tog .pf2t small{opacity:.7;font-size:12px}
+.pf2tog .pf2t small{opacity:.7;font-size:13px}
 .pf2sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex:none}
 .pf2sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform 120ms}
 .pf2tog[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 16%,var(--surface))}
@@ -24,7 +24,7 @@
 .pf2sug .fti{width:30px;height:30px;flex:none;display:grid}
 .pf2sug .fti svg,.pf2gift .fti svg{width:100%;height:100%}
 .pf2sug .pf2t{flex:1;display:grid}
-.pf2sug small{opacity:.75;font-size:12px}
+.pf2sug small{opacity:.75;font-size:13px}
 .pf2sug button{width:38px;height:38px;border-radius:10px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:inherit;padding:0}
 .pf2sug button svg{width:22px;height:22px}
 .pf2sug .pf2y{border-color:var(--gold)}
@@ -43,7 +43,7 @@
 .grpcard .grpcols{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .rlk{display:inline-grid;width:18px;height:18px;margin-left:6px;vertical-align:-3px}
 .rlk svg{width:100%;height:100%}
-.rst{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:99px;border:1px solid var(--gold);color:var(--gold)}
+.rst{display:inline-block;margin-left:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:1px 6px;border-radius:99px;border:1px solid var(--gold);color:var(--gold)}
 .whob .whs{position:absolute;top:2px;right:2px;width:16px;height:16px}
 .whob .whs svg{width:100%;height:100%}
 .whob{position:relative}
