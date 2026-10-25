@@ -191,7 +191,7 @@ html:not(#_a):not(#_b) body .dqi.done{opacity:.55;box-shadow:none;background:var
 html:not(#_a):not(#_b) body .dqi.done .dqt b{text-decoration:line-through;text-decoration-thickness:2px}
 html:not(#_a):not(#_b) body .dqi.sur{animation:surGlow 2.6s ease-in-out infinite}
 html:not(#_a):not(#_b) body .dqi.swapin{animation:fdIn .3s ease-out}
-html:not(#_a):not(#_b) body .dqend{margin:2px 0 0;display:grid;gap:2px;text-align:center;padding:8px;background:color-mix(in srgb,#3c9a4f 14%,var(--surface));border:2px solid #3c9a4f}
+html:not(#_a):not(#_b) body .dqend{margin:2px 0 0;display:grid;gap:2px;text-align:center;padding:8px;background:color-mix(in srgb,#3c9a4f 14%,var(--surface))}
 .dqend b{font-family:var(--f-pixel);font-size:20px;color:#3c9a4f}
 html:not(#_a):not(#_b) body .dqi.leave{animation:dqOut .32s ease-in forwards;pointer-events:none}
 html:not(#_a):not(#_b) body .dqi.shrink{height:0!important;min-height:0;padding-top:0!important;padding-bottom:0!important;border-width:0!important;margin-bottom:-6px;box-shadow:none!important;overflow:hidden;transition:height .25s cubic-bezier(.4,0,.2,1),padding .25s,margin .25s,border-width .25s}
@@ -209,7 +209,7 @@ html:not(#_a):not(#_b) body .dqbars .bh{display:flex;align-items:baseline;justif
 html:not(#_a):not(#_b) body .dqbars .bh small{font-size:11px}
 html:not(#_a):not(#_b) body .dqbars .barbtn{min-height:34px!important;font-size:13px!important;padding:0 8px!important}
 html:not(#_a):not(#_b) body .dqend.night b{color:#7a6ad8}
-html:not(#_a):not(#_b) body .dqend.night{border-color:#7a6ad8;background:color-mix(in srgb,#7a6ad8 14%,var(--surface))}
+html:not(#_a):not(#_b) body .dqend.night{background:color-mix(in srgb,#7a6ad8 14%,var(--surface))}
 html:not(#_a):not(#_b) body #sqTrack{padding:2px 2px 8px}
 html:not(#_a):not(#_b) body .sq.dqk .sqk{display:flex;align-items:center;gap:5px;color:var(--tc)!important;opacity:1}
 html:not(#_a):not(#_b) body .sq.dqk .sqk::before{content:none!important}
@@ -402,10 +402,10 @@ html:not(#_a):not(#_b) body .plusi{width:32px;height:32px;display:grid;place-ite
 html:not(#_a):not(#_b) body .plusb em{font-style:normal;font-weight:800;font-size:13px;min-width:26px;text-align:center;padding:2px 6px;color:#2a1c0c;background:var(--gold)}
 html.plusopen:not(#_a):not(#_b) body .plusb{border-color:var(--gold)}
 /* — depuis principal-09.css — */
-html:not(#_a):not(#_b) body .wksc{display:grid;gap:6px;padding:14px 14px 12px;background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 22%,rgba(12,14,32,.75)),rgba(12,14,32,.8));border:4px solid #1a1210;box-shadow:inset 0 0 0 3px var(--gold),5px 5px 0 var(--rpg-shadow)}
+html:not(#_a):not(#_b) body .wksc{display:grid;gap:6px;padding:14px 14px 12px;background:var(--surface)}
 html:not(#_a):not(#_b) body .wksk{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 html:not(#_a):not(#_b) body .wkst{font-family:var(--f-pixel);font-size:22px;line-height:1.1;color:#fff8e6}
-html:not(#_a):not(#_b) body .wksc .bstrip{margin:2px -4px 0;background:rgba(0,0,0,.2);border:2px solid #1a1210}
+html:not(#_a):not(#_b) body .wksc .bstrip{margin:2px -4px 0;background:rgba(0,0,0,.2);border:0}
 html:not(#_a):not(#_b) body .wksb{display:flex;align-items:center;gap:16px;margin-top:4px}
 html:not(#_a):not(#_b) body .wksb .btn{flex:1;min-height:46px}
 html:not(#_a):not(#_b) body .slgc{display:grid;gap:4px;padding:14px 16px;background:linear-gradient(140deg,color-mix(in srgb,#7a6ad8 40%,rgba(12,14,32,.8)),rgba(12,14,32,.85));border:4px solid #1a1210;box-shadow:inset 0 0 0 3px #7a6ad8,5px 5px 0 var(--rpg-shadow)}
@@ -504,8 +504,8 @@ html:not(#_a):not(#_b) body .rsk svg{width:13px;height:13px}
 html:not(#_a):not(#_b) body .dqi.core{box-shadow:inset 4px 0 0 #e0a020}
 html:not(#_a):not(#_b) body .mbm.cr{opacity:.75}
 html:not(#_a):not(#_b) body .dqmeal .dqic{display:grid;place-items:center}
-html:not(#_a):not(#_b) body .xmc{position:relative;display:grid;gap:10px;padding:14px;border:3px solid #c0283a;background:radial-gradient(circle at 12% 20%,rgba(255,255,255,.08) 0 2px,transparent 3px) 0 0/34px 30px,radial-gradient(circle at 70% 60%,rgba(255,255,255,.06) 0 1.5px,transparent 2.5px) 0 0/26px 38px,linear-gradient(160deg,color-mix(in srgb,#c0283a 28%,var(--surface)),color-mix(in srgb,#2f8a4f 22%,var(--surface)));box-shadow:4px 4px 0 var(--rpg-shadow)}
-html:not(#_a):not(#_b) body .xmc.an{border-color:#e0a020;background:radial-gradient(circle at 12% 20%,rgba(255,255,255,.08) 0 2px,transparent 3px) 0 0/34px 30px,linear-gradient(160deg,color-mix(in srgb,#e0a020 22%,var(--surface)),color-mix(in srgb,#3a4f80 30%,var(--surface)))}
+html:not(#_a):not(#_b) body .xmc{position:relative;display:grid;gap:10px;padding:14px;background:var(--surface)}
+html:not(#_a):not(#_b) body .xmc.an{}
 html:not(#_a):not(#_b) body .xmt{display:flex;align-items:center;gap:10px}
 html:not(#_a):not(#_b) body .xmt>span:nth-child(2){display:grid;gap:1px;flex:1}
 html:not(#_a):not(#_b) body .xmt small{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#ffd0d6}
@@ -519,8 +519,8 @@ html:not(#_a):not(#_b) body .xmtile b{font-size:15px}
 html:not(#_a):not(#_b) body .xmtile small{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html:not(#_a):not(#_b) body .xmtile.off{opacity:.6}
 html:not(#_a):not(#_b) body .xmql{display:grid;gap:6px}
-html:not(#_a):not(#_b) body .xmq{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 10px;background:var(--surface);border-left:5px solid #c0283a}
-html:not(#_a):not(#_b) body .xmc.an .xmq{border-left-color:#e0a020}
+html:not(#_a):not(#_b) body .xmq{display:flex;align-items:center;gap:8px;padding:8px 8px 8px 10px;background:var(--surface);border-left:0}
+html:not(#_a):not(#_b) body .xmc.an .xmq{border-left:0}
 html:not(#_a):not(#_b) body .xmqt{flex:1;display:grid;gap:2px;min-width:0}
 html:not(#_a):not(#_b) body .xmqt small{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#ff8a98}
 html:not(#_a):not(#_b) body .xmqt b{font-size:15px}
@@ -629,7 +629,7 @@ html:not(#_a):not(#_b) body .mlp{display:flex;flex-direction:column;align-items:
 html:not(#_a):not(#_b) body .mlp:active:not([disabled]){transform:scale(.96)}
 html:not(#_a):not(#_b) body .mlp small{font-size:11px;font-weight:800}
 html:not(#_a):not(#_b) body .mlp .mli{position:relative;display:grid;place-items:center;width:40px;height:40px}
-html:not(#_a):not(#_b) body .mlp.later{opacity:.4}
+html:not(#_a):not(#_b) body .mlp.later{}
 html:not(#_a):not(#_b) body .mlp.st-none:not(.later){border-color:var(--gold)}
 html:not(#_a):not(#_b) body .mlp.st-ok{border-color:#6ccf5a;background:color-mix(in srgb,#6ccf5a 16%,var(--surface))}
 html:not(#_a):not(#_b) body .mlp.st-ko{opacity:.6}
@@ -659,7 +659,7 @@ html:not(#_a):not(#_b) body .slh{margin:0 14px}
 html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-size:11px;font-weight:800}
 html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}
-html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:11px!important;font-weight:800;background:transparent!important;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important}
+html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:11px!important;font-weight:800;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important;background:rgba(10,12,28,.5)!important}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo svg{width:26px!important;height:26px!important;color:var(--gold)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo small{display:none}
 html:not(#_a):not(#_b) body .dqmorn.dqmbar{border-radius:0!important;border:2px dashed color-mix(in srgb,var(--gold) 55%,transparent)!important;background:transparent!important}

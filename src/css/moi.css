@@ -95,7 +95,8 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .colh h3{font-family:var(--f-pixel);text-transform:uppercase;letter-spacing:.06em;font-size:15px;margin:0}
 .colh .count{background:var(--gold);color:var(--bg);font-family:var(--f-pixel);font-weight:700;border-radius:999px;padding:0 9px;font-size:15px}
 .subtabs.vin{animation-name:vinFade}
-.stat .sn{color:var(--cat)!important}
+.stat .sn{color:var(--ink)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .sn::before{content:"";display:inline-block;width:6px;height:6px;margin-right:4px;background:var(--cat);vertical-align:1px}
 .subtabs button{position:relative}
 .subtabs .ndot{top:2px;right:4px}
 .set-top h2{margin:0}
@@ -134,7 +135,7 @@ html body .settings h2::before{content:""!important;display:inline-block!importa
 .subtabs.stuck::before{opacity:1}
 body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 .subtabs{background:transparent!important;border-color:transparent!important;box-shadow:none!important}
-.subtabs::after{content:"";position:absolute;inset:-2px;z-index:-1;pointer-events:none;border-radius:8px;border:2px solid color-mix(in srgb,var(--gold) 55%,var(--line));background:color-mix(in srgb,var(--gold) 10%,var(--surface-2));box-shadow:0 2px 0 var(--rpg-shadow),0 6px 22px 2px rgba(0,0,0,.28)}
+.subtabs::after{content:"";position:absolute;inset:-2px;z-index:-1;pointer-events:none;border-radius:8px;border:2px solid var(--line);background:var(--surface);box-shadow:0 2px 0 var(--rpg-shadow),0 6px 22px 2px rgba(0,0,0,.28)}
 #barWrap{position:relative;overflow:hidden}
 #barWrap::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 46%,rgba(255,255,255,.2) 56%,transparent 70%);transform:translateX(-110%);animation:xpShine 4.5s ease-in-out infinite}
 #barWrap.near{animation:xpNear 2.4s ease-in-out infinite}
