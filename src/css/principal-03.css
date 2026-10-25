@@ -29,7 +29,7 @@
 .ttools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:6px}
 .ttools .btn{min-height:42px;font-weight:700;font-size:13px}
 .testbanner{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 4px);z-index:80;border:2px solid #7a1d1d;border-radius:999px;padding:4px 14px;font-size:13px;color:#fff;background:repeating-linear-gradient(45deg,#c0392b 0 10px,#a93226 10px 20px);box-shadow:0 3px 10px rgba(0,0,0,.3);white-space:nowrap}
-body.testing .qxp{top:calc(env(safe-area-inset-top,0px) + 36px)}
+
 body.testing .wrap{padding-top:calc(env(safe-area-inset-top,0px) + 44px)!important}
 #testCard{border-color:#c0392b!important}
 .rtb.lifeok{justify-content:flex-start!important;gap:10px}
@@ -56,17 +56,17 @@ body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 .sq.dzq{border-color:var(--zc)!important;background:linear-gradient(180deg,color-mix(in srgb,var(--zc) 22%,var(--surface)),color-mix(in srgb,var(--zc) 8%,var(--surface)))!important}
 .sq.dzq .sqk{color:var(--zc)}
 #musBox .dfi div,#dzBox .dfi div{background:color-mix(in srgb,var(--zc) 10%,var(--surface-2))}
-.qxp .qbar,#barWrap{position:relative;overflow:hidden}
-.qxp .qbar::after,#barWrap::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 46%,rgba(255,255,255,.2) 56%,transparent 70%);transform:translateX(-110%);animation:xpShine 4.5s ease-in-out infinite}
+#barWrap{position:relative;overflow:hidden}
+#barWrap::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 46%,rgba(255,255,255,.2) 56%,transparent 70%);transform:translateX(-110%);animation:xpShine 4.5s ease-in-out infinite}
 @keyframes xpShine{0%,55%{transform:translateX(-110%)}85%,100%{transform:translateX(110%)}}
-.qbar.near,#barWrap.near{animation:xpNear 2.4s ease-in-out infinite}
+#barWrap.near{animation:xpNear 2.4s ease-in-out infinite}
 @keyframes xpNear{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--gold) 0%,transparent)}50%{box-shadow:0 0 12px 3px color-mix(in srgb,var(--gold) 75%,transparent)}}
-.qxp .qs.lit .ic{transform-origin:50% 90%;animation:flameDance 1.8s ease-in-out infinite alternate}
-.qxp .qs.lit{background:color-mix(in srgb,var(--c-sport) 24%,var(--surface))}
+
+
 @keyframes flameDance{0%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(4deg) scale(1.12,1.18)}100%{transform:rotate(8deg) scale(.96,1.05)}}
 @media (prefers-reduced-motion:reduce){
-.qxp .qbar::after,#barWrap::after{display:none}
-.qbar.near,#barWrap.near,.qxp .qs.lit .ic{animation:none!important}
+#barWrap::after{display:none}
+#barWrap.near{animation:none!important}
 }
 .bfams{display:grid;gap:10px}
 .bfam{background:var(--surface);border:2px solid var(--line);border-radius:8px;box-shadow:0 3px 0 var(--rpg-shadow)}

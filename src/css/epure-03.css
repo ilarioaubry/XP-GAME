@@ -22,7 +22,7 @@ html:not(#_a):not(#_b) body .realrc{padding:0 14px 14px}
 html:not(#_a):not(#_b) body .realrc .bh3{margin:4px 0 10px}
 html:not(#_a):not(#_b) body section.char :is(#meSet,#wallet,.wallet){display:none!important}
 html:not(#_a):not(#_b) body section.char #charTitle svg{display:none!important}
-html:not(#_a):not(#_b) body .qxp .qs{display:none!important}
+
 html:not(#_a):not(#_b) body #prjBox2 .prgo{display:none!important}
 html:not(#_a):not(#_b) body #prof .fp-when{display:none!important}
 html:not(#_a):not(#_b) body #chapBox .bstory{display:none!important}
@@ -67,12 +67,12 @@ html:not(#_a):not(#_b) body .sltr input[type=range]{opacity:0;position:relative;
 html:not(#_a):not(#_b) body .slk{position:absolute;top:50%;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none;z-index:1;filter:drop-shadow(0 0 5px rgba(255,225,140,.9))}
 html:not(#_a):not(#_b) body .slk svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .slh{margin:0 14px}
-html:not(#_a):not(#_b) body :is(.scwx,.scsnd),html:not(#_a):not(#_b) body :is(.scwx,.scsnd)[aria-pressed]{height:40px;border:2px solid rgba(255,255,255,.28)!important;border-radius:0!important;background:rgba(10,12,28,.5)!important;box-shadow:none!important}
 
-html:not(#_a):not(#_b) body #trkBox .trk-ic{background:none!important;border:0!important;width:32px!important;height:32px!important}
 
-html:not(#_a):not(#_b) body #trkBox .trk-b{width:40px;height:40px;border:2px solid var(--line)!important;background:var(--surface)!important;color:var(--ink)!important;box-shadow:none!important;border-radius:0!important}
-html:not(#_a):not(#_b) body #trkBox .trk-b.plus{border-color:var(--gold)!important;color:var(--gold)!important}
+
+
+
+
 html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-size:11px;font-weight:800}
 html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}

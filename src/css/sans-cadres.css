@@ -5,11 +5,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow:none!important;background:none!important;padding:4px 0!important}
 /* Standard « pas d'encadrés », étendu à toute l'appli : conteneurs d'information sans cadre ni fond.
    Boutons, tuiles, onglets et barre du bas gardent leur forme (ce sont des contrôles). */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ritLife,.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .pf-xp{border:0!important;box-shadow:none!important;background:none!important}
 /* cartes d'action (quêtes, idée sortie) et bouton XP : on garde le fond (lisibilité, décor), sans cadre */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard,#qxpBtn){border:0!important;box-shadow:none!important;outline:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard){border:0!important;box-shadow:none!important;outline:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
 /* Standard « animations sobres » : plus d'éléments d'interface qui bougent en boucle tout seuls.
    Le décor (ciel, météo, maison) et les animations déclenchées par une action restent. */

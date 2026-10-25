@@ -51,6 +51,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 3.1 (25/10/2026) Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
 - [x] 3.2 (25/10/2026) Composants définis une fois (`css/composants.css`, préfixe `ui-`, pas encore utilisés) : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
 - [ ] 3.3 Fusion des 27 feuilles CSS en : base + composants + une feuille par zone — Aujourd'hui, en 5 morceaux : 3.3a haut (scène, météo, sons, XP, bandeau) · 3.3b Mon moment (rituels, repas) · 3.3c quêtes pour toi · 3.3d quêtes spéciales · 3.3e cartes du moment + panneau « + »
+  - [x] 3.3a (25/10/2026) haut d'Aujourd'hui → `css/aujourdhui-haut.css` : 235 règles sorties des couches, 35 sans effet supprimées, 0 `!important`, 0 hack ; rendu identique au pixel (midi, nuit, matin, pluie, décembre)
 - [ ] 3.4 … Proches
 - [ ] 3.5 … Moi (Profil, Bilan, Réglages)
 - [ ] 3.6 … Fenêtres (assiette, menus, « Avec qui ? »…)

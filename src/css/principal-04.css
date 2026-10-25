@@ -156,7 +156,7 @@ body::-webkit-scrollbar{display:none;width:0;height:0}
 
 html:not(#_a):not(#_b) body *,html:not(#_a):not(#_b) body *::before,html:not(#_a):not(#_b) body *::after{border-radius:0!important}
 html:not(#_a):not(#_b) body :is(.ndot,.pjn,.aui,.pbi,.ecodot,.evav,.moodpick){clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)}
-html:not(#_a):not(#_b) body :is(.gcard,.lzc,.dzc .gcard,.set-card,.rl,.sq,.item,.char,.rem,.evr,.pjb,.kp,.pbs,.aut,.tile,.bfam,.sellrow,.fpf,.ritl,.ritbars,.ritdone,.edcard,.evtform,.pf-pick,.pf-tpick,.fp-bd,.fp-bgpick,.bnext,.gbox>div,.week details,.specials .track>*,.chestb,.lootc,.lzpick,.avc-in,.toast,.qxp button,.subtabs::after,.shop,.rel-top+*){box-shadow:4px 4px 0 var(--rpg-shadow)!important}
+html:not(#_a):not(#_b) body :is(.gcard,.lzc,.dzc .gcard,.set-card,.rl,.sq,.item,.char,.rem,.evr,.pjb,.kp,.pbs,.aut,.tile,.bfam,.sellrow,.fpf,.ritl,.ritbars,.ritdone,.edcard,.evtform,.pf-pick,.pf-tpick,.fp-bd,.fp-bgpick,.bnext,.gbox>div,.week details,.specials .track>*,.chestb,.lootc,.lzpick,.avc-in,.toast,.subtabs::after,.shop,.rel-top+*){box-shadow:4px 4px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b) body :is(.btn,.lzbtn,.eqc,.tg,.pjs,.ppc,.avc-tabs button,.thseg button,.evact .btn,.addf,.me-set,.edbtn,.back){box-shadow:3px 3px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b) body :is(.btn,.lzbtn,.eqc,.pjs,.ppc,.thseg button,.me-set,.edbtn,.back):active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--rpg-shadow)!important}
 

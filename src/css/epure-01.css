@@ -1,6 +1,6 @@
 
 
-html:not(#_a):not(#_b) .wrap>#trkBox{order:-28}
+
 html:not(#_a):not(#_b) .wrap>:is(#sleepGo,#enBox,#nowBox,#evmBox,#wkSun,#rtrBox,#gameBox,#xmBox){order:-26}
 html body .wrap>section.evhide{display:none!important}
 
@@ -15,30 +15,30 @@ html body .xph{display:none!important}
 html body button.xpb{font-size:0!important}
 html body button.xpb::after{content:"Fait";font-size:15px;font-weight:700}
 
-html body :is(.sq,.qxp .qbar,#barWrap)::after{animation:none!important;opacity:0!important}
-html body :is(.qbar.near,#barWrap.near,.sq.sur,.dqi.sur,.chestmini,.evr.now .evd,.evr.now .evj){animation:none!important}
+html body :is(.sq,#barWrap)::after{animation:none!important;opacity:0!important}
+html body :is(#barWrap.near,.sq.sur,.dqi.sur,.chestmini,.evr.now .evd,.evr.now .evj){animation:none!important}
 html body .sq.sur .sqk::before{animation:none!important}
 html body #skyBg .skpt i{animation-duration:24s!important;opacity:.4!important}
 html body :is(#skyBg .skst i,.ambstars i){animation-duration:6s!important}
 html body .ambff i{animation-duration:9s!important}
-html body .qxp .qs.lit .ic{animation-duration:3.6s!important}
+
 html body .mdrays{animation-duration:30s,.5s!important}
 html body .float{animation-duration:1.3s!important}
 
 html:not(.bilopen) body #chapBox .bsec,html:not(.bilopen) body #chapBox .bdet,html:not(.bilopen) body .wrap>section[data-sub="bilan"]:not(#chapBox):not(#libBox):not(#bakBox){display:none!important}
 html body #chapBox .bmore{display:block;width:100%;margin-top:12px;min-height:44px;font-weight:700}
 
-html body .scn.se-automne .scnt small{color:#ff9a3d!important}
-html body .scn.se-hiver .scnt small{color:#9fd3ff!important}
-html body .scn.se-printemps .scnt small{color:#7fe07a!important}
-html body .scn.se-ete .scnt small{color:#ffd23d!important}
+
+
+
+
 html body #enBox .enc{gap:0}
 html body #enBox .enb :is(span,small){display:none}
 html body #enBox .enb{min-height:56px}
 html body #enBox .enb svg{width:44px;height:24px}
 html body #sleepGo .slgc{padding:10px}
 html body .ln.ln0{display:none}
-html body #trkBox .bnd-mode{border:0;background:none;padding:2px;width:100%;text-align:left;font:inherit;color:var(--muted);cursor:pointer}
+
 html body #setBox .set-top{margin-top:8px}
 html body #setBox #setBack{display:none!important}
 html body #setBox .set-card:has(#xpCap){display:none!important}
@@ -147,7 +147,7 @@ html body #ficheBox .fchip.fpri{border-color:var(--gold);color:var(--gold);font-
 .epop button{border:0;background:transparent;text-align:left;font:inherit;font-size:15px;color:var(--ink);padding:11px 12px;border-radius:10px}
 .epop button:active{background:var(--surface-2)}
 .epop button[aria-pressed=true]{background:var(--surface-2);font-weight:700}
-html body #dqBox .rtile,html body #trkBox .trk-n{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+html body #dqBox .rtile{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 html body #fqBox .head .count{cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
 html body #sqBox .sq>.sqx{display:none!important}
 html body #sqBox .sq>.sqm{position:absolute;top:0;right:0;width:44px;height:44px;border:0;background:none;color:var(--muted);display:grid;place-items:center}
@@ -254,9 +254,9 @@ html body #fqBox .unicard .fqt b,html body #fqBox .unicard .fqt small{color:#fff
 .unip{position:fixed;z-index:90;width:18px;height:18px;pointer-events:none;animation:uniP .9s ease-out forwards}
 .unip svg{width:100%;height:100%}
 @keyframes uniP{0%{transform:translate(0,0) scale(.6);opacity:1}70%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.1);opacity:0}}
-html body #sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff8e6;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
-html body #sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff8e6;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
-html body #sceneBox .scbub svg{width:100%;height:100%}
+
+
+
 @keyframes bubIn{from{transform:scale(.3);opacity:0}}
 html:not(#_a):not(#_b) body .natq .sqn{color:#fff!important}
 html:not(#_a):not(#_b) body .natq .uiq{filter:drop-shadow(0 0 6px var(--uc))}

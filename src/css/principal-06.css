@@ -29,7 +29,7 @@ html:not(#_a):not(#_b) body .mbex button{display:grid!important;grid-template-co
 html:not(#_a):not(#_b) body .mbex button .mbic{grid-area:i}html:not(#_a):not(#_b) body .mbex button b{grid-area:n;font-size:15px}html:not(#_a):not(#_b) body .mbex button em{grid-area:e}
 html:not(#_a):not(#_b) body .tmask .tmbig .pxi{margin:0 auto}
 
-.qhp[hidden],.pf-hp[hidden]{display:none!important}
+.pf-hp[hidden]{display:none!important}
 html:not(#_a):not(#_b) body .rtrbox[hidden]{display:none!important}
 .rtrp .rtrday{margin:14px 0 6px;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .rtrp .rtrday:first-of-type{margin-top:4px}
@@ -156,12 +156,12 @@ body.rtmon{overflow:hidden}
 .raord{display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:13px;font-weight:600;color:var(--muted)}
 .raord input{width:20px;height:20px;accent-color:var(--gold);flex:none}
 @media (prefers-reduced-motion:reduce){.rtile.busy,.rtmc,.rtmrec.new{animation:none}}
-html:not(#_a):not(#_b) body .qxp{display:grid;gap:0}
-html:not(#_a):not(#_b) body .qxp #qxpBtn{border-bottom:0!important;border-radius:8px 8px 0 0!important;box-shadow:none!important;padding:8px 12px 4px}
-html:not(#_a):not(#_b) body .qxp .qday{margin-top:0;border-top:0;border-radius:0 0 8px 8px!important;padding:0 12px 8px;gap:8px;box-shadow:0 3px 0 var(--rpg-shadow),0 6px 22px 2px rgba(0,0,0,.28)!important}
-html:not(#_a):not(#_b) body .qxp .qday .qdl{font-size:11px;letter-spacing:.06em}
-html:not(#_a):not(#_b) body .qxp .qday .qdbar{height:7px;border-width:1.5px}
-html:not(#_a):not(#_b) body .qxp .qday b{font-size:11px;color:var(--muted)}
+
+
+
+
+
+
 html:not(#_a):not(#_b) body #dqBox{margin-top:2px}
 html:not(#_a):not(#_b) body #dqBox .rtl.main{gap:10px}
 html:not(#_a):not(#_b) body #dqBox .rtl.main .rtile{min-height:118px}

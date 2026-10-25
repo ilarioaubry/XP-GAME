@@ -183,7 +183,7 @@ html:not(#_a):not(#_b) body #idBox .idnx img{width:22px;height:22px;image-render
 html:not(#_a):not(#_b) body #idBox .idnx.max{border-style:solid}
 html:not(#_a):not(#_b) body #idBox .idnx.max img{filter:none;opacity:1}
 html:not(#_a):not(#_b) body #qDay>:not(.frise){display:none!important}
-html:not(#_a):not(#_b) body #trkBox .bnd-mode{display:none!important}
+
 html:not(#_a):not(#_b) body #qDay{display:block!important;padding:8px 12px 10px!important}
 html:not(#_a):not(#_b) body .frise{display:grid;gap:4px;width:100%}
 html:not(#_a):not(#_b) body .frt{position:relative;display:block;height:22px;border:2px solid #1a1210;overflow:visible}
