@@ -32,8 +32,13 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 ## Phase 2 — Tri et code mort (avec Ilario)
 
-- [ ] 2.1 **(décision)** Passer en revue les 32 sections jamais affichées, une par une : garder / déplacer / supprimer
+- [x] 2.1 (25/10/2026) Passer en revue les 32 sections jamais affichées, une par une : garder / déplacer / supprimer
   nightBox, evToday, evmBox, sleepGo, wkSun, plusBox, nowBox, rtrBox, gameBox, xmBox, duoBox, wkBox, prjBox, prof, weekBox, sonSeance, Armoire, Badges, lzProf, Skills, musBox, dzBox, pathBox, ritStat, wkRecap, recBox, sleepBox, plWeek, jrBox, moodBox, pcBox, fd
+  **Décisions d'Ilario (25/10) :**
+  - Garder (s'affichent à un moment précis) : nightBox, evToday, evmBox, sleepGo, wkSun, rtrBox, nowBox, plusBox + wkBox + duoBox (panneau « + »), prof, Armoire, Badges, plWeek, gameBox (retirer ses restes de boss)
+  - Noël (xmBox) : garder la saison des fêtes, **supprimer son boss** (« Bougonnoël »)
+  - Supprimer : compétences musique (Skills, lzProf, musBox, dzBox, sonSeance), Mon chemin (pathBox), Sommeil (sleepBox), Humeur de l'année (moodBox), Mes rituels (ritStat), Ma semaine / Records / Journal (wkRecap, recBox, jrBox), Rappels (pcBox), ancien Projets (prjBox), weekBox
+  - Les données correspondantes restent dans la sauvegarde
 - [ ] 2.2 Supprimer les 24 déclarations jamais utilisées : FAMILLE, vkind, VK_IC, avcTab, chHeadDx, myCardURL, __picC, SK_XP, MAP_T, ritOpen, PROJ, PJ_XP, PJ_BONUS, pjOpen, pjArm, sellPrice, LOOTVB, bgPrjRev, bgPrjFast, bgSoiDays, LOOTPX, LOOTWAIT, PX1, TALENTS
 - [ ] 2.3 Supprimer ce qui est seulement caché (selon 2.1) : Noël (xmBox, masqué en CSS seulement), vue « t » et barre `qnav`, sous-onglets sons / compétences, weekBox, sections masquées en CSS (ritStat, sleepBox, moodBox)
 - [ ] 2.4 Renommer les fichiers « boss » (13-pixel-clair-boss, 23-boss-par-categorie, 28-sons-boss) et n'en garder que ce qui sert (figurines `BOSS_CAT`, projets `CB_LIST`, sons)
