@@ -48,8 +48,8 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 ## Phase 3 — Composants et fusion des CSS (écran par écran, Aujourd'hui d'abord)
 
-- [ ] 3.1 Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
-- [ ] 3.2 Composants définis une fois : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
+- [x] 3.1 (25/10/2026) Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
+- [x] 3.2 (25/10/2026) Composants définis une fois (`css/composants.css`, préfixe `ui-`, pas encore utilisés) : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
 - [ ] 3.3 Fusion des 27 feuilles CSS en : base + composants + une feuille par zone — Aujourd'hui
 - [ ] 3.4 … Proches
 - [ ] 3.5 … Moi (Profil, Bilan, Réglages)
