@@ -113,3 +113,5 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{min-hei
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.evch.evadd,.pbs){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .rtmgo{border:2px solid rgba(255,255,255,.17)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fond) small{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
+/* pas d'indicateurs dans les boutons (appui long, minuteur, écran) */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!important}
