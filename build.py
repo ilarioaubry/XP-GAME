@@ -14,7 +14,7 @@ Chaque @@include(chemin)@@ est remplacé par le contenu exact du fichier
 est l'ordre d'exécution : ne pas le changer à la légère, la cascade CSS et
 l'initialisation du JS en dépendent.
 """
-import pathlib, re, sys
+import hashlib, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -34,6 +34,8 @@ def build():
         return f.read_text(encoding="utf8", newline="")
 
     out = MARK.sub(sub, skeleton)
+    # @@VERSION@@ : empreinte du contenu, visible dans Moi > Bilan pour vérifier qu'on a la dernière version
+    out = out.replace("@@VERSION@@", hashlib.sha1(out.encode()).hexdigest()[:7])
     dup = {u for u in used if used.count(u) > 1}
     if dup:
         sys.exit("Fichier inclus deux fois : " + ", ".join(sorted(dup)))
