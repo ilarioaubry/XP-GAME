@@ -105,7 +105,7 @@ html:not(#_a):not(#_b) body .rap .wkcta{margin-bottom:10px}
 html:not(#_a):not(#_b) body .prhp i.pop{animation:prPop .4s ease-out forwards}
 html:not(#_a):not(#_b) body .sppl{display:grid;gap:6px}
 html:not(#_a):not(#_b) body .sppl .btn{min-height:46px}
-html:not(#_a):not(#_b) body .spc a.qcgo{display:grid;place-items:center;text-decoration:none}
+
 #skyBg .skwx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 #skyBg .skwx i{position:absolute;top:-30px;width:2px;height:14px;background:rgba(170,215,255,.75);animation:wxRain 1.9s linear infinite;transform:rotate(12deg)}
 #skyBg .skwx .fg{position:absolute;left:-20%;width:140%;height:18vh;background:rgba(235,238,245,.32);animation:wxFog 26s ease-in-out infinite alternate}
@@ -146,10 +146,10 @@ html:not(#_a):not(#_b) body .qwq{margin:6px 0 0;font-family:var(--f-pixel);font-
 html:not(#_a):not(#_b) body .qwbody{display:grid;gap:10px;animation:qwIn .2s ease}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .qwbody{animation:none}}
 /* — depuis principal-10.css — */
-html:not(#_a):not(#_b) body .cbpk .bpc{max-width:340px}
+
 .pu .puc.pop{animation:puPop .18s ease-out}
 /* — depuis principal-11.css — */
-html:not(#_a):not(#_b) body .cbpk .bpc{padding-top:26px;border:4px solid #000;box-shadow:inset 0 0 0 3px var(--pc,#e0a020),6px 6px 0 rgba(0,0,0,.45);background:linear-gradient(180deg,color-mix(in srgb,var(--pc,#e0a020) 14%,var(--surface)),var(--surface) 55%)}
+
 /* — depuis principal-12.css — */
 html:not(#_a):not(#_b) body .rapop{align-items:end;padding:0}
 html:not(#_a):not(#_b) body .rap{width:min(480px,100%);max-height:92vh;overflow:auto;display:block;text-align:left;padding:16px 16px 22px;--tc:#e0a020}

@@ -43,7 +43,7 @@
 .p-pic{width:88px;height:88px;border-radius:20px;overflow:hidden;display:grid;place-items:center;font-family:var(--f-pixel);font-weight:700;font-size:44px;color:var(--ink);background:color-mix(in srgb,var(--h) 35%,var(--surface));border:2px solid var(--h)}
 .p-pic img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated;display:block}
 .tagrow[hidden]{display:none!important}
-.iview .frform{display:none}
+
 .tal{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 .tal .sk{grid-template-columns:minmax(0,1fr) auto auto}
 .tal .frform{max-width:100%}
@@ -131,12 +131,12 @@ html body #prof .fpf .me-set{position:static!important;width:44px;height:44px}
 html body #prof .fpf .fp-body{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
 html body #prof .fpf .p-pic{width:104px!important;height:121px!important;border-radius:6px!important;border:3px solid var(--ink)!important;box-shadow:0 0 0 3px var(--h),0 5px 0 3px var(--rpg-shadow);font-size:52px}
 html body #prof .fpf .p-pic img{object-position:50% 0}
-html body #prof .fpf .p-sum{display:grid;grid-template-columns:1fr;gap:2px;margin:0}
-html body #prof .fpf .p-sum{border:0;padding:0}
-html body #prof .fpf .p-sum dt{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:6px}
-html body #prof .fpf .p-sum dt:first-child{margin-top:0}
-html body #prof .fpf .p-sum dd{margin:0;font-size:15px;font-weight:600;overflow-wrap:anywhere}
-html body #prof .fpf .p-cols{grid-template-columns:1fr!important;gap:8px}
+
+
+
+
+
+
 .fp-xp .bar i{background:repeating-linear-gradient(90deg,var(--h) 0 10px,color-mix(in srgb,var(--h) 70%,#fff) 10px 12px)!important}
 .fp-bd{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,#e05a9a 14%,var(--surface));border:2px solid color-mix(in srgb,#e05a9a 55%,var(--line))}
 .fp-bd .fpbi{color:#e05a9a;display:grid;place-items:center}
@@ -152,7 +152,7 @@ html body #prof .fpf .p-cols{grid-template-columns:1fr!important;gap:8px}
 .fp-bgpick{padding:10px;border-radius:10px;background:var(--surface-2);border:2px solid var(--line)}
 html:not(#_a):not(#_b) body :is(.rl,.fpf,.fp-bd,.fp-bgpick,.rel-top+*){box-shadow:4px 4px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b) body :is(.addf){box-shadow:3px 3px 0 var(--rpg-shadow)!important}
-.wk-sm .empty{opacity:.55}
+
 html:not(#_a):not(#_b) body :is(.fpf.aura-on)>*{position:relative;z-index:1}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on)::before,html:not(#_a):not(#_b) body :is(.fpf.aura-on)::after{content:""!important;display:block!important;position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none;background-repeat:repeat!important;image-rendering:pixelated;border-radius:0!important;-webkit-mask:none!important;mask:none!important}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-flames::before{background-image:var(--aut-fl1)!important;background-size:120px 120px!important;animation:auUp 5s steps(40) infinite}
@@ -177,11 +177,11 @@ html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::after{background-image:v
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body :is(.fpf.aura-on)::before,html:not(#_a):not(#_b) body :is(.fpf.aura-on)::after{animation:none!important}}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::before{background-size:240px 240px!important;animation:auUpH3 16s steps(80) infinite;opacity:.5}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::after{background-size:240px 240px!important;animation:auUpH4 12s steps(80) infinite;opacity:.4}
-html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on,.wr-hero.aura-on) :is(.pf-name,.statlist,.fp-info,.pf-xp,.fp-bd:not(:empty),.fp-when){background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:2px solid color-mix(in srgb,var(--au) 35%,transparent);padding:4px 8px}
+html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) :is(.pf-name,.statlist,.pf-xp,.fp-bd:not(:empty),.fp-when){background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:2px solid color-mix(in srgb,var(--au) 35%,transparent);padding:4px 8px}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .pf-name{margin:-4px 0 0 -8px}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .statlist{margin:0 -8px 0 0}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .pf-xp{padding:6px 8px;margin:0 -2px}
-html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on,.wr-hero.aura-on) .fp-when{display:block;width:fit-content}
+html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) .fp-when{display:block;width:fit-content}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on){box-shadow:4px 4px 0 var(--rpg-shadow),0 0 0 3px var(--au),0 0 0 6px color-mix(in srgb,var(--au) 40%,transparent),0 0 18px 8px color-mix(in srgb,var(--au) 55%,transparent),0 0 40px 14px color-mix(in srgb,var(--au) 25%,transparent)!important;animation:auGlow 3s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body :is(.fpf.aura-on){animation:none!important}}
 html:not(#_a):not(#_b) body .char.pf:not(.fpf) .pf-body{align-items:stretch}
@@ -285,9 +285,9 @@ html:not(#_a):not(#_b) body :is(#tgTypes,#tgTal) .tg{display:inline-flex;align-i
 html:not(#_a):not(#_b) body #prof .fp-when{display:none!important}
 html:not(#_a):not(#_b) body .fgh{display:flex;align-items:center;justify-content:space-between}
 html:not(#_a):not(#_b) body .fgcard .rwr.fgr{position:absolute;right:8px;top:8px;width:28px;height:28px}
-html:not(#_a):not(#_b) body #prof #pEmpty{display:none!important}
+
 html:not(#_a):not(#_b) body .wrap section:is([data-v="c"],[data-v="r"]) :is(.head h2,.rel-top h2){font-family:var(--f-pixel)!important;font-weight:700!important;text-transform:uppercase!important;font-size:20px!important;letter-spacing:.04em!important;color:var(--ink)!important}
-html:not(#_a):not(#_b) body #pCardF .fp-info:not(:has(#pSum:not(:empty))):not(:has(.p-cols:not([hidden]))){display:none!important}
+
 html:not(#_a):not(#_b) body #pCardF .fp-body:not(:has(.fp-info:not([style*=none]) #pSum:not(:empty))){justify-content:center}
 html:not(#_a):not(#_b) body #pCardF .fp-body:not(:has(#pSum:not(:empty))):not(:has(.p-cols:not([hidden]))){display:flex!important;justify-content:center!important}
 html:not(#_a):not(#_b) body #pCardF #pBdBox.fp-bd{background:var(--bdfl) top center/96px 22px repeat-x,var(--bdconf) center/120px 120px,var(--bdgrad)!important;border:0!important;box-shadow:none!important;padding:28px 14px 12px!important;color:#fff!important;border-radius:0!important}

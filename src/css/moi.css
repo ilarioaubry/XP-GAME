@@ -163,8 +163,8 @@ body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 .tgrp{display:grid;gap:4px;margin-top:4px}
 .tgl{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .tgl em{font-style:normal;font-weight:400}
-.mcal i.fut{opacity:.4}
-.mcal i.td{outline:2px solid var(--ink)}
+
+
 .pf .cname-in{font-family:var(--f-pixel)!important;font-size:30px!important;line-height:1.05!important;text-align:left!important;border:0!important;padding:0!important;background:none;color:var(--ink);text-transform:uppercase;letter-spacing:.03em;width:100%}
 .pf .statwrap{padding:0!important;align-self:center}
 .pf .statlist{gap:8px}
@@ -264,7 +264,7 @@ html:not(#_a):not(#_b) body #pfBdg .pbs.pbt:nth-child(3) .em::after{animation-de
 #pfBdg .pbs:nth-child(2) .bpx::after{animation-delay:.25s}
 #pfBdg .pbs:nth-child(3) .bpx::after{animation-delay:.5s}
 @media (prefers-reduced-motion:reduce){.bpx::after{display:none}}
-html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.wr-hero.aura-on) .statlist{margin:0 -8px 0 0}
+html:not(#_a):not(#_b) body :is(.char.pf.aura-on) .statlist{margin:0 -8px 0 0}
 /* — depuis principal-05.css — */
 html:not(#_a):not(#_b) body .pf .wallet b{font-size:22px;line-height:1}
 html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{transform-origin:50% 100%;animation:kChest 4s ease-in-out infinite}
@@ -288,7 +288,7 @@ html:not(#_a):not(#_b) body .bdg.new::before{display:none;content:"";position:ab
 .bpbig .bpx{filter:drop-shadow(4px 4px 0 var(--rpg-shadow))}
 .bpc.lock .bpbig .bpx{opacity:.4;filter:none}
 .bpc .bpr{width:100%;margin-top:8px}
-html:not(#_a):not(#_b) body .subtabs.qnav{position:relative!important;top:auto!important;margin-bottom:2px}
+
 html:not(#_a):not(#_b) body #ritEdCard{display:block!important;overflow:hidden}
 html:not(#_a):not(#_b) body #ritEdCard>*{max-width:100%;min-width:0}
 html:not(#_a):not(#_b) body .wrbtn b{font-size:13px!important;white-space:nowrap}
@@ -442,7 +442,7 @@ html:not(#_a):not(#_b) body .pf-hp .hps{grid-column:1/-1;font-size:11px;font-wei
 .sndrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;margin-bottom:10px}
 .sndrow>span{font-weight:800}
 html:not(#_a):not(#_b) body .sndseg{grid-template-columns:1fr 1fr!important}
-html:not(#_a):not(#_b) body .cbbest .bestia .lock small{color:var(--muted)}
+
 /* — depuis principal-11.css — */
 html:not(#_a):not(#_b) body .balrows{display:grid;gap:10px}
 html:not(#_a):not(#_b) body .balr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
@@ -531,7 +531,7 @@ html body #ficheBox .fopts button[aria-pressed=true]{background:var(--ink);color
 html body #ficheBox .fnote{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
 html body #ficheBox .frow2{grid-template-columns:1fr 1fr}
 html body #ficheBox .frow2 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;font-size:13px}
-html body #ficheBox .fchip.fpri{border-color:var(--gold);color:var(--gold);font-weight:700}
+
 html body #chapBox .bstory{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;margin-top:10px}
 html body #chapBox .bstory small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 html body #chapBox .bstory p{margin:0;font-size:15px;line-height:1.4}

@@ -117,7 +117,7 @@ html body .jrn summary h2::before{content:""!important;display:inline-block!impo
 .jrn summary::after{content:"▾";margin-left:auto;color:var(--muted);transition:transform .2s}
 .jrn[open] summary::after{transform:rotate(180deg)}
 .ritbars{background:var(--surface);border:2px solid var(--line)!important;border-radius:8px;box-shadow:0 4px 0 var(--rpg-shadow);padding:10px 12px!important;margin:0}
-.bestia div.cur{outline:2px solid var(--c-sport)}
+
 .char.cmp .bars{padding-top:10px}
 .edcard{margin-top:4px;border-style:dashed!important}
 .rt.life{gap:8px}
@@ -439,13 +439,13 @@ html:not(#_a):not(#_b) body .mbclean b{color:#3c9a4f}
 .lx.open .lx-hint,.lx.open .lx-dots,.lx.open .lx-kind{visibility:hidden}
 .lx.r3.open{animation:lxQuake .5s steps(8)}
 @media (prefers-reduced-motion:reduce){.lx.r3.open{animation:none!important}}
-html:not(#_a):not(#_b) body .cbt b.fdt::after{margin-left:auto}
-html:not(#_a):not(#_b) body .cbbest .bestia>div.cur{border-style:dashed}
-html:not(#_a):not(#_b) body .dqboss .dqic{background:#16121c;border-color:var(--tc)}
-html:not(#_a):not(#_b) body .dqboss .dqic svg{width:30px;height:24px}
-html:not(#_a):not(#_b) body .dqboss .dqa{display:flex;gap:6px;align-items:center}
-html:not(#_a):not(#_b) body .cbo.open .cbop{display:block;animation:cbOp .25s ease-out}
-html:not(#_a):not(#_b) body .cbpp.cur{border-color:var(--accent,#ffc83d);opacity:.8}
+
+
+
+
+
+
+
 .pu .stdots i.cur{background:#ffd75a}
 /* — depuis principal-11.css — */
 html:not(#_a):not(#_b) body .gfbox.open{filter:drop-shadow(0 0 12px #ffd75a)}
@@ -553,8 +553,8 @@ html:not(#_a):not(#_b) body :is(#fqBox .fqw,.sq .sqk){color:var(--muted)!importa
 html body .mbil .mbv{display:none!important}
 html body #spCount,html body #plusBox .plusb em{display:none!important}
 html body .wrap details.jrn.jempty{display:none!important}
-html:not(#_a):not(#_b) body #fqBox .fqai{display:flex;justify-content:center}
-html:not(#_a):not(#_b) body #fqBox .fqask{width:auto!important;min-height:36px!important;padding:4px 14px!important;background:transparent!important;border:1px solid var(--line)!important;box-shadow:none!important;color:var(--muted)!important;font-size:13px!important;border-radius:999px!important}
+
+
 html:not(#_a):not(#_b) body .wrap>#sqBox:not([hidden]){display:grid!important;order:-14}
 html:not(#_a):not(#_b) body .wrap>#evToday{order:-27}
 html body #evToday:empty{display:none}
@@ -600,7 +600,7 @@ html:not(#_a):not(#_b) body .fjobs.mini{grid-template-columns:repeat(4,1fr);gap:
 html:not(#_a):not(#_b) body .fjobs.mini button{font-size:11px}
 html:not(#_a):not(#_b) body .fjobs.mini .fti{width:28px;height:28px}
 html:not(#_a):not(#_b) body #evToday .fask{margin:0 0 8px}
-html:not(#_a):not(#_b) body :is(#pTypes,#pTals) .mini{display:inline-flex;align-items:center;gap:4px}
+
 html:not(#_a):not(#_b) body #sqBox .sq.idq{display:grid!important;gap:0!important}
 html:not(#_a):not(#_b) body .idq .idqr{display:inline-flex;align-items:center;gap:5px;text-decoration:none!important;align-self:center!important}
 html:not(#_a):not(#_b) body #dqBox .rtl.main{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
@@ -644,7 +644,7 @@ html:not(#_a):not(#_b) body .slhd b{font-size:15px}
 html:not(#_a):not(#_b) body .slhd small{opacity:.7;font-size:13px}
 html:not(#_a):not(#_b) body .sltr{display:grid;grid-template-columns:8fr 9fr;height:30px;background:linear-gradient(90deg,#2b2266,#0d1236 45%,#1d2350 60%,#f08a5a 80%,#7fd4ff);border:2px solid #1a1210}
 html:not(#_a):not(#_b) body .slh{position:relative;display:block;min-width:0}
-html:not(#_a):not(#_b) body .slh .slic{display:none}
+
 html:not(#_a):not(#_b) body .sltr input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:100%;margin:0;background:transparent;cursor:pointer}
 html:not(#_a):not(#_b) body .sltr input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border:0;background:center/contain no-repeat;filter:drop-shadow(0 0 4px rgba(255,230,150,.8))}
 html:not(#_a):not(#_b) body .sltr .slc::-webkit-slider-thumb{background-image:var(--slmoon)}

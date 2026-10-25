@@ -100,14 +100,14 @@ html body .pose-sit .scfire{left:calc(24% + 70px)}
 @media (prefers-reduced-motion:reduce){html body .scav img{animation:none}
 html body .scav .f0{opacity:1}}
 .scvis{position:absolute;bottom:10px;width:64px;height:104px;z-index:1;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.scvis.v0{left:60%}
+
 .scvis.v1{left:79%}
-.pose-sit .scvis.v0{left:calc(24% + 116px)}
+
 .pose-sit .scvis.v1{left:calc(24% + 176px)}
 .scn.night .scvis>div,.scn.night .scgift{filter:brightness(.82) drop-shadow(-6px 0 10px rgba(255,140,50,.45))}
 .scvis img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:0}
 .scvis>div{position:absolute;inset:0}
-.scvis .scvi.n1 .f0{opacity:1}
+
 .scvis .scvi.n2 .f{animation:scN2 1.7s steps(1) infinite}
 .scvis .scvi.n2 .f1{animation-delay:-.85s}
 .scvis .scvw,.scvis .scvv{display:none}
@@ -128,9 +128,9 @@ html body .scav .f0{opacity:1}}
 .scbub::after{content:"";position:absolute;right:22px;top:100%;width:8px;height:6px;background:#fffaf0;border:2px solid #24182c;border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
 .scbub b{color:#c2185b}
 .scvis.talk .scbub{opacity:1;transform:none}
-.scvis.v0 .scbub{right:auto;left:50%;transform:translate(-50%,6px) scale(.9);transform-origin:50% 100%}
-.scvis.v0.talk .scbub{transform:translate(-50%,0)}
-.scvis.v0 .scbub::after{right:auto;left:calc(50% - 4px)}
+
+
+
 @media (prefers-reduced-motion:reduce){.scvis.arr{animation:none}}
 html body .pose-idle .scav{left:30%}
 html body .scav.yawn img,html body .scav.act img:not(.fa){opacity:0;animation:none}
@@ -139,10 +139,10 @@ html body .scav.act img.fa{animation:scN2 .5s steps(1) infinite}
 html body .scav.act img.fa1{animation-delay:-.25s}
 html body .scav.yawn,html body .scav.act{animation-play-state:paused}
 html body .scn.slow.pose-walk .scav{animation-duration:42s}
-html body .scn.slow .scav.n4 .f{animation-duration:.96s}
-html body .scn.slow .scav.n4 .f1{animation-delay:-.72s}
-html body .scn.slow .scav.n4 .f2{animation-delay:-.48s}
-html body .scn.slow .scav.n4 .f3{animation-delay:-.24s}
+
+
+
+
 html body .scn.glad.pose-walk .scav{animation-duration:20s}
 .scbk{position:absolute;left:50%;top:-34px;width:34px;height:34px;margin-left:-17px;background:#fffaf0;border:2px solid #24182c;box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:3px;box-sizing:border-box;z-index:4;animation:scBk 2.2s ease both}
 .scbk::after{content:"";position:absolute;left:12px;top:100%;width:6px;height:5px;background:#fffaf0;border:2px solid #24182c;border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
@@ -169,22 +169,22 @@ html body .scn.glad.pose-walk .scav{animation-duration:20s}
 .scglad i:nth-child(3){left:58px;top:30px;animation-delay:-1.2s}
 @media (prefers-reduced-motion:reduce){.sccloud,.sccloud i,.scglad i{animation:none}}
 /* — depuis principal-08.css — */
-.scradio{position:absolute;left:3%;bottom:14px;width:48px;height:36px;padding:0;background:none;border:0;cursor:pointer;z-index:2;-webkit-tap-highlight-color:transparent}
-.scradio svg{width:100%;height:100%;display:block;filter:drop-shadow(2px 2px 0 rgba(36,24,44,.35))}
-.pose-sit .scradio{left:auto;right:4%}
-.scradio.on svg{animation:spBeat .5s steps(2) infinite}
-.scn2{position:absolute;left:14px;top:-4px;width:30px;height:30px;pointer-events:none;display:none}
-.scradio.on .scn2{display:block}
-.scn2 i{position:absolute;bottom:0;width:6px;height:8px;background:#fff3a0;box-shadow:inset -2px 0 0 #ffd94a;clip-path:polygon(40% 0,100% 0,100% 30%,70% 30%,70% 100%,0 100%,0 60%,40% 60%);animation:spNote 1.6s linear infinite;--dx:-10px}
-.scn2 i:nth-child(2){left:10px;animation-delay:-.55s;--dx:6px;background:#ff9ec0;box-shadow:inset -2px 0 0 #d8608a}
-.scn2 i:nth-child(3){left:20px;animation-delay:-1.1s;--dx:-4px;background:#9ae8ff;box-shadow:inset -2px 0 0 #2f8fe0}
-.scrb{position:absolute;left:0;bottom:calc(100% + 26px);display:none;min-width:120px;max-width:200px;padding:4px 8px;text-align:left;background:#fffaf0;color:#24182c;border:2px solid #24182c;box-shadow:3px 3px 0 rgba(36,24,44,.35);font:700 13px/1.25 var(--font,system-ui)}
-.scrb b,.scrb span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.scrb span{font-weight:600;color:#5a4a66}
-.scradio.on:hover .scrb,.scradio.on:focus-visible .scrb{display:block}
+
+
+
+
+
+
+
+
+
+
+
+
+
 html body .scav.groove img.f{translate:0 0}
 html body .pose-walk .scav.groove,html body .pose-idle .scav.groove{filter:drop-shadow(0 0 0 transparent)}
-@media (prefers-reduced-motion:reduce){.scradio.on svg,.scn2 i{animation:none}}
+
 html body .scnt{padding-right:100px;box-sizing:border-box}
 .scwx{position:absolute;right:48px;top:4px;z-index:2;height:40px;min-width:40px;padding:0 8px 0 6px;display:flex;align-items:center;gap:5px;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff8e6;font:800 15px/1 var(--font,system-ui);cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .scwx svg{width:22px;height:20px;display:block}
