@@ -14,3 +14,7 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 ## Ponytail
 
 Skills Ponytail installés dans `.claude/skills/` (MIT, github.com/DietrichGebert/ponytail) : `/ponytail` (mode « dev paresseux » : plus petit changement qui résout le problème), `/ponytail-review`, `/ponytail-audit`, `/ponytail-debt`, `/ponytail-gain`, `/ponytail-help`. Niveaux : `/ponytail lite|full|ultra|off`.
+
+## frontend-design
+
+Skill `frontend-design` (Apache-2.0, github.com/anthropics/skills) dans `.claude/skills/`. À utiliser pour créer ou refondre un écran. Pour une retouche sur l'existant, garder le style actuel de l'appli (pixel art, couleurs, composants) plutôt que d'y appliquer une nouvelle direction artistique.
