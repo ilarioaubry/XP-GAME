@@ -60,6 +60,7 @@ Conventions du code existant (à suivre) :
 - **Typo** : `--f-pixel` (Lilita One) pour les titres, `--f-body` (Atkinson Hyperlegible) pour le texte.
 - **Textes** : tutoiement, phrases courtes, vocabulaire simple.
 - **Données** : nouvelles clés dans `S.g`, jamais de renommage ni de changement de format. Réparation ponctuelle = une migration numérotée ajoutée à la fin de `MIG` dans `js/migrations.js` (`S.g.ver` = nombre de migrations appliquées) ; ne jamais modifier ni réordonner une migration existante.
+- **Fonctionnalité retirée** : supprimée du code (HTML, JS, et CSS lors de la fusion), jamais seulement cachée ; ses données restent dans la sauvegarde. Tenir `FONCTIONNALITES.md` et `DONNEES.md` à jour.
 - **Ajout d'un élément visible** : vérifier qu'aucune règle CSS existante ne le masque (ex. Bilan masque les sections non listées).
 
 ## Ponytail

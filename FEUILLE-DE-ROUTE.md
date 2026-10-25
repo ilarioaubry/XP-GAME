@@ -43,8 +43,8 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 2.3 (25/10/2026) Supprimer ce qui est seulement caché (fait selon les décisions de 2.1 : 14 sections + onglet « Domaines » + leur code ; boss de Noël et restes de boss des coffres retirés ; Noël gardé) (selon 2.1) : Noël (xmBox, masqué en CSS seulement), vue « t » et barre `qnav`, sous-onglets sons / compétences, weekBox, sections masquées en CSS (ritStat, sleepBox, moodBox)
 - [x] 2.4 (25/10/2026) Renommer les fichiers « boss » (→ 13-figurines-expressions, 23-coffres-quetes-du-jour, 28-sons-proches-validation ; code de boss restant supprimé ; identifiants internes gardés car enregistrés dans les données : badges boss1/boss4, coffre « boss », clés boss/bh) (13-pixel-clair-boss, 23-boss-par-categorie, 28-sons-boss) et n'en garder que ce qui sert (figurines `BOSS_CAT`, projets `CB_LIST`, sons)
 - [x] 2.7 (25/10/2026) Renommer `17-spotify-meteo.js` (→ `17-meteo.js`) en fichier météo (Spotify retiré)
-- [ ] 2.5 Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
-- [ ] 2.6 Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
+- [x] 2.5 (25/10/2026) Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
+- [x] 2.6 (25/10/2026) Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
 
 ## Phase 3 — Composants et fusion des CSS (écran par écran, Aujourd'hui d'abord)
 
@@ -91,6 +91,7 @@ Points d'uniformité restants :
 - [x] 5.20 Salut « Bonsoir, Ilar » : pas un bug, c'est le prénom choisi (25/10/2026)
 - [ ] 5.21 Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées
 - [ ] 5.22 Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif »)
+- [ ] 5.23 Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30)
 - [ ] 5.15 Carrousel des quêtes spéciales avec une seule carte : même taille de carte
 
 Lisibilité :
