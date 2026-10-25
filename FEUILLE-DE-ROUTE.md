@@ -83,7 +83,7 @@ Points d'uniformité restants :
 - [ ] 5.13 Menus contextuels encore en survol / positionnés au doigt → petite fenêtre centrée
 - [ ] 5.14 Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte
 - [ ] 5.19 Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10
-- [ ] 5.20 Salut « Bonsoir, Ilar » : prénom coupé ? à vérifier
+- [x] 5.20 Salut « Bonsoir, Ilar » : pas un bug, c'est le prénom choisi (25/10/2026)
 - [ ] 5.21 Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées
 - [ ] 5.15 Carrousel des quêtes spéciales avec une seule carte : même taille de carte
 
