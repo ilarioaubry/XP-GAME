@@ -108,7 +108,7 @@ Lisibilité :
 - [ ] 6.4 Aujourd'hui en ordre fixe : prochaine action → la journée (repas + assiette, rituels, quêtes du jour) → quêtes spéciales ; le décoratif part dans Moi > Profil
 - [ ] 6.5 Mettre en avant la prochaine action (« qu'est-ce que je fais maintenant ? »)
 - [ ] 6.6 Le jeu apparaît à la validation (+XP, petite animation) et dans Profil, pas en bloc dans Aujourd'hui
-- [ ] 6.7 Moi en trois sous-pages : Profil, Bilan, Réglages (réglages : rituels, sauvegarde, sons, aide)
+- [ ] 6.7 Réorganiser Moi en gardant Bilan et Chez moi (Ilario y tient, 25/10) : où mettre Profil et Réglages ? (réglages : rituels, sauvegarde, sons, aide)
 - [ ] 6.8 Un seul chemin principal par action (repas : tuile / assiette / quête ; quête : bouton / « … » / appui long)
 - [ ] 6.9 Page « Aide » courte pour les gestes
 - [ ] 6.10 Proches triés par temps depuis le dernier contact **(décision)**
