@@ -212,11 +212,15 @@ html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 2
       <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span></p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
-      <button type="button" class="btn" id="expBtn" style="width:100%">Copier mes données (sauvegarde)</button>
-      <textarea id="dataBox" rows="4" readonly hidden style="width:100%;margin-top:8px;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px"></textarea>
-      <h3 style="margin-top:16px">Restaurer</h3>
-      <textarea id="impBox" rows="3" placeholder="Colle ici une sauvegarde…" style="width:100%;font:12px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px"></textarea>
-      <button type="button" class="btn" id="impBtn" style="width:100%;margin-top:8px">Restaurer</button>
+      <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
+      <button type="button" class="btn" id="impFileBtn" style="width:100%;margin-top:8px">Restaurer depuis un fichier</button>
+      <input type="file" id="impFile" accept=".json,application/json,text/plain" hidden>
+      <details class="bksec" style="margin-top:12px"><summary class="hint">Par texte (secours)</summary>
+      <button type="button" class="btn" id="expBtn" style="width:100%;margin-top:8px">Copier le texte</button>
+      <textarea id="dataBox" rows="4" readonly hidden style="width:100%;margin-top:8px;font:16px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px"></textarea>
+      <textarea id="impBox" rows="3" placeholder="Colle ici une sauvegarde…" style="width:100%;margin-top:8px;font:16px monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px"></textarea>
+      <button type="button" class="btn" id="impBtn" style="width:100%;margin-top:8px">Restaurer le texte</button>
+      </details>
       <p class="hint" id="impMsg" style="margin:6px 0 0"></p>
     </div>
   </section>

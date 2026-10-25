@@ -12,6 +12,20 @@ $("expBtn").onclick=async()=>{
   toast(ok?"Sauvegarde copiée : colle-la dans une note":"Sélectionne le texte et copie-le");
 };
 let impArmed=false;
+// sauvegarde en fichier : menu de partage iOS (Enregistrer dans Fichiers), sinon téléchargement
+$("expFile").onclick=async()=>{
+  const name="carnet-"+new Date().toISOString().slice(0,10)+".json",f=new File([JSON.stringify(snapshot())],name,{type:"application/json"});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});S.g.bkLast=Date.now();save();return}}catch(e){if(e&&e.name==="AbortError")return}
+  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+  S.g.bkLast=Date.now();save();toast("Sauvegarde exportée");
+};
+$("impFileBtn").onclick=()=>$("impFile").click();
+$("impFile").onchange=async e=>{
+  const fl=e.target.files&&e.target.files[0];e.target.value="";if(!fl)return;let d;
+  try{d=JSON.parse(await fl.text())}catch(x){toast("Ce fichier n'est pas une sauvegarde");return}
+  if(!d||typeof d!=="object"||typeof d.xp!=="number"||!Array.isArray(d.actions)){toast("Sauvegarde non reconnue");return}
+  undoAfter("Données restaurées",()=>{load(d);save();render()});
+};
 $("impBtn").onclick=()=>{
   const m=$("impMsg");let d;
   try{d=JSON.parse($("impBox").value.trim())}catch(e){m.textContent="Ce texte n'est pas une sauvegarde valide.";impArmed=false;$("impBtn").textContent="Restaurer";return}

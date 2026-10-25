@@ -21,7 +21,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 ## Phase 1 — Sécurité des données et hors ligne
 
-- [ ] 1.1 Export de la sauvegarde en fichier (partage iOS → iCloud Drive / Fichiers) + import depuis un fichier, à la place du copier-coller
+- [x] 1.1 (25/10/2026) Export de la sauvegarde en fichier (partage iOS → iCloud Drive / Fichiers) + import depuis un fichier, à la place du copier-coller
 - [ ] 1.2 Rappel d'export régulier (discret, ton encourageant)
 - [ ] 1.3 Numéro de version dans la sauvegarde + liste de migrations numérotées qui remplace les drapeaux ponctuels (`dst26`, `voc1`) sans casser les données
 - [ ] 1.4 `manifest.json` : nom, icône pixel, écran de démarrage, mode appli
