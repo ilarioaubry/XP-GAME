@@ -50,14 +50,14 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 - [x] 3.1 (25/10/2026) Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
 - [x] 3.2 (25/10/2026) Composants définis une fois (`css/composants.css`, préfixe `ui-`, pas encore utilisés) : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
-- [ ] 3.3 Fusion des 27 feuilles CSS en : base + composants + une feuille par zone — Aujourd'hui, en 5 morceaux : 3.3a haut (scène, météo, sons, XP, bandeau) · 3.3b Mon moment (rituels, repas) · 3.3c quêtes pour toi · 3.3d quêtes spéciales · 3.3e cartes du moment + panneau « + »
+- [x] 3.3 (26/10/2026) Une feuille par zone : `aujourdhui-haut`, `aujourdhui`, `proches`, `moi`, `fenetres` (rangement automatique d'après les classes réellement présentes dans chaque zone ; rendu identique au pixel sur 55 écrans)
   - [x] 3.3a (25/10/2026) haut d'Aujourd'hui → `css/aujourdhui-haut.css` : 235 règles sorties des couches, 35 sans effet supprimées, 0 `!important`, 0 hack ; rendu identique au pixel (midi, nuit, matin, pluie, décembre)
-- [ ] 3.4 … Proches
-- [ ] 3.5 … Moi (Profil, Bilan, Réglages)
-- [ ] 3.6 … Fenêtres (assiette, menus, « Avec qui ? »…)
-- [ ] 3.7 Supprimer les 1 451 `!important` et les hacks `html:not(#_a)…` au fil de la fusion
-- [ ] 3.9 Supprimer le CSS des fonctionnalités retirées (radio Spotify `.scradio`, `.spt`, `.spsh`, boss, Noël…)
-- [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds
+- [x] 3.4 (26/10/2026) Proches → `proches.css`
+- [x] 3.5 (26/10/2026) Moi → `moi.css`
+- [x] 3.6 (26/10/2026) Fenêtres → `fenetres.css` ; les 27 anciennes couches (principal, épure, maison…) fusionnées dans `base.css` dans leur ordre ; en-tête de page remis dans <head>
+- [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important`
+- [x] 3.9 (26/10/2026) Supprimer le CSS des fonctionnalités retirées (328 règles et 355 sélecteurs dont les classes n'existent plus dans le code)
+- [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds → à faire avec 3.7 (la règle universelle reste en attendant, elle marche)
 
 ## Phase 4 — Scripts
 
