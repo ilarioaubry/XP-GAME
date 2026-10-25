@@ -3632,7 +3632,7 @@ function renderJournal(){
     const li=document.createElement("li");const t=new Date(e.t);
     li.innerHTML=`<time>${String(t.getHours()).padStart(2,"0")}:${String(t.getMinutes()).padStart(2,"0")}</time><span class="n"></span><span class="x">+${e.xp}</span><button class="undo" type="button">Annuler</button>`;
     li.querySelector(".n").textContent=e.name;li.__e=e;
-    li.querySelector(".undo").onclick=()=>{const prev=levelInfo(S.xp).l;S.log=S.log.filter(x=>x!==e);S.xp=Math.max(0,S.xp-e.xp);if(e.prj&&e.ps!=null&&S.g&&Array.isArray(S.g.prj)){const p=S.g.prj.find(x=>x.id===e.prj);if(p&&p.st[e.ps]){delete p.st[e.ps].d;delete p.won}}if(e.sold&&!S.g.gear.includes(e.sold))S.g.gear.push(e.sold);if(e.pj){const G=pjState();if(e.pjfin){try{const o=JSON.parse(e.pjfin);o.i=e.pji;o.last="";G.pj[e.pj]=o;G.pjd=G.pjd.filter(x=>x!==o.id);delete G.pjf[e.pj];if(G.chests>0)G.chests--}catch(er){}}else{const c=G.pj[e.pj];if(c&&c.id===e.pjid){c.i=e.pji;c.last=""}}}if(e.lz&&e.lzx){const zi=e.lz.split(":")[0],z=lzState();z.xp[zi]=Math.max(0,(z.xp[zi]||0)-e.lzx)}if(e.out&&S.g.rel[e.out])delete S.g.rel[e.out];if(e.mb&&S.g.mb)delete S.g.mb[e.mb];if(e.cb&&S.g.cb&&S.g.cb[e.cb]){const B=cbCur(e.cb);if(B&&B.id===e.cbb)S.g.cb[e.cb].h=S.g.cb[e.cb].h.filter(x=>x!==e.cbs)}if(e.sleep&&S.g.sleep[e.sleep])S.g.sleep[e.sleep].x=0;if(e.snd)Object.entries(e.snd).forEach(([k,v])=>{S.snd[k]=Math.max(0,(S.snd[k]||0)-v)});if(e.rel&&S.bonds[e.who]!=null)S.bonds[e.who]=Math.max(0,S.bonds[e.who]-e.xp);if(Array.isArray(e.fgw))e.fgw.forEach(n=>{S.bonds[n]=Math.max(0,(S.bonds[n]||0)-Math.max(2,Math.round(e.xp/2)))});if(e.sp&&S.g.dq&&Array.isArray(S.g.dq.done)){const di=S.g.dq.done.findIndex(x=>x.id===e.a||(!x.id&&x.n===e.name));if(di>=0)S.g.dq.done.splice(di,1)}if(e.sp&&!S.specials.some(q=>q.id===e.a)){
+    li.querySelector(".undo").onclick=()=>{const prev=levelInfo(S.xp).l;S.log=S.log.filter(x=>x!==e);S.xp=Math.max(0,S.xp-e.xp);if(e.prj&&e.ps!=null&&S.g&&Array.isArray(S.g.prj)){const p=S.g.prj.find(x=>x.id===e.prj);if(p&&p.st[e.ps]){delete p.st[e.ps].d;delete p.won}}if(e.sold&&!S.g.gear.includes(e.sold))S.g.gear.push(e.sold);if(e.pj){const G=pjState();if(e.pjfin){try{const o=JSON.parse(e.pjfin);o.i=e.pji;o.last="";G.pj[e.pj]=o;G.pjd=G.pjd.filter(x=>x!==o.id);delete G.pjf[e.pj];if(G.chests>0)G.chests--}catch(er){}}else{const c=G.pj[e.pj];if(c&&c.id===e.pjid){c.i=e.pji;c.last=""}}}if(e.lz&&e.lzx){const zi=e.lz.split(":")[0],z=lzState();z.xp[zi]=Math.max(0,(z.xp[zi]||0)-e.lzx)}if(e.out&&S.g.rel[e.out])delete S.g.rel[e.out];if(e.mb&&S.g.mb)delete S.g.mb[e.mb];if(e.plk){try{plUndo(e)}catch(er){}}if(e.cb&&S.g.cb&&S.g.cb[e.cb]){const B=cbCur(e.cb);if(B&&B.id===e.cbb)S.g.cb[e.cb].h=S.g.cb[e.cb].h.filter(x=>x!==e.cbs)}if(e.sleep&&S.g.sleep[e.sleep])S.g.sleep[e.sleep].x=0;if(e.snd)Object.entries(e.snd).forEach(([k,v])=>{S.snd[k]=Math.max(0,(S.snd[k]||0)-v)});if(e.rel&&S.bonds[e.who]!=null)S.bonds[e.who]=Math.max(0,S.bonds[e.who]-e.xp);if(Array.isArray(e.fgw))e.fgw.forEach(n=>{S.bonds[n]=Math.max(0,(S.bonds[n]||0)-Math.max(2,Math.round(e.xp/2)))});if(e.sp&&S.g.dq&&Array.isArray(S.g.dq.done)){const di=S.g.dq.done.findIndex(x=>x.id===e.a||(!x.id&&x.n===e.name));if(di>=0)S.g.dq.done.splice(di,1)}if(e.sp&&!S.specials.some(q=>q.id===e.a)){
       const ug=e.g||"friends";
       if(e.fr&&(ug==="friends"||ug==="family")&&S.bonds[e.who]!=null)S.bonds[e.who]=Math.max(0,S.bonds[e.who]-e.xp);
       if(e.fr){S.specials=S.specials.filter(q=>q.grp!==ug);S[GROUPS[ug].done]=S[GROUPS[ug].done].filter(n=>n!==e.who)}
@@ -3758,10 +3758,10 @@ const MB_V=[["junk","Mal mangé","burger",-10],["smoke","Fumé","smoke",-15],["d
 const mbDraft={};
 const MEAL_H={pdej:0,dej:11,gouter:16,diner:19};
 function mbDr(key){const MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={});const dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};dr.pl=dr.pl||{};dr.v=dr.v||{};dr.cr=dr.cr||{};return dr}
-function mealQuick(per,k,btn,v,ev){const tk=dayKey(Date.now()),key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k);if(!M)return;const[,l,p]=M;
+function mealQuick(per,k,btn,v,ev,bx,extra){const tk=dayKey(Date.now()),key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k);if(!M)return;const[,l,p]=M;
   if(dr.cr[k]||dr.m[k]===0||dr.m[k]===1||(S.g.mb&&S.g.mb[key])){render();return}
   dr.m[k]=v;delete dr.w[k];dr.cr[k]=1;if(btn){btn.disabled=true;const it=btn.closest(".dqi");if(it)it.classList.add("leave")}
-  if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p},btn,ev);else{save();render();toast(l+(v?" noté":" sauté"))}}
+  if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p+(bx||0)},btn,ev,false,extra);else{save();render();toast(l+(v?" noté":" sauté"))}}
 
 function mbCard(pp){const[per,day0]=pp.split(":"),day=day0||dayKey(Date.now()),key=day+":"+per,MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={}),dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};Object.keys(MBD).filter(k=>k.slice(0,10)<dayKey(Date.now()-2*864e5)).forEach(k=>delete MBD[k]);
   const MBX=MB_EX.filter(e=>!e[4]||e[4]===per),soft=isSoft(day);const c=document.createElement("div");c.className="mbil";const late=(per==="matin"&&dayPer()!=="matin")||!!day0;
@@ -13724,6 +13724,26 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow
 @media (prefers-reduced-motion:reduce){.plit.pop{animation:none}}
 /* la frise reste visible dans Bilan, comme la sauvegarde */
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid!important}
+/* coup de pouce, XP, boss */
+.plhd h2 small{font-size:15px;color:rgba(255,247,230,.55);font-family:var(--f-body)}
+.plhint b{color:#fff7e6}
+.plxp{margin:-4px 0 0;text-align:center;font-family:var(--f-pixel);font-size:15px;color:var(--gold,#ffd94a);min-height:1.2em}
+.plxp.full{animation:plglow 1s ease-in-out 2}
+@keyframes plglow{50%{text-shadow:0 0 10px var(--gold,#ffd94a)}}
+.plside.need h3 em{font-style:normal;font-family:var(--f-body);font-size:12px;color:#2a1606;background:var(--pc);padding:1px 6px;margin-left:4px}
+.plside.need .plfoods{animation:plneed 1.4s ease-in-out 3}
+@keyframes plneed{50%{background:color-mix(in srgb,var(--pc) 18%,transparent)}}
+.pldy{grid-template-columns:76px 1fr}
+.plboss{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding-top:8px;border-top:1px dashed rgba(255,255,255,.14)}
+.plbs{display:block;width:48px;height:48px;overflow:hidden}
+.plbs svg{width:48px;height:48px;display:block}
+.plboss b{font-size:14px;color:#fff7e6}.plboss b small{font-weight:400;color:rgba(255,247,230,.55)}
+.plboss>div>small{display:block;font-size:12px;color:rgba(255,247,230,.6)}
+.plpv{display:flex;gap:3px;margin-top:4px}
+.plpv i{flex:1;max-width:22px;height:8px;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
+.plpv i.on{background:var(--bc)}
+.plrun em{white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.plxp.full,.plside.need .plfoods{animation:none}}
 </style>
 <script>
 (function(){
@@ -14417,7 +14437,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
   function mealRow(){const tr=document.getElementById("spTrack");if(!tr||!S||!S.g)return;try{mealAuto()}catch(e){}const h=dayH();
     const st=MEALS.map(([k,per])=>mealState(k,per)+(h>=MEAL_H[k]?"":"|later")).join(",");let r=tr.querySelector(".mlrow");if(r&&r.dataset.k===st&&r.parentElement===tr){try{plateDay(r)}catch(e){}return}
     if(!r){r=document.createElement("div");r.className="mlrow"}r.dataset.k=st;tr.querySelectorAll(".mlpop").forEach(x=>x.remove());
-    r.innerHTML=MEALS.map(([k,per,l,ic])=>{const s=mealState(k,per),later=h<MEAL_H[k];return`<button type="button" class="mlp st-${s||"none"}${later?" later":""}" data-k="${k}" data-per="${per}" ${later||s?"disabled":""} aria-label="${l}${s==="ok"?", pris":s==="ko"?", sauté":""}"><span class="mli">${pxImg(ic,3)}${s==="ko"?'<i class="mlx"></i>':""}${s==="ok"?`<span class="mlb">${vI("check")}</span>`:""}</span><small>${l}</small></button>`}).join("");
+    r.innerHTML=MEALS.map(([k,per,l,ic])=>{const s=mealState(k,per),later=h<MEAL_H[k];return`<button type="button" class="mlp st-${s||"none"}${later?" later":""}" data-k="${k}" data-per="${per}" ${later||(s&&!(s==="ok"&&MB_PLM.includes(k)))?"disabled":""} aria-label="${l}${s==="ok"?", pris":s==="ko"?", sauté":""}"><span class="mli">${pxImg(ic,3)}${s==="ko"?'<i class="mlx"></i>':""}${s==="ok"?`<span class="mlb">${vI("check")}</span>`:""}</span><small>${l}</small></button>`}).join("");
     const anchor=tr.querySelector(".rtl.main");if(anchor)anchor.after(r);else tr.appendChild(r);
     r.querySelectorAll(".mlp:not([disabled])").forEach(b=>b.onclick=()=>{if(typeof plateOpen==="function"&&MB_PLM.includes(b.dataset.k)){tr.querySelectorAll(".mlpop").forEach(x=>x.remove());plateOpen(b.dataset.per,b.dataset.k,b);return}const ps=[...tr.querySelectorAll(".mlpop")],same=ps.some(x=>x.dataset.k===b.dataset.k);ps.forEach(x=>x.remove());if(same)return;const p=document.createElement("div");p.className="mlpop";p.dataset.k=b.dataset.k;const l=b.querySelector("small").textContent;
       p.innerHTML=`<button type="button" data-v="1"><span>${pxImg(MEALS.find(m=>m[0]===b.dataset.k)[3],3)}</span>Pris</button><button type="button" data-v="0"><span class="mlskip">${pxImg(MEALS.find(m=>m[0]===b.dataset.k)[3],3)}<i class="mlx"></i></span>Sauté</button>`;r.after(p);
@@ -14572,27 +14592,51 @@ function plSvg(lv){const c=15.5,rows=[];for(let y=0;y<32;y++){let row="";for(let
   return`<svg viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function plSlots(s,n){const a=PL_A[s],P=[[7,0],[9,-34],[9,34],[4.2,0]];return P.slice(0,n).map(([r,da])=>{const t=(a+da)*Math.PI/180;return[(15.5+r*Math.cos(t))/32*100,(15.5+r*Math.sin(t))/32*100]})}
 
-function plateOpen(per,k,btn){const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],x:{...(cur.x||{})}};
+const plDone=(d,per,k)=>{const key=d+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];return(((b&&b.m)||(dr&&dr.m)||{})[k])===1};
+const plXp=L=>{const n=["f","p","l"].filter(s=>L[s]).length;return n*MB_PLX+(n===3?MB_PLB:0)};
+function plateOpen(per,k,btn){const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],x:{...(cur.x||{})},...(cur.bh?{bh:1}:{})};
+  const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[];
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);let step=1;
-  const close=()=>{o.remove();document.removeEventListener("keydown",esc)},esc=e=>{if(e.key==="Escape")close()};
+  const close=()=>{o.remove();document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
-  const draw=()=>{const L=lv();
-    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]:"Et avec ça ?"}</h2><button type="button" class="plcl" aria-label="Fermer">✕</button></div>`+
+  const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L);
+    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2><button type="button" class="plcl" aria-label="Fermer">✕</button></div>`+
     (step===1?`<div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${plName(s,id)}">${rkSvg(id)}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
-      <p class="plhint">Touche ce que tu manges. Touche-le sur l'assiette pour le retirer.</p>
-      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2,F])=>`<div class="plside" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}</h3><div class="plfoods">${F.map(([id,n])=>`<button type="button" class="plf" data-add="${s}:${id}"><span>${rkSvg(id)}</span><small>${n}</small></button>`).join("")}</div></div>`).join("")}</div>
-      <div class="plbar"><button type="button" class="btn plskip">Sauté</button><button type="button" class="btn primary plnext">Suite</button></div>`
+      <p class="plhint">${nd.length?`À midi il manquait : <b>${nd.map(s=>PL_SIDES.find(z=>z[0]===s)[1].toLowerCase()).join(", ")}</b>. C'est le moment d'en ajouter.`:edit?"Ajoute ou retire ce que tu as oublié.":"Touche ce que tu manges. Touche-le sur l'assiette pour le retirer."}</p>
+      ${edit?"":`<p class="plxp${bx>=MB_PLX*3+MB_PLB?" full":""}">${bx?`+${bx} XP d'assiette${bx>=MB_PLX*3+MB_PLB?" · complète !":""}`:"Chaque côté rempli rapporte de l'XP"}</p>`}
+      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2,F])=>`<div class="plside${nd.includes(s)?" need":""}" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}${nd.includes(s)?`<em>Il t'en manque aujourd'hui</em>`:""}</h3><div class="plfoods">${F.map(([id,n])=>`<button type="button" class="plf" data-add="${s}:${id}"><span>${rkSvg(id)}</span><small>${n}</small></button>`).join("")}</div></div>`).join("")}</div>
+      <div class="plbar">${edit?`<button type="button" class="btn plcl2">Annuler</button>`:`<button type="button" class="btn plskip">Sauté</button>`}<button type="button" class="btn primary plnext">Suite</button></div>`
     :`<div class="plxs">${PL_X.map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
-      <div class="plbar"><button type="button" class="btn plback">Retour</button><button type="button" class="btn primary plok">Valider</button></div>`)+`</div>`;
-    o.querySelector(".plcl").onclick=close;
+      ${plWaterRit()?`<p class="plhint">Le verre d'eau compte aussi pour ton rituel « ${esc(plWaterRit().name)} ».</p>`:""}
+      <div class="plbar"><button type="button" class="btn plback">Retour</button><button type="button" class="btn primary plok">${edit?"Enregistrer":"Valider"}</button></div>`)+`</div>`;
+    o.querySelectorAll(".plcl,.plcl2").forEach(b=>b.onclick=close);
     o.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const[s,id]=b.dataset.add.split(":");m[s].push(id);try{sfx("blip")}catch(e){}draw();const it=o.querySelectorAll(`.plit[data-rm^="${s}:"]`);const last=it[Math.min(m[s].length,3)-1];if(last&&m[s].length<=3)last.classList.add("pop")});
     o.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{const[s,i]=b.dataset.rm.split(":");m[s].splice(+i,1);draw()});
     o.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{const id=b.dataset.x;if(m.x[id])delete m.x[id];else m.x[id]=1;try{sfx("blip")}catch(e){}draw()});
     const nx=o.querySelector(".plnext");if(nx)nx.onclick=()=>{step=2;draw()};
     const bk=o.querySelector(".plback");if(bk)bk.onclick=()=>{step=1;draw()};
     const sk=o.querySelector(".plskip");if(sk)sk.onclick=ev=>{close();try{mealQuick(per,k,btn,0,ev)}catch(e){}};
-    const ok=o.querySelector(".plok");if(ok)ok.onclick=ev=>{plSave(tk,k,m);close();try{mealQuick(per,k,btn,1,ev)}catch(e){}}};
-  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",esc);document.body.appendChild(o);try{sfx("open")}catch(e){}}
+    const ok=o.querySelector(".plok");if(ok)ok.onclick=ev=>{const water=m.x.eau&&!(cur.x||{}).eau,hit=plBossHit(m);plSave(tk,k,m);close();
+      if(edit){try{render()}catch(e){}toast("Assiette corrigée")}else{try{mealQuick(per,k,btn,1,ev,plXp(lv()),{plk:tk+":"+k,plp:per})}catch(e){}}
+      if(water)setTimeout(()=>{try{const t=plWaterRit();if(t)ritTap(t,btn,null)}catch(e){}},900);
+      if(hit)setTimeout(()=>plBossFx(hit),water?1900:1100)}};
+  draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);try{sfx("open")}catch(e){}}
+// rituel Eau du jour (s'il existe et n'est pas fini)
+function plWaterRit(){try{ritRoll();return(S.daily.tasks||[]).find(t=>/\beau\b|verre/i.test(t.name)&&(S.daily.c[t.id]||0)<t.n)||null}catch(e){return null}}
+// annuler le repas depuis « Annuler » ou le journal : l'assiette et l'état du repas repartent à zéro
+function plUndo(e){const[d,k]=e.plk.split(":"),per=e.plp,P=(S.g.plt||{})[d],m=P&&P[k];if(m&&m.bh){const B=plBoss();if(B.h>0)B.h--}if(P)delete P[k];
+  const key=d+":"+per,dr=(S.g.mbd||{})[key];if(dr){if(dr.m)delete dr.m[k];if(dr.cr)delete dr.cr[k]}if(S.g.mb&&S.g.mb[key]){if(dr)Object.keys(S.g.mb[key].m||{}).forEach(q=>{if(q!==k&&dr.m[q]==null){dr.m[q]=S.g.mb[key].m[q];dr.cr=dr.cr||{};dr.cr[q]=1}});delete S.g.mb[key]}}
+
+// ---- Boss d'assiette : chaque assiette complète (les 3 côtés) lui retire 1 PV
+const PL_BOSS=[["Gloutonnet","slime","#8bc34a",5],["Sucrétin","ghost","#ff9ec0",7],["Frittosaure","dragon","#f0a020",10]],PL_BOSS_XP=50;
+function plBoss(){const G=S.g;if(!G.plb||typeof G.plb!=="object")G.plb={i:0,h:0};const B=G.plb,b=PL_BOSS[B.i%PL_BOSS.length],tier=Math.floor(B.i/PL_BOSS.length);B.n=b[0];B.sp=b[1];B.col=b[2];B.hp=b[3]+tier*3;B.tier=tier;return B}
+function plBossHit(m){if(m.bh||!["f","p","l"].every(s=>plN(m,s)))return null;m.bh=1;const B=plBoss(),n=B.n;B.h++;if(B.h<B.hp)return{n,left:B.hp-B.h};
+  B.i++;B.h=0;addBonus("Boss vaincu : "+n,PL_BOSS_XP,0,"plbw");S.g.bchests=(S.g.bchests||0)+1;return{n,win:1}}
+function plBossFx(r){try{sfx(r.win?"level":"hit")}catch(e){}toast(r.win?`<span class="p">${esc(r.n)}</span> est vaincu ! +${PL_BOSS_XP} XP et un coffre`:`Assiette complète : <span class="p">${esc(r.n)}</span> perd 1 PV (encore ${r.left})`);try{render()}catch(e){}}
+// série : jours d'affilée avec des légumes (aujourd'hui compte s'il y en a, sinon on part d'hier)
+function plVegRun(){let n=0;const d=new Date();if(!plTot(dayKey(d)).l)d.setDate(d.getDate()-1);for(let i=0;i<400;i++){if(!plTot(dayKey(d)).l)break;n++;d.setDate(d.getDate()-1)}return n}
+try{const _bd=badgeDefs;badgeDefs=function(){const B=_bd.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>plVegRun()>=7});return B}}catch(e){}
+try{const _fo=famOf;famOf=function(id){return id==="veg7"?"reg":_fo(id)}}catch(e){}
 function plName(s,id){const f=PL_SIDES.find(z=>z[0]===s)[4].find(z=>z[0]===id);return f?f[1]:id}
 function plSave(tk,k,m){const P=S.g.plt=S.g.plt||{};(P[tk]=P[tk]||{})[k]=m;const lim=dayKey(Date.now()-120*864e5);Object.keys(P).forEach(d=>{if(d<lim)delete P[d]});save()}
 // totaux d'une journée (déjeuner + dîner)
@@ -14600,10 +14644,11 @@ function plTot(d){const D=plDay(d),t={f:0,p:0,l:0,x:{yaourt:0,fromage:0,eau:0},n
 
 // Aujourd'hui : petite assiette du jour sous les repas (dès qu'un repas est rempli)
 function plateDay(row){if(!row||!row.parentElement)return;const t=plTot(dayKey(Date.now()));let e=row.parentElement.querySelector(".pldy");
-  if(!t.n){if(e)e.remove();return}const st=JSON.stringify(t);if(e&&e.dataset.k===st)return;
+  if(!t.n&&!S.g.plb){if(e)e.remove();return}const B=plBoss(),run=plVegRun(),st=JSON.stringify([t,B.i,B.h,run]);if(e&&e.dataset.k===st)return;
   if(!e){e=document.createElement("div");e.className="pldy";row.after(e)}e.dataset.k=st;
   const miss=PL_SIDES.filter(([s])=>!t[s]).map(([,l])=>l.toLowerCase());
-  e.innerHTML=`<div class="pldp">${plSvg(t)}</div><div class="pldt"><b>${miss.length?"Il manque : "+miss.join(", "):"Assiette complète aujourd'hui"}</b><div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${t[s]}</span>`).join("")}</div><div class="pldx">${PL_X.map(([id,l,ic])=>`<span class="${t.x[id]?"on":""}" title="${l}">${rkSvg(ic)}<em>${t.x[id]}</em></span>`).join("")}</div></div>`}
+  e.innerHTML=`<div class="pldp">${plSvg(t)}</div><div class="pldt"><b>${!t.n?"Pas encore d'assiette aujourd'hui":miss.length?"Il manque : "+miss.join(", "):"Assiette complète aujourd'hui"}</b><div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${t[s]}</span>`).join("")}</div><div class="pldx">${PL_X.map(([id,l,ic])=>`<span class="${t.x[id]?"on":""}" title="${l}">${rkSvg(ic)}<em>${t.x[id]}</em></span>`).join("")}${run>1?`<span class="on plrun" title="Jours d'affilée avec des légumes">${rkSvg("legume")}<em>${run} j de suite</em></span>`:""}</div></div>
+  <div class="plboss" style="--bc:${B.col}"><span class="plbs">${spriteSvg(B.sp,B.col,3)}</span><div><b>${esc(B.n)}${B.tier?" <small>· revanche</small>":""}</b><small>Chaque assiette complète lui retire 1 PV</small><div class="plpv" aria-label="${B.hp-B.h} PV sur ${B.hp}">${Array.from({length:B.hp},(_,i)=>`<i class="${i<B.hp-B.h?"on":""}"></i>`).join("")}</div></div></div>`}
 
 // Bilan : les 7 derniers jours
 function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||!S.g)return;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,plTot(dayKey(d))])}

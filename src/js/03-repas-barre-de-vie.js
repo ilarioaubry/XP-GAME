@@ -6,10 +6,10 @@ const MB_V=[["junk","Mal mangé","burger",-10],["smoke","Fumé","smoke",-15],["d
 const mbDraft={};
 const MEAL_H={pdej:0,dej:11,gouter:16,diner:19};
 function mbDr(key){const MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={});const dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};dr.pl=dr.pl||{};dr.v=dr.v||{};dr.cr=dr.cr||{};return dr}
-function mealQuick(per,k,btn,v,ev){const tk=dayKey(Date.now()),key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k);if(!M)return;const[,l,p]=M;
+function mealQuick(per,k,btn,v,ev,bx,extra){const tk=dayKey(Date.now()),key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k);if(!M)return;const[,l,p]=M;
   if(dr.cr[k]||dr.m[k]===0||dr.m[k]===1||(S.g.mb&&S.g.mb[key])){render();return}
   dr.m[k]=v;delete dr.w[k];dr.cr[k]=1;if(btn){btn.disabled=true;const it=btn.closest(".dqi");if(it)it.classList.add("leave")}
-  if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p},btn,ev);else{save();render();toast(l+(v?" noté":" sauté"))}}
+  if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p+(bx||0)},btn,ev,false,extra);else{save();render();toast(l+(v?" noté":" sauté"))}}
 
 function mbCard(pp){const[per,day0]=pp.split(":"),day=day0||dayKey(Date.now()),key=day+":"+per,MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={}),dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};Object.keys(MBD).filter(k=>k.slice(0,10)<dayKey(Date.now()-2*864e5)).forEach(k=>delete MBD[k]);
   const MBX=MB_EX.filter(e=>!e[4]||e[4]===per),soft=isSoft(day);const c=document.createElement("div");c.className="mbil";const late=(per==="matin"&&dayPer()!=="matin")||!!day0;
