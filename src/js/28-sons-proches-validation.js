@@ -29,8 +29,7 @@ function sfx(n,arg){if(!sfxOn())return;const c=sfxCtx();if(!c)return;SFX.last=pe
 document.addEventListener("click",e=>{const t=e.target;if(!t.closest)return;const el=t.closest("button,[role=button],[role=tab],[role=link],a[href],summary,.rl,.motc,.bdg,.wr-it,.evav");if(!el||el.disabled)return;if(performance.now()-(SFX.last||0)<90)return;sfx("bop")});
 ["pointerdown","touchstart","keydown"].forEach(ev=>document.addEventListener(ev,function un(){sfxCtx();if(S.g&&S.g.ambS)ambSnd(true);document.removeEventListener(ev,un)},{once:true,passive:true}));
 
-// ---- Boss par catégorie
-// un seul boss actif : celui du domaine le plus délaissé (14 derniers jours)
+// ---- Proches : profils, relations, groupes
 
 
 function cbWho(t){return[...S.friends,...S.family].filter(n=>n&&t.includes(n)).sort((a,b)=>b.length-a.length)[0]||null}

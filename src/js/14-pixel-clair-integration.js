@@ -26,7 +26,7 @@ function headURL(cfg,W,H,x0,dy0,sc){const c={...AV_DEF,...(cfg||{})},k=JSON.stri
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){const v=F.px[y*W+x];if(v){g.fillStyle=v;g.fillRect(x*sc,y*sc,sc,sc)}}
   return __hdC[k]=cv.toDataURL("image/png")}
 function avPicURL(avc){return headURL(avc,20,22,6,-7,6)}
-// boss
+// figurines (personnages pixel de la collection)
 function spriteSvg(kind,col,px){return px>=3?bossFrames(kind,col,px):bossSvg(kind,col,px,0)}
 // icônes de garde-robe
 function itemIconNew(it){if(it.s==="aura")return null;

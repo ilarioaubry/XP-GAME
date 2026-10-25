@@ -1,4 +1,4 @@
-// ---- Boss par catégorie : 3 boss par qualité, chacun = une suite d'actions courtes sur un thème
+// ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
 const BOSS_CAT={"sport":[["golem_canape","Canapix","golem","#8a7a66","Se remettre en mouvement",["Marcher 20 min","3 séries de 10 pompes","10 min d'étirements","Prendre les escaliers toute la journée","20 min de sport"]],["gelee_courb","Courbatou","slime","#c95a8a","Construire ton programme",["Noter 3 objectifs sportifs","Choisir 3 jours fixes d'entraînement","Lister 5 exercices","Tester une séance complète","Noter tes séries et répétitions"]],["dragon_endu","Souffléon","dragon","#d1493f","Repousser tes limites",["30 min de marche rapide ou de course","Battre ton record de pompes","2 min de gainage","45 min de sport"]]],"perso":[["spectre_page","Blanchou","ghost","#9a8fd0","Écrire un son",["Écrire 4 lignes","Trouver une instru qui te plaît","Enregistrer une maquette voix","Finir un couplet","Faire écouter la maquette à {a1}"]],["gelee_mix","Grésillon","slime","#e8762a","Mettre de l'ordre dans tes sons",["Ranger tes projets audio","Renommer proprement tes fichiers","Faire un premier mix","Comparer avec un son de référence","Exporter une version propre"]],["dragon_sortie","Timidrake","dragon","#f0b62e","Sortir un son",["Choisir le son à sortir","Créer la cover","Écrire la description","Programmer la sortie","Envoyer le son à {a2}"]]],"social":[["fantome_silence","Silencio","ghost","#4fb3b3","Reprendre contact",["Écrire à {a1}","Écrire à {a2}","Écrire à {a3}","Envoyer un vocal à {a4}","Proposer un appel à {a5}"]],["golem_agenda","Plutardos","golem","#4f8f86","Organiser une sortie",["Proposer une sortie à {a1}","Fixer une date avec {a1}","Choisir le lieu de la sortie","Proposer la sortie {g1}","Ajouter la sortie à ton agenda"]],["chauve_distance","Lointin","bat","#3a6a8a","Entretenir les liens",["Reprendre contact avec {a1}","Faire un appel vidéo avec {a2}","Envoyer une petite attention à {a3}","Proposer à {a4} de passer le voir","Demander la date d'anniversaire de {anb}"]]],"famille":[["spectre_nouv","Quoidneuf","ghost","#7a8ad6","Donner des nouvelles",["Appeler {f1}","Appeler {f2}","Envoyer une photo à {f3}","Prendre des nouvelles de {f4}","Proposer un repas de famille à {f1}"]],["gelee_souv","Nostalgelée","slime","#c9a24a","Garder les souvenirs",["Retrouver 5 vieilles photos de famille","Créer un album partagé","Envoyer une vieille photo à {f1}","Demander une histoire de famille à {f2}","Demander la recette préférée de {f3}"]],["dragon_retro","Câlinours","dragon","#4a55f5","Préparer des retrouvailles",["Proposer une date à {f1} pour se voir","Choisir une activité à faire ensemble","Trouver une idée de petit cadeau pour {f1}","Appeler {f1} pour caler les détails","Noter la date dans ton agenda"]]],"maison":[["bouillie_bordel","Bazardine","slime","#c97a1a","Ranger ta chambre",["Vider le sol","Faire la poussière","Ranger le bureau","Trier une étagère","Passer l'aspirateur"]],["golem_tel","Stockagros","golem","#5a6a7a","Trier ton téléphone",["Trier les photos","Vider la boîte mail","Supprimer les applis inutiles","Nettoyer l'écran et la coque","Ranger l'écran d'accueil","Sauvegarder le téléphone"]],["crane_placard","Fripouille","skull","#e8e2d0","Trier tes vêtements",["Sortir les vêtements trop petits","Plier et ranger","Faire un sac de dons","Ranger les vêtements de l'autre saison","Organiser les chaussures"]]],"soi":[["spectre_scroll","Scrollito","ghost","#7fa3c9","Reprendre ton attention",["1 h sans réseaux sociaux","Couper les notifications inutiles","Lire 10 pages","10 min de méditation","Téléphone dans une autre pièce pendant 1 h"]],["champi_sommeil","Roupillon","shroom","#9a5ce0","Mieux dormir",["Préparer tes affaires pour demain","Pas d'écran 30 min avant de dormir","Régler un réveil à heure fixe","Aérer la chambre"]],["dragon_doute","Peut-Êtron","dragon","#5a4a8a","Avancer vers un objectif",["Écrire 3 qualités que tu as","Noter un objectif à 3 mois","Découper l'objectif en étapes","Faire la première étape"]]],"travail":[["troll_notif","Bipbip","golem","#4f8f86","Te concentrer",["Ranger le bureau de l'ordi","Faire la to-do du jour","25 min de travail concentré","Répondre aux mails urgents","Fermer les onglets inutiles"]],["gelee_procra","Demainou","slime","#5fae4f","Débloquer ce qui traîne",["Lister les tâches repoussées","Faire la plus petite","Faire la plus redoutée","Bloquer 1 h dans l'agenda","Finir une tâche en entier"]],["dragon_dossier","Paperasson","dragon","#6f8fe0","Boucler un dossier",["Définir l'objectif du dossier","Rassembler les documents","Faire un premier jet","Relire et corriger","Envoyer le dossier"]]]};
 const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
@@ -32,25 +32,13 @@ function syncHist(){
   Object.keys(H).forEach(k=>{if(keep(k))delete H[k]});
   L.forEach(e=>{const k=dayKey(e.t);if(!keep(k))return;const h=H[k]=H[k]||{x:0,c:{},s:0};h.x+=e.xp;const c=catOf(e);if(c&&e.xp)h.c[c]=(h.c[c]||0)+e.xp;if(e.snd)h.s+=Object.values(e.snd).reduce((a,b)=>a+b,0)});
 }
-const wkKey=t=>dayKey(mondayOf(t));
-function bossDmg(){const m=mondayOf(Date.now()).getTime();return S.log.filter(e=>e.t>=m&&!e.boss).reduce((a,e)=>a+e.xp*(e.bq?3:1),0)}
 let gameMsgs=[];
 function gameTick(){
   if(!S.g)S.g=newG();const G=S.g,now=Date.now();let ch=false;
   syncHist();
-  const wk=wkKey(now);
-  if(false&&G.boss.wk!==wk){
-    if(G.boss.wk)G.bh.push({wk:G.boss.wk,name:G.boss.name,won:!!G.boss.won});
-    if(G.bh.length>60)G.bh=G.bh.slice(-60);
-    const m=mondayOf(now);let sum=0;for(let i=1;i<=14;i++){const d=new Date(m);d.setDate(d.getDate()-i);sum+=(G.hist[dayKey(d)]||{}).x||0}
-    const max=sum?Math.min(3000,Math.max(250,Math.round(sum/14*7*1.15/50)*50)):300;
-    let i=Math.floor(Math.random()*BOSSES.length);if(i===G.boss.i)i=(i+1)%BOSSES.length;
-    G.boss={wk,max,name:BOSSES[i][0],i,won:false};ch=true;
-  }
-
-  // quête du boss : une par semaine, tant que le boss n'est pas vaincu
+  // anciennes quêtes de boss encore présentes : retirées ; quêtes du jour périmées : retirées
   S.specials=S.specials.filter(q=>{if(q.bq){ch=true;return false}if(q.bs){ch=true;return false}if(q.sur&&q.sur!==dayKey(now)){ch=true;return false}return true});
-  if(G.cbE){G.cbE=null;ch=true}
+
   // quête surprise du jour (XP doublé, valable aujourd'hui seulement)
   const tk=dayKey(now);
   {const hh=dayH();S.specials=S.specials.filter(q=>{if(q.org&&q.org!==tk){ch=true;return false}return true});

@@ -1181,7 +1181,7 @@ function renderCollection(){
 }
 let view="q";
 const subs={c:"vie",t:"boss",q:"q"};try{Object.assign(subs,JSON.parse(localStorage.getItem("cq-subs")||"{}"))}catch(e){}if(subs.t==="son")subs.t="skl";
-if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","sons","bilan"].includes(subs.c))subs.c="vie";if(subs.t!=="boss")subs.t="boss";subs.q="q";
+if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","bilan"].includes(subs.c))subs.c="vie";if(subs.t!=="boss")subs.t="boss";subs.q="q";
 let lastNb=0;
 function badgeDots(){const n=(S.g&&S.g.nb||[]).length,grew=n>lastNb;lastNb=n;[["tabC",n],["subBadges",n]].forEach(([id,c])=>{const el=id==="subBadges"?document.querySelector('.subtabs button[data-sub="badges"]'):$(id);if(!el)return;let d=el.querySelector(".ndot");if(c&&!d){d=document.createElement("span");d.className="ndot";el.appendChild(d)}if(d){d.hidden=!c;d.textContent=c;if(grew&&c){d.classList.remove("pop");void d.offsetWidth;d.classList.add("pop")}}})}
 function applySub(){if(view==="c"&&subs.c==="badges"&&S.g&&S.g.nb&&S.g.nb.length){setTimeout(()=>{const t=document.querySelector("#bdgGrid .bdg.new");if(t)t.scrollIntoView({block:"center",behavior:"smooth"})},350)}document.querySelectorAll('[data-v][data-sub]').forEach(el=>el.hidden=view!==el.dataset.v||el.dataset.sub!==subs[el.dataset.v]);document.querySelectorAll(".subtabs").forEach(nv=>nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===subs[nv.dataset.v])));requestAnimationFrame(placeInds)}

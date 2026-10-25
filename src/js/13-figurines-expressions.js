@@ -1,4 +1,4 @@
-// ===== Pixel Clair : boss (monstres des mauvaises habitudes) =====
+// ===== Pixel Clair : figurines de la collection (anciens personnages des mauvaises habitudes) + expressions du corps =====
 // Grille 20 x 16 (viewBox 0 0 20 16), affichée en px*10 x px*8 comme l'ancien spriteSvg(kind,col,px).
 // Lettres :
 //   "." vide            "#" couleur principale (col)   "s" ombre de col (vers noir 25 %)

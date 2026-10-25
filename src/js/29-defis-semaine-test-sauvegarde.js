@@ -97,7 +97,6 @@ document.querySelectorAll("#testTools [data-t]").forEach(b=>b.onclick=()=>{if(!t
   if(t==="lvl"){const i=levelInfo(S.xp);addBonus("Test : +1 niveau",i.need-i.cur)}
   if(t==="eur")S.extraMoney=Math.round((S.extraMoney+20)*100)/100;
   if(t==="chest")S.g.chests+=3;if(t==="bchest")S.g.bchests=(S.g.bchests||0)+1;
-  if(t==="boss")S.g.boss.max=Math.max(1,bossDmg());
   if(t==="rit"){ritRoll();ritTasks().forEach(x=>S.daily.c[x.id]=x.n);dailyBonusCheck()}
   if(t==="day"){const back=x=>x-864e5;S.log.forEach(e=>e.t=back(e.t));S.days=S.days.map(k=>{const d=new Date(k+"T12:00");d.setDate(d.getDate()-1);return dayKey(d)});S.daily.day="";S.g.surDone="";S.specials=S.specials.filter(q=>!q.sur)}
   if(t==="skills"){const z=lzState();LZ.forEach(L=>lzGain(L.id,100));const k=S.skills.find(x=>x.name==="Sons");if(k)k.xp+=100}

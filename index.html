@@ -3362,8 +3362,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
         <button type="button" class="btn primary tunlock" data-t="all">Tout débloquer</button>
         <div class="ttools">
           <button type="button" class="btn" data-t="xp">+100 XP</button><button type="button" class="btn" data-t="lvl">+1 niveau</button>
-          <button type="button" class="btn" data-t="chest">+3 coffres</button><button type="button" class="btn" data-t="bchest">+1 coffre boss</button>
-          <button type="button" class="btn" data-t="boss">Vaincre le boss</button><button type="button" class="btn" data-t="rit">Finir les rituels</button>
+          <button type="button" class="btn" data-t="chest">+3 coffres</button><button type="button" class="btn" data-t="bchest">+1 coffre boss</button><button type="button" class="btn" data-t="rit">Finir les rituels</button>
           <button type="button" class="btn" data-t="day">Passer au lendemain</button><button type="button" class="btn" data-t="skills">Skills +100 XP</button>
           <button type="button" class="btn" data-t="gear">Tous les objets</button><button type="button" class="btn" data-t="boost">Boost ×2</button>
         </div>
@@ -3393,7 +3392,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 92609ac</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version c6267e5</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -3612,7 +3611,7 @@ function renderJournal(){
       const ug=e.g||"friends";
       if(e.fr&&(ug==="friends"||ug==="family")&&S.bonds[e.who]!=null)S.bonds[e.who]=Math.max(0,S.bonds[e.who]-e.xp);
       if(e.fr){S.specials=S.specials.filter(q=>q.grp!==ug);S[GROUPS[ug].done]=S[GROUPS[ug].done].filter(n=>n!==e.who)}
-      S.specials.unshift({id:e.a,name:e.name,cat:e.cat,xp:e.xp,...(e.fr?{grp:ug,who:e.who}:{}),...(e.bd?{bd:e.who}:{}),...(e.bq?{bq:S.g.boss.wk}:{}),...(e.bsq?(S.g.bsDone=null,{bs:{d:dayKey(Date.now()),b:e.cbb,s:e.cbs},bn:e.bn}):{}),...(e.sur?{sur:e.sur}:{}),...(e.gift&&e.sp?{gift:e.gift,d:dayKey(Date.now())}:{}),...(e.dzq?{dz:e.dzq,lzs:e.dzq}:{})});if(e.bq)S.g.bqDone="";if(e.sur)S.g.surDone="";if(e.bd)delete S.bdDone[e.who];
+      S.specials.unshift({id:e.a,name:e.name,cat:e.cat,xp:e.xp,...(e.fr?{grp:ug,who:e.who}:{}),...(e.bd?{bd:e.who}:{}),...(e.sur?{sur:e.sur}:{}),...(e.gift&&e.sp?{gift:e.gift,d:dayKey(Date.now())}:{}),...(e.dzq?{dz:e.dzq,lzs:e.dzq}:{})});if(e.bq)S.g.bqDone="";if(e.sur)S.g.surDone="";if(e.bd)delete S.bdDone[e.who];
     }if(e.eur)S.extraMoney=Math.round(Math.max(0,S.extraMoney-e.eur)*100)/100;if(e.dayb)S.daily.bonusDay="";if(e.sk){const k=S.skills.find(x=>x.id===e.sk);if(k)k.xp=Math.max(0,k.xp-e.xp)}if(e.ep){const ep=S.epics.find(x=>x.id===e.ep.e);if(ep&&ep.steps[e.ep.i]){ep.steps[e.ep.i].done=false;ep.finished=false}}const uc=catOf(e);if(uc)S.stats[uc]=Math.max(0,(S.stats[uc]||0)-e.xp);recomputeDays();save();render();toast(`−${e.xp} XP · « ${esc(e.name)} » annulé`)};
     ul.appendChild(li);
   });
@@ -3717,7 +3716,7 @@ function renderGroups(){
 initGroups();
 
 const DQ_K={fgq:["Groupe d'amis","#ff7aa8",'<circle cx="8" cy="9" r="3" fill="currentColor"/><circle cx="16" cy="9" r="3" fill="currentColor"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6zM10 20c0-3.3 2.7-6 6-6s6 2.7 6 6z" fill="currentColor"/>'],secret:["Rare","#9b5de5",'<path d="M12 2l2.4 5.6L20 8.5l-4.3 3.9L17 18l-5-3-5 3 1.3-5.6L4 8.5l5.6-.9z" fill="currentColor"/>'],org:["Organisation","#2f7fb5",'<rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2"/><path d="M8 14l2.5 2.5L16 12" fill="none" stroke="currentColor" stroke-width="2.2"/>'],gift:["Anniversaire aujourd'hui","#e0447a",'<rect x="3" y="9" width="18" height="12" rx="2" fill="currentColor"/><rect x="2" y="7" width="20" height="4" rx="1.5" fill="currentColor" opacity=".8"/><path d="M12 7v14" stroke="var(--surface)" stroke-width="2"/><path d="M12 7c-2-4-6-4-6-1.5S10 7 12 7zm0 0c2-4 6-4 6-1.5S14 7 12 7z" fill="none" stroke="currentColor" stroke-width="1.8"/>'],sur:["XP ×2","#2a8fd6",'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z" fill="currentColor"/>'],
-  bq:["Quête du boss","#e8382f",'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>'],
+  bq:["Quête spéciale","#e8382f",'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>'],
   music:["Musique","#f08300",'<path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="currentColor"/><circle cx="17" cy="16" r="3" fill="currentColor"/>'],
   friends:["Ami","#00a3a3",'<circle cx="9" cy="8" r="3.5" fill="currentColor"/><path d="M2.5 20c.6-4 3.2-6 6.5-6s5.9 2 6.5 6z" fill="currentColor"/><circle cx="17" cy="9" r="2.6" fill="currentColor" opacity=".7"/><path d="M15.5 14.2c3 .2 5.3 2 6 5.8h-4.6" fill="currentColor" opacity=".7"/>'],
   family:["Famille","#4a55f5",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/>'],
@@ -4462,9 +4461,8 @@ function renderSpecials(){schedNow();renderBalance();
   const sMood=softMood(),RT0=PER&&!soirWait?ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===PER&&ritDue(t)):[],RT=(sMood||evmOn())&&RT0.some(t=>t.core)?RT0.filter(t=>t.core):RT0,RL=RT.filter(t=>(S.daily.c[t.id]||0)<t.n);
   const lifeOk=PER==="matin"?!!G.sleep[tk]:PER==="soir"?!!G.mood[tk]:true;
   if(!G.mb||typeof G.mb!=="object")G.mb={};const mbOk=!PER||!!G.mb[tk+":"+PER];
-  const BQ=null,bsP="",showB=!!(PER&&BQ&&(bsP===PER||PER==="soir")),doneB=!!(PER&&G.bsDone===tk&&G.bsDoneP===PER);
   const WE=isWeekend()&&RT.some(t=>t.core),RTc=WE?RT.filter(t=>t.core):RT,RLc=WE?RL.filter(t=>t.core):RL;
-  const tot0=PER?RTc.length+2+(showB||doneB?1:0):0,left0=PER?RLc.length+(lifeOk?0:1)+(mbOk?0:1)+(showB?1:0):0;
+  const tot0=PER?RTc.length+2:0,left0=PER?RLc.length+(lifeOk?0:1)+(mbOk?0:1):0;
   const _ml=PER?MB[PER].filter(([k])=>dayH()>=MEAL_H[k]):[],_mll=_ml.filter(([k])=>{const dr=(S.g.mbd||{})[tk+":"+PER];return!(G.mb&&G.mb[tk+":"+PER])&&!(dr&&dr.m&&(dr.m[k]===0||dr.m[k]===1))});
   const tot=tot0+_ml.length,left=left0+_mll.length,nd=tot-left;
   $("dqTitle").firstChild.textContent=PER==="soir"?"Soir":"Matin";box.setAttribute("aria-label",PER==="soir"?"Ce soir":"Ce matin");
@@ -7741,7 +7739,7 @@ window.CH_HEAD_N={hair:HAIR.length,hat:HAT.length,glasses:GLS.length,beard:BEARD
 
 window.chHead=chHead;
 })();
-// ===== Pixel Clair : boss (monstres des mauvaises habitudes) =====
+// ===== Pixel Clair : figurines de la collection (anciens personnages des mauvaises habitudes) + expressions du corps =====
 // Grille 20 x 16 (viewBox 0 0 20 16), affichée en px*10 x px*8 comme l'ancien spriteSvg(kind,col,px).
 // Lettres :
 //   "." vide            "#" couleur principale (col)   "s" ombre de col (vers noir 25 %)
@@ -8053,7 +8051,7 @@ function headURL(cfg,W,H,x0,dy0,sc){const c={...AV_DEF,...(cfg||{})},k=JSON.stri
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){const v=F.px[y*W+x];if(v){g.fillStyle=v;g.fillRect(x*sc,y*sc,sc,sc)}}
   return __hdC[k]=cv.toDataURL("image/png")}
 function avPicURL(avc){return headURL(avc,20,22,6,-7,6)}
-// boss
+// figurines (personnages pixel de la collection)
 function spriteSvg(kind,col,px){return px>=3?bossFrames(kind,col,px):bossSvg(kind,col,px,0)}
 // icônes de garde-robe
 function itemIconNew(it){if(it.s==="aura")return null;
@@ -9513,7 +9511,6 @@ const RARE_TITLES=["Barde légendaire","Maître du flow","Prince de la topline",
 const SURPRISE=[["Finir une instru laissée de côté","perso",20,"son"],["Enregistrer une maquette voix","perso",20,"son"],["Faire écouter un son à quelqu'un","perso",20,"son"],["Refaire un son connu à ta façon","perso",20,"son"],["16 mesures en 20 min chrono","perso",10,"son"],["Poster un extrait de son","perso",20,"son"],["20 min de marche sans téléphone","sport",10,"out"],["Battre ton record de pompes","sport",10],["Étirements avant de dormir","sport",10],["20 min de marche dehors","soi",10,"out"],["Lire 10 pages","soi",10],["Couper le téléphone 1 h avant de dormir","soi",10],["Prendre un rendez-vous médecin ou dentiste en retard","soi",20],["Trier un tiroir ou une étagère","maison",10],["Vider entièrement l'évier","maison",10],["Laver ta gourde ou ta tasse","maison",3],["Envoyer un vocal à quelqu'un perdu de vue","social",20,"cour"],["Ramener un café ou une viennoiserie à quelqu'un","social",20],["Envoyer une photo souvenir à la famille","famille",10,"loin"],["Aider à une tâche chez tes parents","famille",20,"parents"]];
 function surOk(x){if(!normOk(x[0]))return false;if(S.g&&(S.g.fqNo||{})["s:"+x[0]])return false;const s=typeof sitOf==="function"?sitOf():null,w=typeof wxNow==="function"?wxNow():null,t=x[3];if(t==="son")return s?!!((s.pass||[]).includes("creer")||(s.pass||[]).includes("rap")||(s.goals||[]).includes("son")):!(S.g&&S.g.noMus);
   if(t==="out")return!(w&&["rain","storm","snow"].includes(w.k))&&!(typeof fqHasOut==="function"&&fqHasOut());if(t==="parents")return!s||s.home==="parents"||(s.goals||[]).includes("famille");if(t==="loin")return!s||s.home!=="parents";return true}
-const BOSSES=[["Canapix","golem","#8a7a66"],["La Gelée de la Flemme","slime","#5fae4f"],["Scrollito","ghost","#7fa3c9"],["Le Dragon de la Procrastination","dragon","#d1493f"],["Bipbip","golem","#4f8f86"],["Le Fantôme du Lundi","ghost","#9a8fd0"],["Bazardine","slime","#c97a1a"],["La Wyverne du Réveil","dragon","#2f7fb5"]];
 const SPRITES={
  slime:["..........","...####...","..######..",".##o##o##.",".##x##x##.","##########","##########",".########."],
  ghost:["...####...","..######..",".##o##o##.",".##x##x##.",".########.",".########.",".########.",".#.##.##.#"],
@@ -9522,7 +9519,7 @@ const SPRITES={
  bat:["#........#","##.####.##","##########","#.#o##o#.#","..#x##x#..","...####...","....##....",".........."],
  skull:["..######..",".########.","##o####o##","##x####x##",".########.","..##..##..","..#.##.#..",".........."],
  shroom:["..######..",".##.##.##.","##########","...o##o...","...x##x...","..######..","..##..##..",".........."]};
-// ---- Boss par catégorie : 3 boss par qualité, chacun = une suite d'actions courtes sur un thème
+// ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
 const BOSS_CAT={"sport":[["golem_canape","Canapix","golem","#8a7a66","Se remettre en mouvement",["Marcher 20 min","3 séries de 10 pompes","10 min d'étirements","Prendre les escaliers toute la journée","20 min de sport"]],["gelee_courb","Courbatou","slime","#c95a8a","Construire ton programme",["Noter 3 objectifs sportifs","Choisir 3 jours fixes d'entraînement","Lister 5 exercices","Tester une séance complète","Noter tes séries et répétitions"]],["dragon_endu","Souffléon","dragon","#d1493f","Repousser tes limites",["30 min de marche rapide ou de course","Battre ton record de pompes","2 min de gainage","45 min de sport"]]],"perso":[["spectre_page","Blanchou","ghost","#9a8fd0","Écrire un son",["Écrire 4 lignes","Trouver une instru qui te plaît","Enregistrer une maquette voix","Finir un couplet","Faire écouter la maquette à {a1}"]],["gelee_mix","Grésillon","slime","#e8762a","Mettre de l'ordre dans tes sons",["Ranger tes projets audio","Renommer proprement tes fichiers","Faire un premier mix","Comparer avec un son de référence","Exporter une version propre"]],["dragon_sortie","Timidrake","dragon","#f0b62e","Sortir un son",["Choisir le son à sortir","Créer la cover","Écrire la description","Programmer la sortie","Envoyer le son à {a2}"]]],"social":[["fantome_silence","Silencio","ghost","#4fb3b3","Reprendre contact",["Écrire à {a1}","Écrire à {a2}","Écrire à {a3}","Envoyer un vocal à {a4}","Proposer un appel à {a5}"]],["golem_agenda","Plutardos","golem","#4f8f86","Organiser une sortie",["Proposer une sortie à {a1}","Fixer une date avec {a1}","Choisir le lieu de la sortie","Proposer la sortie {g1}","Ajouter la sortie à ton agenda"]],["chauve_distance","Lointin","bat","#3a6a8a","Entretenir les liens",["Reprendre contact avec {a1}","Faire un appel vidéo avec {a2}","Envoyer une petite attention à {a3}","Proposer à {a4} de passer le voir","Demander la date d'anniversaire de {anb}"]]],"famille":[["spectre_nouv","Quoidneuf","ghost","#7a8ad6","Donner des nouvelles",["Appeler {f1}","Appeler {f2}","Envoyer une photo à {f3}","Prendre des nouvelles de {f4}","Proposer un repas de famille à {f1}"]],["gelee_souv","Nostalgelée","slime","#c9a24a","Garder les souvenirs",["Retrouver 5 vieilles photos de famille","Créer un album partagé","Envoyer une vieille photo à {f1}","Demander une histoire de famille à {f2}","Demander la recette préférée de {f3}"]],["dragon_retro","Câlinours","dragon","#4a55f5","Préparer des retrouvailles",["Proposer une date à {f1} pour se voir","Choisir une activité à faire ensemble","Trouver une idée de petit cadeau pour {f1}","Appeler {f1} pour caler les détails","Noter la date dans ton agenda"]]],"maison":[["bouillie_bordel","Bazardine","slime","#c97a1a","Ranger ta chambre",["Vider le sol","Faire la poussière","Ranger le bureau","Trier une étagère","Passer l'aspirateur"]],["golem_tel","Stockagros","golem","#5a6a7a","Trier ton téléphone",["Trier les photos","Vider la boîte mail","Supprimer les applis inutiles","Nettoyer l'écran et la coque","Ranger l'écran d'accueil","Sauvegarder le téléphone"]],["crane_placard","Fripouille","skull","#e8e2d0","Trier tes vêtements",["Sortir les vêtements trop petits","Plier et ranger","Faire un sac de dons","Ranger les vêtements de l'autre saison","Organiser les chaussures"]]],"soi":[["spectre_scroll","Scrollito","ghost","#7fa3c9","Reprendre ton attention",["1 h sans réseaux sociaux","Couper les notifications inutiles","Lire 10 pages","10 min de méditation","Téléphone dans une autre pièce pendant 1 h"]],["champi_sommeil","Roupillon","shroom","#9a5ce0","Mieux dormir",["Préparer tes affaires pour demain","Pas d'écran 30 min avant de dormir","Régler un réveil à heure fixe","Aérer la chambre"]],["dragon_doute","Peut-Êtron","dragon","#5a4a8a","Avancer vers un objectif",["Écrire 3 qualités que tu as","Noter un objectif à 3 mois","Découper l'objectif en étapes","Faire la première étape"]]],"travail":[["troll_notif","Bipbip","golem","#4f8f86","Te concentrer",["Ranger le bureau de l'ordi","Faire la to-do du jour","25 min de travail concentré","Répondre aux mails urgents","Fermer les onglets inutiles"]],["gelee_procra","Demainou","slime","#5fae4f","Débloquer ce qui traîne",["Lister les tâches repoussées","Faire la plus petite","Faire la plus redoutée","Bloquer 1 h dans l'agenda","Finir une tâche en entier"]],["dragon_dossier","Paperasson","dragon","#6f8fe0","Boucler un dossier",["Définir l'objectif du dossier","Rassembler les documents","Faire un premier jet","Relire et corriger","Envoyer le dossier"]]]};
 const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
@@ -9556,25 +9553,13 @@ function syncHist(){
   Object.keys(H).forEach(k=>{if(keep(k))delete H[k]});
   L.forEach(e=>{const k=dayKey(e.t);if(!keep(k))return;const h=H[k]=H[k]||{x:0,c:{},s:0};h.x+=e.xp;const c=catOf(e);if(c&&e.xp)h.c[c]=(h.c[c]||0)+e.xp;if(e.snd)h.s+=Object.values(e.snd).reduce((a,b)=>a+b,0)});
 }
-const wkKey=t=>dayKey(mondayOf(t));
-function bossDmg(){const m=mondayOf(Date.now()).getTime();return S.log.filter(e=>e.t>=m&&!e.boss).reduce((a,e)=>a+e.xp*(e.bq?3:1),0)}
 let gameMsgs=[];
 function gameTick(){
   if(!S.g)S.g=newG();const G=S.g,now=Date.now();let ch=false;
   syncHist();
-  const wk=wkKey(now);
-  if(false&&G.boss.wk!==wk){
-    if(G.boss.wk)G.bh.push({wk:G.boss.wk,name:G.boss.name,won:!!G.boss.won});
-    if(G.bh.length>60)G.bh=G.bh.slice(-60);
-    const m=mondayOf(now);let sum=0;for(let i=1;i<=14;i++){const d=new Date(m);d.setDate(d.getDate()-i);sum+=(G.hist[dayKey(d)]||{}).x||0}
-    const max=sum?Math.min(3000,Math.max(250,Math.round(sum/14*7*1.15/50)*50)):300;
-    let i=Math.floor(Math.random()*BOSSES.length);if(i===G.boss.i)i=(i+1)%BOSSES.length;
-    G.boss={wk,max,name:BOSSES[i][0],i,won:false};ch=true;
-  }
-
-  // quête du boss : une par semaine, tant que le boss n'est pas vaincu
+  // anciennes quêtes de boss encore présentes : retirées ; quêtes du jour périmées : retirées
   S.specials=S.specials.filter(q=>{if(q.bq){ch=true;return false}if(q.bs){ch=true;return false}if(q.sur&&q.sur!==dayKey(now)){ch=true;return false}return true});
-  if(G.cbE){G.cbE=null;ch=true}
+
   // quête surprise du jour (XP doublé, valable aujourd'hui seulement)
   const tk=dayKey(now);
   {const hh=dayH();S.specials=S.specials.filter(q=>{if(q.org&&q.org!==tk){ch=true;return false}return true});
@@ -11462,7 +11447,7 @@ function renderCollection(){
 }
 let view="q";
 const subs={c:"vie",t:"boss",q:"q"};try{Object.assign(subs,JSON.parse(localStorage.getItem("cq-subs")||"{}"))}catch(e){}if(subs.t==="son")subs.t="skl";
-if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","sons","bilan"].includes(subs.c))subs.c="vie";if(subs.t!=="boss")subs.t="boss";subs.q="q";
+if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","bilan"].includes(subs.c))subs.c="vie";if(subs.t!=="boss")subs.t="boss";subs.q="q";
 let lastNb=0;
 function badgeDots(){const n=(S.g&&S.g.nb||[]).length,grew=n>lastNb;lastNb=n;[["tabC",n],["subBadges",n]].forEach(([id,c])=>{const el=id==="subBadges"?document.querySelector('.subtabs button[data-sub="badges"]'):$(id);if(!el)return;let d=el.querySelector(".ndot");if(c&&!d){d=document.createElement("span");d.className="ndot";el.appendChild(d)}if(d){d.hidden=!c;d.textContent=c;if(grew&&c){d.classList.remove("pop");void d.offsetWidth;d.classList.add("pop")}}})}
 function applySub(){if(view==="c"&&subs.c==="badges"&&S.g&&S.g.nb&&S.g.nb.length){setTimeout(()=>{const t=document.querySelector("#bdgGrid .bdg.new");if(t)t.scrollIntoView({block:"center",behavior:"smooth"})},350)}document.querySelectorAll('[data-v][data-sub]').forEach(el=>el.hidden=view!==el.dataset.v||el.dataset.sub!==subs[el.dataset.v]);document.querySelectorAll(".subtabs").forEach(nv=>nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===subs[nv.dataset.v])));requestAnimationFrame(placeInds)}
@@ -11816,8 +11801,7 @@ function sfx(n,arg){if(!sfxOn())return;const c=sfxCtx();if(!c)return;SFX.last=pe
 document.addEventListener("click",e=>{const t=e.target;if(!t.closest)return;const el=t.closest("button,[role=button],[role=tab],[role=link],a[href],summary,.rl,.motc,.bdg,.wr-it,.evav");if(!el||el.disabled)return;if(performance.now()-(SFX.last||0)<90)return;sfx("bop")});
 ["pointerdown","touchstart","keydown"].forEach(ev=>document.addEventListener(ev,function un(){sfxCtx();if(S.g&&S.g.ambS)ambSnd(true);document.removeEventListener(ev,un)},{once:true,passive:true}));
 
-// ---- Boss par catégorie
-// un seul boss actif : celui du domaine le plus délaissé (14 derniers jours)
+// ---- Proches : profils, relations, groupes
 
 
 function cbWho(t){return[...S.friends,...S.family].filter(n=>n&&t.includes(n)).sort((a,b)=>b.length-a.length)[0]||null}
@@ -12329,7 +12313,6 @@ document.querySelectorAll("#testTools [data-t]").forEach(b=>b.onclick=()=>{if(!t
   if(t==="lvl"){const i=levelInfo(S.xp);addBonus("Test : +1 niveau",i.need-i.cur)}
   if(t==="eur")S.extraMoney=Math.round((S.extraMoney+20)*100)/100;
   if(t==="chest")S.g.chests+=3;if(t==="bchest")S.g.bchests=(S.g.bchests||0)+1;
-  if(t==="boss")S.g.boss.max=Math.max(1,bossDmg());
   if(t==="rit"){ritRoll();ritTasks().forEach(x=>S.daily.c[x.id]=x.n);dailyBonusCheck()}
   if(t==="day"){const back=x=>x-864e5;S.log.forEach(e=>e.t=back(e.t));S.days=S.days.map(k=>{const d=new Date(k+"T12:00");d.setDate(d.getDate()-1);return dayKey(d)});S.daily.day="";S.g.surDone="";S.specials=S.specials.filter(q=>!q.sur)}
   if(t==="skills"){const z=lzState();LZ.forEach(L=>lzGain(L.id,100));const k=S.skills.find(x=>x.name==="Sons");if(k)k.xp+=100}
@@ -14621,7 +14604,6 @@ const SQ_IC={maison:"canape",sport:"halteres",soi:"medit",nourriture:"repas",tra
 function sqIcons(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.querySelector(".uiq"))return;const t=((c.querySelector(".sqn")||{}).textContent||"").trim(),q=(S.specials||[]).find(x=>x.name===t)||{},ic=SQ_IC[q.cat]||"etoile";
   const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg(RKI[ic]?ic:"etoile");c.appendChild(sp)})}
 {let q=0;const run=()=>{q=0;try{sqIcons()}catch(e){}};new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run)}).observe(document.body,{childList:true,subtree:true});run()}
-// Réparation unique : le titre « Dompteur de boss » devient « Maître des projets » (plus de boss dans l'appli)
 // Choix rapides (menu « … », Pris / Sauté) : petite fenêtre centrée ; toucher à côté la ferme
 document.addEventListener("click",e=>{const t=e.target,stop=()=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()};
   const p=document.querySelector(".mlpop");if(p&&!t.closest(".mlpop")){p.remove();if(!t.closest(".mlp"))stop();return}
