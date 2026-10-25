@@ -3153,7 +3153,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
     const ago=(d,tk)=>{if(!d)return"Jamais noté";const n=nDays(d,tk,false)-1;if(n<=0)return"Aujourd'hui";if(n===1)return"Hier";if(n<14)return`Il y a ${n} jours`;if(n<60)return`Il y a ${Math.round(n/7)} semaines`;const m=Math.round(n/30);return m<12?`Il y a ${m} mois`:`Il y a ${Math.floor(n/365)} an${n>=730?"s":""}`};
     const evL=x=>{const u=UN[x.u]||UN.j;return x.n>1?`tous les ${x.n} ${u[2]}`:`chaque ${u[1]}`};
     const ratio=(x,tk)=>{if(!x.d)return 1.01;const n=nDays(x.d,tk,false)-1;return n/Math.max(1,x.n*(UN[x.u]||UN.j)[0])};
-    const lRow=(x,r,tk,mini)=>{const td=x.d===tk,st=td?"ok":r>=1?"late":r>=.8?"soon":"ok";return`<div class="lst-r ${st}"><button type="button" class="lst-n" data-le="${x.id}"><b>${esc(x.name)}</b><small>${ago(x.d,tk)}${mini?"":" · "+evL(x)}</small></button><button type="button" class="lst-do${td?" dn":""}" data-ld="${x.id}" aria-label="${td?"Annuler":"Fait aujourd'hui"} : ${esc(x.name)}">${td?"✓ Fait":"Fait"}</button></div>`};
+    const lRow=(x,r,tk,mini)=>{const td=x.d===tk,st=td?"ok":r>=1?"late":r>=.8?"soon":"ok";return`<div class="lst-r ${st}"><button type="button" class="lst-n" data-le="${x.id}"><b>${esc(x.name)}</b><small>${ago(x.d,tk)}${mini?"":" · "+evL(x)}</small></button><button type="button" class="lst-do${td?" dn":""}" data-ld="${x.id}" aria-label="${td?"Annuler":"Fait aujourd'hui"} : ${esc(x.name)}">${td?ICO("check",14)+" Fait":"Fait"}</button></div>`};
     function lastHTML(tk){const L=S.g.last;let h="";
       if(lEdit==="new")h+=lForm(null,tk);
       if(!L.length&&lEdit!=="new")return h+`<div class="lst-sug">${SUG.map((s,i)=>`<button type="button" data-sg="${i}">${esc(s[0])}</button>`).join("")}</div>`;
@@ -3176,16 +3176,16 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
       const m=box.querySelector(".lst-more");if(m)m.onclick=()=>{lAll=!lAll;rt()};
       const f=box.querySelector(".lst-f");if(!f)return;
       f.querySelector(".cancel").onclick=()=>{lEdit=null;lPre=null;rt()};
-      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>{if(!confirm("Supprimer cet élément ?"))return;S.g.last=L.filter(y=>y.id!==lEdit);lEdit=null;save();rt()};
+      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>undoAfter("Élément supprimé",()=>{S.g.last=L.filter(y=>y.id!==lEdit);lEdit=null;save();rt()});
       f.onsubmit=e=>{e.preventDefault();const name=f.querySelector("[name=n]").value.trim();if(!name){f.querySelector("[name=n]").focus();return}
         const o={name,n:Math.max(1,Math.min(99,parseInt(f.querySelector("[name=ev]").value)||1)),u:f.querySelector("[name=u]").value,d:f.querySelector("[name=d]").value||null};if(o.d&&o.d>tk)o.d=tk;
         if(lEdit==="new")L.push({id:"l"+Date.now().toString(36),...o});else{const x=L.find(y=>y.id===lEdit);if(x){Object.assign(x,o);delete x.pv}}lEdit=null;lPre=null;save();rt()}}
     // ---- Périodes
     function perStat(p,tk){const tot=nDays(p.s,p.e,p.wd),done=tk<p.s?0:nDays(p.s,tk>p.e?p.e:tk,p.wd),left=Math.max(0,tot-done),pct=tot?Math.round(done/tot*100):0,us=p.wd?"jours de travail":"jours",u=p.wd?"jour de travail":"jour";
-      let st;if(tk<p.s){const k=nDays(tk,addD(p.s,-1),false);st=`Commence ${k===1?"demain":"dans "+k+" jours"} · ${fmt(p.s)}`}else if(tk>p.e)st=`Terminé le ${fmt(p.e)} 🎉`;else if(left===0)st=tk===p.e?"Dernier jour, tu y es 🎉":"C'est bouclé 🎉";else st=`Plus que ${left} ${left>1?us:u} · fin ${fmt(p.e)}`;
+      let st;if(tk<p.s){const k=nDays(tk,addD(p.s,-1),false);st=`Commence ${k===1?"demain":"dans "+k+" jours"} · ${fmt(p.s)}`}else if(tk>p.e)st=`Terminé le ${fmt(p.e)}, bravo`;else if(left===0)st=tk===p.e?"Dernier jour, tu y es !":"C'est bouclé, bravo !";else st=`Plus que ${left} ${left>1?us:u} · fin ${fmt(p.e)}`;
       const lbl=tk<p.s?"À venir":tk>p.e?"Terminé":`${p.wd?"Jour de travail":"Jour"} ${Math.max(done,1)} sur ${tot}`;return{tot,done,left,pct,st,lbl}}
     const perCard=(p,tk,cls)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p ${cls||"trk-c"}${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : modifier"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b><small>${s.lbl} · ${s.st}</small></span><span class="trk-pct">${s.pct}%</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
-    const perMini=(p,tk)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : ${s.lbl}, ${s.st}"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b></span><span class="trk-pct">${tk>p.e?"✓":Math.max(s.done,1)+"/"+s.tot}</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
+    const perMini=(p,tk)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : ${s.lbl}, ${s.st}"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b></span><span class="trk-pct">${tk>p.e?ICO("check",14):Math.max(s.done,1)+"/"+s.tot}</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
     function perForm(p){const tk=tkNow(),s=p?p.s:tk,e=p?p.e:addD(tk,13),t=p?p.t:"contrat";
       return`<form class="trk-c trk-f per-f"><label>Type<select name="t">${Object.keys(PT).map(k=>`<option value="${k}"${t===k?" selected":""}>${PT[k].l}</option>`).join("")}</select></label>
       <label>Nom<input type="text" name="n" maxlength="40" value="${p?esc(p.name):"Contrat"}" autocomplete="off"></label>
@@ -3201,7 +3201,7 @@ html:not(#_a):not(#_b) body .obsum{list-style:none;margin:0!important;padding:0!
       tI.onchange=()=>{const names=Object.values(PT).map(x=>x.l.split(" /")[0]).concat("Contrat");if(!nI.value.trim()||names.includes(nI.value.trim()))nI.value=PT[tI.value].l.split(" /")[0];upd()};
       [sI,eI,wI].forEach(x=>x.oninput=upd);upd();
       f.querySelector(".cancel").onclick=()=>{editId=null;rt()};
-      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>{if(!confirm("Supprimer cette période ?"))return;g.per=g.per.filter(p=>p.id!==editId);editId=null;save();rt()};
+      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>undoAfter("Période supprimée",()=>{g.per=g.per.filter(p=>p.id!==editId);editId=null;save();rt()});
       f.onsubmit=e=>{e.preventDefault();if(!sI.value||!eI.value||eI.value<sI.value){upd();return}const o={t:tI.value,name:nI.value.trim()||PT[tI.value].l,s:sI.value,e:eI.value,wd:wI.checked};
         if(editId==="new")g.per.push({id:"p"+Date.now().toString(36),...o});else Object.assign(g.per.find(p=>p.id===editId)||{},o);editId=null;save();rt();try{render()}catch(e){}}}
     // ---- Proches
@@ -8863,7 +8863,7 @@ function memOf(id){return(Array.isArray(S.g.mem)?S.g.mem:[]).find(m=>m.id===id)|
 function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.g,old=memOf(ctx.id)||{};let ph=old.ph||"";
   const o=document.createElement("div");o.className="bpop memsh";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Souvenir");
   o.innerHTML=`<div class="bpc mempc"><small class="memk">${ctx.ev?"Ton billet":"Souvenir"}</small><h3></h3><div class="memph">${ph?`<img src="${ph}" alt="">`:""}<label class="btn memadd"><input type="file" accept="image/*" hidden>${ph?"Changer la photo":"Ajouter une photo"}</label></div>
-    <textarea maxlength="140" rows="2" placeholder="Un mot, une phrase, ce que tu veux retenir"></textarea>${ctx.ev?`<div class="memst" role="group" aria-label="Note">${[1,2,3,4,5].map(i=>`<button type="button" data-s="${i}" aria-pressed="${(old.s|0)>=i}" aria-label="${i} sur 5">★</button>`).join("")}</div>`:""}
+    <textarea maxlength="140" rows="2" placeholder="Un mot, une phrase, ce que tu veux retenir"></textarea>${ctx.ev?`<div class="memst" role="group" aria-label="Note">${[1,2,3,4,5].map(i=>`<button type="button" data-s="${i}" aria-pressed="${(old.s|0)>=i}" aria-label="${i} sur 5">${ICO("star",22)}</button>`).join("")}</div>`:""}
     <button type="button" class="btn primary memgo">Garder ce souvenir</button><button type="button" class="lnk memx">Plus tard</button></div>`;
   o.querySelector("h3").textContent=ctx.q;o.querySelector("textarea").value=old.w||"";let stars=old.s|0;
   o.querySelectorAll(".memst button").forEach(b=>b.onclick=()=>{stars=+b.dataset.s;o.querySelectorAll(".memst button").forEach(x=>x.setAttribute("aria-pressed",+x.dataset.s<=stars))});
@@ -8875,7 +8875,7 @@ function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.
     close();save();if(done)done(first);else render();sfx("badge");toast(ctx.ev?"Billet rangé dans ta fiche":"Souvenir gardé")};
   document.body.appendChild(o);setTimeout(()=>o.querySelector("textarea").focus({preventScroll:true}),60)}
 function tickets(){const G=S.g,tk=dayKey(Date.now()),seen=new Set(),L=[];evArc().forEach(e=>{if(seen.has(e.id))return;seen.add(e.id);if(e.d<=tk&&(e.t||evtGuess(e.n))==="concert")L.push(e)});return L.sort((a,b)=>a.d<b.d?1:-1)}
-function tikHTML(e,sm){const m=memOf("tik:"+e.id),d=new Date(e.d+"T12:00");return`<div class="tkt${sm?" sm":""}"><span class="tkl"><small>Concert</small><b></b>${m&&m.s?`<em>${"★".repeat(m.s)}</em>`:""}</span><span class="tkr"><b>${d.getDate()}</b><small>${MOIS_C[d.getMonth()].slice(0,4)}</small></span>${m&&m.ph?`<img class="tkph" src="${m.ph}" alt="">`:""}</div>`}
+function tikHTML(e,sm){const m=memOf("tik:"+e.id),d=new Date(e.d+"T12:00");return`<div class="tkt${sm?" sm":""}"><span class="tkl"><small>Concert</small><b></b>${m&&m.s?`<em>${ICO("star",12).repeat(m.s)}</em>`:""}</span><span class="tkr"><b>${d.getDate()}</b><small>${MOIS_C[d.getMonth()].slice(0,4)}</small></span>${m&&m.ph?`<img class="tkph" src="${m.ph}" alt="">`:""}</div>`}
 // --- déclencheurs de rituels
 const TRG={matin:["Au réveil","Après le café","Après la douche","Après le petit-déj","Avant de partir"],soir:["En rentrant","Après le dîner","Après la douche","Avant de me coucher","En éteignant les écrans"]};
 function trgPick(t,cb){const per=ritPer(t),o=document.createElement("div");o.className="bpop trgsh";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Déclencheur");
@@ -8958,7 +8958,7 @@ function bMoments(K){const G=S.g,tk=dayKey(Date.now()),M=[];
   K.forEach(k=>{const j=(G.jr||{})[k];if(j&&(j.t||j.k))M.push({d:k,h:`<div class="bmt jr"><small>${JOURS[wdOf(k)]}</small>${j.t?`<b>« ${esc(j.t)} »</b>`:""}${j.k?`<span>Le kif : ${esc(j.k)}</span>`:""}</div>`});
     const s=(G.sdj||{})[k];if(s&&s.n)M.push({d:k,h:`<a class="bmt sdj" href="${esc(s.u||"#")}" target="_blank" rel="noopener">${spCov(s,44)}<span><small>Son du ${JOURS[wdOf(k)]}</small><b>${esc(s.n)}</b><em>${esc(s.a||"")}</em></span></a>`});
     if(((G.mood||{})[k]|0)===5)M.push({d:k,h:`<div class="bmt md">${moodFace(5,32)}<span><small>${JOURS[wdOf(k)]}</small><b>Super journée</b></span></div>`})});
-  (Array.isArray(G.mem)?G.mem:[]).filter(m=>K.includes(m.d)).forEach(m=>M.push({d:m.d,h:`<div class="bmt mem">${m.ph?`<img src="${m.ph}" alt="">`:""}<span><small>${m.ev?"Souvenir du concert":"Souvenir · "+JOURS[wdOf(m.d)]}</small><b>${esc(m.q)}</b>${m.w?`<em>« ${esc(m.w)} »</em>`:""}${m.s?`<i class="memsr">${"★".repeat(m.s)}</i>`:""}</span></div>`}));
+  (Array.isArray(G.mem)?G.mem:[]).filter(m=>K.includes(m.d)).forEach(m=>M.push({d:m.d,h:`<div class="bmt mem">${m.ph?`<img src="${m.ph}" alt="">`:""}<span><small>${m.ev?"Souvenir du concert":"Souvenir · "+JOURS[wdOf(m.d)]}</small><b>${esc(m.q)}</b>${m.w?`<em>« ${esc(m.w)} »</em>`:""}${m.s?`<i class="memsr">${ICO("star",12).repeat(m.s)}</i>`:""}</span></div>`}));
   return M.sort((a,b)=>a.d<b.d?-1:1).slice(-10).map(x=>x.h).join("")}
 function bGains(K){const end=new Date(K[K.length-1]+"T23:59").getTime(),start=new Date(K[0]+"T00:00").getTime()+dayCut()*36e5,B=badgeDefs(),out=[];
   Object.entries(S.badges||{}).forEach(([id,t])=>{if(t>=start&&t<=end+dayCut()*36e5){const b=B.find(x=>x.id===id);if(b)out.push(`<div class="bgn">${bdgIconImg(b,36)}<span><small>Badge</small><b>${esc(b.name)}</b></span></div>`)}});
@@ -8981,7 +8981,7 @@ function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const 
     h+=`<div class="bhero">${bStrip(K)}<div class="bchap"><small>${cur&&wdOf(tk)<6?"Chapitre en cours":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small>${bilEdit?`<form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form>`:`<h3 class="bct"></h3>`}<ul class="bcl">${lines.map(()=>"<li></li>").join("")}</ul>
       <div class="bcb">${bilEdit?"":`<button type="button" class="lnk bced1">Renommer</button>`}<button type="button" class="lnk bcai"${bilAiBusy?" disabled":""} title="Compte comme un court message dans ton forfait Claude">${bilAiBusy?"Claude écrit…":"Écrire avec Claude"}</button>${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div>${bilAiErr?`<p class="sperr">${esc(bilAiErr)}</p>`:""}</div></div>`;
     h+=bSec("Tes quêtes principales",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`);
-    h+=bSec(`Tes rituels<span class="bh3r">${R.due?R.pct+" %":""}${ritStreak()&&cur?` · socle ${ritStreak()} j`:""}</span>`,R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>raté<i class="c-o"></i>pas prévu</p>`:`<p class="hint">Aucun rituel suivi cette semaine.</p>`);
+    h+=bSec(`Tes rituels<span class="bh3r">${R.due?R.pct+" %":""}${ritStreak()&&cur?` · socle ${ritStreak()} j`:""}</span>`,R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint">Aucun rituel suivi cette semaine.</p>`);
     h+=bSec("Corps et tête",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`);
     if(mo)h+=bSec("Moments forts",`<div class="bmo">${mo}</div>`);
     if(gn)h+=bSec("Ce que tu as gagné",`<div class="bgns">${gn}</div>`);
@@ -9122,7 +9122,7 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
     const rr=r.querySelector(".fqrr");if(rr)rr.onclick=()=>{fqMenu=fqMenu===x.id?"":x.id;renderFq()};
     r.querySelectorAll("[data-no]").forEach(b=>b.onclick=()=>{fqMenu="";feedNo(x,b.dataset.no)})});
   box.querySelector(".fqsit").onclick=()=>sitSheet();{const a=box.querySelector(".fqask");if(a)a.onclick=()=>fqAsk()}{const a=box.querySelector(".fqcta");if(a)a.onclick=()=>sitSheet()}{const a=box.querySelector(".arccta");if(a)a.onclick=()=>arcAsk()}
-  {const a=box.querySelector(".fqrst");if(a)a.onclick=()=>{if(!confirm("Réautoriser les quêtes que tu as écartées ?"))return;G.fqNo={};G.fqNoT=[];G.fqFam={};Object.keys(G.fqW||{}).forEach(k=>{if(G.fqW[k]<0)G.fqW[k]=0});if(G.fq)G.fq.d="";save();render();toast("C'est noté : elles peuvent revenir")}}
+  {const a=box.querySelector(".fqrst");if(a)a.onclick=()=>undoAfter("Quêtes écartées réautorisées",()=>{G.fqNo={};G.fqNoT=[];G.fqFam={};Object.keys(G.fqW||{}).forEach(k=>{if(G.fqW[k]<0)G.fqW[k]=0});if(G.fq)G.fq.d="";save();render()})}
   try{window.__fqFinish&&window.__fqFinish()}catch(e){}
   renderPlus()}
 // --- énergie du matin
@@ -11953,7 +11953,7 @@ function rdOpen(btn,n,fin){const G=S.g;const o=document.createElement("div");o.c
       <p class="rdx">${B.p+k>=B.n?"Livre terminé · ":""}+${rdXp(k)} XP${B.p+k>=B.n?" + 40 XP bonus":""}</p><button type="button" class="btn primary" id="rdOk">Valider</button><div class="rdlinks"><button type="button" class="lnk" id="rdNew">Changer de livre</button><button type="button" class="lnk" id="rdX">Annuler</button></div></div>`;
     o.querySelector(".rdt").textContent=B.t;
     o.querySelectorAll(".rdm").forEach(b=>b.onclick=()=>{k=Math.max(1,Math.min(left,k+ +b.dataset.d));draw()});
-    o.querySelector("#rdX").onclick=close;o.querySelector("#rdNew").onclick=()=>{if(confirm("Abandonner « "+B.t+" » et en commencer un autre ?")){G.book=null;save();draw()}};
+    o.querySelector("#rdX").onclick=close;o.querySelector("#rdNew").onclick=()=>undoAfter("« "+B.t+" » abandonné",()=>{G.book=null;save();draw()});
     o.querySelector("#rdOk").onclick=()=>{const done=B.p+k>=B.n;rdPages(Math.min(k,B.n-B.p));B.p=Math.min(B.n,B.p+k);B.x=(B.x||0)+rdXp(k);B.ss=(B.ss||0)+1;close();qPass(btn,rdXp(k));
       if(done)rdDone(B);else save()}};
   draw()}
@@ -12116,7 +12116,7 @@ function renderProfile(force){
   const when=last==null?"Pas encore de nouvelles":days<1?"Nouvelles aujourd'hui":days===1?"Dernières nouvelles hier":`Dernières nouvelles il y a ${days} j`;
   const fam=isFam(n),RL=fam?REL_FAM:REL_FR,rk=relOf(n),ri=relInfo(n),st=statusOf(n);
   root.style.setProperty("--h",`hsl(${hueOf(n)} 55% 50%)`);
-  root.innerHTML=`<button type="button" class="btn back" id="pBack">← Proches</button>
+  root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF">
     <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="ctitle">${bondTitle(bi.l)}</span><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
       <div class="fp-btns"><button type="button" class="me-set" id="pBgBtn" aria-label="Changer le fond" aria-expanded="false" title="Fond"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.3-1.7-.4-1 .2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button></div></div>
@@ -12286,7 +12286,7 @@ function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);
   root.style.setProperty("--h",col);
   const HI=[[/vu|voir|les voir/i,"duo"],[/appel/i,"tel"],[/nouvelles|message/i,"bulle"]];
   const grp=[];hist.forEach(e=>{const t=new Date(e.t).toLocaleDateString("fr-FR",{day:"numeric",month:"short"}).replace(/\.$/,""),k=t+"|"+e.name,l=grp[grp.length-1];if(l&&l.k===k){l.n++;l.x+=e.xp||0}else grp.push({k,t,nm:e.name,n:1,x:e.xp||0})});
-  root.innerHTML=`<button type="button" class="btn back" id="pBack">← Proches</button>
+  root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="grpcard" style="--gc:${col}"><div class="grph"><div><span class="grpk">Groupe</span><input class="grpn grpin2" id="gName" maxlength="24" aria-label="Nom du groupe"><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais vus ensemble":d<1?"contactés aujourd'hui":"contactés il y a "+d+" j"}</small></div></div>
     <div class="cphoto">${grpRows(M.map(n=>`<div class="grpmw"><button type="button" class="grpmb" data-n="${esc(n)}">${grpHeadHTML(n)}<span>${esc(n)}</span></button><button type="button" class="grpx" data-x="${esc(n)}" aria-label="Retirer ${esc(n)}">${ICO("close",12)}</button></div>`).concat([`<button type="button" class="grpadd" id="gAdd" aria-label="Ajouter des membres"><span class="pav">+</span><span>Ajouter</span></button>`]))}</div>
     <div class="grpcols" id="gCols">${FG_COL.map(c=>`<button type="button" class="grpc${c===col?" on":""}" data-c="${c}" style="--c:${c}" aria-label="Couleur"></button>`).join("")}</div></div>
@@ -12300,7 +12300,7 @@ function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);
   root.querySelectorAll(".grpc").forEach(b=>b.onclick=()=>{g.c=b.dataset.c;save();renderGroupPage(id);renderRelations()});
   $("gAdd").onclick=()=>{nm.dispatchEvent(new Event("change"));fgOpen(id,()=>renderGroupPage(id))};
   FG_ACT.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span class="rai">${rkSvg(GRP_ICO[A.k])}</span><span>${A.label}</span><b>+${A.xp} XP</b>`;b.style.setProperty("--gc",col);b.onclick=ev=>fgAct(g,A,b,ev);$("gActs").appendChild(b)});
-  $("gDel").onclick=()=>{if(!confirm("Supprimer le groupe « "+g.n+" » ?"))return;S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;showView("r");renderRelations()}}
+  $("gDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;showView("r");renderRelations()})}
 function fgList(){const G=S.g;if(!G)return[];if(!Array.isArray(G.fgr))G.fgr=[];return G.fgr}
 function fgAdd(n){const g={id:"g"+Date.now().toString(36),n:n.slice(0,24)};fgList().push(g);return g}
 function fgMembers(id){return relNames().filter(n=>((S.profiles[n]||{}).grp||[]).includes(id))}
@@ -12309,7 +12309,7 @@ function fgOpen(id,after){const g=fgList().find(x=>x.id===id);if(!g)return;const
     const nm=o.querySelector(".fgname");nm.value=g.n;nm.onchange=()=>{const v=nm.value.trim();if(v){g.n=v;save()}};
     o.querySelectorAll(".fgm").forEach(b=>b.onclick=()=>{const P=S.profiles[b.dataset.n]=S.profiles[b.dataset.n]||{},a=P.grp||(P.grp=[]),i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);save();draw()});
     o.querySelector("#fgOk").onclick=()=>{nm.dispatchEvent(new Event("change"));close()};
-    o.querySelector("#fgDel").onclick=()=>{if(!confirm("Supprimer le groupe « "+g.n+" » ?"))return;S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()}};
+    o.querySelector("#fgDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()})};
   draw()}
 function renderFG(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
   box.innerHTML=`<div class="fgh"><b>Groupes</b><button type="button" class="addf fgplus" id="fgAddB" aria-label="Créer un groupe"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><div class="fgcards">${L.map(g=>{const M=fgMembers(g.id),d=G.fgLast&&G.fgLast[g.id]?Math.floor((Date.now()-G.fgLast[g.id])/864e5):null;return`<button type="button" class="fgcard" data-g="${g.id}" style="--gc:${fgCol(g)}"><b></b><span class="fgav">${M.slice(0,5).map(n=>pAv(n,"fgsm")).join("")}${M.length>5?`<i>+${M.length-5}</i>`:""}</span><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais contacté":d<1?"aujourd'hui":"il y a "+d+" j"}</small></button>`}).join("")}</div>`;
@@ -12393,6 +12393,10 @@ function complete(a,el,ev,sp,extra){
   if(bt)setTimeout(()=>toast(bt),900);
 }
 let undoT=0;
+// suppression immédiate + « Annuler » quelques secondes (standard de l'appli) : on restaure l'état d'avant comme une sauvegarde
+function undoAfter(label,fn,restore){const snap=restore?null:JSON.stringify(snapshot());fn();let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
+  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=label;b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
+  b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");try{if(restore)restore();else{load(JSON.parse(snap));save();render()}}catch(e){}toast("Annulé")}}
 function undoOffer(e,rc){if(!e||e.bonus)return;let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
   b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":" validé");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");const li=[...document.querySelectorAll("#log li")].find(x=>x.__e===e);if(!li){toast("Trop tard pour annuler ici : passe par le journal");return}
@@ -13594,6 +13598,21 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ficheBox,#idBox,#vieBox,#prjB
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c{border:0!important;box-shadow:none!important;border-radius:0!important;background:none!important;padding:14px 0 4px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1px dashed rgba(255,255,255,.18)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow:none!important;background:none!important;padding:4px 0!important}
+/* Standard « pas d'encadrés », étendu à toute l'appli : conteneurs d'information sans cadre ni fond.
+   Boutons, tuiles, onglets et barre du bas gardent leur forme (ce sont des contrôles). */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card,.motc){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .pf-xp{border:0!important;box-shadow:none!important;background:none!important}
+/* cartes d'action (quêtes, idée sortie) et bouton XP : on garde le fond (lisibilité, décor), sans cadre */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard,#qxpBtn){border:0!important;box-shadow:none!important;outline:0!important}
+/* Proches : fiches sans cadre ; une ligne pixel à la couleur du lien les sépare */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body #relList>li.rl{border:0!important;box-shadow:none!important;border-radius:0!important;background:repeating-linear-gradient(90deg,var(--fc) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important;padding-bottom:10px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .motc{background:repeating-linear-gradient(90deg,var(--mc,var(--gold)) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
+/* Standard « animations sobres » : plus d'éléments d'interface qui bougent en boucle tout seuls.
+   Le décor (ciel, météo, maison) et les animations déclenchées par une action restent. */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.chestmini,.evr.now .evd){animation:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .bpx,.lvl,.pbs.on .pbi)::after{animation:none!important;opacity:0!important}
 /* Assiette du repas (js/assiette.js) */
 .plo{position:fixed;inset:0;z-index:230;background:#0d0f22;overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
 .plin{max-width:440px;margin:0 auto;display:grid;gap:12px;min-height:100%;align-content:start}
@@ -13688,6 +13707,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plics button.on{background:rgba(255,255,255,.12);border-bottom-color:var(--pc)}
 .plnewb{display:grid;grid-template-columns:1fr 2fr;gap:8px}
 .plfoods{row-gap:8px}
+html body #undoBar{z-index:250}
+.pxic{vertical-align:-.15em}
 </style>
 <script>
 (function(){
@@ -13804,7 +13825,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
       if(afStep==="who"){box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><div class="afdr"><small>Avec qui ?</small><div class="afppl">${isWho?"":`<button type="button" class="afsolo" data-p="">Seul·e</button>`}${groups().map((g,i)=>`<button type="button" class="afgrp" data-g="${i}" aria-pressed="${g.m.every(n=>afWho.includes(n))}"></button>`).join("")}${shownP.map(p=>`<button type="button" data-p="${esc(p)}" aria-pressed="${afWho.includes(p)}"></button>`).join("")}${!afAllP&&P.length>10?`<button type="button" class="afmore">+ ${P.length-10}</button>`:""}</div></div>${afWho.length?`<button type="button" class="btn primary afnext"></button>`:""}</div>`;
         box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
         box.querySelectorAll(".afppl [data-p]").forEach(b=>{const p=b.dataset.p;if(p)b.textContent=p;b.onclick=ev=>{if(!p){afWho=[];if(quickDur){afFinish(it,b,ev);return}afStep=nextStep(it);renderAF();return}afWho=afWho.includes(p)?afWho.filter(x=>x!==p):[...afWho,p];renderAF()}});
-        {const GG=groups();box.querySelectorAll(".afppl [data-g]").forEach(b=>{const g=GG[+b.dataset.g];b.textContent="👥 "+g.n;b.onclick=()=>{const all=g.m.every(n=>afWho.includes(n));afWho=all?afWho.filter(n=>!g.m.includes(n)):[...new Set([...afWho,...g.m])];renderAF()}})}
+        {const GG=groups();box.querySelectorAll(".afppl [data-g]").forEach(b=>{const g=GG[+b.dataset.g];b.innerHTML=ICO("users",14)+" "+esc(g.n);b.onclick=()=>{const all=g.m.every(n=>afWho.includes(n));afWho=all?afWho.filter(n=>!g.m.includes(n)):[...new Set([...afWho,...g.m])];renderAF()}})}
         {const nx=box.querySelector(".afnext");if(nx){{const wl=whoLabel(afWho);nx.textContent="Continuer avec "+(wl!==afWho.join(", ")?wl:afWho.length>2?afWho.slice(0,2).join(", ")+" +"+(afWho.length-2):afWho.join(" et "))+" →"}nx.onclick=ev=>{if(quickDur){afFinish(it,nx,ev);return}afStep=nextStep(it);renderAF()}}}
         const m=box.querySelector(".afmore");if(m)m.onclick=()=>{afAllP=true;renderAF()};
         box.querySelector(".afback").onclick=()=>{afSel=null;renderAF()};return}
@@ -13819,13 +13840,13 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
       box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afFinish(it,b,ev)});
       box.querySelector(".afback").onclick=()=>{if(it.f&&it.f.nap){afSel=null}else afStep="who";renderAF()};return}
     const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);if(own.length)F.push({l:"Mes actions",c:(DOMS.find(d=>d[0]===id)||[])[2],its:own});return F};
-    const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:"✓"}</em>`:""}</button>`};
+    const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
     let body="";
     if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div><button type="button" class="afnew">+ Créer « <b></b> »</button>`}
     else if(afCat&&afFam){const F=fams(afCat).find(F=>F.l===afFam);if(!F){afFam=""}else {const fid=F.its[0]&&F.its[0].k==="fam"?F.its[0].f.id:"",cu=((S.g.afCustom||{})[fid]||[]);body=`<div class="aff" style="--fc:${F.c||"var(--gold)"}"><div class="affh"><button type="button" class="afback afup" aria-label="Retour">${ICO("chev",18)}</button><b class="afft"></b></div><div class="afopts">${F.its.map(it=>chip(it,it.k==="fam"?it.opt:it.name)).join("")}${fid?(afAdd?`<span class="afaddin"><input maxlength="30" placeholder="Nouveau…" aria-label="Nouvelle option"><button type="button" class="btn primary afaddok">Ajouter</button></span>`:`<button type="button" class="afo afadd" aria-label="Ajouter une option">+</button>`):""}</div>${afAdd&&cu.length?`<div class="afcu"><small>Tes ajouts</small>${cu.map((c,i)=>`<button type="button" class="afcux" data-cu="${i}"></button>`).join("")}</div>`:""}</div>`;box.__fid=fid}}
-    if(afCat&&!afFam&&!q){const FF=fams(afCat);body=`<div class="afgrid">${FF.map((F,i)=>{const red=F.its.filter(it=>afFresh(it)==="fr-r").length,org=F.its.filter(it=>afFresh(it)==="fr-o").length,dn=F.its.some(it=>afToday(afKey(it)));return`<button type="button" class="aft${red?" r":org?" o":""}${dn?" did":""}" data-fam="${i}" style="--fc:${F.c||"var(--gold)"}"><b></b>${red?`<i class="afred">${red}</i>`:org?`<i class="afor">${org}</i>`:dn?`<em>✓</em>`:""}</button>`}).join("")}</div><button type="button" class="afnew">+ Créer une action</button>`}
+    if(afCat&&!afFam&&!q){const FF=fams(afCat);body=`<div class="afgrid">${FF.map((F,i)=>{const red=F.its.filter(it=>afFresh(it)==="fr-r").length,org=F.its.filter(it=>afFresh(it)==="fr-o").length,dn=F.its.some(it=>afToday(afKey(it)));return`<button type="button" class="aft${red?" r":org?" o":""}${dn?" did":""}" data-fam="${i}" style="--fc:${F.c||"var(--gold)"}"><b></b>${red?`<i class="afred">${red}</i>`:org?`<i class="afor">${org}</i>`:dn?`<em>${ICO("check",12)}</em>`:""}</button>`}).join("")}</div><button type="button" class="afnew">+ Créer une action</button>`}
     else if(!afCat&&!q){const cnt={};(S.log||[]).forEach(e=>{if(e.a)cnt[e.a]=(cnt[e.a]||0)+1});const L=items.filter(it=>cnt[afKey(it)]).sort((a,b)=>(habitRank(afKey(b))||cnt[afKey(b)])-(habitRank(afKey(a))||cnt[afKey(a)])).slice(0,8);body=L.length?`<small class="afh">Tes habituelles</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div>`:`<small class="afh">Choisis une catégorie</small>`}
-    box.innerHTML=`<div class="afs"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" class="afq" placeholder="Chercher : cuisine, film, pompes…" autocomplete="off" enterkeyhint="search">${afQ?`<button type="button" class="afx" aria-label="Effacer">✕</button>`:""}</div>
+    box.innerHTML=`<div class="afs"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" class="afq" placeholder="Chercher : cuisine, film, pompes…" autocomplete="off" enterkeyhint="search">${afQ?`<button type="button" class="afx" aria-label="Effacer">${ICO("close",14)}</button>`:""}</div>
       ${q?"":`<div class="afc">${C.D.map(c=>`<button type="button" data-afc="${c.id}" aria-pressed="${afCat===c.id}" style="--cc:${c.c}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${c.ic}</svg><span></span></button>`).join("")}</div>`}
       <div class="afl">${body}</div>`;
     box.querySelectorAll("[data-afc] span").forEach((s,i)=>s.textContent=C.all[i].label);setTimeout(dressAF,0);
@@ -13836,7 +13857,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
       const fid=box.__fid,CU=()=>{if(!S.g.afCustom||typeof S.g.afCustom!=="object")S.g.afCustom={};return S.g.afCustom[fid]=S.g.afCustom[fid]||[]};
       const ab=box.querySelector(".afadd");if(ab)ab.onclick=()=>{afAdd=true;renderAF();const i=document.querySelector("#actFind .afaddin input");if(i)i.focus()};
       const ai=box.querySelector(".afaddin input"),ao=box.querySelector(".afaddok");if(ai){const go=()=>{const v=ai.value.trim();if(!v){afAdd=false;renderAF();return}const L=CU();if(!L.some(x=>norm(x)===norm(v)))L.push(v.charAt(0).toUpperCase()+v.slice(1));save();afAdd=false;renderAF()};ao.onclick=go;ai.onkeydown=e=>{if(e.key==="Enter")go();if(e.key==="Escape"){afAdd=false;renderAF()}}}
-      box.querySelectorAll(".afcux").forEach(b=>{const L=CU(),c=L[+b.dataset.cu];b.textContent="✕ "+c;b.onclick=()=>{L.splice(+b.dataset.cu,1);save();renderAF()}})}
+      box.querySelectorAll(".afcux").forEach(b=>{const L=CU(),c=L[+b.dataset.cu];b.innerHTML=ICO("close",12)+" "+esc(c);b.onclick=()=>{L.splice(+b.dataset.cu,1);save();renderAF()}})}
     if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.l;b.onclick=ev=>{if(F.its.length===1){const it=F.its[0];if(it.k==="fam"&&it.f.quick){try{uniBurst(b,it.dom)}catch(e){}afDo(it,b,ev,0,[]);b.classList.add("pop");afClose();return}const M=(S.g.afMem||{})[afKey(it)]||{};afSel=it;afWho=[];afDur=0;afAllP=false;afStep=it.k==="fam"&&it.f.nap?"dur":"who";renderAF();return}afFam=F.l;renderAF()}})}
     box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{const[it,lab]=reg[i];b.querySelector("span").textContent=lab;
       b.onclick=ev=>{if(it.k==="fam"&&it.f.quick&&!it.f.who){try{uniBurst(b,it.dom)}catch(e){}afDo(it,b,ev,0,[]);b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop","did");afClose();return}const M=(S.g.afMem||{})[afKey(it)]||{};afSel=it;afWho=[];afDur=0;afAllP=false;afStep=it.k==="fam"&&it.f.nap?"dur":"who";renderAF()}});
@@ -14018,7 +14039,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
     if(Q.ok){if(c)c.remove();return}const sig=Q.o.join(",")+"|"+Q.p;if(c&&c.dataset.sig===sig&&c===tr.firstElementChild)return;
     if(!c){c=document.createElement("div");c.className="sq idq"}c.dataset.sig=sig;if(c!==tr.firstElementChild){const z=tr.scrollLeft<12;tr.prepend(c);if(z)tr.scrollLeft=0}const we=isWeekend(),h=dayH(),when=h>=15?"Ce soir":we?"Ce week-end":"Aujourd'hui";
     if(Q.p==null)Q.p=Q.o[0];const x=IDQ[Q.p];
-    c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée">${ICO("refresh",16)||"↻"}<span>Une autre</span></button></span>`;
+    c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée">${ICO("refresh",16)}<span>Une autre</span></button></span>`;
     c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=idPick(1);Q.p=Q.o[0];save();idqCard()};
     c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
       try{uniBurst(e.currentTarget,"divert")}catch(_){}addBonus("Sortie : "+x[0],x[3],0,"idq");save();try{toast(`Belle sortie <span class="p">+${x[3]} XP</span>`)}catch(_){}setTimeout(()=>{try{render(prev)}catch(_){}idqCard()},600)}}
@@ -14185,9 +14206,9 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
   {const f=document.createElement("button");f.type="button";f.id="afFab";f.dataset.v="q";f.setAttribute("aria-label","Noter une action");f.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';f.onclick=()=>{const b=document.querySelector("#plusBox .plusb");if(b&&!document.documentElement.classList.contains("plusopen"))b.click()};document.body.appendChild(f);try{f.hidden=view!=="q"}catch(e){}}
   // 1. Rituels : appui long sur une tuile
   hold("#dqBox .rtile",(b)=>{const n=(b.querySelector(".rtn")||{}).textContent;const t=ritTasks().find(x=>x.name===n);if(!t)return;
-    pop(b,[{l:(t.core?"★ Retirer du socle":"★ Mettre dans le socle"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
+    pop(b,[{l:ICO("star",14)+(t.core?" Retirer du socle":" Mettre dans le socle"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
       {l:"⏸ Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
-      {l:"✎ Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
+      {l:ICO("edit",14)+" Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
   // 8. Cigarettes : appui long pour masquer
   hold("#trkBox .trk-n",(b)=>{pop(b,[{l:"Masquer le compteur",f:()=>{const v=S.g.vie||(S.g.vie={});v.track=v.track||{};v.track.cig=false;save();try{renderTrk()}catch(e){}toast("Compteur masqué · à réactiver dans Ma vie")}}])});
   // 3. Capacité : toucher le compteur d'Aujourd'hui
@@ -14203,7 +14224,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
       if(x.k==="arc"&&x.p)add("prj","Voir le projet","étapes, modifier",()=>{try{showView("c")}catch(e){}goSub("vie");setTimeout(()=>{const b=document.getElementById("prjBox2");if(b){b.scrollIntoView({behavior:"smooth",block:"start"});const h=b.querySelector('.prh[aria-expanded="false"]');if(h)h.click()}},200)})})}
   // 7. Quêtes spéciales : un seul « … »
   function sqMenus(){document.querySelectorAll("#sqBox .sq").forEach(c=>{const x=c.querySelector(":scope>.sqx");if(!x||c.querySelector(".sqm"))return;const b=document.createElement("button");b.type="button";b.className="sqm";b.setAttribute("aria-label","Options");b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg>';
-      b.onclick=e=>{e.stopPropagation();const lab=x.getAttribute("aria-label")||"Retirer";pop(b,[{l:/autre/i.test(lab)?"↻ Proposer autre chose":"✕ Retirer cette quête",f:()=>x.click()}])};c.appendChild(b)})}
+      b.onclick=e=>{e.stopPropagation();const lab=x.getAttribute("aria-label")||"Retirer";pop(b,[{l:/autre/i.test(lab)?ICO("refresh",14)+" Proposer autre chose":ICO("close",14)+" Retirer cette quête",f:()=>x.click()}])};c.appendChild(b)})}
   // 6. Skills : un interrupteur par skill
   
   // Plus de quêtes : un panneau qui monte du bas
@@ -14540,14 +14561,16 @@ const PL_X=[["yaourt","Yaourt","yaourt"],["fromage","Fromage","fromage"],["eau",
 const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite, 90° = bas)
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
-// assiette pixel 32×32 : chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
-function plSvg(lv){const c=15.5,rows=[];for(let y=0;y<32;y++){let row="";for(let x=0;x<32;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
-  if(d>15.6)col="";else if(d>14.6)col="#2a1606";else if(d>13)col=(x+y)%2?"#dfe8f0":"#ffffff";else if(d>12.4)col="#c9d3dd";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
-    const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.55&&Math.cos((a-b)*Math.PI/180)>0);
-    if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0);col=n&&d<=12.4*n/3?((x*3+y)%4?S2[2]:S2[3]):"#ffffff"}}
-  row+=col+"|"}rows.push(row)}
-  let r="";rows.forEach((row,y)=>{const cs=row.split("|");let x=0;while(x<32){const col=cs[x];let w=1;while(x+w<32&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
-  return`<svg viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+// assiette pixel 64×64 : rebord éclairé en haut à gauche ; chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
+function plSvg(lv){const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
+  if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
+  else if(d>24.6)col=(-dx-dy)>0?"#b8c4cf":"#e3eaf0";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
+    const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.9&&Math.cos((a-b)*Math.PI/180)>0);
+    if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0),R=24.6*n/3;
+      col=n&&d<=R?(d>R-1.2?S2[3]:((x*7+y*3)%11===0?"#ffffff":(x+2*y)%5===0||(2*x+y)%7===0?S2[3]:S2[2])):"#ffffff"}}
+  row.push(col)}rows.push(row)}
+  let r="";rows.forEach((cs,y)=>{let x=0;while(x<N){const col=cs[x];let w=1;while(x+w<N&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
+  return`<svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function plSlots(s,n){const a=PL_A[s],P=[[7,0],[9,-34],[9,34],[4.2,0]];return P.slice(0,n).map(([r,da])=>{const t=(a+da)*Math.PI/180;return[(15.5+r*Math.cos(t))/32*100,(15.5+r*Math.sin(t))/32*100]})}
 
 const plDone=(d,per,k)=>{const key=d+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];return(((b&&b.m)||(dr&&dr.m)||{})[k])===1};
@@ -14589,10 +14612,10 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
-    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">✕</button></div>`+
+    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">${ICO("close",18)}</button></div>`+
     (step===1?`${q?`<p class="plq">Quête : <b>${esc(q.t)}</b></p>`:""}
-      <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?"<i>✕</i>":""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
-      ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">✕</button></div>`:""}
+      <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?`<i>${ICO("close",10)}</i>`:""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
+      ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">${ICO("close",14)}</button></div>`:""}
       <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
       <p class="plhint">${tri?"Touche un aliment pour le masquer ou le remettre. Touche une recette pour la supprimer.":nd.length?`À midi il manquait : <b>${nd.map(s=>PL_SIDES.find(z=>z[0]===s)[1].toLowerCase()).join(", ")}</b>. C'est le moment d'en ajouter.`:edit?"Ajoute ou retire ce que tu as oublié.":"Touche ce que tu manges, ou une recette. Touche un aliment sur l'assiette pour le retirer."}</p>
       ${edit||tri?"":`<p class="plxp${bx>=MB_PLX*3+MB_PLB?" full":""}">${bx?`+${bx} XP d'assiette${bx>=MB_PLX*3+MB_PLB?" · complète !":""}`:"Chaque côté rempli rapporte de l'XP"}</p>`}
@@ -14608,7 +14631,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
     on("[data-add]",b=>{const[s,id]=b.dataset.add.split(":");m[s].push(id);delete m.r;try{sfx("blip")}catch(e){}draw();const it=o.querySelectorAll(`.plit[data-rm^="${s}:"]`);const last=it[Math.min(m[s].length,3)-1];if(last&&m[s].length<=3)last.classList.add("pop")});
     on("[data-rm]",b=>{const[s,i]=b.dataset.rm.split(":");m[s].splice(+i,1);delete m.r;draw()});
     on("[data-hide]",b=>{const id=b.dataset.hide,H=plHid(),i=H.indexOf(id);if(i<0)H.push(id);else H.splice(i,1);save();draw()});
-    on("[data-rec]",b=>{const R=plRec(),r=R.find(x=>x.id===b.dataset.rec);if(!r)return;if(tri){R.splice(R.indexOf(r),1);save();draw();return}
+    on("[data-rec]",b=>{const R=plRec(),r=R.find(x=>x.id===b.dataset.rec);if(!r)return;if(tri){const i=R.indexOf(r);undoAfter(`Recette « ${r.n} » supprimée`,()=>{R.splice(i,1);save();draw()},()=>{R.splice(i,0,r);save();if(o.isConnected)draw()});return}
       ["f","p","l"].forEach(s=>m[s]=[...(r[s]||[])]);m.r=r.id;try{sfx("blip")}catch(e){}draw();o.querySelectorAll(".plit").forEach(x=>x.classList.add("pop"))});
     on(".plsv",()=>{naming=true;recName="";draw();const i=$o(".plname input");if(i)i.focus()});
     const ni=$o(".plname input");if(ni){ni.oninput=()=>recName=ni.value;ni.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$o(".plnok").click()}}}
@@ -14671,6 +14694,44 @@ try{const _r=render;render=function(){const r=_r.apply(this,arguments);try{rende
     if(whole){if(!mb[kz])mb[kz]=mb[ka];delete mb[ka];n++}});
   save();if(n){try{render()}catch(e){}}}catch(e){}})();
 try{if(S.g&&S.g.plb){delete S.g.plb;save()}}catch(e){}
+// ---- Icônes d'interface en pixel art (standard « tout en pixel art ») : grilles 12×12, une seule couleur (currentColor),
+// pour garder les couleurs et états actuels des boutons. Remplace ICO() et les anciennes icônes vectorielles au trait.
+const PXUI={
+close:["##........##","###......###",".###....###.","..###..###..","...######...","....####....","....####....","...######...","..###..###..",".###....###.","###......###","##........##"],
+check:["............","..........##",".........###","........###.",".......###..","##....###...","###..###....",".######.....","..####......","...##.......","............","............"],
+chev:["............","............","............","##........##","###......###",".###....###.","..###..###..","...######...","....####....",".....##.....","............","............"],
+plus:["............",".....##.....",".....##.....",".....##.....",".....##.....",".##########.",".##########.",".....##.....",".....##.....",".....##.....",".....##.....","............"],
+edit:["........##..",".......####.","......######",".....##.####","....##..###.","...##..###..","..##..###...",".##..###....",".#.###......",".###........","####........","............"],
+spark:[".....##.....",".....##.....","....####....","....####....","..########..","############","############","..########..","....####....","....####....",".....##.....",".....##....."],
+star:[".....##.....",".....##.....","....####....","############",".##########.","..########..","...######...","..########..","..###..###..",".###....###.",".##......##.","............"],
+sword:["..........##",".........###","........###.",".......###..","......###...",".#...###....",".##.###.....","..####......","...##.......","..####......",".##..##.....","##....#....."],
+chat:[".##########.","############","##........##","##........##","##........##","##........##","############",".###.######.","...#.#......","...##.......","...#........","............"],
+phone:[".##.........","####........","####........",".###........","..##........","..###.......","...###......","....###.....",".....####.##","......######",".......#####",".........##."],
+camera:["...####.....","############","#..........#","#...####...#","#..#....#..#","#..#....#..#","#..#....#..#","#...####...#","#..........#","############","............","............"],
+swap:["........#...","........##..","###########.","........##..","........#...","............","............","...#........","..##........",".###########","..##........","...#........"],
+refresh:["....####.#..","..##....###.",".#......####",".#..........","#...........","#...........","...........#","...........#","..........#.","####......#.",".###....##..","..#.####...."],
+reset:["..#.####....",".###....##..","####......#.","..........#.","...........#","...........#","#...........","#...........",".#..........",".#......#...","..##....##..","....####...."],
+flame:[".....#......","....##......","....###.....","...####.#...","...########.","..#########.",".####.#####.",".###...####.",".###...####.",".####.#####.","..########..","...######..."],
+todo:["############","#..........#","#.......##.#","#......##..#","#.....##...#","#.##.##....#","#..###.....#","#...#......#","#..........#","############","............","............"],
+user:["....####....","...######...","...######...","...######...","....####....","............","..########..",".##########.","############","############","............","............"],
+users:["..##.....##.",".####...####",".####...####","..##.....##.","............",".####...####","######.#####","######.#####","######.#####","............","............","............"],
+gear:[".....##.....","..#.####.#..",".##########.","..###..###..",".###....###.","####....####","####....####",".###....###.","..###..###..",".##########.","..#.####.#..",".....##....."],
+sndon:[".....#......","....##...#..","...###....#.","####.#..#..#","####.#...#.#","####.#...#.#","####.#..#..#","...###....#.","....##...#..",".....#......","............","............"],
+sndoff:[".....#......","....##......","...###.#...#","####.#..#.#.","####.#...#..","####.#...#..","####.#..#.#.","...###.#...#","....##......",".....#......","............","............"],
+back:["............","....##......","...##.......","..##........",".###########",".###########","..##........","...##.......","....##......","............","............","............"],
+calendar:["..#.....#...","############","############","#..........#","#.##.##.##.#","#..........#","#.##.##.##.#","#..........#","############","............","............","............"],
+};
+function pxIco(n,s,cls){const R=PXUI[n];if(!R)return"";let r="";R.forEach((row,y)=>{let x=0;while(x<12){if(row[x]!=="#"){x++;continue}let w=1;while(x+w<12&&row[x+w]==="#")w++;r+=`<rect x="${x}" y="${y}" width="${w}" height="1.02"/>`;x+=w}});
+  return`<svg class="ic pxic${cls?" "+cls:""}" viewBox="0 0 12 12" width="${s||16}" height="${s||16}" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+try{const _ICO=ICO;ICO=function(n,s){return pxIco(n,s)||_ICO(n,s)}}catch(e){}
+// anciennes icônes au trait encore écrites en dur (barre du bas, boutons) : remplacées à l'affichage par leur version pixel
+const PXUSIG=[["M17 21v-2","users"],["M9 11l3 3L22 4","todo"],["M4 21c0-4","user"],["M6 9l6 6 6-6","chev"],["M17 9l5 6","sndoff"],["M16 9a4","sndon"],["M4 20h4L19 9","edit"],
+  ["M12 3l2.2 6.8","spark"],["M12 5v14M5 12h14","plus"],["M6 6l12 12","close"],["M5 12.5l4.5","check"],["M4 5h16v11","chat"],["M5 4h4l2 5","phone"],["M20 11a8","swap"],["M4 12a8","reset"],["M14.5 17.5","sword"],["M12 22c4","flame"]];
+function pxSwap(){document.querySelectorAll("svg:not(.pxic)").forEach(sv=>{if(sv.getAttribute("shape-rendering")==="crispEdges")return;if(sv.getAttribute("stroke")!=="currentColor"&&!sv.querySelector('[stroke="currentColor"]'))return;
+  const h=sv.innerHTML,m=PXUSIG.find(([k])=>h.includes(k));if(!m)return;const w=+sv.getAttribute("width")||Math.round(sv.getBoundingClientRect().width)||16,t=document.createElement("template");t.innerHTML=pxIco(m[1],w);
+  const nn=t.content.firstChild;const c=sv.getAttribute("class");if(c)nn.setAttribute("class",c+" pxic");sv.replaceWith(nn)})}
+{let q=0;const run=()=>{q=0;try{pxSwap()}catch(e){}};pxSwap();new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run)}).observe(document.body,{childList:true,subtree:true})}
+try{render()}catch(e){}
 </script>
 </body></html>
 </body></html>

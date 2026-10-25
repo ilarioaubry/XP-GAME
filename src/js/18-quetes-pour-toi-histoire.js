@@ -169,7 +169,7 @@ function memOf(id){return(Array.isArray(S.g.mem)?S.g.mem:[]).find(m=>m.id===id)|
 function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.g,old=memOf(ctx.id)||{};let ph=old.ph||"";
   const o=document.createElement("div");o.className="bpop memsh";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Souvenir");
   o.innerHTML=`<div class="bpc mempc"><small class="memk">${ctx.ev?"Ton billet":"Souvenir"}</small><h3></h3><div class="memph">${ph?`<img src="${ph}" alt="">`:""}<label class="btn memadd"><input type="file" accept="image/*" hidden>${ph?"Changer la photo":"Ajouter une photo"}</label></div>
-    <textarea maxlength="140" rows="2" placeholder="Un mot, une phrase, ce que tu veux retenir"></textarea>${ctx.ev?`<div class="memst" role="group" aria-label="Note">${[1,2,3,4,5].map(i=>`<button type="button" data-s="${i}" aria-pressed="${(old.s|0)>=i}" aria-label="${i} sur 5">★</button>`).join("")}</div>`:""}
+    <textarea maxlength="140" rows="2" placeholder="Un mot, une phrase, ce que tu veux retenir"></textarea>${ctx.ev?`<div class="memst" role="group" aria-label="Note">${[1,2,3,4,5].map(i=>`<button type="button" data-s="${i}" aria-pressed="${(old.s|0)>=i}" aria-label="${i} sur 5">${ICO("star",22)}</button>`).join("")}</div>`:""}
     <button type="button" class="btn primary memgo">Garder ce souvenir</button><button type="button" class="lnk memx">Plus tard</button></div>`;
   o.querySelector("h3").textContent=ctx.q;o.querySelector("textarea").value=old.w||"";let stars=old.s|0;
   o.querySelectorAll(".memst button").forEach(b=>b.onclick=()=>{stars=+b.dataset.s;o.querySelectorAll(".memst button").forEach(x=>x.setAttribute("aria-pressed",+x.dataset.s<=stars))});
@@ -181,7 +181,7 @@ function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.
     close();save();if(done)done(first);else render();sfx("badge");toast(ctx.ev?"Billet rangé dans ta fiche":"Souvenir gardé")};
   document.body.appendChild(o);setTimeout(()=>o.querySelector("textarea").focus({preventScroll:true}),60)}
 function tickets(){const G=S.g,tk=dayKey(Date.now()),seen=new Set(),L=[];evArc().forEach(e=>{if(seen.has(e.id))return;seen.add(e.id);if(e.d<=tk&&(e.t||evtGuess(e.n))==="concert")L.push(e)});return L.sort((a,b)=>a.d<b.d?1:-1)}
-function tikHTML(e,sm){const m=memOf("tik:"+e.id),d=new Date(e.d+"T12:00");return`<div class="tkt${sm?" sm":""}"><span class="tkl"><small>Concert</small><b></b>${m&&m.s?`<em>${"★".repeat(m.s)}</em>`:""}</span><span class="tkr"><b>${d.getDate()}</b><small>${MOIS_C[d.getMonth()].slice(0,4)}</small></span>${m&&m.ph?`<img class="tkph" src="${m.ph}" alt="">`:""}</div>`}
+function tikHTML(e,sm){const m=memOf("tik:"+e.id),d=new Date(e.d+"T12:00");return`<div class="tkt${sm?" sm":""}"><span class="tkl"><small>Concert</small><b></b>${m&&m.s?`<em>${ICO("star",12).repeat(m.s)}</em>`:""}</span><span class="tkr"><b>${d.getDate()}</b><small>${MOIS_C[d.getMonth()].slice(0,4)}</small></span>${m&&m.ph?`<img class="tkph" src="${m.ph}" alt="">`:""}</div>`}
 // --- déclencheurs de rituels
 const TRG={matin:["Au réveil","Après le café","Après la douche","Après le petit-déj","Avant de partir"],soir:["En rentrant","Après le dîner","Après la douche","Avant de me coucher","En éteignant les écrans"]};
 function trgPick(t,cb){const per=ritPer(t),o=document.createElement("div");o.className="bpop trgsh";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Déclencheur");

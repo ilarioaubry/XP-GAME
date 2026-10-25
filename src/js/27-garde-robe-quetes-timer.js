@@ -227,7 +227,7 @@ function rdOpen(btn,n,fin){const G=S.g;const o=document.createElement("div");o.c
       <p class="rdx">${B.p+k>=B.n?"Livre terminé · ":""}+${rdXp(k)} XP${B.p+k>=B.n?" + 40 XP bonus":""}</p><button type="button" class="btn primary" id="rdOk">Valider</button><div class="rdlinks"><button type="button" class="lnk" id="rdNew">Changer de livre</button><button type="button" class="lnk" id="rdX">Annuler</button></div></div>`;
     o.querySelector(".rdt").textContent=B.t;
     o.querySelectorAll(".rdm").forEach(b=>b.onclick=()=>{k=Math.max(1,Math.min(left,k+ +b.dataset.d));draw()});
-    o.querySelector("#rdX").onclick=close;o.querySelector("#rdNew").onclick=()=>{if(confirm("Abandonner « "+B.t+" » et en commencer un autre ?")){G.book=null;save();draw()}};
+    o.querySelector("#rdX").onclick=close;o.querySelector("#rdNew").onclick=()=>undoAfter("« "+B.t+" » abandonné",()=>{G.book=null;save();draw()});
     o.querySelector("#rdOk").onclick=()=>{const done=B.p+k>=B.n;rdPages(Math.min(k,B.n-B.p));B.p=Math.min(B.n,B.p+k);B.x=(B.x||0)+rdXp(k);B.ss=(B.ss||0)+1;close();qPass(btn,rdXp(k));
       if(done)rdDone(B);else save()}};
   draw()}

@@ -124,7 +124,7 @@ function renderProfile(force){
   const when=last==null?"Pas encore de nouvelles":days<1?"Nouvelles aujourd'hui":days===1?"Dernières nouvelles hier":`Dernières nouvelles il y a ${days} j`;
   const fam=isFam(n),RL=fam?REL_FAM:REL_FR,rk=relOf(n),ri=relInfo(n),st=statusOf(n);
   root.style.setProperty("--h",`hsl(${hueOf(n)} 55% 50%)`);
-  root.innerHTML=`<button type="button" class="btn back" id="pBack">← Proches</button>
+  root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF">
     <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="ctitle">${bondTitle(bi.l)}</span><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
       <div class="fp-btns"><button type="button" class="me-set" id="pBgBtn" aria-label="Changer le fond" aria-expanded="false" title="Fond"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.3-1.7-.4-1 .2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button></div></div>
@@ -294,7 +294,7 @@ function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);
   root.style.setProperty("--h",col);
   const HI=[[/vu|voir|les voir/i,"duo"],[/appel/i,"tel"],[/nouvelles|message/i,"bulle"]];
   const grp=[];hist.forEach(e=>{const t=new Date(e.t).toLocaleDateString("fr-FR",{day:"numeric",month:"short"}).replace(/\.$/,""),k=t+"|"+e.name,l=grp[grp.length-1];if(l&&l.k===k){l.n++;l.x+=e.xp||0}else grp.push({k,t,nm:e.name,n:1,x:e.xp||0})});
-  root.innerHTML=`<button type="button" class="btn back" id="pBack">← Proches</button>
+  root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="grpcard" style="--gc:${col}"><div class="grph"><div><span class="grpk">Groupe</span><input class="grpn grpin2" id="gName" maxlength="24" aria-label="Nom du groupe"><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais vus ensemble":d<1?"contactés aujourd'hui":"contactés il y a "+d+" j"}</small></div></div>
     <div class="cphoto">${grpRows(M.map(n=>`<div class="grpmw"><button type="button" class="grpmb" data-n="${esc(n)}">${grpHeadHTML(n)}<span>${esc(n)}</span></button><button type="button" class="grpx" data-x="${esc(n)}" aria-label="Retirer ${esc(n)}">${ICO("close",12)}</button></div>`).concat([`<button type="button" class="grpadd" id="gAdd" aria-label="Ajouter des membres"><span class="pav">+</span><span>Ajouter</span></button>`]))}</div>
     <div class="grpcols" id="gCols">${FG_COL.map(c=>`<button type="button" class="grpc${c===col?" on":""}" data-c="${c}" style="--c:${c}" aria-label="Couleur"></button>`).join("")}</div></div>
@@ -308,7 +308,7 @@ function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);
   root.querySelectorAll(".grpc").forEach(b=>b.onclick=()=>{g.c=b.dataset.c;save();renderGroupPage(id);renderRelations()});
   $("gAdd").onclick=()=>{nm.dispatchEvent(new Event("change"));fgOpen(id,()=>renderGroupPage(id))};
   FG_ACT.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span class="rai">${rkSvg(GRP_ICO[A.k])}</span><span>${A.label}</span><b>+${A.xp} XP</b>`;b.style.setProperty("--gc",col);b.onclick=ev=>fgAct(g,A,b,ev);$("gActs").appendChild(b)});
-  $("gDel").onclick=()=>{if(!confirm("Supprimer le groupe « "+g.n+" » ?"))return;S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;showView("r");renderRelations()}}
+  $("gDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;showView("r");renderRelations()})}
 function fgList(){const G=S.g;if(!G)return[];if(!Array.isArray(G.fgr))G.fgr=[];return G.fgr}
 function fgAdd(n){const g={id:"g"+Date.now().toString(36),n:n.slice(0,24)};fgList().push(g);return g}
 function fgMembers(id){return relNames().filter(n=>((S.profiles[n]||{}).grp||[]).includes(id))}
@@ -317,7 +317,7 @@ function fgOpen(id,after){const g=fgList().find(x=>x.id===id);if(!g)return;const
     const nm=o.querySelector(".fgname");nm.value=g.n;nm.onchange=()=>{const v=nm.value.trim();if(v){g.n=v;save()}};
     o.querySelectorAll(".fgm").forEach(b=>b.onclick=()=>{const P=S.profiles[b.dataset.n]=S.profiles[b.dataset.n]||{},a=P.grp||(P.grp=[]),i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);save();draw()});
     o.querySelector("#fgOk").onclick=()=>{nm.dispatchEvent(new Event("change"));close()};
-    o.querySelector("#fgDel").onclick=()=>{if(!confirm("Supprimer le groupe « "+g.n+" » ?"))return;S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()}};
+    o.querySelector("#fgDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()})};
   draw()}
 function renderFG(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
   box.innerHTML=`<div class="fgh"><b>Groupes</b><button type="button" class="addf fgplus" id="fgAddB" aria-label="Créer un groupe"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><div class="fgcards">${L.map(g=>{const M=fgMembers(g.id),d=G.fgLast&&G.fgLast[g.id]?Math.floor((Date.now()-G.fgLast[g.id])/864e5):null;return`<button type="button" class="fgcard" data-g="${g.id}" style="--gc:${fgCol(g)}"><b></b><span class="fgav">${M.slice(0,5).map(n=>pAv(n,"fgsm")).join("")}${M.length>5?`<i>+${M.length-5}</i>`:""}</span><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais contacté":d<1?"aujourd'hui":"il y a "+d+" j"}</small></button>`}).join("")}</div>`;
@@ -401,6 +401,10 @@ function complete(a,el,ev,sp,extra){
   if(bt)setTimeout(()=>toast(bt),900);
 }
 let undoT=0;
+// suppression immédiate + « Annuler » quelques secondes (standard de l'appli) : on restaure l'état d'avant comme une sauvegarde
+function undoAfter(label,fn,restore){const snap=restore?null:JSON.stringify(snapshot());fn();let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
+  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=label;b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
+  b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");try{if(restore)restore();else{load(JSON.parse(snap));save();render()}}catch(e){}toast("Annulé")}}
 function undoOffer(e,rc){if(!e||e.bonus)return;let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
   b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":" validé");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");const li=[...document.querySelectorAll("#log li")].find(x=>x.__e===e);if(!li){toast("Trop tard pour annuler ici : passe par le journal");return}

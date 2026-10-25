@@ -3,3 +3,18 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ficheBox,#idBox,#vieBox,#prjB
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c{border:0!important;box-shadow:none!important;border-radius:0!important;background:none!important;padding:14px 0 4px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1px dashed rgba(255,255,255,.18)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow:none!important;background:none!important;padding:4px 0!important}
+/* Standard « pas d'encadrés », étendu à toute l'appli : conteneurs d'information sans cadre ni fond.
+   Boutons, tuiles, onglets et barre du bas gardent leur forme (ce sont des contrôles). */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card,.motc){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .pf-xp{border:0!important;box-shadow:none!important;background:none!important}
+/* cartes d'action (quêtes, idée sortie) et bouton XP : on garde le fond (lisibilité, décor), sans cadre */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard,#qxpBtn){border:0!important;box-shadow:none!important;outline:0!important}
+/* Proches : fiches sans cadre ; une ligne pixel à la couleur du lien les sépare */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body #relList>li.rl{border:0!important;box-shadow:none!important;border-radius:0!important;background:repeating-linear-gradient(90deg,var(--fc) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important;padding-bottom:10px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .motc{background:repeating-linear-gradient(90deg,var(--mc,var(--gold)) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
+/* Standard « animations sobres » : plus d'éléments d'interface qui bougent en boucle tout seuls.
+   Le décor (ciel, météo, maison) et les animations déclenchées par une action restent. */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.chestmini,.evr.now .evd){animation:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .bpx,.lvl,.pbs.on .pbi)::after{animation:none!important;opacity:0!important}

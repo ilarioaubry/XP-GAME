@@ -33,14 +33,16 @@ const PL_X=[["yaourt","Yaourt","yaourt"],["fromage","Fromage","fromage"],["eau",
 const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite, 90° = bas)
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
-// assiette pixel 32×32 : chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
-function plSvg(lv){const c=15.5,rows=[];for(let y=0;y<32;y++){let row="";for(let x=0;x<32;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
-  if(d>15.6)col="";else if(d>14.6)col="#2a1606";else if(d>13)col=(x+y)%2?"#dfe8f0":"#ffffff";else if(d>12.4)col="#c9d3dd";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
-    const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.55&&Math.cos((a-b)*Math.PI/180)>0);
-    if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0);col=n&&d<=12.4*n/3?((x*3+y)%4?S2[2]:S2[3]):"#ffffff"}}
-  row+=col+"|"}rows.push(row)}
-  let r="";rows.forEach((row,y)=>{const cs=row.split("|");let x=0;while(x<32){const col=cs[x];let w=1;while(x+w<32&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
-  return`<svg viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
+// assiette pixel 64×64 : rebord éclairé en haut à gauche ; chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
+function plSvg(lv){const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
+  if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
+  else if(d>24.6)col=(-dx-dy)>0?"#b8c4cf":"#e3eaf0";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
+    const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.9&&Math.cos((a-b)*Math.PI/180)>0);
+    if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0),R=24.6*n/3;
+      col=n&&d<=R?(d>R-1.2?S2[3]:((x*7+y*3)%11===0?"#ffffff":(x+2*y)%5===0||(2*x+y)%7===0?S2[3]:S2[2])):"#ffffff"}}
+  row.push(col)}rows.push(row)}
+  let r="";rows.forEach((cs,y)=>{let x=0;while(x<N){const col=cs[x];let w=1;while(x+w<N&&cs[x+w]===col)w++;if(col)r+=`<rect x="${x}" y="${y}" width="${w}" height="1.03" fill="${col}"/>`;x+=w}});
+  return`<svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function plSlots(s,n){const a=PL_A[s],P=[[7,0],[9,-34],[9,34],[4.2,0]];return P.slice(0,n).map(([r,da])=>{const t=(a+da)*Math.PI/180;return[(15.5+r*Math.cos(t))/32*100,(15.5+r*Math.sin(t))/32*100]})}
 
 const plDone=(d,per,k)=>{const key=d+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];return(((b&&b.m)||(dr&&dr.m)||{})[k])===1};
@@ -82,10 +84,10 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
-    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">✕</button></div>`+
+    o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">${ICO("close",18)}</button></div>`+
     (step===1?`${q?`<p class="plq">Quête : <b>${esc(q.t)}</b></p>`:""}
-      <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?"<i>✕</i>":""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
-      ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">✕</button></div>`:""}
+      <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?`<i>${ICO("close",10)}</i>`:""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
+      ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">${ICO("close",14)}</button></div>`:""}
       <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
       <p class="plhint">${tri?"Touche un aliment pour le masquer ou le remettre. Touche une recette pour la supprimer.":nd.length?`À midi il manquait : <b>${nd.map(s=>PL_SIDES.find(z=>z[0]===s)[1].toLowerCase()).join(", ")}</b>. C'est le moment d'en ajouter.`:edit?"Ajoute ou retire ce que tu as oublié.":"Touche ce que tu manges, ou une recette. Touche un aliment sur l'assiette pour le retirer."}</p>
       ${edit||tri?"":`<p class="plxp${bx>=MB_PLX*3+MB_PLB?" full":""}">${bx?`+${bx} XP d'assiette${bx>=MB_PLX*3+MB_PLB?" · complète !":""}`:"Chaque côté rempli rapporte de l'XP"}</p>`}
@@ -101,7 +103,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
     on("[data-add]",b=>{const[s,id]=b.dataset.add.split(":");m[s].push(id);delete m.r;try{sfx("blip")}catch(e){}draw();const it=o.querySelectorAll(`.plit[data-rm^="${s}:"]`);const last=it[Math.min(m[s].length,3)-1];if(last&&m[s].length<=3)last.classList.add("pop")});
     on("[data-rm]",b=>{const[s,i]=b.dataset.rm.split(":");m[s].splice(+i,1);delete m.r;draw()});
     on("[data-hide]",b=>{const id=b.dataset.hide,H=plHid(),i=H.indexOf(id);if(i<0)H.push(id);else H.splice(i,1);save();draw()});
-    on("[data-rec]",b=>{const R=plRec(),r=R.find(x=>x.id===b.dataset.rec);if(!r)return;if(tri){R.splice(R.indexOf(r),1);save();draw();return}
+    on("[data-rec]",b=>{const R=plRec(),r=R.find(x=>x.id===b.dataset.rec);if(!r)return;if(tri){const i=R.indexOf(r);undoAfter(`Recette « ${r.n} » supprimée`,()=>{R.splice(i,1);save();draw()},()=>{R.splice(i,0,r);save();if(o.isConnected)draw()});return}
       ["f","p","l"].forEach(s=>m[s]=[...(r[s]||[])]);m.r=r.id;try{sfx("blip")}catch(e){}draw();o.querySelectorAll(".plit").forEach(x=>x.classList.add("pop"))});
     on(".plsv",()=>{naming=true;recName="";draw();const i=$o(".plname input");if(i)i.focus()});
     const ni=$o(".plname input");if(ni){ni.oninput=()=>recName=ni.value;ni.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$o(".plnok").click()}}}

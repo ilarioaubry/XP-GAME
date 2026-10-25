@@ -38,7 +38,7 @@
     const ago=(d,tk)=>{if(!d)return"Jamais noté";const n=nDays(d,tk,false)-1;if(n<=0)return"Aujourd'hui";if(n===1)return"Hier";if(n<14)return`Il y a ${n} jours`;if(n<60)return`Il y a ${Math.round(n/7)} semaines`;const m=Math.round(n/30);return m<12?`Il y a ${m} mois`:`Il y a ${Math.floor(n/365)} an${n>=730?"s":""}`};
     const evL=x=>{const u=UN[x.u]||UN.j;return x.n>1?`tous les ${x.n} ${u[2]}`:`chaque ${u[1]}`};
     const ratio=(x,tk)=>{if(!x.d)return 1.01;const n=nDays(x.d,tk,false)-1;return n/Math.max(1,x.n*(UN[x.u]||UN.j)[0])};
-    const lRow=(x,r,tk,mini)=>{const td=x.d===tk,st=td?"ok":r>=1?"late":r>=.8?"soon":"ok";return`<div class="lst-r ${st}"><button type="button" class="lst-n" data-le="${x.id}"><b>${esc(x.name)}</b><small>${ago(x.d,tk)}${mini?"":" · "+evL(x)}</small></button><button type="button" class="lst-do${td?" dn":""}" data-ld="${x.id}" aria-label="${td?"Annuler":"Fait aujourd'hui"} : ${esc(x.name)}">${td?"✓ Fait":"Fait"}</button></div>`};
+    const lRow=(x,r,tk,mini)=>{const td=x.d===tk,st=td?"ok":r>=1?"late":r>=.8?"soon":"ok";return`<div class="lst-r ${st}"><button type="button" class="lst-n" data-le="${x.id}"><b>${esc(x.name)}</b><small>${ago(x.d,tk)}${mini?"":" · "+evL(x)}</small></button><button type="button" class="lst-do${td?" dn":""}" data-ld="${x.id}" aria-label="${td?"Annuler":"Fait aujourd'hui"} : ${esc(x.name)}">${td?ICO("check",14)+" Fait":"Fait"}</button></div>`};
     function lastHTML(tk){const L=S.g.last;let h="";
       if(lEdit==="new")h+=lForm(null,tk);
       if(!L.length&&lEdit!=="new")return h+`<div class="lst-sug">${SUG.map((s,i)=>`<button type="button" data-sg="${i}">${esc(s[0])}</button>`).join("")}</div>`;
@@ -61,16 +61,16 @@
       const m=box.querySelector(".lst-more");if(m)m.onclick=()=>{lAll=!lAll;rt()};
       const f=box.querySelector(".lst-f");if(!f)return;
       f.querySelector(".cancel").onclick=()=>{lEdit=null;lPre=null;rt()};
-      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>{if(!confirm("Supprimer cet élément ?"))return;S.g.last=L.filter(y=>y.id!==lEdit);lEdit=null;save();rt()};
+      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>undoAfter("Élément supprimé",()=>{S.g.last=L.filter(y=>y.id!==lEdit);lEdit=null;save();rt()});
       f.onsubmit=e=>{e.preventDefault();const name=f.querySelector("[name=n]").value.trim();if(!name){f.querySelector("[name=n]").focus();return}
         const o={name,n:Math.max(1,Math.min(99,parseInt(f.querySelector("[name=ev]").value)||1)),u:f.querySelector("[name=u]").value,d:f.querySelector("[name=d]").value||null};if(o.d&&o.d>tk)o.d=tk;
         if(lEdit==="new")L.push({id:"l"+Date.now().toString(36),...o});else{const x=L.find(y=>y.id===lEdit);if(x){Object.assign(x,o);delete x.pv}}lEdit=null;lPre=null;save();rt()}}
     // ---- Périodes
     function perStat(p,tk){const tot=nDays(p.s,p.e,p.wd),done=tk<p.s?0:nDays(p.s,tk>p.e?p.e:tk,p.wd),left=Math.max(0,tot-done),pct=tot?Math.round(done/tot*100):0,us=p.wd?"jours de travail":"jours",u=p.wd?"jour de travail":"jour";
-      let st;if(tk<p.s){const k=nDays(tk,addD(p.s,-1),false);st=`Commence ${k===1?"demain":"dans "+k+" jours"} · ${fmt(p.s)}`}else if(tk>p.e)st=`Terminé le ${fmt(p.e)} 🎉`;else if(left===0)st=tk===p.e?"Dernier jour, tu y es 🎉":"C'est bouclé 🎉";else st=`Plus que ${left} ${left>1?us:u} · fin ${fmt(p.e)}`;
+      let st;if(tk<p.s){const k=nDays(tk,addD(p.s,-1),false);st=`Commence ${k===1?"demain":"dans "+k+" jours"} · ${fmt(p.s)}`}else if(tk>p.e)st=`Terminé le ${fmt(p.e)}, bravo`;else if(left===0)st=tk===p.e?"Dernier jour, tu y es !":"C'est bouclé, bravo !";else st=`Plus que ${left} ${left>1?us:u} · fin ${fmt(p.e)}`;
       const lbl=tk<p.s?"À venir":tk>p.e?"Terminé":`${p.wd?"Jour de travail":"Jour"} ${Math.max(done,1)} sur ${tot}`;return{tot,done,left,pct,st,lbl}}
     const perCard=(p,tk,cls)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p ${cls||"trk-c"}${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : modifier"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b><small>${s.lbl} · ${s.st}</small></span><span class="trk-pct">${s.pct}%</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
-    const perMini=(p,tk)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : ${s.lbl}, ${s.st}"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b></span><span class="trk-pct">${tk>p.e?"✓":Math.max(s.done,1)+"/"+s.tot}</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
+    const perMini=(p,tk)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : ${s.lbl}, ${s.st}"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b></span><span class="trk-pct">${tk>p.e?ICO("check",14):Math.max(s.done,1)+"/"+s.tot}</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
     function perForm(p){const tk=tkNow(),s=p?p.s:tk,e=p?p.e:addD(tk,13),t=p?p.t:"contrat";
       return`<form class="trk-c trk-f per-f"><label>Type<select name="t">${Object.keys(PT).map(k=>`<option value="${k}"${t===k?" selected":""}>${PT[k].l}</option>`).join("")}</select></label>
       <label>Nom<input type="text" name="n" maxlength="40" value="${p?esc(p.name):"Contrat"}" autocomplete="off"></label>
@@ -86,7 +86,7 @@
       tI.onchange=()=>{const names=Object.values(PT).map(x=>x.l.split(" /")[0]).concat("Contrat");if(!nI.value.trim()||names.includes(nI.value.trim()))nI.value=PT[tI.value].l.split(" /")[0];upd()};
       [sI,eI,wI].forEach(x=>x.oninput=upd);upd();
       f.querySelector(".cancel").onclick=()=>{editId=null;rt()};
-      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>{if(!confirm("Supprimer cette période ?"))return;g.per=g.per.filter(p=>p.id!==editId);editId=null;save();rt()};
+      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>undoAfter("Période supprimée",()=>{g.per=g.per.filter(p=>p.id!==editId);editId=null;save();rt()});
       f.onsubmit=e=>{e.preventDefault();if(!sI.value||!eI.value||eI.value<sI.value){upd();return}const o={t:tI.value,name:nI.value.trim()||PT[tI.value].l,s:sI.value,e:eI.value,wd:wI.checked};
         if(editId==="new")g.per.push({id:"p"+Date.now().toString(36),...o});else Object.assign(g.per.find(p=>p.id===editId)||{},o);editId=null;save();rt();try{render()}catch(e){}}}
     // ---- Proches

@@ -92,3 +92,5 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plics button.on{background:rgba(255,255,255,.12);border-bottom-color:var(--pc)}
 .plnewb{display:grid;grid-template-columns:1fr 2fr;gap:8px}
 .plfoods{row-gap:8px}
+html body #undoBar{z-index:250}
+.pxic{vertical-align:-.15em}
