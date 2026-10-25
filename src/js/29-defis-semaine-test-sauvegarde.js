@@ -54,7 +54,7 @@ function completeSpecial(q,el,ev){
   if(q.dz==="cine")filmSeen(q.name,true);
   if(q.lzs)lzGain(q.lzs,q.xp);
   if(q.sur)S.g.surDone=q.sur;if(q.org)S.g.orgDone=q.org;if(q.secret)S.g.secDone=(S.g.secDone||0)+1;
-  if(q.fg){const G=S.g;G.fgDone=dayKey(Date.now());if(!G.fgLast)G.fgLast={};G.fgLast[q.fg]=Date.now();G.fgQ=(G.fgQ||0)+1;fgMembers(q.fg).forEach(n=>{S.bondsLast[n]=Date.now();S.bonds[n]=(S.bonds[n]||0)+5})}if(q.bq)S.g.bqDone=q.bq;if(q.bs){S.g.bsDone=q.bs.d;S.g.bsDoneP=dayPer();const B=cbCur(q.cat);if(B&&B.id===q.bs.b)setTimeout(()=>cbHit(q.cat,q.bs.s,null,null,true),50)}
+  if(q.fg){const G=S.g;G.fgDone=dayKey(Date.now());if(!G.fgLast)G.fgLast={};G.fgLast[q.fg]=Date.now();G.fgQ=(G.fgQ||0)+1;fgMembers(q.fg).forEach(n=>{S.bondsLast[n]=Date.now();S.bonds[n]=(S.bonds[n]||0)+5})}if(q.bq)S.g.bqDone=q.bq;if(q.bs){S.g.bsDone=q.bs.d;S.g.bsDoneP=dayPer();}
   {const i=S.specials.findIndex(x=>x.id===q.id);let nq=null;
    if(q.grp){const D=GROUPS[q.grp].done;if(!S[D].includes(q.who))S[D].push(q.who)}
    {const tk=dayKey(Date.now());if(!S.g.dq||S.g.dq.d!==tk)S.g.dq={d:tk,done:[]};if(!q.bd)S.g.dq.done.push({p:dayPer()==="matin"?"matin":"soir",id:q.id,n:q.name,xp:q.xp,grp:q.grp||"",k:q.gift?"gift":q.sur?"sur":(q.bq||q.bs)?"bq":q.grp||(q.dz||q.dfi?"dz":"")})}

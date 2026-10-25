@@ -30,89 +30,11 @@ document.addEventListener("click",e=>{const t=e.target;if(!t.closest)return;cons
 ["pointerdown","touchstart","keydown"].forEach(ev=>document.addEventListener(ev,function un(){sfxCtx();if(S.g&&S.g.ambS)ambSnd(true);document.removeEventListener(ev,un)},{once:true,passive:true}));
 
 // ---- Boss par catégorie
-function cbState(){const G=S.g;if(!G.cb||typeof G.cb!=="object")G.cb={};if(!Array.isArray(G.cbd))G.cbd=[];Object.keys(BOSS_CAT).forEach(k=>{if(!G.cb[k])G.cb[k]={i:0,h:[]}});return G}
-function cbResolve(steps){const lr=n=>S.bondsLast[n]||0,fr=S.friends.filter(n=>!S.family.includes(n)).sort((a,b)=>lr(a)-lr(b)),fa=S.family.slice().sort((a,b)=>lr(a)-lr(b)),nobd=fr.filter(n=>!((S.profiles[n]||{}).bd&&(S.profiles[n]||{}).bd.d));
-  const A=i=>fr.length?fr[(i-1)%fr.length]:"un ami",F=i=>fa.length?fa[(i-1)%fa.length]:"un proche";
-  return steps.map(t=>t.replace(/\{a(\d)\}/g,(_,i)=>A(+i)).replace(/\{f(\d)\}/g,(_,i)=>F(+i)).replace(/\{anb\}/g,()=>nobd[0]||A(5)).replace(/\{g1\}/g,()=>{const g=fgList().filter(x=>fgMembers(x.id).length)[0];return g?"au groupe "+g.n:"à "+A(2)}))}
-function cbCur(cat){if(cat==="perso"&&S.g&&S.g.noMus)return null;const G=cbState(),st=G.cb[cat],L=BOSS_CAT[cat];if(!L||!st)return null;const tier=Math.floor(st.i/L.length),base=cbOf(L[st.i%L.length][0]);
-  const b=tier?{...base,id:base.id+"_r"+tier,n:base.n+" "+(ROMAN[tier+1]||tier+1),steps:tier%2?(CB_REV[base.id]||base.steps):base.steps,tier,base:base.id,fig:"fig_"+base.id+"_or",xpw:CB_WIN+50*tier}:{...base,tier:0,base:base.id,fig:"fig_"+base.id,xpw:CB_WIN};
-  if(st.b!==b.id||!Array.isArray(st.s)||st.s.length!==b.steps.length){st.b=b.id;st.s=cbResolve(b.steps);st.h=st.h.filter(x=>x<b.steps.length);st.o=null;st.f=null}
-  if(!Array.isArray(st.o)||st.o.length!==b.steps.length)st.o=b.steps.map((_,i)=>i);return{...b,steps:st.s}}
 // un seul boss actif : celui du domaine le plus délaissé (14 derniers jours)
-function cbActive(){return null}
 
 
-const CB_PM={sport:"matin",maison:"matin",travail:"matin",soi:"soir",social:"soir",famille:"soir",perso:"soir"};
-function cbPer(cat,t){if(/coucher|écran|réveil|méditation|positives|pages/i.test(t))return"soir";if(/aérer|aspirateur|poussière|marche|course|pompes|gainage|séance|sport|escaliers|to-do/i.test(t))return"matin";return CB_PM[cat]||"soir"}
 function cbWho(t){return[...S.friends,...S.family].filter(n=>n&&t.includes(n)).sort((a,b)=>b.length-a.length)[0]||null}
-function cbSwapName(cat,si){const st=cbState().cb[cat],n=cbWho(st.s[si]||"");if(!n)return false;const lr=x=>S.bondsLast[x]||0,fam=S.family.includes(n),grp=fam?S.family:S.friends.filter(x=>!S.family.includes(x));
-  const und=st.s.filter((_,i)=>!st.h.includes(i));let c=grp.filter(x=>x!==n&&!und.some(u=>u.includes(x))).sort((a,b)=>lr(a)-lr(b));if(!c.length)c=grp.filter(x=>x!==n);if(!c.length)return false;
-  st.s=st.s.map((t,i)=>st.h.includes(i)?t:t.split(n).join(c[0]));return true}
-function cbPostpone(cat,si){const st=cbState().cb[cat];if(st.o.filter(x=>!st.h.includes(x)).length<2)return false;st.o=st.o.filter(x=>x!==si).concat(si);return true}
-function cbReroll(cat,si){return cbSwapName(cat,si)||cbPostpone(cat,si)}
-function cbCanReroll(cat,si){const G=cbState(),st=G.cb[cat];if(G.cbRr===dayKey(Date.now())||!st)return false;return!!cbWho(st.s[si]||"")||st.o.filter(x=>!st.h.includes(x)).length>1}
-function cbRerollNow(q){const G=cbState(),tk=dayKey(Date.now());if(!cbCanReroll(q.cat,q.bs.s))return;if(!cbReroll(q.cat,q.bs.s))return;G.cbRr=tk;const st=G.cb[q.cat];st.f=null;
-  S.specials=S.specials.filter(x=>x.id!==q.id);save();render();const nq=S.specials.find(x=>x.bs);toast(nq?`Nouvelle étape : <span class="p">${esc(nq.name)}</span>`:"Étape changée")}
-function cbHitFx(b,before,total){const o=document.createElement("div");o.className="cbfx"+(before<=1?" kill":"");o.setAttribute("aria-hidden","true");
-  o.innerHTML=`<div class="cbfx-c" style="--bc:${b.col}"><div class="cbfx-sp">${spriteSvg(b.sp,b.col,6)}<span class="cbfx-d">-1 PV</span></div><div class="cbfx-r"><b></b><div class="cbseg">${Array.from({length:total},(_,i)=>`<i class="${i<before-1?"on":i===before-1?"on hit":""}"></i>`).join("")}</div><small>${before<=1?"K.O. !":(before-1)+" / "+total+" PV"}</small></div></div>`;
-  o.querySelector("b").textContent=b.n;document.body.appendChild(o);sfx("hit",before<=1?1:0);setTimeout(()=>o.classList.add("out"),before<=1?1500:1300);setTimeout(()=>o.remove(),before<=1?1800:1600)}
-let cbFx="";
-function cbHit(cat,si,el,ev,viaQuest){const G=cbState(),st=G.cb[cat],b=cbCur(cat);if(!b||st.h.includes(si))return;const before=b.steps.length-st.h.length;st.h.push(si);cbFx=cat;cbHitFx(b,before,b.steps.length);
-  {const tk=dayKey(Date.now()),q=S.specials.find(x=>x.bs&&x.cat===cat&&x.bs.s===si);if(q&&!viaQuest){G.bsDone=tk;G.bsDoneP=dayPer();S.specials=S.specials.filter(x=>x!==q)}}
-  if(!viaQuest)complete({id:"cb",cat,name:b.n.replace(/^(Le|La|L') ?/,"")+" : "+b.steps[si],xp:CB_XP},el,ev,false,{cb:cat,cbs:si,cbb:b.id});
-  if(st.h.length>=b.steps.length){st.i++;st.h=[];st.o=null;st.f=null;G.cbd.push(b.id);G.cbLast=cat;G.cbA=null;if(G.cbE&&G.cbE.c===cat)G.cbE.won=1;const fid=b.fig;b.newFig=!G.gear.includes(fid);if(b.newFig)G.gear.push(fid);G.bchests=(G.bchests||0)+1;
-    const prev=levelInfo(S.xp).l;{const lg=G.rare&&G.rare.d===dayKey(Date.now())&&G.rare.k==="legend";if(lg){b.xpw*=2;G.bchests=(G.bchests||0)+1;G.cbLeg=1}if(cbMid()-Date.now()<36e5)G.cbClutch=1}addBonus("Boss vaincu : "+b.n,b.xpw,0,"cbw");save();render(prev);setTimeout(()=>cbWin(b),1500)}else{save();render()}}
-function cbWin(b){sfx("open",3);const o=document.createElement("div");o.className="bpop cbwin";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
-  const it=b.newFig?gearOf(b.fig):null,nc=b.cat,nx=cbCur(nc);
-  o.innerHTML=`<div class="bpc" style="--tc:${b.col}"><span class="cbw-k">Boss vaincu !</span><div class="cbw-sp">${spriteSvg(b.sp,b.col,10)}</div><h3></h3><p class="bpd">+${b.xpw} XP · coffre du boss</p><div class="cbw-rec"><small>Aujourd'hui, tu as :</small><ul>${b.steps.map(t=>`<li>${pxImg("check",2,"inl")}<span>${esc(t.charAt(0).toLowerCase()+t.slice(1))}</span></li>`).join("")}</ul></div>${it?`<div class="cbw-it">${itemImg(it,56)}<span><small>Objet exclusif</small><b></b></span></div>`:""}${nx?`<p class="bpdt">${nx.tier&&nx.i===0&&!b.tier?`Les boss ${esc((CATS[nc]||{}).label||nc)} reviendront plus forts : `:`Prochain boss ${esc((CATS[nc]||{}).label||nc)} : `}${esc(nx.n)}</p>`:""}<button type="button" class="btn primary">Génial !</button></div>`;
-  o.querySelector("h3").textContent=b.n;if(it)o.querySelector(".cbw-it b").textContent=it.n;
-  o.querySelector(".btn").onclick=()=>o.remove();o.onclick=e=>{if(e.target===o)o.remove()};document.body.appendChild(o)}
-function cbMid(){const c=dayCut(),m=new Date();m.setHours(m.getHours()-c);m.setHours(24+c,0,0,0);return+m}
-function cbEndLab(){const c=dayCut();return c?c+" h":"minuit"}
-function cbClock(){const ms=Math.max(0,cbMid()-Date.now()),h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),sc=Math.floor(ms%6e4/1e3),p=x=>String(x).padStart(2,"0");return`<u>${p(h)}</u><i>:</i><u>${p(m)}</u><i>:</i><u>${p(sc)}</u>`}
-function cbTmState(){const E=S.g&&S.g.cbE,end=cbMid(),now=Date.now(),t0=E&&E.t&&E.t<end?E.t:end-16*36e5,pct=Math.max(0,Math.min(100,(end-now)/(end-t0)*100)),left=end-now;return{pct,lv:left<36e5?"crit":left<3*36e5?"warn":"ok"}}
-function cbTimer(){const{pct,lv}=cbTmState();return`<div class="cbtm ${lv}"><span class="cbhg">${pxImg("hourglass",3)}</span><span class="cbtmr"><small>${lv==="crit"?"Dernière heure !":"Il s'enfuit dans"}</small><b class="cbclk">${cbClock()}</b></span><span class="cbfuse"><i style="width:${pct}%"><em></em></i></span></div>`}
-function cbTick(){const els=document.querySelectorAll(".cbtm");if(!els.length)return;const{pct,lv}=cbTmState();els.forEach(e=>{if(!e.classList.contains(lv))e.className="cbtm "+lv;const c=e.querySelector(".cbclk");if(c){const ms=Math.max(0,cbMid()-Date.now()),p=x=>String(x).padStart(2,"0"),v=[Math.floor(ms/36e5),Math.floor(ms%36e5/6e4),Math.floor(ms%6e4/1e3)].map(p),n=c.querySelectorAll("u");if(n.length===3)n.forEach((u,k)=>{if(u.textContent!==v[k])u.textContent=v[k]});else c.innerHTML=cbClock()}const f=e.querySelector(".cbfuse i");if(f)f.style.width=pct+"%";const sm=e.querySelector("small"),tx=lv==="crit"?"Dernière heure !":"Il s'enfuit dans";if(sm&&sm.textContent!==tx)sm.textContent=tx})}
-setInterval(cbTick,1000);
 function pAv(n,cls){const pc=picOf(n);return`<span class="pav ${cls||""}" style="--h:hsl(${hueOf(n)} 55% 50%)">${pc?`<img src="${pc}" alt="">`:esc((n[0]||"?").toUpperCase())}</span>`}
-function cbPick(cat,si){const G=cbState(),st=G.cb[cat],n=cbWho(st.s[si]||"");if(!n)return;const fam=S.family.includes(n),grp=fam?S.family:S.friends.filter(x=>!S.family.includes(x)),und=st.s.filter((_,i)=>!st.h.includes(i)&&i!==si);
-  const o=document.createElement("div");o.className="bpop cbpk";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
-  o.innerHTML=`<div class="bpc"><h3>${fam?"Quel proche ?":"Quel ami ?"}</h3><p class="bpd"></p><div class="cbpl">${grp.map(x=>{const used=und.some(u=>u.includes(x)),cur=x===n;return`<button type="button" class="cbpp${cur?" cur":""}" data-n="${esc(x)}" ${used||cur?"disabled":""}>${pAv(x)}<b>${esc(x)}</b><small>${cur?"actuel":used?"déjà prévu":""}</small></button>`}).join("")}</div><button type="button" class="btn">Annuler</button></div>`;
-  o.querySelector(".bpd").textContent=st.s[si];
-  const close=()=>o.remove();o.querySelector(".btn").onclick=close;o.onclick=e=>{if(e.target===o)close()};
-  o.querySelectorAll(".cbpp:not([disabled])").forEach(b=>b.onclick=()=>{const nn=b.dataset.n;st.s=st.s.map((t,i)=>st.h.includes(i)?t:t.split(n).join(nn));save();close();render();toast(`C'est noté : <span class="p">${esc(st.s[si])}</span>`)});
-  document.body.appendChild(o)}
-function cbLeft(){const ms=cbMid()-Date.now(),h=Math.floor(ms/36e5),mn=Math.floor(ms%36e5/6e4);return h?`${h} h ${String(mn).padStart(2,"0")}`:`${mn} min`}
-function cbEngage(cat){const G=cbState(),b=cbCur(cat);if(!b||cbActive())return;G.cbE={d:dayKey(Date.now()),c:cat,b:b.id,t:Date.now()};sfx("start");save();render();toast(`Combat lancé contre <span class="p">${esc(b.n)}</span> · jusqu'à ${cbEndLab()}`);
-  setTimeout(()=>{const q=document.querySelector('.qnav [data-sub="q"]');if(q)q.click()},350)}
-function cbCard(k,big){const G=cbState(),C=CATS[k]||{},b=cbCur(k),st=G.cb[k],left=b.steps.length-st.h.length;
-  const seg=`<div class="cbseg${big?" big":""}">${b.steps.map((_,i)=>`<i class="${i<left?"on":""}"></i>`).join("")}</div>`;
-  const steps=st.o.filter(i=>!st.h.includes(i)).map(i=>{const t=b.steps[i],w=cbWho(t);return`<li class="${w?"who":""}">${w?pAv(w,"cbav"):""}<span>${esc(t)}</span>${w?`<button type="button" class="cbsw" data-c="${k}" data-i="${i}" aria-label="Changer la personne" title="Changer la personne">${ICO("swap",15)}</button>`:""}<button type="button" class="btn primary cbgo" data-c="${k}" data-i="${i}" data-tm="cb-${k}-${i}" data-tmn="${esc(t)}">+${CB_XP}</button></li>`}).join("");
-  const done=st.o.filter(i=>st.h.includes(i)).map(i=>`<li class="done"><span>${esc(b.steps[i])}</span><span class="cbok">${ICO("check",16)}</span></li>`).join("");
-  return`<div class="cba${cbFx===k?" hitfx":""}${b.tier?" rev":""}" style="--cc:${C.c};--bc:${b.col}"><small class="cbak">${esc(C.label||k)} · ${b.tier?"Revanche · ":""}boss ${b.i+1}/3</small>
-    <div class="cbstage"><span class="cbbig">${spriteSvg(b.sp,b.col,big?10:7)}</span></div><b class="cban">${esc(b.n)}</b><span class="cbth">${esc(b.th)}</span>
-    ${seg}<span class="cbpv">${left} / ${b.steps.length} PV</span>${cbTimer()}
-    <ul class="cbsteps">${steps}${done}</ul></div>`}
-function renderCbDay(){const box=$("cbDay");if(!box||!S.g)return;box.classList.add("voff");box.innerHTML="";return;const k=cbActive(),G=cbState();box.classList.toggle("voff",!k);if(!k){box.innerHTML="";return}
-  if(k){box.innerHTML=`<div class="head"><h2>Boss du jour</h2></div>`+cbCard(k,false)}
-  else{const won=G.cbE&&G.cbE.d===dayKey(Date.now())&&G.cbE.won;const any=Object.keys(BOSS_CAT).some(c=>cbCur(c));
-    box.innerHTML=any?`<button type="button" class="cbpick${won?" won":""}"><span class="cbpi">${pxImg(won?"check":"star",3)}</span><span><b>${won?"Boss vaincu aujourd'hui !":"Choisis ton boss du jour"}</b><small>${won?"Un autre ?":"Jusqu'à "+cbEndLab()}</small></span><span class="go">${won?"Encore":"Choisir"}</span></button>`:""}
-  const pk=box.querySelector(".cbpick");if(pk)pk.onclick=()=>{const t=document.querySelector('.qnav [data-sub="boss"]');if(t)t.click()};
-  box.querySelectorAll(".cbgo").forEach(b=>b.onclick=ev=>cbHit(b.dataset.c,+b.dataset.i,b,ev));box.querySelectorAll(".cbsw").forEach(b=>b.onclick=()=>cbPick(b.dataset.c,+b.dataset.i))}
-function renderBosses(){schedNow();const box=$("bossBox2");if(!box||!S.g)return;const G=cbState(),won=G.cbd.length,k=cbActive();
-  let h="";
-  if(k)h+=`<div class="cbhead"><p class="hint">À vaincre avant ${cbEndLab()}.</p></div>`+cbCard(k,true);
-  else{const cats=Object.keys(BOSS_CAT).filter(c=>cbCur(c));
-    h+=`<div class="cbhead"><h3 class="cbh3">Choisis ton boss du jour</h3><p class="hint">Avant ${cbEndLab()} · ${CB_WIN} XP et un coffre.</p></div>`;
-    h+=cats.length?`<div class="cbsel">${cats.map(c=>{const C=CATS[c]||{},b=cbCur(c);return`<div class="cbo${b.tier?" rev":""}" style="--cc:${C.c};--bc:${b.col}"><button type="button" class="cboh" aria-expanded="false"><span class="cbsp">${spriteSvg(b.sp,b.col,4)}</span><span class="cbt"><small>${esc(C.label||c)} · ${b.tier?"Revanche "+(ROMAN[b.tier+1]||"")+" · ":""}boss ${b.i+1}/3</small><b>${esc(b.n)}</b><span class="cbth">${esc(b.th)} · ${b.steps.length} étapes</span></span></button>
-      <div class="cbop"><ul>${b.steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul><button type="button" class="btn primary cbfight" data-c="${c}">Affronter aujourd'hui</button></div></div>`}).join("")}</div>`:`<div class="cba done"><b class="cban">Tous les boss sont vaincus !</b></div>`}
-  h+=`<div class="gcard col1 cbbest"><div class="bh2"><h3>Bestiaire</h3><span class="hint">${CB_LIST.filter(b=>G.cbd.includes(b.id)).length} / ${CB_LIST.length} vaincus</span></div><div class="bestia">${CB_LIST.map(b=>{const w=G.cbd.includes(b.id),rv=G.cbd.some(x=>x.startsWith(b.id+"_r")),cur=!w&&(cbCur(b.cat)||{}).id===b.id;return`<div class="${w?"won":cur?"cur":"lock"}${rv?" rev":""}" title="${w||cur?esc(b.n):"???"}">${spriteSvg(b.sp,w?b.col:cur?"#8a8f99":"#3a3a40",4)}<small>${w||cur?esc(b.n):"???"}</small></div>`}).join("")}</div></div>`;
-  box.innerHTML=h;
-  box.querySelectorAll(".cboh").forEach(x=>x.onclick=()=>{const o=x.parentElement,op=!o.classList.contains("open");box.querySelectorAll(".cbo.open").forEach(e=>{e.classList.remove("open");e.querySelector(".cboh").setAttribute("aria-expanded","false")});if(op){o.classList.add("open");x.setAttribute("aria-expanded","true")}});
-  box.querySelectorAll(".cbfight").forEach(x=>x.onclick=()=>cbEngage(x.dataset.c));
-  box.querySelectorAll(".cbgo").forEach(b=>b.onclick=ev=>cbHit(b.dataset.c,+b.dataset.i,b,ev));box.querySelectorAll(".cbsw").forEach(b=>b.onclick=()=>cbPick(b.dataset.c,+b.dataset.i));
-  renderCbDay();cbFx=""}
-setInterval(()=>{document.querySelectorAll(".cbcdt").forEach(e=>e.textContent=cbLeft())},30000);
 function openProfile(n){profName=n;showView("p")}
 const MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 const picOf=n=>{const P=S.profiles[n]||{};if(P.avc)return avPicURL(P.avc);return P.pic||PICS[n.toLowerCase()]||null};

@@ -1,5 +1,5 @@
 // ---- Sections repliables : tout replié à chaque ouverture de l'appli
-const FOLD={"g:bossBox2:1":1,evt:1,"g:pathBox:0":1,"g:ritStat:0":1};
+const FOLD={evt:1,"g:pathBox:0":1,"g:ritStat:0":1};
 function tagFolds(){
   document.querySelectorAll("#dzBox>.dzc,#musBox>.dzc").forEach((el,i)=>{if(el.classList.contains("fd"))return;const h=el.querySelector(":scope>.dzh");if(!h)return;el.classList.add("fd");el.dataset.fk="dz:"+(h.textContent.trim().split(/\s/)[0]||i);h.classList.add("fdh")});
   document.querySelectorAll('section[data-sub="bilan"]:not(#libBox)>.gcard').forEach((el,i)=>{if(el.classList.contains("fd"))return;const h=el.firstElementChild;if(!h)return;el.classList.add("fd");el.dataset.fk="g:"+(el.parentElement.id||"")+":"+[...el.parentElement.children].indexOf(el);h.classList.add("fdh")});

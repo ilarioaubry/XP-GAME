@@ -140,7 +140,7 @@ function renderSpecials(){schedNow();renderBalance();
   const sMood=softMood(),RT0=PER&&!soirWait?ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===PER&&ritDue(t)):[],RT=(sMood||evmOn())&&RT0.some(t=>t.core)?RT0.filter(t=>t.core):RT0,RL=RT.filter(t=>(S.daily.c[t.id]||0)<t.n);
   const lifeOk=PER==="matin"?!!G.sleep[tk]:PER==="soir"?!!G.mood[tk]:true;
   if(!G.mb||typeof G.mb!=="object")G.mb={};const mbOk=!PER||!!G.mb[tk+":"+PER];
-  const BQ=null,bsP=BQ?cbPer(BQ.cat,BQ.name):"",showB=!!(PER&&BQ&&(bsP===PER||PER==="soir")),doneB=!!(PER&&G.bsDone===tk&&G.bsDoneP===PER);
+  const BQ=null,bsP="",showB=!!(PER&&BQ&&(bsP===PER||PER==="soir")),doneB=!!(PER&&G.bsDone===tk&&G.bsDoneP===PER);
   const WE=isWeekend()&&RT.some(t=>t.core),RTc=WE?RT.filter(t=>t.core):RT,RLc=WE?RL.filter(t=>t.core):RL;
   const tot0=PER?RTc.length+2+(showB||doneB?1:0):0,left0=PER?RLc.length+(lifeOk?0:1)+(mbOk?0:1)+(showB?1:0):0;
   const _ml=PER?MB[PER].filter(([k])=>dayH()>=MEAL_H[k]):[],_mll=_ml.filter(([k])=>{const dr=(S.g.mbd||{})[tk+":"+PER];return!(G.mb&&G.mb[tk+":"+PER])&&!(dr&&dr.m&&(dr.m[k]===0||dr.m[k]===1))});
@@ -169,10 +169,6 @@ function renderSpecials(){schedNow();renderBalance();
    try{window.__sqFinish&&window.__sqFinish()}catch(e){}
    st.scrollLeft=keep}
   const RI=PER==="soir"?'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/>':'<circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>';
-  if(showB){const b=cbOf(BQ.bs.b)||{},d=mk("Boss · "+(b.n||BQ.bn||""),b.col||"#d63b3b","",BQ.name);d.classList.add("dqboss");d.querySelector(".dqic").innerHTML=spriteSvg(b.sp,b.col,3);
-    const a=d.querySelector(".dqa"),canR=cbCanReroll(BQ.cat,BQ.bs.s);a.innerHTML=`${canR?`<button type="button" class="dqsw" aria-label="Changer d'étape" title="Changer d'étape (1 fois par jour)">${ICO("swap",16)}</button>`:""}<button type="button" class="btn primary dqgo">+${BQ.xp}</button>`;
-    const go=a.querySelector(".dqgo");go.setAttribute("aria-label",BQ.name+", +"+BQ.xp+" XP");go.dataset.tm="sp-"+BQ.id;go.dataset.tmn=BQ.name;go.onclick=ev=>leave(d,go,()=>completeSpecial(BQ,go,ev),ev);
-    const sw=a.querySelector(".dqsw");if(sw)sw.onclick=()=>cbRerollNow(BQ)}
   const RIm='<circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>';
   const rit=(t,RP,par)=>{const c=S.daily.c[t.id]||0,a0=t.link&&S.actions.find(x=>x.name===t.link),xp=a0?actXp(a0,S.log.filter(e=>e.a===a0.id&&dayKey(e.t)===tk).length):(!t.bar&&c+1>=t.n?RIT_XP:0);
     const d=mk((t.core?"Socle · ":"")+(RP==="soir"?"Rituel du soir":"Rituel du matin"),RP==="soir"?"#7a6ad8":"#e0a020",RP==="soir"?RI:RIm,t.name+(t.n>1?` (${c}/${t.n})`:""),0,0,par);if(t.core)d.classList.add("core");if(t.ev>1)d.querySelector("small").textContent+=" · "+evLab(t);
@@ -191,7 +187,7 @@ function renderSpecials(){schedNow();renderBalance();
   if(soirWait){const e=document.createElement("p");e.className=left===0?"dqend dqwait":"dqwait";e.innerHTML=`<span class="dqwi">${rkSvg("lune")}</span><b>${RIT_SOIR_H}h</b>`;tr.appendChild(e)}
   if(RM.length){const w=document.createElement("div");w.className="dqmorn"+(dqMorn?" open":"");w.innerHTML=`<button type="button" class="dqmh" aria-expanded="${dqMorn}"><span>Matin</span><em>${RM.length}</em><i class="dqchev">${ICO("chev",14)}</i></button><div class="dqmb"></div>`;
     w.classList.add("open","dqmbar");w.querySelector(".dqmh").onclick=()=>{};{const bd=w.querySelector(".dqmb");bd.appendChild(ritTiles(ritOrder(RM),"matin","mini"))}tr.prepend(w)}
-  {const hide=sMood;$("sqBox").classList.toggle("vsoft",hide);const cb=$("cbDay");if(cb)cb.classList.toggle("vsoft",hide);
+  {const hide=sMood;$("sqBox").classList.toggle("vsoft",hide);
    if(sMood&&PER){const e=document.createElement("div");e.className="softc";e.innerHTML=`<b>Journée difficile</b><small>Juste l'essentiel${RT0.some(t=>t.core)?" : ton socle":""}.</small><button type="button" class="lnk">Voir tout quand même</button>`;e.querySelector("button").onclick=()=>{S.g.softAll=tk;save();render()};tr.prepend(e)}}
   const all=!!PER&&tot>0&&left===0&&!soirWait;box.classList.toggle("voff",all&&G.endHide===tk+":"+PER);
   $("dqHead").hidden=!PER||all;box.classList.toggle("alldone",all||!PER);$("bars").hidden=!PER;
