@@ -52,7 +52,7 @@
 @media (prefers-reduced-motion:reduce){.plit.pop{animation:none}}
 /* la frise reste visible dans Bilan, comme la sauvegarde */
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid!important}
-/* coup de pouce, XP, boss */
+/* coup de pouce, XP */
 .plhd h2 small{font-size:15px;color:rgba(255,247,230,.55);font-family:var(--f-body)}
 .plhint b{color:#fff7e6}
 .plxp{margin:-4px 0 0;text-align:center;font-family:var(--f-pixel);font-size:15px;color:var(--gold,#ffd94a);min-height:1.2em}
@@ -62,13 +62,5 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plside.need .plfoods{animation:plneed 1.4s ease-in-out 3}
 @keyframes plneed{50%{background:color-mix(in srgb,var(--pc) 18%,transparent)}}
 .pldy{grid-template-columns:76px 1fr}
-.plboss{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding-top:8px;border-top:1px dashed rgba(255,255,255,.14)}
-.plbs{display:block;width:48px;height:48px;overflow:hidden}
-.plbs svg{width:48px;height:48px;display:block}
-.plboss b{font-size:14px;color:#fff7e6}.plboss b small{font-weight:400;color:rgba(255,247,230,.55)}
-.plboss>div>small{display:block;font-size:12px;color:rgba(255,247,230,.6)}
-.plpv{display:flex;gap:3px;margin-top:4px}
-.plpv i{flex:1;max-width:22px;height:8px;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
-.plpv i.on{background:var(--bc)}
 .plrun em{white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.plxp.full,.plside.need .plfoods{animation:none}}
