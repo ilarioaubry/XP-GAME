@@ -1,5 +1,5 @@
 // ---- défis de la semaine
-const mondayOf=t=>{const c=dayCut(),d=new Date(+new Date(t)-c*36e5);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(c);return d};
+const mondayOf=t=>{const c=dayCut(),d=new Date(+new Date(t));d.setHours(d.getHours()-c);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(c);return d};
 
 
 

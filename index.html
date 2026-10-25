@@ -3534,7 +3534,8 @@ function wakeH(){try{const w=S&&S.g&&+S.g.wake;return w>=5&&w<=13?w:8}catch(e){r
 function dayCut(){return Math.max(0,wakeH()-4)}
 function adjH(){const d=new Date();return(d.getHours()+d.getMinutes()/60-(wakeH()-8)+48)%24}
 function dayH(){const h=adjH();return h<4?h+24:h}
-const dayKey=t=>{const d=new Date(+new Date(t)-dayCut()*36e5);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const dayKey=t=>{const d=new Date(+new Date(t));d.setHours(d.getHours()-dayCut());// heures d'horloge, pas de durée : sinon la nuit du changement d'heure décale le jour
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 
 const STARTER_WISHES=[{id:"w0",name:"Un bon dessert",price:5},{id:"w1",name:"Une place de ciné",price:12},{id:"w2",name:"Un nouveau livre",price:20},{id:"w3",name:"Un jeu vidéo",price:60}];
 let S={xp:0,actions:STARTER,log:[],days:[],perLevel:1,rankBonus:5,wishes:STARTER_WISHES,spent:[],stats:{},bonds:{},bondsLast:{},profiles:{},myPic:"",name:"",specials:[],friends:[],friendDone:[],family:[],familyDone:[],music:MUSIC.slice(),musicDone:[],snd:{},g:newG(),qPrice:1,xpCap:300,dayLimit:3,streakBonus:{},weekly:{wk:"",done:[]},skills:[],epics:[],title:"",frame:"",bdDone:{},theme:"auto",daily:{tasks:null,day:"",c:{},wAdded:false,bonusDay:""},seeded:[],badges:{},badgesInit:false,extraMoney:0,dayBonus:{xp:30,eur:1}};
@@ -12056,7 +12057,7 @@ function cbWin(b){sfx("open",3);const o=document.createElement("div");o.classNam
   o.innerHTML=`<div class="bpc" style="--tc:${b.col}"><span class="cbw-k">Boss vaincu !</span><div class="cbw-sp">${spriteSvg(b.sp,b.col,10)}</div><h3></h3><p class="bpd">+${b.xpw} XP · coffre du boss</p><div class="cbw-rec"><small>Aujourd'hui, tu as :</small><ul>${b.steps.map(t=>`<li>${pxImg("check",2,"inl")}<span>${esc(t.charAt(0).toLowerCase()+t.slice(1))}</span></li>`).join("")}</ul></div>${it?`<div class="cbw-it">${itemImg(it,56)}<span><small>Objet exclusif</small><b></b></span></div>`:""}${nx?`<p class="bpdt">${nx.tier&&nx.i===0&&!b.tier?`Les boss ${esc((CATS[nc]||{}).label||nc)} reviendront plus forts : `:`Prochain boss ${esc((CATS[nc]||{}).label||nc)} : `}${esc(nx.n)}</p>`:""}<button type="button" class="btn primary">Génial !</button></div>`;
   o.querySelector("h3").textContent=b.n;if(it)o.querySelector(".cbw-it b").textContent=it.n;
   o.querySelector(".btn").onclick=()=>o.remove();o.onclick=e=>{if(e.target===o)o.remove()};document.body.appendChild(o)}
-function cbMid(){const c=dayCut(),m=new Date(Date.now()-c*36e5);m.setHours(24+c,0,0,0);return+m}
+function cbMid(){const c=dayCut(),m=new Date();m.setHours(m.getHours()-c);m.setHours(24+c,0,0,0);return+m}
 function cbEndLab(){const c=dayCut();return c?c+" h":"minuit"}
 function cbClock(){const ms=Math.max(0,cbMid()-Date.now()),h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),sc=Math.floor(ms%6e4/1e3),p=x=>String(x).padStart(2,"0");return`<u>${p(h)}</u><i>:</i><u>${p(m)}</u><i>:</i><u>${p(sc)}</u>`}
 function cbTmState(){const E=S.g&&S.g.cbE,end=cbMid(),now=Date.now(),t0=E&&E.t&&E.t<end?E.t:end-16*36e5,pct=Math.max(0,Math.min(100,(end-now)/(end-t0)*100)),left=end-now;return{pct,lv:left<36e5?"crit":left<3*36e5?"warn":"ok"}}
@@ -12508,7 +12509,7 @@ function streakBonusCheck(){
   return msg;
 }
 // ---- défis de la semaine
-const mondayOf=t=>{const c=dayCut(),d=new Date(+new Date(t)-c*36e5);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(c);return d};
+const mondayOf=t=>{const c=dayCut(),d=new Date(+new Date(t));d.setHours(d.getHours()-c);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(c);return d};
 
 
 
@@ -14613,6 +14614,15 @@ function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||
     <div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${cnt(s)}/${done.length} j</span>`).join("")}</div>
     <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
 try{const _r=render;render=function(){const r=_r.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}}catch(e){}
+// shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026
+(function(){try{const G=S&&S.g;if(!G||G.dst26)return;G.dst26=1;const a=Date.UTC(2026,9,25,2),b=a+36e5,A="2026-10-25",Z="2026-10-24",win=t=>t>=a&&t<b;
+  const hit=(S.log||[]).filter(e=>e.a==="mb"&&win(e.t)).map(e=>e.name),mb=G.mb||{},D=G.mbd||{},P=G.plt||{};let n=0;
+  ["matin","soir"].forEach(per=>{const ka=A+":"+per,kz=Z+":"+per,whole=mb[ka]&&win(mb[ka].t);
+    MB[per].forEach(([k,l])=>{if(!whole&&!hit.includes(l))return;const s=D[ka];
+      if(s&&s.m&&k in s.m){const t=D[kz]=D[kz]||{m:{},ex:{},w:{}};t.cr=t.cr||{};if(!(k in t.m)){t.m[k]=s.m[k];t.cr[k]=1}delete s.m[k];if(s.cr)delete s.cr[k];n++}
+      if(P[A]&&P[A][k]){(P[Z]=P[Z]||{})[k]=P[A][k];delete P[A][k];n++}});
+    if(whole){if(!mb[kz])mb[kz]=mb[ka];delete mb[ka];n++}});
+  save();if(n){try{render()}catch(e){}}}catch(e){}})();
 </script>
 </body></html>
 </body></html>

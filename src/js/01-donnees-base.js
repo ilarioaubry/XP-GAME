@@ -38,7 +38,8 @@ function wakeH(){try{const w=S&&S.g&&+S.g.wake;return w>=5&&w<=13?w:8}catch(e){r
 function dayCut(){return Math.max(0,wakeH()-4)}
 function adjH(){const d=new Date();return(d.getHours()+d.getMinutes()/60-(wakeH()-8)+48)%24}
 function dayH(){const h=adjH();return h<4?h+24:h}
-const dayKey=t=>{const d=new Date(+new Date(t)-dayCut()*36e5);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const dayKey=t=>{const d=new Date(+new Date(t));d.setHours(d.getHours()-dayCut());// heures d'horloge, pas de durée : sinon la nuit du changement d'heure décale le jour
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 
 const STARTER_WISHES=[{id:"w0",name:"Un bon dessert",price:5},{id:"w1",name:"Une place de ciné",price:12},{id:"w2",name:"Un nouveau livre",price:20},{id:"w3",name:"Un jeu vidéo",price:60}];
 let S={xp:0,actions:STARTER,log:[],days:[],perLevel:1,rankBonus:5,wishes:STARTER_WISHES,spent:[],stats:{},bonds:{},bondsLast:{},profiles:{},myPic:"",name:"",specials:[],friends:[],friendDone:[],family:[],familyDone:[],music:MUSIC.slice(),musicDone:[],snd:{},g:newG(),qPrice:1,xpCap:300,dayLimit:3,streakBonus:{},weekly:{wk:"",done:[]},skills:[],epics:[],title:"",frame:"",bdDone:{},theme:"auto",daily:{tasks:null,day:"",c:{},wAdded:false,bonusDay:""},seeded:[],badges:{},badgesInit:false,extraMoney:0,dayBonus:{xp:30,eur:1}};
