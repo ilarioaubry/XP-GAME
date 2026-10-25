@@ -27,6 +27,13 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Suppression** : immédiate, avec un bouton « Annuler » quelques secondes (barre du bas), pas de question de confirmation.
 - **Placement** : action du jour → Aujourd'hui ; historique et stats → Moi > Bilan ; réglages → Moi.
 - **Ton** : simple et encourageant, direct, jamais culpabilisant (« Il manque : légumes », pas « Tu n'as pas mangé de légumes »).
+- **Jamais de zoom** dans l'appli (viewport bloqué, pas de pincement ni de double-tap, champs à 16 px).
+- **Coins carrés partout** (pixel art). Jamais de mélange carré dehors / arrondi dedans. Seuls les vrais ronds (`border-radius:50%`) restent ; un nouveau rond doit être ajouté à la liste de `css/standards.css`.
+- **Titres de section** : tous identiques (police pixel, majuscules, losange à la couleur de la section), sans ombre ni fond.
+- **Même catégorie d'info = même taille et même alignement** (fiches de proches, cartes de quêtes, boutons d'action…), sans changer la taille des polices : texte trop long → une ligne avec « … ».
+- **Contenu centré** dans tout élément encadré (bouton, tuile, carte).
+- **Pas d'icônes qui annoncent le type d'interaction** (coin des cartes de quêtes), nulle part.
+- **Personnes associées à une action** : on les choisit au moment de « Fait » (fenêtre « Avec qui ? »), jamais suggérées avant.
 - **Grandes illustrations** (assiette, scène, personnage) : pixel art détaillé, grilles fines (jusqu'à 64×64), pixels nets, mêmes palettes que les icônes.
 
 Conventions du code existant (à suivre) :

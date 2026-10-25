@@ -122,7 +122,7 @@ html:not(#_a):not(#_b):not(#_c) body .rcpl>li:last-child{border-bottom:0}
 </style>
 </head><body>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13709,6 +13709,54 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty)
 .plfoods{row-gap:8px}
 html body #undoBar{z-index:250}
 .pxic{vertical-align:-.15em}
+/* ---- Standards globaux de l'appli (voir CLAUDE.md) */
+/* jamais de zoom : pas de double-tap, et les champs à 16 px pour qu'iOS ne zoome pas en les touchant */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(input,textarea,select){font-size:max(16px,1em)!important}
+
+/* coins carrés partout (pixel art, et plus de mélange carré dehors / arrondi dedans) ; seuls les vrais ronds restent */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *::before,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body *::after{border-radius:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.plwk .plz,.pav.bdp,.pav.fmini,.pav.fpav,.rwr i,.idqw .pav.fmini,.rwt .rwk,.avc-dots i,.cphoto .grpx,.actdots button span,.bni,.pbs .pbi,.aut .aui,.evx,.rkst b,.rkp-steam i,.rkp-puff i,.rkp-ring i,.mdrays,#skyBg .skpt i.snow,.scfx .fg,.bse,.lx-rays){border-radius:50%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf2sw::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .aut[aria-pressed="true"]::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .p-pic.editable::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .sw::after{border-radius:50%!important}
+/* titres de section : tous pareils, sans ombre ni fond */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head h2,.head h2 *,h2.cbh3,.plside h3,.gcard h3){text-shadow:none!important}
+/* rattrapage du matin, le soir : pas de cadre en pointillés */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .dqmorn{border:0!important;box-shadow:none!important;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 6px,transparent 6px 10px) top left/100% 2px no-repeat!important;padding-left:0!important;padding-right:0!important}
+/* Proches : toutes les fiches ont la même structure (mêmes tailles, mêmes alignements) ;
+   nom sur une ligne (… si trop long), barre d'XP pleine largeur avec le niveau au centre */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl{grid-template-columns:52px minmax(0,1fr)!important;grid-template-rows:auto auto!important;grid-template-areas:"av nm" "bar bar"!important;align-items:start!important;column-gap:10px!important;row-gap:12px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rb{align-content:start!important;grid-template-rows:26px 30px!important;row-gap:4px!important;min-width:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;min-width:0!important;height:26px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn b{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn .rlk{flex:none!important;margin:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rwr{justify-self:start!important;align-self:center!important;margin:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rx{position:relative!important;display:block!important;height:22px!important;width:100%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rbar{display:block!important;width:100%!important;height:22px!important;box-sizing:border-box!important;margin:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rbar i{height:100%!important;box-sizing:border-box!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rl-lv{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;color:#fff!important;text-shadow:0 1px 0 rgba(0,0,0,.85),0 -1px 0 rgba(0,0,0,.85),1px 0 0 rgba(0,0,0,.85),-1px 0 0 rgba(0,0,0,.85)!important;pointer-events:none}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rb{grid-template-columns:auto auto minmax(0,1fr)!important;column-gap:8px!important;align-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn{display:contents!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn b{grid-row:1!important;grid-column:1/-1!important;align-self:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rwr{grid-row:2!important;grid-column:1!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn .rlk{grid-row:2!important;grid-column:2!important;align-self:center!important}
+/* plus d'icônes qui annoncent le type d'interaction (coin haut-droit des quêtes), nulle part */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .uiq{display:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .unicard :is(.sqn,.sqk,.fqt){padding-right:0!important}
+/* quêtes spéciales : même largeur que les autres cartes de quête */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq{flex:0 0 100%!important;width:100%!important;max-width:none!important;box-sizing:border-box!important}
+/* choix rapide « Avec qui ? » : petite fenêtre centrée */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .whopop{align-items:center!important;align-content:center!important;place-items:center!important}
+/* même catégorie = même taille : boutons d'action des quêtes tous identiques */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{width:84px!important;min-width:84px!important;min-height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-left:4px!important;padding-right:4px!important;box-sizing:border-box!important}
+/* le contenu d'un élément encadré est toujours centré */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.plr,.evch,.fqr .fqt,.sq .sqk,.sq .sqn,.plq){text-align:center!important;justify-content:center!important;justify-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta>span,.evch>span){justify-items:center!important;text-align:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .sq .sqr{justify-content:center!important;gap:12px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .plq{border:0!important;background:none!important;padding:0!important}
+/* titres de section de Moi : tous sur le modèle de « Mes projets » (police pixel, majuscules, losange) */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
 </style>
 <script>
 (function(){
@@ -14375,7 +14423,7 @@ html body #undoBar{z-index:250}
   // ---- avec qui pour la sortie
   const IDW={mus:/musi|f[êe]t/i,mic:/f[êe]t|musi|humour/i,q:/intello|geek/i,cine:/cin[ée]/i,dice:/geek|f[êe]t/i,mask:/artiste|humour/i,key:/geek|intello/i,food:/gourm/i,bag:/artiste|mode/i,art:/artiste|dessin/i,run:/sport/i,map:/voyag|nature/i};
   function idWho(ix,skip){const x=IDQ[ix],re=IDW[x[5]]||/./,now=Date.now();const L=(S.friends||[]).map(n=>{const P=(S.profiles||{})[n]||{},ty=[...(P.types||[]),...(P.talents||[])].join(" "),d=((S.bondsLast||{})[n]?(now-S.bondsLast[n])/864e5:60);return{n,s:(re.test(ty)?5:0)+Math.min(4,d/7)+((S.bonds||{})[n]||0)/200+(P.best?1:0)}}).sort((a,b)=>b.s-a.s).map(o=>o.n);return L.filter(n=>!(skip||[]).includes(n))[0]||L[0]||""}
-  function idqWho(){const c=document.querySelector("#sqBox .idq");if(!c||!S.g.idq||S.g.idq.p==null)return;const Q=S.g.idq;if(!Q.w||Q.wp!==Q.p){Q.w=idWho(Q.p,Q.ws||[]);Q.wp=Q.p;save()}if(!Q.w)return;let w=c.querySelector(".idqw");if(w&&w.dataset.n===Q.w)return;if(!w){w=document.createElement("button");w.type="button";w.className="idqw";const sn=c.querySelector(".sqn");sn.after(w)}
+  function idqWho(){const old=document.querySelector("#sqBox .idq .idqw");if(old)old.remove();return;const c=document.querySelector("#sqBox .idq");if(!c||!S.g.idq||S.g.idq.p==null)return;const Q=S.g.idq;if(!Q.w||Q.wp!==Q.p){Q.w=idWho(Q.p,Q.ws||[]);Q.wp=Q.p;save()}if(!Q.w)return;let w=c.querySelector(".idqw");if(w&&w.dataset.n===Q.w)return;if(!w){w=document.createElement("button");w.type="button";w.className="idqw";const sn=c.querySelector(".sqn");sn.after(w)}
     w.dataset.n=Q.w;w.innerHTML=`${pAv(Q.w,"fmini")}<span>avec ${esc(Q.w)} ?</span>`;w.onclick=ev=>{ev.stopPropagation();Q.ws=[...(Q.ws||[]),Q.w].slice(-12);Q.w=idWho(Q.p,Q.ws);save();idqWho()};
     const f=c.querySelector(".idqf");if(f&&!f.dataset.w){f.dataset.w=1;f.addEventListener("click",()=>{const n=Q.w;if(n){S.bonds[n]=(S.bonds[n]||0)+20;S.bondsLast[n]=Date.now();save();setTimeout(()=>kwAsk([n]),2800)}},true)}}
   // ---- ce mois-ci, en vrai
@@ -14439,7 +14487,7 @@ html body #undoBar{z-index:250}
 
   // ---- quêtes « avec quelqu'un » : préciser avec qui en validant
   const SOC=/avec (des|tes|mes|un|une|ta|ton|ses|quelqu)|potes|\bamis?\b|à deux|à plusieurs|en groupe|ensemble|en famille|coloc|bande|soirée/i;
-  function questWho(card){const t=((card.querySelector(".fqt b,.sqn")||{}).textContent||"").trim();if(!t||!SOC.test(t))return null;
+  function questWho(card){const t=((card.querySelector(".fqt b,.sqn")||{}).textContent||"").trim();if(t&&card.classList.contains("idq"))return t;if(!t||!SOC.test(t))return null;
     const names=(typeof relNames==="function"?relNames():[]);if(names.some(n=>new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(t)))return null;
     const q=(S.specials||[]).find(x=>x.name===t);if(q&&(q.who||q.bd||q.fg))return null;return t}
   function whoSheet(title,done){const o=document.createElement("div");o.className="bpop whopop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Avec qui ?");
@@ -14449,7 +14497,7 @@ html body #undoBar{z-index:250}
       o.querySelectorAll(".whob").forEach(b=>b.onclick=()=>{if(b.dataset.g){const M=fgMembers(b.dataset.g),all=M.every(n=>sel.has(n));M.forEach(n=>all?sel.delete(n):sel.add(n))}else{const n=b.dataset.n;sel.has(n)?sel.delete(n):sel.add(n)}const st=o.querySelector(".whog").scrollTop;draw();o.querySelector(".whog").scrollTop=st});
       o.querySelector(".whono").onclick=()=>{o.remove();done([])};o.querySelector(".whook").onclick=()=>{o.remove();done([...sel])}};
     o.onclick=e=>{if(e.target===o)o.remove()};draw();document.body.appendChild(o)}
-  document.addEventListener("click",e=>{const go=e.target.closest("#fqBox .fqr .fqgo, #sqBox .sq:not(.idq) .btn.primary");if(!go||go.dataset.wok)return;const card=go.closest(".fqr,.sq");if(!card||card.classList.contains("later"))return;const t=questWho(card);if(!t)return;
+  document.addEventListener("click",e=>{const go=e.target.closest("#fqBox .fqr .fqgo, #sqBox .sq .btn.primary");if(!go||go.dataset.wok)return;const card=go.closest(".fqr,.sq");if(!card||card.classList.contains("later"))return;const t=questWho(card);if(!t)return;
     e.preventDefault();e.stopImmediatePropagation();
     whoSheet(t,who=>{const t0=Date.now();go.dataset.wok="1";go.click();delete go.dataset.wok;if(!who.length)return;
       setTimeout(()=>{try{const L=S.log||[];let ent=null;for(let i=L.length-1;i>=0&&i>=L.length-6;i--){if(L[i].t>=t0-50&&(L[i].name||"").includes(t.slice(0,18))){ent=L[i];break}}if(!ent)for(let i=L.length-1;i>=0&&i>=L.length-3;i--){if(L[i].t>=t0-50){ent=L[i];break}}
@@ -14732,6 +14780,10 @@ function pxSwap(){document.querySelectorAll("svg:not(.pxic)").forEach(sv=>{if(sv
   const nn=t.content.firstChild;const c=sv.getAttribute("class");if(c)nn.setAttribute("class",c+" pxic");sv.replaceWith(nn)})}
 {let q=0;const run=()=>{q=0;try{pxSwap()}catch(e){}};pxSwap();new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run)}).observe(document.body,{childList:true,subtree:true})}
 try{render()}catch(e){}
+// ---- Standards globaux de l'appli (voir CLAUDE.md, « Standards de l'appli »)
+// Jamais de zoom : ni pincement, ni double-tap (géré par touch-action en CSS ; iOS ignore parfois user-scalable=no).
+["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
 </script>
 </body></html>
 </body></html>

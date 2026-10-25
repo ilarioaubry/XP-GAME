@@ -663,7 +663,7 @@
   // ---- avec qui pour la sortie
   const IDW={mus:/musi|f[êe]t/i,mic:/f[êe]t|musi|humour/i,q:/intello|geek/i,cine:/cin[ée]/i,dice:/geek|f[êe]t/i,mask:/artiste|humour/i,key:/geek|intello/i,food:/gourm/i,bag:/artiste|mode/i,art:/artiste|dessin/i,run:/sport/i,map:/voyag|nature/i};
   function idWho(ix,skip){const x=IDQ[ix],re=IDW[x[5]]||/./,now=Date.now();const L=(S.friends||[]).map(n=>{const P=(S.profiles||{})[n]||{},ty=[...(P.types||[]),...(P.talents||[])].join(" "),d=((S.bondsLast||{})[n]?(now-S.bondsLast[n])/864e5:60);return{n,s:(re.test(ty)?5:0)+Math.min(4,d/7)+((S.bonds||{})[n]||0)/200+(P.best?1:0)}}).sort((a,b)=>b.s-a.s).map(o=>o.n);return L.filter(n=>!(skip||[]).includes(n))[0]||L[0]||""}
-  function idqWho(){const c=document.querySelector("#sqBox .idq");if(!c||!S.g.idq||S.g.idq.p==null)return;const Q=S.g.idq;if(!Q.w||Q.wp!==Q.p){Q.w=idWho(Q.p,Q.ws||[]);Q.wp=Q.p;save()}if(!Q.w)return;let w=c.querySelector(".idqw");if(w&&w.dataset.n===Q.w)return;if(!w){w=document.createElement("button");w.type="button";w.className="idqw";const sn=c.querySelector(".sqn");sn.after(w)}
+  function idqWho(){const old=document.querySelector("#sqBox .idq .idqw");if(old)old.remove();return;const c=document.querySelector("#sqBox .idq");if(!c||!S.g.idq||S.g.idq.p==null)return;const Q=S.g.idq;if(!Q.w||Q.wp!==Q.p){Q.w=idWho(Q.p,Q.ws||[]);Q.wp=Q.p;save()}if(!Q.w)return;let w=c.querySelector(".idqw");if(w&&w.dataset.n===Q.w)return;if(!w){w=document.createElement("button");w.type="button";w.className="idqw";const sn=c.querySelector(".sqn");sn.after(w)}
     w.dataset.n=Q.w;w.innerHTML=`${pAv(Q.w,"fmini")}<span>avec ${esc(Q.w)} ?</span>`;w.onclick=ev=>{ev.stopPropagation();Q.ws=[...(Q.ws||[]),Q.w].slice(-12);Q.w=idWho(Q.p,Q.ws);save();idqWho()};
     const f=c.querySelector(".idqf");if(f&&!f.dataset.w){f.dataset.w=1;f.addEventListener("click",()=>{const n=Q.w;if(n){S.bonds[n]=(S.bonds[n]||0)+20;S.bondsLast[n]=Date.now();save();setTimeout(()=>kwAsk([n]),2800)}},true)}}
   // ---- ce mois-ci, en vrai
@@ -727,7 +727,7 @@
 
   // ---- quêtes « avec quelqu'un » : préciser avec qui en validant
   const SOC=/avec (des|tes|mes|un|une|ta|ton|ses|quelqu)|potes|\bamis?\b|à deux|à plusieurs|en groupe|ensemble|en famille|coloc|bande|soirée/i;
-  function questWho(card){const t=((card.querySelector(".fqt b,.sqn")||{}).textContent||"").trim();if(!t||!SOC.test(t))return null;
+  function questWho(card){const t=((card.querySelector(".fqt b,.sqn")||{}).textContent||"").trim();if(t&&card.classList.contains("idq"))return t;if(!t||!SOC.test(t))return null;
     const names=(typeof relNames==="function"?relNames():[]);if(names.some(n=>new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(t)))return null;
     const q=(S.specials||[]).find(x=>x.name===t);if(q&&(q.who||q.bd||q.fg))return null;return t}
   function whoSheet(title,done){const o=document.createElement("div");o.className="bpop whopop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Avec qui ?");
@@ -737,7 +737,7 @@
       o.querySelectorAll(".whob").forEach(b=>b.onclick=()=>{if(b.dataset.g){const M=fgMembers(b.dataset.g),all=M.every(n=>sel.has(n));M.forEach(n=>all?sel.delete(n):sel.add(n))}else{const n=b.dataset.n;sel.has(n)?sel.delete(n):sel.add(n)}const st=o.querySelector(".whog").scrollTop;draw();o.querySelector(".whog").scrollTop=st});
       o.querySelector(".whono").onclick=()=>{o.remove();done([])};o.querySelector(".whook").onclick=()=>{o.remove();done([...sel])}};
     o.onclick=e=>{if(e.target===o)o.remove()};draw();document.body.appendChild(o)}
-  document.addEventListener("click",e=>{const go=e.target.closest("#fqBox .fqr .fqgo, #sqBox .sq:not(.idq) .btn.primary");if(!go||go.dataset.wok)return;const card=go.closest(".fqr,.sq");if(!card||card.classList.contains("later"))return;const t=questWho(card);if(!t)return;
+  document.addEventListener("click",e=>{const go=e.target.closest("#fqBox .fqr .fqgo, #sqBox .sq .btn.primary");if(!go||go.dataset.wok)return;const card=go.closest(".fqr,.sq");if(!card||card.classList.contains("later"))return;const t=questWho(card);if(!t)return;
     e.preventDefault();e.stopImmediatePropagation();
     whoSheet(t,who=>{const t0=Date.now();go.dataset.wok="1";go.click();delete go.dataset.wok;if(!who.length)return;
       setTimeout(()=>{try{const L=S.log||[];let ent=null;for(let i=L.length-1;i>=0&&i>=L.length-6;i--){if(L[i].t>=t0-50&&(L[i].name||"").includes(t.slice(0,18))){ent=L[i];break}}if(!ent)for(let i=L.length-1;i>=0&&i>=L.length-3;i--){if(L[i].t>=t0-50){ent=L[i];break}}
