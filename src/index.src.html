@@ -1,16 +1,4 @@
-<!doctype html><html lang="fr"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style id="bilan2">
-  @@include(css/bilan-cloture.css)@@
-</style>
-<style id="maison">
-  @@include(css/maison-1.css)@@
-</style>
-<style id="maison2">
-  @@include(css/maison-2.css)@@
-</style>
-<style id="maison3">
-  @@include(css/maison-3.css)@@
-</style>
-</head><body>
+<!doctype html><html lang="fr"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,37 +7,19 @@
 <meta name="apple-mobile-web-app-title" content="XP">
 <meta name="theme-color" content="#f8e3ad" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#14120d" media="(prefers-color-scheme: dark)">
-<style>
-html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-height:100%;background:var(--bg)}
-html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
-html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
-html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
-html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 28px))}
-</style>
-<script>document.documentElement.classList.add("sky");</script>
-<script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
-<link rel="manifest" href="manifest.json">
-<script>try{if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}catch(e){}</script>
 <title>XP</title>
+<link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icones/xp-180.png">
 <link rel="icon" type="image/png" href="icones/xp-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
-<style>
-  @@include(css/principal-01.css)@@
-  @@include(css/principal-02.css)@@
-  @@include(css/principal-03.css)@@
-  @@include(css/principal-04.css)@@
-  @@include(css/principal-05.css)@@
-  @@include(css/principal-06.css)@@
-  @@include(css/principal-07.css)@@
-  @@include(css/principal-08.css)@@
-  @@include(css/principal-09.css)@@
-  @@include(css/principal-10.css)@@
-  @@include(css/principal-11.css)@@
-  @@include(css/principal-12.css)@@
+<script>document.documentElement.classList.add("sky");</script>
+<script>(function(){try{var st=window.navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches);if(st)document.documentElement.classList.add("fullh")}catch(e){}})();</script>
+<script>try{if("serviceWorker"in navigator&&/^https?:$/.test(location.protocol))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}catch(e){}</script>
+<style id="base">
+  @@include(css/base.css)@@
 </style>
-
+</head><body>
 <div class="wrap">
   <h1 class="banner"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg><span>XP</span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M5 19l-2 2M9 15l-3 3"/></svg></h1>
 
@@ -58,9 +28,6 @@ html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 2
   <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
   <section data-v="q" class="nightb voff" id="nightBox" aria-label="Bonne nuit"></section>
   <section data-v="q" class="qxp" aria-label="Ma progression"><button type="button" id="qxpBtn" aria-label="Voir mon profil"><span class="ql" id="qLvlBox">Niv <b id="qLvl">1</b></span><span class="qbar"><i id="qBar"></i></span><span class="qt"><b id="qCur">0</b> / <span id="qNeed">100</span> XP</span><span class="qs" title="Série de jours"><svg class="ic" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-2.8 7-6.8 0-3.6-2.4-5.6-3.6-8.7-.4 1.9-1.4 3-2.6 3.5C13 6.5 11.6 4 9 2.5c.3 3.4-4 6.2-4 11.3C5 18.6 8 22 12 22z"/></svg><b id="qStreak">0</b></span><span class="qhp" id="qHpRow"></span></button><button type="button" class="qday" id="qDay" aria-label="Récap de l'XP du jour"><span class="qdl">Jour</span><span class="qdbar"><i id="qDayBar"></i></span><b id="qDayT">0 / 150</b></button></section>
-    <style>
-  @@include(css/suivi-du-jour.css)@@
-</style>
   <section data-v="q" class="rit trkbox" id="trkBox" aria-label="Ton bandeau du jour"></section>
   <section data-v="q" class="evtoday" id="evToday" aria-label="Aujourd'hui"></section>
   <script>
@@ -300,17 +267,7 @@ html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 2
 
 
 
-<style id="epure">
-  @@include(css/epure-01.css)@@
-  @@include(css/epure-02.css)@@
-  @@include(css/epure-03.css)@@
-  @@include(css/epure-atelier-rituels.css)@@
-  @@include(css/epure-fiche-personne.css)@@
-  @@include(css/epure-editeur-avatar.css)@@
-  @@include(css/epure-bibliotheque.css)@@
-  @@include(css/sans-cadres.css)@@
-  @@include(css/assiette.css)@@
-  @@include(css/standards.css)@@
+<style id="composants">
   @@include(css/composants.css)@@
 </style>
 <style id="z-haut">
