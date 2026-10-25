@@ -50,7 +50,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 - [x] 3.1 (25/10/2026) Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
 - [x] 3.2 (25/10/2026) Composants définis une fois (`css/composants.css`, préfixe `ui-`, pas encore utilisés) : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
-- [ ] 3.3 Fusion des 27 feuilles CSS en : base + composants + une feuille par zone — Aujourd'hui
+- [ ] 3.3 Fusion des 27 feuilles CSS en : base + composants + une feuille par zone — Aujourd'hui, en 5 morceaux : 3.3a haut (scène, météo, sons, XP, bandeau) · 3.3b Mon moment (rituels, repas) · 3.3c quêtes pour toi · 3.3d quêtes spéciales · 3.3e cartes du moment + panneau « + »
 - [ ] 3.4 … Proches
 - [ ] 3.5 … Moi (Profil, Bilan, Réglages)
 - [ ] 3.6 … Fenêtres (assiette, menus, « Avec qui ? »…)
@@ -72,7 +72,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 Standards trop globaux → version précisée :
 - [ ] 5.1 Centrage : centré pour bouton, tuile, compteur ; aligné à gauche pour les cartes avec description
-- [ ] 5.2 État « à faire maintenant » : garder « bordure colorée = actif », ajouter un signal défini (étiquette « Maintenant » ou opacité réduite pour « plus tard ») **(décision)**
+- [x] 5.2 (25/10/2026, choix C) État « à faire maintenant » : aucun signal pour l'instant ; « bordure colorée = actif / sélectionné » reste la seule règle
 - [ ] 5.3 Textes longs : titres de carte 2 lignes max ; noms dans les listes 1 ligne avec « … »
 - [ ] 5.4 11 px seulement sur fond sombre, sinon 13 px
 - [ ] 5.5 Un seul séparateur (pointillés) pour tous les groupes, Proches et Bilan compris (sauf fiches de proches)
