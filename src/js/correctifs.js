@@ -290,7 +290,7 @@
   const STARS="radial-gradient(1.2px 1.2px at 22% 30%,#fff 60%,transparent),radial-gradient(1px 1px at 48% 68%,#fff 60%,transparent),radial-gradient(1.4px 1.4px at 72% 22%,#fff 60%,transparent),radial-gradient(1px 1px at 86% 58%,#fff 60%,transparent),radial-gradient(1px 1px at 35% 82%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 62% 44%,#fff8 60%,transparent)";
   function natDress(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn")||{}).textContent||"";const q=t&&(S.specials||[]).find(x=>x.name===t&&x.nat);if(!q)return;const V=NATV[q.nat];if(!V)return;c.dataset.uni=1;
       c.classList.add("unicard","natq","nat-"+q.nat);c.style.setProperty("--uni",(["moon","star","meteor"].includes(q.nat)?STARS+",":"")+V[0]);c.style.setProperty("--uc",V[1]);
-      if(!c.querySelector(".uiq")){const sp=document.createElement("span");sp.className="uiq";sp.innerHTML='<svg viewBox="0 0 24 24">'+V[2]+'</svg>';c.appendChild(sp)}})}
+      if(!c.querySelector(".uiq")){const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg({moon:"lune",star:"etoile",meteor:"etoile",sun:"soleil",leaf:/^Cuisiner/i.test(t)?"courge":"plante",snow:"flocon"}[q.nat]||"etoile");c.appendChild(sp)}})}
   // ---- quête spéciale : idée de sortie (plusieurs propositions)
   // [nom, quand (s=soir, j=journée, w=week-end seulement), dedans(1)/dehors(0), xp, option d'action, icône]
   const IDQ=[

@@ -1184,7 +1184,7 @@ function renderCollection(){
     const det=document.createElement("details");det.className="bfam";det.open=hasNew||!!bfOpen[fk];
     det.innerHTML=`<summary><span class="bfn">${fn}${hasNew?` <span class="bfnew">${list.filter(b=>(S.g.nb||[]).includes(b.id)).length} nouveau${list.filter(b=>(S.g.nb||[]).includes(b.id)).length>1?"x":""}</span>`:""}</span><span class="bpr bfbar"><i style="width:${on/list.length*100}%"></i></span><b>${on}/${list.length}</b></summary><div class="brow"></div>`;
     det.addEventListener("toggle",()=>{bfOpen[fk]=det.open});
-    const tl=det.querySelector(".brow");list.slice().sort((a,b)=>(!!S.badges[b.id])-(!!S.badges[a.id])).forEach(b=>tl.appendChild(badgeTile(b)));g.appendChild(det)});
+    const tl=det.querySelector(".brow");const own=list.filter(b=>S.badges[b.id]),lk=list.length-own.length;own.forEach(b=>tl.appendChild(badgeTile(b)));if(lk){const m=document.createElement("button");m.type="button";m.className="bdg bmore";m.setAttribute("aria-label",lk+" badges à débloquer");m.innerHTML=`<span class="wr-plus">+${lk}</span>`;m.onclick=()=>toast(`${lk} badge${lk>1?"s":""} à débloquer dans « ${fn} »`);tl.appendChild(m)}g.appendChild(det)});
   window.__newBadges=null;
 }
 let view="q";

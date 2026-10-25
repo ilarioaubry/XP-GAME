@@ -11668,7 +11668,7 @@ function renderCollection(){
     const det=document.createElement("details");det.className="bfam";det.open=hasNew||!!bfOpen[fk];
     det.innerHTML=`<summary><span class="bfn">${fn}${hasNew?` <span class="bfnew">${list.filter(b=>(S.g.nb||[]).includes(b.id)).length} nouveau${list.filter(b=>(S.g.nb||[]).includes(b.id)).length>1?"x":""}</span>`:""}</span><span class="bpr bfbar"><i style="width:${on/list.length*100}%"></i></span><b>${on}/${list.length}</b></summary><div class="brow"></div>`;
     det.addEventListener("toggle",()=>{bfOpen[fk]=det.open});
-    const tl=det.querySelector(".brow");list.slice().sort((a,b)=>(!!S.badges[b.id])-(!!S.badges[a.id])).forEach(b=>tl.appendChild(badgeTile(b)));g.appendChild(det)});
+    const tl=det.querySelector(".brow");const own=list.filter(b=>S.badges[b.id]),lk=list.length-own.length;own.forEach(b=>tl.appendChild(badgeTile(b)));if(lk){const m=document.createElement("button");m.type="button";m.className="bdg bmore";m.setAttribute("aria-label",lk+" badges à débloquer");m.innerHTML=`<span class="wr-plus">+${lk}</span>`;m.onclick=()=>toast(`${lk} badge${lk>1?"s":""} à débloquer dans « ${fn} »`);tl.appendChild(m)}g.appendChild(det)});
   window.__newBadges=null;
 }
 let view="q";
@@ -11751,7 +11751,7 @@ function renderWardrobe(){
   const G=S.g;if(!G||!$("wrBody"))return;
   const tot=GEAR.length,own=wrOwned();$("wrCnt").textContent=own+"/"+tot;
   {const nc=(G.chests||0)+(G.bchests||0);$("wrChest").innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="wrChestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre du boss":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";const b=$("wrChestBtn");if(b)b.onclick=()=>openChest()}
-  $("wrCats").innerHTML=WR_CATS.map(([k,l])=>{const L=k==="titre"||k==="set"||k==="badges"?null:GEAR.filter(x=>x.s===k);const n=L?L.filter(x=>G.gear.includes(x.id)).length+"/"+L.length:k==="set"?wrSetsDone().length+"/"+WR_SETS.length:k==="badges"?(()=>{try{const D=badgeDefs().filter(b=>!b.sec||(S.badges||{})[b.id]);return D.filter(b=>(S.badges||{})[b.id]).length+"/"+D.length}catch(e){return""}})():"";const [a0,b0]=n?n.split("/").map(Number):[0,0];return`<button type="button" role="tab" data-c="${k}" aria-selected="${wrCat===k}" aria-label="${l}${n?" "+n:""}"><i class="wci">${rkSvg(({tete:"casquette",haut:"tshirt",yeux:"lunettes",bijou:"bague",main:"epee",fond:"paysage",aura:"aura",titre:"banniere",set:"cintre",badges:"medaille"})[k]||"etoile")}</i><span class="wcl">${l}</span>${n?`<span class="wcg"><i style="width:${b0?Math.round(a0/b0*100):0}%"></i></span>`:`<span class="wcg wcg0"></span>`}</button>`}).join("");
+  $("wrCats").innerHTML=WR_CATS.map(([k,l])=>{const L=k==="titre"||k==="set"||k==="badges"?null:GEAR.filter(x=>x.s===k);const n=L?L.filter(x=>G.gear.includes(x.id)).length+"/"+L.length:k==="titre"?(()=>{const lv=levelInfo(S.xp).l,own=new Set([...RANKS.filter(r=>lv>=r[0]).map(r=>r[1]),...G.rt]).size,lk=RARE_TITLES.filter(t=>!G.rt.includes(t)).length+WR_SETS.filter(([,,t])=>!G.rt.includes(t)).length;return own+"/"+(own+lk)})():k==="set"?wrSetsDone().length+"/"+WR_SETS.length:k==="badges"?(()=>{try{const D=badgeDefs().filter(b=>!b.sec||(S.badges||{})[b.id]);return D.filter(b=>(S.badges||{})[b.id]).length+"/"+D.length}catch(e){return""}})():"";const [a0,b0]=n?n.split("/").map(Number):[0,0];return`<button type="button" role="tab" data-c="${k}" aria-selected="${wrCat===k}" aria-label="${l}${n?" "+n:""}"><i class="wci">${rkSvg(({tete:"casquette",haut:"tshirt",yeux:"lunettes",bijou:"bague",main:"epee",fond:"paysage",aura:"aura",titre:"banniere",set:"cintre",badges:"medaille"})[k]||"etoile")}</i><span class="wcl">${l}</span>${n?`<span class="wcg"><i style="width:${b0?Math.round(a0/b0*100):0}%"></i></span>`:`<span class="wcg wcg0"></span>`}</button>`}).join("");
   $("wrCats").querySelectorAll("button").forEach(b=>b.onclick=()=>{wrCat=b.dataset.c;renderWardrobe();try{window.wrBadges&&window.wrBadges()}catch(e){}});
   const body=$("wrBody");
   if(wrCat==="titre"){const l=levelInfo(S.xp).l,ranks=RANKS.filter(r=>l>=r[0]).map(r=>r[1]);const all=[...new Set([...ranks,...G.rt])],locked=RARE_TITLES.filter(t=>!G.rt.includes(t)).length+WR_SETS.filter(([,,t])=>!G.rt.includes(t)).length;
@@ -11760,8 +11760,12 @@ function renderWardrobe(){
   if(wrCat==="set"){body.innerHTML=`<div class="wr-sets">${WR_SETS.map(([k,n,t])=>{const L=GEAR.filter(x=>x.set===k),h=L.filter(x=>G.gear.includes(x.id)).length,done=h===L.length;
       return`<div class="wr-set${done?" done":""}"><div class="wr-sh"><b>${esc(n)}</b><span>${done?"Complète":h+"/"+L.length}</span></div><div class="wr-si">${L.map(x=>`<span class="wr-mini${G.gear.includes(x.id)?"":" lock"}" style="--rc:${RAR[x.r][1]}" title="${G.gear.includes(x.id)?esc(x.n):"???"}">${itemImg(x,40)}</span>`).join("")}</div><small>Bonus : titre « ${esc(t)} »</small></div>`}).join("")}</div>`;return}
   const L=GEAR.filter(x=>x.s===wrCat).sort((a,b)=>(!!a.ex-!!b.ex)||a.r-b.r);
-  body.innerHTML=`<div class="wr-grid">${L.map((x,i)=>{const has=G.gear.includes(x.id),on=has&&wrEquipped(x);return`<button type="button" class="wr-it${has?"":" lock"}${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${has?esc(x.n):"Objet à trouver"}"><span class="wr-ic">${itemImg(x,56)}</span><b>${has?esc(x.n):"???"}</b><small>${x.ex?(has?"Exclusif":esc(x.ex)):RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}</div>`;
-  body.querySelectorAll(".wr-it").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(!G.gear.includes(x.id)){toast(x.ex?`À débloquer : <span class="p">${esc(x.ex)}</span>`:`À trouver dans les coffres · <span class="p">${RAR[x.r][0]}</span>`);return}wrToggle(x)});
+  const lk=L.filter(x=>!G.gear.includes(x.id)),fd=wrCat==="fond";
+  body.innerHTML=`<div class="wr-grid${fd?" wr-fonds":""}">${L.map((x,i)=>{const has=G.gear.includes(x.id),on=has&&wrEquipped(x);if(!has)return"";const nm=fd?x.n.replace(/^Fond\s+/i,"").replace(/^./,c=>c.toUpperCase()):x.n;
+    return fd?`<button type="button" class="wr-it wr-fond${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]};--fbg:url(${itemIcon(x)})" aria-pressed="${on}" aria-label="${esc(nm)}"><b>${esc(nm)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`
+    :`<button type="button" class="wr-it${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${esc(x.n)}"><span class="wr-ic">${itemImg(x,56)}</span><b>${esc(x.n)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}${lk.length?`<button type="button" class="wr-it wr-more" style="--rc:#8a8f99" aria-label="${lk.length} à trouver"><span class="wr-ic wr-plus">+${lk.length}</span><b>À trouver</b><small>Coffres et défis</small></button>`:""}</div>`;
+  {const m=body.querySelector(".wr-more");if(m)m.onclick=()=>{const c=lk.filter(x=>!x.ex).length,ex=lk.filter(x=>x.ex);toast(`${c?c+" dans les coffres":""}${c&&ex.length?" · ":""}${ex.length?ex.length+" à débloquer : "+ex.slice(0,3).map(x=>esc(x.ex)).join(", ")+(ex.length>3?"…":""):""}`)}}
+  body.querySelectorAll(".wr-it[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(!G.gear.includes(x.id)){toast(x.ex?`À débloquer : <span class="p">${esc(x.ex)}</span>`:`À trouver dans les coffres · <span class="p">${RAR[x.r][0]}</span>`);return}wrToggle(x)});
 }
 
 // ---- Quêtes chronométrées : le timer remplace la validation directe
@@ -13600,14 +13604,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow:none!important;background:none!important;padding:4px 0!important}
 /* Standard « pas d'encadrés », étendu à toute l'appli : conteneurs d'information sans cadre ni fond.
    Boutons, tuiles, onglets et barre du bas gardent leur forme (ce sont des contrôles). */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card,.motc){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,#log,.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.trk-c,#ritLife,.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .pf-xp{border:0!important;box-shadow:none!important;background:none!important}
 /* cartes d'action (quêtes, idée sortie) et bouton XP : on garde le fond (lisibilité, décor), sans cadre */
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard,#qxpBtn){border:0!important;box-shadow:none!important;outline:0!important}
-/* Proches : fiches sans cadre ; une ligne pixel à la couleur du lien les sépare */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body #relList>li.rl{border:0!important;box-shadow:none!important;border-radius:0!important;background:repeating-linear-gradient(90deg,var(--fc) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important;padding-bottom:10px!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .motc{background:repeating-linear-gradient(90deg,var(--mc,var(--gold)) 0 6px,transparent 6px 10px) bottom left/100% 3px no-repeat!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
 /* Standard « animations sobres » : plus d'éléments d'interface qui bougent en boucle tout seuls.
    Le décor (ciel, météo, maison) et les animations déclenchées par une action restent. */
@@ -13739,11 +13740,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn b{grid-row:1!important;grid-column:1/-1!important;align-self:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rwr{grid-row:2!important;grid-column:1!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #relList>li.rl .rn .rlk{grid-row:2!important;grid-column:2!important;align-self:center!important}
-/* plus d'icônes qui annoncent le type d'interaction (coin haut-droit des quêtes), nulle part */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .uiq{display:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .unicard :is(.sqn,.sqk,.fqt){padding-right:0!important}
-/* quêtes spéciales : même largeur que les autres cartes de quête */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq{flex:0 0 100%!important;width:100%!important;max-width:none!important;box-sizing:border-box!important}
+/* quêtes spéciales : la carte suivante dépasse un peu (on voit que ça glisse) ; une icône pixel en bas à droite de chaque carte */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq{top:auto!important;bottom:10px!important;right:10px!important;width:32px!important;height:32px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq svg{width:100%!important;height:100%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq :is(.sqn,.sqk){padding-right:0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .sqr{padding-right:40px!important}
 /* choix rapide « Avec qui ? » : petite fenêtre centrée */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .whopop{align-items:center!important;align-content:center!important;place-items:center!important}
 /* même catégorie = même taille : boutons d'action des quêtes tous identiques */
@@ -13757,6 +13758,16 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .plq{border:0!important;b
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
+/* Armoire : toutes les tuiles de la même taille ; « +N » pour ce qui reste à trouver ; fonds en plein cadre, titre en haut */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it b{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden!important;line-height:1.2!important;min-height:2.4em!important;align-self:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .wr-plus{display:grid!important;place-items:center!important;width:56px!important;height:56px!important;font-family:var(--f-pixel)!important;font-size:26px!important;color:var(--gold,#ffd94a)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond{background:var(--fbg) center 22%/cover no-repeat!important;image-rendering:pixelated!important;grid-template-rows:auto 1fr auto!important;align-items:start!important;padding:6px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond b{align-self:start!important;min-height:0!important;background:rgba(13,15,34,.78)!important;padding:2px 6px!important;color:#fff7e6!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it.wr-fond small{grid-row:3!important;background:rgba(13,15,34,.78)!important;padding:1px 6px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore{display:grid!important;place-items:center!important;cursor:pointer}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #bdgGrid .bdg.bmore .wr-plus{width:64px!important;height:64px!important}
 </style>
 <script>
 (function(){
@@ -14050,7 +14061,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,htm
   const STARS="radial-gradient(1.2px 1.2px at 22% 30%,#fff 60%,transparent),radial-gradient(1px 1px at 48% 68%,#fff 60%,transparent),radial-gradient(1.4px 1.4px at 72% 22%,#fff 60%,transparent),radial-gradient(1px 1px at 86% 58%,#fff 60%,transparent),radial-gradient(1px 1px at 35% 82%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 62% 44%,#fff8 60%,transparent)";
   function natDress(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn")||{}).textContent||"";const q=t&&(S.specials||[]).find(x=>x.name===t&&x.nat);if(!q)return;const V=NATV[q.nat];if(!V)return;c.dataset.uni=1;
       c.classList.add("unicard","natq","nat-"+q.nat);c.style.setProperty("--uni",(["moon","star","meteor"].includes(q.nat)?STARS+",":"")+V[0]);c.style.setProperty("--uc",V[1]);
-      if(!c.querySelector(".uiq")){const sp=document.createElement("span");sp.className="uiq";sp.innerHTML='<svg viewBox="0 0 24 24">'+V[2]+'</svg>';c.appendChild(sp)}})}
+      if(!c.querySelector(".uiq")){const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg({moon:"lune",star:"etoile",meteor:"etoile",sun:"soleil",leaf:/^Cuisiner/i.test(t)?"courge":"plante",snow:"flocon"}[q.nat]||"etoile");c.appendChild(sp)}})}
   // ---- quête spéciale : idée de sortie (plusieurs propositions)
   // [nom, quand (s=soir, j=journée, w=week-end seulement), dedans(1)/dehors(0), xp, option d'action, icône]
   const IDQ=[
@@ -14602,6 +14613,7 @@ tofu:["................","................","....oooooooo....","...owwwwwwwWo...
 poischiche:["................","................","................","...oo.oo..oo....","..oppoppooppo...",".opPoopPopPPoo..",".oooooooooooooo.","okkkkkkkkkkkkKKo","okwkkkkkkkkkkKKo",".okkkkkkkkkkKKo.","..oKKKKKKKKKKo..","...oooooooooo...","................","................","................","................"],
 crevette:["................","................",".....oooo.......","...ooYYYYoo.....","..oYYwYYYYYo....",".oYYoooooYYYo...",".oYo.....oYYo...",".oYYo.....oYo...","..oYYo...oYYo...","...oYYoooYYo.o..","....oYYYYYooYo..",".....ooooooYYo..","..........oooo..","................","................","................"]
 });
+Object.assign(RKI,{courge:["................",".......oo.......",".......oGo......","......oNNo......",".....oYYYYo.....",".....oYyYYo.....",".....oYyYYo.....",".....oYYYYo.....","....oYYYYYYo....","...oYyYYYYYYo...","...oYyYYYYYYo...","...oYYYYYYYYo...","...oYYYYYYYYo...","....oYYYYYYo....",".....oooooo.....","................"]});
 const PL_SIDES=[["f","Féculents","#ffd94a","#f0a020",[["pates","Pâtes"],["riz","Riz"],["pain","Pain"],["patate","Patates"],["gnocchi","Gnocchi"],["semoule","Semoule"]]],
   ["p","Protéines","#ff9ec0","#e8473a",[["viande","Poulet"],["steak","Viande"],["oeuf","Œuf"],["poisson","Poisson"],["jambon","Jambon"],["thon","Thon"],["crevette","Crevettes"],["tofu","Tofu"],["lentilles","Lentilles"],["poischiche","Pois chiches"]]],
   ["l","Légumes","#a8eb8a","#4fb84a",[["salade","Salade"],["carotte","Carotte"],["tomate","Tomate"],["legume","Brocoli"],["courgette","Courgette"],["poivron","Poivron"],["haricots","Haricots verts"],["champignon","Champignons"],["aubergine","Aubergine"]]]];
@@ -14784,6 +14796,11 @@ try{render()}catch(e){}
 // Jamais de zoom : ni pincement, ni double-tap (géré par touch-action en CSS ; iOS ignore parfois user-scalable=no).
 ["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
 document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1)e.preventDefault()},{passive:false});
+// Quêtes spéciales : chaque carte a une icône pixel en bas à droite (celles qui n'en ont pas reçoivent celle de leur catégorie)
+const SQ_IC={maison:"canape",sport:"halteres",soi:"medit",nourriture:"repas",travail:"ecran",perso:"micro",social:"coeur",famille:"famille",eau:"verre"};
+function sqIcons(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.querySelector(".uiq"))return;const t=((c.querySelector(".sqn")||{}).textContent||"").trim(),q=(S.specials||[]).find(x=>x.name===t)||{},ic=SQ_IC[q.cat]||"etoile";
+  const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg(RKI[ic]?ic:"etoile");c.appendChild(sp)})}
+{let q=0;const run=()=>{q=0;try{sqIcons()}catch(e){}};new MutationObserver(()=>{if(!q)q=requestAnimationFrame(run)}).observe(document.body,{childList:true,subtree:true});run()}
 </script>
 </body></html>
 </body></html>

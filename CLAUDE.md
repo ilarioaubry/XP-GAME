@@ -16,7 +16,7 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 Règles données par Ilario (à respecter sans redemander) :
 
 - **Tout en pixel art** : icônes, illustrations, éléments graphiques. Pas d'emoji ni d'icône vectorielle dans le contenu.
-- **Pas d'encadrés** autour des sections ni des blocs (cadres colorés, boîtes à bordure). Séparer par l'espacement et une ligne pixel en pointillés à la couleur de la section ; si ça devient flou, trouver une séparation graphique, pas un cadre.
+- **Pas d'encadrés** autour des sections ni des blocs (cadres colorés, boîtes à bordure). Séparer par l'espacement et une ligne pixel en pointillés à la couleur de la section ; si ça devient flou, trouver une séparation graphique, pas un cadre. Exception voulue : les fiches des proches (profils d'amis) gardent leur cadre.
 - **Pas de boss ni de combats.** Ne pas en ajouter, ne pas en proposer.
 - **Ne pas inventer de mécanique de jeu** non demandée : proposer d'abord, construire après accord.
 - Avant de livrer : tester à largeur iPhone (393 px) et montrer une capture. Dire clairement ce qui n'a pas pu être vérifié sur son iPhone.
@@ -32,7 +32,8 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Titres de section** : tous identiques (police pixel, majuscules, losange à la couleur de la section), sans ombre ni fond.
 - **Même catégorie d'info = même taille et même alignement** (fiches de proches, cartes de quêtes, boutons d'action…), sans changer la taille des polices : texte trop long → une ligne avec « … ».
 - **Contenu centré** dans tout élément encadré (bouton, tuile, carte).
-- **Pas d'icônes qui annoncent le type d'interaction** (coin des cartes de quêtes), nulle part.
+- **Quêtes spéciales** : carrousel où la carte suivante dépasse un peu (on voit que ça glisse) ; chaque carte a une icône pixel en bas à droite (catégorie par défaut si la quête n'en a pas).
+- **Collections** (armoire, badges…) : on montre ce qui est obtenu, puis une seule tuile « +N » pour ce qui reste à trouver, jamais la liste des éléments verrouillés.
 - **Personnes associées à une action** : on les choisit au moment de « Fait » (fenêtre « Avec qui ? »), jamais suggérées avant.
 - **Grandes illustrations** (assiette, scène, personnage) : pixel art détaillé, grilles fines (jusqu'à 64×64), pixels nets, mêmes palettes que les icônes.
 
