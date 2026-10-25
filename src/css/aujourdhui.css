@@ -371,7 +371,7 @@ html:not(#_a):not(#_b) body .fql{display:grid;gap:8px}
 html:not(#_a):not(#_b) body .fqr{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--zc);box-shadow:3px 3px 0 var(--rpg-shadow)}
 html:not(#_a):not(#_b) body .fqr.done{opacity:.6}
 html:not(#_a):not(#_b) body .fqr.done b{text-decoration:line-through}
-html:not(#_a):not(#_b) body .fqt b{display:block;font-size:15px;line-height:1.25}
+html:not(#_a):not(#_b) body .fqt b{font-size:15px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 html:not(#_a):not(#_b) body .fqw{display:block;font-size:13px;color:color-mix(in srgb,var(--zc) 65%,#fff);font-weight:800;margin-bottom:2px}
 html:not(#_a):not(#_b) body .fqa{display:flex;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body .fqgo{min-height:42px;padding:0 12px;white-space:nowrap}
@@ -656,7 +656,7 @@ html:not(#_a):not(#_b) body .sltr input[type=range]{opacity:0;position:relative;
 html:not(#_a):not(#_b) body .slk{position:absolute;top:50%;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none;z-index:1;filter:drop-shadow(0 0 5px rgba(255,225,140,.9))}
 html:not(#_a):not(#_b) body .slk svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .slh{margin:0 14px}
-html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-size:11px;font-weight:800}
+html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-weight:800;font-size:13px}
 html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:11px!important;font-weight:800;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important;background:rgba(10,12,28,.5)!important}
@@ -697,7 +697,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq svg{width
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq :is(.sqn,.sqk){padding-right:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .sqr{padding-right:40px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{width:84px!important;min-width:84px!important;min-height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-left:4px!important;padding-right:4px!important;box-sizing:border-box!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqr .fqt,.sq .sqk,.sq .sqn){text-align:center!important;justify-content:center!important;justify-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqr .fqt,.sq .sqk,.sq .sqn){justify-content:center!important;text-align:left!important;justify-items:start!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .sq .sqr{justify-content:center!important;gap:12px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.mlp,.rtile){border-color:rgba(255,255,255,.17)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.mlp[aria-pressed="true"]){border-color:var(--gold,#ffd94a)!important}

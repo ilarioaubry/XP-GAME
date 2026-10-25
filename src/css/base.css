@@ -50,7 +50,7 @@ html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color
 .hmscene{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#000}
 .hmscene.hmlib{border:0;box-shadow:none;background:none;line-height:normal;overflow:visible}.hmlib .libc{margin-top:0}
 .hmsvg{width:100%;height:auto;display:block}
-.hmsvg .hmo{cursor:pointer;outline:none}.hmsvg .hmo:hover,.hmsvg .hmo:focus-visible{filter:brightness(1.25)}
+.hmsvg .hmo{cursor:pointer;outline:none}@media (hover:hover){.hmsvg .hmo:hover,.hmsvg .hmo:focus-visible{filter:brightness(1.25)}}
 .hmsvg .hmo.sel{filter:brightness(1.35) drop-shadow(0 0 1px #fff)}
 .hminfo{margin-top:0}
 .hmname{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;margin-top:10px}.hmname input{min-width:0;min-height:40px;font:inherit;font-size:15px;padding:6px 10px}
@@ -93,8 +93,8 @@ html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color
 html:not(#_a):not(#_b):not(#_c) body .hmh2{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:6px;align-items:center}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2{margin:0;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:clamp(13px,4vw,20px)!important;text-transform:uppercase;letter-spacing:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2::before{content:""!important;flex:none;width:12px!important;height:12px!important;background:var(--hc)!important;transform:rotate(45deg)!important}
-html:not(#_a):not(#_b):not(#_c) body .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}
-html:not(#_a):not(#_b):not(#_c) body .hmib:hover,html:not(#_a):not(#_b):not(#_c) body .hmib:focus-visible{border-color:var(--hc,#ffd94a)}.hmib:active{transform:translateY(1px)}
+html:not(#_a):not(#_b):not(#_c) body .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}@media (hover:hover){
+html:not(#_a):not(#_b):not(#_c) body .hmib:hover,html:not(#_a):not(#_b):not(#_c) body .hmib:focus-visible{border-color:var(--hc,#ffd94a)}}.hmib:active{transform:translateY(1px)}
 html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}.hmnext svg{transform:rotate(-90deg)}
 
 
@@ -3927,8 +3927,8 @@ html:not(#_a):not(#_b) body .grpcard .grpcols .grpc{width:30px;height:30px}
 .libc{margin-top:10px}
 .libshelf{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);border-radius:4px;overflow:hidden;background:#2a1c10;line-height:0}
 .libsvg{width:100%;height:auto;display:block;image-rendering:pixelated}
-.libsvg .bk{cursor:pointer;outline:none}
-.libsvg .bk:hover,.libsvg .bk:focus-visible{transform:translateY(-1px)}
+.libsvg .bk{cursor:pointer;outline:none}@media (hover:hover){
+.libsvg .bk:hover,.libsvg .bk:focus-visible{transform:translateY(-1px)}}
 .libsvg .bk.sel{transform:translateY(-2px)}
 .libsvg .bk.sel rect:first-child{stroke:#fff;stroke-width:.6}
 .libsvg .curg{animation:libGlow 1.6s steps(2) infinite}

@@ -21,8 +21,8 @@ html:not([data-room="chambre"]) body section[data-sub="wr"]:not(#homeBox){displa
 .hmhouse .an-twk{animation:hmBlink 2.8s steps(1) infinite}
 .hmhouse{position:relative;border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#0d1230}
 .hmhsvg{width:100%;height:auto;display:block}
-.hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}
-.hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}
+.hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}@media (hover:hover){
+.hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}}
 .hmslot .hml{left:3px;bottom:3px;padding:2px 5px;border-width:2px}
 .hmslot .hml b{font-size:11px}
 .hmslot .hml small{font-size:11px}
@@ -386,7 +386,7 @@ html:not(#_a):not(#_b) body .bsd.now .bsb{border-color:var(--gold)}
 html:not(#_a):not(#_b) body .bsd.now .bsl{color:var(--gold)}
 html:not(#_a):not(#_b) body .bchap{display:grid;gap:4px;padding:14px 16px 12px;background:rgba(10,8,20,.55);border-top:3px solid #1a1210}
 /* — depuis principal-09.css — */
-html:not(#_a):not(#_b) body .bchap>small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+html:not(#_a):not(#_b) body .bchap>small{font-weight:800;text-transform:uppercase;font-family:var(--f-pixel);font-size:20px;color:var(--ink);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
 html:not(#_a):not(#_b) body .bct{margin:0;font-family:var(--f-pixel);font-size:24px;line-height:1.1;color:#fff8e6;text-wrap:balance}
 html:not(#_a):not(#_b) body .bcl{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:15px;color:var(--text)}
 html:not(#_a):not(#_b) body .bcl li::before{content:"▸ ";color:var(--gold)}
@@ -589,7 +589,7 @@ html:not(#_a):not(#_b) body .bcviz{display:grid;grid-template-columns:repeat(3,1
 html:not(#_a):not(#_b) body .bct2{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 6px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
 html:not(#_a):not(#_b) body .bct2 .fti{width:30px;height:30px;display:block}
 html:not(#_a):not(#_b) body .bct2 b{font-size:15px}
-html:not(#_a):not(#_b) body .bct2 small{font-size:11px;opacity:.75;line-height:1.2}
+html:not(#_a):not(#_b) body .bct2 small{opacity:.75;line-height:1.2;font-size:13px}
 html:not(#_a):not(#_b) body .bct2 .bcl2{text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:11px}
 html:not(#_a):not(#_b) body #vieBox :is(#vie-maison,.capviz){display:none!important}
 html:not(#_a):not(#_b) body #vie-rythme label.vie-l:has([data-wake]){display:none!important}
@@ -676,8 +676,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.pav.bdp,.bn
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after{border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch){text-align:center!important;justify-content:center!important;justify-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch>span){justify-items:center!important;text-align:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
@@ -702,3 +702,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bnv){background:rgba
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bnv){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch.evadd,.pbs){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fond) small{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
+
+/* 5.11 : « Chapitre en cours » au modèle des titres de section (losange à la couleur de la section) */
+html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10px;flex:none;background:var(--gold);transform:rotate(45deg)}

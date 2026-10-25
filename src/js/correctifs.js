@@ -495,7 +495,7 @@
   // 1. Rituels : appui long sur une tuile
   hold("#dqBox .rtile",(b)=>{const n=(b.querySelector(".rtn")||{}).textContent;const t=ritTasks().find(x=>x.name===n);if(!t)return;
     pop(b,[{l:ICO("star",14)+(t.core?" Retirer des essentiels":" Mettre dans mes essentiels"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
-      {l:"⏸ Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
+      {l:"Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
       {l:ICO("edit",14)+" Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
   // 8. Cigarettes : appui long pour masquer
   hold("#trkBox .trk-n",(b)=>{pop(b,[{l:"Masquer le compteur",f:()=>{const v=S.g.vie||(S.g.vie={});v.track=v.track||{};v.track.cig=false;save();try{renderTrk()}catch(e){}toast("Compteur masqué · à réactiver dans Ma vie")}}])});

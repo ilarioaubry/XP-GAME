@@ -1,7 +1,7 @@
 /* — depuis principal-01.css — */
 .q{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:grid;gap:4px;min-height:76px;transition:transform .12s,border-color .12s;overflow:hidden}
-.q::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cat)}
-.q:hover{border-color:var(--cat)}
+.q::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cat)}@media (hover:hover){
+.q:hover{border-color:var(--cat)}}
 .q:active{transform:scale(.97)}
 .q .name{font-weight:700;line-height:1.25;font-size:15px;padding-right:2px;overflow-wrap:anywhere}
 .q .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
@@ -79,8 +79,8 @@
 .rel-top h2,.tal h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}
 .rel-top h2::before,.tal h2::before{content:"";display:inline-block;background:var(--gold);transform:rotate(45deg);margin-right:10px;vertical-align:2px;box-shadow:1px 1px 0 var(--rpg-shadow)}
 .rl,.q{border:2px solid var(--line)!important;border-radius:8px!important;box-shadow:0 4px 0 var(--rpg-shadow),inset 0 0 0 2px color-mix(in srgb,var(--gold) 22%,transparent)}
-.rl{padding:10px 12px}
-.q:hover{transform:none}
+.rl{padding:10px 12px}@media (hover:hover){
+.q:hover{transform:none}}
 .q:active,.rl:active{transform:translateY(3px);box-shadow:0 1px 0 var(--rpg-shadow)}
 .rl .rbar{border:2px solid var(--ink);border-radius:3px!important;background:var(--surface-2);position:relative;overflow:hidden;height:12px}
 .rl .rbar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.28) 6px 8px);pointer-events:none}

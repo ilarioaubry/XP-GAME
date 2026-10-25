@@ -68,7 +68,7 @@ html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color
 .hmscene{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#000}
 .hmscene.hmlib{border:0;box-shadow:none;background:none;line-height:normal;overflow:visible}.hmlib .libc{margin-top:0}
 .hmsvg{width:100%;height:auto;display:block}
-.hmsvg .hmo{cursor:pointer;outline:none}.hmsvg .hmo:hover,.hmsvg .hmo:focus-visible{filter:brightness(1.25)}
+.hmsvg .hmo{cursor:pointer;outline:none}@media (hover:hover){.hmsvg .hmo:hover,.hmsvg .hmo:focus-visible{filter:brightness(1.25)}}
 .hmsvg .hmo.sel{filter:brightness(1.35) drop-shadow(0 0 1px #fff)}
 .hminfo{margin-top:0}
 .hmname{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;margin-top:10px}.hmname input{min-width:0;min-height:40px;font:inherit;font-size:15px;padding:6px 10px}
@@ -111,8 +111,8 @@ html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color
 html:not(#_a):not(#_b):not(#_c) body .hmh2{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:6px;align-items:center}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2{margin:0;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:clamp(13px,4vw,20px)!important;text-transform:uppercase;letter-spacing:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 html:not(#_a):not(#_b):not(#_c) body .hmh2 h2::before{content:""!important;flex:none;width:12px!important;height:12px!important;background:var(--hc)!important;transform:rotate(45deg)!important}
-html:not(#_a):not(#_b):not(#_c) body .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}
-html:not(#_a):not(#_b):not(#_c) body .hmib:hover,html:not(#_a):not(#_b):not(#_c) body .hmib:focus-visible{border-color:var(--hc,#ffd94a)}.hmib:active{transform:translateY(1px)}
+html:not(#_a):not(#_b):not(#_c) body .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}@media (hover:hover){
+html:not(#_a):not(#_b):not(#_c) body .hmib:hover,html:not(#_a):not(#_b):not(#_c) body .hmib:focus-visible{border-color:var(--hc,#ffd94a)}}.hmib:active{transform:translateY(1px)}
 html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}.hmnext svg{transform:rotate(-90deg)}
 
 
@@ -3945,8 +3945,8 @@ html:not(#_a):not(#_b) body .grpcard .grpcols .grpc{width:30px;height:30px}
 .libc{margin-top:10px}
 .libshelf{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);border-radius:4px;overflow:hidden;background:#2a1c10;line-height:0}
 .libsvg{width:100%;height:auto;display:block;image-rendering:pixelated}
-.libsvg .bk{cursor:pointer;outline:none}
-.libsvg .bk:hover,.libsvg .bk:focus-visible{transform:translateY(-1px)}
+.libsvg .bk{cursor:pointer;outline:none}@media (hover:hover){
+.libsvg .bk:hover,.libsvg .bk:focus-visible{transform:translateY(-1px)}}
 .libsvg .bk.sel{transform:translateY(-2px)}
 .libsvg .bk.sel rect:first-child{stroke:#fff;stroke-width:.6}
 .libsvg .curg{animation:libGlow 1.6s steps(2) infinite}
@@ -4496,7 +4496,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version cebb8f6</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 1e1a387</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -14276,7 +14276,7 @@ html:not(#_a):not(#_b) body .fql{display:grid;gap:8px}
 html:not(#_a):not(#_b) body .fqr{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--zc);box-shadow:3px 3px 0 var(--rpg-shadow)}
 html:not(#_a):not(#_b) body .fqr.done{opacity:.6}
 html:not(#_a):not(#_b) body .fqr.done b{text-decoration:line-through}
-html:not(#_a):not(#_b) body .fqt b{display:block;font-size:15px;line-height:1.25}
+html:not(#_a):not(#_b) body .fqt b{font-size:15px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 html:not(#_a):not(#_b) body .fqw{display:block;font-size:13px;color:color-mix(in srgb,var(--zc) 65%,#fff);font-weight:800;margin-bottom:2px}
 html:not(#_a):not(#_b) body .fqa{display:flex;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body .fqgo{min-height:42px;padding:0 12px;white-space:nowrap}
@@ -14561,7 +14561,7 @@ html:not(#_a):not(#_b) body .sltr input[type=range]{opacity:0;position:relative;
 html:not(#_a):not(#_b) body .slk{position:absolute;top:50%;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none;z-index:1;filter:drop-shadow(0 0 5px rgba(255,225,140,.9))}
 html:not(#_a):not(#_b) body .slk svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .slh{margin:0 14px}
-html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-size:11px;font-weight:800}
+html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-weight:800;font-size:13px}
 html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
 html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:11px!important;font-weight:800;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important;background:rgba(10,12,28,.5)!important}
@@ -14602,7 +14602,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .uiq svg{width
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq :is(.sqn,.sqk){padding-right:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #sqBox .sq .sqr{padding-right:40px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{width:84px!important;min-width:84px!important;min-height:48px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-left:4px!important;padding-right:4px!important;box-sizing:border-box!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqr .fqt,.sq .sqk,.sq .sqn){text-align:center!important;justify-content:center!important;justify-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqr .fqt,.sq .sqk,.sq .sqn){justify-content:center!important;text-align:left!important;justify-items:start!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .sq .sqr{justify-content:center!important;gap:12px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.mlp,.rtile){border-color:rgba(255,255,255,.17)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.mlp[aria-pressed="true"]){border-color:var(--gold,#ffd94a)!important}
@@ -14616,8 +14616,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .rtmgo{border:2px solid r
 </style>
 <style id="z-proches">/* — depuis principal-01.css — */
 .q{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:grid;gap:4px;min-height:76px;transition:transform .12s,border-color .12s;overflow:hidden}
-.q::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cat)}
-.q:hover{border-color:var(--cat)}
+.q::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--cat)}@media (hover:hover){
+.q:hover{border-color:var(--cat)}}
 .q:active{transform:scale(.97)}
 .q .name{font-weight:700;line-height:1.25;font-size:15px;padding-right:2px;overflow-wrap:anywhere}
 .q .meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:auto}
@@ -14695,8 +14695,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .rtmgo{border:2px solid r
 .rel-top h2,.tal h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}
 .rel-top h2::before,.tal h2::before{content:"";display:inline-block;background:var(--gold);transform:rotate(45deg);margin-right:10px;vertical-align:2px;box-shadow:1px 1px 0 var(--rpg-shadow)}
 .rl,.q{border:2px solid var(--line)!important;border-radius:8px!important;box-shadow:0 4px 0 var(--rpg-shadow),inset 0 0 0 2px color-mix(in srgb,var(--gold) 22%,transparent)}
-.rl{padding:10px 12px}
-.q:hover{transform:none}
+.rl{padding:10px 12px}@media (hover:hover){
+.q:hover{transform:none}}
 .q:active,.rl:active{transform:translateY(3px);box-shadow:0 1px 0 var(--rpg-shadow)}
 .rl .rbar{border:2px solid var(--ink);border-radius:3px!important;background:var(--surface-2);position:relative;overflow:hidden;height:12px}
 .rl .rbar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.28) 6px 8px);pointer-events:none}
@@ -15021,8 +15021,8 @@ html:not([data-room="chambre"]) body section[data-sub="wr"]:not(#homeBox){displa
 .hmhouse .an-twk{animation:hmBlink 2.8s steps(1) infinite}
 .hmhouse{position:relative;border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#0d1230}
 .hmhsvg{width:100%;height:auto;display:block}
-.hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}
-.hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}
+.hmslot{position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;font:inherit;color:#fff;line-height:1.1}@media (hover:hover){
+.hmslot:hover,.hmslot:focus-visible{outline:2px solid #ffd94a;outline-offset:-1px;background:rgba(255,217,74,.08)}}
 .hmslot .hml{left:3px;bottom:3px;padding:2px 5px;border-width:2px}
 .hmslot .hml b{font-size:11px}
 .hmslot .hml small{font-size:11px}
@@ -15386,7 +15386,7 @@ html:not(#_a):not(#_b) body .bsd.now .bsb{border-color:var(--gold)}
 html:not(#_a):not(#_b) body .bsd.now .bsl{color:var(--gold)}
 html:not(#_a):not(#_b) body .bchap{display:grid;gap:4px;padding:14px 16px 12px;background:rgba(10,8,20,.55);border-top:3px solid #1a1210}
 /* — depuis principal-09.css — */
-html:not(#_a):not(#_b) body .bchap>small{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+html:not(#_a):not(#_b) body .bchap>small{font-weight:800;text-transform:uppercase;font-family:var(--f-pixel);font-size:20px;color:var(--ink);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
 html:not(#_a):not(#_b) body .bct{margin:0;font-family:var(--f-pixel);font-size:24px;line-height:1.1;color:#fff8e6;text-wrap:balance}
 html:not(#_a):not(#_b) body .bcl{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:15px;color:var(--text)}
 html:not(#_a):not(#_b) body .bcl li::before{content:"▸ ";color:var(--gold)}
@@ -15589,7 +15589,7 @@ html:not(#_a):not(#_b) body .bcviz{display:grid;grid-template-columns:repeat(3,1
 html:not(#_a):not(#_b) body .bct2{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 6px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
 html:not(#_a):not(#_b) body .bct2 .fti{width:30px;height:30px;display:block}
 html:not(#_a):not(#_b) body .bct2 b{font-size:15px}
-html:not(#_a):not(#_b) body .bct2 small{font-size:11px;opacity:.75;line-height:1.2}
+html:not(#_a):not(#_b) body .bct2 small{opacity:.75;line-height:1.2;font-size:13px}
 html:not(#_a):not(#_b) body .bct2 .bcl2{text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:11px}
 html:not(#_a):not(#_b) body #vieBox :is(#vie-maison,.capviz){display:none!important}
 html:not(#_a):not(#_b) body #vie-rythme label.vie-l:has([data-wake]){display:none!important}
@@ -15676,8 +15676,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.pav.bdp,.bn
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after{border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch){text-align:center!important;justify-content:center!important;justify-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch>span){justify-items:center!important;text-align:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
@@ -15702,6 +15702,9 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bnv){background:rgba
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bnv){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch.evadd,.pbs){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fond) small{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
+
+/* 5.11 : « Chapitre en cours » au modèle des titres de section (losange à la couleur de la section) */
+html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10px;flex:none;background:var(--gold);transform:rotate(45deg)}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
@@ -16589,7 +16592,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
   // 1. Rituels : appui long sur une tuile
   hold("#dqBox .rtile",(b)=>{const n=(b.querySelector(".rtn")||{}).textContent;const t=ritTasks().find(x=>x.name===n);if(!t)return;
     pop(b,[{l:ICO("star",14)+(t.core?" Retirer des essentiels":" Mettre dans mes essentiels"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
-      {l:"⏸ Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
+      {l:"Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
       {l:ICO("edit",14)+" Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
   // 8. Cigarettes : appui long pour masquer
   hold("#trkBox .trk-n",(b)=>{pop(b,[{l:"Masquer le compteur",f:()=>{const v=S.g.vie||(S.g.vie={});v.track=v.track||{};v.track.cig=false;save();try{renderTrk()}catch(e){}toast("Compteur masqué · à réactiver dans Ma vie")}}])});

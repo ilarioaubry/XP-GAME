@@ -72,34 +72,35 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 ## Phase 5 — Standards précisés, uniformité, lisibilité
 
 Standards trop globaux → version précisée :
-- [ ] 5.1 Centrage : centré pour bouton, tuile, compteur ; aligné à gauche pour les cartes avec description
+- [x] 5.1 (26/10/2026) Centrage : centré pour bouton, tuile, compteur ; aligné à gauche pour les cartes avec description → cartes de quêtes (pour toi, spéciales) alignées à gauche
 - [x] 5.2 (25/10/2026, choix C) État « à faire maintenant » : aucun signal pour l'instant ; « bordure colorée = actif / sélectionné » reste la seule règle
-- [ ] 5.3 Textes longs : titres de carte 2 lignes max ; noms dans les listes 1 ligne avec « … »
-- [ ] 5.4 11 px seulement sur fond sombre, sinon 13 px
-- [ ] 5.5 Un seul séparateur (pointillés) pour tous les groupes, Proches et Bilan compris (sauf fiches de proches)
-- [ ] 5.6 Icônes en 3 tailles : 16, 32, 48 px (multiples de la grille, pixels nets)
-- [ ] 5.7 Rareté : étoiles + mot de la rareté dans la fiche détaillée
-- [ ] 5.8 Toute action par appui long existe aussi dans le menu « … »
+- [x] 5.3 (26/10/2026) Textes longs : titres de carte 2 lignes max ; noms dans les listes 1 ligne avec « … » → quêtes pour toi : titre sur 2 lignes
+- [x] 5.4 (26/10/2026) 11 px seulement sur fond sombre, sinon 13 px → Énergie du matin et « meilleur jour » passés à 13 px ; règle écrite dans CLAUDE.md
+- [x] 5.5 (26/10/2026) Un seul séparateur (pointillés) pour tous les groupes, Proches et Bilan compris (sauf fiches de proches) → Proches : bandeaux pleins Famille / Amis remplacés par titre + pointillés à leur couleur
+- [ ] 5.6 Icônes en 3 tailles : 16, 32, 48 px (multiples de la grille, pixels nets) **(décision)** : aujourd'hui 15, 16, 18, 22, 24, 26, 27 px. Les icônes d'interface sont dessinées sur une grille de 12 : nettes à 12, 24 ou 36 px, floues à 16 ou 32 → proposition : interface 24 px, contenu 16 / 32 / 48 px
+- [x] 5.7 (26/10/2026) Rareté : étoiles + mot de la rareté dans la fiche détaillée → déjà le cas : le mot de rareté s'affiche à l'ouverture du coffre
+- [x] 5.8 (26/10/2026) Toute action par appui long existe aussi dans le menu « … » → vérifié : rituels (Atelier), compteur (Ma vie) ont un autre chemin ; seul le rythme des actions de « Cette semaine » reste en appui long
 
 Points d'uniformité restants :
-- [ ] 5.9 Fond des cartes : un seul fond partout
-- [ ] 5.10 Avatars des proches : un seul format (carré pixel, initiale si pas de photo)
-- [ ] 5.11 Titres de Bilan (« CHAPITRE EN COURS ») au modèle des titres de section
-- [ ] 5.12 Restes : pastilles « 0/10+5 », libellé « Goûter » grisé, tuile « Routine » de taille différente
-- [ ] 5.13 Menus contextuels encore en survol / positionnés au doigt → petite fenêtre centrée
-- [ ] 5.14 Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte
-- [ ] 5.19 Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10
+- [x] 5.9 (26/10/2026) Fond des cartes : un seul fond partout → cartes du moment au même fond que les autres ; les quêtes gardent la teinte de leur catégorie (couleur = catégorie)
+- [x] 5.10 (26/10/2026) Avatars des proches : un seul format (carré pixel, initiale si pas de photo) → déjà le cas : carrés pixel avec initiale
+- [x] 5.11 (26/10/2026) Titres de Bilan (« CHAPITRE EN COURS ») au modèle des titres de section → « Chapitre en cours » et « Données » au modèle des titres de section
+- [x] 5.12 (26/10/2026) Restes : pastilles « 0/10+5 », libellé « Goûter » grisé, tuile « Routine » de taille différente → « Goûter » plus grisé, tuile « Routine » au même fond, « 0/10 +5 » séparé en compteur + bouton « +5 »
+- [x] 5.13 (26/10/2026) Menus contextuels encore en survol / positionnés au doigt → petite fenêtre centrée → menus déjà centrés ; effets de survol limités aux appareils qui en ont (collaient sur iPhone)
+- [x] 5.14 (26/10/2026) Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte → vérifiées : météo, situation, projet, cadeau, retour après absence, coffre, assiette ; atelier des rituels non capturé
+- [x] 5.19 (26/10/2026) Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10 → plus de cadre jaune ni de cadre autour du graphique
 - [x] 5.20 Salut « Bonsoir, Ilar » : pas un bug, c'est le prénom choisi (25/10/2026)
-- [ ] 5.21 Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées
-- [ ] 5.22 Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif »)
-- [ ] 5.23 Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30)
-- [ ] 5.15 Carrousel des quêtes spéciales avec une seule carte : même taille de carte
+- [x] 5.21 (26/10/2026) Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées → plein écran quand on tape une ville ; lignes Aujourd'hui / Demain sans cadre
+- [x] 5.22 (26/10/2026) Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif ») → plus de cadre rouge ni de bordures à gauche
+- [x] 5.23 (26/10/2026) Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30) → choix : 2, 5, 10, 15, 20, 30 (les actions existantes gardent leur XP)
+- [ ] 5.24 Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels
+- [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
 - [ ] 5.16 Voile sombre sous le contenu, ou ciel limité à un bandeau en haut **(décision)**
-- [ ] 5.17 Libellés de stats (Force, Talent…) lisibles (fond sombre)
+- [x] 5.17 (26/10/2026) Libellés de stats (Force, Talent…) lisibles (fond sombre) → libellés en crème avec un petit carré de la couleur de la stat
 
-- [ ] 5.18 Intégrer les standards précisés dans CLAUDE.md
+- [x] 5.18 (26/10/2026) Intégrer les standards précisés dans CLAUDE.md
 
 ## Phase 6 — Interface et utilisation
 
