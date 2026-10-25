@@ -96,7 +96,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `duo` | 08, 18 | Défi à deux de la semaine | active ? |
 | `filmDay`, `filmSeen`, `filmDone` | 19, 24, 25 | Film du jour, films vus | active |
 | `taste`, `sit`, `normOff`, `lz`, `noMus`, `music` | 06, 18, 22, 28, correctifs | Goûts, situation, préférences, centres d'intérêt | active |
-| `aiN` | 18 | Compteur mensuel des appels à Claude | **héritée** (synchro Claude, étape 1.7) |
+| `aiN` | — | Compteur mensuel des appels à Claude (code retiré à l'étape 1.7) | **héritée** |
 | `afLast`, `afMem`, `afCustom` | 18, 26, correctifs, ma-vie | Dernière fois par activité, avec qui, activités perso | active |
 | `cur`, `fini`, `dm` | correctifs | En cours (livre, série…), terminés, objectifs du mois | active |
 | `map` | 15, 18, correctifs | Sorties : lieux visités | active |
@@ -134,8 +134,8 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 ### Météo et musique
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
-| `wx`, `wxc`, `wxh` | 17, 19, 20 | Météo : réglage, cache, historique | active |
-| `sdj`, `spOn` | 17, 18, 19 | Spotify : titres du jour, activé | active ? |
+| `wx`, `wxc`, `wxh` | 17, 19, 20 | Météo : réglage, cache, historique — à rebrancher (étape 1.8) | active |
+| `sdj`, `spOn` | 19 | Spotify : titres du jour (encore affichés dans l'historique du Bilan), activé — Spotify retiré à l'étape 1.7 | **héritée** |
 
 ### Héritées (fonctionnalités retirées ou cachées) — à trancher en phase 2
 | Clé | Fichiers | Contenu |

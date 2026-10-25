@@ -61,7 +61,7 @@ const qualityLevels=()=>STAT_KEYS.reduce((a,k)=>a+statInfo(S.stats[k]||0).l-1,0)
 const earnedAt=l=>(l-1)*S.perLevel+RANKS.filter(([min])=>min>1&&l>=min).length*S.rankBonus+qualityLevels()*(S.qPrice||0);
 const spentTotal=()=>S.spent.reduce((a,s)=>a+s.price,0);
 const balance=()=>earnedAt(levelInfo(S.xp).l)+S.extraMoney-spentTotal();
-let filter="all",doc=null,dirty=false,saving=false,saveTimer=null,mode="local";
+let filter="all",dirty=false,saveTimer=null;
 const $=id=>document.getElementById(id);
 
 

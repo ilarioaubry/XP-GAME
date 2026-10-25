@@ -27,7 +27,8 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 1.4 (25/10/2026) `manifest.json` : nom « XP » (aussi dans l'appli : bannière, accueil), icône pixel, écran de démarrage, mode appli
 - [x] 1.5 (25/10/2026) Service worker : l'appli s'ouvre sans réseau
 - [x] 1.6 (25/10/2026) Documenter les clés de `S.g` (`DONNEES.md` : 148 clés trouvées, pas 88 ; 13 héritées à trancher en phase 2)
-- [ ] 1.7 Supprimer le code de synchronisation avec le compte Claude (inutile sur GitHub Pages) et l'enveloppe HTML en double (deux documents imbriqués)
+- [x] 1.7 (25/10/2026, choix B) Supprimer le code de synchronisation avec le compte Claude (inutile sur GitHub Pages) et l'enveloppe HTML en double (deux documents imbriqués). Fait aussi : Spotify et les fonctions qui appelaient Claude (Écrire avec Claude, Renouveler, étapes de projet par Claude, arc par Claude → découpage automatique sans Claude) retirés, car ils ne marchent pas hors de Claude
+- [ ] 1.8 Météo : remplacer le connecteur AccuWeather de Claude (ne marche pas sur GitHub Pages) par Open-Meteo, gratuit et sans compte, position gardée sur le téléphone ; d'ici là le bouton « Météo » ne fonctionne pas
 
 ## Phase 2 — Tri et code mort (avec Ilario)
 
@@ -48,6 +49,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [ ] 3.5 … Moi (Profil, Bilan, Réglages)
 - [ ] 3.6 … Fenêtres (assiette, menus, « Avec qui ? »…)
 - [ ] 3.7 Supprimer les 1 451 `!important` et les hacks `html:not(#_a)…` au fil de la fusion
+- [ ] 3.9 Supprimer le CSS des fonctionnalités retirées (radio Spotify `.scradio`, `.spt`, `.spsh`, boss, Noël…)
 - [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds
 
 ## Phase 4 — Scripts
@@ -112,7 +114,7 @@ Lisibilité :
 
 ## Phase 8 — Nouvelles fonctionnalités (seulement après, à valider)
 
-- [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan
+- [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan (correction du 25/10 : des onglets Semaine / Mois / Année existent déjà, à revoir plutôt qu'à créer)
 - [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
 
 ## À vérifier sur l'iPhone d'Ilario (non vérifiable ici)

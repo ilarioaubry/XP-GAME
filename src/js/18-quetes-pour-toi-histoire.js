@@ -18,7 +18,7 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
     <h4>Ce qui ne te concerne pas <small>ces quêtes ne te seront plus proposées</small></h4><div class="qcdom">${NORMS.map(([k,l])=>`<button type="button" class="qchip sm" data-norm="${k}" aria-pressed="${nf.includes(k)}">${l}</button>`).join("")}</div>
     <h4>Tes artistes <small>pour des quêtes musique</small></h4><div class="sitart">${art.map((a,i)=>`<span class="sita"><b></b><button type="button" data-ra="${i}" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}</div>
     <form class="qcadd sitaf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter">${ICO("check",16)}</button></form>
-    ${G.spOn?`<button type="button" class="btn sitsp"${busy?" disabled":""}>${busy?"Spotify cherche…":"Récupérer mes artistes Spotify"}</button>`:`<p class="hint">Avec Spotify branché (la radio de ta scène), l'appli peut récupérer tes artistes toute seule.</p>`}${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
+    ${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
     <h4>Ce qui compte pour toi en ce moment <small>facultatif</small></h4><input class="qcname sitnote" maxlength="80" placeholder="Ex. je prépare mon premier concert">
     <button type="button" class="btn primary qcgo">Enregistrer</button></div>`;
     p.querySelector(".raclose").onclick=close;p.querySelectorAll(".sita b").forEach((b,i)=>b.textContent=art[i]);
@@ -27,8 +27,6 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
     p.querySelectorAll("[data-ra]").forEach(b=>b.onclick=()=>{art.splice(+b.dataset.ra,1);draw()});
     p.querySelectorAll("[data-norm]").forEach(b=>b.onclick=()=>{const k=b.dataset.norm,i=nf.indexOf(k);if(i>=0)nf.splice(i,1);else nf.push(k);draw()});
     p.querySelector(".sitaf").onsubmit=e=>{e.preventDefault();const i=e.target.querySelector("input"),v=i.value.trim();if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))art.push(v.slice(0,40));draw()};
-    {const sb=p.querySelector(".sitsp");if(sb)sb.onclick=async()=>{busy=true;artMsg="";draw();try{if(!SP.mcp&&!(await spStart()))throw{code:"not_granted"};const r=await SP.mcp.callTool("Spotify","search",{prompt:"mes artistes les plus écoutés",language:"fr-FR",limit:10});
-      const L=((r.payload&&r.payload.entities)||[]).filter(x=>x&&x.name&&(x.entity_type==="CREATOR"||/artist/.test(x.uri||""))).map(x=>String(x.name).slice(0,40));let n=0;L.forEach(a=>{if(art.length<12&&!art.some(b=>b.toLowerCase()===a.toLowerCase())){art.push(a);n++}});artMsg=n?"":"Aucun nouvel artiste trouvé."}catch(e){artMsg=spMsg(e)}busy=false;draw()}}
     p.querySelector(".qcgo").onclick=()=>{G.normOff=nf.slice();G.sit={...st,note:(st.note||"").trim().slice(0,80),t:Date.now()};G.taste={art:art.slice(0,12),t:Date.now()};if(G.fq)G.fq.d="";save();close();render();toast("Situation enregistrée : tes quêtes vont suivre")}};
   draw()}
 
@@ -115,7 +113,6 @@ function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=
 function fqItems(){const F=fqPick(false),c=fqCtx(),out=[];F.L.forEach(x=>{const q=FQ.find(y=>y[0]===x.id.split(":")[0]);if(!q)return;const cc={...c,A:x.A};let t,why;try{t=fqText(q,cc);why=q[6](cc)}catch(e){return}
   if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,why:o.cour?why+" · courage +15":why,cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
   (F.ai||[]).forEach((x,i)=>out.push({id:x.id||"ai"+i,t:x.t,why:x.why,cat:CATS[x.cat]?x.cat:"soi",xp:x.xp,ai:1}));return out}
-let fqAiBusy=false,fqAiErr="";
 // ===== Compléments de l'audit : normes, gratuit, compteur, réconfort, quartier, réactions
 const NORMS=[["minuit","Se coucher avant minuit",/minuit|au lit avant|avant 23 ?h/i],["soda","Journée sans soda",/soda/i],["vege","Repas végétarien",/végétarien|végé\b/i],["ecran","Pas d'écran avant de dormir",/écrans? coupés|sans écran.*(dormir|lit)|pas d'écran au lit|écran.*avant de dormir/i],["sport","Le sport",/pompes|squats|gainage|séance de sport|sport à la maison/i]];
 function normOk(t){const off=(S.g&&S.g.normOff)||[];if(!off.length)return true;t=String(t||"");return!NORMS.some(([k,,re])=>off.includes(k)&&re.test(t))}
@@ -129,9 +126,6 @@ function cntOf(t){const m=String(t||"").match(/(\d+)\s*(pages|offres|candidature
 const COMFORT=[["Une douche chaude, sans te presser","soi"],["10 min allongé·e avec une musique douce","soi"],["Une boisson chaude, sans écran","soi"],["Écrire ce qui pèse, puis fermer le carnet","soi"],["Appeler un proche 5 min","social"],["Se faire une tisane ou un chocolat chaud","soi"]];
 function badDay(){const G=S.g,tk=dayKey(Date.now()),md=(G.mood||{})[tk]|0,sl=(G.sleep||{})[tk];return enOf()===1||(md&&md<=2)||!!(sl&&sl.h&&sl.h<6)}
 function comfortQ(){if(!badDay())return[];const tk=dayKey(Date.now());let h=0;for(const ch of tk)h=(h*31+ch.charCodeAt(0))>>>0;const L=COMFORT.filter(c=>normOk(c[0]));const c=L[h%L.length];return c?[{id:"cf:"+tk,t:c[0],why:"Journée lourde : un moment de réconfort",cat:c[1],xp:10,k:"cf",key:""}]:[]}
-// coût de Claude
-function aiTick(){const G=S.g,ym=dayKey(Date.now()).slice(0,7);if(!G.aiN||typeof G.aiN!=="object"||G.aiN.m!==ym)G.aiN={m:ym,n:0};G.aiN.n++}
-function aiNote(){const G=S.g,ym=dayKey(Date.now()).slice(0,7),n=G.aiN&&G.aiN.m===ym?G.aiN.n:0;return``}
 // la carte du quartier : les quêtes dehors la découvrent
 const MAP_N=6,MAP_T=["parc","cafe","banc","fontaine","maison","arbre","boulang","rue","rue","maison","arbre","parc","kiosque","maison"];
 function mapOrder(){const c=(MAP_N-1)/2,ix=[];for(let i=0;i<MAP_N*MAP_N;i++)ix.push(i);return ix.sort((a,b)=>{const da=Math.hypot(a%MAP_N-c,Math.floor(a/MAP_N)-c),db=Math.hypot(b%MAP_N-c,Math.floor(b/MAP_N)-c);return da-db||a-b})}
@@ -154,14 +148,7 @@ function arcCur(){return(Array.isArray(S.g.prj)?S.g.prj:[]).find(p=>p.arc&&!p.wo
 function arcStep(){const p=arcCur();if(!p)return null;const i=p.st.findIndex(s=>!s.d);return i<0?null:{p,i}}
 function arcFallback(note){return["Décrire ton objectif réussi en une phrase","Lister 3 premières actions concrètes","20 min de recherche sur le sujet","Faire la première action de ta liste","En parler à quelqu'un qui peut t'aider","45 min pour avancer sur le plus dur","Étape finale : faire le pas décisif"]}
 async function arcAsk(){if(arcBusy)return;const G=S.g,s=sitOf();const note=(s&&s.note||"").trim();if(!note){sitSheet();return}
-  let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
   arcBusy=true;arcErr="";render();let n=cap(note).slice(0,40),cat="perso",st=null,ai=0;
-  if(sample){const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";
-    const prompt=`Tu découpes un objectif de vie en arc de quêtes pour une appli de jeu de rôle de la vie réelle. Objectif : « ${note} ». Situation : ${lab("job",s.job)||"?"}, vit ${lab("home",s.home)||"?"}, temps libre en semaine : ${lab("time",s.time)||"?"}.
-Réponds UNIQUEMENT en JSON : {"n": nom court de l'arc (max 32 caractères, sans tutoiement), "cat": une valeur parmi sport|perso|social|famille|maison|soi|travail|nourriture, "st": [6 ou 7 étapes]}.
-Chaque étape : 50 caractères max, au tutoiement implicite, un verbe d'action + un objet + une mesure, faisable en moins de 45 min, dans l'ordre logique. La dernière étape est le pas décisif, commence par « Boss final : ». Rien de coûteux ni de dangereux.`;
-    aiTick();try{const r=await sample.json(prompt,{cache:false});if(r&&Array.isArray(r.st)&&r.st.length>=3){st=r.st.slice(0,8).map(x=>String(x).slice(0,60));if(r.n)n=String(r.n).slice(0,40);if(CATS[r.cat])cat=r.cat;ai=1}}
-    catch(e){const k=e&&e.code;if(k==="not_granted"||k==="sampling_disabled"||k==="not_declared")arcErr="Claude n'est pas autorisé : j'ai utilisé un découpage simple.";else if(k!=="cancelled")arcErr="Claude n'a pas répondu : j'ai utilisé un découpage simple."}}
   if(!st)st=arcFallback(note);if(!Array.isArray(G.prj))G.prj=[];
   G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Arc lancé : <span class="p">${esc(n)}</span> · ${st.length} chapitres`)}
 // --- souvenirs

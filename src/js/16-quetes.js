@@ -44,7 +44,7 @@ function qcDiffGuess(n){const m=durOf(n);if(!m)return null;return m<5?0:m<=15?1:
 function qcSugs(kind){const s=sitOf(),doms=[...new Set([...((s&&s.goals)||[]).map(g=>QC_GOALDOM[g]).filter(Boolean),...QC_DOM.map(d=>d[0])])],out=[];
   for(let r=0;r<3&&out.length<6;r++)doms.forEach(d=>{const L=(QC_TPL[d]||[]).filter(t=>t[1]===kind);if(L[r]&&out.length<6&&!out.includes(L[r]))out.push(L[r])});return out}
 function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
-  const st={k:kind||"",name:"",ic:null,icSet:false,mo:"any",cat:opt.cat||null,catSet:!!opt.cat,diff:1,diffSet:false,rh:{m:"free",n:3,wd:[]},steps:[],due:"",dueM:"none",stepsMode:"",edit:!!E,pick:""};
+  const st={k:kind||"",name:"",ic:null,icSet:false,mo:"any",cat:opt.cat||null,catSet:!!opt.cat,diff:1,diffSet:false,rh:{m:"free",n:3,wd:[]},steps:[],due:"",dueM:"none",stepsMode:"me",edit:!!E,pick:""};
   if(E){st.name=E.name||E.n||"";if(kind==="act"){st.cat=E.cat;st.catSet=true;st.mo=E.mo||"any";const i=DIFF.findIndex(d=>d[1]===E.xp);st.diff=i>=0?i:1;st.diffSet=true;if(E.ic){st.ic=E.ic;st.icSet=true}st.rh=rhState(E,true)}}
   const steps=()=>(st.k==="act"?["type","name","when","rh","size","recap"]:st.k==="prj"?["type","name","steps","due","size","recap"]:["type"]).filter(x=>!(E&&x==="type"));
   let si=kind?(E?steps().length-1:1):0;
@@ -74,7 +74,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     else if(n==="steps"){q="Les étapes de ton projet";
       h=st.stepsMode?`<ol class="qcst">${st.steps.map((s,i)=>`<li><span></span><button type="button" data-rmst="${i}" aria-label="Retirer l'étape">${ICO("close",14)}</button></li>`).join("")}</ol>
         <form class="qcadd"><input maxlength="60" placeholder="${st.steps.length?"Étape suivante":"Première étape"}" aria-label="Nouvelle étape"><button type="submit" class="btn" aria-label="Ajouter l'étape">${ICO("check",18)}</button></form>
-        ${qcBusy?`<p class="hint">Claude découpe ton projet…</p>`:""}<button type="button" class="btn primary qwnext"${st.steps.length>=2?"":" disabled"}>${st.steps.length>=2?"Suivant":"Au moins 2 étapes"}</button>`
+        <button type="button" class="btn primary qwnext"${st.steps.length>=2?"":" disabled"}>${st.steps.length>=2?"Suivant":"Au moins 2 étapes"}</button>`
         :opt3([["ai","Claude les découpe pour moi","Compte comme un court message Claude"],["me","Je les écris moi-même",""]],"","sm")}
     else if(n==="due"){q="Pour quand ?";h=opt3([["none","Pas de date",""],["week","Cette semaine","Avant dimanche"],["month","Ce mois-ci","Avant la fin du mois"],["pick","Choisir une date",""]],st.dueM,"due")+(st.dueM==="pick"?`<input type="date" class="qcdue qwx" value="${st.due}" aria-label="Échéance"><button type="button" class="btn primary qwnext"${st.due?"":" disabled"}>Suivant</button>`:"")}
     else if(n==="recap"){q=E?"Tout est bon ?":"Ta nouvelle quête";const k=st.k,c=cat(),C=CATS[c]||{},I=ic(),kd=k==="prj"?prjKind({id:"x"+st.name.length,cat:c}):null,x=DIFF[diff()][1];
@@ -102,7 +102,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
       if(st.dueM==="none")st.due="";else if(st.dueM==="week"){t.setDate(t.getDate()+(6-wdOf(dayKey(Date.now()))));st.due=dayKey(t)}else if(st.dueM==="month"){st.due=dayKey(new Date(t.getFullYear(),t.getMonth()+1,0,12))}
       draw();if(st.dueM!=="pick")auto()});
     {const d=p.querySelector(".qcdue");if(d)d.onchange=()=>{st.due=d.value;draw()}}
-    p.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>{st.stepsMode=b.dataset.sm;draw();if(st.stepsMode==="ai")qcAiSteps(st,draw);else setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},60)});
+    p.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>{st.stepsMode=b.dataset.sm;draw();setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},60)});
     p.querySelectorAll("[data-rmst]").forEach(b=>b.onclick=()=>{st.steps.splice(+b.dataset.rmst,1);draw()});
     p.querySelectorAll(".qcst li span").forEach((s,i)=>s.textContent=st.steps[i]);
     {const f=p.querySelector(".qcadd");if(f)f.onsubmit=e=>{e.preventDefault();const v=f.querySelector("input").value.trim();if(!v)return;if(st.steps.length>=12){toast("12 étapes maximum");return}st.steps.push(v.slice(0,60));draw();setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},0)}}
@@ -113,12 +113,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     p.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{st.cat=b.dataset.cat;st.catSet=true;st.pick="";draw()});
     {const g=p.querySelector(".qwgo");if(g)g.onclick=()=>qcSave(st,E,{ic:ic(),cat:cat(),diff:diff()},close)}};
   draw()}
-let qcBusy=false;
-async function qcAiSteps(st,draw){if(qcBusy)return;let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
-  if(!sample){toast("Claude n'est pas disponible ici : écris tes étapes");return}qcBusy=true;draw();
-  try{aiTick();const r=await sample.json(`Découpe ce projet de la vie réelle en 4 à 7 étapes concrètes, dans l'ordre, chacune faisable en une fois (50 caractères max, un verbe d'action + un objet). Projet : « ${st.name} ». Réponds UNIQUEMENT avec un tableau JSON de chaînes.`,{cache:false});
-    const L=(Array.isArray(r)?r:[]).map(x=>String(x).slice(0,60)).filter(Boolean).slice(0,8);if(L.length)st.steps=L;else toast("Claude n'a pas répondu dans le bon format : écris tes étapes")}
-  catch(e){toast("Claude n'a pas pu répondre : écris tes étapes")}qcBusy=false;draw()}
+
 function qcSave(st,E,g,close){const name=st.name.trim();if(!name)return;const ts=Date.now(),k=st.k;
   if(E){if(k==="act"){E.name=name.slice(0,60);E.cat=g.cat;E.xp=DIFF[g.diff][1];if(g.ic)E.ic=g.ic;if(st.mo!=="any")E.mo=st.mo;else delete E.mo;rhApply(E,st.rh)}
     sfx("badge");save();close();render();toast("Modifié");return}
@@ -164,7 +159,7 @@ function renderPrj(){if(!S.g)return;const P=(S.g.prj||[]),A=P.filter(p=>!p.won),
   ["prjBox","prjBox2"].forEach(id=>{const box=$(id);if(!box)return;const inBoss=id==="prjBox2";
     if(!A.length&&!inBoss){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
     box.innerHTML=`<div class="head"><h2>${inBoss?"Mes projets":"Projets"}<span class="count">${A.length}</span></h2><button type="button" class="btn edbtn prnew" aria-label="Lancer un projet" title="Lancer un projet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
-    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("spark",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Claude le découpe en chapitres.</small></span></button>`:""}
+    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("spark",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
     ${A.length?A.map(prjCard).join(""):`<button type="button" class="wkcta prcta">${ICO("plus",18)}<span><b>Lance un projet</b><small>Une grosse tâche en étapes.</small></span></button>`}${W?`<p class="hint prwon">${W} projet${W>1?"s":""} terminé${W>1?"s":""}</p>`:""}`;
     box.querySelectorAll(".prc").forEach(c=>{const p=P.find(x=>x.id===c.dataset.id);c.querySelector(".prt b").textContent=p.n;const nt=c.querySelector(".prnt");if(nt)nt.textContent=p.st[p.st.findIndex(s=>!s.d)].t;
       c.querySelectorAll(".prl li span").forEach((s,i)=>s.textContent=p.st[i].t);

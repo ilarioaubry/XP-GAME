@@ -114,19 +114,14 @@ document.querySelectorAll("#testTools [data-t]").forEach(b=>b.onclick=()=>{if(!t
     save();render();toast("Test : tout est débloqué");return}
   save();render(prev);toast("Test : "+b.textContent)});
 
-// ---- Sauvegarde : ton espace privé dans la base de l'artefact, sinon ce navigateur ----
+// ---- Sauvegarde : stockage local du téléphone (clé « carnet-quetes ») ----
 function snapshot(){return{xp:S.xp,actions:S.actions,log:S.log,days:S.days,perLevel:S.perLevel,qPrice:S.qPrice,xpCap:S.xpCap,rankBonus:S.rankBonus,wishes:S.wishes,spent:S.spent.slice(-300),stats:S.stats,name:S.name,specials:S.specials,friends:S.friends,friendDone:S.friendDone,family:S.family,familyDone:S.familyDone,musicDone:S.musicDone,snd:S.snd,bonds:S.bonds,bondsLast:S.bondsLast,profiles:S.profiles,myPic:S.myPic,dayLimit:S.dayLimit,streakBonus:S.streakBonus,weekly:S.weekly,skills:S.skills,epics:S.epics,title:S.title,frame:S.frame,bdDone:S.bdDone,theme:S.theme,daily:S.daily,seeded:S.seeded,extraMoney:S.extraMoney,dayBonus:S.dayBonus,badges:S.badges,badgesInit:S.badgesInit,g:S.g,v:28}}
 function save(){dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,400)}
-let lastW="";
 let testMode=false,realSnap=null;
 async function flush(){
   if(testMode){dirty=false;clearTimeout(saveTimer);return}
-  if(saving||!dirty)return;dirty=false;
-  if(mode==="db"&&doc){saving=true;$("sync").textContent="Enregistrement…";
-    try{const snap0=snapshot();lastW=JSON.stringify(snap0);await doc.set(snap0);$("sync").textContent="Enregistré sur ton compte"}
-    catch(e){$("sync").textContent=e&&e.code==="invalid_argument"?"Lecture seule : progression non enregistrée":"Pas enregistré, nouvel essai…";if(e&&e.code!=="invalid_argument"){dirty=true;setTimeout(flush,2000)}}
-    saving=false;if(dirty)flush();
-  }else{try{localStorage.setItem("carnet-quetes",JSON.stringify(snapshot()));$("sync").textContent="Enregistré dans ce navigateur"}catch(e){$("sync").textContent="Non enregistré"}}
+  if(!dirty)return;dirty=false;
+  {try{localStorage.setItem("carnet-quetes",JSON.stringify(snapshot()));$("sync").textContent="Enregistré sur ce téléphone"}catch(e){$("sync").textContent="Non enregistré"}}
 }
 function migrateActions(d){
   let acts=Array.isArray(d.actions)?d.actions.map(a=>({...a})):STARTER.map(a=>({...a}));
@@ -214,21 +209,8 @@ function loadCore(d){S={xp:+d.xp||0,actions:migrateActions(d),log:Array.isArray(
 
 try{const raw=localStorage.getItem("carnet-quetes");if(raw){window.__hadLocal=1;load(JSON.parse(raw))}}catch(e){}
 if(ensureGroupQuests())save();
-render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(defis|talents)$/.test(location.hash)?"t":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré dans ce navigateur";
+render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(defis|talents)$/.test(location.hash)?"t":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré sur ce téléphone";
 
-(async()=>{
-  try{
-    const [db,user]=await Promise.all([window.claude?.use?.("db"),window.claude?.use?.("user")]);
-    const uid=user?await user.id():null;
-    if(!db||!uid){if(!window.__hadLocal)obStart();return}
-    doc=db.doc("data/users/"+uid+"/progress");
-    const snap=await doc.get();mode="db";
-    if(snap.exists){lastW=JSON.stringify(snap.data());load(snap.data());render()}
-    else{save();obStart()} // premier passage : on crée ta fiche
-    $("sync").textContent="Synchronisé avec ton compte";
-    let first=true;
-    const refresh=async()=>{if(testMode||document.hidden||dirty||saving)return;try{const s2=await doc.get();if(!s2.exists||dirty||saving)return;const d2=s2.data();if(JSON.stringify(d2)===lastW)return;lastW=JSON.stringify(d2);const prev=levelInfo(S.xp).l;load(d2);render(prev)}catch(e){}};
-    document.addEventListener("visibilitychange",refresh);window.addEventListener("focus",refresh);window.addEventListener("pageshow",refresh);
-    doc.onSnapshot(s=>{if(first){first=false;return}if(testMode)return;if(s.metadata.hasPendingWrites||dirty||saving||!s.exists)return;try{if(JSON.stringify(s.data())===lastW)return}catch(e){}const prev=levelInfo(S.xp).l;load(s.data());render(prev)},()=>{});
-  }catch(e){}
-})();
+// données enregistrées sur ce téléphone (stockage local) ; premier lancement : création du profil
+if(!window.__hadLocal)obStart();
+try{$("sync").textContent="Enregistré sur ce téléphone"}catch(e){}

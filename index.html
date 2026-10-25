@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!doctype html><html lang="fr"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style id="bilan2">
 html body .clo2{--text:#fff8e6;--muted:rgba(255,248,230,.7);--surface:rgba(16,18,44,.78);--line:rgba(255,255,255,.22)}
 html body .clo2 .cloin{gap:12px;min-height:100vh;align-content:start;grid-template-rows:auto 1fr auto}
@@ -3561,7 +3560,7 @@ const qualityLevels=()=>STAT_KEYS.reduce((a,k)=>a+statInfo(S.stats[k]||0).l-1,0)
 const earnedAt=l=>(l-1)*S.perLevel+RANKS.filter(([min])=>min>1&&l>=min).length*S.rankBonus+qualityLevels()*(S.qPrice||0);
 const spentTotal=()=>S.spent.reduce((a,s)=>a+s.price,0);
 const balance=()=>earnedAt(levelInfo(S.xp).l)+S.extraMoney-spentTotal();
-let filter="all",doc=null,dirty=false,saving=false,saveTimer=null,mode="local";
+let filter="all",dirty=false,saveTimer=null;
 const $=id=>document.getElementById(id);
 
 
@@ -4322,9 +4321,9 @@ function sceneTick(){const box=$("sceneBox");if(!box||!S.g)return;const h=dayH()
   const key=[pose,night,sub,__scBody.k,S.g.ambS?1:0,S.name,se,V.map(v=>v.n+v.msg+JSON.stringify(v.avc)).join(",")].join("|");if(box.__k===key)return;box.__k=key;
   let g="";for(let x=0;x<64;x++){const y=Math.round(2+Math.sin(x/6)*1.2);g+=`<rect x="${x}" y="${y}" width="1.03" height="1" fill="${mixc(SE.g[0],"#ffffff",.18)}"/><rect x="${x}" y="${y+1}" width="1.03" height="${3}" fill="${SE.g[0]}"/><rect x="${x}" y="${y+4}" width="1.03" height="${8-y-4}" fill="${SE.g[1]}"/>`;if(x%9===3&&se!=="hiver")g+=`<rect x="${x}" y="${y-1}" width="1" height="1" fill="${SE.g[0]}"/>`}
   box.innerHTML=`<div class="scn se-${se} pose-${pose}${night?" night":""}${SS.md?" md"+SS.md:""}${SS.tired?" tired":""}${SS.tired||(SS.md&&SS.md<=2)?" slow":SS.md===5?" glad":""}"><div class="scnt"><b></b><small></small></div><button type="button" class="scwx" aria-label="Météo"></button><button type="button" class="scsnd" aria-pressed="${!!S.g.ambS}" aria-label="Ambiance sonore" title="Ambiance sonore">${S.g.ambS?'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>':'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>'}</button>
-    ${spRadioHTML()}<div class="scgr"><svg viewBox="0 0 64 8" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">${g}</svg></div>
+    <div class="scgr"><svg viewBox="0 0 64 8" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">${g}</svg></div>
     ${pose==="sit"?`<div class="sclog">${ambPx(["..oooooooooo..",".oNNNNNNNNnNo.","oNnNNNNNNNNNNo","oNNNNNNnNNNNNo",".oNNNNNNNNNNo.","..oooooooooo.."],{o:"#2a1606",N:"#7a4a24",n:"#a8743a"})}</div>`:""}${pose==="sit"?`<div class="scfire">${ambPx(FIRE,{y:"#ffe066",Y:"#ffb030",r:"#ff7a2a",R:"#e8402a",o:"#3a2410",N:"#7a4a24"})}</div>`:""}
-    <div class="scav n${(pose==="walk"?4:pose==="sit"?1:2)}">${(pose==="walk"?[B.w0,B.w1,B.w2,B.w3]:pose==="sit"?[B.sit]:pose==="stretch"?[B.i0,B.st]:[B.i0,B.i1]).map((u,i)=>`<img class="f f${i}" src="${u}" alt="">`).join("")}<img class="fu" src="${B.up}" alt=""><img class="fw0" src="${B.wv0}" alt=""><img class="fw1" src="${B.wv1}" alt=""><img class="fy" src="${B.yw}" alt="">${(()=>{const w=wxNow();return w&&(w.k==="rain"||w.k==="storm")?`<span class="scumb">${ambPx(WX_UMB,{o:"#24182c",R:"#d64a3a",W:"#f4f1e8",k:"#5a3a2a"})}</span>`:""})()}${SS.md===1?`<span class="sccloud">${ambPx(["...oooo.....","..oWWWWo.oo.",".oWWWWWWoWWo","oWWWWWWWWWWo","oKKKKKKKKKKo",".oooooooooo."],{o:"#24182c",W:"#c8ccd8",K:"#9aa0b4"})}<i></i><i></i><i></i></span>`:""}${SS.md===5?`<span class="scglad"><i></i><i></i><i></i></span>`:""}</div>${sceneVisHTML(V,pose==="sit")}</div>`;sceneVisWire(box,V);sceneYawn(SS.tired&&pose!=="sit");{const r=box.querySelector(".scradio");if(r)r.onclick=()=>spSheet()}spPaint();spBoot();{const x=box.querySelector(".scwx");if(x)x.onclick=()=>wxSheet()}box.__wx=wxK2();wxBoot();
+    <div class="scav n${(pose==="walk"?4:pose==="sit"?1:2)}">${(pose==="walk"?[B.w0,B.w1,B.w2,B.w3]:pose==="sit"?[B.sit]:pose==="stretch"?[B.i0,B.st]:[B.i0,B.i1]).map((u,i)=>`<img class="f f${i}" src="${u}" alt="">`).join("")}<img class="fu" src="${B.up}" alt=""><img class="fw0" src="${B.wv0}" alt=""><img class="fw1" src="${B.wv1}" alt=""><img class="fy" src="${B.yw}" alt="">${(()=>{const w=wxNow();return w&&(w.k==="rain"||w.k==="storm")?`<span class="scumb">${ambPx(WX_UMB,{o:"#24182c",R:"#d64a3a",W:"#f4f1e8",k:"#5a3a2a"})}</span>`:""})()}${SS.md===1?`<span class="sccloud">${ambPx(["...oooo.....","..oWWWWo.oo.",".oWWWWWWoWWo","oWWWWWWWWWWo","oKKKKKKKKKKo",".oooooooooo."],{o:"#24182c",W:"#c8ccd8",K:"#9aa0b4"})}<i></i><i></i><i></i></span>`:""}${SS.md===5?`<span class="scglad"><i></i><i></i><i></i></span>`:""}</div>${sceneVisHTML(V,pose==="sit")}</div>`;sceneVisWire(box,V);sceneYawn(SS.tired&&pose!=="sit");{const x=box.querySelector(".scwx");if(x)x.onclick=()=>wxSheet()}box.__wx=wxK2();wxBoot();
   box.querySelector(".scnt b").textContent=hi+(S.name?", "+S.name:"");box.querySelector(".scnt small").textContent=sub;
   {const av=box.querySelector(".scav");if(av)av.onclick=()=>{av.classList.add("wave");sfx("blip");setTimeout(()=>av.classList.remove("wave"),1600)}}
   box.querySelector(".scsnd").onclick=()=>{S.g.ambS=!S.g.ambS;save();sfxCtx();ambSnd(!!S.g.ambS);box.__k="";sceneTick();toast(S.g.ambS?"Ambiance sonore activée":"Ambiance sonore coupée")}}
@@ -8451,7 +8450,7 @@ function qcDiffGuess(n){const m=durOf(n);if(!m)return null;return m<5?0:m<=15?1:
 function qcSugs(kind){const s=sitOf(),doms=[...new Set([...((s&&s.goals)||[]).map(g=>QC_GOALDOM[g]).filter(Boolean),...QC_DOM.map(d=>d[0])])],out=[];
   for(let r=0;r<3&&out.length<6;r++)doms.forEach(d=>{const L=(QC_TPL[d]||[]).filter(t=>t[1]===kind);if(L[r]&&out.length<6&&!out.includes(L[r]))out.push(L[r])});return out}
 function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
-  const st={k:kind||"",name:"",ic:null,icSet:false,mo:"any",cat:opt.cat||null,catSet:!!opt.cat,diff:1,diffSet:false,rh:{m:"free",n:3,wd:[]},steps:[],due:"",dueM:"none",stepsMode:"",edit:!!E,pick:""};
+  const st={k:kind||"",name:"",ic:null,icSet:false,mo:"any",cat:opt.cat||null,catSet:!!opt.cat,diff:1,diffSet:false,rh:{m:"free",n:3,wd:[]},steps:[],due:"",dueM:"none",stepsMode:"me",edit:!!E,pick:""};
   if(E){st.name=E.name||E.n||"";if(kind==="act"){st.cat=E.cat;st.catSet=true;st.mo=E.mo||"any";const i=DIFF.findIndex(d=>d[1]===E.xp);st.diff=i>=0?i:1;st.diffSet=true;if(E.ic){st.ic=E.ic;st.icSet=true}st.rh=rhState(E,true)}}
   const steps=()=>(st.k==="act"?["type","name","when","rh","size","recap"]:st.k==="prj"?["type","name","steps","due","size","recap"]:["type"]).filter(x=>!(E&&x==="type"));
   let si=kind?(E?steps().length-1:1):0;
@@ -8481,7 +8480,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     else if(n==="steps"){q="Les étapes de ton projet";
       h=st.stepsMode?`<ol class="qcst">${st.steps.map((s,i)=>`<li><span></span><button type="button" data-rmst="${i}" aria-label="Retirer l'étape">${ICO("close",14)}</button></li>`).join("")}</ol>
         <form class="qcadd"><input maxlength="60" placeholder="${st.steps.length?"Étape suivante":"Première étape"}" aria-label="Nouvelle étape"><button type="submit" class="btn" aria-label="Ajouter l'étape">${ICO("check",18)}</button></form>
-        ${qcBusy?`<p class="hint">Claude découpe ton projet…</p>`:""}<button type="button" class="btn primary qwnext"${st.steps.length>=2?"":" disabled"}>${st.steps.length>=2?"Suivant":"Au moins 2 étapes"}</button>`
+        <button type="button" class="btn primary qwnext"${st.steps.length>=2?"":" disabled"}>${st.steps.length>=2?"Suivant":"Au moins 2 étapes"}</button>`
         :opt3([["ai","Claude les découpe pour moi","Compte comme un court message Claude"],["me","Je les écris moi-même",""]],"","sm")}
     else if(n==="due"){q="Pour quand ?";h=opt3([["none","Pas de date",""],["week","Cette semaine","Avant dimanche"],["month","Ce mois-ci","Avant la fin du mois"],["pick","Choisir une date",""]],st.dueM,"due")+(st.dueM==="pick"?`<input type="date" class="qcdue qwx" value="${st.due}" aria-label="Échéance"><button type="button" class="btn primary qwnext"${st.due?"":" disabled"}>Suivant</button>`:"")}
     else if(n==="recap"){q=E?"Tout est bon ?":"Ta nouvelle quête";const k=st.k,c=cat(),C=CATS[c]||{},I=ic(),kd=k==="prj"?prjKind({id:"x"+st.name.length,cat:c}):null,x=DIFF[diff()][1];
@@ -8509,7 +8508,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
       if(st.dueM==="none")st.due="";else if(st.dueM==="week"){t.setDate(t.getDate()+(6-wdOf(dayKey(Date.now()))));st.due=dayKey(t)}else if(st.dueM==="month"){st.due=dayKey(new Date(t.getFullYear(),t.getMonth()+1,0,12))}
       draw();if(st.dueM!=="pick")auto()});
     {const d=p.querySelector(".qcdue");if(d)d.onchange=()=>{st.due=d.value;draw()}}
-    p.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>{st.stepsMode=b.dataset.sm;draw();if(st.stepsMode==="ai")qcAiSteps(st,draw);else setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},60)});
+    p.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>{st.stepsMode=b.dataset.sm;draw();setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},60)});
     p.querySelectorAll("[data-rmst]").forEach(b=>b.onclick=()=>{st.steps.splice(+b.dataset.rmst,1);draw()});
     p.querySelectorAll(".qcst li span").forEach((s,i)=>s.textContent=st.steps[i]);
     {const f=p.querySelector(".qcadd");if(f)f.onsubmit=e=>{e.preventDefault();const v=f.querySelector("input").value.trim();if(!v)return;if(st.steps.length>=12){toast("12 étapes maximum");return}st.steps.push(v.slice(0,60));draw();setTimeout(()=>{const i=p.querySelector(".qcadd input");i&&i.focus()},0)}}
@@ -8520,12 +8519,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     p.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{st.cat=b.dataset.cat;st.catSet=true;st.pick="";draw()});
     {const g=p.querySelector(".qwgo");if(g)g.onclick=()=>qcSave(st,E,{ic:ic(),cat:cat(),diff:diff()},close)}};
   draw()}
-let qcBusy=false;
-async function qcAiSteps(st,draw){if(qcBusy)return;let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
-  if(!sample){toast("Claude n'est pas disponible ici : écris tes étapes");return}qcBusy=true;draw();
-  try{aiTick();const r=await sample.json(`Découpe ce projet de la vie réelle en 4 à 7 étapes concrètes, dans l'ordre, chacune faisable en une fois (50 caractères max, un verbe d'action + un objet). Projet : « ${st.name} ». Réponds UNIQUEMENT avec un tableau JSON de chaînes.`,{cache:false});
-    const L=(Array.isArray(r)?r:[]).map(x=>String(x).slice(0,60)).filter(Boolean).slice(0,8);if(L.length)st.steps=L;else toast("Claude n'a pas répondu dans le bon format : écris tes étapes")}
-  catch(e){toast("Claude n'a pas pu répondre : écris tes étapes")}qcBusy=false;draw()}
+
 function qcSave(st,E,g,close){const name=st.name.trim();if(!name)return;const ts=Date.now(),k=st.k;
   if(E){if(k==="act"){E.name=name.slice(0,60);E.cat=g.cat;E.xp=DIFF[g.diff][1];if(g.ic)E.ic=g.ic;if(st.mo!=="any")E.mo=st.mo;else delete E.mo;rhApply(E,st.rh)}
     sfx("badge");save();close();render();toast("Modifié");return}
@@ -8571,7 +8565,7 @@ function renderPrj(){if(!S.g)return;const P=(S.g.prj||[]),A=P.filter(p=>!p.won),
   ["prjBox","prjBox2"].forEach(id=>{const box=$(id);if(!box)return;const inBoss=id==="prjBox2";
     if(!A.length&&!inBoss){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
     box.innerHTML=`<div class="head"><h2>${inBoss?"Mes projets":"Projets"}<span class="count">${A.length}</span></h2><button type="button" class="btn edbtn prnew" aria-label="Lancer un projet" title="Lancer un projet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
-    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("spark",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Claude le découpe en chapitres.</small></span></button>`:""}
+    ${inBoss&&sitOf()&&sitOf().note&&!arcCur()?`<button type="button" class="wkcta arccta2">${ICO("spark",18)}<span><b>Faire de « ${esc(sitOf().note.slice(0,40))} » un arc</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
     ${A.length?A.map(prjCard).join(""):`<button type="button" class="wkcta prcta">${ICO("plus",18)}<span><b>Lance un projet</b><small>Une grosse tâche en étapes.</small></span></button>`}${W?`<p class="hint prwon">${W} projet${W>1?"s":""} terminé${W>1?"s":""}</p>`:""}`;
     box.querySelectorAll(".prc").forEach(c=>{const p=P.find(x=>x.id===c.dataset.id);c.querySelector(".prt b").textContent=p.n;const nt=c.querySelector(".prnt");if(nt)nt.textContent=p.st[p.st.findIndex(s=>!s.d)].t;
       c.querySelectorAll(".prl li span").forEach((s,i)=>s.textContent=p.st[i].t);
@@ -8588,61 +8582,6 @@ function prjWin(p){const kd=prjKind(p),bonus=DIFF[p.d||0][1]*2;sfx("open",3);sky
   o.innerHTML=`<div class="bpc prwin" style="--tc:var(--gold)"><div class="prwm">${bossSvg(kd[0],kd[1],7)}</div><p class="bph">Projet terminé</p><h3></h3><p class="bpd">${p.st.length} étapes bouclées. Tu gagnes un coffre et +${bonus} XP.</p><button type="button" class="btn primary">Récupérer</button></div>`;
   o.querySelector("h3").textContent=p.n;document.body.appendChild(o);const go=o.querySelector("button");go.focus({preventScroll:true});
   go.onclick=ev=>{o.remove();complete({id:"prjwin-"+p.id,name:"Projet terminé · "+p.n,cat:CATS[p.cat]?p.cat:"soi",xp:bonus},document.querySelector(".qxp")||document.body,ev,0,{prj:p.id,win:1})}}
-// ===== Spotify : la platine de la scène, le son du jour, les playlists =====
-const SP={mcp:null,tried:false,tr:null,err:"",unw:null,recent:null,recErr:"",pl:null,plErr:"",plBusy:false,alt:null};
-const SP_MSG={needs_reauth:"Spotify s'est déconnecté. Reconnecte-le dans claude.ai, Réglages, Connecteurs.",server_not_connected:"Ajoute Spotify dans claude.ai, Réglages, Connecteurs, puis reviens ici.",selection_required:"Choisis ton compte Spotify dans la fenêtre que Claude t'a montrée, puis réessaie.",
-  not_in_manifest:"Tu n'as pas autorisé Spotify pour cette appli. Tu peux l'autoriser depuis les permissions de la page.",blocked_by_policy:"Ton organisation bloque cet outil Spotify.",approval_required:"Ton organisation demande une validation pour cet outil.",
-  not_granted:"Les connecteurs ne sont pas disponibles dans cette vue.",capability_disabled:"Les connecteurs ne sont pas disponibles dans cette vue.",capability_removed:"Les connecteurs ne sont pas disponibles dans cette vue.",
-  server_unavailable:"Spotify ne répond pas pour l'instant. Réessaie dans un moment.",rate_limited:"Trop de demandes d'un coup. Réessaie dans quelques secondes.",cancelled:"Demande annulée."};
-const spMsg=e=>SP_MSG[e&&e.code]||"Spotify n'a pas pu répondre. Réessaie dans un moment.";
-const SP_DENY=["needs_reauth","server_not_connected","selection_required","not_in_manifest","blocked_by_policy","approval_required","not_granted","capability_disabled","capability_removed","server_not_found"];
-function spFind(o,d){if(!o||typeof o!=="object"||d>5)return null;if(Array.isArray(o)){for(const x of o){const r=spFind(x,d+1);if(r)return r}return null}
-  if((o.name||o.title)&&(o.creators||o.artists||o.artist||o.album||o.uri&&/track|episode/.test(o.uri)))return o;for(const k of["currently_playing_entity","item","track","currently_playing","playing","entity","entities","result","data"])if(o[k]){const r=spFind(o[k],d+1);if(r)return r}for(const v of Object.values(o))if(v&&typeof v==="object"){const r=spFind(v,d+1);if(r)return r}return null}
-function spTrack(p,ifPlaying){if(typeof p==="string"){try{p=JSON.parse(p)}catch(e){return null}}if(!p||typeof p!=="object"||!Object.keys(p).length)return null;if(ifPlaying&&(p.is_playing===false||p.isPlaying===false))return null;const x=spFind(p,0);if(!x)return null;
-  const art=(x.creators||x.artists||[]).map(a=>a&&a.name).filter(Boolean).join(", ")||(typeof x.artist==="string"?x.artist:"")||"";
-  const cv=x.display&&x.display.covers?(x.display.covers.find(c=>c.size==="SMALL")||x.display.covers[0]||{}).url:x.album&&x.album.images?(x.album.images.slice(-1)[0]||{}).url:x.image||"";
-  const url=x.url||(x.external_urls&&x.external_urls.spotify)||"";return{n:String(x.name||x.title).slice(0,80),a:art.slice(0,80),u:/^https:\/\/open\.spotify\.com\//.test(url)?url:"",c:/^https:\/\/i\.scdn\.co\//.test(cv||"")?cv:""}}
-function spUrlIn(o,d){if(d>6||o==null)return null;if(typeof o==="string"){const m=o.match(/https:\/\/open\.spotify\.com\/playlist\/[A-Za-z0-9]+[^\s"')]*/);return m?m[0]:null}if(typeof o==="object")for(const v of Object.values(o)){const r=spUrlIn(v,d+1);if(r)return r}return null}
-async function spStart(){if(SP.unw)return true;SP.tried=true;let m=null;try{m=window.claude&&claude.use?await claude.use("mcp"):null}catch(e){m=null}
-  if(!m){SP.err="not_granted";spPaint();return false}SP.mcp=m;
-  try{SP.unw=m.watchTool("Spotify","get_currently_playing",null,ev=>{if(ev.type==="data"){SP.tr=spTrack(ev.result.payload,true);SP.err=""}else{const c=ev.error&&ev.error.code;if(SP_DENY.includes(c)){SP.tr=null;SP.err=c}else if(!SP.tr)SP.err=c||"upstream_error"}spPaint()},{refetchInterval:60000})}catch(e){SP.err="capability_disabled"}
-  spPaint();return true}
-function spPaint(){const r=document.querySelector("#sceneBox .scradio");if(r){r.classList.toggle("on",!!SP.tr);r.setAttribute("aria-label",SP.tr?`Sur Spotify : ${SP.tr.n}${SP.tr.a?" de "+SP.tr.a:""}`:"Musique");const b=r.querySelector(".scrb");if(b){b.querySelector("b").textContent=SP.tr?SP.tr.n:"";b.querySelector("span").textContent=SP.tr?SP.tr.a:""}}
-  const av=document.querySelector("#sceneBox .scav");if(av)av.classList.toggle("groove",!!SP.tr);const sh=document.querySelector(".spsh");if(sh&&sh.__draw)sh.__draw()}
-const SP_RADIO=["....k.......","....k.......","oooooooooooo","oRRRRRRRRRRo","oRwwoRRowwRo","oRwbwRRwbwRo","oRwwoRRowwRo","oRRRRRRRRRRo","oooooooooooo"];
-function spRadioHTML(){return`<button type="button" class="scradio${SP.tr?" on":""}" aria-label="Musique">${ambPx(SP_RADIO,{o:"#24182c",R:"#d64a3a",w:"#e8e2d0",b:"#2a2238",k:"#8a8f99"})}<span class="scn2"><i></i><i></i><i></i></span><span class="scrb"><b></b><span></span></span></button>`}
-function spCard(t,i){return`<div class="spt">${spCov(t,44)}<span><b></b><small></small></span>${t.u?`<a class="btn sm" href="${t.u}" target="_blank" rel="noopener">Ouvrir</a>`:""}<button type="button" class="btn sm sdj" data-i="${i}">Son du jour</button></div>`}
-
-function spSheet(){if(document.querySelector(".spsh"))return;if(SP.mcp&&SP.mcp.invalidate)SP.mcp.invalidate("Spotify","get_currently_playing").catch(()=>{});const G=S.g,tk=dayKey(Date.now()),p=document.createElement("div");p.className="bpop rapop spsh";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-label","Musique");document.body.appendChild(p);
-  const close=()=>p.remove();p.onclick=e=>{if(e.target===p)close()};const soir=dayPer()!=="matin";
-  const draw=p.__draw=()=>{if(!document.body.contains(p))return;if(!G.sdj||typeof G.sdj!=="object")G.sdj={};const sd=G.sdj[tk],L=[];
-    const cur=SP.tr;if(cur)L.push(cur);const rec=(SP.recent||[]).filter(t=>!cur||t.n!==cur.n);
-    let h=`<div class="bpc rap qc spc"><div class="raph"><h3>Musique</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>`;
-    if(!G.spOn)h+=`<p class="qcsub">Ta musique sur ta scène et une playlist pour ta routine.</p><button type="button" class="btn primary qcgo spgo">Connecter Spotify</button>`;
-    else{if(SP.err&&SP_DENY.includes(SP.err))h+=`<p class="sperr">${esc(spMsg({code:SP.err}))}</p>`;
-      if(sd)h+=`<h4>Son du jour</h4><div class="spl">${spCard(sd,-1)}</div>`;
-      h+=`<h4>En ce moment</h4>${cur?`<div class="spl">${spCard(cur,0)}</div>`:`<p class="hint" style="margin:0">${SP.err&&!SP_DENY.includes(SP.err)?esc(spMsg({code:SP.err})):"Rien ne joue sur Spotify en ce moment."}</p>`}
-      <h4>Tes derniers sons</h4>${SP.recent?rec.length?`<div class="spl">${rec.map((t,k)=>spCard(t,L.length+k)).join("")}</div>`:`<p class="hint vide">Aucun résultat.</p>`:SP.recErr?`<p class="sperr">${esc(SP.recErr)}</p><button type="button" class="btn sprec">Réessayer</button>`:`<button type="button" class="btn sprec">Afficher mes derniers sons</button>`}
-      <h4>Playlist</h4><div class="sppl"><button type="button" class="btn${soir?"":" primary"}" data-pl="matin"${SP.plBusy?" disabled":""}>Pour ma routine du matin</button><button type="button" class="btn${soir?" primary":""}" data-pl="soir"${SP.plBusy?" disabled":""}>Pour le feu de camp du soir</button></div>
-      ${SP.plBusy?`<p class="hint">Spotify prépare ta playlist…</p>`:""}${SP.pl?`<a class="btn primary qcgo" href="${SP.pl}" target="_blank" rel="noopener">Ouvrir ma playlist dans Spotify</a>`:""}${SP.plErr?`<p class="sperr">${esc(SP.plErr)}</p>`:""}
-      ${SP.alt&&SP.alt.length?`<div class="spl">${SP.alt.map(t=>`<div class="spt"><span class="spnc">${ICO("spark",18)}</span><span><b></b><small></small></span>${t.u?`<a class="btn sm" href="${t.u}" target="_blank" rel="noopener">Ouvrir</a>`:""}</div>`).join("")}</div>`:""}`}
-    h+=`</div>`;p.innerHTML=h;const all=[...L,...rec];
-    p.querySelectorAll(".spl").forEach(box=>{const cards=[...box.querySelectorAll(".spt")];cards.forEach(el=>{const i=+((el.querySelector(".sdj")||{}).dataset||{}).i;const t=i===-1?sd:Number.isNaN(i)?null:all[i];if(t){el.querySelector("b").textContent=t.n;el.querySelector("small").textContent=t.a}})});
-    if(SP.alt){const altBox=[...p.querySelectorAll(".spl")].pop();if(altBox)[...altBox.querySelectorAll(".spt")].forEach((el,k)=>{const t=SP.alt[k];if(t&&!el.querySelector(".sdj")){el.querySelector("b").textContent=t.n;el.querySelector("small").textContent=t.a}})}
-    p.querySelector(".raclose").onclick=close;
-    {const go=p.querySelector(".spgo");if(go)go.onclick=async()=>{G.spOn=1;save();await spStart();if(SP.err&&SP_DENY.includes(SP.err)){G.spOn=0;save()}draw()}}
-    p.querySelectorAll(".sdj").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const t=i===-1?sd:all[i];if(!t)return;if(i===-1){delete G.sdj[tk];toast("Son du jour retiré")}else{G.sdj[tk]={...t,t:Date.now()};const ks=Object.keys(G.sdj).sort();while(ks.length>60)delete G.sdj[ks.shift()];sfx("badge");toast(`Son du jour : <span class="p">${esc(t.n)}</span>`)}save();draw();sceneTick()});
-    {const rb=p.querySelector(".sprec");if(rb)rb.onclick=async()=>{rb.disabled=true;rb.textContent="Chargement…";try{if(!SP.mcp&&!(await spStart()))throw{code:"not_granted"};const r=await SP.mcp.callTool("Spotify","search",{prompt:"mes titres écoutés récemment",language:"fr-FR",limit:6});const ents=(r.payload&&r.payload.entities)||[];SP.recent=ents.map(e=>spTrack(e)).filter(Boolean);SP.recErr=""}catch(e){SP.recErr=spMsg(e)}draw()}}
-    p.querySelectorAll("[data-pl]").forEach(b=>b.onclick=async()=>{if(SP.plBusy)return;SP.plBusy=true;SP.pl=null;SP.plErr="";SP.alt=null;draw();const mo=b.dataset.pl,md=(G.mood||{})[tk];
-      const prompt=mo==="matin"?`Crée une playlist d'environ 25 minutes pour ma routine du matin, énergique et positive${md&&md<=2?", qui remonte le moral en douceur":""}, dans le style de ce que j'écoute`:`Crée une playlist d'environ 40 minutes calme et chaleureuse pour une soirée au coin du feu, dans le style de ce que j'écoute`;
-      try{if(!SP.mcp&&!(await spStart()))throw{code:"not_granted"};const r=await SP.mcp.callTool("Spotify","generate_playlist",{prompt,language:"fr-FR"},{cache:false});const u=spUrlIn(r.payload,0)||spUrlIn(r.content,0);
-        const txt=JSON.stringify(r.payload||r.content||"");if(u){SP.pl=u;sfx("badge")}else if(/NOT_SUBSCRIBED|PREMIUM/i.test(txt))throw{code:"premium"};else SP.plErr="Spotify a répondu sans lien de playlist. Elle est peut-être déjà dans ta bibliothèque Spotify."}
-      catch(e){if(e&&(e.code==="premium"||/NOT_SUBSCRIBED|PREMIUM/i.test(JSON.stringify(e.result||e.message||"")))){SP.plErr="Créer une playlist demande Spotify Premium. Voici des playlists existantes à la place :";
-          try{const r=await SP.mcp.callTool("Spotify","search",{prompt:mo==="matin"?"playlist énergique pour la routine du matin":"playlist calme coin du feu soirée",language:"fr-FR",limit:4});SP.alt=((r.payload&&r.payload.entities)||[]).map(x=>({n:String(x.name||"").slice(0,80),a:((x.creators||[]).map(c=>c.name).join(", ")||"Playlist").slice(0,80),u:/^https:\/\/open\.spotify\.com\//.test(x.url||"")?x.url:""})).filter(x=>x.n)}catch(e2){}}
-        else SP.plErr=e&&e.code==="tool_error"?"Spotify n'a pas pu créer la playlist : "+String(e.message||"").slice(0,120):spMsg(e)}
-      SP.plBusy=false;draw()})};
-  draw()}
-function spBoot(){if(S.g&&S.g.spOn&&!SP.tried)spStart()}
 // ===== Météo réelle (AccuWeather) : ciel, avatar, quêtes =====
 const WXS="AccuWeather®";
 const WX={mcp:null,tried:false,err:"",unw:null,res:null,busy:false};
@@ -8733,7 +8672,7 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
     <h4>Ce qui ne te concerne pas <small>ces quêtes ne te seront plus proposées</small></h4><div class="qcdom">${NORMS.map(([k,l])=>`<button type="button" class="qchip sm" data-norm="${k}" aria-pressed="${nf.includes(k)}">${l}</button>`).join("")}</div>
     <h4>Tes artistes <small>pour des quêtes musique</small></h4><div class="sitart">${art.map((a,i)=>`<span class="sita"><b></b><button type="button" data-ra="${i}" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}</div>
     <form class="qcadd sitaf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter">${ICO("check",16)}</button></form>
-    ${G.spOn?`<button type="button" class="btn sitsp"${busy?" disabled":""}>${busy?"Spotify cherche…":"Récupérer mes artistes Spotify"}</button>`:`<p class="hint">Avec Spotify branché (la radio de ta scène), l'appli peut récupérer tes artistes toute seule.</p>`}${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
+    ${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
     <h4>Ce qui compte pour toi en ce moment <small>facultatif</small></h4><input class="qcname sitnote" maxlength="80" placeholder="Ex. je prépare mon premier concert">
     <button type="button" class="btn primary qcgo">Enregistrer</button></div>`;
     p.querySelector(".raclose").onclick=close;p.querySelectorAll(".sita b").forEach((b,i)=>b.textContent=art[i]);
@@ -8742,8 +8681,6 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
     p.querySelectorAll("[data-ra]").forEach(b=>b.onclick=()=>{art.splice(+b.dataset.ra,1);draw()});
     p.querySelectorAll("[data-norm]").forEach(b=>b.onclick=()=>{const k=b.dataset.norm,i=nf.indexOf(k);if(i>=0)nf.splice(i,1);else nf.push(k);draw()});
     p.querySelector(".sitaf").onsubmit=e=>{e.preventDefault();const i=e.target.querySelector("input"),v=i.value.trim();if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))art.push(v.slice(0,40));draw()};
-    {const sb=p.querySelector(".sitsp");if(sb)sb.onclick=async()=>{busy=true;artMsg="";draw();try{if(!SP.mcp&&!(await spStart()))throw{code:"not_granted"};const r=await SP.mcp.callTool("Spotify","search",{prompt:"mes artistes les plus écoutés",language:"fr-FR",limit:10});
-      const L=((r.payload&&r.payload.entities)||[]).filter(x=>x&&x.name&&(x.entity_type==="CREATOR"||/artist/.test(x.uri||""))).map(x=>String(x.name).slice(0,40));let n=0;L.forEach(a=>{if(art.length<12&&!art.some(b=>b.toLowerCase()===a.toLowerCase())){art.push(a);n++}});artMsg=n?"":"Aucun nouvel artiste trouvé."}catch(e){artMsg=spMsg(e)}busy=false;draw()}}
     p.querySelector(".qcgo").onclick=()=>{G.normOff=nf.slice();G.sit={...st,note:(st.note||"").trim().slice(0,80),t:Date.now()};G.taste={art:art.slice(0,12),t:Date.now()};if(G.fq)G.fq.d="";save();close();render();toast("Situation enregistrée : tes quêtes vont suivre")}};
   draw()}
 
@@ -8830,7 +8767,6 @@ function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=
 function fqItems(){const F=fqPick(false),c=fqCtx(),out=[];F.L.forEach(x=>{const q=FQ.find(y=>y[0]===x.id.split(":")[0]);if(!q)return;const cc={...c,A:x.A};let t,why;try{t=fqText(q,cc);why=q[6](cc)}catch(e){return}
   if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,why:o.cour?why+" · courage +15":why,cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
   (F.ai||[]).forEach((x,i)=>out.push({id:x.id||"ai"+i,t:x.t,why:x.why,cat:CATS[x.cat]?x.cat:"soi",xp:x.xp,ai:1}));return out}
-let fqAiBusy=false,fqAiErr="";
 // ===== Compléments de l'audit : normes, gratuit, compteur, réconfort, quartier, réactions
 const NORMS=[["minuit","Se coucher avant minuit",/minuit|au lit avant|avant 23 ?h/i],["soda","Journée sans soda",/soda/i],["vege","Repas végétarien",/végétarien|végé\b/i],["ecran","Pas d'écran avant de dormir",/écrans? coupés|sans écran.*(dormir|lit)|pas d'écran au lit|écran.*avant de dormir/i],["sport","Le sport",/pompes|squats|gainage|séance de sport|sport à la maison/i]];
 function normOk(t){const off=(S.g&&S.g.normOff)||[];if(!off.length)return true;t=String(t||"");return!NORMS.some(([k,,re])=>off.includes(k)&&re.test(t))}
@@ -8844,9 +8780,6 @@ function cntOf(t){const m=String(t||"").match(/(\d+)\s*(pages|offres|candidature
 const COMFORT=[["Une douche chaude, sans te presser","soi"],["10 min allongé·e avec une musique douce","soi"],["Une boisson chaude, sans écran","soi"],["Écrire ce qui pèse, puis fermer le carnet","soi"],["Appeler un proche 5 min","social"],["Se faire une tisane ou un chocolat chaud","soi"]];
 function badDay(){const G=S.g,tk=dayKey(Date.now()),md=(G.mood||{})[tk]|0,sl=(G.sleep||{})[tk];return enOf()===1||(md&&md<=2)||!!(sl&&sl.h&&sl.h<6)}
 function comfortQ(){if(!badDay())return[];const tk=dayKey(Date.now());let h=0;for(const ch of tk)h=(h*31+ch.charCodeAt(0))>>>0;const L=COMFORT.filter(c=>normOk(c[0]));const c=L[h%L.length];return c?[{id:"cf:"+tk,t:c[0],why:"Journée lourde : un moment de réconfort",cat:c[1],xp:10,k:"cf",key:""}]:[]}
-// coût de Claude
-function aiTick(){const G=S.g,ym=dayKey(Date.now()).slice(0,7);if(!G.aiN||typeof G.aiN!=="object"||G.aiN.m!==ym)G.aiN={m:ym,n:0};G.aiN.n++}
-function aiNote(){const G=S.g,ym=dayKey(Date.now()).slice(0,7),n=G.aiN&&G.aiN.m===ym?G.aiN.n:0;return``}
 // la carte du quartier : les quêtes dehors la découvrent
 const MAP_N=6,MAP_T=["parc","cafe","banc","fontaine","maison","arbre","boulang","rue","rue","maison","arbre","parc","kiosque","maison"];
 function mapOrder(){const c=(MAP_N-1)/2,ix=[];for(let i=0;i<MAP_N*MAP_N;i++)ix.push(i);return ix.sort((a,b)=>{const da=Math.hypot(a%MAP_N-c,Math.floor(a/MAP_N)-c),db=Math.hypot(b%MAP_N-c,Math.floor(b/MAP_N)-c);return da-db||a-b})}
@@ -8869,14 +8802,7 @@ function arcCur(){return(Array.isArray(S.g.prj)?S.g.prj:[]).find(p=>p.arc&&!p.wo
 function arcStep(){const p=arcCur();if(!p)return null;const i=p.st.findIndex(s=>!s.d);return i<0?null:{p,i}}
 function arcFallback(note){return["Décrire ton objectif réussi en une phrase","Lister 3 premières actions concrètes","20 min de recherche sur le sujet","Faire la première action de ta liste","En parler à quelqu'un qui peut t'aider","45 min pour avancer sur le plus dur","Étape finale : faire le pas décisif"]}
 async function arcAsk(){if(arcBusy)return;const G=S.g,s=sitOf();const note=(s&&s.note||"").trim();if(!note){sitSheet();return}
-  let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
   arcBusy=true;arcErr="";render();let n=cap(note).slice(0,40),cat="perso",st=null,ai=0;
-  if(sample){const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";
-    const prompt=`Tu découpes un objectif de vie en arc de quêtes pour une appli de jeu de rôle de la vie réelle. Objectif : « ${note} ». Situation : ${lab("job",s.job)||"?"}, vit ${lab("home",s.home)||"?"}, temps libre en semaine : ${lab("time",s.time)||"?"}.
-Réponds UNIQUEMENT en JSON : {"n": nom court de l'arc (max 32 caractères, sans tutoiement), "cat": une valeur parmi sport|perso|social|famille|maison|soi|travail|nourriture, "st": [6 ou 7 étapes]}.
-Chaque étape : 50 caractères max, au tutoiement implicite, un verbe d'action + un objet + une mesure, faisable en moins de 45 min, dans l'ordre logique. La dernière étape est le pas décisif, commence par « Boss final : ». Rien de coûteux ni de dangereux.`;
-    aiTick();try{const r=await sample.json(prompt,{cache:false});if(r&&Array.isArray(r.st)&&r.st.length>=3){st=r.st.slice(0,8).map(x=>String(x).slice(0,60));if(r.n)n=String(r.n).slice(0,40);if(CATS[r.cat])cat=r.cat;ai=1}}
-    catch(e){const k=e&&e.code;if(k==="not_granted"||k==="sampling_disabled"||k==="not_declared")arcErr="Claude n'est pas autorisé : j'ai utilisé un découpage simple.";else if(k!=="cancelled")arcErr="Claude n'a pas répondu : j'ai utilisé un découpage simple."}}
   if(!st)st=arcFallback(note);if(!Array.isArray(G.prj))G.prj=[];
   G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Arc lancé : <span class="p">${esc(n)}</span> · ${st.length} chapitres`)}
 // --- souvenirs
@@ -8940,7 +8866,7 @@ function renderSleepGo(){const box=$("sleepGo");if(!box||!S.g)return;const G=S.g
   box.innerHTML=`<div class="slgc"><button type="button" class="btn primary slgb"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>Je vais dormir</button></div>`;
   box.querySelector(".slgb").onclick=()=>closeOpen(0,1)}
 // ===== Nouveau Bilan : ta semaine comme un chapitre
-let bilTab="w",bilOff=0,bilDet=false,bilEdit=false,bilAiBusy=false,bilAiErr="";
+let bilTab="w",bilOff=0,bilDet=false,bilEdit=false;
 const GOAL_CAT={job:["travail"],forme:["sport"],potes:["social"],famille:["famille"],son:["perso"],apprendre:["perso"],chez:["maison"],manger:["nourriture"],argent:["maison","travail"],ecrans:["soi"],moral:["soi"],sommeil:[]};
 const GOAL_INT={job:"Envoyer 5 candidatures",forme:"3 séances de sport",sommeil:"Au lit avant minuit, 5 soirs",ecrans:"Pas d'écran au lit",potes:"Voir un pote en vrai",famille:"Appeler un proche 3 fois",son:"3 séances de son",argent:"Noter chaque dépense",apprendre:"20 min d'apprentissage par jour",chez:"Ranger une zone par jour",moral:"Un moment rien que pour toi chaque jour",manger:"Un vrai repas maison chaque soir"};
 const CHAP_CAT={sport:"La semaine du sport",social:"La semaine des potes",famille:"La semaine en famille",maison:"La semaine du grand rangement",soi:"La semaine pour toi",perso:"La semaine du son",travail:"La semaine au travail",nourriture:"La semaine aux fourneaux"};
@@ -9000,7 +8926,7 @@ function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const 
     const R=bRit(K),gl=bGoals(K,1),mo=bMoments(K),gn=bGains(K);
     h+=`<div class="bnav"><button type="button" class="bnv" data-d="1" aria-label="Semaine précédente">${ICO("chev",18)}</button><span>${(()=>{const a=new Date(K[0]+"T12:00"),b=new Date(K[K.length-1]+"T12:00"),m=d=>d.toLocaleDateString("fr-FR",{month:"short"});return a.getMonth()===b.getMonth()?a.getDate()+"–"+b.getDate()+" "+m(b):a.getDate()+" "+m(a)+" – "+b.getDate()+" "+m(b)})()}</span><button type="button" class="bnv nx" data-d="-1" aria-label="Semaine suivante" ${bilOff<=0?"disabled":""}>${ICO("chev",18)}</button></div>`;
     h+=`<div class="bhero">${bStrip(K)}<div class="bchap"><small>${cur&&wdOf(tk)<6?"Chapitre en cours":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small>${bilEdit?`<form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form>`:`<h3 class="bct"></h3>`}<ul class="bcl">${lines.map(()=>"<li></li>").join("")}</ul>
-      <div class="bcb">${bilEdit?"":`<button type="button" class="lnk bced1">Renommer</button>`}<button type="button" class="lnk bcai"${bilAiBusy?" disabled":""} title="Compte comme un court message dans ton forfait Claude">${bilAiBusy?"Claude écrit…":"Écrire avec Claude"}</button>${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div>${bilAiErr?`<p class="sperr">${esc(bilAiErr)}</p>`:""}</div></div>`;
+      <div class="bcb">${bilEdit?"":`<button type="button" class="lnk bced1">Renommer</button>`}${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div></div></div>`;
     h+=bSec("Tes quêtes principales",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`);
     h+=bSec(`Tes rituels<span class="bh3r">${R.due?R.pct+" %":""}${ritStreak()&&cur?` · essentiels ${ritStreak()} j`:""}</span>`,R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint vide">Aucun rituel suivi cette semaine.</p>`);
     h+=bSec("Corps et tête",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`);
@@ -9014,7 +8940,7 @@ function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const 
      const f=box.querySelector(".bced");if(f){const i=f.querySelector("input");i.value=title;setTimeout(()=>i.focus(),30);f.onsubmit=e=>{e.preventDefault();const v=i.value.trim();G.chap[wk]={...(G.chap[wk]||{}),t:v||undefined};if(!v)delete G.chap[wk].t;bilEdit=false;save();renderChap()}}
      const e1=box.querySelector(".bced1");if(e1)e1.onclick=()=>{bilEdit=true;renderChap()};
      const rs=box.querySelector(".bcrs");if(rs)rs.onclick=()=>{delete G.chap[wk];save();renderChap()};
-     const ai=box.querySelector(".bcai");if(ai)ai.onclick=()=>chapAsk(K,auto);
+     
      const sb=box.querySelector(".bsit");if(sb)sb.onclick=()=>sitSheet();
      box.querySelectorAll("[data-int]").forEach(b=>b.onclick=()=>{if(!G.intn||typeof G.intn!=="object")G.intn={};const nk=bWeek(-1)[0];G.intn[nk]=G.intn[nk]===b.dataset.int?"":b.dataset.int;save();renderChap();if(G.intn[nk])toast("Intention notée pour lundi")})}}
   else if(bilTab==="m"){const d=new Date(dayKey(Date.now())+"T12:00");d.setDate(1);d.setMonth(d.getMonth()-bilOff);const y=d.getFullYear(),m=d.getMonth(),n=new Date(y,m+1,0).getDate(),K=[];for(let i=1;i<=n;i++)K.push(`${y}-${String(m+1).padStart(2,"0")}-${String(i).padStart(2,"0")}`);
@@ -9041,19 +8967,6 @@ function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const 
   box.querySelectorAll("[data-bt]").forEach(b=>b.onclick=()=>{bilTab=b.dataset.bt;bilOff=0;bilEdit=false;renderChap()});
   box.querySelectorAll(".bnv").forEach(b=>b.onclick=()=>{bilOff=Math.max(0,bilOff+ +b.dataset.d);bilEdit=false;renderChap()});
   {const sunK=wdOf(tk)===6&&dayH()>=18?bWeek(0)[0]:wdOf(tk)===0&&dayH()<14?bWeek(1)[0]:null;if(sunK&&bilTab==="w"&&bWeek(bilOff)[0]===sunK&&typeof subs!=="undefined"&&subs.c==="bilan"&&view==="c"&&G.wkSeen!==sunK){G.wkSeen=sunK;save()}}}
-async function chapAsk(K,auto){if(bilAiBusy)return;let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
-  if(!sample){bilAiErr="Claude n'est pas disponible dans cette vue.";renderChap();return}bilAiBusy=true;bilAiErr="";renderChap();const G=S.g,tk=dayKey(Date.now()),s=sitOf()||{};
-  const days=K.filter(k=>k<=tk).map(k=>{const c=bCat(k),j=(G.jr||{})[k]||{},sd=(G.sdj||{})[k];return`${JOURS[wdOf(k)]} : ${bXp(k)} XP (${Object.entries(c).filter(([a])=>a!=="eau").sort((a,b)=>b[1]-a[1]).slice(0,2).map(([a,v])=>(CATS[a]||{}).label+" "+v).join(", ")||"rien"}), humeur ${(G.mood||{})[k]||"?"}/5, nuit ${((G.sleep||{})[k]||{}).h||"?"} h${j.t?`, journal : « ${j.t} »`:""}${sd?`, son du jour : ${sd.n} de ${sd.a}`:""}`}).join("\n");
-  const ev=evArc().filter(e=>K.includes(e.d)).map(e=>e.n).join(", ");
-  const prompt=`Tu écris le titre et le résumé d'une semaine dans une appli de jeu de rôle de la vie réelle, comme le titre d'un chapitre de roman. Réponds UNIQUEMENT en JSON : {"t": titre (max 45 caractères, commence par « La semaine », tutoiement interdit dans le titre), "l": [3 phrases courtes au tutoiement, max 70 caractères chacune, concrètes, bienveillantes, jamais culpabilisantes]}.
-Objectifs : ${(s.goals||[]).map(g=>((SIT_Q.goals.find(x=>x[0]===g)||[])[1])||g).join(", ")||"?"} ; en ce moment : ${s.note||"?"}.
-Événements : ${ev||"aucun"}.
-Résumé automatique : ${auto.l.join(" ; ")}.
-Jours :
-${days}`;
-  aiTick();try{const r=await sample.json(prompt,{cache:false});if(!r||typeof r.t!=="string")throw{code:"invalid_json"};G.chap[K[0]]={t:String(r.t).slice(0,60),l:(Array.isArray(r.l)?r.l:[]).slice(0,3).map(x=>String(x).slice(0,90)),ai:1};save();sfx("badge")}
-  catch(e){const k=e&&e.code;bilAiErr=k==="not_granted"||k==="sampling_disabled"||k==="not_declared"?"Tu n'as pas autorisé Claude pour cette appli.":k==="rate_limited"?"Trop de demandes pour l'instant. Réessaie plus tard.":k==="cancelled"?"":"Claude n'a pas pu écrire ce chapitre. Réessaie dans un moment."}
-  bilAiBusy=false;renderChap()}
 // --- récap du dimanche soir (et du lundi matin) sur l'accueil
 function renderWkSun(){const box=$("wkSun");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),wd=wdOf(tk),h=dayH();let K=null;
   if(wd===6&&h>=18)K=bWeek(0);else if(wd===0&&h<14)K=bWeek(1);const show=!!K&&G.wkSeen!==K[0]&&!isOff();box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
@@ -9133,8 +9046,8 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
       <span class="fqa">${d?`<span class="fqok">${x.part?"½":ICO("check",18)}</span>`:`${(()=>{const cn=!x.later&&cntOf(x.t),dm0=!x.later&&!cn&&durOf(x.t),dm=dm0>=10?dm0:0;if(cn){const k=((F.cnt||{})[x.id])|0;return`<button type="button" class="btn primary fqgo fqcnt" data-cnt="1">${k}/${cn.n}<small>+${Math.min(cn.st,cn.n-k)}</small></button>`}return`<button type="button" class="btn primary fqgo"${dm?` data-tm="fq-${esc(x.id)}" data-tmn="${esc(x.t)}"`:""}>${x.later?"À partir de "+mqUntil(x.from).replace(/^(\d+)h$/,"$1 h"):dm?`${dm>=60?(dm/60).toLocaleString("fr-FR")+" h":dm+" min"}`:"Fait"} <small>+${x.xp}</small></button>`})()}<button type="button" class="fqrr" aria-label="Pas maintenant" aria-expanded="${m}" title="Pas maintenant"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg></button>`}</span>
       ${m?`<span class="fqno">${x.film?`<button type="button" class="btn" data-no="seen">Déjà vu<small>un autre film</small></button>`:""}${["fq","ai","mq","ev","cf"].includes(x.k)?`<button type="button" class="btn" data-no="part">En partie<small>moitié des XP</small></button>`:""}<button type="button" class="btn" data-no="later">Plus tard<small>revient ce soir</small></button><button type="button" class="btn" data-no="today">Pas aujourd'hui<small>un autre jour</small></button>${x.gift||x.nonever?"":`<button type="button" class="btn" data-no="never">Pas pour moi<small>ne revient plus</small></button>`}</span>`:""}</div>`}).join("")}</div>`:`<p class="fqempty">C'est tout pour l'instant.</p>`}
     ${s?"":`<button type="button" class="wkcta fqcta">${ICO("spark",18)}<span><b>Dis-m'en un peu plus sur toi</b><small>Pour des quêtes tirées de ta vie.</small></span></button>`}
-    ${s?`<div class="fqai">${fqAiErr?`<p class="sperr">${esc(fqAiErr)}</p>`:""}<button type="button" class="btn fqask"${fqAiBusy?" disabled":""}>${fqAiBusy?"Claude réfléchit à tes quêtes…":'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>Renouveler'}</button>${aiNote()}</div>`:""}
-    ${s&&s.note&&!arcCur()&&!evmOn()?`<button type="button" class="wkcta arccta"${arcBusy?" disabled":""}>${ICO("spark",18)}<span><b>${arcBusy?"Claude découpe ton arc…":"Faire de « "+esc(s.note.slice(0,40))+" » un arc"}</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
+    
+    ${s&&s.note&&!arcCur()&&!evmOn()?`<button type="button" class="wkcta arccta"${arcBusy?" disabled":""}>${ICO("spark",18)}<span><b>${arcBusy?"Découpage…":"Faire de « "+esc(s.note.slice(0,40))+" » un arc"}</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
     ${nNo?`<button type="button" class="lnk fqrst">${nNo} quête${nNo>1?"s":""} écartée${nNo>1?"s":""} · les réautoriser</button>`:""}`;
   {const cx=box.querySelector(".fqctx");if(cx)cx.textContent=ctxL}
   box.querySelectorAll(".fqr").forEach(r=>{const x=L[+r.dataset.i];r.querySelector(".fqt b").textContent=x.t;r.querySelector(".fqw span").textContent=x.why||"";
@@ -9142,7 +9055,7 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
     {const mm=r.querySelector(".fqmem");if(mm)mm.onclick=()=>memOpen({id:"q:"+dayKey(Date.now())+":"+x.id,q:x.t})}
     const rr=r.querySelector(".fqrr");if(rr)rr.onclick=()=>{fqMenu=fqMenu===x.id?"":x.id;renderFq()};
     r.querySelectorAll("[data-no]").forEach(b=>b.onclick=()=>{fqMenu="";feedNo(x,b.dataset.no)})});
-  box.querySelector(".fqsit").onclick=()=>sitSheet();{const a=box.querySelector(".fqask");if(a)a.onclick=()=>fqAsk()}{const a=box.querySelector(".fqcta");if(a)a.onclick=()=>sitSheet()}{const a=box.querySelector(".arccta");if(a)a.onclick=()=>arcAsk()}
+  box.querySelector(".fqsit").onclick=()=>sitSheet();{const a=box.querySelector(".fqcta");if(a)a.onclick=()=>sitSheet()}{const a=box.querySelector(".arccta");if(a)a.onclick=()=>arcAsk()}
   {const a=box.querySelector(".fqrst");if(a)a.onclick=()=>undoAfter("Quêtes écartées réautorisées",()=>{G.fqNo={};G.fqNoT=[];G.fqFam={};Object.keys(G.fqW||{}).forEach(k=>{if(G.fqW[k]<0)G.fqW[k]=0});if(G.fq)G.fq.d="";save();render()})}
   try{window.__fqFinish&&window.__fqFinish()}catch(e){}
   renderPlus()}
@@ -9164,22 +9077,6 @@ function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk
   box.querySelector(".plusb").onclick=()=>{plusOpen=!plusOpen;renderPlus();if(plusOpen)setTimeout(()=>{const n=box.nextElementSibling;box.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})},50)}}
 
 
-async function fqAsk(){if(fqAiBusy)return;const G=S.g,c=fqCtx();let sample=null;try{sample=window.claude&&claude.use?await claude.use("sample"):null}catch(e){}
-  if(!sample){fqAiErr="Claude n'est pas disponible dans cette vue.";renderFq();return}fqAiBusy=true;fqAiErr="";renderFq();
-  const recent=S.log.filter(e=>Date.now()-e.t<3*864e5&&e.name&&!e.bonus).slice(-15).map(e=>e.name);const s=sitOf()||{};const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";
-  const prompt=`Tu proposes des quêtes du quotidien pour une appli de jeu de rôle de la vie réelle. Réponds UNIQUEMENT avec un tableau JSON de exactement 3 objets {"t": quête courte et concrète en français (max 70 caractères, tutoiement), "why": raison courte et personnelle (max 50 caractères), "cat": une valeur parmi sport|perso|social|famille|maison|soi|travail|nourriture, "xp": 3 (un geste, moins de 5 min) | 10 (un quart d'heure) | 20 (une demi-heure) | 35 (une heure ou plus), "courage": true si la quête demande de surmonter une appréhension (appeler, postuler, oser), sinon false}. Exemple : [{"t":"Regarder une interview de Disiz","why":"Tu l'écoutes en boucle","cat":"perso","xp":10,"courage":false}].
-Intitulés : 50 caractères au maximum, un verbe d'action + un objet + une mesure (durée, nombre, lieu).
-Règles : faisable aujourd'hui, dans le temps qu'il reste ; adaptée à la météo et au moment ; variée (3 domaines différents) ; précise (un nom, une durée, un lieu) ; jamais culpabilisante ; rien de dangereux ni de coûteux ; évite ce qu'il a déjà fait récemment.
-Profil : situation : ${lab("job",s.job)||"?"} ; vit : ${lab("home",s.home)||"?"} ; veut faire avancer : ${(s.goals||[]).map(v=>lab("goals",v)).join(", ")||"?"} ; passions : ${(s.pass||[]).map(v=>lab("pass",v)).join(", ")||"?"} ; temps libre en semaine : ${lab("time",s.time)||"?"} ; en ce moment : ${s.note||"rien de précis"}.
-Artistes écoutés : ${c.art.join(", ")||"inconnus"}.
-Maintenant : ${new Date().toLocaleDateString("fr-FR",{weekday:"long"})}, ${String(Math.floor(c.h%24)).padStart(2,"0")} h${c.we?" (week-end)":""} ; météo : ${c.wx?`${WX_L[c.wx.k]}, ${c.wx.tc}°`:"inconnue"} ; humeur : ${c.md?c.md+"/5":"non notée"} ; ${c.tired?"nuit courte":"nuit correcte"} ; énergie : ${["non dite","faible (que des petites quêtes, rien au-dessus de 20 XP)","moyenne","pleine (une grosse quête est bienvenue)"][c.en|0]}.
-Il n'aime pas ce genre de quêtes, n'en propose pas d'approchantes : ${(G.fqNoT||[]).join(" ; ")||"rien de signalé"}.
-À venir dans son calendrier : ${(Array.isArray(G.ev)?G.ev:[]).map(e=>({e,d:evInD(e)})).filter(x=>x.d>=-1&&x.d<=14).map(({e,d})=>`${evtOf(e.t||evtGuess(e.n))[1]} « ${e.n}»${e.a?" ("+e.a+")":""} ${evWhenS(d)}`).join(" ; ")||"rien"}.
-Déjà fait ces 3 derniers jours : ${recent.join(" ; ")||"rien"}.`
-  aiTick();try{const arr=await sample.json(prompt,{cache:false});const L=(Array.isArray(arr)?arr:[]).filter(x=>x&&typeof x.t==="string").slice(0,3).map(x=>({t:String(x.t).slice(0,80),why:(String(x.why||"").slice(0,50)+(x.courage===true?" · courage +15":"")),cat:String(x.cat||"soi"),xp:([3,10,20,35].includes(+x.xp)?+x.xp:XPE(+x.xp||10))+(x.courage===true?15:0)}));const ts=Date.now().toString(36);L.forEach((x,k)=>x.id="ai"+ts+k);
-    if(!L.length)throw{code:"invalid_json"};const F=fqPick(false);F.ai=[...(F.ai||[]).filter(x=>(F.done||[]).includes(x.id)),...L].slice(-6);F.useAi=true;F.ad=dayKey(Date.now());save();sfx("badge")}
-  catch(e){const k=e&&e.code;fqAiErr=k==="not_granted"||k==="sampling_disabled"||k==="not_declared"?"Tu n'as pas autorisé Claude pour cette appli.":k==="rate_limited"?"Trop de demandes pour l'instant. Réessaie plus tard.":k==="cancelled"?"":k==="invalid_json"||k==="empty_completion"?"Claude n'a pas répondu dans le bon format. Réessaie.":"Claude n'a pas pu répondre. Réessaie dans un moment."}
-  fqAiBusy=false;renderFq()}
 // ===== Calendrier, quêtes d'événements, fiche de personnage =====
 const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["autre","Autre","#aab4bd"]];
 const evtOf=t=>EVT.find(x=>x[0]===t)||EVT[7];
@@ -12575,19 +12472,14 @@ document.querySelectorAll("#testTools [data-t]").forEach(b=>b.onclick=()=>{if(!t
     save();render();toast("Test : tout est débloqué");return}
   save();render(prev);toast("Test : "+b.textContent)});
 
-// ---- Sauvegarde : ton espace privé dans la base de l'artefact, sinon ce navigateur ----
+// ---- Sauvegarde : stockage local du téléphone (clé « carnet-quetes ») ----
 function snapshot(){return{xp:S.xp,actions:S.actions,log:S.log,days:S.days,perLevel:S.perLevel,qPrice:S.qPrice,xpCap:S.xpCap,rankBonus:S.rankBonus,wishes:S.wishes,spent:S.spent.slice(-300),stats:S.stats,name:S.name,specials:S.specials,friends:S.friends,friendDone:S.friendDone,family:S.family,familyDone:S.familyDone,musicDone:S.musicDone,snd:S.snd,bonds:S.bonds,bondsLast:S.bondsLast,profiles:S.profiles,myPic:S.myPic,dayLimit:S.dayLimit,streakBonus:S.streakBonus,weekly:S.weekly,skills:S.skills,epics:S.epics,title:S.title,frame:S.frame,bdDone:S.bdDone,theme:S.theme,daily:S.daily,seeded:S.seeded,extraMoney:S.extraMoney,dayBonus:S.dayBonus,badges:S.badges,badgesInit:S.badgesInit,g:S.g,v:28}}
 function save(){dirty=true;clearTimeout(saveTimer);saveTimer=setTimeout(flush,400)}
-let lastW="";
 let testMode=false,realSnap=null;
 async function flush(){
   if(testMode){dirty=false;clearTimeout(saveTimer);return}
-  if(saving||!dirty)return;dirty=false;
-  if(mode==="db"&&doc){saving=true;$("sync").textContent="Enregistrement…";
-    try{const snap0=snapshot();lastW=JSON.stringify(snap0);await doc.set(snap0);$("sync").textContent="Enregistré sur ton compte"}
-    catch(e){$("sync").textContent=e&&e.code==="invalid_argument"?"Lecture seule : progression non enregistrée":"Pas enregistré, nouvel essai…";if(e&&e.code!=="invalid_argument"){dirty=true;setTimeout(flush,2000)}}
-    saving=false;if(dirty)flush();
-  }else{try{localStorage.setItem("carnet-quetes",JSON.stringify(snapshot()));$("sync").textContent="Enregistré dans ce navigateur"}catch(e){$("sync").textContent="Non enregistré"}}
+  if(!dirty)return;dirty=false;
+  {try{localStorage.setItem("carnet-quetes",JSON.stringify(snapshot()));$("sync").textContent="Enregistré sur ce téléphone"}catch(e){$("sync").textContent="Non enregistré"}}
 }
 function migrateActions(d){
   let acts=Array.isArray(d.actions)?d.actions.map(a=>({...a})):STARTER.map(a=>({...a}));
@@ -12675,24 +12567,11 @@ function loadCore(d){S={xp:+d.xp||0,actions:migrateActions(d),log:Array.isArray(
 
 try{const raw=localStorage.getItem("carnet-quetes");if(raw){window.__hadLocal=1;load(JSON.parse(raw))}}catch(e){}
 if(ensureGroupQuests())save();
-render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(defis|talents)$/.test(location.hash)?"t":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré dans ce navigateur";
+render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(defis|talents)$/.test(location.hash)?"t":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré sur ce téléphone";
 
-(async()=>{
-  try{
-    const [db,user]=await Promise.all([window.claude?.use?.("db"),window.claude?.use?.("user")]);
-    const uid=user?await user.id():null;
-    if(!db||!uid){if(!window.__hadLocal)obStart();return}
-    doc=db.doc("data/users/"+uid+"/progress");
-    const snap=await doc.get();mode="db";
-    if(snap.exists){lastW=JSON.stringify(snap.data());load(snap.data());render()}
-    else{save();obStart()} // premier passage : on crée ta fiche
-    $("sync").textContent="Synchronisé avec ton compte";
-    let first=true;
-    const refresh=async()=>{if(testMode||document.hidden||dirty||saving)return;try{const s2=await doc.get();if(!s2.exists||dirty||saving)return;const d2=s2.data();if(JSON.stringify(d2)===lastW)return;lastW=JSON.stringify(d2);const prev=levelInfo(S.xp).l;load(d2);render(prev)}catch(e){}};
-    document.addEventListener("visibilitychange",refresh);window.addEventListener("focus",refresh);window.addEventListener("pageshow",refresh);
-    doc.onSnapshot(s=>{if(first){first=false;return}if(testMode)return;if(s.metadata.hasPendingWrites||dirty||saving||!s.exists)return;try{if(JSON.stringify(s.data())===lastW)return}catch(e){}const prev=levelInfo(S.xp).l;load(s.data());render(prev)},()=>{});
-  }catch(e){}
-})();
+// données enregistrées sur ce téléphone (stockage local) ; premier lancement : création du profil
+if(!window.__hadLocal)obStart();
+try{$("sync").textContent="Enregistré sur ce téléphone"}catch(e){}
 </script>
 
 
@@ -14896,5 +14775,4 @@ function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.le
   let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}
 runMig();
 </script>
-</body></html>
 </body></html>
