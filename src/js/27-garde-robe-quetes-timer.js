@@ -21,6 +21,8 @@ function wrEquipped(it){if(it.s==="aura")return S.g.eq.aura===it.id;const c=wrCf
 function wrToggle(it){const G=S.g;if(it.s==="aura"){if(G.eq.aura===it.id)delete G.eq.aura;else G.eq.aura=it.id}
   else{if(!G.avc)G.avc={...AV_DEF};if((G.avc[it.k]|0)===it.o)G.avc[it.k]=0;else G.avc[it.k]=it.o;if(it.k==="bijou"&&it.o===2&&G.avc.bijou===0&&false)G.avc.bijou=0}
   sfx("blip");save();render();renderWardrobe()}
+// la rareté se lit en étoiles pixel (1 à 4), plus en couleur
+const rarStars=r=>`<span class="rst" aria-label="${RAR[r][0]}">${ICO("star",10).repeat(r+1)}</span>`;
 function renderWardrobe(){
   const G=S.g;if(!G||!$("wrBody"))return;
   const tot=GEAR.length,own=wrOwned();$("wrCnt").textContent=own+"/"+tot;
@@ -36,8 +38,8 @@ function renderWardrobe(){
   const L=GEAR.filter(x=>x.s===wrCat).sort((a,b)=>(!!a.ex-!!b.ex)||a.r-b.r);
   const lk=L.filter(x=>!G.gear.includes(x.id)),fd=wrCat==="fond";
   body.innerHTML=`<div class="wr-grid${fd?" wr-fonds":""}">${L.map((x,i)=>{const has=G.gear.includes(x.id),on=has&&wrEquipped(x);if(!has)return"";const nm=fd?x.n.replace(/^Fond\s+/i,"").replace(/^./,c=>c.toUpperCase()):x.n;
-    return fd?`<button type="button" class="wr-it wr-fond${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]};--fbg:url(${itemIcon(x)})" aria-pressed="${on}" aria-label="${esc(nm)}"><b>${esc(nm)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`
-    :`<button type="button" class="wr-it${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${esc(x.n)}"><span class="wr-ic">${itemImg(x,56)}</span><b>${esc(x.n)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}${lk.length?`<button type="button" class="wr-it wr-more" style="--rc:#8a8f99" aria-label="${lk.length} à trouver"><span class="wr-ic wr-plus">+${lk.length}</span><b>À trouver</b><small>Coffres et défis</small></button>`:""}</div>`;
+    return fd?`<button type="button" class="wr-it wr-fond${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]};--fbg:url(${itemIcon(x)})" aria-pressed="${on}" aria-label="${esc(nm)}"><b>${esc(nm)}</b><small>${x.ex?"Exclusif":rarStars(x.r)}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`
+    :`<button type="button" class="wr-it${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${esc(x.n)}"><span class="wr-ic">${itemImg(x,56)}</span><b>${esc(x.n)}</b><small>${x.ex?"Exclusif":rarStars(x.r)}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}${lk.length?`<button type="button" class="wr-it wr-more" style="--rc:#8a8f99" aria-label="${lk.length} à trouver"><span class="wr-ic wr-plus">+${lk.length}</span><b>À trouver</b><small>Coffres et défis</small></button>`:""}</div>`;
   {const m=body.querySelector(".wr-more");if(m)m.onclick=()=>{const c=lk.filter(x=>!x.ex).length,ex=lk.filter(x=>x.ex);toast(`${c?c+" dans les coffres":""}${c&&ex.length?" · ":""}${ex.length?ex.length+" à débloquer : "+ex.slice(0,3).map(x=>esc(x.ex)).join(", ")+(ex.length>3?"…":""):""}`)}}
   body.querySelectorAll(".wr-it[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(!G.gear.includes(x.id)){toast(x.ex?`À débloquer : <span class="p">${esc(x.ex)}</span>`:`À trouver dans les coffres · <span class="p">${RAR[x.r][0]}</span>`);return}wrToggle(x)});
 }

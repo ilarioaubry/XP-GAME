@@ -43,6 +43,9 @@ Règles données par Ilario (à respecter sans redemander) :
 - **États vides** : classe `vide`, phrase courte centrée du type « Aucun … pour l'instant. », suivie du bouton pour agir s'il existe.
 - **Choix rapides** (menus « … », Pris / Sauté…) : petite fenêtre centrée sur fond assombri ; un toucher à côté la ferme sans rien déclencher derrière.
 - **Vocabulaire** : français et neutre. Pas de « boss », « monstre », « skill » : projet, compétence, essentiels, tri.
+- **Une couleur = un sens** : couleur de catégorie = la catégorie ; or = action principale, sélection, progression (XP, compteurs) ; rouge = nouveau / alerte. La rareté se lit en étoiles pixel (1 à 4), jamais en couleur.
+- **Accent identique jour et nuit** (or `#ffd94a`) : seul le décor change avec l'heure ; la couleur du ciel ne colore pas l'interface.
+- **Boutons : trois styles, hauteur 44 px** : principal = jaune plein ; secondaire = fond sombre, bordure neutre ; ajout = pointillés. Boutons icône = carrés 44×44. Les liens texte restent des liens.
 - **Grandes illustrations** (assiette, scène, personnage) : pixel art détaillé, grilles fines (jusqu'à 64×64), pixels nets, mêmes palettes que les icônes.
 
 Conventions du code existant (à suivre) :

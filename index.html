@@ -11743,6 +11743,8 @@ function wrEquipped(it){if(it.s==="aura")return S.g.eq.aura===it.id;const c=wrCf
 function wrToggle(it){const G=S.g;if(it.s==="aura"){if(G.eq.aura===it.id)delete G.eq.aura;else G.eq.aura=it.id}
   else{if(!G.avc)G.avc={...AV_DEF};if((G.avc[it.k]|0)===it.o)G.avc[it.k]=0;else G.avc[it.k]=it.o;if(it.k==="bijou"&&it.o===2&&G.avc.bijou===0&&false)G.avc.bijou=0}
   sfx("blip");save();render();renderWardrobe()}
+// la rareté se lit en étoiles pixel (1 à 4), plus en couleur
+const rarStars=r=>`<span class="rst" aria-label="${RAR[r][0]}">${ICO("star",10).repeat(r+1)}</span>`;
 function renderWardrobe(){
   const G=S.g;if(!G||!$("wrBody"))return;
   const tot=GEAR.length,own=wrOwned();$("wrCnt").textContent=own+"/"+tot;
@@ -11758,8 +11760,8 @@ function renderWardrobe(){
   const L=GEAR.filter(x=>x.s===wrCat).sort((a,b)=>(!!a.ex-!!b.ex)||a.r-b.r);
   const lk=L.filter(x=>!G.gear.includes(x.id)),fd=wrCat==="fond";
   body.innerHTML=`<div class="wr-grid${fd?" wr-fonds":""}">${L.map((x,i)=>{const has=G.gear.includes(x.id),on=has&&wrEquipped(x);if(!has)return"";const nm=fd?x.n.replace(/^Fond\s+/i,"").replace(/^./,c=>c.toUpperCase()):x.n;
-    return fd?`<button type="button" class="wr-it wr-fond${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]};--fbg:url(${itemIcon(x)})" aria-pressed="${on}" aria-label="${esc(nm)}"><b>${esc(nm)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`
-    :`<button type="button" class="wr-it${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${esc(x.n)}"><span class="wr-ic">${itemImg(x,56)}</span><b>${esc(x.n)}</b><small>${x.ex?"Exclusif":RAR[x.r][0]}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}${lk.length?`<button type="button" class="wr-it wr-more" style="--rc:#8a8f99" aria-label="${lk.length} à trouver"><span class="wr-ic wr-plus">+${lk.length}</span><b>À trouver</b><small>Coffres et défis</small></button>`:""}</div>`;
+    return fd?`<button type="button" class="wr-it wr-fond${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]};--fbg:url(${itemIcon(x)})" aria-pressed="${on}" aria-label="${esc(nm)}"><b>${esc(nm)}</b><small>${x.ex?"Exclusif":rarStars(x.r)}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`
+    :`<button type="button" class="wr-it${on?" on":""}" data-i="${i}" style="--rc:${RAR[x.r][1]}" aria-pressed="${on}" aria-label="${esc(x.n)}"><span class="wr-ic">${itemImg(x,56)}</span><b>${esc(x.n)}</b><small>${x.ex?"Exclusif":rarStars(x.r)}</small>${on?`<i class="wr-on">${ICO("check",12)}</i>`:""}</button>`}).join("")}${lk.length?`<button type="button" class="wr-it wr-more" style="--rc:#8a8f99" aria-label="${lk.length} à trouver"><span class="wr-ic wr-plus">+${lk.length}</span><b>À trouver</b><small>Coffres et défis</small></button>`:""}</div>`;
   {const m=body.querySelector(".wr-more");if(m)m.onclick=()=>{const c=lk.filter(x=>!x.ex).length,ex=lk.filter(x=>x.ex);toast(`${c?c+" dans les coffres":""}${c&&ex.length?" · ":""}${ex.length?ex.length+" à débloquer : "+ex.slice(0,3).map(x=>esc(x.ex)).join(", ")+(ex.length>3?"…":""):""}`)}}
   body.querySelectorAll(".wr-it[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(!G.gear.includes(x.id)){toast(x.ex?`À débloquer : <span class="p">${esc(x.ex)}</span>`:`À trouver dans les coffres · <span class="p">${RAR[x.r][0]}</span>`);return}wrToggle(x)});
 }
@@ -13782,8 +13784,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.mlp,.rtile,#relList>
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(#wrBody .wr-it.on,.svt[aria-pressed="true"],.svt.on,.mlp[aria-pressed="true"]){border-color:var(--gold,#ffd94a)!important}
 /* 5 · Une seule étiquette (vers 14 h, NOUVEAU, Ami du mois, nom de pièce…) et un seul compteur (0/3, 15/117, 2/17…) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.fqh,.hml,.motk,.bdgnew,.bfnew){font-family:var(--f-body)!important;font-size:11px!important;font-weight:800!important;letter-spacing:.02em!important;text-transform:none!important;line-height:1.3!important;color:#fff7e6!important;background:rgba(10,10,24,.72)!important;border:0!important;box-shadow:none!important;padding:2px 6px!important;text-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bdgnew,.bfnew){color:var(--gold,#ffd94a)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head .count,.colh .count,h2 .count,h3 .count,.bfam summary>b,#relList .rhd button b){font-family:var(--f-pixel)!important;font-size:15px!important;font-weight:700!important;color:var(--gold,#ffd94a)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin-left:8px!important;min-width:0!important;height:auto!important;line-height:1!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bdgnew,.bfnew){color:#ff7a6b!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.head .count,.colh .count,h2 .count,h3 .count,.bfam summary>b,#relList .rhd button b,#logCnt){font-family:var(--f-pixel)!important;font-size:15px!important;font-weight:700!important;color:var(--gold,#ffd94a)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin-left:8px!important;min-width:0!important;height:auto!important;line-height:1!important}
 /* 6 · Un seul modèle de barre : grande (niveaux : XP, proches) et petite (tout le reste) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.qbar,#relList>li.rl .rbar,.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){box-sizing:border-box!important;border:2px solid rgba(255,247,230,.85)!important;background:rgba(0,0,0,.35)!important;box-shadow:none!important;overflow:hidden!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.qbar,#relList>li.rl .rbar){height:18px!important}
@@ -13814,6 +13816,21 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vide{text-align:center!important;font-size:13px!important;color:rgba(255,247,230,.6)!important;margin:10px 0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .fqr.menu .fqno{position:fixed!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;z-index:215!important;width:min(300px,calc(100vw - 32px))!important;display:grid!important;grid-template-columns:1fr!important;gap:8px!important;padding:16px!important;background:rgba(14,16,36,.96)!important;box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5)!important;margin:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .prm{border-color:rgba(255,255,255,.17)!important}
+/* 2 · Une seule couleur d'accent, jour et nuit : seul le décor change (la couleur du ciel ne colore plus l'interface) */
+html:root:not(#_a):not(#_b):not(#_c){--skyac:#ffd94a!important;--gold:#ffd94a!important;--accent:#ffd94a!important;--gold-soft:color-mix(in srgb,#ffd94a 35%,transparent)!important}
+/* 1 · Une couleur = un sens : catégorie = sa couleur ; or = action principale, sélection, progression ; rouge = nouveau/alerte ;
+   la rareté se lit en étoiles, plus en couleur */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#wrBody .wr-it,.wr-mini){--rc:#8a8f99!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .rst{display:inline-flex!important;gap:1px!important;color:var(--gold,#ffd94a)!important;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
+/* 3 · Trois styles de boutons, une hauteur commune (44 px) :
+   principal = jaune plein · secondaire = sombre à bordure neutre · ajout = pointillés. Les liens texte restent des liens. */
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr,.scsnd,.scwx,.trk-b,.addf,.bnv,.dqed){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .btn.primary{background:var(--gold,#ffd94a)!important;border:2px solid var(--gold,#ffd94a)!important;color:#1a1206!important;min-height:44px!important;box-sizing:border-box!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn.edbtn,.addf,.bnv,.dqed,.scsnd,.trk-b){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #fqBox .fqr .fqgo{min-height:44px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wkcta,.evch.evadd,.pbs){border:2px dashed rgba(255,255,255,.3)!important;background:rgba(12,14,32,.35)!important;box-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .rtmgo{border:2px solid rgba(255,255,255,.17)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fond) small{border:0!important;background:none!important;box-shadow:none!important;padding:0!important}
 </style>
 <script>
 (function(){
