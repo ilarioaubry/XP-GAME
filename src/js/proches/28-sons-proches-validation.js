@@ -275,7 +275,6 @@ function renderRemind(){
   card(fa,"Membre du mois","var(--c-famille)","Appelle un proche pour l'élire");
   box.appendChild(spot);
 }
-let relShut=[];
 const FG_COL=["#ff7aa8","#e0447a","#f08a2a","#f2c94c","#5fae4f","#4fb3b3","#2a8fd6","#9b5de5"];
 const FG_ACT=[{k:"news",label:"Prendre des nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:40}];
 const fgCol=g=>g.c||FG_COL[0];

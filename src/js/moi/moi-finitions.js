@@ -18,9 +18,6 @@ function weekStory(K){const set=new Set(K),L=(S.log||[]).filter(e=>set.has(dayKe
   {const q=L.filter(e=>e.sp||e.autoq||e.eod).length;if(q)out.push(`${q} quête${q>1?"s":""} spéciale${q>1?"s":""} réussie${q>1?"s":""}.`)}
   return out}
 window.__weekStory=weekStory;
-function bilStory(){const c=document.getElementById("chapBox");if(!c||c.offsetHeight===0)return;const hero=c.querySelector(".bhero");if(!hero)return;let K;try{if(typeof bilTab!=="undefined"&&bilTab!=="w"){const x=c.querySelector(".bstory");if(x)x.remove();return}K=bWeek(typeof bilOff!=="undefined"?bilOff:0)}catch(e){return}
-  const L=weekStory(K),key=K[0]+"|"+L.join("|");let st=c.querySelector(".bstory");if(st&&st.dataset.k===key)return;if(!st){st=document.createElement("div");st.className="bstory";hero.after(st)}st.dataset.k=key;
-  st.innerHTML=L.length?`<small>Ta semaine en bref</small>${L.map(()=>"<p></p>").join("")}`:`<small>Ta semaine en bref</small><p>Note tes actions avec le + : ta semaine se racontera ici.</p>`;if(L.length)st.querySelectorAll("p").forEach((p,i)=>p.textContent=L[i])}
 // ---- les skills vivent dans les actions : niveau, en cours, objectif du mois
 const SKB={lire:{z:"lect",g:["af:lire:Livre fini",1,"livre fini","lect:l"],c:{k:"book",lab:"Livre en cours",ph:"Titre du livre",u:"pages",inc:{"Livre":"q","BD ou manga":"q"},fin:"Livre fini"}},
   regarder:{z:"cine",g:["af:regarder:Film",4,"films","cine:f"],c:{k:"serie",lab:"Série en cours",ph:"Nom de la série",u:"épisodes",inc:{"Épisode":1},fin:"Série finie"}},
@@ -134,7 +131,6 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
   box.querySelector(".fart").onclick=()=>{try{sitSheet()}catch(e){}};
   box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
   ficheMove()}
-function ficheTick(){try{autoTime()}catch(e){}try{ficheMove()}catch(e){}try{askToday()}catch(e){}}
 // ---- capacité déduite + suivi en cartes
 try{void 0;}catch(e){}
 
@@ -155,7 +151,6 @@ function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.c
   g.innerHTML=T.map(([id,ic,l,sub,on])=>`<button type="button" class="svt" data-b="${id}" aria-pressed="${on?"true":"false"}"><span class="fti">${vI(ic)}</span><span>${l}</span><em>${esc(sub)}</em></button>`).join("");
   g.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const id=b.dataset.b;if(id==="off"&&og)og.click();if(id==="pz"&&pz)pz.click();if(id==="soft"&&so){so.checked=!so.checked;so.dispatchEvent(new Event("change"))}if(id==="cf"&&cf){cf.checked=!cf.checked;cf.dispatchEvent(new Event("change"))}g.dataset.k="";setTimeout(balViz,50)})}
 function homeFix(){const s=sitOf();if(!s)return;if(!Array.isArray(s.with))s.with=[];const h=homeOf(s);if(s.home!==h){s.home=h;save();try{if(!fEdit)renderFiche()}catch(e){}}}
-function vizPass2(){try{homeFix()}catch(e){}}
 // ---- Ce que tu deviens : titre + barre + icône du prochain palier
 function idViz(){document.querySelectorAll("#idBox .idcard").forEach(c=>{const bar=c.querySelector(".idbar");if(!bar)return;const st=[...c.querySelectorAll(".idsteps i")],nx=st.find(i=>!i.classList.contains("on")),img=c.querySelector(".idi img");
     const k=(nx?nx.title:"max")+"|"+(bar.querySelector("i")||{}).style?.width;if(c.dataset.vz===k)return;c.dataset.vz=k;let w=c.querySelector(".idrow");if(!w){w=document.createElement("span");w.className="idrow";bar.before(w);w.appendChild(bar)}
@@ -171,7 +166,6 @@ function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)
   const so=L.filter(e=>e.idq).length;if(so)T.push([vI("ticket"),so+" sortie"+(so>1?"s":""),"découvertes"]);const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;if(rm)T.push([vI("balai"),rm+" pièce"+(rm>1?"s":""),"rangées"]);
   const k=T.map(t=>t[1]+t[2]).join("|");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k)return;if(!T.length){if(c)c.remove();return}if(!c){c=document.createElement("div");c.className="realrc";const anc=b.querySelector(".bchap");(anc||b.firstElementChild).after(c)}c.dataset.k=k;
   c.innerHTML=`<h3 class="bh3">Ce mois-ci, en vrai</h3><div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`}
-function b7Pass(){try{idqWho()}catch(e){}try{realRecap()}catch(e){}}
 
 // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
 function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;

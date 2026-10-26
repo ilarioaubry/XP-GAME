@@ -91,7 +91,6 @@ function wrViz(){const RN=(typeof RAR!=="undefined"?RAR:[]).map(r=>r[0]);documen
 function bilViz(){document.querySelectorAll("#chapBox ul.bcl:not([data-vz])").forEach(ul=>{ul.dataset.vz=1;const T=[...ul.querySelectorAll("li")].map(li=>{const t=li.textContent.trim(),pts=t.split(" · ");let lab="",main=pts[0],sub=pts.slice(1).join(" · "),ic="etoile";
       if(/XP/.test(main)){ic="eclair";lab="XP"}else if(/^Rituels/i.test(main)){ic="check";lab="Rituels";main=main.replace(/^Rituels\s*:\s*/i,"")}else if(/^Nuits?/i.test(main)){ic="lune";lab="Nuits";main=main.replace(/^Nuits?\s*(de)?\s*/i,"")}else{const m=main.match(/^(.*?)\s*:\s*(.*)$/);if(m){lab=m[1];main=m[2]}}
       return`<div class="bct2"><span class="fti">${vI(ic)}</span><b>${esc(main)}</b>${lab&&ic!=="eclair"?`<small class="bcl2">${esc(lab)}</small>`:""}${sub?`<small>${esc(sub)}</small>`:""}</div>`});ul.insertAdjacentHTML("afterend",`<div class="bcviz">${T.join("")}</div>`)})}
-function vizPass(){try{profViz()}catch(e){}try{relViz()}catch(e){}}
 // ---- Proches : les groupes prennent le même anneau de fraîcheur que les personnes
 function grpViz(){document.querySelectorAll(".fgcard small").forEach(s=>{const t=s.textContent.trim();if(s.dataset.vz===t)return;s.dataset.vz=t;const m=t.match(/il y a (\d+) j/),d=/aujourd/.test(t)?0:m?+m[1]:null;
     const col=d==null?"#6d7680":d<=7?"#6ccf5a":d<=14?"#ffd94a":d<=30?"#f0a020":"#e8473a",pc=d==null?0:Math.min(100,d/30*100);let r=s.parentElement.querySelector(".rwr");if(!r){r=document.createElement("span");r.className="rwr fgr";s.after(r)}

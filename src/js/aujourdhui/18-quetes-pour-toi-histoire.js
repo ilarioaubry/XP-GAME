@@ -168,7 +168,6 @@ function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.
     close();save();if(done)done(first);else render();sfx("badge");toast(ctx.ev?"Billet rangé dans ta fiche":"Souvenir gardé")};
   document.body.appendChild(o);setTimeout(()=>o.querySelector("textarea").focus({preventScroll:true}),60)}
 function tickets(){const G=S.g,tk=dayKey(Date.now()),seen=new Set(),L=[];evArc().forEach(e=>{if(seen.has(e.id))return;seen.add(e.id);if(e.d<=tk&&(e.t||evtGuess(e.n))==="concert")L.push(e)});return L.sort((a,b)=>a.d<b.d?1:-1)}
-function tikHTML(e,sm){const m=memOf("tik:"+e.id),d=new Date(e.d+"T12:00");return`<div class="tkt${sm?" sm":""}"><span class="tkl"><small>Concert</small><b></b>${m&&m.s?`<em>${ICO("star",12).repeat(m.s)}</em>`:""}</span><span class="tkr"><b>${d.getDate()}</b><small>${MOIS_C[d.getMonth()].slice(0,4)}</small></span>${m&&m.ph?`<img class="tkph" src="${m.ph}" alt="">`:""}</div>`}
 // --- déclencheurs de rituels
 const TRG={matin:["Au réveil","Après le café","Après la douche","Après le petit-déj","Avant de partir"],soir:["En rentrant","Après le dîner","Après la douche","Avant de me coucher","En éteignant les écrans"]};
 function trgPick(t,cb){const per=ritPer(t),o=document.createElement("div");o.className="bpop trgsh";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Déclencheur");

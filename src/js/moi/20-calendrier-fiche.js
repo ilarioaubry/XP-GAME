@@ -73,9 +73,6 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
   draw()}
 
 // --- fiche de personnage
-const CLASSE={etud:["Apprenti·e","Étudiant·e"],poste:["Artisan·e","En poste"],cherche:["Aventurier·e en quête","En recherche d'emploi"],indep:["Mercenaire","Indépendant·e"],pause:["Voyageur·se au repos","En pause"],autre:["Esprit libre","Autre"]};
-const REPAIRE={seul:"Tour solitaire",coloc:"Taverne partagée",couple:"Nid à deux",parents:"Château familial"};
-let ficheOpen=false;
 
 {const b=document.getElementById("actNew");if(b)b.onclick=()=>qcOpen("act")}
 function dailyBonusCheck(){return;

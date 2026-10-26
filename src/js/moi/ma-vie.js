@@ -14,8 +14,7 @@
     const MODS=[["sceneBox","Scène animée","Le décor en haut de l'écran"],["enBox","Énergie du matin","La question sur ta batterie"],["nowBox","Maintenant","La carte de la chose à faire tout de suite"],["plusBox","Plus de quêtes","Le raccourci vers les autres quêtes"],["wkBox","Cette semaine","Tes actions avec un rythme"],["sqBox","Quêtes spéciales","Amis, famille, musique…"],["gameBox","Coffres","Les coffres et récompenses"],["evtBox","Événements","Tes événements à venir"],["duoBox","Défi à deux","Les défis partagés"],["rtrBox","Rattrapage","Les rituels manqués à rattraper"],["xmBox","Saison des fêtes","Les quêtes de saison"]];
     const UN={j:[1,"jour","jours"],s:[7,"semaine","semaines"],m:[30,"mois","mois"]};
     const SUG=[["Coiffeur",6,"s"],["Dentiste",6,"m"],["Changer les draps",2,"s"],["Laver les serviettes",1,"s"],["Nettoyer le frigo",1,"m"],["Couper mes ongles",2,"s"],["Faire le ménage à fond",1,"m"],["Vider la poubelle de la salle de bain",2,"s"],["Bilan chez le médecin",12,"m"]];
-    const FREQ=[[0,"—"],[7,"chaque semaine"],[14,"toutes les 2 sem."],[30,"chaque mois"],[90,"tous les 3 mois"]];
-    let editId=null,editFrom=null,lEdit=null,lAll=false,lPre=null,force=false;
+        let editId=null,editFrom=null,lEdit=null,lAll=false,lPre=null,force=false;
     const tkNow=()=>dayKey(Date.now());
     const hh=t=>{const[a,b]=(t||"0:0").split(":");return(+a)+"h"+(b&&b!=="00"?b:"")};
     const V=()=>{const g=S.g;if(!g.vie||typeof g.vie!=="object")g.vie={};const v=g.vie;
