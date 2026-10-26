@@ -4489,7 +4489,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 66b8432</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9cf4a49</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -15046,6 +15046,8 @@ html:not(#_a):not(#_b) body #relList>li.rhd .chev{width:24px!important;height:24
 html body #relList>li.rgh{grid-column:1/-1;list-style:none}
 html body #relList>li.rgh:not(:first-child){margin-top:16px}
 html body #relList>li.rgh .vide{margin:12px 0 0}
+/* « Nv N » centré dans la barre : la boîte fait la hauteur de la barre (18 px) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #relList>li.rl .rx{height:18px!important}
 </style>
 <style id="z-moi">/* — depuis bilan-cloture.css — */
 html:not(#_a):not(#_b):not(#_c) body #balCard{min-width:0;max-width:100%;box-sizing:border-box}
@@ -15758,6 +15760,11 @@ html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10
 /* Ma fiche profil garde son cadre, comme la fiche d'un proche (décision du 26/10) : bordure neutre, fond sombre, l'aura s'affiche dedans */
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:2px solid var(--line)!important;border-radius:0!important;padding:12px!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background:var(--surface)!important}
+/* Ma fiche : barres par catégorie au même modèle que les proches (grande barre 18 px, « Nv N » centré dedans) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat{display:grid!important;grid-template-columns:62px minmax(0,1fr)!important;align-items:center!important;gap:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sb{grid-area:1/2!important;display:block!important;width:100%!important;height:18px!important;box-sizing:border-box!important;margin:0!important;border:2px solid rgba(255,247,230,.85)!important;border-radius:0!important;background:rgba(0,0,0,.35)!important;box-shadow:none!important;overflow:hidden!important;position:relative!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sb>i{display:block!important;height:100%!important;margin:0!important;background:var(--cat)!important;border-radius:0!important;box-shadow:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sl{grid-area:1/2!important;z-index:1;display:grid!important;place-items:center!important;height:18px!important;width:100%!important;margin:0!important;padding:0!important;font-family:var(--f-pixel)!important;font-size:13px!important;line-height:1!important;color:#fff7e6!important;text-shadow:1px 1px 0 #000!important;background:none!important;pointer-events:none}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
