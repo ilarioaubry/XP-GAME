@@ -78,13 +78,14 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 
 ## Phase 4 — Scripts
 
-- [ ] 4.1 Reporter chaque rustine de `correctifs.js` (139 Ko) dans sa fonction d'origine, puis supprimer le fichier
-- [ ] 4.2 Remplacer les 24 réécritures de fonctions globales par des modifications directes (`render` ×2 dans correctifs et assiette, `ICO`, `feedDo`, `badgeDefs`, `complete`, `famOf`…)
-- [ ] 4.3 Icônes pixel écrites à la source, suppression des observateurs DOM (`pxSwap`, `sqIcons`)
-- [ ] 4.4 Regrouper les scripts par zone : `coeur/` (données, sauvegarde, XP, dates), `aujourdhui/` (repas, assiette, rituels, quêtes du jour), `proches/`, `moi/` (profil, armoire, badges, bilan, réglages), `decor/` (ciel, scène, sons), `ui/` (fenêtres, toasts, icônes, boutons)
-- [ ] 4.5 Sortir le contenu du code dans des fichiers de données : grilles d'icônes (RKI, IC, PXUI), aliments, badges, quêtes
-- [ ] 4.6 Alléger les gros fichiers : 12-pixel-clair-moteur (114 Ko), 25-chez-moi (78 Ko), 26-bibliotheque-badges (69 Ko)
-- [ ] 4.7 Passer en modules JavaScript par zone (s'importent au lieu de se réécrire), un seul point d'état `load()` / `save()`
+- [x] 4.1 (26/10/2026) `correctifs.js` supprimé : sorti de sa grosse IIFE, puis rangé par zone (`aujourdhui-finitions.js`, `moi-finitions.js`, `proches-finitions.js`, `demarrage.js`). Il reste dans ces fichiers des passes visuelles d'après rendu (`…Viz`, `dress…`) → à fondre dans leurs rendus pendant la refonte écran par écran (3.10, 6.4+)
+- [x] 4.2 (26/10/2026) Plus aucune réécriture de fonction globale : les 16 réécritures + les 11 retouches « avant / après » + les 5 minuteurs sont devenues des versions complètes posées à côté de leur origine (`fBase` = le cœur). Doublons de Chez moi et de `renderFiche` supprimés
+- [x] 4.3 (26/10/2026) Icônes pixel écrites à la source ; observateurs DOM `pxSwap`, `sqIcons`, recherche d'action et panneau + remplacés par des appels directs. Reste un observateur pour les blocs repliables (`applyFolds`), à revoir avec la refonte
+- [x] 4.4 (26/10/2026) Scripts rangés : `js/coeur/` (données, sauvegarde, rendu, icônes, personnage, migrations, démarrage), `js/aujourdhui/` (avec ciel et scène), `js/moi/`, `js/proches/`, `js/donnees/`. Pas de dossiers `decor/` et `ui/` séparés : ce code est encore mêlé aux zones, à séparer pendant la refonte si utile
+- [x] 4.5 (26/10/2026) `js/donnees/` : grilles d'icônes (RKI, PXUI, PXSP, PXI, BPX_M), équipement (GEAR, AV_OPT, AV_MAIN), quêtes (FAM, IDQ, IDI, FIC, QC_TPL, BOSS_CAT, DQ_K), contenu (IDS, FILMS, RIT_G, BOSS2). Restent dans le code, car mêlés à des fonctions : icônes des badges (IC), liste des badges (conditions), quêtes pour toi (FQ), aliments de l'assiette
+- [x] 4.6 (26/10/2026) Moteur Pixel Clair découpé en 6 fichiers, badges en 3, Chez moi en 3 ; 16 déclarations mortes retirées. Plus gros fichier restant : `aujourdhui-finitions.js` (78 Ko), qui fondra avec la refonte
+- [ ] 4.7 **(décision)** Un seul point d'état : déjà le cas (`load()` / `save()`, seule clé `carnet-quetes`) ✔. Modules JavaScript : déconseillé pour l'instant — l'appli est un seul fichier HTML, tout repose sur la portée globale (des centaines de noms à exporter / importer) ; gros risque pour un gain invisible. Proposition : abandonner ou reporter après la refonte
+- [ ] 4.8 **(question)** Les projets prennent l'apparence de créatures (`BOSS_CAT` : golem, slime…, et `BOSS2`) : héritage des anciens boss. Garder, ou remplacer par une icône d'objet ?
 
 ## Phase 5 — Standards précisés, uniformité, lisibilité
 
@@ -149,7 +150,7 @@ Lisibilité :
 - [x] 7.1 (26/10/2026) README : à quoi sert l'appli, installation sur iPhone
 - [x] 7.2 (26/10/2026) CHANGELOG (ce qui a changé, quand)
 - [x] 7.5 (26/10/2026) Ranger dans le projet les outils de vérification construits pendant la phase 3 (captures de 55 écrans + comparaison au pixel, styles calculés, tri du CSS) → `outils/` + `outils/LISEZMOI.md`
-- [ ] 7.3 5 à 10 tests Playwright versionnés (valider un repas, une quête, annuler, assiette, sauvegarde…)
+- [x] 7.3 (26/10/2026) Tests de parcours versionnés : `outils/parcours.py` (profil, rituel, assiette, quête, Annuler, minuteur, ajouter un proche, bouton Fond, tous les écrans, maison, recherche d'action, sauvegarde après rechargement, export / restauration, aucune icône au trait, aucune erreur)
 - [ ] 7.4 GitHub Actions : build `--check` + tests à chaque envoi
 
 ## Phase 8 — Nouvelles fonctionnalités (seulement après, à valider)
@@ -157,6 +158,10 @@ Lisibilité :
 - [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan (correction du 25/10 : des onglets Semaine / Mois / Année existent déjà, à revoir plutôt qu'à créer)
 - [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
 - [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
+
+## Corrigé en passant
+
+- [x] (26/10/2026) La famille était remise à la liste d'origine à chaque chargement (`load()` ignorait `family`) : un proche ajouté à la famille disparaissait. Corrigé, trouvé par les tests de parcours
 
 ## À vérifier sur l'iPhone d'Ilario (non vérifiable ici)
 

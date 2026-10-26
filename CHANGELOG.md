@@ -3,6 +3,11 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 26/10/2026
+- Phase 4 (scripts, invisible à l'écran) : `correctifs.js` supprimé et rangé par zone, plus aucune réécriture de fonction, icônes pixel écrites à la source, observateurs DOM retirés, scripts rangés en dossiers (`coeur`, `aujourdhui`, `moi`, `proches`, `donnees`), gros fichiers découpés, code mort retiré.
+- Tests de parcours (`outils/parcours.py`).
+- Correction : un proche ajouté à la famille disparaissait au rechargement.
+- Proches : Famille et Amis en sections comme Groupes (titre + bouton +), ajout d'un proche en plein écran ; barres de niveau « Nv » centrées, et même barre par catégorie sur ma fiche.
+- Fiche d'un proche : bouton Fond branché plus tôt ; dernière erreur affichée dans Bilan > Données.
 - Ma fiche profil retrouve son cadre (neutre) et les auras leur fond ; cadre des fiches de proches en gris clair.
 - Guide de construction (`DESIGN.md`) : rôles de texte, en-tête de section, boutons, espacements, cadres, couleurs, interactions.
 - Tous les boutons à 44 px, puces de choix à 44 px, bouton flottant à 56 px ; actions d'en-tête alignées (Relations, Ma fiche en icône crayon) ; 24 px entre les sections.
