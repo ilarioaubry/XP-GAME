@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 034ea40</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version a36cf3c</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -15814,6 +15814,21 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 /* aura : même voile derrière le bloc du prénom et derrière les catégories ; la barre d'XP sans cadre */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on :is(.pf-head,.statlist){background:rgba(12,14,32,.55)!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important;border:2px solid rgba(255,255,255,.17)!important;padding:8px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on .pf-xp{background:none!important;border:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:0!important}
+/* retouche 26/10 : prénom seul en haut, centré ; puis portrait | titre, niveau, badges (sans encadrés) ; puis le reste */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-areas:"name name name" "side title lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick"!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-head,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-name{display:contents!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charName{grid-area:name!important;text-align:center!important;margin:0 0 12px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charTitle{grid-area:title!important;align-self:start!important;justify-self:start!important;min-height:0!important;height:auto!important;padding:2px 0 0!important;line-height:1.2!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox{grid-area:lvl!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg{align-self:start!important;margin:8px 0 0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs.pbt{border:0!important;background:none!important;box-shadow:none!important;outline-offset:0!important;min-height:0!important;padding:4px 2px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on :is(#charName,.statlist){background:rgba(12,14,32,.55)!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important;border:2px solid rgba(255,255,255,.17)!important;padding:8px!important;box-sizing:border-box!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"name name" "side title" "side bdg" "xp xp" "tpick tpick" "stats stats" "pick pick"!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox{grid-area:name!important;justify-self:end!important;align-self:center!important;margin:0 0 12px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charName{padding-left:52px!important;padding-right:52px!important;min-height:50px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg{margin:4px 0 0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-rows:auto auto 1fr!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
