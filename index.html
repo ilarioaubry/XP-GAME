@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version a36cf3c</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 473faa1</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -15829,6 +15829,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg{margin:4px 0 0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-rows:auto auto 1fr!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* aura (26/10) : tout le fond est flouté et assombri d'un seul voile ; la disposition reste celle sans aura (aucun voile par bloc) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.pf-name,.statlist,.pf-xp,#charName){background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important;padding-top:0!important;padding-bottom:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) .statlist{padding:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf){background:linear-gradient(rgba(12,14,32,.5),rgba(12,14,32,.5)),var(--aubg)!important;background-color:var(--surface)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::before,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::after{filter:blur(2px)!important}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
