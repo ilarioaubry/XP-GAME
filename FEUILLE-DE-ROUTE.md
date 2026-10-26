@@ -77,7 +77,7 @@ Standards trop globaux → version précisée :
 - [x] 5.3 (26/10/2026) Textes longs : titres de carte 2 lignes max ; noms dans les listes 1 ligne avec « … » → quêtes pour toi : titre sur 2 lignes
 - [x] 5.4 (26/10/2026) 11 px seulement sur fond sombre, sinon 13 px → Énergie du matin et « meilleur jour » passés à 13 px ; règle écrite dans CLAUDE.md
 - [x] 5.5 (26/10/2026) Un seul séparateur (pointillés) pour tous les groupes, Proches et Bilan compris (sauf fiches de proches) → Proches : bandeaux pleins Famille / Amis remplacés par titre + pointillés à leur couleur
-- [ ] 5.6 Icônes en 3 tailles : 16, 32, 48 px (multiples de la grille, pixels nets) **(décision)** : aujourd'hui 15, 16, 18, 22, 24, 26, 27 px. Les icônes d'interface sont dessinées sur une grille de 12 : nettes à 12, 24 ou 36 px, floues à 16 ou 32 → proposition : interface 24 px, contenu 16 / 32 / 48 px
+- [x] 5.6 (26/10/2026) Icônes en 3 tailles : 16, 32, 48 px (multiples de la grille, pixels nets) **(décision)** : aujourd'hui 15, 16, 18, 22, 24, 26, 27 px. Les icônes d'interface sont dessinées sur une grille de 12 : nettes à 12, 24 ou 36 px, floues à 16 ou 32 → proposition : interface 24 px, contenu 16 / 32 / 48 px → décision : interface 24 px, contenu 48 px (exceptions : étoiles de rareté, petites icônes dans les recettes et le récap d'assiette)
 - [x] 5.7 (26/10/2026) Rareté : étoiles + mot de la rareté dans la fiche détaillée → déjà le cas : le mot de rareté s'affiche à l'ouverture du coffre
 - [x] 5.8 (26/10/2026) Toute action par appui long existe aussi dans le menu « … » → vérifié : rituels (Atelier), compteur (Ma vie) ont un autre chemin ; seul le rythme des actions de « Cette semaine » reste en appui long
 
@@ -97,7 +97,7 @@ Points d'uniformité restants :
 - [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
-- [ ] 5.16 Voile sombre sous le contenu, ou ciel limité à un bandeau en haut **(décision)**
+- [x] 5.16 (26/10/2026) Voile sombre sous le contenu, ou ciel limité à un bandeau en haut **(décision)** → choix A : voile sombre plus marqué sous le contenu, le haut (scène) reste clair
 - [x] 5.17 (26/10/2026) Libellés de stats (Force, Talent…) lisibles (fond sombre) → libellés en crème avec un petit carré de la couleur de la stat
 
 - [x] 5.18 (26/10/2026) Intégrer les standards précisés dans CLAUDE.md

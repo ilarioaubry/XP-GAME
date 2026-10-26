@@ -4496,7 +4496,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 1e1a387</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 0b05fab</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -13653,6 +13653,14 @@ try{$("sync").textContent="Enregistré sur ce téléphone"}catch(e){}
 
 /* Animations sobres : respecter « réduire les animations » */
 @media (prefers-reduced-motion:reduce){.ui-btn:active:not(:disabled){transform:none}}
+
+/* ---------- 5.6 · Tailles d'icônes (décision du 26/10) ----------
+   Interface (grille 12 px) : 24 px. Contenu (aliments, rituels, objets, grille 16 px) : 48 px.
+   Exceptions : étoiles de rareté (.rst) et petites icônes collées au texte (recettes, récap d'assiette).
+   Le préfixe :not(#_u…) et !important ne sont là que pour passer devant l'ancien CSS (à retirer avec 3.7). */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(svg.ic,svg.pxic):not(.rst *):not(.plr *):not(.pldx *){width:24px!important;height:24px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.rtic svg,.mli img,.slk svg,.uiq svg,.trk-ic svg,.plf span,.fti svg,.idi img){width:48px!important;height:48px!important;max-width:none!important;image-rendering:pixelated}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .chev{width:24px!important;height:24px!important;flex:none}
 </style>
 <style id="z-haut">/* — depuis principal-02.css — */
 .qxp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20}
@@ -13888,7 +13896,7 @@ html body #trkBox .bnd-mode{display:none}
 /* — depuis epure-03.css — */
 html body .qxp .qs{display:none}
 
-html body #trkBox .trk-ic{background:none;border:0;width:32px;height:32px}
+html body #trkBox .trk-ic{background:none;border:0;width:48px;height:48px}
 
 
 /* — depuis sans-cadres.css — */
@@ -14997,6 +15005,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(#relList>li.
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.rbar)>i{height:100%!important;margin:0!important;top:0!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
+
+html:not(#_a):not(#_b) body #relList>li.rhd .chev{width:24px!important;height:24px!important;flex:none!important;margin-right:4px!important}
 </style>
 <style id="z-moi">/* — depuis bilan-cloture.css — */
 html:not(#_a):not(#_b):not(#_c) body #balCard{min-width:0;max-width:100%;box-sizing:border-box}
@@ -15771,7 +15781,7 @@ html:not(#_a):not(#_b) body .bpc{position:relative;width:min(300px,100%);display
 /* — depuis principal-07.css — */
 #skyBg{position:fixed;inset:0;z-index:-1;pointer-events:none}
 #skyBg .b-matin{left:8%;top:9%}
-#skyBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,22,.18),rgba(6,8,22,.08) 40%,rgba(6,8,22,.35))}
+#skyBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,22,.12) 0,rgba(6,8,22,.12) 170px,rgba(6,8,22,.42) 320px,rgba(6,8,22,.5) 100%)}
 html.sky:not(#_a):not(#_b) body :is(.avc-in){box-shadow:none!important;border-width:1.5px!important;border-style:solid;border-color:var(--line)!important;border-radius:12px!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 html.sky:not(#_a):not(#_b) body .dock{background:rgba(6,8,20,.74)!important;border-top:1.5px solid var(--line)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 html.sky:not(#_a):not(#_b) body .tabs button[aria-selected="true"]{background:rgba(255,255,255,.1)!important;color:var(--skyac)!important}

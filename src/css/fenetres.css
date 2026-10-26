@@ -63,7 +63,7 @@ html:not(#_a):not(#_b) body .bpc{position:relative;width:min(300px,100%);display
 /* — depuis principal-07.css — */
 #skyBg{position:fixed;inset:0;z-index:-1;pointer-events:none}
 #skyBg .b-matin{left:8%;top:9%}
-#skyBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,22,.18),rgba(6,8,22,.08) 40%,rgba(6,8,22,.35))}
+#skyBg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,22,.12) 0,rgba(6,8,22,.12) 170px,rgba(6,8,22,.42) 320px,rgba(6,8,22,.5) 100%)}
 html.sky:not(#_a):not(#_b) body :is(.avc-in){box-shadow:none!important;border-width:1.5px!important;border-style:solid;border-color:var(--line)!important;border-radius:12px!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 html.sky:not(#_a):not(#_b) body .dock{background:rgba(6,8,20,.74)!important;border-top:1.5px solid var(--line)!important;box-shadow:none!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 html.sky:not(#_a):not(#_b) body .tabs button[aria-selected="true"]{background:rgba(255,255,255,.1)!important;color:var(--skyac)!important}

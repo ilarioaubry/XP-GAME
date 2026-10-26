@@ -52,6 +52,8 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Boutons : trois styles, hauteur 44 px** : principal = jaune plein ; secondaire = fond sombre, bordure neutre ; ajout = pointillés. Boutons icône = carrés 44×44. Les liens texte restent des liens.
 - **Effets au survol** (`:hover`) seulement dans `@media (hover:hover)` : sur iPhone ils restent collés.
 - **Pas d'indicateurs dans les boutons** (cercle « appui long », sablier, triangle…) : le bouton dit seulement son action.
+- **Tailles d'icônes** : interface (icônes `PXUI`, grille 12) = 24 px ; contenu (aliments, rituels, objets, grille 16) = 48 px. Exceptions : étoiles de rareté, petites icônes collées au texte.
+- **Lisibilité sur le ciel** : un voile sombre est posé sur le ciel sous la scène (`#skyBg::after`) ; ne pas l'alléger.
 - **Grandes illustrations** (assiette, scène, personnage) : pixel art détaillé, grilles fines (jusqu'à 64×64), pixels nets, mêmes palettes que les icônes.
 
 Conventions du code existant (à suivre) :

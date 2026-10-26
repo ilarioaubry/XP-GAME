@@ -381,3 +381,5 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(#relList>li.
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.rbar)>i{height:100%!important;margin:0!important;top:0!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
+
+html:not(#_a):not(#_b) body #relList>li.rhd .chev{width:24px!important;height:24px!important;flex:none!important;margin-right:4px!important}
