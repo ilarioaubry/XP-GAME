@@ -14,6 +14,13 @@ def check(nom, ok, info=""):
 
 def xp(pg): return pg.evaluate("S.xp")
 
+# Icônes au trait restées dans la page (elles doivent toutes être en pixel, écrites à la source)
+TRAIT = ["M17 21v-2","M9 11l3 3L22 4","M4 21c0-4","M6 9l6 6 6-6","M17 9l5 6","M16 9a4","M4 20h4L19 9","M12 3l2.2 6.8","M12 5v14M5 12h14","M6 6l12 12","M5 12.5l4.5","M4 5h16v11","M5 4h4l2 5","M20 11a8","M4 12a8","M14.5 17.5","M12 22c4"]
+trait_vus = set()
+def trait(pg, ou):
+    r = pg.evaluate("""S=>[...document.querySelectorAll('svg:not(.pxic)')].filter(sv=>sv.getAttribute('shape-rendering')!=='crispEdges'&&(sv.getAttribute('stroke')==='currentColor'||sv.querySelector('[stroke="currentColor"]'))&&S.some(k=>sv.innerHTML.includes(k))&&sv.getClientRects().length).map(sv=>(sv.closest('[id]')||{}).id+' '+sv.outerHTML.slice(0,90))""", TRAIT)
+    for x in r: trait_vus.add(ou + " : " + x)
+
 with sync_playwright() as p:
     b = p.chromium.launch()
     ctx = b.new_context(viewport={"width": 393, "height": 852}, is_mobile=True, has_touch=True, timezone_id="Europe/Paris", reduced_motion="reduce")
@@ -37,7 +44,7 @@ with sync_playwright() as p:
 
     # 3. Assiette du déjeuner
     x0 = xp(pg); pg.click(".mlp >> nth=1"); pg.wait_for_timeout(400)
-    check("l'assiette s'ouvre", pg.is_visible(".plo"))
+    check("l'assiette s'ouvre", pg.is_visible(".plo")); trait(pg, "assiette")
     for f in ("Pâtes", "Poulet", "Salade"): pg.evaluate("f=>[...document.querySelectorAll('.plo .plf')].find(b=>b.textContent.trim()===f).click()", f); pg.wait_for_timeout(150)
     for _ in range(6):
         if pg.is_visible(".plo .plok"): break
@@ -70,7 +77,7 @@ with sync_playwright() as p:
     for n in ("Gaby", "Adeline"):
         pg.evaluate(f"openProfile('{n}')"); pg.wait_for_timeout(400)
         pg.evaluate("document.getElementById('pBgBtn').click()"); pg.wait_for_timeout(200)
-        check(f"fiche de {n} : le bouton Fond ouvre le choix", pg.evaluate("!document.getElementById('pBgPick').hidden"))
+        trait(pg, "fiche " + n); check(f"fiche de {n} : le bouton Fond ouvre le choix", pg.evaluate("!document.getElementById('pBgPick').hidden"))
 
     # 7. Tous les écrans s'ouvrent
     for nom, js in [("Aujourd'hui", "showView('q')"), ("Ma vie", "showView('c');document.querySelector('[data-sub=vie][role=tab]').click()"),
@@ -80,7 +87,7 @@ with sync_playwright() as p:
         n0 = len(errs)
         try: pg.evaluate("()=>{document.querySelectorAll('.bpop,.plo,.wxsh,.sitsh,.qcsh,.qcw').forEach(e=>e.remove());" + js + "}"); pg.wait_for_timeout(300)
         except Exception as e: errs.append(nom + ": " + str(e)[:100])
-        check(f"écran {nom}", len(errs) == n0)
+        trait(pg, nom); check(f"écran {nom}", len(errs) == n0)
 
     # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
     n0 = len(errs)
@@ -106,6 +113,7 @@ with sync_playwright() as p:
 
     b.close()
 
+check("aucune icône au trait (tout en pixel)", not trait_vus, " | ".join(sorted(trait_vus)[:4]))
 check("aucune erreur JavaScript", not errs, " | ".join(errs[:3]))
 print(f"\n{len(fails)} échec(s)")
 sys.exit(1 if fails else 0)
