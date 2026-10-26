@@ -221,10 +221,17 @@ function bondAction(n,A,el,ev){
   toast(`${esc(A.verb(n))} <span class="p">+${A.xp} XP</span>${nl>pl?` · ${esc(n)} niveau <span class="p">${nl}</span>`:""}`);
   render();renderProfile(true);
 }
-$("addFBtn").onclick=()=>{const f=$("addFForm");f.hidden=!f.hidden;f.style.display=f.hidden?"none":"flex";$("addFBtn").setAttribute("aria-expanded",!f.hidden);if(!f.hidden)$("addFName").focus()};
-$("addFForm").addEventListener("submit",e=>{e.preventDefault();const n=$("addFName").value.trim();if(!n)return;
-  if(S.friends.some(x=>x.toLowerCase()===n.toLowerCase())){toast("Cet ami existe déjà");return}
-  S.friends.push(n);$("addFName").value="";ensureGroupQuests();save();render();toast(`<span class="p">${esc(n)}</span> ajouté`)});
+// Ajouter un ami : fenêtre plein écran (règle : champ texte = plein écran), Annuler à gauche, Ajouter à droite
+$("addFBtn").onclick=()=>{if(document.querySelector(".addfw"))return;
+  const w=document.createElement("form");w.className="ui-plein addfw";w.setAttribute("role","dialog");w.setAttribute("aria-label","Nouvel ami");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Nouvel ami</h2></div>
+    <div class="ui-plein__corps"><input class="ui-champ" id="addFName" maxlength="30" placeholder="Prénom de l'ami" aria-label="Prénom de l'ami" autocomplete="off"></div>
+    <div class="ui-plein__bas"><button type="button" class="ui-btn addfno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">Ajouter</button></div>`;
+  const close=()=>w.remove();w.querySelector(".addfno").onclick=close;
+  w.onsubmit=e=>{e.preventDefault();const n=$("addFName").value.trim();if(!n)return;
+    if(S.friends.some(x=>x.toLowerCase()===n.toLowerCase())){toast("Cet ami existe déjà");return}
+    S.friends.push(n);close();ensureGroupQuests();save();render();toast(`<span class="p">${esc(n)}</span> ajouté`)};
+  document.body.appendChild(w);$("addFName").focus()};
 function removeFriend(n){
   S.friends=S.friends.filter(x=>x!==n);S.friendDone=S.friendDone.filter(x=>x!==n);
   delete S.bonds[n];delete S.bondsLast[n];delete S.profiles[n];if(S.g&&S.g.sit&&Array.isArray(S.g.sit.with))S.g.sit.with=S.g.sit.with.filter(x=>x!==n);
