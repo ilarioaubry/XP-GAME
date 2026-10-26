@@ -73,6 +73,7 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important`
 - [x] 3.9 (26/10/2026) Supprimer le CSS des fonctionnalités retirées (328 règles et 355 sélecteurs dont les classes n'existent plus dans le code)
 - [ ] 3.10 Les écrans n'utilisent pas encore les composants `ui-` (créés en 3.2) : à faire écran par écran, avec 3.7 et 3.8
+- [ ] 3.11 Donner un rôle à chaque texte (titre de section, titre de carte, texte, petite info, chiffre décoratif, champ) par une classe `ui-`, la taille venant du rôle et non plus d'une règle par élément. Audit du 26/10 : 813 textes, 0 classé ; les titres sont tantôt `h2`, `h3`, `h4`, `b` ou `small`, de 10,8 à 30 px ; « Groupes » existe à 15 et à 20 px. Un test automatique vérifiera ensuite que chaque texte a un rôle et la bonne taille.
 - [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds → à faire avec 3.7 (la règle universelle reste en attendant, elle marche)
 
 ## Phase 4 — Scripts
