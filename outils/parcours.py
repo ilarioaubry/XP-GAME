@@ -79,6 +79,10 @@ with sync_playwright() as p:
         pg.evaluate("document.getElementById('pBgBtn').click()"); pg.wait_for_timeout(200)
         trait(pg, "fiche " + n); check(f"fiche de {n} : le bouton Fond ouvre le choix", pg.evaluate("!document.getElementById('pBgPick').hidden"))
 
+    # 6b. Supprimer un proche (poubelle) puis Annuler
+    r = pg.evaluate("(()=>{openProfile('Gaby');document.getElementById('delBtn').click();const gone=!S.family.includes('Gaby');document.querySelector('#undoBar button').click();return gone&&S.family.includes('Gaby')})()")
+    check("supprimer un proche puis Annuler", r is True)
+
     # 7. Tous les écrans s'ouvrent
     for nom, js in [("Aujourd'hui", "showView('q')"), ("Ma vie", "showView('c');document.querySelector('[data-sub=vie][role=tab]').click()"),
                     ("Chez moi", "showView('c');document.querySelector('[data-sub=wr][role=tab]').click()"),

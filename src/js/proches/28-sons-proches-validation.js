@@ -146,18 +146,14 @@ function renderProfileBase(force){
     <form class="tagadd" id="pGrpForm"><input id="pGrpNew" maxlength="24" placeholder="Nouveau groupe…" aria-label="Nouveau groupe"><button class="btn" type="submit">Créer</button></form></section>
   <label class="pf2gift"><span class="fti">${rkSvg("cadeau")}</span><span class="pf2t"><b>Idée cadeau</b><input id="pGift" maxlength="120" placeholder="ex. un livre de photo" aria-label="Idée cadeau"></span></label>
   <div class="set-card" id="pHistCard" hidden><h3>Historique</h3><ul class="hist" id="pHist"></ul></div>
-  <div class="pf2del" id="delCard"><button type="button" class="lnk delf" id="delBtn">${fam?"Retirer de mes proches":"Supprimer l'ami"}</button>
-    <div id="delAsk" hidden style="display:none"><p>Supprimer ${fam?"ce proche":"cet ami"} ? Son XP et sa fiche seront perdus.</p>
-    <div class="delrow"><button type="button" class="btn" id="delNo">Annuler</button><button type="button" class="danger" id="delYes">Oui, supprimer</button></div></div></div>`;
+  <div class="pf2del" id="delCard"><button type="button" class="btn delf delic" id="delBtn" aria-label="${fam?"Retirer de mes proches":"Supprimer l'ami"}" title="${fam?"Retirer de mes proches":"Supprimer l'ami"}">${ICO("trash",24)}</button></div>`;
   $("pName").textContent=n;
   try{fpExtras(n,P)}catch(e){xpErr(e)} // tôt : le bouton Fond marche même si une partie plus bas plante
   $("pGift").value=P.gifts||"";$("pGift").onchange=()=>{const v=$("pGift").value.trim();if(v)P.gifts=v;else delete P.gifts;save()};
   {const items=S.log.filter(e=>e.who===n&&(e.rel||e.fr)).slice(-8).reverse(),ul=$("pHist");$("pHistCard").hidden=!items.length;
    items.forEach(e=>{const d=new Date(e.t),li=document.createElement("li"),t=document.createElement("time"),nm=document.createElement("span"),x=document.createElement("span");t.textContent=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});nm.textContent=e.name;x.className="x";x.textContent="+"+e.xp;li.append(t,nm,x);ul.appendChild(li)})}
-  $("delBtn").onclick=()=>{$("delBtn").style.display="none";$("delAsk").hidden=false;$("delAsk").style.display="block"};
-  $("delNo").onclick=()=>{$("delAsk").hidden=true;$("delAsk").style.display="none";$("delBtn").style.display=""};
-  $("delYes").onclick=()=>removeFriend(n);
-  if(fam&&!S.friends.includes(n))$("delCard").hidden=true;
+  // suppression immédiate, avec « Annuler » (standard) ; marche aussi pour la famille
+  $("delBtn").onclick=()=>undoAfter(n+" retiré de tes proches",()=>removeFriend(n,true));
   const pic=picOf(n),pp=$("pPic");
   if(pic){const im=document.createElement("img");im.src=pic;im.alt="";pp.appendChild(im)}else pp.textContent=n[0].toUpperCase();
   $("pBack").onclick=()=>showView("r");
@@ -234,11 +230,11 @@ function addPerson(fam){if(document.querySelector(".addfw"))return;
     if([...S.friends,...S.family].some(x=>x.toLowerCase()===n.toLowerCase())){toast(`<span class="p">${esc(n)}</span> est déjà dans tes proches`);return}
     (fam?S.family:S.friends).push(n);close();ensureGroupQuests();save();render();toast(`<span class="p">${esc(n)}</span> ajouté`)};
   document.body.appendChild(w);$("addFName").focus()}
-function removeFriend(n){
-  S.friends=S.friends.filter(x=>x!==n);S.friendDone=S.friendDone.filter(x=>x!==n);
+function removeFriend(n,quiet){
+  S.friends=S.friends.filter(x=>x!==n);S.friendDone=S.friendDone.filter(x=>x!==n);S.family=S.family.filter(x=>x!==n);S.familyDone=(S.familyDone||[]).filter(x=>x!==n);
   delete S.bonds[n];delete S.bondsLast[n];delete S.profiles[n];if(S.g&&S.g.sit&&Array.isArray(S.g.sit.with))S.g.sit.with=S.g.sit.with.filter(x=>x!==n);
   S.specials=S.specials.filter(q=>!(q.grp==="friends"&&q.who===n));ensureGroupQuests();
-  profName=null;save();showView("r");render();toast("Ami supprimé")}
+  profName=null;save();showView("r");render();if(!quiet)toast("Ami supprimé")}
 function renderRemind(){
   const box=$("relRemind");box.innerHTML="";
   const bds=relNames().map(n=>({n,nb:nextBirthday((S.profiles[n]||{}).bd)})).filter(x=>x.nb&&x.nb.days<=30).sort((a,b)=>a.nb.days-b.nb.days);
@@ -307,7 +303,7 @@ function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);
     <div class="grpcols" id="gCols">${FG_COL.map(c=>`<button type="button" class="grpc${c===col?" on":""}" data-c="${c}" style="--c:${c}" aria-label="Couleur"></button>`).join("")}</div></div>
   <div class="ract ractz" id="gActs"></div>
   ${grp.length?`<div class="set-card"><h3>Historique</h3><div class="histviz">${grp.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${rkSvg((HI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.t)}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")}</div></div>`:""}
-  <div class="pf2del"><button type="button" class="lnk delf" id="gDel">Supprimer le groupe</button></div>`;
+  <div class="pf2del"><button type="button" class="btn delf delic" id="gDel" aria-label="Supprimer le groupe" title="Supprimer le groupe">${ICO("trash",24)}</button></div>`;
   $("pBack").onclick=()=>{profName=null;showView("r")};
   const nm=$("gName");nm.value=g.n;nm.onchange=()=>{const v=nm.value.trim();if(v){g.n=v;save();renderRelations()}else nm.value=g.n};
   root.querySelectorAll(".grpmb").forEach(b=>b.onclick=()=>openProfile(b.dataset.n));

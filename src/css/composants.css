@@ -154,3 +154,9 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .qc h4 sma
 #relSub:empty{display:none}
 /* 5.33 · 24 px entre les sections d'un écran */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .wrap>section+section{margin-top:24px!important}
+/* bouton retour (← Écran) : flèche et texte alignés */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.back{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;line-height:1!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.back>svg{display:block!important;vertical-align:0!important;flex:none!important}
+/* supprimer : bouton icône poubelle, carré 44, style secondaire */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic{display:inline-grid!important;place-items:center!important;width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;background:var(--ui-fond,rgba(12,14,32,.8))!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;border-radius:0!important;box-shadow:none!important;text-decoration:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic svg{display:block!important}
