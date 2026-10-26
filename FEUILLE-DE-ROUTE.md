@@ -110,6 +110,13 @@ Points d'uniformité restants :
 - [x] 5.22 (26/10/2026) Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif ») → plus de cadre rouge ni de bordures à gauche
 - [x] 5.23 (26/10/2026) Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30) → choix : 2, 5, 10, 15, 20, 30 (les actions existantes gardent leur XP)
 - [x] 5.24 (26/10/2026) Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels → redessinées en pixels
+- [ ] 5.25 Boutons sous 44 px (audit du 26/10) : onglets 40, boutons fermer 36–40, puces de choix 34–36, « Annuler » 22, « Hier » 32, titre du personnage 28, barre d'XP 42
+- [ ] 5.26 Icônes de la barre du bas à 27 px (standard : 24)
+- [ ] 5.27 Confirmations en deux temps au lieu de « suppression immédiate + Annuler » : supprimer un événement, arrêter le minuteur, décocher un rituel terminé, restaurer par texte
+- [ ] 5.28 XP au-dessus du barème : « Son sorti » 150, collection complète 50, rituel ancré 50, livre fini 40, deux quêtes à 40 et une à 45 **(décision)**
+- [ ] 5.29 Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px)
+- [ ] 5.30 Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)**
+- [ ] 5.31 Un texte à 10,8 px dans « Ma situation » (hors échelle)
 - [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
