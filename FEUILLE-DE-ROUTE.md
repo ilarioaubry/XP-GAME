@@ -57,7 +57,7 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [x] 2.7 (25/10/2026) Renommer `17-spotify-meteo.js` (→ `17-meteo.js`) en fichier météo (Spotify retiré)
 - [x] 2.5 (25/10/2026) Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
 - [x] 2.6 (25/10/2026) Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
-- [ ] 2.8 Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer
+- [x] 2.8 (26/10/2026) Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer → supprimés, avec les onglets fantômes « T » et « B » de la barre du bas
 - [ ] 2.9 Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration
 - [ ] 2.10 « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)**
 
@@ -111,15 +111,15 @@ Points d'uniformité restants :
 - [x] 5.22 (26/10/2026) Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif ») → plus de cadre rouge ni de bordures à gauche
 - [x] 5.23 (26/10/2026) Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30) → choix : 2, 5, 10, 15, 20, 30 (les actions existantes gardent leur XP)
 - [x] 5.24 (26/10/2026) Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels → redessinées en pixels
-- [ ] 5.25 Boutons sous 44 px (audit du 26/10) : onglets 40, boutons fermer 36–40, puces de choix 34–36, « Annuler » 22, « Hier » 32, titre du personnage 28, barre d'XP 42
-- [ ] 5.26 Icônes de la barre du bas à 27 px (standard : 24)
-- [ ] 5.27 Confirmations en deux temps au lieu de « suppression immédiate + Annuler » : supprimer un événement, arrêter le minuteur, décocher un rituel terminé, restaurer par texte
-- [ ] 5.28 XP au-dessus du barème : « Son sorti » 150, collection complète 50, rituel ancré 50, livre fini 40, deux quêtes à 40 et une à 45 **(décision)**
-- [ ] 5.29 Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px)
+- [x] 5.25 (26/10/2026) Boutons sous 44 px (audit du 26/10) : onglets 40, boutons fermer 36–40, puces de choix 34–36, « Annuler » 22, « Hier » 32, titre du personnage 28, barre d'XP 42 → tous à 44 px (audit : plus aucun bouton sous 44)
+- [x] 5.26 (26/10/2026) Icônes de la barre du bas à 27 px (standard : 24) → 24 px (l'agrandissement de l'onglet actif est retiré)
+- [x] 5.27 (26/10/2026) Confirmations en deux temps au lieu de « suppression immédiate + Annuler » : supprimer un événement, arrêter le minuteur, décocher un rituel terminé, restaurer par texte → suppression immédiate + Annuler partout
+- [x] 5.28 (26/10/2026) XP au-dessus du barème : « Son sorti » 150, collection complète 50, rituel ancré 50, livre fini 40, deux quêtes à 40 et une à 45 **(décision)** → décision : on garde ces grosses récompenses
+- [x] 5.29 (26/10/2026) Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px) → 18 px, contour crème 2 px
 - [ ] 5.30 Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)**
-- [ ] 5.31 Un texte à 10,8 px dans « Ma situation » (hors échelle)
-- [ ] 5.32 Appliquer l'en-tête standard (DESIGN.md § 3) : le « + » de Relations est 10 px plus à gauche que les autres actions ; « Modifier » de Ma fiche est un bouton texte ; « Créer » (groupes, fiche proche) et « Ajouter » aussi
-- [ ] 5.33 Écart entre sections : 22 px aujourd'hui, 24 px dans le guide
+- [x] 5.31 (26/10/2026) Un texte à 10,8 px dans « Ma situation » (hors échelle) → 11 px
+- [x] 5.32 (26/10/2026) Appliquer l'en-tête standard (DESIGN.md § 3) : le « + » de Relations est 10 px plus à gauche que les autres actions ; « Modifier » de Ma fiche est un bouton texte ; « Créer » (groupes, fiche proche) et « Ajouter » aussi → « + » de Relations aligné, « Modifier » de Ma fiche en icône crayon ; « Créer » / « Ajouter » restent : ce sont des boutons de formulaire, pas des actions d'en-tête
+- [x] 5.33 (26/10/2026) Écart entre sections : 22 px aujourd'hui, 24 px dans le guide → 24 px
 - [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
@@ -146,9 +146,9 @@ Lisibilité :
 
 ## Phase 7 — Organisation du projet
 
-- [ ] 7.1 README : à quoi sert l'appli, installation sur iPhone
-- [ ] 7.2 CHANGELOG (ce qui a changé, quand)
-- [ ] 7.5 Ranger dans le projet les outils de vérification construits pendant la phase 3 (captures de 55 écrans + comparaison au pixel, styles calculés, tri du CSS)
+- [x] 7.1 (26/10/2026) README : à quoi sert l'appli, installation sur iPhone
+- [x] 7.2 (26/10/2026) CHANGELOG (ce qui a changé, quand)
+- [x] 7.5 (26/10/2026) Ranger dans le projet les outils de vérification construits pendant la phase 3 (captures de 55 écrans + comparaison au pixel, styles calculés, tri du CSS) → `outils/` + `outils/LISEZMOI.md`
 - [ ] 7.3 5 à 10 tests Playwright versionnés (valider un repas, une quête, annuler, assiette, sauvegarde…)
 - [ ] 7.4 GitHub Actions : build `--check` + tests à chaque envoi
 

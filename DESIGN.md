@@ -2,7 +2,7 @@
 
 Ce fichier dit **comment construire** n'importe quel élément de l'appli : taille des textes, place des boutons, espacements, cadres, couleurs, interactions.
 Les **règles d'Ilario** (le pourquoi) sont dans `CLAUDE.md` > Standards ; ce guide les traduit en mesures et en composants (`css/composants.css`, préfixe `ui-`).
-Statut : proposé le 26/10/2026. Les points marqués **(à valider)** attendent l'accord d'Ilario.
+Statut : validé par Ilario le 26/10/2026.
 
 ---
 
@@ -50,7 +50,7 @@ Un titre de fenêtre plein écran est un **chiffre décoratif** (26 px) ; le nom
   - ajouter → icône `plus`
   - modifier / régler → icône `edit`
 - Plus d'une action → un seul bouton « … » qui ouvre une petite fenêtre centrée.
-- **(à valider)** Plus de bouton texte dans les en-têtes (« Modifier » de Ma fiche devient l'icône crayon).
+- Pas de bouton texte dans les en-têtes (« Modifier » de Ma fiche est l'icône crayon). Les boutons « Créer » / « Ajouter » à côté d'un champ appartiennent au formulaire, pas à l'en-tête.
 
 Composant : `.ui-entete` (titre + compteur + action).
 
@@ -68,8 +68,8 @@ Composant : `.ui-entete` (titre + compteur + action).
 - Dans une carte : le bouton principal à droite, centré verticalement.
 - En bas d'une fenêtre plein écran : secondaire à gauche (1/3), principal à droite (2/3), comme l'assiette.
 - Le bouton dit son action, rien d'autre (pas de compteur, pas de minuteur, pas d'indicateur) ; un compteur se met à côté.
-- **Puces de choix** (Étudiant·e, Geek…) : boutons secondaires de 44 px **(à valider : aujourd'hui 34–36 px)** ; sélectionnée = bordure or.
-- **Bouton flottant « + »** : un seul dans l'appli, sur Aujourd'hui, en bas à droite au-dessus de la barre d'onglets, carré **56 px (à valider : 62 aujourd'hui)**, jaune.
+- **Puces de choix** (Étudiant·e, Geek…) : boutons secondaires de 44 px ; sélectionnée = bordure or.
+- **Bouton flottant « + »** : un seul dans l'appli, sur Aujourd'hui, en bas à droite au-dessus de la barre d'onglets, carré **56 px**, jaune.
 
 ## 5. Cadres, cartes et tuiles
 
