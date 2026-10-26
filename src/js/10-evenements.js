@@ -53,7 +53,7 @@ function renderEvents(){
     const go=r.querySelector(".evgo");
     if(go)go.onclick=ev=>{if(e.k==="bd"){completeSpecial(e.q,go,ev);return}
       S.xp+=e.xp;S.log.push({a:"bonus",cat:null,name:e.n,xp:e.xp,t:Date.now(),bonus:1,evd:e.id});floatXp(e.xp,ev,go);save();render();toast(`Événement : <span class="p">${esc(e.n)}</span> +${e.xp} XP`)};
-    const x=r.querySelector(".evx");if(x)x.onclick=()=>{if(x.dataset.arm){S.g.ev=S.g.ev.filter(v=>v.id!==e.id);save();render()}else{x.dataset.arm="1";x.classList.add("arm");x.setAttribute("aria-label","Confirmer la suppression");setTimeout(()=>{delete x.dataset.arm;x.classList.remove("arm")},2500)}};
+    const x=r.querySelector(".evx");if(x)x.onclick=()=>undoAfter("Événement supprimé",()=>{S.g.ev=S.g.ev.filter(v=>v.id!==e.id);save();render()});
     box.appendChild(r)});
 }
 $("evtAdd").onclick=()=>{calOpen();return;const f=$("evtForm");f.hidden=!f.hidden;$("evtAdd").setAttribute("aria-expanded",!f.hidden);if(!f.hidden){if(!$("evtDate").value)$("evtDate").value=dayKey(new Date());$("evtName").focus()}};

@@ -566,7 +566,7 @@
     const H=HOMEI[s.home]||HOMEI.seul,av=s.with.slice(0,4).map(n=>pAv(n,"fmini")).join("");
     const P=perNow();let perH="";if(s.job==="poste"&&P){const a=Date.parse(P.s),e=Date.parse(P.e),t=Date.parse(tkF()),tot=Math.round((e-a)/864e5)+1,dn=Math.round((t-a)/864e5)+1;perH=`<div class="fper"><b></b><small>Jour ${dn} sur ${tot} · plus que ${tot-dn} j</small><i><em style="width:${Math.min(100,dn/tot*100)}%"></em></i></div>`}
     if(!fEdit){const gl=(s.goals||[]).map(v=>lab("goals",v)).filter(Boolean);
-      box.innerHTML=`<div class="fcard fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn fced">${ICO("edit",15)}<span>Modifier</span></button></div>
+      box.innerHTML=`<div class="fcard fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn fced edbtn" aria-label="Modifier ma fiche">${ICO("edit",24)}</button></div>
         ${perAskCard()}
         <div class="fsum"><div class="fsq"><span class="fti">${tileI(JOBI[s.job]||"autre")}</span><small>${esc(lab("job",s.job)||"Situation ?")}</small></div>
         <div class="fsq"><span class="fti">${tileI(H[0])}</span><small>${H[1]}</small>${av?`<span class="fav">${av}</span>`:""}</div>
@@ -772,7 +772,7 @@
   // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
   try{const _rl=renderLife;renderLife=function(){const r=_rl.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}}catch(e){}
   try{const _rs=renderSpecials;renderSpecials=function(){try{noBoss();smartQuests()}catch(e){}const r=_rs.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}}catch(e){}
-  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{if(view==="q"||view==="t"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
+  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
   // ---- Moi : chaque bloc finit son propre rendu (plus de retouche globale après coup)
   const after=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){const r=o.apply(this,arguments);try{fn()}catch(e){console.warn(name,e)}return r}}catch(e){}};
   const before=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){try{fn()}catch(e){console.warn(name,e)}return o.apply(this,arguments)}}catch(e){}};

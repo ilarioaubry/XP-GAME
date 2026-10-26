@@ -1180,12 +1180,12 @@ function renderCollection(){
   window.__newBadges=null;
 }
 let view="q";
-const subs={c:"vie",t:"boss",q:"q"};try{Object.assign(subs,JSON.parse(localStorage.getItem("cq-subs")||"{}"))}catch(e){}if(subs.t==="son")subs.t="skl";
-if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","bilan"].includes(subs.c))subs.c="vie";if(subs.t!=="boss")subs.t="boss";subs.q="q";
+const subs={c:"vie",q:"q"};try{Object.assign(subs,JSON.parse(localStorage.getItem("cq-subs")||"{}"))}catch(e){}
+if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","bilan"].includes(subs.c))subs.c="vie";delete subs.t;subs.q="q";
 let lastNb=0;
 function badgeDots(){const n=(S.g&&S.g.nb||[]).length,grew=n>lastNb;lastNb=n;[["tabC",n],["subBadges",n]].forEach(([id,c])=>{const el=id==="subBadges"?document.querySelector('.subtabs button[data-sub="badges"]'):$(id);if(!el)return;let d=el.querySelector(".ndot");if(c&&!d){d=document.createElement("span");d.className="ndot";el.appendChild(d)}if(d){d.hidden=!c;d.textContent=c;if(grew&&c){d.classList.remove("pop");void d.offsetWidth;d.classList.add("pop")}}})}
 function applySub(){if(view==="c"&&subs.c==="badges"&&S.g&&S.g.nb&&S.g.nb.length){setTimeout(()=>{const t=document.querySelector("#bdgGrid .bdg.new");if(t)t.scrollIntoView({block:"center",behavior:"smooth"})},350)}document.querySelectorAll('[data-v][data-sub]').forEach(el=>el.hidden=view!==el.dataset.v||el.dataset.sub!==subs[el.dataset.v]);document.querySelectorAll(".subtabs").forEach(nv=>nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===subs[nv.dataset.v])));requestAnimationFrame(placeInds)}
-function goSub(v,sb){if(v==="q"&&sb!=="q"){subs.t=sb;try{localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}showView("t");return}if(v==="t"&&sb==="q"){showView("q");return}const old=subs[v];subs[v]=sb;try{localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}if(view!==v){showView(v);SCR.scrollTo(0,0);return}
+function goSub(v,sb){const old=subs[v];subs[v]=sb;try{localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}if(view!==v){showView(v);SCR.scrollTo(0,0);return}
   if(old===sb){applySub();return}
   const nv=document.querySelector('.subtabs[data-v="'+v+'"]'),bs=nv?[...nv.querySelectorAll("button")].map(b=>b.dataset.sub):[],dir=bs.indexOf(sb)>=bs.indexOf(old)?1:-1;
   nv&&nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===sb));moveInd(nv);
@@ -1222,7 +1222,7 @@ function showView(v,fromHash){
   const prevV=view;
   view=v;document.querySelectorAll("[data-v]").forEach(el=>el.hidden=el.dataset.v!==v);applySub();
   if(prevV!==v||fromHash)requestAnimationFrame(()=>animIn(v,fromHash||prevV===v?0:(VORD[v]??0)>=(VORD[prevV]??0)?1:-1));
-  $("tabQ").setAttribute("aria-selected",v==="q"||v==="t");$("tabB").setAttribute("aria-selected",v==="b");$("tabR").setAttribute("aria-selected",v==="r"||v==="p");$("tabT").setAttribute("aria-selected",v==="t");$("tabC").setAttribute("aria-selected",v==="c"||v==="s");
+  $("tabQ").setAttribute("aria-selected",v==="q");$("tabR").setAttribute("aria-selected",v==="r"||v==="p");$("tabC").setAttribute("aria-selected",v==="c"||v==="s");
   $("strip").hidden=v!=="q";
   if(v==="p")renderProfile(true);
   if(!fromHash){try{history.replaceState(null,"",v==="b"?"#boutique":v==="s"?"#reglages":v==="t"?"#defis":v==="c"?"#profil":(v==="r"||v==="p")?"#relations":"#quetes")}catch(e){}SCR.scrollTo(0,0)}
@@ -1230,5 +1230,5 @@ function showView(v,fromHash){
 {const qs=[...document.querySelectorAll(".qxp,.subtabs")];let t=0;const chk=()=>{t=0;qs.forEach(q=>{if(q.hidden||!q.offsetHeight){q.classList.remove("stuck");return}const r=q.getBoundingClientRect(),top=parseFloat(getComputedStyle(q).top)||0;q.classList.toggle("stuck",r.top<=top+.5&&SCR.scrollTop>20)})};SCR.addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(chk)},{passive:true});}
 ["spTrack","grid"].forEach(id=>{const el=$(id);el.addEventListener("scroll",()=>{el.classList.toggle("sl",el.scrollLeft>4);el.classList.toggle("end",el.scrollLeft+el.clientWidth>=el.scrollWidth-4&&el.scrollLeft>4)},{passive:true})});
 $("wallet").onclick=()=>{goSub("c","wr");setTimeout(()=>{const n=document.querySelector(".subtabs[data-v=c]");if(n)n.scrollIntoView({behavior:"smooth",block:"start"})},200)};$("qxpBtn").onclick=()=>showView("c");$("meSet").onclick=()=>showView("s");
-{const tp=$("pfTPick"),tb=$("charTitle"),setT=o=>{tp.hidden=!o;tb.setAttribute("aria-expanded",o)};tb.onclick=()=>setT(tp.hidden);$("pfTClose").onclick=()=>setT(false);window.__closeTPick=()=>setT(false)}$("setBack").onclick=()=>showView("c");$("tabQ").onclick=()=>showView("q");$("tabB").onclick=()=>showView("b");$("tabR").onclick=()=>showView("r");$("tabT").onclick=()=>showView("t");$("tabC").onclick=()=>showView("c");
+{const tp=$("pfTPick"),tb=$("charTitle"),setT=o=>{tp.hidden=!o;tb.setAttribute("aria-expanded",o)};tb.onclick=()=>setT(tp.hidden);$("pfTClose").onclick=()=>setT(false);window.__closeTPick=()=>setT(false)}$("setBack").onclick=()=>showView("c");$("tabQ").onclick=()=>showView("q");$("tabR").onclick=()=>showView("r");$("tabC").onclick=()=>showView("c");
 

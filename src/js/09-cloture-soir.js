@@ -83,8 +83,8 @@ function ritTiles(list,per,cls){const w=document.createElement("div");w.classNam
     const b=document.createElement("button");b.type="button";b.className="rtile"+(full?" done":"")+(t.core?" core":"");b.style.setProperty("--kc",K.c);
     if(!full){b.dataset.tm="rit-"+t.id;b.dataset.tmn=t.name;b.dataset.nohold="1"}
     b.innerHTML=`<span class="rtic">${rkSvg(K.k,K.c)}</span><span class="rtn"></span>${t.trg&&!full?`<span class="rttr"></span>`:""}${t.n>1?`<span class="rtd">${Array.from({length:t.n},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span>`:""}<em>${full?ICO("check",12):(xp?"+"+xp:ICO("check",12))}</em>${t.core?`<span class="rtcore">${STAR_SVG}</span>`:""}`;
-    if(isWeekend()&&!t.core&&!full&&list.some(x=>x.core))b.insertAdjacentHTML("beforeend",`<span class="rtbonus">Bonus</span>`);b.querySelector(".rtn").textContent=shortName(t.name);{const tr=b.querySelector(".rttr");if(tr)tr.textContent=t.trg}b.setAttribute("aria-label",t.name+(full?", fait. Touche deux fois pour décocher":xp?", +"+xp+" XP":""));
-    b.onclick=ev=>{if(full){if(b.dataset.arm){ritUntap(t);return}b.dataset.arm="1";b.classList.add("arm");b.querySelector("em").textContent="Décocher ?";setTimeout(()=>{if(b.isConnected){delete b.dataset.arm;b.classList.remove("arm");b.querySelector("em").innerHTML=ICO("check",12)}},2200);return}
+    if(isWeekend()&&!t.core&&!full&&list.some(x=>x.core))b.insertAdjacentHTML("beforeend",`<span class="rtbonus">Bonus</span>`);b.querySelector(".rtn").textContent=shortName(t.name);{const tr=b.querySelector(".rttr");if(tr)tr.textContent=t.trg}b.setAttribute("aria-label",t.name+(full?", fait. Toucher pour décocher":xp?", +"+xp+" XP":""));
+    b.onclick=ev=>{if(full){undoAfter("Rituel décoché",()=>ritUntap(t));return}
       if(b.classList.contains("busy"))return;b.classList.add("busy");rkFx(b,K);const last=c+1>=t.n,fin=last&&w.classList.contains("main")&&[...w.querySelectorAll(".rtile:not(.done)")].length===1;
       setTimeout(()=>{window.__ritSnd=1;try{ritTap(t,b,ev)}finally{window.__ritSnd=0}if(fin)momentDone(per)},last?700:90)};
     w.appendChild(b)});

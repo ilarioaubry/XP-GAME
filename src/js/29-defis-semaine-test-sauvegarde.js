@@ -208,7 +208,7 @@ function loadCore(d){S={xp:+d.xp||0,actions:migrateActions(d),log:Array.isArray(
 
 try{const raw=localStorage.getItem("carnet-quetes");if(raw){window.__hadLocal=1;load(JSON.parse(raw))}}catch(e){}
 if(ensureGroupQuests())save();
-render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(defis|talents)$/.test(location.hash)?"t":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré sur ce téléphone";
+render();if(location.hash==="#boutique"){subs.c="wr"}showView(location.hash==="#boutique"?"c":location.hash==="#reglages"?"s":/^#(profil|collection)$/.test(location.hash)?"c":location.hash==="#relations"?"r":"q",true);$("sync").textContent="Enregistré sur ce téléphone";
 
 // données enregistrées sur ce téléphone (stockage local) ; premier lancement : création du profil
 if(!window.__hadLocal)obStart();

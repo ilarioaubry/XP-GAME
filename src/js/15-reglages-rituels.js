@@ -11,7 +11,6 @@ $("expBtn").onclick=async()=>{
   let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{ok=document.execCommand("copy")}catch(e2){}}
   toast(ok?"Sauvegarde copiée : colle-la dans une note":"Sélectionne le texte et copie-le");
 };
-let impArmed=false;
 // sauvegarde en fichier : menu de partage iOS (Enregistrer dans Fichiers), sinon téléchargement
 $("expFile").onclick=async()=>{
   const name="carnet-"+new Date().toISOString().slice(0,10)+".json",f=new File([JSON.stringify(snapshot())],name,{type:"application/json"});
@@ -28,10 +27,9 @@ $("impFile").onchange=async e=>{
 };
 $("impBtn").onclick=()=>{
   const m=$("impMsg");let d;
-  try{d=JSON.parse($("impBox").value.trim())}catch(e){m.textContent="Ce texte n'est pas une sauvegarde valide.";impArmed=false;$("impBtn").textContent="Restaurer";return}
+  try{d=JSON.parse($("impBox").value.trim())}catch(e){m.textContent="Ce texte n'est pas une sauvegarde valide.";return}
   if(!d||typeof d!=="object"||typeof d.xp!=="number"||!Array.isArray(d.actions)){m.textContent="Sauvegarde non reconnue.";return}
-  if(!impArmed){impArmed=true;$("impBtn").textContent="Confirmer : remplace tout";m.textContent="Cela remplace toute ta progression actuelle.";return}
-  impArmed=false;$("impBtn").textContent="Restaurer";load(d);save();render();$("impBox").value="";m.textContent="Sauvegarde restaurée.";toast("Données restaurées");
+  undoAfter("Données restaurées",()=>{load(d);save();render()});$("impBox").value="";m.textContent="";
 };
 
 // ---- Talents perso
