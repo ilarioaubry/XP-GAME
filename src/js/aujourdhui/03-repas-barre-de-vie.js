@@ -6,6 +6,12 @@ const MB_V=[["junk","Mal mangé","burger",-10],["smoke","Fumé","smoke",-15],["d
 const mbDraft={};
 const MEAL_H={pdej:0,dej:11,gouter:16,diner:19};
 function mbDr(key){const MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={});const dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};dr.pl=dr.pl||{};dr.v=dr.v||{};dr.cr=dr.cr||{};return dr}
+// Revenir sur un repas noté (pris ou sauté) : on efface la note du jour, et l'XP s'il avait été noté « pris » ; v = 1 pris, 0 sauté, null effacer
+function mealClear(tk,per,k){const key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k),G=S.g;
+  if(dr.m[k]===1&&M){const e=[...S.log].reverse().find(x=>x.a==="mb"&&x.name===M[1]&&dayKey(x.t)===tk);if(e){S.log=S.log.filter(x=>x!==e);S.xp=Math.max(0,S.xp-e.xp);if(e.cat&&S.stats[e.cat]!=null)S.stats[e.cat]=Math.max(0,S.stats[e.cat]-e.xp)}}
+  delete dr.m[k];delete dr.cr[k];delete dr.w[k];
+  if(G.mb&&G.mb[key]){if(G.mb[key].auto)delete G.mb[key];else if(G.mb[key].m)delete G.mb[key].m[k]}}
+function mealSet(per,k,v,btn,ev){mealClear(dayKey(Date.now()),per,k);if(v===0||v===1)mealQuick(per,k,btn,v,ev);else{save();render();toast("Repas effacé")}}
 function mealQuick(per,k,btn,v,ev,bx,extra){const tk=dayKey(Date.now()),key=tk+":"+per,dr=mbDr(key),M=MB[per].find(x=>x[0]===k);if(!M)return;const[,l,p]=M;
   if(dr.cr[k]||dr.m[k]===0||dr.m[k]===1||(S.g.mb&&S.g.mb[key])){render();return}
   dr.m[k]=v;delete dr.w[k];dr.cr[k]=1;if(btn){btn.disabled=true;const it=btn.closest(".dqi");if(it)it.classList.add("leave")}

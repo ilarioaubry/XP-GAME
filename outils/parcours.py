@@ -65,6 +65,11 @@ with sync_playwright() as p:
         if pg.is_visible(".rtq-fin"): pg.click(".rtq-fin"); pg.wait_for_timeout(300)
     check("routine : départ, étapes, fin", okr and not pg.is_visible(".rtq"))
 
+    # 3b. Revenir sur un repas : sauté → pris → effacé
+    r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const tap=async v=>{document.querySelector('.mlp[data-k=pdej]').click();await W(100);const b=document.querySelector('.mlpop [data-v="'+v+'"]');if(!b)return false;b.click();await W(400);return true};
+      const o=[];await tap('0');const x0=S.xp;o.push(mealState('pdej','matin'));await tap('1');o.push(mealState('pdej','matin'),S.xp>x0);await tap('x');o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
+    check("revenir sur un repas (sauté → pris → effacé)", r == "ko,ok,true,vide,true", r)
+
     # 4. Quête du jour puis Annuler
     pg.evaluate("document.querySelectorAll('.bpop').forEach(e=>e.remove())")
     x0 = xp(pg); pg.evaluate("[...document.querySelectorAll('.fqgo')].find(b=>/^Fait/.test(b.textContent.trim())).click()"); pg.wait_for_timeout(1500)
