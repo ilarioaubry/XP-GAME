@@ -4495,7 +4495,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 09ca522</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2d0eb39</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9553,7 +9553,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     p.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const ch=st.k!==b.dataset.k;st.k=b.dataset.k;if(ch){st.rh={m:"free",n:3,wd:[]}}sfx("blip");draw();auto()});
     {const nm=p.querySelector(".qwname");if(nm){nm.value=st.name;const hint=p.querySelector(".qwhint"),nb=p.querySelector(".qwnext");const upd=()=>{st.name=nm.value;nb.disabled=!st.name.trim();hint.hidden=st.k==="prj"||!st.name.trim()||/\d/.test(st.name)||st.name.trim().length<4};upd();nm.oninput=upd;
       nm.onkeydown=e=>{if(e.key==="Enter"&&st.name.trim()){e.preventDefault();if(st.k==="prj")next();else goTo("recap")}};nb.onclick=()=>{if(st.name.trim())next()};setTimeout(()=>nm.focus({preventScroll:true}),60);
-      const sg=qcSugs(st.k);p.querySelectorAll("[data-sg]").forEach(b=>{const t=sg[+b.dataset.sg];b.querySelector("span:not(.qcti)").textContent=t[0];b.onclick=()=>tpl(t)})}}
+      const sg=qcSugs(st.k);p.querySelectorAll("[data-sg]").forEach(b=>{const t=sg[+b.dataset.sg];b.querySelector("span:not(.qcti)").textContent=t[0];b.onclick=()=>tpl(t)});if(!nm.__qf){nm.__qf=1;try{qwFind(nm)}catch(e){}}}}
     p.querySelectorAll("[data-mo]").forEach(b=>b.onclick=()=>{st.mo=b.dataset.mo;draw();auto()});
     p.querySelectorAll("[data-rh]").forEach(b=>b.onclick=()=>{st.rh.m=b.dataset.rh;if(st.rh.m==="wd"&&!st.rh.wd.length)st.rh.wd=[wdOf(dayKey(Date.now()))];draw();if(st.rh.m!=="xw"&&st.rh.m!=="wd")auto()});
     p.querySelectorAll(".rhpm").forEach(b=>b.onclick=()=>{st.rh.n=Math.max(1,Math.min(6,st.rh.n+ +b.dataset.d));draw()});
@@ -10148,7 +10148,7 @@ let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());
   const fi=feedIds(),nSp=(S.specials||[]).filter(q=>!q.bd&&!q.bs&&!fi.sp.has(q.id)).length+mqActive().filter(q=>!fi.mq.has(q[0])).length,nPr=(Array.isArray(G.prj)?G.prj:[]).filter(p=>!p.won).length,nEv=(()=>{try{return evList().length}catch(e){return 0}})();
   const parts=[nSp?`${nSp} spéciale${nSp>1?"s":""}`:"","bonnes actions",typeof rhOn==="function"&&S.actions.some(a=>rhOn(a))?"ta semaine":"",nPr?`${nPr} projet${nPr>1?"s":""}`:"",nEv?`${nEv} événement${nEv>1?"s":""}`:""].filter(Boolean);
-  document.documentElement.classList.toggle("plusopen",plusOpen);
+  document.documentElement.classList.toggle("plusopen",plusOpen);if(typeof plusSheet==="function")plusSheet();
   box.innerHTML=`<button type="button" class="plusb" aria-expanded="${plusOpen}"><span class="plusi">${plusOpen?"−":"+"}</span><span><b>${plusOpen?"Ranger":"Noter une action"}</b><small>${esc(parts.join(" · "))}</small></span>${nSp&&!plusOpen?`<em>${nSp}</em>`:""}</button>`;
   box.querySelector(".plusb").onclick=()=>{plusOpen=!plusOpen;renderPlus();if(plusOpen)setTimeout(()=>{const n=box.nextElementSibling;box.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})},50)}}
 
@@ -16423,7 +16423,7 @@ function qwFind(inp){const kind=/Courir/.test(inp.placeholder)?"act":"";if(!kind
     box.querySelectorAll("[data-qwc]").forEach(b=>b.onclick=()=>{box.__cat=box.__cat===b.dataset.qwc?"":b.dataset.qwc;draw()});
     box.querySelectorAll(".afr").forEach((b,i)=>b.onclick=()=>{inp.value=L[i].name;inp.dispatchEvent(new Event("input",{bubbles:true}));inp.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",bubbles:true}))})};
   draw()}
-try{new MutationObserver(()=>{document.querySelectorAll(".qwname").forEach(i=>{if(!i.__qf){i.__qf=1;try{qwFind(i)}catch(e){}}})}).observe(document.body,{childList:true,subtree:true})}catch(e){}
+// qwFind est appelé par la fenêtre de création (16-quetes.js) quand le champ du nom apparaît
 // ===== Ergonomie : réglages là où vivent les choses
 function pop(anchor,items,title){document.querySelectorAll(".epop").forEach(x=>x.remove());const r=anchor.getBoundingClientRect(),p=document.createElement("div");p.className="epop";p.setAttribute("role","menu");
   p.innerHTML=(title?`<b class="eph"></b>`:"")+items.map((it,i)=>`<button type="button" role="menuitem" data-i="${i}"${it.on?' aria-pressed="true"':""}>${it.l}</button>`).join("");
@@ -16469,7 +16469,7 @@ function plusSheet(){const open=document.documentElement.classList.contains("plu
   const secs=PLUS_IDS.map(id=>document.getElementById(id)).filter(Boolean);
   if(open){secs.forEach(x=>{if(x.parentNode!==pw)pw.appendChild(x)});if(!sh.__af){afQ="";afCat="";afSel=null;afFam="";afStep="who";renderAF()}sh.__af=1}
   else if(wrap&&plus){sh.__af=0;secs.forEach(x=>{if(x.parentNode===pw)wrap.insertBefore(x,plus.nextSibling)})}}
-try{new MutationObserver(()=>plusSheet()).observe(document.documentElement,{attributes:true,attributeFilter:["class"]})}catch(e){}
+// plusSheet est appelé quand le panneau + s'ouvre ou se ferme (19-bilan.js)
 // Événement du jour, en haut d'Aujourd'hui
 let evK="";const deN=n=>/^[aeiouyhéèêàâîôûAEIOUYHÉÈ]/.test(n)?"d'"+n:"de "+n;
 function evToday(){const b=document.getElementById("evToday");if(!b||!S||!S.g)return;let L=[];try{L=evList().filter(e=>e.inD===0||e.k==="bd"&&e.inD>0&&e.inD<=3).sort((a,b)=>a.inD-b.inD)}catch(e){}

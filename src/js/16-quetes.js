@@ -91,7 +91,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     p.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const ch=st.k!==b.dataset.k;st.k=b.dataset.k;if(ch){st.rh={m:"free",n:3,wd:[]}}sfx("blip");draw();auto()});
     {const nm=p.querySelector(".qwname");if(nm){nm.value=st.name;const hint=p.querySelector(".qwhint"),nb=p.querySelector(".qwnext");const upd=()=>{st.name=nm.value;nb.disabled=!st.name.trim();hint.hidden=st.k==="prj"||!st.name.trim()||/\d/.test(st.name)||st.name.trim().length<4};upd();nm.oninput=upd;
       nm.onkeydown=e=>{if(e.key==="Enter"&&st.name.trim()){e.preventDefault();if(st.k==="prj")next();else goTo("recap")}};nb.onclick=()=>{if(st.name.trim())next()};setTimeout(()=>nm.focus({preventScroll:true}),60);
-      const sg=qcSugs(st.k);p.querySelectorAll("[data-sg]").forEach(b=>{const t=sg[+b.dataset.sg];b.querySelector("span:not(.qcti)").textContent=t[0];b.onclick=()=>tpl(t)})}}
+      const sg=qcSugs(st.k);p.querySelectorAll("[data-sg]").forEach(b=>{const t=sg[+b.dataset.sg];b.querySelector("span:not(.qcti)").textContent=t[0];b.onclick=()=>tpl(t)});if(!nm.__qf){nm.__qf=1;try{qwFind(nm)}catch(e){}}}}
     p.querySelectorAll("[data-mo]").forEach(b=>b.onclick=()=>{st.mo=b.dataset.mo;draw();auto()});
     p.querySelectorAll("[data-rh]").forEach(b=>b.onclick=()=>{st.rh.m=b.dataset.rh;if(st.rh.m==="wd"&&!st.rh.wd.length)st.rh.wd=[wdOf(dayKey(Date.now()))];draw();if(st.rh.m!=="xw"&&st.rh.m!=="wd")auto()});
     p.querySelectorAll(".rhpm").forEach(b=>b.onclick=()=>{st.rh.n=Math.max(1,Math.min(6,st.rh.n+ +b.dataset.d));draw()});

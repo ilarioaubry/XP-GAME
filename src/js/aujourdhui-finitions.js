@@ -341,7 +341,7 @@ function qwFind(inp){const kind=/Courir/.test(inp.placeholder)?"act":"";if(!kind
     box.querySelectorAll("[data-qwc]").forEach(b=>b.onclick=()=>{box.__cat=box.__cat===b.dataset.qwc?"":b.dataset.qwc;draw()});
     box.querySelectorAll(".afr").forEach((b,i)=>b.onclick=()=>{inp.value=L[i].name;inp.dispatchEvent(new Event("input",{bubbles:true}));inp.dispatchEvent(new KeyboardEvent("keydown",{key:"Enter",bubbles:true}))})};
   draw()}
-try{new MutationObserver(()=>{document.querySelectorAll(".qwname").forEach(i=>{if(!i.__qf){i.__qf=1;try{qwFind(i)}catch(e){}}})}).observe(document.body,{childList:true,subtree:true})}catch(e){}
+// qwFind est appelé par la fenêtre de création (16-quetes.js) quand le champ du nom apparaît
 // ===== Ergonomie : réglages là où vivent les choses
 function pop(anchor,items,title){document.querySelectorAll(".epop").forEach(x=>x.remove());const r=anchor.getBoundingClientRect(),p=document.createElement("div");p.className="epop";p.setAttribute("role","menu");
   p.innerHTML=(title?`<b class="eph"></b>`:"")+items.map((it,i)=>`<button type="button" role="menuitem" data-i="${i}"${it.on?' aria-pressed="true"':""}>${it.l}</button>`).join("");
@@ -387,7 +387,7 @@ function plusSheet(){const open=document.documentElement.classList.contains("plu
   const secs=PLUS_IDS.map(id=>document.getElementById(id)).filter(Boolean);
   if(open){secs.forEach(x=>{if(x.parentNode!==pw)pw.appendChild(x)});if(!sh.__af){afQ="";afCat="";afSel=null;afFam="";afStep="who";renderAF()}sh.__af=1}
   else if(wrap&&plus){sh.__af=0;secs.forEach(x=>{if(x.parentNode===pw)wrap.insertBefore(x,plus.nextSibling)})}}
-try{new MutationObserver(()=>plusSheet()).observe(document.documentElement,{attributes:true,attributeFilter:["class"]})}catch(e){}
+// plusSheet est appelé quand le panneau + s'ouvre ou se ferme (19-bilan.js)
 // Événement du jour, en haut d'Aujourd'hui
 let evK="";const deN=n=>/^[aeiouyhéèêàâîôûAEIOUYHÉÈ]/.test(n)?"d'"+n:"de "+n;
 function evToday(){const b=document.getElementById("evToday");if(!b||!S||!S.g)return;let L=[];try{L=evList().filter(e=>e.inD===0||e.k==="bd"&&e.inD>0&&e.inD<=3).sort((a,b)=>a.inD-b.inD)}catch(e){}

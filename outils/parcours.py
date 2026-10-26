@@ -89,6 +89,11 @@ with sync_playwright() as p:
         except Exception as e: errs.append(nom + ": " + str(e)[:100])
         trait(pg, nom); check(f"écran {nom}", len(errs) == n0)
 
+    # 7a. Créer une action : la recherche s'attache au champ du nom
+    pg.evaluate("()=>{document.querySelectorAll('.qcw,.qcsh,.bpop').forEach(e=>e.remove());qcOpen('act')}"); pg.wait_for_timeout(300)
+    check("créer une action : recherche sous le nom", pg.evaluate("!!document.querySelector('.qwname')&&!!document.querySelector('.qwfind')"))
+    pg.evaluate("document.querySelectorAll('.qcw,.qcsh,.bpop').forEach(e=>e.remove())")
+
     # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
     n0 = len(errs)
     nb = pg.evaluate("""(()=>{showView('c');document.querySelector('[data-sub=wr][role=tab]').click();let n=0;

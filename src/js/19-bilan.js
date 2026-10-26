@@ -216,7 +216,7 @@ let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());
   const fi=feedIds(),nSp=(S.specials||[]).filter(q=>!q.bd&&!q.bs&&!fi.sp.has(q.id)).length+mqActive().filter(q=>!fi.mq.has(q[0])).length,nPr=(Array.isArray(G.prj)?G.prj:[]).filter(p=>!p.won).length,nEv=(()=>{try{return evList().length}catch(e){return 0}})();
   const parts=[nSp?`${nSp} spéciale${nSp>1?"s":""}`:"","bonnes actions",typeof rhOn==="function"&&S.actions.some(a=>rhOn(a))?"ta semaine":"",nPr?`${nPr} projet${nPr>1?"s":""}`:"",nEv?`${nEv} événement${nEv>1?"s":""}`:""].filter(Boolean);
-  document.documentElement.classList.toggle("plusopen",plusOpen);
+  document.documentElement.classList.toggle("plusopen",plusOpen);if(typeof plusSheet==="function")plusSheet();
   box.innerHTML=`<button type="button" class="plusb" aria-expanded="${plusOpen}"><span class="plusi">${plusOpen?"−":"+"}</span><span><b>${plusOpen?"Ranger":"Noter une action"}</b><small>${esc(parts.join(" · "))}</small></span>${nSp&&!plusOpen?`<em>${nSp}</em>`:""}</button>`;
   box.querySelector(".plusb").onclick=()=>{plusOpen=!plusOpen;renderPlus();if(plusOpen)setTimeout(()=>{const n=box.nextElementSibling;box.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"})},50)}}
 
