@@ -93,7 +93,7 @@ Points d'uniformité restants :
 - [x] 5.21 (26/10/2026) Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées → plein écran quand on tape une ville ; lignes Aujourd'hui / Demain sans cadre
 - [x] 5.22 (26/10/2026) Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif ») → plus de cadre rouge ni de bordures à gauche
 - [x] 5.23 (26/10/2026) Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30) → choix : 2, 5, 10, 15, 20, 30 (les actions existantes gardent leur XP)
-- [ ] 5.24 Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels
+- [x] 5.24 (26/10/2026) Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels → redessinées en pixels
 - [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
