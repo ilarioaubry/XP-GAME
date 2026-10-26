@@ -734,19 +734,24 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 /* aura : un seul voile, le même partout */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.statlist,.pf-xp){background:rgba(12,14,32,.55)!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important;border:2px solid rgba(255,255,255,.17)!important;padding:8px!important;border-radius:0!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important;min-width:0!important;max-width:100%!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf.aura-on:not(.fpf) .pf-name{background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important;padding:0!important}
-/* disposition : [portrait | prénom, titre, niveau] puis les catégories sur 2 colonnes, puis les badges */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr)!important;grid-template-areas:"side head" "side xp" "tpick tpick" "stats stats" "bdg bdg" "pick pick"!important;column-gap:12px!important;row-gap:0!important;align-items:start!important}
+/* disposition C (choisie le 26/10) : [portrait | prénom, titre, niveau / 3 badges] puis barre d'XP sur toute la largeur, sans cadre, puis les catégories sur 2 colonnes */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr) 44px!important;grid-template-areas:"side head lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick"!important;column-gap:12px!important;row-gap:0!important;align-items:start!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf)>*{grid-column:1/-1}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-body{display:contents!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-body,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-xp{display:contents!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-side{grid-area:side!important;display:block!important;align-self:start!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-head{grid-area:head!important;align-self:start!important;margin:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-name{flex-direction:column!important;align-items:flex-start!important;gap:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charName{width:100%!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charTitle{padding:0!important;text-align:left!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-xp{grid-area:xp!important;align-self:end!important;margin:8px 0 0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox{grid-area:lvl!important;align-self:start!important;justify-self:end!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg{grid-area:bdg!important;margin:8px 0 0!important;align-self:end!important;gap:6px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs:not(.pbt){min-height:52px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #barWrap{grid-area:xp!important;margin:12px 0 0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-tpick{grid-area:tpick!important;margin-top:12px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .statwrap{grid-area:stats!important;margin:12px 0 0!important;width:auto!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #stats{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px 12px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #stats .stat{grid-template-columns:58px minmax(0,1fr)!important;margin:0!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg{grid-area:bdg!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-pick{grid-area:pick!important}
+/* aura : même voile derrière le bloc du prénom et derrière les catégories ; la barre d'XP sans cadre */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on :is(.pf-head,.statlist){background:rgba(12,14,32,.55)!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important;border:2px solid rgba(255,255,255,.17)!important;padding:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on .pf-xp{background:none!important;border:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:0!important}
