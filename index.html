@@ -4489,7 +4489,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9fa78e6</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7fbbad7</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -14942,7 +14942,7 @@ html:not(#_a):not(#_b):not(#_c) body :is(.rai){width:48px!important;height:48px!
 html:not(#_a):not(#_b):not(#_c) body :is(.rai)>:is(svg,img){width:48px!important;height:48px!important;max-width:none!important;display:block}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl.gfam{--fc:var(--c-famille)}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl{--fc:var(--c-social)}
-html:not(#_a):not(#_b):not(#_c) body :is(#relList>li.rl,#pCardF){border:2px solid var(--fc,var(--line))!important}
+html:not(#_a):not(#_b):not(#_c) body :is(#relList>li.rl,#pCardF){border:2px solid var(--line)!important}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl.gfam{--fc:var(--c-famille)!important}
 /* — depuis epure-fiche-personne.css — */
 .fp-badges .rk{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 3px;background:var(--surface-2);color:var(--ink)}
@@ -15694,7 +15694,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not([data-wrc="badges"]) body .col:has(
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ficheBox,#idBox,#vieBox,#prjBox2,#evtBox,#setBox){border:0!important;box-shadow:none!important;border-radius:0!important;padding:18px 2px 6px!important;background:repeating-linear-gradient(90deg,var(--fc) 0 8px,transparent 8px 12px) top left/100% 4px no-repeat!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c{border:0!important;box-shadow:none!important;border-radius:0!important;background:none!important;padding:14px 0 4px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1px dashed rgba(255,255,255,.18)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.char.cmp.pf,.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.evr.now .evd){animation:none!important}
@@ -15735,6 +15735,10 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it:not(.wr-fo
 
 /* 5.11 : « Chapitre en cours » au modèle des titres de section (losange à la couleur de la section) */
 html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10px;flex:none;background:var(--gold);transform:rotate(45deg)}
+
+/* Ma fiche profil garde son cadre, comme la fiche d'un proche (décision du 26/10) : bordure neutre, fond sombre, l'aura s'affiche dedans */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:2px solid var(--line)!important;border-radius:0!important;padding:12px!important;box-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background:var(--surface)!important}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}

@@ -76,7 +76,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 |---|---|---|
 | Sauvegarde | Stockage local du téléphone, migrations numérotées | active |
 | Hors ligne | Service worker | active |
-| Mode test | Outils de test (XP, niveaux, coffres, jour suivant) sur une copie des données | active ? (accès à préciser) |
+| Mode test | Outils de test (XP, niveaux, coffres, jour suivant) sur une copie des données ; s'ouvre par un appui long sur le titre des Réglages | active (gardé, 26/10) |
 | Accueil | Création du profil au premier lancement | active |
 
 ---

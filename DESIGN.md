@@ -76,7 +76,7 @@ Composant : `.ui-entete` (titre + compteur + action).
 - **Section** : jamais de cadre. Séparation = espace + ligne en pointillés à la couleur de la section.
 - **Carte** (un élément qu'on lit et sur lequel on agit) : fond sombre `--ui-fond`, bordure **2 px neutre**, coins carrés, padding 12 px, contenu aligné à gauche.
 - **Tuile** (un élément court : icône + mot) : carrée, même fond et même bordure, contenu centré, nom sur une ligne.
-- **Fiche d'un proche** : seule exception de grand cadre.
+- **Fiche d'un proche** et **ma fiche profil** : seules exceptions de grand cadre, bordure neutre 2 px ; l'aura équipée remplit le fond de ma fiche.
 - **Bordure or 2 px = actif / sélectionné**. Aucune autre bordure colorée.
 
 ## 6. Couleurs

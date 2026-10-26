@@ -24,7 +24,7 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 Règles données par Ilario (à respecter sans redemander) :
 
 - **Tout en pixel art** : icônes, illustrations, éléments graphiques. Pas d'emoji ni d'icône vectorielle dans le contenu.
-- **Pas d'encadrés** autour des sections ni des blocs (cadres colorés, boîtes à bordure). Séparer par l'espacement et une ligne pixel en pointillés à la couleur de la section ; si ça devient flou, trouver une séparation graphique, pas un cadre. Exception voulue : les fiches des proches (profils d'amis) gardent leur cadre. Les groupes (Famille, Amis…) se séparent par leur titre et une ligne en pointillés à leur couleur, pas par un bandeau plein. Les cartes ont toutes le même fond sombre et une bordure neutre fine.
+- **Pas d'encadrés** autour des sections ni des blocs (cadres colorés, boîtes à bordure). Séparer par l'espacement et une ligne pixel en pointillés à la couleur de la section ; si ça devient flou, trouver une séparation graphique, pas un cadre. Exception voulue : les fiches des proches et ma fiche profil (Moi) gardent leur cadre, en bordure neutre ; l'aura équipée s'affiche dans le fond de ma fiche. Les groupes (Famille, Amis…) se séparent par leur titre et une ligne en pointillés à leur couleur, pas par un bandeau plein. Les cartes ont toutes le même fond sombre et une bordure neutre fine.
 - **Pas de boss ni de combats.** Ne pas en ajouter, ne pas en proposer.
 - **Ne pas inventer de mécanique de jeu** non demandée : proposer d'abord, construire après accord.
 - Avant de livrer : tester à largeur iPhone (393 px) et montrer une capture. Dire clairement ce qui n'a pas pu être vérifié sur son iPhone.

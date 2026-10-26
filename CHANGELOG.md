@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 26/10/2026
+- Ma fiche profil retrouve son cadre (neutre) et les auras leur fond ; cadre des fiches de proches en gris clair.
 - Guide de construction (`DESIGN.md`) : rôles de texte, en-tête de section, boutons, espacements, cadres, couleurs, interactions.
 - Tous les boutons à 44 px, puces de choix à 44 px, bouton flottant à 56 px ; actions d'en-tête alignées (Relations, Ma fiche en icône crayon) ; 24 px entre les sections.
 - Suppressions immédiates avec « Annuler » au lieu de confirmations (événement, minuteur, rituel décoché, restauration par texte).

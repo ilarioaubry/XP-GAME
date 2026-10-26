@@ -58,8 +58,8 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [x] 2.5 (25/10/2026) Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
 - [x] 2.6 (25/10/2026) Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
 - [x] 2.8 (26/10/2026) Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer → supprimés, avec les onglets fantômes « T » et « B » de la barre du bas
-- [ ] 2.9 Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration
-- [ ] 2.10 « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)**
+- [x] 2.9 (26/10/2026) Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration → décision : on les garde
+- [x] 2.10 (26/10/2026) « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)** → décision : on le garde (appui long sur le titre des Réglages)
 
 ## Phase 3 — Composants et fusion des CSS (écran par écran, Aujourd'hui d'abord)
 
@@ -116,7 +116,7 @@ Points d'uniformité restants :
 - [x] 5.27 (26/10/2026) Confirmations en deux temps au lieu de « suppression immédiate + Annuler » : supprimer un événement, arrêter le minuteur, décocher un rituel terminé, restaurer par texte → suppression immédiate + Annuler partout
 - [x] 5.28 (26/10/2026) XP au-dessus du barème : « Son sorti » 150, collection complète 50, rituel ancré 50, livre fini 40, deux quêtes à 40 et une à 45 **(décision)** → décision : on garde ces grosses récompenses
 - [x] 5.29 (26/10/2026) Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px) → 18 px, contour crème 2 px
-- [ ] 5.30 Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)**
+- [x] 5.30 (26/10/2026) Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)** → décision : gris clair ; ma fiche profil retrouve aussi son cadre (neutre), et les auras leur fond (perdu lors d'un ancien épurage)
 - [x] 5.31 (26/10/2026) Un texte à 10,8 px dans « Ma situation » (hors échelle) → 11 px
 - [x] 5.32 (26/10/2026) Appliquer l'en-tête standard (DESIGN.md § 3) : le « + » de Relations est 10 px plus à gauche que les autres actions ; « Modifier » de Ma fiche est un bouton texte ; « Créer » (groupes, fiche proche) et « Ajouter » aussi → « + » de Relations aligné, « Modifier » de Ma fiche en icône crayon ; « Créer » / « Ajouter » restent : ce sont des boutons de formulaire, pas des actions d'en-tête
 - [x] 5.33 (26/10/2026) Écart entre sections : 22 px aujourd'hui, 24 px dans le guide → 24 px

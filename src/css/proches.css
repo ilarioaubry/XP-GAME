@@ -298,7 +298,7 @@ html:not(#_a):not(#_b):not(#_c) body :is(.rai){width:48px!important;height:48px!
 html:not(#_a):not(#_b):not(#_c) body :is(.rai)>:is(svg,img){width:48px!important;height:48px!important;max-width:none!important;display:block}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl.gfam{--fc:var(--c-famille)}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl{--fc:var(--c-social)}
-html:not(#_a):not(#_b):not(#_c) body :is(#relList>li.rl,#pCardF){border:2px solid var(--fc,var(--line))!important}
+html:not(#_a):not(#_b):not(#_c) body :is(#relList>li.rl,#pCardF){border:2px solid var(--line)!important}
 html:not(#_a):not(#_b):not(#_c) body #relList>li.rl.gfam{--fc:var(--c-famille)!important}
 /* — depuis epure-fiche-personne.css — */
 .fp-badges .rk{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:1px 9px 1px 3px;background:var(--surface-2);color:var(--ink)}
