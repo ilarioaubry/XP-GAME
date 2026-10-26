@@ -51,7 +51,9 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
     <h4 class="bh4">Ton intention pour la semaine prochaine</h4><div class="bint">${props.slice(0,3).map(p=>`<button type="button" class="qchip" data-int="${esc(p)}" aria-pressed="${cur===p}">${esc(p)}</button>`).join("")}</div>`}
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
-function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
+// renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilKpi();bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;
   let h="";
@@ -115,7 +117,9 @@ function dayGoal0(){const G=S.g;if(!G)return 150;const tk=dayKey(Date.now()),e=e
 function fqNo(){const G=S.g;if(!G.fqNo||typeof G.fqNo!=="object")G.fqNo={};return G.fqNo}
 function fqWt(k){const G=S.g;return k&&G.fqW&&typeof G.fqW[k]==="number"?G.fqW[k]:0}
 function fqWAdd(k,d){if(!k)return;const G=S.g;if(!G.fqW||typeof G.fqW!=="object")G.fqW={};G.fqW[k]=Math.max(-2,Math.min(1.5,(G.fqW[k]||0)+d))}
-function feedPick(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.now(),NO=fqNo();
+// feedPick : version complète (ex-réécriture de correctifs.js), feedPickBase = le cœur d'origine
+function feedPick(){const r=feedPickBase.apply(this,arguments);try{if(r&&Array.isArray(r.L))r.L=r.L.filter(x=>x.done||x.k==="arc"||x.gift||!famCool(famOfQ(x)))}catch(e){}return r}
+function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.now(),NO=fqNo();
   if(!Array.isArray(F.done))F.done=[];if(!Array.isArray(F.dn)||F.dnd!==tk){F.dn=[];F.dnd=tk}if(!Array.isArray(F.sk)||F.skd!==tk){F.sk=[];F.lt={};F.skd=tk}if(!F.lt||typeof F.lt!=="object")F.lt={};
   const done=new Set(F.done),hid=id=>F.sk.includes(id)||(F.lt[id]&&F.lt[id]>now);
   const ev=evQuests().map(x=>({...x,k:"ev",key:"e:"+x.tpl})).filter(x=>!NO[x.key]);
@@ -144,7 +148,9 @@ function feedPick(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.n
   return{L:out,rest:open.filter(x=>!seen.has(x.id)).length,F}}
 function fqList(){return feedPick().L}
 function feedIds(){try{const P=feedPick(),L=P.L,F=P.F,now=Date.now(),hd=id=>(F.sk||[]).includes(id)||(F.lt&&F.lt[id]>now),sp=new Set(L.filter(x=>x.k==="sp"&&!x.done).map(x=>x.q.id)),mq=new Set(L.filter(x=>x.k==="mq"&&!x.done).map(x=>x.q[0]));(S.specials||[]).forEach(q=>{if(hd("sp:"+q.id))sp.add(q.id)});mqActive().forEach(q=>{if(hd("mq:"+q[0]))mq.add(q[0])});return{sp,mq}}catch(e){return{sp:new Set(),mq:new Set()}}}
-function feedDo(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){toast(`Cette quête s'ouvre à partir de ${mqUntil(x.from)}`);return}
+// feedDo : version complète (ex-réécriture de assiette.js), feedDoBase = le cœur d'origine
+function feedDo(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return feedDoBase.apply(this,arguments)}
+function feedDoBase(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){toast(`Cette quête s'ouvre à partir de ${mqUntil(x.from)}`);return}
   if((F.done||[]).includes(x.id)||(go&&go.dataset.busy))return;if(go&&x.k!=="tik"){go.dataset.busy="1";go.disabled=true}
   const mark=()=>{F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:x.xp,k:x.k}];F.dnd=tk;fqWAdd(x.key,.2);if(F.lt)delete F.lt[x.id]};
   if(x.k==="tik"){memOpen({id:"tik:"+x.e.id,q:x.e.n,ev:x.e.id,d:x.e.d},()=>{mark();complete({id:"tik",cat:"perso",name:"Billet : "+x.e.n,xp:x.xp},document.querySelector("#fqBox")||document.body,null)});return}
@@ -157,7 +163,10 @@ function feedDo(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){to
   if(x.film)filmSeen(x.t,true);
   if(/verre d'eau/i.test(x.t)){const wt=ritTasks().find(t=>t.bar==="eau");if(wt)S.daily.c[wt.id]=Math.min(wt.n,(S.daily.c[wt.id]||0)+1)}
   complete({id:"fq-"+x.id.split(":")[0],cat:x.cat,name:x.t,xp:x.xp},go,ev,0,{fq:1});skyCheer()}
-function feedNo(x,how){const G=S.g,F=G.fq,now=Date.now();
+// feedNo : version complète (ex-réécriture de correctifs.js), feedNoBase = le cœur d'origine
+function feedNo(x,how){if(how==="today"||how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
+      if(!was&&famCool(f)){const F=(typeof FAM!=="undefined"?FAM.find(z=>z.id===f):null);setTimeout(()=>toast(`Compris : moins de quêtes « ${esc((F&&F.l)||f)} » pendant un moment`),900)}}}return feedNoBase.apply(this,arguments)}
+function feedNoBase(x,how){const G=S.g,F=G.fq,now=Date.now();
   if(how==="seen"){filmSeen(x.t);G.filmDay=null;save();renderFq();toast("Noté comme déjà vu : voici un autre film");return}
   if(how==="part"){if((F.done||[]).includes(x.id))return;const tk=dayKey(now),hx=Math.max(1,Math.round(x.xp/2));F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:hx,k:x.k,part:1}];F.dnd=tk;if(F.lt)delete F.lt[x.id];
     if(x.k==="mq"){if(!G.mq||typeof G.mq!=="object")G.mq={};if(!G.mq[tk])G.mq[tk]=[];G.mq[tk].push(x.q[0])}if(x.ev){if(!G.evq||typeof G.evq!=="object")G.evq={};G.evq[x.ev]=[...(G.evq[x.ev]||[]),x.tpl]}
@@ -199,7 +208,9 @@ function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=day
   box.innerHTML=`<div class="enc"><div class="enr">${[1,2,3].map(v=>`<button type="button" class="btn enb" data-en="${v}">${enSvg(v)}<span>${["","Faible","Moyenne","Pleine"][v]}</span><small>${[0,80,120,150][v]} XP</small></button>`).join("")}</div></div>`;
   box.querySelectorAll(".enb").forEach(b=>b.onclick=()=>enSet(+b.dataset.en))}
 function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
-function enSet(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
+// enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
+function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
+function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
 // --- tiroir « Plus »
 let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());

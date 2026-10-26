@@ -47,7 +47,9 @@ function bgMusic(){const R=/musique|\bsons?\b|beat|instru|guitare|piano|chant|co
 function bgPerfect(){if((S.daily&&S.daily.bonusDay)||S.log.some(e=>e.dayb))return true;const T=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz);if(!T.length)return false;return Object.values(ritH()).some(H=>T.every(t=>H[t.id]))}
 function bgSortie(){return S.log.some(e=>e.dzq)||Object.keys((S.g&&S.g.afLast)||{}).some(k=>k.startsWith("af:sorties:"))}
 const TIERC={1:"#b0763c",2:"#aab4bd",3:"#e0b030"};
-function badgeDefs(){
+// badgeDefs : version complète (ex-réécriture de assiette.js), badgeDefsBase = le cœur d'origine
+function badgeDefs(){const B=badgeDefsBase.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
+function badgeDefsBase(){
   const L=()=>levelInfo(S.xp).l,B=[];
   RANKS.filter(r=>r[0]>1&&r[0]!==5).forEach(([min,n])=>B.push({id:"rank"+min,name:n,desc:"Atteindre le niveau "+min,ic:"shield",t:min<5?1:min<17?2:3,ok:()=>L()>=min}));
   B.push({id:"first",name:"Première quête",desc:"Accomplir ta première action",ic:"star",t:1,ok:()=>S.xp>0});
@@ -113,7 +115,9 @@ function checkBadges(){
 }
 
 const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
-function famOf(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+// famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
+function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
+function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];

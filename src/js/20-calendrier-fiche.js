@@ -75,25 +75,6 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
 // --- fiche de personnage
 const CLASSE={etud:["Apprenti·e","Étudiant·e"],poste:["Artisan·e","En poste"],cherche:["Aventurier·e en quête","En recherche d'emploi"],indep:["Mercenaire","Indépendant·e"],pause:["Voyageur·se au repos","En pause"],autre:["Esprit libre","Autre"]};
 const REPAIRE={seul:"Tour solitaire",coloc:"Taverne partagée",couple:"Nid à deux",parents:"Château familial"};
-function renderFiche(){const box=$("ficheBox");if(!box||!S.g)return;const G=S.g,s=sitOf();
-  if(!s){box.innerHTML=`<button type="button" class="wkcta fcta">${ICO("edit",18)}<span><b>Crée ta fiche de personnage</b><small>Ce qui nourrit tes quêtes.</small></span></button>`;box.querySelector(".fcta").onclick=()=>sitSheet();return}
-  const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"",cl=CLASSE[s.job]||["Héros sans classe","À préciser"],w=typeof wxNow==="function"?wxNow():null,art=(G.taste&&G.taste.art)||[];
-  const up=(Array.isArray(G.ev)?G.ev:[]).map(e=>({e,d:evInD(e)})).filter(x=>x.d>=0).sort((a,b)=>a.d-b.d).slice(0,3);
-  const chips=(arr,k)=>arr.length?arr.map(v=>`<span class="fchip">${esc(k?lab(k,v):v)}</span>`).join(""):`<span class="fnone">À remplir</span>`;
-  if(!ficheOpen){const gl=(s.goals||[]).map(v=>lab("goals",v));box.innerHTML=`<button type="button" class="fiche fmini" aria-expanded="false"><span class="fmh"><b>Ma fiche</b><em>Ouvrir ${ICO("chev",14)}</em></span><span class="fml"><span class="fmc">${esc(cl[0])}</span><span>${esc(REPAIRE[s.home]||"")}</span>${w?`<span class="fmw">${wxIcon(w.k,w.day)}${w.tc}°</span>`:""}</span>${gl.length?`<span class="fml fmg">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</span>`:""}${tickets().length?`<span class="fml">${tickets().length} billet${tickets().length>1?"s":""} de concert</span>`:""}${up.length?`<span class="fml fmv">À venir : <b></b> · ${up[0].d===0?"aujourd'hui":up[0].d===1?"demain":"J-"+up[0].d}</span>`:""}</button>`;
-    {const b=box.querySelector(".fmv b");if(b)b.textContent=up[0].e.n}box.querySelector(".fmini").onclick=()=>{ficheOpen=true;renderFiche()};return}
-  box.innerHTML=`<div class="fiche"><div class="fh"><h3>Ma fiche</h3><button type="button" class="lnk fclose">Réduire</button></div><div class="fgrid">
-    <button type="button" class="fcell" data-f="sit"><span class="fic">${rkSvg("note")}</span><small>Classe</small><b>${esc(cl[0])}</b><em>${esc(cl[1])}</em></button>
-    <button type="button" class="fcell" data-f="wx"><span class="fic">${w?wxIcon(w.k,w.day):rkSvg("lit")}</span><small>Repaire</small><b>${esc(REPAIRE[s.home]||"À choisir")}</b><em>${G.wx&&G.wx.n?esc(G.wx.n.split(",")[0])+(w?` · ${w.tc}°`:""):"Ta ville : touche pour la météo"}</em></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Quêtes principales</small><span class="fchips">${chips(s.goals||[],"goals")}</span></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Talents</small><span class="fchips">${chips(s.pass||[],"pass")}</span></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Bardes favoris</small><span class="fchips">${chips(art.slice(0,8))}</span></button>
-    <button type="button" class="fcell wide" data-f="cal"><span class="fic">${rkSvg("note")}</span><small>Grimoire · à venir</small><span class="fev">${up.length?up.map(({e,d})=>`<span style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><i>${d===0?"Auj.":d===1?"Demain":"J-"+d}</i><b></b></span>`).join(""):`<span class="fnone">Rien de prévu : ajoute tes concerts, rendez-vous, voyages…</span>`}</span></button>
-    ${s.note?`<button type="button" class="fcell wide" data-f="sit"><small>Ce qui compte en ce moment</small><q></q></button>`:""}
-    ${tickets().length?`<div class="fcell wide ftix"><small>Mes billets · ${tickets().length}</small><span class="ftl">${tickets().slice(0,4).map(e=>tikHTML(e,1)).join("")}</span></div>`:""}
-    <div class="fcell wide fstat"><small>Temps libre</small><b>${esc(lab("time",s.time)||"?")}</b><small>en semaine</small></div></div></div>`;
-  box.querySelectorAll(".fev b").forEach((b,i)=>b.textContent=up[i].e.n);{const T=tickets();box.querySelectorAll(".ftix .tkt").forEach((t,i)=>{t.querySelector(".tkl b").textContent=T[i].n;t.onclick=()=>memOpen({id:"tik:"+T[i].id,q:T[i].n,ev:T[i].id,d:T[i].d})})}{const q=box.querySelector(".fcell q");if(q)q.textContent=s.note}
-  box.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{const f=b.dataset.f;if(f==="cal")calOpen();else if(f==="wx")wxSheet();else sitSheet()});box.querySelector(".fclose").onclick=()=>{ficheOpen=false;renderFiche()}}
 let ficheOpen=false;
 
 {const b=document.getElementById("actNew");if(b)b.onclick=()=>qcOpen("act")}

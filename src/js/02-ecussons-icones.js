@@ -39,7 +39,10 @@ Object.assign(PXSP,{"cup":[["..w.w.....","...w.w....","kkkkkkkk..","kwwwwwwkkk",
 function pxSprite(k){if(typeof pxU==="function")pxU(k);if(PXSPC[k])return PXSPC[k];const[r,p]=PXSP[k],c=document.createElement("canvas");c.width=r[0].length;c.height=r.length;const g=c.getContext("2d");
   r.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch!=="."){g.fillStyle=p[ch];g.fillRect(x,y,1,1)}}));return PXSPC[k]=c.toDataURL()}
 function pxImg(k,sc,cls){if(typeof pxU==="function")pxU(k);const[r,,w0]=PXSP[k];if(w0)sc=Math.max(1,Math.round(w0*sc/16));return`<img class="pxi ${cls||""}" src="${pxSprite(k)}" width="${r[0].length*sc}" height="${r.length*sc}" alt="" aria-hidden="true">`}
-function render(prevLevel){
+// render = renderBase (le cœur) → finitions d'Aujourd'hui (renderBase2) → assiettes de la semaine. Ex-réécritures de correctifs.js et assiette.js.
+function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}
+function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
+function renderBase(prevLevel){
   if(seedOnce())save();
   if(gameTick())save();
   const {l,cur,need}=levelInfo(S.xp);
@@ -54,7 +57,7 @@ function render(prevLevel){
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
   $("streak").textContent=streak();
   if(prevLevel&&l>prevLevel){setTimeout(()=>sfx("level"),180);$("lvlBox").classList.remove("bump");void $("lvlBox").offsetWidth;$("lvlBox").classList.add("bump");toast(`Niveau <span class="p">${l}</span> atteint !${rankOf(l)!==rankOf(prevLevel)?" Nouveau rang : <span class=\"p\">"+rankOf(l)+"</span>":""}`)}
-  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
+  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();if(typeof renderFiche==="function")renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
   $("favs").hidden=true;$("filters").hidden=true;$("seeAll").hidden=true;$("allActs").hidden=false;
   for(const k in viewDirty)viewDirty[k]=true;
   runView(view);

@@ -111,7 +111,9 @@ function whoScore(t,n){const P=S.profiles[n]||{},tags=[...(P.types||[]),...(P.ta
   return s}
 function whoRank(t,L){return L.map((n,i)=>({n,i,s:whoScore(t,n)})).sort((a,b)=>b.s-a.s||a.i-b.i).map(o=>o.n)}
 
-function renderProfile(force){
+// renderProfile : finitions autour de renderProfileBase (le cœur), ex-retouche de correctifs.js
+function renderProfile(){try{homeFix()}catch(e){console.warn("renderProfile",e)}const r=renderProfileBase.apply(this,arguments);try{profViz();profRemind();proFrame()}catch(e){console.warn("renderProfile",e)}return r}
+function renderProfileBase(force){
   const root=$("prof");
   if(!force&&root.contains(document.activeElement)&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
   const n=profName;if(!n){root.innerHTML="";return}
@@ -325,11 +327,15 @@ function fgOpen(id,after){const g=fgList().find(x=>x.id===id);if(!g)return;const
     o.querySelector("#fgOk").onclick=()=>{nm.dispatchEvent(new Event("change"));close()};
     o.querySelector("#fgDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()})};
   draw()}
-function renderFG(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
+// renderFG : finitions autour de renderFGBase (le cœur), ex-retouche de correctifs.js
+function renderFG(){const r=renderFGBase.apply(this,arguments);try{grpViz()}catch(e){console.warn("renderFG",e)}return r}
+function renderFGBase(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
   box.innerHTML=`<div class="fgh"><b>Groupes</b><button type="button" class="addf fgplus" id="fgAddB" aria-label="Créer un groupe"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><div class="fgcards">${L.map(g=>{const M=fgMembers(g.id),d=G.fgLast&&G.fgLast[g.id]?Math.floor((Date.now()-G.fgLast[g.id])/864e5):null;return`<button type="button" class="fgcard" data-g="${g.id}" style="--gc:${fgCol(g)}"><b></b><span class="fgav">${M.slice(0,5).map(n=>pAv(n,"fgsm")).join("")}${M.length>5?`<i>+${M.length-5}</i>`:""}</span><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais contacté":d<1?"aujourd'hui":"il y a "+d+" j"}</small></button>`}).join("")}</div>`;
   box.querySelectorAll(".fgcard").forEach(b=>{b.querySelector("b").textContent=L.find(g=>g.id===b.dataset.g).n;b.onclick=()=>openGroup(b.dataset.g)});
   $("fgAddB").onclick=()=>{const g=fgAdd("Nouveau groupe");g.c=FG_COL[(fgList().length-1)%FG_COL.length];save();renderFG();openGroup(g.id,true)}}
-function renderRelations(){
+// renderRelations : finitions autour de renderRelationsBase (le cœur), ex-retouche de correctifs.js
+function renderRelations(){const r=renderRelationsBase.apply(this,arguments);try{relViz()}catch(e){console.warn("renderRelations",e)}return r}
+function renderRelationsBase(){
   renderRemind();renderFG();
   const ul=$("relList");ul.innerHTML="";
   const srt=a=>a.sort((x,y)=>{const lx=S.bondsLast[x],ly=S.bondsLast[y];if(lx==null&&ly==null)return x.localeCompare(y,"fr");if(lx==null)return 1;if(ly==null)return -1;return lx-ly});
@@ -385,7 +391,11 @@ function streak(){
 }
 function recomputeDays(){const ex=new Set([dayKey(Date.now()),...(window.__jDay?[dayKey(Date.now()-864e5)]:[])]),keep=new Set(S.days.filter(k=>!ex.has(k)));S.log.forEach(e=>keep.add(dayKey(e.t)));S.days=[...keep].sort().slice(-400)}
 
-function complete(a,el,ev,sp,extra){
+// complete : version complète (ex-réécriture de correctifs.js), completeBase = le cœur d'origine
+function complete(a,el,ev,sp,extra){const r=completeBase.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
+      let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
+      autoQuest(e)}}catch(err){}return r}
+function completeBase(a,el,ev,sp,extra){
   {const k=String(a.id||"")+"|"+(a.name||"")+"|"+(a.who||"");if(!/^rit/.test(String(a.id||""))&&window.__lastC&&window.__lastC.k===k&&Date.now()-window.__lastC.t<700)return;window.__lastC={k,t:Date.now()}}
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}

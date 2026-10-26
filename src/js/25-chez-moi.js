@@ -30,76 +30,19 @@ const hmEv=(H,r)=>H.ev.filter(e=>e.r===r);
 const hmDur=n=>{const m=String(n).match(/(\d+)\s*h(?:\s*(\d+))?|(\d+)\s*min/);return!m?0:m[3]?+m[3]:(+m[1])*60+(+(m[2]||0))};
 const hmWho=w=>w&&w.length?w.join(", "):"";
 function hmRow(ic,l,v){return`<li><i>${rkSvg(ic)}</i><span>${l}</span><b>${v}</b></li>`}
-function hmPop(kind,title,rows,extra){return`<div class="libpop"><small>${esc(kind)}</small><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`}
 function hmName(H,e,label,ph){const cur=H.nm[e.t]||"";return`<div class="hmname"><input maxlength="60" placeholder="${esc(ph)}" aria-label="${esc(label)}" value="${esc(cur)}" data-nt="${e.t}"><button type="button" class="btn" data-ns="${e.t}">OK</button></div>`}
 // ---------- étagère générique : des objets de largeur variable rangés sur des planches
 function hmShelf(items,o){const U=o.U||56,rows=[[]];let x=0;items.forEach(it=>{const w=it.w+(o.gap||0);if(x+w>U){rows.push([]);x=0}it.x=x;x+=w;rows[rows.length-1].push(it)});while(rows.length<(o.min||2))rows.push([]);return rows}
 
 // ---------- VIDÉOCLUB
 const HMV_K={f:["Film","#d1493f"],d:["Documentaire","#2a8fd6"],s:["Série finie","#c9a227"],e:["Épisode","#7b6cf0"]};
-function hmVideo(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),rows=hmShelf(T.map((e,i)=>({e,i,w:e.k==="s"?7:3})),{U:56,gap:1,min:2}),RH=13,top=10,Hh=top+rows.length*RH+20;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Vidéoclub">`+hmR(0,0,64,Hh,"#241536")+hmR(0,0,64,1,"#3a2352");
-  for(let x=2;x<64;x+=8)s+=hmR(x,1,1,Hh-21,"#2b1a40");
-  s+=hmR(18,2,28,6,"#ff5fa8")+hmR(19,3,26,4,"#3a0f2a")+hmR(29,4,1,2,"#ff9ccc")+hmR(30,4,2,2,"#ff9ccc")+hmR(32,5,1,1,"#ff9ccc")+hmR(21,4,6,1,"#7fe3ff")+hmR(36,4,7,1,"#7fe3ff")+hmR(21,6,4,0.5,"#7fe3ff");
-  rows.forEach((r,ri)=>{const yb=top+ri*RH+11;s+=hmR(3,top+ri*RH,58,11,"#1b0f29")+hmR(2,yb,60,2,"#6b4a28")+hmR(2,yb,60,1,"#a67c4a");
-    r.forEach(it=>{const e=it.e,x0=4+it.x,K=HMV_K[e.k]||HMV_K.f,p=LIB_PAL[libHash(e.t+"v")%LIB_PAL.length];let g=`<g class="hmo" data-o="v:${e.t}" tabindex="0" role="button" aria-label="${esc(H.nm[e.t]||K[0])}">`;
-      if(e.k==="s")g+=hmR(x0,yb-10,7,10,"#120c18")+hmR(x0+1,yb-9,5,8,K[1])+hmR(x0+1,yb-9,5,1,"#fff1b0")+hmR(x0+3,yb-6,1,4,"#120c18");
-      else g+=hmR(x0,yb-9,3,9,"#16131c")+hmR(x0,yb-6,3,3,e.k==="d"?K[1]:p[0])+hmR(x0+1,yb-5,1,1,"#f3e6c4")+hmR(x0,yb-9,3,1,"#2e2a38");
-      s+=g+hmR(x0-.5,yb-11,(e.k==="s"?7:3)+1,11,"transparent")+"</g>"})});
-  const fy=Hh-20;s+=hmR(0,fy+12,64,8,"#3a2a1c")+hmR(0,fy+12,64,1,"#5a4028");
-  s+=`<g class="hmo" data-o="tv" tabindex="0" role="button" aria-label="Télé">`+hmR(5,fy+4,16,9,"#4e3a28")+hmR(6,fy+1,14,9,"#111")+hmR(7,fy+2,12,7,ep.length?"#4aa8e8":"#22303a")+(ep.length?hmR(8,fy+3,4,2,"#bfe8ff"):"")+hmR(12,fy+10,2,2,"#111")+hmR(4,fy+12,18,1,"#2a1c10")+"</g>";
-  s+=hmR(28,fy+6,22,6,"#8a2f4a")+hmR(28,fy+4,22,3,"#a63d5c")+hmR(27,fy+5,2,7,"#6e2238")+hmR(49,fy+5,2,7,"#6e2238")+hmR(31,fy+12,1,1,"#2a1c10")+hmR(47,fy+12,1,1,"#2a1c10");
-  s+=hmR(55,fy+6,5,6,"#8b5a2b")+hmR(54,fy+1,7,5,"#3c9a4f")+hmR(56,fy,3,2,"#5ac27a");
-  return{svg:s+"</svg>",sum:`${E.filter(e=>e.k==="f").length} films · ${E.filter(e=>e.k==="s").length} séries finies · ${ep.length} épisodes${E.filter(e=>e.k==="d").length?" · "+E.filter(e=>e.k==="d").length+" docs":""}`,
-    empty:"L'étagère attend sa première cassette : note un film ou une série.",
-    info(o){if(o==="tv"){const l=ep[ep.length-1];return hmPop("Télé","Épisodes",hmRow("ecran","Vus",ep.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      const e=E.find(x=>"v:"+x.t===o);if(!e)return"";const K=HMV_K[e.k]||HMV_K.f,fd=S.g.filmDay,sug=!H.nm[e.t]&&fd&&fd.t&&fd.d===dayKey(e.t)?`<button type="button" class="lnk hmsug" data-sg="${e.t}" data-v="${esc(fd.t)}">C'était « ${esc(fd.t)} » ?</button>`:"";
-      return hmPop(K[0],H.nm[e.t]||K[0],hmRow("calendrier","Vu le",hmFd(e.t))+(hmDur(e.n)?hmRow("sablier","Durée",fmtMin(hmDur(e.n))):"")+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),hmName(H,e,"Titre","Donner un titre")+sug)}}}
 function fmtMin(m){return m<60?m+" min":Math.floor(m/60)+" h"+(m%60?" "+String(m%60).padStart(2,"0"):"")}
 
 // ---------- STUDIO
 const HMS_EQ=[["pc","Ordinateur",1],["casque","Casque",3],["hp","Enceintes",5],["clav","Clavier maître",8],["micro","Micro",12],["mousse","Panneaux acoustiques",18],["platine","Platine vinyle",25],["synth","Synthé",35],["or","Disque d'or",50]];
-function hmStudio(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0);
-  const has=id=>n>=HMS_EQ.find(q=>q[0]===id)[2],gh='opacity=".16"';const Z=(id,body)=>`<g class="hmo${has(id)?"":" lock"}" data-o="eq:${id}" tabindex="0" role="button" aria-label="${HMS_EQ.find(q=>q[0]===id)[1]}"${has(id)?"":" "+gh}>${body}</g>`;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 44" shape-rendering="crispEdges" role="group" aria-label="Studio">`+hmR(0,0,64,44,"#1f2a33")+hmR(0,34,64,10,"#3a2a1c")+hmR(0,34,64,1,"#5a4028");
-  s+=Z("mousse",[[3,3],[10,3],[3,10],[10,10],[47,3],[54,3]].map(([x,y])=>hmR(x,y,6,6,"#3d4a57")+hmR(x,y,3,3,"#2b3540")+hmR(x+3,y+3,3,3,"#2b3540")).join(""));
-  s+=Z("or",hmR(27,3,10,10,"#6b4a28")+hmR(28,4,8,8,"#1a1210")+hmR(29,5,6,6,"#f4d767")+hmR(31,7,2,2,"#6e5610")+hmR(29,5,2,1,"#fff6c8"));
-  s+=`<g class="hmo" data-o="vinyl" tabindex="0" role="button" aria-label="Albums">`+hmR(40,16,22,1,"#a67c4a")+hmR(40,17,22,1,"#6b4a28");VY.slice(-10).forEach((v,i)=>{s+=hmR(41+i*2,10,2,6,LIB_PAL[libHash(v.t+"a")%LIB_PAL.length][0])+hmR(41+i*2,10,1,6,"#111")});s+="</g>";
-  s+=hmR(8,26,48,3,"#8b5a2b")+hmR(8,26,48,1,"#c9a066")+hmR(10,29,2,5,"#6b4a28")+hmR(52,29,2,5,"#6b4a28");
-  s+=Z("pc",hmR(25,15,14,9,"#111")+hmR(26,16,12,7,n?"#2f6fd6":"#22303a")+(n?hmR(27,18,3,3,"#5ac27a")+hmR(31,17,2,5,"#f0b62e")+hmR(34,19,3,2,"#ff5fa8"):"")+hmR(31,24,2,2,"#111"));
-  s+=Z("hp",hmR(13,18,6,8,"#1a1a1f")+hmR(14,20,4,4,"#3d3d48")+hmR(15,21,2,2,"#111")+hmR(45,18,6,8,"#1a1a1f")+hmR(46,20,4,4,"#3d3d48")+hmR(47,21,2,2,"#111"));
-  s+=Z("clav",hmR(22,25,20,2,"#f2f0ea")+[0,1,2,3,4,5,6].map(i=>hmR(23+i*3,25,1,1,"#111")).join(""));
-  s+=Z("casque",hmR(4,20,1,6,"#6b4a28")+hmR(3,19,5,1,"#2c2c34")+hmR(2,20,1,3,"#2c2c34")+hmR(7,20,1,3,"#2c2c34")+hmR(1,22,2,3,"#d63b3b")+hmR(7,22,2,3,"#d63b3b"));
-  s+=Z("micro",hmR(58,20,1,14,"#8a8f99")+hmR(56,33,5,1,"#8a8f99")+hmR(57,17,3,4,"#2c2c34")+hmR(57,17,3,1,"#c2c6cf"));
-  s+=Z("synth",hmR(14,36,20,4,"#2c2c34")+hmR(15,37,18,2,"#f2f0ea")+[0,1,2,3,4].map(i=>hmR(16+i*4,37,1,1,"#111")).join("")+hmR(15,40,1,3,"#6b4a28")+hmR(32,40,1,3,"#6b4a28"));
-  s+=Z("platine",hmR(40,36,12,5,"#3a2a1c")+hmR(41,37,6,3,"#111")+hmR(43,38,2,1,"#d63b3b")+hmR(49,37,1,3,"#c2c6cf"));
-  s+=`<g class="hmo" data-o="txt" tabindex="0" role="button" aria-label="Carnet de textes">`+hmR(9,23,8,3,TX.length?"#f3e6c4":"#5a5a66")+hmR(9,23,1,3,"#8b2f2f")+(TX.length?hmR(11,24,5,0.5,"#555"):"")+"</g>";
-  return{svg:s+"</svg>",sum:`${n} session${n>1?"s":""}${mins?" · "+fmtMin(mins)+" de son":""} · ${TX.length} texte${TX.length>1?"s":""} · ${VY.length} album${VY.length>1?"s":""}`,
-    empty:"Le studio s'équipe à chaque session « Faire du son ».",
-    info(o){if(o==="vinyl"){const l=VY[VY.length-1];return hmPop("Disques","Albums écoutés",hmRow("note","Écoutés en entier",VY.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      if(o==="txt"){const l=TX[TX.length-1];return hmPop("Carnet","Textes écrits",hmRow("note","Textes",TX.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      const id=o.slice(3),q=HMS_EQ.find(x=>x[0]===id);if(!q)return"";const ok=n>=q[2],at=SS[q[2]-1];
-      return hmPop(ok?"Équipement":"À débloquer",q[1],ok?hmRow("eclair","Débloqué à la",q[2]+(q[2]>1?"e":"re")+" session")+(at?hmRow("calendrier","Le",hmFd(at.t)):""):hmRow("sablier","Se débloque à la",q[2]+"e session")+hmRow("note","Encore",(q[2]-n)+" session"+(q[2]-n>1?"s":"")))}}}
 
 // ---------- CUISINE
 const HMC_K={"Repas maison":"#6fbf5a","Nouveau plat":"#e8873a","Pâtisserie":"#f08cc0","Préparer demain":"#5a93c2"};
-function hmCuisine(H){const E=hmEv(H,"cuisine"),rows=hmShelf(E.map((e,i)=>({e,i,w:4})),{U:54,gap:1,min:1}),RH=10,top=4,Hh=top+rows.length*RH+24;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Cuisine">`+hmR(0,0,64,Hh,"#e9e2d0");
-  for(let y=0;y<Hh-14;y+=4)for(let x=(y/4)%2?0:4;x<64;x+=8)s+=hmR(x,y,4,4,"#dcd3bd");
-  rows.forEach((r,ri)=>{const yb=top+ri*RH+8;s+=hmR(4,yb,56,2,"#8b5a2b")+hmR(4,yb,56,1,"#b07a44")+hmR(6,yb+2,1,2,"#6b4a28")+hmR(57,yb+2,1,2,"#6b4a28");
-    r.forEach(it=>{const e=it.e,x0=6+it.x,c=HMC_K[e.o]||"#6fbf5a",named=!!H.nm[e.t];s+=`<g class="hmo" data-o="j:${e.t}" tabindex="0" role="button" aria-label="${esc(H.nm[e.t]||e.o)}">`+hmR(x0,yb-6,4,6,"#cfe8f0")+hmR(x0+1,yb-4,2,3,c)+hmR(x0,yb-7,4,1,named?"#d63b3b":"#8b5a2b")+hmR(x0+1,yb-6,1,1,"#fff")+hmR(x0-.5,yb-8,5,8,"transparent")+"</g>"})});
-  const cy=Hh-14;s+=hmR(0,cy+4,64,10,"#8b5a2b")+hmR(0,cy+4,64,2,"#c9a066")+hmR(2,cy+8,12,5,"#6b4a28")+hmR(50,cy+8,12,5,"#6b4a28");
-  s+=hmR(24,cy+2,16,2,"#2c2c34")+hmR(27,cy-3,10,5,"#8a8f99")+hmR(26,cy-3,12,1,"#c2c6cf")+hmR(30,cy-6,1,2,"#fff")+hmR(33,cy-7,1,3,"#fff")+hmR(26,cy+2,3,1,"#e8473a")+hmR(35,cy+2,3,1,"#e8473a");
-  s+=`<g class="hmo" data-o="book" tabindex="0" role="button" aria-label="Carnet de recettes">`+hmR(46,cy,10,4,"#8b2f2f")+hmR(47,cy,8,1,"#f3e6c4")+hmR(50,cy+1,2,2,"#f4d767")+hmR(45.5,cy-1,11,6,"transparent")+"</g>";
-  s+=hmR(8,cy,6,4,"#e8873a")+hmR(9,cy-1,4,1,"#5ac27a");
-  const R=S.g.rcp||[];return{svg:s+"</svg>",sum:`${E.length} repas cuisiné${E.length>1?"s":""} · ${(q=>q+(q>1?" nouveaux plats":" nouveau plat"))(E.filter(e=>e.o==="Nouveau plat").length)} · ${R.length} recette${R.length>1?"s":""}`,
-    empty:"Chaque plat cuisiné ajoute un bocal sur l'étagère.",
-    info(o){if(o==="book")return"";const e=E.find(x=>"j:"+x.t===o);if(!e)return"";return hmPop(e.o,H.nm[e.t]||e.o,hmRow("calendrier","Le",hmFd(e.t))+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),hmName(H,e,"Nom du plat","Nom du plat"))},
-    extra:hmRecipes()}}
-function hmRecipes(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="bh2"><h3>Carnet de recettes</h3><button type="button" class="btn rcpadd">+ Recette</button></div>
-  ${window.__rcpNew?`<div class="rcpf"><label class="rdl">Nom<input id="rcpN" maxlength="50" placeholder="Ex. Curry de pois chiches"></label><label class="rdl">Ingrédients<textarea id="rcpI" rows="3" placeholder="Un par ligne"></textarea></label><label class="rdl">Étapes<textarea id="rcpS" rows="3" placeholder="Une par ligne"></textarea></label><div class="rcpb"><button type="button" class="btn rcpx">Annuler</button><button type="button" class="btn primary rcpok">Enregistrer</button></div></div>`:""}
-  ${R.length?`<ul class="rcpl">${R.map((r,i)=>`<li class="${op===r.id?"open":""}"><button type="button" class="rcph" data-ro="${r.id}"><b></b><small>${r.c?`cuisinée ${r.c} fois · ${hmFd(r.t)}`:"pas encore cuisinée"}</small></button><button type="button" class="btn primary rcpdo" data-rd="${r.id}">Cuisinée !</button>
-    ${op===r.id?`<div class="rcpd">${r.ing?`<small>Ingrédients</small><ul>${r.ing.split("\n").filter(Boolean).map(x=>`<li></li>`).join("")}</ul>`:""}${r.st?`<small>Étapes</small><ol>${r.st.split("\n").filter(Boolean).map(x=>`<li></li>`).join("")}</ol>`:""}<button type="button" class="lnk rcpdel" data-rx="${r.id}">Supprimer la recette</button></div>`:""}</li>`).join("")}</ul>`:window.__rcpNew?"":`<p class="hint">Note tes recettes ici, puis touche « Cuisinée ! » quand tu les refais.</p>`}</div>`}
 function hmRecipeBind(box){const G=S.g;if(!Array.isArray(G.rcp))G.rcp=[];const R=G.rcp,rr=()=>renderHome(1);
   box.querySelectorAll(".rcpl>li").forEach((li,i)=>{const r=R[i];li.querySelector(".rcph b").textContent=r.n;const ul=li.querySelectorAll(".rcpd ul li"),ol=li.querySelectorAll(".rcpd ol li");(r.ing||"").split("\n").filter(Boolean).forEach((x,k)=>{if(ul[k])ul[k].textContent=x});(r.st||"").split("\n").filter(Boolean).forEach((x,k)=>{if(ol[k])ol[k].textContent=x})});
   const a=box.querySelector(".rcpadd");if(a)a.onclick=()=>{window.__rcpNew=1;rr();setTimeout(()=>{const n=document.getElementById("rcpN");n&&n.focus()},50)};
@@ -112,25 +55,6 @@ function hmRecipeBind(box){const G=S.g;if(!Array.isArray(G.rcp))G.rcp=[];const R
 
 // ---------- SALLE DE SPORT
 const HMSP_MS=[[5,"un 5 km"],[10,"un 10 km"],[21.1,"un semi-marathon"],[42.2,"un marathon"],[100,"100 km"],[465,"Paris – Lyon"],[775,"Paris – Marseille"],[1000,"1 000 km"],[3400,"un Tour de France"]];
-function hmSport(H){const G=S.g,E=hmEv(H,"sport"),num=(re)=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
-  const km=Math.round(num(/(\d+(?:[.,]\d+)?)\s*km/i)*10)/10,reps=Math.round(num(/(\d+)\s*(?:rép|pompes|squats|abdos|tractions)/i)),best=w=>Math.max(0,...E.filter(e=>new RegExp(w,"i").test(e.n)).map(e=>{const m=e.n.match(/(\d+)\s*(?:rép|pompes|squats)/i);return m?+m[1]:0})),pu=Math.max((G.pu&&G.pu.rec)||0,best("pompes")),sq=Math.max((G.sq&&G.sq.rec)||0,best("squats")),gn=(G.gn&&G.gn.rec)||0,rn=Math.max((G.run&&G.run.rec)||0,...E.map(e=>{const m=e.n.match(/(\d+(?:[.,]\d+)?)\s*km/i);return m?parseFloat(m[1].replace(",",".")):0}),0);
-  const M=[["gn","Gainage",gn,gn?fmtSec(gn):"",[60,120,180]],["pu","Pompes d'affilée",pu,pu+"",[20,40,60]],["sq","Squats d'affilée",sq,sq+"",[30,60,100]],["rn","Plus longue course",rn,rn?rn.toLocaleString("fr-FR")+" km":"",[5,10,21]],["km","Total parcouru",km,km?km.toLocaleString("fr-FR")+" km":"",[20,100,500]],["rp","Total répétitions",reps,reps+"",[200,1000,5000]]];
-  const tier=(v,t)=>v>=t[2]?["#f4d767","#c9a227"]:v>=t[1]?["#e1e5ec","#9aa1ad"]:v>=t[0]?["#e0a065","#a5642c"]:["#8a8f99","#5a5f69"];
-  let s=`<svg class="hmsvg" viewBox="0 0 64 46" shape-rendering="crispEdges" role="group" aria-label="Salle de sport">`+hmR(0,0,64,46,"#2a3140")+hmR(0,24,64,1,"#3a4356");
-  for(let x=0;x<64;x+=16)s+=hmR(x,0,1,24,"#252b38");
-  M.forEach((m,i)=>{const x=4+i*10,[c,d]=tier(m[2],m[4]),on=m[2]>0;s+=`<g class="hmo${on?"":" lock"}" data-o="m:${m[0]}" tabindex="0" role="button" aria-label="${m[1]}"${on?"":' opacity=".3"'}>`+hmR(x+2,3,2,6,"#d63b3b")+hmR(x+4,3,2,6,"#2f6fd6")+hmR(x+1,9,6,6,d)+hmR(x+2,10,4,4,c)+hmR(x+3,11,1,1,"#fff")+hmR(x,2,8,14,"transparent")+"</g>"});
-  const n=E.length,db=Math.min(8,Math.ceil(n/3));s+=`<g class="hmo" data-o="rack" tabindex="0" role="button" aria-label="Haltères">`+hmR(3,22,26,1,"#8a8f99")+hmR(3,28,26,1,"#8a8f99")+hmR(4,22,1,11,"#5a5f69")+hmR(27,22,1,11,"#5a5f69");
-  for(let i=0;i<8;i++){const x=6+(i%4)*5,y=i<4?19:25;s+=i<db?hmR(x,y+1,4,1,"#c2c6cf")+hmR(x-1,y,2,3,i%2?"#d63b3b":"#2c2c34")+hmR(x+3,y,2,3,i%2?"#d63b3b":"#2c2c34"):hmR(x,y+1,4,1,"rgba(255,255,255,.08)")}s+="</g>";
-  s+=hmR(36,27,22,3,"#1a1a1f")+hmR(37,27,20,1,"#3c4252")+hmR(39,30,1,3,"#8a8f99")+hmR(54,30,1,3,"#8a8f99")+hmR(56,18,2,9,"#8a8f99")+hmR(52,18,8,1,"#c2c6cf")+hmR(50,17,2,3,"#2c2c34")+hmR(60,17,2,3,"#2c2c34");
-  const nx=HMSP_MS.find(q=>q[0]>km)||HMSP_MS[HMSP_MS.length-1],pv=[...HMSP_MS].reverse().find(q=>q[0]<=km),p=Math.min(1,km/nx[0]);
-  s+=`<g class="hmo" data-o="track" tabindex="0" role="button" aria-label="Piste">`+hmR(0,34,64,12,"#b5452f")+hmR(0,34,64,1,"#d76a50");for(let x=2;x<64;x+=6)s+=hmR(x,39,3,1,"#f2f0ea");
-  s+=hmR(2,42,60,2,"#6e2a1c")+hmR(2,42,Math.round(60*p),2,"#f4d767");const rx=2+Math.round(56*p);s+=hmR(rx,35,2,2,"#f2bf98")+hmR(rx,37,2,2,"#2f6fd6")+hmR(rx,39,1,2,"#1a1a1f")+hmR(rx+1,39,1,1,"#1a1a1f")+hmR(61,35,1,7,"#f2f0ea")+hmR(62,35,2,2,"#d63b3b")+"</g>";
-  return{svg:s+"</svg>",sum:`${n} séance${n>1?"s":""} · ${km?km.toLocaleString("fr-FR")+" km":"0 km"} · ${reps} répétitions`,
-    empty:"Chaque séance de sport remplit le rack, et tes records s'accrochent au mur.",
-    info(o){if(o==="rack"){const l=E[E.length-1];return hmPop("Rack","Séances",hmRow("sport","Séances notées",n)+(l?hmRow("calendrier","Dernière",hmFd(l.t)):""))}
-      if(o==="track")return hmPop("Piste","Distance cumulée",hmRow("sport","Parcouru",km.toLocaleString("fr-FR")+" km")+(pv?hmRow("medaille","Déjà fait",pv[1]):"")+hmRow("sablier","Prochain cap",nx[1]+" · encore "+Math.max(0,Math.round((nx[0]-km)*10)/10).toLocaleString("fr-FR")+" km"));
-      const m=M.find(q=>"m:"+q[0]===o);if(!m)return"";const t=m[4];const lv=m[2]>=t[2]?"Or":m[2]>=t[1]?"Argent":m[2]>=t[0]?"Bronze":"";const nxT=t.find(q=>q>m[2]);
-      return hmPop(lv?"Médaille "+lv.toLowerCase():"Record",m[1],m[2]?hmRow("medaille","Record",m[3])+(nxT?hmRow("sablier","Médaille suivante",(m[0]==="gn"?fmtSec(nxT):nxT.toLocaleString("fr-FR")+(/km/.test(m[3])?" km":""))):""):hmRow("sablier","Pas encore de record","Lance l'action pour en poser un"))}}}
 
 // ---------- CARTE DES SORTIES
 const HMM_POS={cine:[4,4,26,17],scene:[35,4,26,17],resto:[66,4,26,17],culture:[4,26,26,17],amis:[35,26,26,17],loisirs:[66,26,26,17],nature:[4,48,88,20]};
@@ -142,27 +66,8 @@ function hmLand(id,x,y,w,h){const R=hmR;switch(id){
   case"amis":return R(x+3,y+6,8,6,"#f08cc0")+R(x+2,y+5,10,1,"#8b2f2f")+R(x+4,y+4,6,1,"#8b2f2f")+R(x+6,y+9,2,3,"#6b4a28")+R(x+14,y+6,8,6,"#7fc8f8")+R(x+13,y+5,10,1,"#2f5d8b")+R(x+15,y+4,6,1,"#2f5d8b")+R(x+17,y+9,2,3,"#6b4a28");
   case"loisirs":return R(x+7,y+3,12,9,"#2c2c34")+R(x+8,y+4,10,4,"#36b679")+R(x+10,y+5,2,2,"#ffd94a")+R(x+14,y+5,2,2,"#ff5fa8")+R(x+9,y+9,1,2,"#d63b3b")+R(x+15,y+9,2,1,"#2f6fd6");
   case"nature":return[8,20,62,74].map((tx,i)=>R(x+tx,y+3+(i%2),5,5,"#2f8b4a")+R(x+tx+1,y+2+(i%2),3,1,"#5ac27a")+R(x+tx+2,y+8+(i%2),1,3,"#6b4a28")).join("")+R(x+32,y+6,20,8,"#4aa8e8")+R(x+34,y+5,16,1,"#4aa8e8")+R(x+36,y+8,4,1,"#bfe8ff")+R(x+44,y+11,5,1,"#bfe8ff")}return""}
-function hmCarte(H){const E=hmEv(H,"carte"),by={};E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
-  let s=`<svg class="hmsvg" viewBox="0 0 96 72" shape-rendering="crispEdges" role="group" aria-label="Carte des sorties">`+hmR(0,0,96,72,"#5f9a4a");
-  s+=hmR(0,21,96,5,"#6b6b78")+hmR(0,43,96,5,"#6b6b78")+hmR(30,0,5,48,"#6b6b78")+hmR(61,0,5,48,"#6b6b78");for(let x=2;x<96;x+=6){s+=hmR(x,23,3,1,"#e9e2d0")+hmR(x,45,3,1,"#e9e2d0")}for(let y=2;y<44;y+=6){s+=hmR(32,y,1,3,"#e9e2d0")+hmR(63,y,1,3,"#e9e2d0")}
-  Object.keys(HMM_POS).forEach(id=>{const[x,y,w,h]=HMM_POS[id],D=HM_DIST[id],L=by[id]||[],on=L.length>0;
-    s+=`<g class="hmo hmd${on?"":" lock"}" data-o="d:${id}" tabindex="0" role="button" aria-label="${D[0]}">`+hmR(x,y,w,h,id==="nature"?"#4e8a3c":"#8fae6a")+hmR(x,y,w,1,"#a9c784")+hmLand(id,x,y,w,h)+(on?"":hmR(x,y,w,h,"rgba(12,14,30,.62)")+hmR(x+w/2-1,y+h/2-3,3,1,"#e9e2d0")+hmR(x+w/2+1,y+h/2-2,1,2,"#e9e2d0")+hmR(x+w/2,y+h/2,1,1,"#e9e2d0")+hmR(x+w/2,y+h/2+2,1,1,"#e9e2d0"))+"</g>";
-    const cols=Math.floor((w-2)/4),LL=L.slice(-cols*(id==="nature"?3:2));LL.forEach((e,i)=>{const row=Math.floor(i/cols),fx=x+2+(i%cols)*4,fy=id==="nature"?y+h-7-row*6:row?y+1:y+h-7;s+=`<g class="hmo hmf" data-o="f:${e.t}" tabindex="0" role="button" aria-label="${esc(e.o)}">`+hmR(fx,fy,1,6,"#f2f0ea")+hmR(fx+1,fy,3,2,D[1])+hmR(fx+1,fy,1,1,"#fff")+hmR(fx-1,fy-1,6,8,"transparent")+"</g>"})});
-  const nd=Object.keys(by).length;return{svg:s+"</svg>",sum:`${E.length} sortie${E.length>1?"s":""} · ${nd} quartier${nd>1?"s":""} sur 7 découverts`,
-    empty:"Chaque sortie plante un drapeau. Les quartiers s'éclairent quand tu y vas.",
-    info(o){if(o.startsWith("d:")){const id=o.slice(2),D=HM_DIST[id],L=by[id]||[];if(!L.length)return hmPop("Quartier à découvrir",D[0],hmRow("sablier","Pour l'éclairer",id==="amis"?"passer voir un proche":"une sortie : "+D[2].slice(0,3).join(", ").toLowerCase()));
-        const cnt={};L.forEach(e=>e.w.forEach(p=>cnt[p]=(cnt[p]||0)+1));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
-        return hmPop("Quartier",D[0],hmRow("paysage","Sorties",L.length)+hmRow("calendrier","Dernière",hmFd(L[L.length-1].t))+(top.length?hmRow("duo","Souvent avec",esc(top.join(", "))):""))}
-      const e=E.find(x=>"f:"+x.t===o);if(!e)return"";return hmPop(HM_DIST[e.k][0],H.pl[e.t]||e.o,(e.o!==(H.pl[e.t]||e.o)||e.k!=="amis"?hmRow("paysage","Sortie",esc(e.o)):"")+hmRow("calendrier","Le",hmFd(e.t))+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),
-        `<div class="hmname"><input maxlength="60" placeholder="Nom du lieu" aria-label="Nom du lieu" value="${esc(H.pl[e.t]||"")}" data-pt="${e.t}"><button type="button" class="btn" data-ps="${e.t}">OK</button></div>`)}}}
 
 // ---------- CHAMBRE
-function hmChambre(){let s=`<svg class="hmsvg" viewBox="0 0 64 36" shape-rendering="crispEdges" role="img" aria-label="Chambre">`+hmR(0,0,64,36,"#3b3358")+hmR(0,27,64,9,"#5a4028")+hmR(0,27,64,1,"#7a5838");
-  s+=hmR(24,4,14,10,"#7fc8f8")+hmR(24,4,14,1,"#e9e2d0")+hmR(30,4,1,10,"#e9e2d0")+hmR(24,9,14,1,"#e9e2d0")+hmR(33,6,3,3,"#f4f0c8");
-  s+=hmR(4,8,12,19,"#8b5a2b")+hmR(5,9,5,17,"#a06a36")+hmR(10,9,5,17,"#a06a36")+hmR(9,16,1,2,"#f4d767")+hmR(10,16,1,2,"#f4d767");
-  s+=hmR(40,20,22,7,"#e9e2d0")+hmR(40,18,6,4,"#f2f0ea")+hmR(46,19,16,8,"#2f6fd6")+hmR(46,19,16,1,"#5a93c2")+hmR(40,27,1,3,"#6b4a28")+hmR(61,27,1,3,"#6b4a28")+hmR(39,15,2,15,"#6b4a28");
-  s+=hmR(48,4,12,1,"#a67c4a")+hmR(50,1,2,3,"#f4d767")+hmR(54,2,2,2,"#c2c6cf")+hmR(57,1,2,3,"#e0a065");
-  return{svg:s+"</svg>",sum:"Ta garde-robe et tes badges",empty:"",info(){return""}}}
 
 // ---------- vue d'ensemble
 function hmMini(id,on){const R=hmR;let s=`<svg viewBox="0 0 40 22" shape-rendering="crispEdges" aria-hidden="true">`;
@@ -175,32 +80,9 @@ function hmMini(id,on){const R=hmR;let s=`<svg viewBox="0 0 40 22" shape-renderi
   if(id==="sport"){for(let i=0;i<5;i++)s+=R(4+i*7,3,4,5,["#f4d767","#e1e5ec","#e0a065","#f4d767","#e1e5ec"][i]);s+=R(0,18,40,4,"#b5452f")+R(4,12,16,1,"#8a8f99")+R(26,10,10,8,"#1a1a1f")}
   if(!on)s+=R(0,0,40,22,"rgba(8,10,24,.7)");return s+"</svg>"}
 function hmCount(H,id){const G=S.g;if(id==="chambre")return 1;if(id==="biblio")return(G.books||[]).length+(G.book?1:0);return hmEv(H,id).length}
-function hmHTML(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
-  const lab={biblio:["livre","livres"],studio:["session","sessions"],video:["objet","objets"],cuisine:["bocal","bocaux"],sport:["séance","séances"]};
-  const room=id=>{const n=hmCount(H,id),on=n>0,nm=HM_ROOMS.find(r=>r[0]===id)[1];return`<button type="button" class="hmr${on?"":" off"}" data-r="${id}" aria-label="${nm}${on?"":" (à débloquer)"}">${hmMini(id,on)}<span class="hml"><b>${nm}</b>${id==="chambre"?"":`<small>${on?n+" "+lab[id][n>1?1:0]:"à débloquer"}</small>`}</span>${here===id&&me?`<img class="hmme" src="${me}" alt="Toi">`:""}</button>`};
-  const nC=hmCount(H,"carte");
-  return`<div class="hm"><div class="hmroof"><svg viewBox="0 0 96 16" shape-rendering="crispEdges" aria-hidden="true">${hmR(14,10,68,6,"#8b2f2f")+hmR(22,5,52,5,"#a63d3d")+hmR(32,1,32,4,"#c25a5a")+hmR(14,15,68,1,"#4e1717")+hmR(70,0,5,9,"#6e5a50")+hmR(69,0,7,1,"#8a7a70")}</svg></div>
-    <div class="hmgrid">${["chambre","biblio","studio","video","cuisine","sport"].map(room).join("")}</div>
-    <button type="button" class="hmout${nC?"":" off"}" data-r="carte"><svg viewBox="0 0 96 14" shape-rendering="crispEdges" aria-hidden="true">${hmR(0,0,96,14,"#5f9a4a")+hmR(0,8,96,6,"#6b6b78")+hmR(44,0,8,8,"#c9a066")+hmR(46,1,4,7,"#6b4a28")+hmR(49,4,1,1,"#f4d767")+[6,18,74,86].map(x=>hmR(x,1,6,5,"#2f8b4a")+hmR(x+2,6,2,2,"#6b4a28")).join("")+[10,30,58,80].map(x=>hmR(x,10,4,1,"#e9e2d0")).join("")}</svg><span class="hml"><b>Dehors · carte des sorties</b><small>${nC?nC+" drapeau"+(nC>1?"x":""):"à découvrir"}</small></span>${here==="carte"&&me?`<img class="hmme" src="${me}" alt="Toi">`:""}</button></div>`}
 function hmRoomData(H,id){return id==="video"?hmVideo(H):id==="studio"?hmStudio(H):id==="cuisine"?hmCuisine(H):id==="sport"?hmSport(H):id==="carte"?hmCarte(H):id==="chambre"?hmChambre():null}
-function renderHome(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
-  const H=hmData();document.documentElement.dataset.room=hmRoom||"home";
-  if(!hmRoom){const hh=`<div class="bh2"><h3>Chez moi</h3><span class="hint">Touche une pièce</span></div>`+hmHTML(H);if(box.__h===hh&&box.querySelector(".hmhouse"))return;box.innerHTML=hh;box.__h=hh;box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);box.scrollIntoView({block:"start",behavior:"smooth"})});return}
-  box.__h="";const i=HM_ROOMS.findIndex(r=>r[0]===hmRoom),nm=HM_ROOMS[i][1],nav=`<div class="hmh"><button type="button" class="btn hmback">${ICO("chev",16)} Maison</button><b>${nm==="Dehors"?"Sorties":nm}</b><span class="hmnav"><button type="button" class="btn" data-d="-1" aria-label="Pièce précédente">‹</button><button type="button" class="btn" data-d="1" aria-label="Pièce suivante">›</button></span></div>`;
-  if(hmRoom==="biblio"){box.innerHTML=nav+`<div class="hmscene hmlib">${libHTML()}</div>`;libBind(box)}
-  else{const D=hmRoomData(H,hmRoom),has=hmRoom==="chambre"||hmEv(H,hmRoom).length;
-    box.innerHTML=nav+`<p class="hint hmsum">${D.sum}</p><div class="hmscene">${D.svg}</div><div class="libinfo hminfo" aria-live="polite"><p class="hint">${has?(hmRoom==="chambre"?"Ta garde-robe et tes badges sont juste en dessous.":"Touche un objet pour voir son histoire."):D.empty}</p></div>${D.extra||""}`;
-    const info=box.querySelector(".hminfo"),show=g=>{const o=g.dataset.o;if(o==="book"){const r=box.querySelector(".rcp");r&&r.scrollIntoView({block:"center",behavior:"smooth"});return}const h=D.info(o);if(!h)return;box.querySelectorAll(".hmo.sel").forEach(x=>x.classList.remove("sel"));g.classList.add("sel");info.innerHTML=h;sfx("coin");bindNames()};
-    const bindNames=()=>{info.querySelectorAll("[data-ns]").forEach(b=>b.onclick=()=>{const t=b.dataset.ns,v=info.querySelector(`[data-nt="${t}"]`).value.trim();if(v)H.nm[t]=v;else delete H.nm[t];save();toast("Nom enregistré");renderHome(1)});
-      info.querySelectorAll("[data-ps]").forEach(b=>b.onclick=()=>{const t=b.dataset.ps,v=info.querySelector(`[data-pt="${t}"]`).value.trim();if(v)H.pl[t]=v;else delete H.pl[t];save();toast("Lieu enregistré");renderHome(1)});
-      info.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{H.nm[b.dataset.sg]=b.dataset.v;save();renderHome(1)});
-      info.querySelectorAll("input").forEach(inp=>inp.onkeydown=e=>{if(e.key==="Enter"){const b=inp.nextElementSibling;b&&b.click()}})};
-    box.querySelectorAll(".hmo").forEach(g=>{g.onclick=()=>show(g);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g)}}});
-    if(hmRoom==="cuisine")hmRecipeBind(box)}
-  box.querySelector(".hmback").onclick=()=>{hmRoom=null;renderHome(1)};
-  box.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const j=(i+ +b.dataset.d+HM_ROOMS.length)%HM_ROOMS.length;hmRoom=HM_ROOMS[j][0];sfx("blip");renderHome(1)});
-  const sc=box.querySelector(".hmscene");if(sc){let x0=null;sc.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});sc.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>60){const b=box.querySelector(`[data-d="${dx<0?1:-1}"]`);b&&b.click()}},{passive:true})}}
-/*HM2-START*/(function(){
+/*HM2-START*/
+
 // ---- Kit pixel pour la maison : police 3x5, sprites, volumes ombrés
 const PXF={A:"010101111101101",B:"110101110101110",C:"011100100100011",D:"110101101101110",E:"111100110100111",F:"111100110100100",G:"011100101101011",H:"101101111101101",I:"111010010010111",J:"001001001101010",K:"101101110101101",L:"100100100100111",M:"101111111101101",N:"110101101101101",O:"010101101101010",P:"110101110100100",Q:"010101101110011",R:"110101110101101",S:"011100010001110",T:"111010010010010",U:"101101101101111",V:"101101101101010",W:"101101111111101",X:"101101010101101",Y:"101101010010010",Z:"111001010100111","0":"111101101101111","1":"010110010010111","2":"110001010100111","3":"110001010001110","4":"101101111001001","5":"111100110001110","6":"011100111101111","7":"111001010010010","8":"111101111101111","9":"111101111001110",".":"000000000000010",",":"000000000010100",":":"000010000010000","-":"000000111000000","'":"010010000000000","/":"001001010100100","+":"000010111010000","!":"010010010000010","?":"110001010000010","%":"101001010100101"," ":"000000000000000"};
 const OUT="#1a1210";
@@ -252,7 +134,7 @@ function hmBld(id,x,y){let s="";const win=(X,Y,c)=>R(X,Y,3,3,OUT)+R(X+1,Y+1,1,1,
     [4,16,28,88,100,112].forEach((X,i)=>{s+=tree(x+X,y+2+(i%2)*4)});s+=R(x+84,y+20,10,2,"#8b5a2b")+R(x+85,y+22,1,2,"#6b4a28")+R(x+92,y+22,1,2,"#6b4a28")+ptxt("PARC",x+4,y+19,"#fff6c8","#1f6a38");
     [[30,20],[36,4],[82,6],[118,18]].forEach(([X,Y])=>{s+=R(x+X,y+Y,1,1,"#ff9ccc")+R(x+X+2,y+Y+1,1,1,"#ffd94a")})}
   return s}
-hmCarte=function(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
+function hmCarte(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Carte des sorties">`+R(0,0,W,Hh,"#6aa84f");
   for(let y=1;y<Hh;y+=3)for(let x=(y*7)%5;x<W;x+=9)s+=R(x,y,1,1,"#5a9640");
   // routes, trottoirs, passages piétons
@@ -277,7 +159,7 @@ hmCarte=function(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[
 
 // ---------- CUISINE (128 px)
 const HMC_FILL={"Repas maison":["#6fbf5a","#4a8f3a","pasta"],"Nouveau plat":["#e8873a","#b85f1f","beans"],"Pâtisserie":["#f08cc0","#c25a8d","jam"],"Préparer demain":["#5a93c2","#2f5d8b","rice"]};
-hmCuisine=function(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>({e,i,w:7})),{U:60,gap:1,min:2}),RH=14,top=8,shH=rows.length*RH,Hh=top+shH+52;
+function hmCuisine(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>({e,i,w:7})),{U:60,gap:1,min:2}),RH=14,top=8,shH=rows.length*RH,Hh=top+shH+52;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Cuisine">`;
   s+=shell(W,Hh,{wall:"#efe6d2",wall2:"#ddd2b8",pat:"tile",floor:"#c9b48c",floor2:"#b39d74",fh:12,base:"#8b5a2b"});
   // sol en damier
@@ -317,7 +199,7 @@ hmCuisine=function(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>
     extra:hmRecipes()}};
 
 // ---------- CHAMBRE (128 px)
-hmChambre=function(){const W=128,Hh=80,G=S.g,ng=(G.gear||[]).length,nb=(G.nb||[]).length;
+function hmChambre(){const W=128,Hh=80,G=S.g,ng=(G.gear||[]).length,nb=(G.nb||[]).length;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="img" aria-label="Chambre">`;
   s+=shell(W,Hh,{wall:"#3b3358",wall2:"#433a63",pat:"dots",floor:"#7a5838",floor2:"#6a4a2e",fh:18,base:"#2a2340"});
   // fenêtre de nuit
@@ -374,7 +256,7 @@ function hmHouseSvg(H,lit){const W=128,Hh=184,h=new Date().getHours(),night=h<7|
   s+=R(0,164,W,20,"#5a5a66")+R(0,164,W,2,"#9a9aa6")+R(0,182,W,2,"#9a9aa6");for(let x=2;x<W;x+=10)s+=R(x,173,5,1,"#e9e2d0");
   s+=R(4,166,33,9,OUT)+R(5,167,31,7,"#2f8b4a")+ptxt("SORTIES",7,168,"#fff6c8")+R(19,175,2,7,"#8a8f99");
   return s+"</svg>"}
-hmHTML=function(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
+function hmHTML(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
   const lit={};["chambre","biblio","studio","video","cuisine","sport"].forEach(id=>lit[id]=hmCount(H,id)>0);
   const lab={biblio:["livre","livres"],studio:["session","sessions"],video:["objet","objets"],cuisine:["bocal","bocaux"],sport:["séance","séances"]};
   const pc=(v,t)=>(v/t*100).toFixed(2)+"%";
@@ -385,7 +267,7 @@ hmHTML=function(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=
   return`<div class="hmhouse">${window.__hmHC.s}${Object.keys(HMH_SLOT).map(slot).join("")}<button type="button" class="hmslot hmstreet" data-r="carte" style="left:0;top:${pc(152,184)};width:100%;height:${pc(32,184)}" aria-label="Sorties"><span class="hml"><b>Sorties</b>${nC?`<small>${nC} drapeau${nC>1?"x":""}</small>`:""}</span>${here==="carte"&&me?`<img class="hmme" src="${me}" alt="Toi ici">`:""}</button></div>`};
 
 // ---------- SALLE DE SPORT (128 px)
-hmSport=function(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
+function hmSport(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
   const best=w=>Math.max(0,...E.filter(e=>new RegExp(w,"i").test(e.n)).map(e=>{const m=e.n.match(/(\d+)\s*(?:rép|pompes|squats)/i);return m?+m[1]:0}));
   const km=Math.round(num(/(\d+(?:[.,]\d+)?)\s*km/i)*10)/10,reps=Math.round(num(/(\d+)\s*(?:rép|pompes|squats|abdos|tractions)/i)),pu=Math.max((G.pu&&G.pu.rec)||0,best("pompes")),sq=Math.max((G.sq&&G.sq.rec)||0,best("squats")),gn=(G.gn&&G.gn.rec)||0,rn=Math.max((G.run&&G.run.rec)||0,0,...E.map(e=>{const m=e.n.match(/(\d+(?:[.,]\d+)?)\s*km/i);return m?parseFloat(m[1].replace(",",".")):0}));
   const M=[["gn","Gainage",gn,gn?fmtSec(gn):"",[60,120,180],gn?fmtSec(gn).replace(" ",""):"-"],["pu","Pompes d'affilée",pu,pu+"",[20,40,60],pu||"-"],["sq","Squats d'affilée",sq,sq+"",[30,60,100],sq||"-"],["rn","Plus longue course",rn,rn?rn.toLocaleString("fr-FR")+" km":"",[5,10,21],rn?String(rn).replace(".",",")+"K":"-"],["km","Total parcouru",km,km?km.toLocaleString("fr-FR")+" km":"",[20,100,500],km?Math.round(km)+"K":"-"],["rp","Total répétitions",reps,reps+"",[200,1000,5000],reps?(reps>=1000?Math.round(reps/100)/10+"K":reps):"-"]];
@@ -417,7 +299,7 @@ hmSport=function(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((
       const nx=HMSP_MS.find(q=>q[0]>km)||HMSP_MS[HMSP_MS.length-1];return hmPop(lv?"Médaille "+lv.toLowerCase():"Record",m[1],m[2]?hmRow("medaille","Record",m[3])+(m[0]==="km"?hmRow("sablier","Prochain cap",nx[1]):"")+(nxT?hmRow("sablier","Médaille suivante",(m[0]==="gn"?fmtSec(nxT):nxT.toLocaleString("fr-FR")+(/km/.test(m[3])?" km":""))):""):hmRow("sablier","Pas encore de record","Lance l'action pour en poser un"))}}};
 
 // ---------- STUDIO (128 px)
-hmStudio=function(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0),W=128,Hh=88;
+function hmStudio(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0),W=128,Hh=88;
   const has=id=>n>=HMS_EQ.find(q=>q[0]===id)[2];
   const Z=(id,body)=>`<g class="hmo${has(id)?"":" lock"}" data-o="eq:${id}" tabindex="0" role="button" aria-label="${HMS_EQ.find(q=>q[0]===id)[1]}"${has(id)?"":' opacity=".18" style="filter:grayscale(1)"'}>${body}</g>`;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Studio">`;
@@ -463,7 +345,7 @@ hmStudio=function(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.f
       return hmPop(ok?"Équipement":"À débloquer",q[1],ok?hmRow("eclair","Débloqué à la",q[2]+(q[2]>1?"e":"re")+" session")+(at?hmRow("calendrier","Le",hmFd(at.t)):""):hmRow("sablier","Se débloque à la",q[2]+"e session")+hmRow("note","Encore",(q[2]-n)+" session"+(q[2]-n>1?"s":"")))}}};
 
 // ---------- VIDÉOCLUB (128 px)
-hmVideo=function(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),W=128;
+function hmVideo(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),W=128;
   const rows=hmShelf(T.map((e,i)=>({e,i,w:e.k==="s"?10:5})),{U:66,gap:1,min:3}),RH=16,top=22,shH=rows.length*RH+4,Hh=top+shH+44;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Vidéoclub">`;
   s+=shell(W,Hh,{wall:"#2b1846",wall2:"#341d55",pat:"stripe",floor:"#3b2a3a",floor2:"#33232f",fh:16,base:"#1c0f2c"});
@@ -498,7 +380,7 @@ hmVideo=function(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter
 // ---------- Affichage : mêmes codes que les autres cartes (bordure 2 px colorée, titre en capitales, boutons carrés à icône)
 const HM_COL={chambre:"#a99cff",biblio:"#c98a4a",studio:"#2fe3d6",video:"#ff5fa8",cuisine:"#e8873a",sport:"#d63b3b",carte:"#5ac27a"};
 const HM_NAME={chambre:"Chambre",biblio:"Bibliothèque",studio:"Studio",video:"Vidéoclub",cuisine:"Cuisine",sport:"Sport",carte:"Sorties"};
-renderHome=function(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+function renderHome(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
   const H=hmData();document.documentElement.dataset.room=hmRoom||"home";
   if(!hmRoom){const hh=`<div class="hmcard hmover">${hmHTML(H)}</div>`;if(box.__h===hh&&box.querySelector(".hmhouse"))return;box.innerHTML=hh;box.__h=hh;
     box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);box.scrollIntoView({block:"start",behavior:"smooth"})});return}
@@ -518,12 +400,12 @@ renderHome=function(force){const box=document.getElementById("homeBox");if(!box|
   box.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const j=(i+ +b.dataset.d+HM_ROOMS.length)%HM_ROOMS.length;hmRoom=HM_ROOMS[j][0];sfx("blip");renderHome(1)});
   const sc=box.querySelector(".hmscene");if(sc){let x0=null;sc.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});sc.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>60){const b=box.querySelector(`[data-d="${dx<0?1:-1}"]`);b&&b.click()}},{passive:true})}};
 // infos : lignes simples, sans carte dans la carte
-hmPop=function(kind,title,rows,extra){return`<div class="hmpop"><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`};
-hmRecipes=function(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="rcph2"><h3>Recettes</h3><button type="button" class="hmib rcpadd" aria-label="Nouvelle recette">${ICO("plus",20)}</button></div>
+function hmPop(kind,title,rows,extra){return`<div class="hmpop"><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`};
+function hmRecipes(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="rcph2"><h3>Recettes</h3><button type="button" class="hmib rcpadd" aria-label="Nouvelle recette">${ICO("plus",20)}</button></div>
   ${window.__rcpNew?`<div class="rcpf"><input id="rcpN" maxlength="50" placeholder="Nom"><textarea id="rcpI" rows="3" placeholder="Ingrédients, un par ligne"></textarea><textarea id="rcpS" rows="3" placeholder="Étapes, une par ligne"></textarea><div class="rcpb"><button type="button" class="btn rcpx">Annuler</button><button type="button" class="btn primary rcpok">Enregistrer</button></div></div>`:""}
   ${R.length?`<ul class="rcpl">${R.map(r=>`<li class="${op===r.id?"open":""}"><button type="button" class="rcph" data-ro="${r.id}"><b></b><small>${r.c?`${r.c} fois · ${hmFd(r.t)}`:"jamais faite"}</small></button><button type="button" class="hmib rcpdo" data-rd="${r.id}" aria-label="Je l'ai cuisinée">${ICO("check",20)}</button>
     ${op===r.id?`<div class="rcpd">${r.ing?`<small>Ingrédients</small><ul>${r.ing.split("\n").filter(Boolean).map(()=>`<li></li>`).join("")}</ul>`:""}${r.st?`<small>Étapes</small><ol>${r.st.split("\n").filter(Boolean).map(()=>`<li></li>`).join("")}</ol>`:""}<button type="button" class="lnk rcpdel" data-rx="${r.id}">Supprimer</button></div>`:""}</li>`).join("")}</ul>`:""}</div>`};
 
-})();/*HM2-END*/
+/*HM2-END*/
 
 

@@ -127,7 +127,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
       plQuests(m,btn,q)}};
   draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);document.documentElement.classList.add("plopen");try{sfx("open")}catch(e){}}
 // une quête nourriture vérifiable ouvre l'assiette du repas en cours au lieu de se valider d'un coup
-try{const _fd=feedDo;window.__plFd=_fd;feedDo=function(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return _fd.apply(this,arguments)}}catch(e){}
+window.__plFd=feedDoBase;
 // rituel Eau du jour (s'il existe et n'est pas fini)
 function plWaterRit(){try{ritRoll();return(S.daily.tasks||[]).find(t=>/\beau\b|verre/i.test(t.name)&&(S.daily.c[t.id]||0)<t.n)||null}catch(e){return null}}
 // annuler le repas depuis « Annuler » ou le journal : l'assiette et l'état du repas repartent à zéro
@@ -136,8 +136,8 @@ function plUndo(e){const[d,k]=e.plk.split(":"),per=e.plp,P=(S.g.plt||{})[d],m=P&
 
 // série : jours d'affilée avec des légumes (aujourd'hui compte s'il y en a, sinon on part d'hier)
 function plVegRun(){let n=0;const d=new Date();if(!plTot(dayKey(d)).l)d.setDate(d.getDate()-1);for(let i=0;i<400;i++){if(!plTot(dayKey(d)).l)break;n++;d.setDate(d.getDate()-1)}return n}
-try{const _bd=badgeDefs;badgeDefs=function(){const B=_bd.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>plVegRun()>=7});return B}}catch(e){}
-try{const _fo=famOf;famOf=function(id){return id==="veg7"?"reg":_fo(id)}}catch(e){}
+
+
 function plName(s,id){return plFood(id).n}
 function plSave(tk,k,m){const P=S.g.plt=S.g.plt||{};(P[tk]=P[tk]||{})[k]=m;const lim=dayKey(Date.now()-120*864e5);Object.keys(P).forEach(d=>{if(d<lim)delete P[d]});save()}
 // totaux d'une journée (déjeuner + dîner)
@@ -158,5 +158,5 @@ function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||
   box.innerHTML=`<div class="gcard col1"><h3>Mon assiette · 7 jours</h3><div class="plwk">${days.map(([d,t])=>`<span class="${t.n?"":"none"}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}">${t.n?plSvg(t):'<i class="plz"></i>'}<em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div>
     <div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${cnt(s)}/${done.length} j</span>`).join("")}</div>
     <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
-try{const _r=render;render=function(){const r=_r.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}}catch(e){}
+
 // shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026

@@ -125,7 +125,9 @@ function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".
 function rtmFmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 
 const RIT_SOIR_H=20;let dqMorn=false,sqMore=false;
-function renderSpecials(){schedNow();renderBalance();
+// renderSpecials : version complète (ex-réécriture de correctifs.js), renderSpecialsBase = le cœur d'origine
+function renderSpecials(){try{noBoss();smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}
+function renderSpecialsBase(){schedNow();renderBalance();
   renderGroups();ritRoll();
   const tr=$("spTrack");tr.innerHTML="";const tk=dayKey(Date.now()),G=S.g,P=dayPer(),box=$("dqBox");ambApply(box);
   const PER=P==="nuit"?null:P;

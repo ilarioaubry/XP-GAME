@@ -23,7 +23,11 @@ function wrToggle(it){const G=S.g;if(it.s==="aura"){if(G.eq.aura===it.id)delete 
   sfx("blip");save();render();renderWardrobe()}
 // la rareté se lit en étoiles pixel (1 à 4), plus en couleur
 const rarStars=r=>`<span class="rst" aria-label="${RAR[r][0]}">${ICO("star",10).repeat(r+1)}</span>`;
-function renderWardrobe(){
+// renderWardrobe : version complète (ex-réécriture de correctifs.js), renderWardrobeBase = le cœur d'origine
+// renderWardrobe : finitions autour de renderWardrobeBase2 (le cœur), ex-retouche de correctifs.js
+function renderWardrobe(){const r=renderWardrobeBase2.apply(this,arguments);try{wrViz()}catch(e){console.warn("renderWardrobe",e)}return r}
+function renderWardrobeBase2(){const r=renderWardrobeBase.apply(this,arguments);try{wrBadges()}catch(e){}return r}
+function renderWardrobeBase(){
   const G=S.g;if(!G||!$("wrBody"))return;
   const tot=GEAR.length,own=wrOwned();$("wrCnt").textContent=own+"/"+tot;
   {const nc=(G.chests||0)+(G.bchests||0);$("wrChest").innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="wrChestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";const b=$("wrChestBtn");if(b)b.onclick=()=>openChest()}
@@ -118,7 +122,9 @@ function fsOpen(cls,inner){const o=document.createElement("div");o.className="pu
 function burstIn(FX,k){for(let i=0;i<k;i++){const e=document.createElement("i");const a=Math.random()*Math.PI*2,d=70+Math.random()*90;e.style.setProperty("--dx",Math.cos(a)*d+"px");e.style.setProperty("--dy",Math.sin(a)*d+"px");e.style.setProperty("--d",(.45+Math.random()*.35)+"s");FX.appendChild(e);setTimeout(()=>e.remove(),900)}}
 function monthAdd(o,v){const ym=ymOf(Date.now());if(!o.m)o.m={};o.m[ym]=(o.m[ym]||0)+v}
 // gainage : chrono qui monte
-function gnOpen(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match(/(\d+)\s*s(?:ec)?\b/i),goal=durOf(n)?durOf(n)*60:mm?+mm[1]:60,rec0=P.rec||0;let t0=0,el=0,iv=0,state="ready",recHit=0,goalHit=0,lastS=-1;
+// gnOpen : finitions autour de gnOpenBase (le cœur), ex-retouche de correctifs.js
+function gnOpen(btn,n){const r=gnOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("gnOpen",e)}return r}
+function gnOpenBase(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match(/(\d+)\s*s(?:ec)?\b/i),goal=durOf(n)?durOf(n)*60:mm?+mm[1]:60,rec0=P.rec||0;let t0=0,el=0,iv=0,state="ready",recHit=0,goalHit=0,lastS=-1;
   const o=fsOpen("gn",`<div class="puh"><b class="pun"></b><small>Objectif ${fmtSec(goal)}${rec0?" · record "+fmtSec(rec0):""}</small></div>
     <div class="pupad gnpad"><span class="pufx" aria-hidden="true"></span><span class="puban"></span><b class="puc gnc">0:00</b><span class="pug"><i></i><em></em></span><span class="pucall"></span><small class="puhelp">Mets-toi en position, puis appuie sur Go. Appuie sur Stop quand tu lâches.</small></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Go</button></div>`);
@@ -139,7 +145,9 @@ function gnOpen(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);o.remove()}}
 // étirements guidés
 const STRETCH=[["Cou","Penche doucement la tête de chaque côté"],["Épaules","Fais de grands cercles avec les épaules"],["Bras","Tire un bras derrière la tête, puis l'autre"],["Dos","Enroule le dos, mains vers les pieds"],["Hanches","Fente basse, bassin vers l'avant"],["Ischios","Jambes tendues, attrape tes chevilles"],["Quadriceps","Debout, attrape ton pied derrière toi"],["Mollets","Mains au mur, une jambe tendue derrière"]];
-function stOpen(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETCH.slice(0,Math.max(4,Math.min(8,Math.round(tot/40)))),per=tot/L.length;let i=0,t0=0,iv=0,paused=0,pacc=0,pst=0,run=0;
+// stOpen : finitions autour de stOpenBase (le cœur), ex-retouche de correctifs.js
+function stOpen(btn,n){const r=stOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("stOpen",e)}return r}
+function stOpenBase(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETCH.slice(0,Math.max(4,Math.min(8,Math.round(tot/40)))),per=tot/L.length;let i=0,t0=0,iv=0,paused=0,pacc=0,pst=0,run=0;
   const o=fsOpen("st",`<div class="puh"><b class="pun"></b><small>${L.length} étirements · ${fmtSec(tot)}</small></div>
     <div class="pupad stpad"><div class="stdots">${L.map(()=>"<i></i>").join("")}</div><small class="stk">Étirement <b class="sti">1</b> / ${L.length}</small><b class="stn"></b><span class="sth"></span><div class="string"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="sbg"/><circle cx="50" cy="50" r="44" class="sfg"/></svg><b class="stt"></b></div></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Commencer</button></div>`);
@@ -154,7 +162,9 @@ function stOpen(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETC
     if(run){if(!paused){paused=1;pst=Date.now();OK.textContent="Reprendre"}else{pacc+=Date.now()-pst;paused=0;OK.textContent="Pause"}}};
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);document.removeEventListener("visibilitychange",vis);o.remove()}}
 // course : chrono + distance
-function runOpen(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n.match(/(\d+(?:[.,]\d+)?)\s*km/i)||[])[1];const goalKm=km0?parseFloat(km0.replace(",",".")):0;let t0=0,el=0,iv=0,state="ready",km=goalKm||2;
+// runOpen : finitions autour de runOpenBase (le cœur), ex-retouche de correctifs.js
+function runOpen(btn,n){const r=runOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("runOpen",e)}return r}
+function runOpenBase(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n.match(/(\d+(?:[.,]\d+)?)\s*km/i)||[])[1];const goalKm=km0?parseFloat(km0.replace(",",".")):0;let t0=0,el=0,iv=0,state="ready",km=goalKm||2;
   const o=fsOpen("rn",`<div class="puh"><b class="pun"></b><small>${goalKm?"Objectif "+goalKm.toLocaleString("fr-FR")+" km":"Cours à ton rythme"}${P.rec?" · record "+P.rec.toLocaleString("fr-FR")+" km":""}</small></div>
     <div class="pupad rnpad"><span class="rnrd" aria-hidden="true"><i></i><i></i><i></i></span><b class="puc rnc">0:00</b><span class="pucall rnsub">Lance le chrono au départ</span><div class="rnkm" hidden><p>Distance parcourue</p><div class="rdk2"><button type="button" class="btn rdm" data-d="-0.5">-0,5</button><button type="button" class="btn rdm" data-d="-0.1">-0,1</button><b class="rdv rnv"></b><button type="button" class="btn rdm" data-d="0.1">+0,1</button><button type="button" class="btn rdm" data-d="0.5">+0,5</button></div><small class="rnpace"></small></div></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Go</button></div>`);
@@ -169,7 +179,9 @@ function runOpen(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n
   o.querySelectorAll(".rdm").forEach(b=>b.onclick=()=>{km=Math.max(.1,Math.round((km+ +b.dataset.d)*10)/10);drawKm()});
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);o.remove()}}
 // méditation : respiration guidée
-function mdOpen(btn,n){const G=S.g;if(!G.md)G.md={};const tot=Math.max(1,durOf(n)||5)*60,PH=[["Inspire",4],["Bloque",2],["Expire",6]],CY=12;let t0=0,iv=0,paused=0,pacc=0,pst=0,run=0,lp=-1;
+// mdOpen : finitions autour de mdOpenBase (le cœur), ex-retouche de correctifs.js
+function mdOpen(btn,n){const r=mdOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("mdOpen",e)}return r}
+function mdOpenBase(btn,n){const G=S.g;if(!G.md)G.md={};const tot=Math.max(1,durOf(n)||5)*60,PH=[["Inspire",4],["Bloque",2],["Expire",6]],CY=12;let t0=0,iv=0,paused=0,pacc=0,pst=0,run=0,lp=-1;
   const o=fsOpen("md",`<div class="puh"><b class="pun"></b><small>${fmtSec(tot)} de respiration</small></div>
     <div class="pupad mdpad"><span class="mdstars" aria-hidden="true"></span><div class="mdc"><svg class="mdorb" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-hidden="true">${mdOrb(4,0)}</svg></div><b class="mdt">Prêt ?</b><b class="mdl">${fmtSec(tot)}</b></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Commencer</button></div>`);
@@ -245,7 +257,9 @@ function puTarget(n,P){P=P||{};let m=n.match(/(\d+)\s*séries?\s*de\s*(\d+)/i);i
   if(/record/i.test(n))return{s:1,r:(P.rec||0)+1,rec:1};m=n.match(/(\d+)\s*(?:pompes|squats)/i);if(m)return{s:1,r:+m[1]};return{s:1,r:10}}
 const PU_CALL=["Encore !","Ça chauffe !","Machine !","Bête de guerre !","Inarrêtable !","Légendaire !"];
 const REPK={pu:{rk:"pu",u:"pompes",help:"Pose le téléphone au sol et touche l'écran avec le nez à chaque pompe"},sq:{rk:"sq",u:"squats",help:"Pose le téléphone sur une chaise devant toi et touche l'écran à chaque remontée"}};
-function puOpen(btn,n){const G=S.g,K=/squat/i.test(n)?REPK.sq:REPK.pu;if(!G[K.rk])G[K.rk]={rec:0,tot:0};const P=G[K.rk],T=puTarget(n,P),goal=T.s*T.r,rec0=P.rec||0;let c=0,set=0,best=0,run=0,recHit=0;
+// puOpen : finitions autour de puOpenBase (le cœur), ex-retouche de correctifs.js
+function puOpen(btn,n){const r=puOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("puOpen",e)}return r}
+function puOpenBase(btn,n){const G=S.g,K=/squat/i.test(n)?REPK.sq:REPK.pu;if(!G[K.rk])G[K.rk]={rec:0,tot:0};const P=G[K.rk],T=puTarget(n,P),goal=T.s*T.r,rec0=P.rec||0;let c=0,set=0,best=0,run=0,recHit=0;
   const o=document.createElement("div");o.className="pu rep-"+K.rk;o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
   o.innerHTML=`<div class="puh"><b class="pun"></b><small>${T.s>1?T.s+" séries de "+T.r:"Objectif "+goal}${rec0?" · record "+rec0:""}</small></div>
     <button type="button" class="pupad" aria-label="Compter"><span class="pufx" aria-hidden="true"></span><span class="puban"></span><span class="puset"></span><b class="puc">0</b><span class="pug"><i></i><em></em></span><span class="pucall"></span><small class="puhelp">${K.help}</small></button>

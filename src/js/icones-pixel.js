@@ -28,7 +28,7 @@ calendar:["..#.....#...","############","############","#..........#","#.##.##.#
 };
 function pxIco(n,s,cls){const R=PXUI[n];if(!R)return"";let r="";R.forEach((row,y)=>{let x=0;while(x<12){if(row[x]!=="#"){x++;continue}let w=1;while(x+w<12&&row[x+w]==="#")w++;r+=`<rect x="${x}" y="${y}" width="${w}" height="1.02"/>`;x+=w}});
   return`<svg class="ic pxic${cls?" "+cls:""}" viewBox="0 0 12 12" width="${s||16}" height="${s||16}" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
-try{const _ICO=ICO;ICO=function(n,s){return pxIco(n,s)||_ICO(n,s)}}catch(e){}
+
 // anciennes icônes au trait encore écrites en dur (barre du bas, boutons) : remplacées à l'affichage par leur version pixel
 const PXUSIG=[["M17 21v-2","users"],["M9 11l3 3L22 4","todo"],["M4 21c0-4","user"],["M6 9l6 6 6-6","chev"],["M17 9l5 6","sndoff"],["M16 9a4","sndon"],["M4 20h4L19 9","edit"],
   ["M12 3l2.2 6.8","spark"],["M12 5v14M5 12h14","plus"],["M6 6l12 12","close"],["M5 12.5l4.5","check"],["M4 5h16v11","chat"],["M5 4h4l2 5","phone"],["M20 11a8","swap"],["M4 12a8","reset"],["M14.5 17.5","sword"],["M12 22c4","flame"]];

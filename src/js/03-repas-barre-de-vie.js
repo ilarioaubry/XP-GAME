@@ -99,7 +99,9 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
   if(!set)box.innerHTML=h;
   const rx=box.querySelector(".rarex");if(rx)rx.onclick=()=>{G.rare.seen=1;save();renderNow()};
   if(G.rare&&G.rare.d===tk&&G.rare.k&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
-function renderBalance(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();
+// renderBalance : finitions autour de renderBalanceBase (le cœur), ex-retouche de correctifs.js
+function renderBalance(){const r=renderBalanceBase.apply(this,arguments);try{balViz()}catch(e){console.warn("renderBalance",e)}return r}
+function renderBalanceBase(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();
   box.innerHTML=`<div class="balr"><span><b>Jour off</b><small>1 par semaine · série protégée</small></span><button type="button" class="btn" id="offGo" ${off||!left?"disabled":""}>${off?"Aujourd'hui":left?"Prendre":"Déjà pris"}</button></div>
     <div class="balr"><span><b>Pause malade / vacances</b><small>${pzActive()?`En pause (${pzActive().k}) jusqu'au ${new Date(pzActive().to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}. Série gelée.`:`Gèle ta série plusieurs jours. ${pzLeft()} jour${pzLeft()>1?"s":""} restant${pzLeft()>1?"s":""} cette année.`}</small></span><button type="button" class="btn" id="pzGo">${pzActive()?"Reprendre":"Pause"}</button></div>
     <label class="balr"><span><b>Mode doux</b><small>Si ton humeur du jour est basse, les malus sont désactivés.</small></span><input type="checkbox" id="softTg" ${G.softAuto!==false?"checked":""}></label>

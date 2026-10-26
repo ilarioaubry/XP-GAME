@@ -4246,7 +4246,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     const actPer=tk=>{const L=(S.g.per||[]).filter(p=>p.s<=tk&&tk<=p.e);return L.find(p=>p.t==="malade")||L.find(p=>p.t!=="contrat"&&p.t!=="autre")||L.find(p=>p.t==="contrat")||L[0]||null};
     const workDay=tk=>{const v=V(),wd=toD(tk).getDay();if(!v.wd.includes(wd))return false;if(v.job)return true;return(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e&&(!p.wd||(wd>0&&wd<6)))};
     // ---- Réglages lus par le reste de l'appli
-    window.vieCap=function(){try{if(!S||!S.g)return 3;const v=V(),tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let c=workDay(tk)?v.capW:v.cap;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return Math.max(1,Math.min(8,c))}catch(e){return 3}};
+    const vieCapBase=function(){try{if(!S||!S.g)return 3;const v=V(),tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let c=workDay(tk)?v.capW:v.cap;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return Math.max(1,Math.min(8,c))}catch(e){return 3}};
+    // vieCap = vieCapBase (le cœur) → capacité choisie pour aujourd'hui (vieCapBase2) → ajustée selon énergie et sommeil. Ex-réécritures de correctifs.js.
+    const vieCapBase2=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return vieCapBase()};
+    window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
+      if(v){v.cap=4;v.capW=2}let c=vieCapBase2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}};
     window.vieGoalF=function(){try{const tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let f=T.goal||1;if(workDay(tk)&&f>.7)f=.7;return f}catch(e){return 1}};
     window.vieSoft=function(){try{const p=actPer(tkNow());return!!(p&&PT[p.t]&&PT[p.t].soft)}catch(e){return false}};
     window.viePri=function(cat){try{const i=V().pri.indexOf(cat);return i<0?9:i}catch(e){return 9}};
@@ -4335,7 +4339,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
       box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>goVie("vie-per"));
       bindPer(box);bindLast(box,tk)};
     // ---- Page « Ma vie » (Profil)
-    window.renderVie=function(){
+    const renderVieBase=function(){
       const box=document.getElementById("vieBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();
       const seg=(k,opts,cur)=>`<div class="seg" role="group">${opts.map(o=>`<button type="button" data-seg="${k}" data-val="${o}" aria-pressed="${cur===o}">${o}</button>`).join("")}</div>`;
       const p=actPer(tk),cap=vieCap();
@@ -4372,6 +4376,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
       box.querySelectorAll("[data-trk]").forEach(b=>b.onchange=()=>{v.track[b.dataset.trk]=b.checked;ch()});
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
       bindPer(box);bindLast(box,tk)};
+    // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js
+    window.renderVie=function(){const r=renderVieBase.apply(this,arguments);try{vieViz();ficheMove()}catch(e){console.warn("renderVie",e)}return r};
   })();
   </script>
   <section data-v="q" class="specials" id="dqBox" aria-label="Mon moment">
@@ -4489,7 +4495,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2c828ec</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 6103622</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4675,7 +4681,10 @@ Object.assign(PXSP,{"cup":[["..w.w.....","...w.w....","kkkkkkkk..","kwwwwwwkkk",
 function pxSprite(k){if(typeof pxU==="function")pxU(k);if(PXSPC[k])return PXSPC[k];const[r,p]=PXSP[k],c=document.createElement("canvas");c.width=r[0].length;c.height=r.length;const g=c.getContext("2d");
   r.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch!=="."){g.fillStyle=p[ch];g.fillRect(x,y,1,1)}}));return PXSPC[k]=c.toDataURL()}
 function pxImg(k,sc,cls){if(typeof pxU==="function")pxU(k);const[r,,w0]=PXSP[k];if(w0)sc=Math.max(1,Math.round(w0*sc/16));return`<img class="pxi ${cls||""}" src="${pxSprite(k)}" width="${r[0].length*sc}" height="${r.length*sc}" alt="" aria-hidden="true">`}
-function render(prevLevel){
+// render = renderBase (le cœur) → finitions d'Aujourd'hui (renderBase2) → assiettes de la semaine. Ex-réécritures de correctifs.js et assiette.js.
+function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}
+function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
+function renderBase(prevLevel){
   if(seedOnce())save();
   if(gameTick())save();
   const {l,cur,need}=levelInfo(S.xp);
@@ -4690,7 +4699,7 @@ function render(prevLevel){
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
   $("streak").textContent=streak();
   if(prevLevel&&l>prevLevel){setTimeout(()=>sfx("level"),180);$("lvlBox").classList.remove("bump");void $("lvlBox").offsetWidth;$("lvlBox").classList.add("bump");toast(`Niveau <span class="p">${l}</span> atteint !${rankOf(l)!==rankOf(prevLevel)?" Nouveau rang : <span class=\"p\">"+rankOf(l)+"</span>":""}`)}
-  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
+  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();if(typeof renderFiche==="function")renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
   $("favs").hidden=true;$("filters").hidden=true;$("seeAll").hidden=true;$("allActs").hidden=false;
   for(const k in viewDirty)viewDirty[k]=true;
   runView(view);
@@ -4923,7 +4932,9 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
   if(!set)box.innerHTML=h;
   const rx=box.querySelector(".rarex");if(rx)rx.onclick=()=>{G.rare.seen=1;save();renderNow()};
   if(G.rare&&G.rare.d===tk&&G.rare.k&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
-function renderBalance(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();
+// renderBalance : finitions autour de renderBalanceBase (le cœur), ex-retouche de correctifs.js
+function renderBalance(){const r=renderBalanceBase.apply(this,arguments);try{balViz()}catch(e){console.warn("renderBalance",e)}return r}
+function renderBalanceBase(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();
   box.innerHTML=`<div class="balr"><span><b>Jour off</b><small>1 par semaine · série protégée</small></span><button type="button" class="btn" id="offGo" ${off||!left?"disabled":""}>${off?"Aujourd'hui":left?"Prendre":"Déjà pris"}</button></div>
     <div class="balr"><span><b>Pause malade / vacances</b><small>${pzActive()?`En pause (${pzActive().k}) jusqu'au ${new Date(pzActive().to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}. Série gelée.`:`Gèle ta série plusieurs jours. ${pzLeft()} jour${pzLeft()>1?"s":""} restant${pzLeft()>1?"s":""} cette année.`}</small></span><button type="button" class="btn" id="pzGo">${pzActive()?"Reprendre":"Pause"}</button></div>
     <label class="balr"><span><b>Mode doux</b><small>Si ton humeur du jour est basse, les malus sont désactivés.</small></span><input type="checkbox" id="softTg" ${G.softAuto!==false?"checked":""}></label>
@@ -5013,7 +5024,9 @@ function idPick(){const T=idState(),o=document.createElement("div");o.className=
     o.querySelectorAll(".idopt").forEach(b=>b.onclick=()=>{const id=b.dataset.id,i=T.ch.indexOf(id);if(i>=0)T.ch.splice(i,1);else{if(T.ch.length>=3)T.ch.shift();T.ch.push(id)}save();draw()});
     o.querySelector("#idOk").onclick=close};
   draw()}
-function renderIdentity(){const box=$("idBox");if(!box||!S.g)return;const T=idState();
+// renderIdentity : finitions autour de renderIdentityBase (le cœur), ex-retouche de correctifs.js
+function renderIdentity(){const r=renderIdentityBase.apply(this,arguments);try{idViz()}catch(e){console.warn("renderIdentity",e)}return r}
+function renderIdentityBase(){const box=$("idBox");if(!box||!S.g)return;const T=idState();
   if(!T.ch.length){box.innerHTML=`<button type="button" class="idempty" id="idGo"><b>Qui veux-tu devenir ?</b><small>Choisis 1 à 3 identités : lecteur, sportif, artiste, ami présent…</small><span class="go">Choisir</span></button>`;$("idGo").onclick=idPick;return}
   box.innerHTML=`<div class="idhead"><b>Ce que tu deviens</b><button type="button" class="lnk" id="idChg">Changer</button></div>`+T.ch.map(id=>{const I=idOf(id);if(!I)return"";const k=idStage(I),nx=idNext(I),last=T.log.filter(l=>l.id===id).slice(-1)[0];
     return`<div class="idcard" style="--ic:${I.c}"><span class="idi">${pxImg(I.ic,4)}</span><div class="idt">${k&&String(I.st[k-1][0]).toLowerCase()===String(I.n).toLowerCase()?"":`<small>${esc(I.n)}</small>`}<b>${k?esc(I.st[k-1][0]):"Le chemin commence"}</b>${nx?`<span class="idbar"><i style="width:${nx.pct}%"></i></span><em>Encore ${nx.left} ${IDU[nx.s[1]]} pour « ${esc(nx.s[0])} »</em>`:`<em>Chemin accompli</em>`}</div><div class="idsteps">${I.st.map((x,j)=>`<i class="${j<k?"on":""}" title="${esc(x[0])}"></i>`).join("")}</div></div>`}).join("");
@@ -5548,7 +5561,9 @@ function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".
 function rtmFmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 
 const RIT_SOIR_H=20;let dqMorn=false,sqMore=false;
-function renderSpecials(){schedNow();renderBalance();
+// renderSpecials : version complète (ex-réécriture de correctifs.js), renderSpecialsBase = le cœur d'origine
+function renderSpecials(){try{noBoss();smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}
+function renderSpecialsBase(){schedNow();renderBalance();
   renderGroups();ritRoll();
   const tr=$("spTrack");tr.innerHTML="";const tk=dayKey(Date.now()),G=S.g,P=dayPer(),box=$("dqBox");ambApply(box);
   const PER=P==="nuit"?null:P;
@@ -9968,7 +9983,9 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
     <h4 class="bh4">Ton intention pour la semaine prochaine</h4><div class="bint">${props.slice(0,3).map(p=>`<button type="button" class="qchip" data-int="${esc(p)}" aria-pressed="${cur===p}">${esc(p)}</button>`).join("")}</div>`}
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
-function renderChap(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
+// renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilKpi();bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;
   let h="";
@@ -10032,7 +10049,9 @@ function dayGoal0(){const G=S.g;if(!G)return 150;const tk=dayKey(Date.now()),e=e
 function fqNo(){const G=S.g;if(!G.fqNo||typeof G.fqNo!=="object")G.fqNo={};return G.fqNo}
 function fqWt(k){const G=S.g;return k&&G.fqW&&typeof G.fqW[k]==="number"?G.fqW[k]:0}
 function fqWAdd(k,d){if(!k)return;const G=S.g;if(!G.fqW||typeof G.fqW!=="object")G.fqW={};G.fqW[k]=Math.max(-2,Math.min(1.5,(G.fqW[k]||0)+d))}
-function feedPick(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.now(),NO=fqNo();
+// feedPick : version complète (ex-réécriture de correctifs.js), feedPickBase = le cœur d'origine
+function feedPick(){const r=feedPickBase.apply(this,arguments);try{if(r&&Array.isArray(r.L))r.L=r.L.filter(x=>x.done||x.k==="arc"||x.gift||!famCool(famOfQ(x)))}catch(e){}return r}
+function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.now(),NO=fqNo();
   if(!Array.isArray(F.done))F.done=[];if(!Array.isArray(F.dn)||F.dnd!==tk){F.dn=[];F.dnd=tk}if(!Array.isArray(F.sk)||F.skd!==tk){F.sk=[];F.lt={};F.skd=tk}if(!F.lt||typeof F.lt!=="object")F.lt={};
   const done=new Set(F.done),hid=id=>F.sk.includes(id)||(F.lt[id]&&F.lt[id]>now);
   const ev=evQuests().map(x=>({...x,k:"ev",key:"e:"+x.tpl})).filter(x=>!NO[x.key]);
@@ -10061,7 +10080,9 @@ function feedPick(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Date.n
   return{L:out,rest:open.filter(x=>!seen.has(x.id)).length,F}}
 function fqList(){return feedPick().L}
 function feedIds(){try{const P=feedPick(),L=P.L,F=P.F,now=Date.now(),hd=id=>(F.sk||[]).includes(id)||(F.lt&&F.lt[id]>now),sp=new Set(L.filter(x=>x.k==="sp"&&!x.done).map(x=>x.q.id)),mq=new Set(L.filter(x=>x.k==="mq"&&!x.done).map(x=>x.q[0]));(S.specials||[]).forEach(q=>{if(hd("sp:"+q.id))sp.add(q.id)});mqActive().forEach(q=>{if(hd("mq:"+q[0]))mq.add(q[0])});return{sp,mq}}catch(e){return{sp:new Set(),mq:new Set()}}}
-function feedDo(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){toast(`Cette quête s'ouvre à partir de ${mqUntil(x.from)}`);return}
+// feedDo : version complète (ex-réécriture de assiette.js), feedDoBase = le cœur d'origine
+function feedDo(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return feedDoBase.apply(this,arguments)}
+function feedDoBase(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){toast(`Cette quête s'ouvre à partir de ${mqUntil(x.from)}`);return}
   if((F.done||[]).includes(x.id)||(go&&go.dataset.busy))return;if(go&&x.k!=="tik"){go.dataset.busy="1";go.disabled=true}
   const mark=()=>{F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:x.xp,k:x.k}];F.dnd=tk;fqWAdd(x.key,.2);if(F.lt)delete F.lt[x.id]};
   if(x.k==="tik"){memOpen({id:"tik:"+x.e.id,q:x.e.n,ev:x.e.id,d:x.e.d},()=>{mark();complete({id:"tik",cat:"perso",name:"Billet : "+x.e.n,xp:x.xp},document.querySelector("#fqBox")||document.body,null)});return}
@@ -10074,7 +10095,10 @@ function feedDo(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){to
   if(x.film)filmSeen(x.t,true);
   if(/verre d'eau/i.test(x.t)){const wt=ritTasks().find(t=>t.bar==="eau");if(wt)S.daily.c[wt.id]=Math.min(wt.n,(S.daily.c[wt.id]||0)+1)}
   complete({id:"fq-"+x.id.split(":")[0],cat:x.cat,name:x.t,xp:x.xp},go,ev,0,{fq:1});skyCheer()}
-function feedNo(x,how){const G=S.g,F=G.fq,now=Date.now();
+// feedNo : version complète (ex-réécriture de correctifs.js), feedNoBase = le cœur d'origine
+function feedNo(x,how){if(how==="today"||how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
+      if(!was&&famCool(f)){const F=(typeof FAM!=="undefined"?FAM.find(z=>z.id===f):null);setTimeout(()=>toast(`Compris : moins de quêtes « ${esc((F&&F.l)||f)} » pendant un moment`),900)}}}return feedNoBase.apply(this,arguments)}
+function feedNoBase(x,how){const G=S.g,F=G.fq,now=Date.now();
   if(how==="seen"){filmSeen(x.t);G.filmDay=null;save();renderFq();toast("Noté comme déjà vu : voici un autre film");return}
   if(how==="part"){if((F.done||[]).includes(x.id))return;const tk=dayKey(now),hx=Math.max(1,Math.round(x.xp/2));F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:hx,k:x.k,part:1}];F.dnd=tk;if(F.lt)delete F.lt[x.id];
     if(x.k==="mq"){if(!G.mq||typeof G.mq!=="object")G.mq={};if(!G.mq[tk])G.mq[tk]=[];G.mq[tk].push(x.q[0])}if(x.ev){if(!G.evq||typeof G.evq!=="object")G.evq={};G.evq[x.ev]=[...(G.evq[x.ev]||[]),x.tpl]}
@@ -10116,7 +10140,9 @@ function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=day
   box.innerHTML=`<div class="enc"><div class="enr">${[1,2,3].map(v=>`<button type="button" class="btn enb" data-en="${v}">${enSvg(v)}<span>${["","Faible","Moyenne","Pleine"][v]}</span><small>${[0,80,120,150][v]} XP</small></button>`).join("")}</div></div>`;
   box.querySelectorAll(".enb").forEach(b=>b.onclick=()=>enSet(+b.dataset.en))}
 function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
-function enSet(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
+// enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
+function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
+function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
 // --- tiroir « Plus »
 let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());
@@ -10204,25 +10230,6 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
 // --- fiche de personnage
 const CLASSE={etud:["Apprenti·e","Étudiant·e"],poste:["Artisan·e","En poste"],cherche:["Aventurier·e en quête","En recherche d'emploi"],indep:["Mercenaire","Indépendant·e"],pause:["Voyageur·se au repos","En pause"],autre:["Esprit libre","Autre"]};
 const REPAIRE={seul:"Tour solitaire",coloc:"Taverne partagée",couple:"Nid à deux",parents:"Château familial"};
-function renderFiche(){const box=$("ficheBox");if(!box||!S.g)return;const G=S.g,s=sitOf();
-  if(!s){box.innerHTML=`<button type="button" class="wkcta fcta">${ICO("edit",18)}<span><b>Crée ta fiche de personnage</b><small>Ce qui nourrit tes quêtes.</small></span></button>`;box.querySelector(".fcta").onclick=()=>sitSheet();return}
-  const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"",cl=CLASSE[s.job]||["Héros sans classe","À préciser"],w=typeof wxNow==="function"?wxNow():null,art=(G.taste&&G.taste.art)||[];
-  const up=(Array.isArray(G.ev)?G.ev:[]).map(e=>({e,d:evInD(e)})).filter(x=>x.d>=0).sort((a,b)=>a.d-b.d).slice(0,3);
-  const chips=(arr,k)=>arr.length?arr.map(v=>`<span class="fchip">${esc(k?lab(k,v):v)}</span>`).join(""):`<span class="fnone">À remplir</span>`;
-  if(!ficheOpen){const gl=(s.goals||[]).map(v=>lab("goals",v));box.innerHTML=`<button type="button" class="fiche fmini" aria-expanded="false"><span class="fmh"><b>Ma fiche</b><em>Ouvrir ${ICO("chev",14)}</em></span><span class="fml"><span class="fmc">${esc(cl[0])}</span><span>${esc(REPAIRE[s.home]||"")}</span>${w?`<span class="fmw">${wxIcon(w.k,w.day)}${w.tc}°</span>`:""}</span>${gl.length?`<span class="fml fmg">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</span>`:""}${tickets().length?`<span class="fml">${tickets().length} billet${tickets().length>1?"s":""} de concert</span>`:""}${up.length?`<span class="fml fmv">À venir : <b></b> · ${up[0].d===0?"aujourd'hui":up[0].d===1?"demain":"J-"+up[0].d}</span>`:""}</button>`;
-    {const b=box.querySelector(".fmv b");if(b)b.textContent=up[0].e.n}box.querySelector(".fmini").onclick=()=>{ficheOpen=true;renderFiche()};return}
-  box.innerHTML=`<div class="fiche"><div class="fh"><h3>Ma fiche</h3><button type="button" class="lnk fclose">Réduire</button></div><div class="fgrid">
-    <button type="button" class="fcell" data-f="sit"><span class="fic">${rkSvg("note")}</span><small>Classe</small><b>${esc(cl[0])}</b><em>${esc(cl[1])}</em></button>
-    <button type="button" class="fcell" data-f="wx"><span class="fic">${w?wxIcon(w.k,w.day):rkSvg("lit")}</span><small>Repaire</small><b>${esc(REPAIRE[s.home]||"À choisir")}</b><em>${G.wx&&G.wx.n?esc(G.wx.n.split(",")[0])+(w?` · ${w.tc}°`:""):"Ta ville : touche pour la météo"}</em></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Quêtes principales</small><span class="fchips">${chips(s.goals||[],"goals")}</span></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Talents</small><span class="fchips">${chips(s.pass||[],"pass")}</span></button>
-    <button type="button" class="fcell wide" data-f="sit"><small>Bardes favoris</small><span class="fchips">${chips(art.slice(0,8))}</span></button>
-    <button type="button" class="fcell wide" data-f="cal"><span class="fic">${rkSvg("note")}</span><small>Grimoire · à venir</small><span class="fev">${up.length?up.map(({e,d})=>`<span style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><i>${d===0?"Auj.":d===1?"Demain":"J-"+d}</i><b></b></span>`).join(""):`<span class="fnone">Rien de prévu : ajoute tes concerts, rendez-vous, voyages…</span>`}</span></button>
-    ${s.note?`<button type="button" class="fcell wide" data-f="sit"><small>Ce qui compte en ce moment</small><q></q></button>`:""}
-    ${tickets().length?`<div class="fcell wide ftix"><small>Mes billets · ${tickets().length}</small><span class="ftl">${tickets().slice(0,4).map(e=>tikHTML(e,1)).join("")}</span></div>`:""}
-    <div class="fcell wide fstat"><small>Temps libre</small><b>${esc(lab("time",s.time)||"?")}</b><small>en semaine</small></div></div></div>`;
-  box.querySelectorAll(".fev b").forEach((b,i)=>b.textContent=up[i].e.n);{const T=tickets();box.querySelectorAll(".ftix .tkt").forEach((t,i)=>{t.querySelector(".tkl b").textContent=T[i].n;t.onclick=()=>memOpen({id:"tik:"+T[i].id,q:T[i].n,ev:T[i].id,d:T[i].d})})}{const q=box.querySelector(".fcell q");if(q)q.textContent=s.note}
-  box.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{const f=b.dataset.f;if(f==="cal")calOpen();else if(f==="wx")wxSheet();else sitSheet()});box.querySelector(".fclose").onclick=()=>{ficheOpen=false;renderFiche()}}
 let ficheOpen=false;
 
 {const b=document.getElementById("actNew");if(b)b.onclick=()=>qcOpen("act")}
@@ -10419,7 +10426,9 @@ const BI={
 };
 // ===== Bloc Jeu / Musique / Vie perso =====
 const ICP={plus:'<path d="M12 5v14M5 12h14"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',camera:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',close:'<path d="M6 6l12 12M18 6L6 18"/>',chev:'<path d="M6 9l6 6 6-6"/>',swap:'<path d="M20 11a8 8 0 0 0-14-4.5L4 8.5M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14 4.5l2-2M20 20v-4.5h-4.5"/>',reset:'<path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5M4 4v4.5h4.5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',spark:'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/>',sword:'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4"/>',flame:'<path d="M12 22c4 0 7-2.8 7-6.8 0-3.6-2.4-5.6-3.6-8.7-.4 1.9-1.4 3-2.6 3.5C13 6.5 11.6 4 9 2.5c.3 3.4-4 6.2-4 11.3C5 18.6 8 22 12 22z"/>'};
-function ICO(n,s){s=s||16;return`<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICP[n]}</svg>`}
+// ICO : version complète (ex-réécriture de icones-pixel.js), ICOBase = le cœur d'origine
+function ICO(n,s){return (typeof pxIco==="function"&&pxIco(n,s))||ICOBase(n,s)}
+function ICOBase(n,s){s=s||16;return`<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICP[n]}</svg>`}
 
 // ===== Skills loisirs =====
 // ===== Bonnes actions en cartes =====
@@ -10804,7 +10813,9 @@ function moodFace(n,px,flat){n=Math.max(1,Math.min(5,n|0));const base=(S.g&&S.g.
     for(let y=0;y<H.H;y++)for(let x=0;x<H.W;x++){const v=H.px[y*H.W+x],X=x+ox,Y=y+oy;if(v&&X>=0&&X<N&&Y>=0&&(flat||(X-C)**2+(Y-C)**2<=(R-.3)**2)){g.fillStyle=v;g.fillRect(X*2,Y*2,2,2)}}
     __mf[k]=cv.toDataURL("image/png")}
   return`<img class="mface" src="${__mf[k]}" width="${px}" height="${px}" alt="" style="image-rendering:pixelated">`}
-function renderLife(){
+// renderLife : version complète (ex-réécriture de correctifs.js), renderLifeBase = le cœur d'origine
+function renderLife(){const r=renderLifeBase.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}
+function renderLifeBase(){
   const box=$("ritLife");if(!box)return;if(box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT")return;
   const G=S.g,tk=dayKey(Date.now()),sl=G.sleep[tk],md=G.mood[tk];
   let h="";const P=dayPer(),shSl=P==="matin"&&(!sl||sleepEdit),shMd=false;box.hidden=!(shSl||shMd);
@@ -10864,76 +10875,19 @@ const hmEv=(H,r)=>H.ev.filter(e=>e.r===r);
 const hmDur=n=>{const m=String(n).match(/(\d+)\s*h(?:\s*(\d+))?|(\d+)\s*min/);return!m?0:m[3]?+m[3]:(+m[1])*60+(+(m[2]||0))};
 const hmWho=w=>w&&w.length?w.join(", "):"";
 function hmRow(ic,l,v){return`<li><i>${rkSvg(ic)}</i><span>${l}</span><b>${v}</b></li>`}
-function hmPop(kind,title,rows,extra){return`<div class="libpop"><small>${esc(kind)}</small><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`}
 function hmName(H,e,label,ph){const cur=H.nm[e.t]||"";return`<div class="hmname"><input maxlength="60" placeholder="${esc(ph)}" aria-label="${esc(label)}" value="${esc(cur)}" data-nt="${e.t}"><button type="button" class="btn" data-ns="${e.t}">OK</button></div>`}
 // ---------- étagère générique : des objets de largeur variable rangés sur des planches
 function hmShelf(items,o){const U=o.U||56,rows=[[]];let x=0;items.forEach(it=>{const w=it.w+(o.gap||0);if(x+w>U){rows.push([]);x=0}it.x=x;x+=w;rows[rows.length-1].push(it)});while(rows.length<(o.min||2))rows.push([]);return rows}
 
 // ---------- VIDÉOCLUB
 const HMV_K={f:["Film","#d1493f"],d:["Documentaire","#2a8fd6"],s:["Série finie","#c9a227"],e:["Épisode","#7b6cf0"]};
-function hmVideo(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),rows=hmShelf(T.map((e,i)=>({e,i,w:e.k==="s"?7:3})),{U:56,gap:1,min:2}),RH=13,top=10,Hh=top+rows.length*RH+20;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Vidéoclub">`+hmR(0,0,64,Hh,"#241536")+hmR(0,0,64,1,"#3a2352");
-  for(let x=2;x<64;x+=8)s+=hmR(x,1,1,Hh-21,"#2b1a40");
-  s+=hmR(18,2,28,6,"#ff5fa8")+hmR(19,3,26,4,"#3a0f2a")+hmR(29,4,1,2,"#ff9ccc")+hmR(30,4,2,2,"#ff9ccc")+hmR(32,5,1,1,"#ff9ccc")+hmR(21,4,6,1,"#7fe3ff")+hmR(36,4,7,1,"#7fe3ff")+hmR(21,6,4,0.5,"#7fe3ff");
-  rows.forEach((r,ri)=>{const yb=top+ri*RH+11;s+=hmR(3,top+ri*RH,58,11,"#1b0f29")+hmR(2,yb,60,2,"#6b4a28")+hmR(2,yb,60,1,"#a67c4a");
-    r.forEach(it=>{const e=it.e,x0=4+it.x,K=HMV_K[e.k]||HMV_K.f,p=LIB_PAL[libHash(e.t+"v")%LIB_PAL.length];let g=`<g class="hmo" data-o="v:${e.t}" tabindex="0" role="button" aria-label="${esc(H.nm[e.t]||K[0])}">`;
-      if(e.k==="s")g+=hmR(x0,yb-10,7,10,"#120c18")+hmR(x0+1,yb-9,5,8,K[1])+hmR(x0+1,yb-9,5,1,"#fff1b0")+hmR(x0+3,yb-6,1,4,"#120c18");
-      else g+=hmR(x0,yb-9,3,9,"#16131c")+hmR(x0,yb-6,3,3,e.k==="d"?K[1]:p[0])+hmR(x0+1,yb-5,1,1,"#f3e6c4")+hmR(x0,yb-9,3,1,"#2e2a38");
-      s+=g+hmR(x0-.5,yb-11,(e.k==="s"?7:3)+1,11,"transparent")+"</g>"})});
-  const fy=Hh-20;s+=hmR(0,fy+12,64,8,"#3a2a1c")+hmR(0,fy+12,64,1,"#5a4028");
-  s+=`<g class="hmo" data-o="tv" tabindex="0" role="button" aria-label="Télé">`+hmR(5,fy+4,16,9,"#4e3a28")+hmR(6,fy+1,14,9,"#111")+hmR(7,fy+2,12,7,ep.length?"#4aa8e8":"#22303a")+(ep.length?hmR(8,fy+3,4,2,"#bfe8ff"):"")+hmR(12,fy+10,2,2,"#111")+hmR(4,fy+12,18,1,"#2a1c10")+"</g>";
-  s+=hmR(28,fy+6,22,6,"#8a2f4a")+hmR(28,fy+4,22,3,"#a63d5c")+hmR(27,fy+5,2,7,"#6e2238")+hmR(49,fy+5,2,7,"#6e2238")+hmR(31,fy+12,1,1,"#2a1c10")+hmR(47,fy+12,1,1,"#2a1c10");
-  s+=hmR(55,fy+6,5,6,"#8b5a2b")+hmR(54,fy+1,7,5,"#3c9a4f")+hmR(56,fy,3,2,"#5ac27a");
-  return{svg:s+"</svg>",sum:`${E.filter(e=>e.k==="f").length} films · ${E.filter(e=>e.k==="s").length} séries finies · ${ep.length} épisodes${E.filter(e=>e.k==="d").length?" · "+E.filter(e=>e.k==="d").length+" docs":""}`,
-    empty:"L'étagère attend sa première cassette : note un film ou une série.",
-    info(o){if(o==="tv"){const l=ep[ep.length-1];return hmPop("Télé","Épisodes",hmRow("ecran","Vus",ep.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      const e=E.find(x=>"v:"+x.t===o);if(!e)return"";const K=HMV_K[e.k]||HMV_K.f,fd=S.g.filmDay,sug=!H.nm[e.t]&&fd&&fd.t&&fd.d===dayKey(e.t)?`<button type="button" class="lnk hmsug" data-sg="${e.t}" data-v="${esc(fd.t)}">C'était « ${esc(fd.t)} » ?</button>`:"";
-      return hmPop(K[0],H.nm[e.t]||K[0],hmRow("calendrier","Vu le",hmFd(e.t))+(hmDur(e.n)?hmRow("sablier","Durée",fmtMin(hmDur(e.n))):"")+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),hmName(H,e,"Titre","Donner un titre")+sug)}}}
 function fmtMin(m){return m<60?m+" min":Math.floor(m/60)+" h"+(m%60?" "+String(m%60).padStart(2,"0"):"")}
 
 // ---------- STUDIO
 const HMS_EQ=[["pc","Ordinateur",1],["casque","Casque",3],["hp","Enceintes",5],["clav","Clavier maître",8],["micro","Micro",12],["mousse","Panneaux acoustiques",18],["platine","Platine vinyle",25],["synth","Synthé",35],["or","Disque d'or",50]];
-function hmStudio(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0);
-  const has=id=>n>=HMS_EQ.find(q=>q[0]===id)[2],gh='opacity=".16"';const Z=(id,body)=>`<g class="hmo${has(id)?"":" lock"}" data-o="eq:${id}" tabindex="0" role="button" aria-label="${HMS_EQ.find(q=>q[0]===id)[1]}"${has(id)?"":" "+gh}>${body}</g>`;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 44" shape-rendering="crispEdges" role="group" aria-label="Studio">`+hmR(0,0,64,44,"#1f2a33")+hmR(0,34,64,10,"#3a2a1c")+hmR(0,34,64,1,"#5a4028");
-  s+=Z("mousse",[[3,3],[10,3],[3,10],[10,10],[47,3],[54,3]].map(([x,y])=>hmR(x,y,6,6,"#3d4a57")+hmR(x,y,3,3,"#2b3540")+hmR(x+3,y+3,3,3,"#2b3540")).join(""));
-  s+=Z("or",hmR(27,3,10,10,"#6b4a28")+hmR(28,4,8,8,"#1a1210")+hmR(29,5,6,6,"#f4d767")+hmR(31,7,2,2,"#6e5610")+hmR(29,5,2,1,"#fff6c8"));
-  s+=`<g class="hmo" data-o="vinyl" tabindex="0" role="button" aria-label="Albums">`+hmR(40,16,22,1,"#a67c4a")+hmR(40,17,22,1,"#6b4a28");VY.slice(-10).forEach((v,i)=>{s+=hmR(41+i*2,10,2,6,LIB_PAL[libHash(v.t+"a")%LIB_PAL.length][0])+hmR(41+i*2,10,1,6,"#111")});s+="</g>";
-  s+=hmR(8,26,48,3,"#8b5a2b")+hmR(8,26,48,1,"#c9a066")+hmR(10,29,2,5,"#6b4a28")+hmR(52,29,2,5,"#6b4a28");
-  s+=Z("pc",hmR(25,15,14,9,"#111")+hmR(26,16,12,7,n?"#2f6fd6":"#22303a")+(n?hmR(27,18,3,3,"#5ac27a")+hmR(31,17,2,5,"#f0b62e")+hmR(34,19,3,2,"#ff5fa8"):"")+hmR(31,24,2,2,"#111"));
-  s+=Z("hp",hmR(13,18,6,8,"#1a1a1f")+hmR(14,20,4,4,"#3d3d48")+hmR(15,21,2,2,"#111")+hmR(45,18,6,8,"#1a1a1f")+hmR(46,20,4,4,"#3d3d48")+hmR(47,21,2,2,"#111"));
-  s+=Z("clav",hmR(22,25,20,2,"#f2f0ea")+[0,1,2,3,4,5,6].map(i=>hmR(23+i*3,25,1,1,"#111")).join(""));
-  s+=Z("casque",hmR(4,20,1,6,"#6b4a28")+hmR(3,19,5,1,"#2c2c34")+hmR(2,20,1,3,"#2c2c34")+hmR(7,20,1,3,"#2c2c34")+hmR(1,22,2,3,"#d63b3b")+hmR(7,22,2,3,"#d63b3b"));
-  s+=Z("micro",hmR(58,20,1,14,"#8a8f99")+hmR(56,33,5,1,"#8a8f99")+hmR(57,17,3,4,"#2c2c34")+hmR(57,17,3,1,"#c2c6cf"));
-  s+=Z("synth",hmR(14,36,20,4,"#2c2c34")+hmR(15,37,18,2,"#f2f0ea")+[0,1,2,3,4].map(i=>hmR(16+i*4,37,1,1,"#111")).join("")+hmR(15,40,1,3,"#6b4a28")+hmR(32,40,1,3,"#6b4a28"));
-  s+=Z("platine",hmR(40,36,12,5,"#3a2a1c")+hmR(41,37,6,3,"#111")+hmR(43,38,2,1,"#d63b3b")+hmR(49,37,1,3,"#c2c6cf"));
-  s+=`<g class="hmo" data-o="txt" tabindex="0" role="button" aria-label="Carnet de textes">`+hmR(9,23,8,3,TX.length?"#f3e6c4":"#5a5a66")+hmR(9,23,1,3,"#8b2f2f")+(TX.length?hmR(11,24,5,0.5,"#555"):"")+"</g>";
-  return{svg:s+"</svg>",sum:`${n} session${n>1?"s":""}${mins?" · "+fmtMin(mins)+" de son":""} · ${TX.length} texte${TX.length>1?"s":""} · ${VY.length} album${VY.length>1?"s":""}`,
-    empty:"Le studio s'équipe à chaque session « Faire du son ».",
-    info(o){if(o==="vinyl"){const l=VY[VY.length-1];return hmPop("Disques","Albums écoutés",hmRow("note","Écoutés en entier",VY.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      if(o==="txt"){const l=TX[TX.length-1];return hmPop("Carnet","Textes écrits",hmRow("note","Textes",TX.length)+(l?hmRow("calendrier","Dernier",hmFd(l.t)):""))}
-      const id=o.slice(3),q=HMS_EQ.find(x=>x[0]===id);if(!q)return"";const ok=n>=q[2],at=SS[q[2]-1];
-      return hmPop(ok?"Équipement":"À débloquer",q[1],ok?hmRow("eclair","Débloqué à la",q[2]+(q[2]>1?"e":"re")+" session")+(at?hmRow("calendrier","Le",hmFd(at.t)):""):hmRow("sablier","Se débloque à la",q[2]+"e session")+hmRow("note","Encore",(q[2]-n)+" session"+(q[2]-n>1?"s":"")))}}}
 
 // ---------- CUISINE
 const HMC_K={"Repas maison":"#6fbf5a","Nouveau plat":"#e8873a","Pâtisserie":"#f08cc0","Préparer demain":"#5a93c2"};
-function hmCuisine(H){const E=hmEv(H,"cuisine"),rows=hmShelf(E.map((e,i)=>({e,i,w:4})),{U:54,gap:1,min:1}),RH=10,top=4,Hh=top+rows.length*RH+24;
-  let s=`<svg class="hmsvg" viewBox="0 0 64 ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Cuisine">`+hmR(0,0,64,Hh,"#e9e2d0");
-  for(let y=0;y<Hh-14;y+=4)for(let x=(y/4)%2?0:4;x<64;x+=8)s+=hmR(x,y,4,4,"#dcd3bd");
-  rows.forEach((r,ri)=>{const yb=top+ri*RH+8;s+=hmR(4,yb,56,2,"#8b5a2b")+hmR(4,yb,56,1,"#b07a44")+hmR(6,yb+2,1,2,"#6b4a28")+hmR(57,yb+2,1,2,"#6b4a28");
-    r.forEach(it=>{const e=it.e,x0=6+it.x,c=HMC_K[e.o]||"#6fbf5a",named=!!H.nm[e.t];s+=`<g class="hmo" data-o="j:${e.t}" tabindex="0" role="button" aria-label="${esc(H.nm[e.t]||e.o)}">`+hmR(x0,yb-6,4,6,"#cfe8f0")+hmR(x0+1,yb-4,2,3,c)+hmR(x0,yb-7,4,1,named?"#d63b3b":"#8b5a2b")+hmR(x0+1,yb-6,1,1,"#fff")+hmR(x0-.5,yb-8,5,8,"transparent")+"</g>"})});
-  const cy=Hh-14;s+=hmR(0,cy+4,64,10,"#8b5a2b")+hmR(0,cy+4,64,2,"#c9a066")+hmR(2,cy+8,12,5,"#6b4a28")+hmR(50,cy+8,12,5,"#6b4a28");
-  s+=hmR(24,cy+2,16,2,"#2c2c34")+hmR(27,cy-3,10,5,"#8a8f99")+hmR(26,cy-3,12,1,"#c2c6cf")+hmR(30,cy-6,1,2,"#fff")+hmR(33,cy-7,1,3,"#fff")+hmR(26,cy+2,3,1,"#e8473a")+hmR(35,cy+2,3,1,"#e8473a");
-  s+=`<g class="hmo" data-o="book" tabindex="0" role="button" aria-label="Carnet de recettes">`+hmR(46,cy,10,4,"#8b2f2f")+hmR(47,cy,8,1,"#f3e6c4")+hmR(50,cy+1,2,2,"#f4d767")+hmR(45.5,cy-1,11,6,"transparent")+"</g>";
-  s+=hmR(8,cy,6,4,"#e8873a")+hmR(9,cy-1,4,1,"#5ac27a");
-  const R=S.g.rcp||[];return{svg:s+"</svg>",sum:`${E.length} repas cuisiné${E.length>1?"s":""} · ${(q=>q+(q>1?" nouveaux plats":" nouveau plat"))(E.filter(e=>e.o==="Nouveau plat").length)} · ${R.length} recette${R.length>1?"s":""}`,
-    empty:"Chaque plat cuisiné ajoute un bocal sur l'étagère.",
-    info(o){if(o==="book")return"";const e=E.find(x=>"j:"+x.t===o);if(!e)return"";return hmPop(e.o,H.nm[e.t]||e.o,hmRow("calendrier","Le",hmFd(e.t))+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),hmName(H,e,"Nom du plat","Nom du plat"))},
-    extra:hmRecipes()}}
-function hmRecipes(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="bh2"><h3>Carnet de recettes</h3><button type="button" class="btn rcpadd">+ Recette</button></div>
-  ${window.__rcpNew?`<div class="rcpf"><label class="rdl">Nom<input id="rcpN" maxlength="50" placeholder="Ex. Curry de pois chiches"></label><label class="rdl">Ingrédients<textarea id="rcpI" rows="3" placeholder="Un par ligne"></textarea></label><label class="rdl">Étapes<textarea id="rcpS" rows="3" placeholder="Une par ligne"></textarea></label><div class="rcpb"><button type="button" class="btn rcpx">Annuler</button><button type="button" class="btn primary rcpok">Enregistrer</button></div></div>`:""}
-  ${R.length?`<ul class="rcpl">${R.map((r,i)=>`<li class="${op===r.id?"open":""}"><button type="button" class="rcph" data-ro="${r.id}"><b></b><small>${r.c?`cuisinée ${r.c} fois · ${hmFd(r.t)}`:"pas encore cuisinée"}</small></button><button type="button" class="btn primary rcpdo" data-rd="${r.id}">Cuisinée !</button>
-    ${op===r.id?`<div class="rcpd">${r.ing?`<small>Ingrédients</small><ul>${r.ing.split("\n").filter(Boolean).map(x=>`<li></li>`).join("")}</ul>`:""}${r.st?`<small>Étapes</small><ol>${r.st.split("\n").filter(Boolean).map(x=>`<li></li>`).join("")}</ol>`:""}<button type="button" class="lnk rcpdel" data-rx="${r.id}">Supprimer la recette</button></div>`:""}</li>`).join("")}</ul>`:window.__rcpNew?"":`<p class="hint">Note tes recettes ici, puis touche « Cuisinée ! » quand tu les refais.</p>`}</div>`}
 function hmRecipeBind(box){const G=S.g;if(!Array.isArray(G.rcp))G.rcp=[];const R=G.rcp,rr=()=>renderHome(1);
   box.querySelectorAll(".rcpl>li").forEach((li,i)=>{const r=R[i];li.querySelector(".rcph b").textContent=r.n;const ul=li.querySelectorAll(".rcpd ul li"),ol=li.querySelectorAll(".rcpd ol li");(r.ing||"").split("\n").filter(Boolean).forEach((x,k)=>{if(ul[k])ul[k].textContent=x});(r.st||"").split("\n").filter(Boolean).forEach((x,k)=>{if(ol[k])ol[k].textContent=x})});
   const a=box.querySelector(".rcpadd");if(a)a.onclick=()=>{window.__rcpNew=1;rr();setTimeout(()=>{const n=document.getElementById("rcpN");n&&n.focus()},50)};
@@ -10946,25 +10900,6 @@ function hmRecipeBind(box){const G=S.g;if(!Array.isArray(G.rcp))G.rcp=[];const R
 
 // ---------- SALLE DE SPORT
 const HMSP_MS=[[5,"un 5 km"],[10,"un 10 km"],[21.1,"un semi-marathon"],[42.2,"un marathon"],[100,"100 km"],[465,"Paris – Lyon"],[775,"Paris – Marseille"],[1000,"1 000 km"],[3400,"un Tour de France"]];
-function hmSport(H){const G=S.g,E=hmEv(H,"sport"),num=(re)=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
-  const km=Math.round(num(/(\d+(?:[.,]\d+)?)\s*km/i)*10)/10,reps=Math.round(num(/(\d+)\s*(?:rép|pompes|squats|abdos|tractions)/i)),best=w=>Math.max(0,...E.filter(e=>new RegExp(w,"i").test(e.n)).map(e=>{const m=e.n.match(/(\d+)\s*(?:rép|pompes|squats)/i);return m?+m[1]:0})),pu=Math.max((G.pu&&G.pu.rec)||0,best("pompes")),sq=Math.max((G.sq&&G.sq.rec)||0,best("squats")),gn=(G.gn&&G.gn.rec)||0,rn=Math.max((G.run&&G.run.rec)||0,...E.map(e=>{const m=e.n.match(/(\d+(?:[.,]\d+)?)\s*km/i);return m?parseFloat(m[1].replace(",",".")):0}),0);
-  const M=[["gn","Gainage",gn,gn?fmtSec(gn):"",[60,120,180]],["pu","Pompes d'affilée",pu,pu+"",[20,40,60]],["sq","Squats d'affilée",sq,sq+"",[30,60,100]],["rn","Plus longue course",rn,rn?rn.toLocaleString("fr-FR")+" km":"",[5,10,21]],["km","Total parcouru",km,km?km.toLocaleString("fr-FR")+" km":"",[20,100,500]],["rp","Total répétitions",reps,reps+"",[200,1000,5000]]];
-  const tier=(v,t)=>v>=t[2]?["#f4d767","#c9a227"]:v>=t[1]?["#e1e5ec","#9aa1ad"]:v>=t[0]?["#e0a065","#a5642c"]:["#8a8f99","#5a5f69"];
-  let s=`<svg class="hmsvg" viewBox="0 0 64 46" shape-rendering="crispEdges" role="group" aria-label="Salle de sport">`+hmR(0,0,64,46,"#2a3140")+hmR(0,24,64,1,"#3a4356");
-  for(let x=0;x<64;x+=16)s+=hmR(x,0,1,24,"#252b38");
-  M.forEach((m,i)=>{const x=4+i*10,[c,d]=tier(m[2],m[4]),on=m[2]>0;s+=`<g class="hmo${on?"":" lock"}" data-o="m:${m[0]}" tabindex="0" role="button" aria-label="${m[1]}"${on?"":' opacity=".3"'}>`+hmR(x+2,3,2,6,"#d63b3b")+hmR(x+4,3,2,6,"#2f6fd6")+hmR(x+1,9,6,6,d)+hmR(x+2,10,4,4,c)+hmR(x+3,11,1,1,"#fff")+hmR(x,2,8,14,"transparent")+"</g>"});
-  const n=E.length,db=Math.min(8,Math.ceil(n/3));s+=`<g class="hmo" data-o="rack" tabindex="0" role="button" aria-label="Haltères">`+hmR(3,22,26,1,"#8a8f99")+hmR(3,28,26,1,"#8a8f99")+hmR(4,22,1,11,"#5a5f69")+hmR(27,22,1,11,"#5a5f69");
-  for(let i=0;i<8;i++){const x=6+(i%4)*5,y=i<4?19:25;s+=i<db?hmR(x,y+1,4,1,"#c2c6cf")+hmR(x-1,y,2,3,i%2?"#d63b3b":"#2c2c34")+hmR(x+3,y,2,3,i%2?"#d63b3b":"#2c2c34"):hmR(x,y+1,4,1,"rgba(255,255,255,.08)")}s+="</g>";
-  s+=hmR(36,27,22,3,"#1a1a1f")+hmR(37,27,20,1,"#3c4252")+hmR(39,30,1,3,"#8a8f99")+hmR(54,30,1,3,"#8a8f99")+hmR(56,18,2,9,"#8a8f99")+hmR(52,18,8,1,"#c2c6cf")+hmR(50,17,2,3,"#2c2c34")+hmR(60,17,2,3,"#2c2c34");
-  const nx=HMSP_MS.find(q=>q[0]>km)||HMSP_MS[HMSP_MS.length-1],pv=[...HMSP_MS].reverse().find(q=>q[0]<=km),p=Math.min(1,km/nx[0]);
-  s+=`<g class="hmo" data-o="track" tabindex="0" role="button" aria-label="Piste">`+hmR(0,34,64,12,"#b5452f")+hmR(0,34,64,1,"#d76a50");for(let x=2;x<64;x+=6)s+=hmR(x,39,3,1,"#f2f0ea");
-  s+=hmR(2,42,60,2,"#6e2a1c")+hmR(2,42,Math.round(60*p),2,"#f4d767");const rx=2+Math.round(56*p);s+=hmR(rx,35,2,2,"#f2bf98")+hmR(rx,37,2,2,"#2f6fd6")+hmR(rx,39,1,2,"#1a1a1f")+hmR(rx+1,39,1,1,"#1a1a1f")+hmR(61,35,1,7,"#f2f0ea")+hmR(62,35,2,2,"#d63b3b")+"</g>";
-  return{svg:s+"</svg>",sum:`${n} séance${n>1?"s":""} · ${km?km.toLocaleString("fr-FR")+" km":"0 km"} · ${reps} répétitions`,
-    empty:"Chaque séance de sport remplit le rack, et tes records s'accrochent au mur.",
-    info(o){if(o==="rack"){const l=E[E.length-1];return hmPop("Rack","Séances",hmRow("sport","Séances notées",n)+(l?hmRow("calendrier","Dernière",hmFd(l.t)):""))}
-      if(o==="track")return hmPop("Piste","Distance cumulée",hmRow("sport","Parcouru",km.toLocaleString("fr-FR")+" km")+(pv?hmRow("medaille","Déjà fait",pv[1]):"")+hmRow("sablier","Prochain cap",nx[1]+" · encore "+Math.max(0,Math.round((nx[0]-km)*10)/10).toLocaleString("fr-FR")+" km"));
-      const m=M.find(q=>"m:"+q[0]===o);if(!m)return"";const t=m[4];const lv=m[2]>=t[2]?"Or":m[2]>=t[1]?"Argent":m[2]>=t[0]?"Bronze":"";const nxT=t.find(q=>q>m[2]);
-      return hmPop(lv?"Médaille "+lv.toLowerCase():"Record",m[1],m[2]?hmRow("medaille","Record",m[3])+(nxT?hmRow("sablier","Médaille suivante",(m[0]==="gn"?fmtSec(nxT):nxT.toLocaleString("fr-FR")+(/km/.test(m[3])?" km":""))):""):hmRow("sablier","Pas encore de record","Lance l'action pour en poser un"))}}}
 
 // ---------- CARTE DES SORTIES
 const HMM_POS={cine:[4,4,26,17],scene:[35,4,26,17],resto:[66,4,26,17],culture:[4,26,26,17],amis:[35,26,26,17],loisirs:[66,26,26,17],nature:[4,48,88,20]};
@@ -10976,27 +10911,8 @@ function hmLand(id,x,y,w,h){const R=hmR;switch(id){
   case"amis":return R(x+3,y+6,8,6,"#f08cc0")+R(x+2,y+5,10,1,"#8b2f2f")+R(x+4,y+4,6,1,"#8b2f2f")+R(x+6,y+9,2,3,"#6b4a28")+R(x+14,y+6,8,6,"#7fc8f8")+R(x+13,y+5,10,1,"#2f5d8b")+R(x+15,y+4,6,1,"#2f5d8b")+R(x+17,y+9,2,3,"#6b4a28");
   case"loisirs":return R(x+7,y+3,12,9,"#2c2c34")+R(x+8,y+4,10,4,"#36b679")+R(x+10,y+5,2,2,"#ffd94a")+R(x+14,y+5,2,2,"#ff5fa8")+R(x+9,y+9,1,2,"#d63b3b")+R(x+15,y+9,2,1,"#2f6fd6");
   case"nature":return[8,20,62,74].map((tx,i)=>R(x+tx,y+3+(i%2),5,5,"#2f8b4a")+R(x+tx+1,y+2+(i%2),3,1,"#5ac27a")+R(x+tx+2,y+8+(i%2),1,3,"#6b4a28")).join("")+R(x+32,y+6,20,8,"#4aa8e8")+R(x+34,y+5,16,1,"#4aa8e8")+R(x+36,y+8,4,1,"#bfe8ff")+R(x+44,y+11,5,1,"#bfe8ff")}return""}
-function hmCarte(H){const E=hmEv(H,"carte"),by={};E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
-  let s=`<svg class="hmsvg" viewBox="0 0 96 72" shape-rendering="crispEdges" role="group" aria-label="Carte des sorties">`+hmR(0,0,96,72,"#5f9a4a");
-  s+=hmR(0,21,96,5,"#6b6b78")+hmR(0,43,96,5,"#6b6b78")+hmR(30,0,5,48,"#6b6b78")+hmR(61,0,5,48,"#6b6b78");for(let x=2;x<96;x+=6){s+=hmR(x,23,3,1,"#e9e2d0")+hmR(x,45,3,1,"#e9e2d0")}for(let y=2;y<44;y+=6){s+=hmR(32,y,1,3,"#e9e2d0")+hmR(63,y,1,3,"#e9e2d0")}
-  Object.keys(HMM_POS).forEach(id=>{const[x,y,w,h]=HMM_POS[id],D=HM_DIST[id],L=by[id]||[],on=L.length>0;
-    s+=`<g class="hmo hmd${on?"":" lock"}" data-o="d:${id}" tabindex="0" role="button" aria-label="${D[0]}">`+hmR(x,y,w,h,id==="nature"?"#4e8a3c":"#8fae6a")+hmR(x,y,w,1,"#a9c784")+hmLand(id,x,y,w,h)+(on?"":hmR(x,y,w,h,"rgba(12,14,30,.62)")+hmR(x+w/2-1,y+h/2-3,3,1,"#e9e2d0")+hmR(x+w/2+1,y+h/2-2,1,2,"#e9e2d0")+hmR(x+w/2,y+h/2,1,1,"#e9e2d0")+hmR(x+w/2,y+h/2+2,1,1,"#e9e2d0"))+"</g>";
-    const cols=Math.floor((w-2)/4),LL=L.slice(-cols*(id==="nature"?3:2));LL.forEach((e,i)=>{const row=Math.floor(i/cols),fx=x+2+(i%cols)*4,fy=id==="nature"?y+h-7-row*6:row?y+1:y+h-7;s+=`<g class="hmo hmf" data-o="f:${e.t}" tabindex="0" role="button" aria-label="${esc(e.o)}">`+hmR(fx,fy,1,6,"#f2f0ea")+hmR(fx+1,fy,3,2,D[1])+hmR(fx+1,fy,1,1,"#fff")+hmR(fx-1,fy-1,6,8,"transparent")+"</g>"})});
-  const nd=Object.keys(by).length;return{svg:s+"</svg>",sum:`${E.length} sortie${E.length>1?"s":""} · ${nd} quartier${nd>1?"s":""} sur 7 découverts`,
-    empty:"Chaque sortie plante un drapeau. Les quartiers s'éclairent quand tu y vas.",
-    info(o){if(o.startsWith("d:")){const id=o.slice(2),D=HM_DIST[id],L=by[id]||[];if(!L.length)return hmPop("Quartier à découvrir",D[0],hmRow("sablier","Pour l'éclairer",id==="amis"?"passer voir un proche":"une sortie : "+D[2].slice(0,3).join(", ").toLowerCase()));
-        const cnt={};L.forEach(e=>e.w.forEach(p=>cnt[p]=(cnt[p]||0)+1));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
-        return hmPop("Quartier",D[0],hmRow("paysage","Sorties",L.length)+hmRow("calendrier","Dernière",hmFd(L[L.length-1].t))+(top.length?hmRow("duo","Souvent avec",esc(top.join(", "))):""))}
-      const e=E.find(x=>"f:"+x.t===o);if(!e)return"";return hmPop(HM_DIST[e.k][0],H.pl[e.t]||e.o,(e.o!==(H.pl[e.t]||e.o)||e.k!=="amis"?hmRow("paysage","Sortie",esc(e.o)):"")+hmRow("calendrier","Le",hmFd(e.t))+(e.w.length?hmRow("duo","Avec",esc(hmWho(e.w))):"")+hmRow("eclair","XP","+"+e.x),
-        `<div class="hmname"><input maxlength="60" placeholder="Nom du lieu" aria-label="Nom du lieu" value="${esc(H.pl[e.t]||"")}" data-pt="${e.t}"><button type="button" class="btn" data-ps="${e.t}">OK</button></div>`)}}}
 
 // ---------- CHAMBRE
-function hmChambre(){let s=`<svg class="hmsvg" viewBox="0 0 64 36" shape-rendering="crispEdges" role="img" aria-label="Chambre">`+hmR(0,0,64,36,"#3b3358")+hmR(0,27,64,9,"#5a4028")+hmR(0,27,64,1,"#7a5838");
-  s+=hmR(24,4,14,10,"#7fc8f8")+hmR(24,4,14,1,"#e9e2d0")+hmR(30,4,1,10,"#e9e2d0")+hmR(24,9,14,1,"#e9e2d0")+hmR(33,6,3,3,"#f4f0c8");
-  s+=hmR(4,8,12,19,"#8b5a2b")+hmR(5,9,5,17,"#a06a36")+hmR(10,9,5,17,"#a06a36")+hmR(9,16,1,2,"#f4d767")+hmR(10,16,1,2,"#f4d767");
-  s+=hmR(40,20,22,7,"#e9e2d0")+hmR(40,18,6,4,"#f2f0ea")+hmR(46,19,16,8,"#2f6fd6")+hmR(46,19,16,1,"#5a93c2")+hmR(40,27,1,3,"#6b4a28")+hmR(61,27,1,3,"#6b4a28")+hmR(39,15,2,15,"#6b4a28");
-  s+=hmR(48,4,12,1,"#a67c4a")+hmR(50,1,2,3,"#f4d767")+hmR(54,2,2,2,"#c2c6cf")+hmR(57,1,2,3,"#e0a065");
-  return{svg:s+"</svg>",sum:"Ta garde-robe et tes badges",empty:"",info(){return""}}}
 
 // ---------- vue d'ensemble
 function hmMini(id,on){const R=hmR;let s=`<svg viewBox="0 0 40 22" shape-rendering="crispEdges" aria-hidden="true">`;
@@ -11009,32 +10925,9 @@ function hmMini(id,on){const R=hmR;let s=`<svg viewBox="0 0 40 22" shape-renderi
   if(id==="sport"){for(let i=0;i<5;i++)s+=R(4+i*7,3,4,5,["#f4d767","#e1e5ec","#e0a065","#f4d767","#e1e5ec"][i]);s+=R(0,18,40,4,"#b5452f")+R(4,12,16,1,"#8a8f99")+R(26,10,10,8,"#1a1a1f")}
   if(!on)s+=R(0,0,40,22,"rgba(8,10,24,.7)");return s+"</svg>"}
 function hmCount(H,id){const G=S.g;if(id==="chambre")return 1;if(id==="biblio")return(G.books||[]).length+(G.book?1:0);return hmEv(H,id).length}
-function hmHTML(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
-  const lab={biblio:["livre","livres"],studio:["session","sessions"],video:["objet","objets"],cuisine:["bocal","bocaux"],sport:["séance","séances"]};
-  const room=id=>{const n=hmCount(H,id),on=n>0,nm=HM_ROOMS.find(r=>r[0]===id)[1];return`<button type="button" class="hmr${on?"":" off"}" data-r="${id}" aria-label="${nm}${on?"":" (à débloquer)"}">${hmMini(id,on)}<span class="hml"><b>${nm}</b>${id==="chambre"?"":`<small>${on?n+" "+lab[id][n>1?1:0]:"à débloquer"}</small>`}</span>${here===id&&me?`<img class="hmme" src="${me}" alt="Toi">`:""}</button>`};
-  const nC=hmCount(H,"carte");
-  return`<div class="hm"><div class="hmroof"><svg viewBox="0 0 96 16" shape-rendering="crispEdges" aria-hidden="true">${hmR(14,10,68,6,"#8b2f2f")+hmR(22,5,52,5,"#a63d3d")+hmR(32,1,32,4,"#c25a5a")+hmR(14,15,68,1,"#4e1717")+hmR(70,0,5,9,"#6e5a50")+hmR(69,0,7,1,"#8a7a70")}</svg></div>
-    <div class="hmgrid">${["chambre","biblio","studio","video","cuisine","sport"].map(room).join("")}</div>
-    <button type="button" class="hmout${nC?"":" off"}" data-r="carte"><svg viewBox="0 0 96 14" shape-rendering="crispEdges" aria-hidden="true">${hmR(0,0,96,14,"#5f9a4a")+hmR(0,8,96,6,"#6b6b78")+hmR(44,0,8,8,"#c9a066")+hmR(46,1,4,7,"#6b4a28")+hmR(49,4,1,1,"#f4d767")+[6,18,74,86].map(x=>hmR(x,1,6,5,"#2f8b4a")+hmR(x+2,6,2,2,"#6b4a28")).join("")+[10,30,58,80].map(x=>hmR(x,10,4,1,"#e9e2d0")).join("")}</svg><span class="hml"><b>Dehors · carte des sorties</b><small>${nC?nC+" drapeau"+(nC>1?"x":""):"à découvrir"}</small></span>${here==="carte"&&me?`<img class="hmme" src="${me}" alt="Toi">`:""}</button></div>`}
 function hmRoomData(H,id){return id==="video"?hmVideo(H):id==="studio"?hmStudio(H):id==="cuisine"?hmCuisine(H):id==="sport"?hmSport(H):id==="carte"?hmCarte(H):id==="chambre"?hmChambre():null}
-function renderHome(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
-  const H=hmData();document.documentElement.dataset.room=hmRoom||"home";
-  if(!hmRoom){const hh=`<div class="bh2"><h3>Chez moi</h3><span class="hint">Touche une pièce</span></div>`+hmHTML(H);if(box.__h===hh&&box.querySelector(".hmhouse"))return;box.innerHTML=hh;box.__h=hh;box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);box.scrollIntoView({block:"start",behavior:"smooth"})});return}
-  box.__h="";const i=HM_ROOMS.findIndex(r=>r[0]===hmRoom),nm=HM_ROOMS[i][1],nav=`<div class="hmh"><button type="button" class="btn hmback">${ICO("chev",16)} Maison</button><b>${nm==="Dehors"?"Sorties":nm}</b><span class="hmnav"><button type="button" class="btn" data-d="-1" aria-label="Pièce précédente">‹</button><button type="button" class="btn" data-d="1" aria-label="Pièce suivante">›</button></span></div>`;
-  if(hmRoom==="biblio"){box.innerHTML=nav+`<div class="hmscene hmlib">${libHTML()}</div>`;libBind(box)}
-  else{const D=hmRoomData(H,hmRoom),has=hmRoom==="chambre"||hmEv(H,hmRoom).length;
-    box.innerHTML=nav+`<p class="hint hmsum">${D.sum}</p><div class="hmscene">${D.svg}</div><div class="libinfo hminfo" aria-live="polite"><p class="hint">${has?(hmRoom==="chambre"?"Ta garde-robe et tes badges sont juste en dessous.":"Touche un objet pour voir son histoire."):D.empty}</p></div>${D.extra||""}`;
-    const info=box.querySelector(".hminfo"),show=g=>{const o=g.dataset.o;if(o==="book"){const r=box.querySelector(".rcp");r&&r.scrollIntoView({block:"center",behavior:"smooth"});return}const h=D.info(o);if(!h)return;box.querySelectorAll(".hmo.sel").forEach(x=>x.classList.remove("sel"));g.classList.add("sel");info.innerHTML=h;sfx("coin");bindNames()};
-    const bindNames=()=>{info.querySelectorAll("[data-ns]").forEach(b=>b.onclick=()=>{const t=b.dataset.ns,v=info.querySelector(`[data-nt="${t}"]`).value.trim();if(v)H.nm[t]=v;else delete H.nm[t];save();toast("Nom enregistré");renderHome(1)});
-      info.querySelectorAll("[data-ps]").forEach(b=>b.onclick=()=>{const t=b.dataset.ps,v=info.querySelector(`[data-pt="${t}"]`).value.trim();if(v)H.pl[t]=v;else delete H.pl[t];save();toast("Lieu enregistré");renderHome(1)});
-      info.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{H.nm[b.dataset.sg]=b.dataset.v;save();renderHome(1)});
-      info.querySelectorAll("input").forEach(inp=>inp.onkeydown=e=>{if(e.key==="Enter"){const b=inp.nextElementSibling;b&&b.click()}})};
-    box.querySelectorAll(".hmo").forEach(g=>{g.onclick=()=>show(g);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g)}}});
-    if(hmRoom==="cuisine")hmRecipeBind(box)}
-  box.querySelector(".hmback").onclick=()=>{hmRoom=null;renderHome(1)};
-  box.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const j=(i+ +b.dataset.d+HM_ROOMS.length)%HM_ROOMS.length;hmRoom=HM_ROOMS[j][0];sfx("blip");renderHome(1)});
-  const sc=box.querySelector(".hmscene");if(sc){let x0=null;sc.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});sc.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>60){const b=box.querySelector(`[data-d="${dx<0?1:-1}"]`);b&&b.click()}},{passive:true})}}
-/*HM2-START*/(function(){
+/*HM2-START*/
+
 // ---- Kit pixel pour la maison : police 3x5, sprites, volumes ombrés
 const PXF={A:"010101111101101",B:"110101110101110",C:"011100100100011",D:"110101101101110",E:"111100110100111",F:"111100110100100",G:"011100101101011",H:"101101111101101",I:"111010010010111",J:"001001001101010",K:"101101110101101",L:"100100100100111",M:"101111111101101",N:"110101101101101",O:"010101101101010",P:"110101110100100",Q:"010101101110011",R:"110101110101101",S:"011100010001110",T:"111010010010010",U:"101101101101111",V:"101101101101010",W:"101101111111101",X:"101101010101101",Y:"101101010010010",Z:"111001010100111","0":"111101101101111","1":"010110010010111","2":"110001010100111","3":"110001010001110","4":"101101111001001","5":"111100110001110","6":"011100111101111","7":"111001010010010","8":"111101111101111","9":"111101111001110",".":"000000000000010",",":"000000000010100",":":"000010000010000","-":"000000111000000","'":"010010000000000","/":"001001010100100","+":"000010111010000","!":"010010010000010","?":"110001010000010","%":"101001010100101"," ":"000000000000000"};
 const OUT="#1a1210";
@@ -11086,7 +10979,7 @@ function hmBld(id,x,y){let s="";const win=(X,Y,c)=>R(X,Y,3,3,OUT)+R(X+1,Y+1,1,1,
     [4,16,28,88,100,112].forEach((X,i)=>{s+=tree(x+X,y+2+(i%2)*4)});s+=R(x+84,y+20,10,2,"#8b5a2b")+R(x+85,y+22,1,2,"#6b4a28")+R(x+92,y+22,1,2,"#6b4a28")+ptxt("PARC",x+4,y+19,"#fff6c8","#1f6a38");
     [[30,20],[36,4],[82,6],[118,18]].forEach(([X,Y])=>{s+=R(x+X,y+Y,1,1,"#ff9ccc")+R(x+X+2,y+Y+1,1,1,"#ffd94a")})}
   return s}
-hmCarte=function(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
+function hmCarte(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[e.k]=by[e.k]||[]).push(e));
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Carte des sorties">`+R(0,0,W,Hh,"#6aa84f");
   for(let y=1;y<Hh;y+=3)for(let x=(y*7)%5;x<W;x+=9)s+=R(x,y,1,1,"#5a9640");
   // routes, trottoirs, passages piétons
@@ -11111,7 +11004,7 @@ hmCarte=function(H){const E=hmEv(H,"carte"),by={},W=128,Hh=106;E.forEach(e=>(by[
 
 // ---------- CUISINE (128 px)
 const HMC_FILL={"Repas maison":["#6fbf5a","#4a8f3a","pasta"],"Nouveau plat":["#e8873a","#b85f1f","beans"],"Pâtisserie":["#f08cc0","#c25a8d","jam"],"Préparer demain":["#5a93c2","#2f5d8b","rice"]};
-hmCuisine=function(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>({e,i,w:7})),{U:60,gap:1,min:2}),RH=14,top=8,shH=rows.length*RH,Hh=top+shH+52;
+function hmCuisine(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>({e,i,w:7})),{U:60,gap:1,min:2}),RH=14,top=8,shH=rows.length*RH,Hh=top+shH+52;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Cuisine">`;
   s+=shell(W,Hh,{wall:"#efe6d2",wall2:"#ddd2b8",pat:"tile",floor:"#c9b48c",floor2:"#b39d74",fh:12,base:"#8b5a2b"});
   // sol en damier
@@ -11151,7 +11044,7 @@ hmCuisine=function(H){const E=hmEv(H,"cuisine"),W=128,rows=hmShelf(E.map((e,i)=>
     extra:hmRecipes()}};
 
 // ---------- CHAMBRE (128 px)
-hmChambre=function(){const W=128,Hh=80,G=S.g,ng=(G.gear||[]).length,nb=(G.nb||[]).length;
+function hmChambre(){const W=128,Hh=80,G=S.g,ng=(G.gear||[]).length,nb=(G.nb||[]).length;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="img" aria-label="Chambre">`;
   s+=shell(W,Hh,{wall:"#3b3358",wall2:"#433a63",pat:"dots",floor:"#7a5838",floor2:"#6a4a2e",fh:18,base:"#2a2340"});
   // fenêtre de nuit
@@ -11208,7 +11101,7 @@ function hmHouseSvg(H,lit){const W=128,Hh=184,h=new Date().getHours(),night=h<7|
   s+=R(0,164,W,20,"#5a5a66")+R(0,164,W,2,"#9a9aa6")+R(0,182,W,2,"#9a9aa6");for(let x=2;x<W;x+=10)s+=R(x,173,5,1,"#e9e2d0");
   s+=R(4,166,33,9,OUT)+R(5,167,31,7,"#2f8b4a")+ptxt("SORTIES",7,168,"#fff6c8")+R(19,175,2,7,"#8a8f99");
   return s+"</svg>"}
-hmHTML=function(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
+function hmHTML(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=(()=>{try{return headURL((S.g&&S.g.avc)||{},20,22,6,-7,3)}catch(e){return""}})();
   const lit={};["chambre","biblio","studio","video","cuisine","sport"].forEach(id=>lit[id]=hmCount(H,id)>0);
   const lab={biblio:["livre","livres"],studio:["session","sessions"],video:["objet","objets"],cuisine:["bocal","bocaux"],sport:["séance","séances"]};
   const pc=(v,t)=>(v/t*100).toFixed(2)+"%";
@@ -11219,7 +11112,7 @@ hmHTML=function(H){const last=H.ev[H.ev.length-1],here=last?last.r:"chambre",me=
   return`<div class="hmhouse">${window.__hmHC.s}${Object.keys(HMH_SLOT).map(slot).join("")}<button type="button" class="hmslot hmstreet" data-r="carte" style="left:0;top:${pc(152,184)};width:100%;height:${pc(32,184)}" aria-label="Sorties"><span class="hml"><b>Sorties</b>${nC?`<small>${nC} drapeau${nC>1?"x":""}</small>`:""}</span>${here==="carte"&&me?`<img class="hmme" src="${me}" alt="Toi ici">`:""}</button></div>`};
 
 // ---------- SALLE DE SPORT (128 px)
-hmSport=function(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
+function hmSport(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((a,e)=>{const m=e.n.match(re);return a+(m?parseFloat(m[1].replace(",",".")):0)},0);
   const best=w=>Math.max(0,...E.filter(e=>new RegExp(w,"i").test(e.n)).map(e=>{const m=e.n.match(/(\d+)\s*(?:rép|pompes|squats)/i);return m?+m[1]:0}));
   const km=Math.round(num(/(\d+(?:[.,]\d+)?)\s*km/i)*10)/10,reps=Math.round(num(/(\d+)\s*(?:rép|pompes|squats|abdos|tractions)/i)),pu=Math.max((G.pu&&G.pu.rec)||0,best("pompes")),sq=Math.max((G.sq&&G.sq.rec)||0,best("squats")),gn=(G.gn&&G.gn.rec)||0,rn=Math.max((G.run&&G.run.rec)||0,0,...E.map(e=>{const m=e.n.match(/(\d+(?:[.,]\d+)?)\s*km/i);return m?parseFloat(m[1].replace(",",".")):0}));
   const M=[["gn","Gainage",gn,gn?fmtSec(gn):"",[60,120,180],gn?fmtSec(gn).replace(" ",""):"-"],["pu","Pompes d'affilée",pu,pu+"",[20,40,60],pu||"-"],["sq","Squats d'affilée",sq,sq+"",[30,60,100],sq||"-"],["rn","Plus longue course",rn,rn?rn.toLocaleString("fr-FR")+" km":"",[5,10,21],rn?String(rn).replace(".",",")+"K":"-"],["km","Total parcouru",km,km?km.toLocaleString("fr-FR")+" km":"",[20,100,500],km?Math.round(km)+"K":"-"],["rp","Total répétitions",reps,reps+"",[200,1000,5000],reps?(reps>=1000?Math.round(reps/100)/10+"K":reps):"-"]];
@@ -11251,7 +11144,7 @@ hmSport=function(H){const G=S.g,E=hmEv(H,"sport"),W=128,Hh=74,num=re=>E.reduce((
       const nx=HMSP_MS.find(q=>q[0]>km)||HMSP_MS[HMSP_MS.length-1];return hmPop(lv?"Médaille "+lv.toLowerCase():"Record",m[1],m[2]?hmRow("medaille","Record",m[3])+(m[0]==="km"?hmRow("sablier","Prochain cap",nx[1]):"")+(nxT?hmRow("sablier","Médaille suivante",(m[0]==="gn"?fmtSec(nxT):nxT.toLocaleString("fr-FR")+(/km/.test(m[3])?" km":""))):""):hmRow("sablier","Pas encore de record","Lance l'action pour en poser un"))}}};
 
 // ---------- STUDIO (128 px)
-hmStudio=function(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0),W=128,Hh=88;
+function hmStudio(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.filter(e=>e.k==="txt"),VY=E.filter(e=>e.k==="vinyl"),n=SS.length,mins=SS.reduce((a,e)=>a+(hmDur(e.n)||60),0),W=128,Hh=88;
   const has=id=>n>=HMS_EQ.find(q=>q[0]===id)[2];
   const Z=(id,body)=>`<g class="hmo${has(id)?"":" lock"}" data-o="eq:${id}" tabindex="0" role="button" aria-label="${HMS_EQ.find(q=>q[0]===id)[1]}"${has(id)?"":' opacity=".18" style="filter:grayscale(1)"'}>${body}</g>`;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Studio">`;
@@ -11297,7 +11190,7 @@ hmStudio=function(H){const E=hmEv(H,"studio"),SS=E.filter(e=>e.k==="son"),TX=E.f
       return hmPop(ok?"Équipement":"À débloquer",q[1],ok?hmRow("eclair","Débloqué à la",q[2]+(q[2]>1?"e":"re")+" session")+(at?hmRow("calendrier","Le",hmFd(at.t)):""):hmRow("sablier","Se débloque à la",q[2]+"e session")+hmRow("note","Encore",(q[2]-n)+" session"+(q[2]-n>1?"s":"")))}}};
 
 // ---------- VIDÉOCLUB (128 px)
-hmVideo=function(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),W=128;
+function hmVideo(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter(e=>e.k==="e"),W=128;
   const rows=hmShelf(T.map((e,i)=>({e,i,w:e.k==="s"?10:5})),{U:66,gap:1,min:3}),RH=16,top=22,shH=rows.length*RH+4,Hh=top+shH+44;
   let s=`<svg class="hmsvg" viewBox="0 0 ${W} ${Hh}" shape-rendering="crispEdges" role="group" aria-label="Vidéoclub">`;
   s+=shell(W,Hh,{wall:"#2b1846",wall2:"#341d55",pat:"stripe",floor:"#3b2a3a",floor2:"#33232f",fh:16,base:"#1c0f2c"});
@@ -11332,7 +11225,7 @@ hmVideo=function(H){const E=hmEv(H,"video"),T=E.filter(e=>e.k!=="e"),ep=E.filter
 // ---------- Affichage : mêmes codes que les autres cartes (bordure 2 px colorée, titre en capitales, boutons carrés à icône)
 const HM_COL={chambre:"#a99cff",biblio:"#c98a4a",studio:"#2fe3d6",video:"#ff5fa8",cuisine:"#e8873a",sport:"#d63b3b",carte:"#5ac27a"};
 const HM_NAME={chambre:"Chambre",biblio:"Bibliothèque",studio:"Studio",video:"Vidéoclub",cuisine:"Cuisine",sport:"Sport",carte:"Sorties"};
-renderHome=function(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+function renderHome(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
   const H=hmData();document.documentElement.dataset.room=hmRoom||"home";
   if(!hmRoom){const hh=`<div class="hmcard hmover">${hmHTML(H)}</div>`;if(box.__h===hh&&box.querySelector(".hmhouse"))return;box.innerHTML=hh;box.__h=hh;
     box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);box.scrollIntoView({block:"start",behavior:"smooth"})});return}
@@ -11352,13 +11245,13 @@ renderHome=function(force){const box=document.getElementById("homeBox");if(!box|
   box.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const j=(i+ +b.dataset.d+HM_ROOMS.length)%HM_ROOMS.length;hmRoom=HM_ROOMS[j][0];sfx("blip");renderHome(1)});
   const sc=box.querySelector(".hmscene");if(sc){let x0=null;sc.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});sc.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>60){const b=box.querySelector(`[data-d="${dx<0?1:-1}"]`);b&&b.click()}},{passive:true})}};
 // infos : lignes simples, sans carte dans la carte
-hmPop=function(kind,title,rows,extra){return`<div class="hmpop"><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`};
-hmRecipes=function(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="rcph2"><h3>Recettes</h3><button type="button" class="hmib rcpadd" aria-label="Nouvelle recette">${ICO("plus",20)}</button></div>
+function hmPop(kind,title,rows,extra){return`<div class="hmpop"><h4>${esc(title)}</h4><ul>${rows}</ul>${extra||""}</div>`};
+function hmRecipes(){const R=S.g.rcp||[],op=window.__rcpOpen;return`<div class="rcp"><div class="rcph2"><h3>Recettes</h3><button type="button" class="hmib rcpadd" aria-label="Nouvelle recette">${ICO("plus",20)}</button></div>
   ${window.__rcpNew?`<div class="rcpf"><input id="rcpN" maxlength="50" placeholder="Nom"><textarea id="rcpI" rows="3" placeholder="Ingrédients, un par ligne"></textarea><textarea id="rcpS" rows="3" placeholder="Étapes, une par ligne"></textarea><div class="rcpb"><button type="button" class="btn rcpx">Annuler</button><button type="button" class="btn primary rcpok">Enregistrer</button></div></div>`:""}
   ${R.length?`<ul class="rcpl">${R.map(r=>`<li class="${op===r.id?"open":""}"><button type="button" class="rcph" data-ro="${r.id}"><b></b><small>${r.c?`${r.c} fois · ${hmFd(r.t)}`:"jamais faite"}</small></button><button type="button" class="hmib rcpdo" data-rd="${r.id}" aria-label="Je l'ai cuisinée">${ICO("check",20)}</button>
     ${op===r.id?`<div class="rcpd">${r.ing?`<small>Ingrédients</small><ul>${r.ing.split("\n").filter(Boolean).map(()=>`<li></li>`).join("")}</ul>`:""}${r.st?`<small>Étapes</small><ol>${r.st.split("\n").filter(Boolean).map(()=>`<li></li>`).join("")}</ol>`:""}<button type="button" class="lnk rcpdel" data-rx="${r.id}">Supprimer</button></div>`:""}</li>`).join("")}</ul>`:""}</div>`};
 
-})();/*HM2-END*/
+/*HM2-END*/
 
 
 // ---- conditions des badges dont la fonction d'origine a disparu (boss, humeur, bilan repas, skill Sons, défis)
@@ -11410,7 +11303,9 @@ function bgMusic(){const R=/musique|\bsons?\b|beat|instru|guitare|piano|chant|co
 function bgPerfect(){if((S.daily&&S.daily.bonusDay)||S.log.some(e=>e.dayb))return true;const T=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz);if(!T.length)return false;return Object.values(ritH()).some(H=>T.every(t=>H[t.id]))}
 function bgSortie(){return S.log.some(e=>e.dzq)||Object.keys((S.g&&S.g.afLast)||{}).some(k=>k.startsWith("af:sorties:"))}
 const TIERC={1:"#b0763c",2:"#aab4bd",3:"#e0b030"};
-function badgeDefs(){
+// badgeDefs : version complète (ex-réécriture de assiette.js), badgeDefsBase = le cœur d'origine
+function badgeDefs(){const B=badgeDefsBase.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
+function badgeDefsBase(){
   const L=()=>levelInfo(S.xp).l,B=[];
   RANKS.filter(r=>r[0]>1&&r[0]!==5).forEach(([min,n])=>B.push({id:"rank"+min,name:n,desc:"Atteindre le niveau "+min,ic:"shield",t:min<5?1:min<17?2:3,ok:()=>L()>=min}));
   B.push({id:"first",name:"Première quête",desc:"Accomplir ta première action",ic:"star",t:1,ok:()=>S.xp>0});
@@ -11476,7 +11371,9 @@ function checkBadges(){
 }
 
 const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
-function famOf(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+// famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
+function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
+function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];
@@ -12620,7 +12517,11 @@ function wrToggle(it){const G=S.g;if(it.s==="aura"){if(G.eq.aura===it.id)delete 
   sfx("blip");save();render();renderWardrobe()}
 // la rareté se lit en étoiles pixel (1 à 4), plus en couleur
 const rarStars=r=>`<span class="rst" aria-label="${RAR[r][0]}">${ICO("star",10).repeat(r+1)}</span>`;
-function renderWardrobe(){
+// renderWardrobe : version complète (ex-réécriture de correctifs.js), renderWardrobeBase = le cœur d'origine
+// renderWardrobe : finitions autour de renderWardrobeBase2 (le cœur), ex-retouche de correctifs.js
+function renderWardrobe(){const r=renderWardrobeBase2.apply(this,arguments);try{wrViz()}catch(e){console.warn("renderWardrobe",e)}return r}
+function renderWardrobeBase2(){const r=renderWardrobeBase.apply(this,arguments);try{wrBadges()}catch(e){}return r}
+function renderWardrobeBase(){
   const G=S.g;if(!G||!$("wrBody"))return;
   const tot=GEAR.length,own=wrOwned();$("wrCnt").textContent=own+"/"+tot;
   {const nc=(G.chests||0)+(G.bchests||0);$("wrChest").innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="wrChestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";const b=$("wrChestBtn");if(b)b.onclick=()=>openChest()}
@@ -12715,7 +12616,9 @@ function fsOpen(cls,inner){const o=document.createElement("div");o.className="pu
 function burstIn(FX,k){for(let i=0;i<k;i++){const e=document.createElement("i");const a=Math.random()*Math.PI*2,d=70+Math.random()*90;e.style.setProperty("--dx",Math.cos(a)*d+"px");e.style.setProperty("--dy",Math.sin(a)*d+"px");e.style.setProperty("--d",(.45+Math.random()*.35)+"s");FX.appendChild(e);setTimeout(()=>e.remove(),900)}}
 function monthAdd(o,v){const ym=ymOf(Date.now());if(!o.m)o.m={};o.m[ym]=(o.m[ym]||0)+v}
 // gainage : chrono qui monte
-function gnOpen(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match(/(\d+)\s*s(?:ec)?\b/i),goal=durOf(n)?durOf(n)*60:mm?+mm[1]:60,rec0=P.rec||0;let t0=0,el=0,iv=0,state="ready",recHit=0,goalHit=0,lastS=-1;
+// gnOpen : finitions autour de gnOpenBase (le cœur), ex-retouche de correctifs.js
+function gnOpen(btn,n){const r=gnOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("gnOpen",e)}return r}
+function gnOpenBase(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match(/(\d+)\s*s(?:ec)?\b/i),goal=durOf(n)?durOf(n)*60:mm?+mm[1]:60,rec0=P.rec||0;let t0=0,el=0,iv=0,state="ready",recHit=0,goalHit=0,lastS=-1;
   const o=fsOpen("gn",`<div class="puh"><b class="pun"></b><small>Objectif ${fmtSec(goal)}${rec0?" · record "+fmtSec(rec0):""}</small></div>
     <div class="pupad gnpad"><span class="pufx" aria-hidden="true"></span><span class="puban"></span><b class="puc gnc">0:00</b><span class="pug"><i></i><em></em></span><span class="pucall"></span><small class="puhelp">Mets-toi en position, puis appuie sur Go. Appuie sur Stop quand tu lâches.</small></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Go</button></div>`);
@@ -12736,7 +12639,9 @@ function gnOpen(btn,n){const G=S.g;if(!G.gn)G.gn={rec:0};const P=G.gn,mm=n.match
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);o.remove()}}
 // étirements guidés
 const STRETCH=[["Cou","Penche doucement la tête de chaque côté"],["Épaules","Fais de grands cercles avec les épaules"],["Bras","Tire un bras derrière la tête, puis l'autre"],["Dos","Enroule le dos, mains vers les pieds"],["Hanches","Fente basse, bassin vers l'avant"],["Ischios","Jambes tendues, attrape tes chevilles"],["Quadriceps","Debout, attrape ton pied derrière toi"],["Mollets","Mains au mur, une jambe tendue derrière"]];
-function stOpen(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETCH.slice(0,Math.max(4,Math.min(8,Math.round(tot/40)))),per=tot/L.length;let i=0,t0=0,iv=0,paused=0,pacc=0,pst=0,run=0;
+// stOpen : finitions autour de stOpenBase (le cœur), ex-retouche de correctifs.js
+function stOpen(btn,n){const r=stOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("stOpen",e)}return r}
+function stOpenBase(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETCH.slice(0,Math.max(4,Math.min(8,Math.round(tot/40)))),per=tot/L.length;let i=0,t0=0,iv=0,paused=0,pacc=0,pst=0,run=0;
   const o=fsOpen("st",`<div class="puh"><b class="pun"></b><small>${L.length} étirements · ${fmtSec(tot)}</small></div>
     <div class="pupad stpad"><div class="stdots">${L.map(()=>"<i></i>").join("")}</div><small class="stk">Étirement <b class="sti">1</b> / ${L.length}</small><b class="stn"></b><span class="sth"></span><div class="string"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="sbg"/><circle cx="50" cy="50" r="44" class="sfg"/></svg><b class="stt"></b></div></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Commencer</button></div>`);
@@ -12751,7 +12656,9 @@ function stOpen(btn,n){const tot=Math.min(5,Math.max(1,durOf(n)||5))*60,L=STRETC
     if(run){if(!paused){paused=1;pst=Date.now();OK.textContent="Reprendre"}else{pacc+=Date.now()-pst;paused=0;OK.textContent="Pause"}}};
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);document.removeEventListener("visibilitychange",vis);o.remove()}}
 // course : chrono + distance
-function runOpen(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n.match(/(\d+(?:[.,]\d+)?)\s*km/i)||[])[1];const goalKm=km0?parseFloat(km0.replace(",",".")):0;let t0=0,el=0,iv=0,state="ready",km=goalKm||2;
+// runOpen : finitions autour de runOpenBase (le cœur), ex-retouche de correctifs.js
+function runOpen(btn,n){const r=runOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("runOpen",e)}return r}
+function runOpenBase(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n.match(/(\d+(?:[.,]\d+)?)\s*km/i)||[])[1];const goalKm=km0?parseFloat(km0.replace(",",".")):0;let t0=0,el=0,iv=0,state="ready",km=goalKm||2;
   const o=fsOpen("rn",`<div class="puh"><b class="pun"></b><small>${goalKm?"Objectif "+goalKm.toLocaleString("fr-FR")+" km":"Cours à ton rythme"}${P.rec?" · record "+P.rec.toLocaleString("fr-FR")+" km":""}</small></div>
     <div class="pupad rnpad"><span class="rnrd" aria-hidden="true"><i></i><i></i><i></i></span><b class="puc rnc">0:00</b><span class="pucall rnsub">Lance le chrono au départ</span><div class="rnkm" hidden><p>Distance parcourue</p><div class="rdk2"><button type="button" class="btn rdm" data-d="-0.5">-0,5</button><button type="button" class="btn rdm" data-d="-0.1">-0,1</button><b class="rdv rnv"></b><button type="button" class="btn rdm" data-d="0.1">+0,1</button><button type="button" class="btn rdm" data-d="0.5">+0,5</button></div><small class="rnpace"></small></div></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Go</button></div>`);
@@ -12766,7 +12673,9 @@ function runOpen(btn,n){const G=S.g;if(!G.run)G.run={rec:0};const P=G.run,km0=(n
   o.querySelectorAll(".rdm").forEach(b=>b.onclick=()=>{km=Math.max(.1,Math.round((km+ +b.dataset.d)*10)/10);drawKm()});
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);o.remove()}}
 // méditation : respiration guidée
-function mdOpen(btn,n){const G=S.g;if(!G.md)G.md={};const tot=Math.max(1,durOf(n)||5)*60,PH=[["Inspire",4],["Bloque",2],["Expire",6]],CY=12;let t0=0,iv=0,paused=0,pacc=0,pst=0,run=0,lp=-1;
+// mdOpen : finitions autour de mdOpenBase (le cœur), ex-retouche de correctifs.js
+function mdOpen(btn,n){const r=mdOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("mdOpen",e)}return r}
+function mdOpenBase(btn,n){const G=S.g;if(!G.md)G.md={};const tot=Math.max(1,durOf(n)||5)*60,PH=[["Inspire",4],["Bloque",2],["Expire",6]],CY=12;let t0=0,iv=0,paused=0,pacc=0,pst=0,run=0,lp=-1;
   const o=fsOpen("md",`<div class="puh"><b class="pun"></b><small>${fmtSec(tot)} de respiration</small></div>
     <div class="pupad mdpad"><span class="mdstars" aria-hidden="true"></span><div class="mdc"><svg class="mdorb" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-hidden="true">${mdOrb(4,0)}</svg></div><b class="mdt">Prêt ?</b><b class="mdl">${fmtSec(tot)}</b></div>
     <div class="pub"><button type="button" class="btn" id="puX">Annuler</button><button type="button" class="btn primary" id="puOk">Commencer</button></div>`);
@@ -12842,7 +12751,9 @@ function puTarget(n,P){P=P||{};let m=n.match(/(\d+)\s*séries?\s*de\s*(\d+)/i);i
   if(/record/i.test(n))return{s:1,r:(P.rec||0)+1,rec:1};m=n.match(/(\d+)\s*(?:pompes|squats)/i);if(m)return{s:1,r:+m[1]};return{s:1,r:10}}
 const PU_CALL=["Encore !","Ça chauffe !","Machine !","Bête de guerre !","Inarrêtable !","Légendaire !"];
 const REPK={pu:{rk:"pu",u:"pompes",help:"Pose le téléphone au sol et touche l'écran avec le nez à chaque pompe"},sq:{rk:"sq",u:"squats",help:"Pose le téléphone sur une chaise devant toi et touche l'écran à chaque remontée"}};
-function puOpen(btn,n){const G=S.g,K=/squat/i.test(n)?REPK.sq:REPK.pu;if(!G[K.rk])G[K.rk]={rec:0,tot:0};const P=G[K.rk],T=puTarget(n,P),goal=T.s*T.r,rec0=P.rec||0;let c=0,set=0,best=0,run=0,recHit=0;
+// puOpen : finitions autour de puOpenBase (le cœur), ex-retouche de correctifs.js
+function puOpen(btn,n){const r=puOpenBase.apply(this,arguments);try{puDejaFait(btn)}catch(e){console.warn("puOpen",e)}return r}
+function puOpenBase(btn,n){const G=S.g,K=/squat/i.test(n)?REPK.sq:REPK.pu;if(!G[K.rk])G[K.rk]={rec:0,tot:0};const P=G[K.rk],T=puTarget(n,P),goal=T.s*T.r,rec0=P.rec||0;let c=0,set=0,best=0,run=0,recHit=0;
   const o=document.createElement("div");o.className="pu rep-"+K.rk;o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
   o.innerHTML=`<div class="puh"><b class="pun"></b><small>${T.s>1?T.s+" séries de "+T.r:"Objectif "+goal}${rec0?" · record "+rec0:""}</small></div>
     <button type="button" class="pupad" aria-label="Compter"><span class="pufx" aria-hidden="true"></span><span class="puban"></span><span class="puset"></span><b class="puc">0</b><span class="pug"><i></i><em></em></span><span class="pucall"></span><small class="puhelp">${K.help}</small></button>
@@ -12980,7 +12891,9 @@ function whoScore(t,n){const P=S.profiles[n]||{},tags=[...(P.types||[]),...(P.ta
   return s}
 function whoRank(t,L){return L.map((n,i)=>({n,i,s:whoScore(t,n)})).sort((a,b)=>b.s-a.s||a.i-b.i).map(o=>o.n)}
 
-function renderProfile(force){
+// renderProfile : finitions autour de renderProfileBase (le cœur), ex-retouche de correctifs.js
+function renderProfile(){try{homeFix()}catch(e){console.warn("renderProfile",e)}const r=renderProfileBase.apply(this,arguments);try{profViz();profRemind();proFrame()}catch(e){console.warn("renderProfile",e)}return r}
+function renderProfileBase(force){
   const root=$("prof");
   if(!force&&root.contains(document.activeElement)&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
   const n=profName;if(!n){root.innerHTML="";return}
@@ -13194,11 +13107,15 @@ function fgOpen(id,after){const g=fgList().find(x=>x.id===id);if(!g)return;const
     o.querySelector("#fgOk").onclick=()=>{nm.dispatchEvent(new Event("change"));close()};
     o.querySelector("#fgDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();close()})};
   draw()}
-function renderFG(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
+// renderFG : finitions autour de renderFGBase (le cœur), ex-retouche de correctifs.js
+function renderFG(){const r=renderFGBase.apply(this,arguments);try{grpViz()}catch(e){console.warn("renderFG",e)}return r}
+function renderFGBase(){const box=$("relGroups");if(!box||!S.g)return;const L=fgList(),G=S.g;
   box.innerHTML=`<div class="fgh"><b>Groupes</b><button type="button" class="addf fgplus" id="fgAddB" aria-label="Créer un groupe"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div><div class="fgcards">${L.map(g=>{const M=fgMembers(g.id),d=G.fgLast&&G.fgLast[g.id]?Math.floor((Date.now()-G.fgLast[g.id])/864e5):null;return`<button type="button" class="fgcard" data-g="${g.id}" style="--gc:${fgCol(g)}"><b></b><span class="fgav">${M.slice(0,5).map(n=>pAv(n,"fgsm")).join("")}${M.length>5?`<i>+${M.length-5}</i>`:""}</span><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais contacté":d<1?"aujourd'hui":"il y a "+d+" j"}</small></button>`}).join("")}</div>`;
   box.querySelectorAll(".fgcard").forEach(b=>{b.querySelector("b").textContent=L.find(g=>g.id===b.dataset.g).n;b.onclick=()=>openGroup(b.dataset.g)});
   $("fgAddB").onclick=()=>{const g=fgAdd("Nouveau groupe");g.c=FG_COL[(fgList().length-1)%FG_COL.length];save();renderFG();openGroup(g.id,true)}}
-function renderRelations(){
+// renderRelations : finitions autour de renderRelationsBase (le cœur), ex-retouche de correctifs.js
+function renderRelations(){const r=renderRelationsBase.apply(this,arguments);try{relViz()}catch(e){console.warn("renderRelations",e)}return r}
+function renderRelationsBase(){
   renderRemind();renderFG();
   const ul=$("relList");ul.innerHTML="";
   const srt=a=>a.sort((x,y)=>{const lx=S.bondsLast[x],ly=S.bondsLast[y];if(lx==null&&ly==null)return x.localeCompare(y,"fr");if(lx==null)return 1;if(ly==null)return -1;return lx-ly});
@@ -13254,7 +13171,11 @@ function streak(){
 }
 function recomputeDays(){const ex=new Set([dayKey(Date.now()),...(window.__jDay?[dayKey(Date.now()-864e5)]:[])]),keep=new Set(S.days.filter(k=>!ex.has(k)));S.log.forEach(e=>keep.add(dayKey(e.t)));S.days=[...keep].sort().slice(-400)}
 
-function complete(a,el,ev,sp,extra){
+// complete : version complète (ex-réécriture de correctifs.js), completeBase = le cœur d'origine
+function complete(a,el,ev,sp,extra){const r=completeBase.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
+      let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
+      autoQuest(e)}}catch(err){}return r}
+function completeBase(a,el,ev,sp,extra){
   {const k=String(a.id||"")+"|"+(a.name||"")+"|"+(a.who||"");if(!/^rit/.test(String(a.id||""))&&window.__lastC&&window.__lastC.k===k&&Date.now()-window.__lastC.t<700)return;window.__lastC={k,t:Date.now()}}
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
@@ -13373,7 +13294,11 @@ function ensureGroupQuests(){
     if(!cur&&S[GROUPS[g].list].length&&!G.dq.done.some(x=>x.grp===g)){const q=groupQuest(g);if(q){q.d=tk;S.specials.unshift(q);added=true}}});
   return added;
 }
-function completeSpecial(q,el,ev){
+// completeSpecial : version complète (ex-réécriture de correctifs.js), completeSpecialBase = le cœur d'origine
+function completeSpecial(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
+      if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
+      if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return completeSpecialBase.apply(this,arguments)}
+function completeSpecialBase(q,el,ev){
   if(q.dz==="cine")filmSeen(q.name,true);
   if(q.lzs)lzGain(q.lzs,q.xp);
   if(q.sur)S.g.surDone=q.sur;if(q.org)S.g.orgDone=q.org;if(q.secret)S.g.secDone=(S.g.secDone||0)+1;
@@ -16371,9 +16296,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
     if(!hit&&e.af){const fid=e.af.split(":")[1];hit=L.find(q=>!q.who&&!q.afk&&afMatch(q.name)&&afMatch(q.name).split(":")[1]===fid)}
     if(!hit)return;S.specials=S.specials.filter(q=>q!==hit);const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:hit.name,t:Date.now()});
     try{addBonus("Quête accomplie : "+hit.name,hit.xp,0,"autoq")}catch(err){}setTimeout(()=>{try{toast(`Quête accomplie au passage : <span class="p">${esc(hit.name)}</span> +${hit.xp} XP`);renderSpecials()}catch(err){}},1300)}
-  try{const _c=complete;complete=function(a,el,ev,sp,extra){const r=_c.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
-      let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
-      autoQuest(e)}}catch(err){}return r}}catch(e){}
+  
   // ===== Habitudes apprises
   const JRS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
   function habits(){const now=Date.now(),wd=new Date().getDay(),tk=dayKey(now),H={},P={};
@@ -16617,9 +16540,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
       g.sm={d:tk};ch=true}
     if(ch){save();try{renderSpecials()}catch(e){}}}
   try{DQ_K.bd=["Anniversaire","#e0447a",'<path d="M4 21h16M5 21v-7h14v7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 11V8" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="5.5" r="1.8" fill="currentColor"/>'];DQ_ORD.bd=-2;DQ_K.smart=["Pour toi","#3fbf6a",'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z" fill="currentColor"/>'];DQ_ORD.smart=-.2}catch(e){}
-  try{const _cs=completeSpecial;completeSpecial=function(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
-      if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
-      if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return _cs.apply(this,arguments)}}catch(e){}
+  
   // Atelier de création : choisir une action avec la même recherche
   function qwTpl(kind,dom){const out=[];try{const doms=dom?[dom]:Object.keys(QC_TPL);doms.forEach(d=>(QC_TPL[d]||[]).forEach(t=>{if(t[1]===kind&&!out.some(x=>x.name===t[0]))out.push({name:t[0],cat:d,k:"tpl"})}))}catch(e){}return out}
   function qwFind(inp){const kind=/Courir/.test(inp.placeholder)?"act":"";if(!kind)return;
@@ -16660,8 +16581,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
   // 3. Capacité : toucher le compteur d'Aujourd'hui
   document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#fqBox .head .count");if(!c)return;e.preventDefault();e.stopPropagation();const tk=dayKey(Date.now()),v=S.g.vie||(S.g.vie={}),cur=vieCap();
     pop(c,[1,2,3,5,8].map(n=>({l:n+" quête"+(n>1?"s":"")+" aujourd'hui",on:n===cur,f:()=>{v.capDay={d:tk,n};if(S.g.fq)S.g.fq.d="";save();render()}})),"Aujourd'hui")},true);
-  {const _vc=window.vieCap;window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return _vc()}}
-  try{const _es=enSet;enSet=function(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return _es(v)}}catch(e){}
+  
+  
   // 2, 4, 5. Menu « … » des quêtes du jour enrichi
   function fqExtra(){const L=(()=>{try{return fqList()}catch(e){return[]}})();document.querySelectorAll("#fqBox .fqr .fqno").forEach(m=>{if(m.querySelector("[data-ex]"))return;const r=m.closest(".fqr"),x=L[+r.dataset.i];if(!x)return;
       const add=(k,l,sub,f)=>{const b=document.createElement("button");b.type="button";b.className="btn";b.dataset.ex=k;b.innerHTML=`${l}<small>${sub}</small>`;b.onclick=e=>{e.stopPropagation();f()};m.prepend(b)};
@@ -16718,7 +16639,9 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
       if(b.dataset.ask==="poste"){fEdit=true;try{showView("c");cGoSub("c","vie")}catch(e){}setTimeout(()=>{const x=document.getElementById("ficheBox");if(x)x.scrollIntoView({behavior:"smooth"})},200);try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
       try{render()}catch(e){}renderFiche();const t=document.getElementById("evToday");if(t)t.querySelectorAll(".fask").forEach(x=>x.remove())})}
   function askToday(){const b=document.getElementById("evToday");if(!b)return;const h=perAskCard();let c=b.querySelector(".fask");if(!h){if(c)c.remove();return}if(c)return;b.insertAdjacentHTML("afterbegin",h);bindAsk(b)}
-  window.renderFiche=function(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
+  // renderFiche : finitions autour de renderFicheBase (le cœur), ex-retouche de correctifs.js
+function renderFiche(){try{homeFix()}catch(e){console.warn("renderFiche",e)}const r=renderFicheBase.apply(this,arguments);try{autoTime();ficheMove()}catch(e){console.warn("renderFiche",e)}return r}
+function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
     const s=s0?{...s0}:{goals:[],pass:[]};if(!Array.isArray(s.with))s.with=[];s.home=homeOf(s);const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";const pri=(G.vie&&G.vie.pri)||[];
     const commit=()=>{const cur=sitOf()||{};G.sit={...cur,...s,t:Date.now()};if(G.fq)G.fq.d="";save()};
     const H=HOMEI[s.home]||HOMEI.seul,av=s.with.slice(0,4).map(n=>pAv(n,"fmini")).join("");
@@ -16751,12 +16674,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
     const n=box.querySelector(".fnote");n.value=s.note||"";n.onchange=()=>{s.note=n.value.trim().slice(0,80);commit()};
     box.querySelector(".fart").onclick=()=>{try{sitSheet()}catch(e){}};
     box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
-    ficheMove()};
+    ficheMove()}
   function ficheTick(){try{autoTime()}catch(e){}try{ficheMove()}catch(e){}try{askToday()}catch(e){}}
   // ---- capacité déduite + suivi en cartes
   try{void 0;}catch(e){}
-  {const _vc2=window.vieCap;window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
-      if(v){v.cap=4;v.capW=2}let c=_vc2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}}}
+  
   function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)return;
     {let c=3;try{c=vieCap()}catch(e){}const e=enOf(),tk=dayKey(Date.now());let wd=false;try{wd=(S.g.vie.wd||[]).includes(new Date().getDay())&&c<=3}catch(_){}
       const why=[];try{const s=sitOf();if(s&&["poste","etud","indep"].includes(s.job)&&wd)why.push("jour de travail")}catch(_){}if(e===1)why.push("batterie basse");if(e===3)why.push("en forme");const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)why.push("nuit courte");
@@ -16878,7 +16800,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
   // ---- Collection : « Badges » est une catégorie comme les autres
   function wrBadges(){const on=typeof wrCat!=="undefined"&&wrCat==="badges";document.documentElement.dataset.wrc=on?"badges":"wr"}
   window.wrBadges=wrBadges;
-  try{const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);try{wrBadges()}catch(e){}return r}}catch(e){}
+  
   // ---- Bilan du mois : toucher un jour pour noter (ou corriger) son humeur
   document.addEventListener("click",e=>{const c=e.target.closest(".bcd.mpk[data-k]");if(!c)return;try{moodPick(c.dataset.k)}catch(err){}});
   document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const c=e.target.closest&&e.target.closest(".bcd.mpk[data-k]");if(!c)return;e.preventDefault();try{moodPick(c.dataset.k)}catch(err){}});
@@ -16908,9 +16830,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
   // ---- apprendre des refus : 3 refus d'une même famille en 30 jours = elle se met en retrait 3 semaines
   const famOfQ=x=>{try{const t=x.t||(x.q&&x.q.name)||"";const k=afMatch(t);return k?k.split(":")[1]:""}catch(e){return""}};
   const famCool=f=>{const R=(S.g&&S.g.fqFam)||{},L=(R[f]||[]).filter(t=>Date.now()-t<30*864e5);return L.length>=3&&Date.now()-L[L.length-1]<21*864e5};
-  try{const _fn=feedNo;feedNo=function(x,how){if(how==="today"||how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
-      if(!was&&famCool(f)){const F=(typeof FAM!=="undefined"?FAM.find(z=>z.id===f):null);setTimeout(()=>toast(`Compris : moins de quêtes « ${esc((F&&F.l)||f)} » pendant un moment`),900)}}}return _fn.apply(this,arguments)}}catch(e){}
-  try{const _fp=feedPick;feedPick=function(){const r=_fp.apply(this,arguments);try{if(r&&Array.isArray(r.L))r.L=r.L.filter(x=>x.done||x.k==="arc"||x.gift||!famCool(famOfQ(x)))}catch(e){}return r}}catch(e){}
+  
+  
   // ---- les quêtes du jour prennent place dans les creux de la journée (frise + « vers 18 h »)
   function fqSlots(){const box=document.getElementById("fqBox"),fr=document.querySelector("#qDay .frise .frt");if(!box||!S||!S.g)return;
     const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24),pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100));
@@ -16928,19 +16849,10 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
     if(!fr)return;const sig=marks.map(m=>m.x+m.t+m.ic.length).join("|");if(fr.dataset.fq===sig&&fr.querySelector(".frq")||(!marks.length&&!fr.querySelector(".frq"))){fr.dataset.fq=sig;return}fr.dataset.fq=sig;fr.querySelectorAll(".frq").forEach(e=>e.remove());
     marks.forEach(m=>{const s=document.createElement("span");s.className="frq";s.style.left=pc(m.x)+"%";s.title=m.t+" · vers "+m.x+" h";s.innerHTML=m.ic;fr.appendChild(s)})}
   // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
-  try{const _rl=renderLife;renderLife=function(){const r=_rl.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}}catch(e){}
-  try{const _rs=renderSpecials;renderSpecials=function(){try{noBoss();smartQuests()}catch(e){}const r=_rs.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}}catch(e){}
-  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
+  
+  
+  
   // ---- Moi : chaque bloc finit son propre rendu (plus de retouche globale après coup)
-  const after=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){const r=o.apply(this,arguments);try{fn()}catch(e){console.warn(name,e)}return r}}catch(e){}};
-  const before=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){try{fn()}catch(e){console.warn(name,e)}return o.apply(this,arguments)}}catch(e){}};
-  after("renderIdentity",()=>idViz());
-  after("renderChap",()=>{bilKpi();bilMore();bilViz();realRecap()});
-  after("renderVie",()=>{vieViz();ficheMove()});
-  before("renderFiche",()=>homeFix());
-  after("renderFiche",()=>{autoTime();ficheMove()});
-  after("renderWardrobe",()=>wrViz());
-  after("renderBalance",()=>balViz());
   try{charLinks();moiTabs()}catch(e){}
   // ---- chaque bloc d'Aujourd'hui finit son propre rendu (plus de retouche globale après coup)
   function sqFinish(){idqCard();idqDress();idqWho();bdDress();natDress();dressQuests();sqMenus();sqEod()}
@@ -16949,16 +16861,13 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
   function sqEod(){const L=(S.specials||[]).filter(q=>q.sm&&q.eod);if(!L.length)return;const tk=dayKey(Date.now());document.querySelectorAll("#sqBox .sq").forEach(c=>{const n=(c.querySelector(".sqn")||{}).textContent,q=L.find(x=>x.name===n);if(!q)return;const go=c.querySelector(".primary");if(!go||go.dataset.eod)return;go.dataset.eod=1;go.disabled=true;go.removeAttribute("data-tm");
       let st="ce soir";if(q.eod==="cig"){const n0=(S.g.cig||{})[tk]||0;st=n0+" / moins de "+q.eodv}if(q.eod==="bed")st="au coucher";go.textContent=st;go.classList.add("eodb")})}
    // ---- Proches et profil : chaque bloc finit son propre rendu
-  after("renderRelations",()=>relViz());
-  after("renderFG",()=>grpViz());
-  before("renderProfile",()=>homeFix());
-  after("renderProfile",()=>{profViz();profRemind();proFrame()});
   // Plus aucune retouche globale : chaque écran (Aujourd'hui, Moi, Proches, profil) se dessine dans sa forme finale.
   try{if(S&&S.g)render()}catch(e){console.warn("init",e)}
   try{renderFiche()}catch(e){}
 
 
-(function(){["gnOpen","stOpen","runOpen","mdOpen","puOpen"].forEach(k=>{const f=window[k];if(typeof f!=="function")return;window[k]=function(btn,n){const r=f.apply(this,arguments);try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}return r}})})();
+// Minuteurs (gainage, étirements, course, méditation, pompes) : bouton « Déjà fait » dans la fenêtre, appelé par gnOpen, stOpen, runOpen, mdOpen, puOpen
+function puDejaFait(btn){try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}}
 // ---- Assiette : au déjeuner et au dîner, on pose ce qu'on mange ; chaque côté (féculents, protéines, légumes) se remplit.
 // Données : S.g.plt["AAAA-MM-JJ"][repas] = {f:[ids], p:[ids], l:[ids], x:{yaourt:1, fromage:1, eau:1}}
 Object.assign(RKI,{
@@ -17088,7 +16997,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
       plQuests(m,btn,q)}};
   draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);document.documentElement.classList.add("plopen");try{sfx("open")}catch(e){}}
 // une quête nourriture vérifiable ouvre l'assiette du repas en cours au lieu de se valider d'un coup
-try{const _fd=feedDo;window.__plFd=_fd;feedDo=function(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return _fd.apply(this,arguments)}}catch(e){}
+window.__plFd=feedDoBase;
 // rituel Eau du jour (s'il existe et n'est pas fini)
 function plWaterRit(){try{ritRoll();return(S.daily.tasks||[]).find(t=>/\beau\b|verre/i.test(t.name)&&(S.daily.c[t.id]||0)<t.n)||null}catch(e){return null}}
 // annuler le repas depuis « Annuler » ou le journal : l'assiette et l'état du repas repartent à zéro
@@ -17097,8 +17006,8 @@ function plUndo(e){const[d,k]=e.plk.split(":"),per=e.plp,P=(S.g.plt||{})[d],m=P&
 
 // série : jours d'affilée avec des légumes (aujourd'hui compte s'il y en a, sinon on part d'hier)
 function plVegRun(){let n=0;const d=new Date();if(!plTot(dayKey(d)).l)d.setDate(d.getDate()-1);for(let i=0;i<400;i++){if(!plTot(dayKey(d)).l)break;n++;d.setDate(d.getDate()-1)}return n}
-try{const _bd=badgeDefs;badgeDefs=function(){const B=_bd.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>plVegRun()>=7});return B}}catch(e){}
-try{const _fo=famOf;famOf=function(id){return id==="veg7"?"reg":_fo(id)}}catch(e){}
+
+
 function plName(s,id){return plFood(id).n}
 function plSave(tk,k,m){const P=S.g.plt=S.g.plt||{};(P[tk]=P[tk]||{})[k]=m;const lim=dayKey(Date.now()-120*864e5);Object.keys(P).forEach(d=>{if(d<lim)delete P[d]});save()}
 // totaux d'une journée (déjeuner + dîner)
@@ -17119,7 +17028,7 @@ function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||
   box.innerHTML=`<div class="gcard col1"><h3>Mon assiette · 7 jours</h3><div class="plwk">${days.map(([d,t])=>`<span class="${t.n?"":"none"}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}">${t.n?plSvg(t):'<i class="plz"></i>'}<em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div>
     <div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${cnt(s)}/${done.length} j</span>`).join("")}</div>
     <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
-try{const _r=render;render=function(){const r=_r.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}}catch(e){}
+
 // shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026
 // ---- Icônes d'interface en pixel art (standard « tout en pixel art ») : grilles 12×12, une seule couleur (currentColor),
 // pour garder les couleurs et états actuels des boutons. Remplace ICO() et les anciennes icônes vectorielles au trait.
@@ -17151,7 +17060,7 @@ calendar:["..#.....#...","############","############","#..........#","#.##.##.#
 };
 function pxIco(n,s,cls){const R=PXUI[n];if(!R)return"";let r="";R.forEach((row,y)=>{let x=0;while(x<12){if(row[x]!=="#"){x++;continue}let w=1;while(x+w<12&&row[x+w]==="#")w++;r+=`<rect x="${x}" y="${y}" width="${w}" height="1.02"/>`;x+=w}});
   return`<svg class="ic pxic${cls?" "+cls:""}" viewBox="0 0 12 12" width="${s||16}" height="${s||16}" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
-try{const _ICO=ICO;ICO=function(n,s){return pxIco(n,s)||_ICO(n,s)}}catch(e){}
+
 // anciennes icônes au trait encore écrites en dur (barre du bas, boutons) : remplacées à l'affichage par leur version pixel
 const PXUSIG=[["M17 21v-2","users"],["M9 11l3 3L22 4","todo"],["M4 21c0-4","user"],["M6 9l6 6 6-6","chev"],["M17 9l5 6","sndoff"],["M16 9a4","sndon"],["M4 20h4L19 9","edit"],
   ["M12 3l2.2 6.8","spark"],["M12 5v14M5 12h14","plus"],["M6 6l12 12","close"],["M5 12.5l4.5","check"],["M4 5h16v11","chat"],["M5 4h4l2 5","phone"],["M20 11a8","swap"],["M4 12a8","reset"],["M14.5 17.5","sword"],["M12 22c4","flame"]];

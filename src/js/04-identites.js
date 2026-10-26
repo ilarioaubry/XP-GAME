@@ -74,7 +74,9 @@ function idPick(){const T=idState(),o=document.createElement("div");o.className=
     o.querySelectorAll(".idopt").forEach(b=>b.onclick=()=>{const id=b.dataset.id,i=T.ch.indexOf(id);if(i>=0)T.ch.splice(i,1);else{if(T.ch.length>=3)T.ch.shift();T.ch.push(id)}save();draw()});
     o.querySelector("#idOk").onclick=close};
   draw()}
-function renderIdentity(){const box=$("idBox");if(!box||!S.g)return;const T=idState();
+// renderIdentity : finitions autour de renderIdentityBase (le cœur), ex-retouche de correctifs.js
+function renderIdentity(){const r=renderIdentityBase.apply(this,arguments);try{idViz()}catch(e){console.warn("renderIdentity",e)}return r}
+function renderIdentityBase(){const box=$("idBox");if(!box||!S.g)return;const T=idState();
   if(!T.ch.length){box.innerHTML=`<button type="button" class="idempty" id="idGo"><b>Qui veux-tu devenir ?</b><small>Choisis 1 à 3 identités : lecteur, sportif, artiste, ami présent…</small><span class="go">Choisir</span></button>`;$("idGo").onclick=idPick;return}
   box.innerHTML=`<div class="idhead"><b>Ce que tu deviens</b><button type="button" class="lnk" id="idChg">Changer</button></div>`+T.ch.map(id=>{const I=idOf(id);if(!I)return"";const k=idStage(I),nx=idNext(I),last=T.log.filter(l=>l.id===id).slice(-1)[0];
     return`<div class="idcard" style="--ic:${I.c}"><span class="idi">${pxImg(I.ic,4)}</span><div class="idt">${k&&String(I.st[k-1][0]).toLowerCase()===String(I.n).toLowerCase()?"":`<small>${esc(I.n)}</small>`}<b>${k?esc(I.st[k-1][0]):"Le chemin commence"}</b>${nx?`<span class="idbar"><i style="width:${nx.pct}%"></i></span><em>Encore ${nx.left} ${IDU[nx.s[1]]} pour « ${esc(nx.s[0])} »</em>`:`<em>Chemin accompli</em>`}</div><div class="idsteps">${I.st.map((x,j)=>`<i class="${j<k?"on":""}" title="${esc(x[0])}"></i>`).join("")}</div></div>`}).join("");

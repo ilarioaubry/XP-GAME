@@ -26,7 +26,11 @@
     const actPer=tk=>{const L=(S.g.per||[]).filter(p=>p.s<=tk&&tk<=p.e);return L.find(p=>p.t==="malade")||L.find(p=>p.t!=="contrat"&&p.t!=="autre")||L.find(p=>p.t==="contrat")||L[0]||null};
     const workDay=tk=>{const v=V(),wd=toD(tk).getDay();if(!v.wd.includes(wd))return false;if(v.job)return true;return(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e&&(!p.wd||(wd>0&&wd<6)))};
     // ---- Réglages lus par le reste de l'appli
-    window.vieCap=function(){try{if(!S||!S.g)return 3;const v=V(),tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let c=workDay(tk)?v.capW:v.cap;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return Math.max(1,Math.min(8,c))}catch(e){return 3}};
+    const vieCapBase=function(){try{if(!S||!S.g)return 3;const v=V(),tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let c=workDay(tk)?v.capW:v.cap;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return Math.max(1,Math.min(8,c))}catch(e){return 3}};
+    // vieCap = vieCapBase (le cœur) → capacité choisie pour aujourd'hui (vieCapBase2) → ajustée selon énergie et sommeil. Ex-réécritures de correctifs.js.
+    const vieCapBase2=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return vieCapBase()};
+    window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
+      if(v){v.cap=4;v.capW=2}let c=vieCapBase2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}};
     window.vieGoalF=function(){try{const tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let f=T.goal||1;if(workDay(tk)&&f>.7)f=.7;return f}catch(e){return 1}};
     window.vieSoft=function(){try{const p=actPer(tkNow());return!!(p&&PT[p.t]&&PT[p.t].soft)}catch(e){return false}};
     window.viePri=function(cat){try{const i=V().pri.indexOf(cat);return i<0?9:i}catch(e){return 9}};
@@ -115,7 +119,7 @@
       box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>goVie("vie-per"));
       bindPer(box);bindLast(box,tk)};
     // ---- Page « Ma vie » (Profil)
-    window.renderVie=function(){
+    const renderVieBase=function(){
       const box=document.getElementById("vieBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();
       const seg=(k,opts,cur)=>`<div class="seg" role="group">${opts.map(o=>`<button type="button" data-seg="${k}" data-val="${o}" aria-pressed="${cur===o}">${o}</button>`).join("")}</div>`;
       const p=actPer(tk),cap=vieCap();
@@ -152,5 +156,7 @@
       box.querySelectorAll("[data-trk]").forEach(b=>b.onchange=()=>{v.track[b.dataset.trk]=b.checked;ch()});
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
       bindPer(box);bindLast(box,tk)};
+    // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js
+    window.renderVie=function(){const r=renderVieBase.apply(this,arguments);try{vieViz();ficheMove()}catch(e){console.warn("renderVie",e)}return r};
   })();
   

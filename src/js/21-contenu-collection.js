@@ -102,7 +102,9 @@ const BI={
 };
 // ===== Bloc Jeu / Musique / Vie perso =====
 const ICP={plus:'<path d="M12 5v14M5 12h14"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',camera:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/>',edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',close:'<path d="M6 6l12 12M18 6L6 18"/>',chev:'<path d="M6 9l6 6 6-6"/>',swap:'<path d="M20 11a8 8 0 0 0-14-4.5L4 8.5M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14 4.5l2-2M20 20v-4.5h-4.5"/>',reset:'<path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5M4 4v4.5h4.5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',spark:'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/>',sword:'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4"/>',flame:'<path d="M12 22c4 0 7-2.8 7-6.8 0-3.6-2.4-5.6-3.6-8.7-.4 1.9-1.4 3-2.6 3.5C13 6.5 11.6 4 9 2.5c.3 3.4-4 6.2-4 11.3C5 18.6 8 22 12 22z"/>'};
-function ICO(n,s){s=s||16;return`<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICP[n]}</svg>`}
+// ICO : version complète (ex-réécriture de icones-pixel.js), ICOBase = le cœur d'origine
+function ICO(n,s){return (typeof pxIco==="function"&&pxIco(n,s))||ICOBase(n,s)}
+function ICOBase(n,s){s=s||16;return`<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICP[n]}</svg>`}
 
 // ===== Skills loisirs =====
 // ===== Bonnes actions en cartes =====

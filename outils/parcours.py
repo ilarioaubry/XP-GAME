@@ -18,6 +18,7 @@ with sync_playwright() as p:
     b = p.chromium.launch()
     ctx = b.new_context(viewport={"width": 393, "height": 852}, is_mobile=True, has_touch=True, timezone_id="Europe/Paris", reduced_motion="reduce")
     pg = ctx.new_page()
+    pg.add_init_script("Math.random=(()=>{let s=42;return()=>{s=(s*16807)%2147483647;return s/2147483647}})()")
     pg.on("pageerror", lambda e: errs.append((str(e)+" @ "+((e.stack or "").split("\n")[1:2] or [""])[0].strip())[:220]))
     t = datetime.datetime.fromisoformat("2026-10-26T13:00:00+01:00"); pg.clock.install(time=t)
     pg.goto("file://" + APP); pg.wait_for_timeout(1500)
@@ -46,13 +47,18 @@ with sync_playwright() as p:
 
     # 4. Quête du jour puis Annuler
     pg.evaluate("document.querySelectorAll('.bpop').forEach(e=>e.remove())")
-    x0 = xp(pg); pg.evaluate("document.querySelector('.fqgo').click()"); pg.wait_for_timeout(1500)
+    x0 = xp(pg); pg.evaluate("[...document.querySelectorAll('.fqgo')].find(b=>/^Fait/.test(b.textContent.trim())).click()"); pg.wait_for_timeout(1500)
     if pg.is_visible(".bpop"):  # « Avec qui ? » éventuel
         pg.evaluate("(document.querySelector('.bpop .primary')||document.querySelector('.bpop button')).click()"); pg.wait_for_timeout(400)
     x1 = xp(pg); check("quête du jour validée (+XP)", x1 > x0, f"{x0} → {x1} " + pg.evaluate("[...document.querySelectorAll('.fqgo')].map(b=>b.textContent+'/'+b.closest('[class]').className).join(' ; ')+' | '+[...document.body.children].slice(-5).map(e=>e.className+':'+e.textContent.slice(0,50)).join(' ; ')"))
     un = pg.evaluate("(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.offsetParent&&b.textContent.trim()==='Annuler'&&!b.closest('.plo,.addfw'));if(b){b.click();return true}return null})()")
     pg.wait_for_timeout(800)
     check("Annuler rend l'XP", un is not None and xp(pg) < x1, f"{x1} → {xp(pg)}")
+
+    # 4b. Quête avec minuteur : la fenêtre s'ouvre avec « Déjà fait »
+    r = pg.evaluate("""(()=>{const b=[...document.querySelectorAll('.fqgo')].find(b=>!/^Fait/.test(b.textContent.trim()));if(!b)return 'aucune';b.click();
+      const o=[...document.querySelectorAll('.pu')].pop();const ok=!!(o&&o.querySelector('.pudone'));if(o)o.remove();return ok})()""")
+    if r != "aucune": check("quête à minuteur : bouton « Déjà fait »", r is True, str(r))
 
     # 5. Proches : ajouter un ami et un membre de la famille
     pg.evaluate("showView('r')"); pg.wait_for_timeout(300)
@@ -75,6 +81,13 @@ with sync_playwright() as p:
         try: pg.evaluate("()=>{document.querySelectorAll('.bpop,.plo,.wxsh,.sitsh,.qcsh,.qcw').forEach(e=>e.remove());" + js + "}"); pg.wait_for_timeout(300)
         except Exception as e: errs.append(nom + ": " + str(e)[:100])
         check(f"écran {nom}", len(errs) == n0)
+
+    # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
+    n0 = len(errs)
+    nb = pg.evaluate("""(()=>{showView('c');document.querySelector('[data-sub=wr][role=tab]').click();let n=0;
+      for(const r of HM_ROOMS){hmRoom=r[0];renderHome(1);document.querySelectorAll('#homeBox .hmo').forEach(g=>{g.dispatchEvent(new MouseEvent('click',{bubbles:true}));n++})}
+      hmRoom=null;renderHome(1);return n})()""")
+    check("pièces de la maison et objets", len(errs) == n0 and nb > 10, f"{nb} objets")
 
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")

@@ -80,7 +80,9 @@ function moodFace(n,px,flat){n=Math.max(1,Math.min(5,n|0));const base=(S.g&&S.g.
     for(let y=0;y<H.H;y++)for(let x=0;x<H.W;x++){const v=H.px[y*H.W+x],X=x+ox,Y=y+oy;if(v&&X>=0&&X<N&&Y>=0&&(flat||(X-C)**2+(Y-C)**2<=(R-.3)**2)){g.fillStyle=v;g.fillRect(X*2,Y*2,2,2)}}
     __mf[k]=cv.toDataURL("image/png")}
   return`<img class="mface" src="${__mf[k]}" width="${px}" height="${px}" alt="" style="image-rendering:pixelated">`}
-function renderLife(){
+// renderLife : version complète (ex-réécriture de correctifs.js), renderLifeBase = le cœur d'origine
+function renderLife(){const r=renderLifeBase.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}
+function renderLifeBase(){
   const box=$("ritLife");if(!box)return;if(box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT")return;
   const G=S.g,tk=dayKey(Date.now()),sl=G.sleep[tk],md=G.mood[tk];
   let h="";const P=dayPer(),shSl=P==="matin"&&(!sl||sleepEdit),shMd=false;box.hidden=!(shSl||shMd);

@@ -214,9 +214,7 @@
     if(!hit&&e.af){const fid=e.af.split(":")[1];hit=L.find(q=>!q.who&&!q.afk&&afMatch(q.name)&&afMatch(q.name).split(":")[1]===fid)}
     if(!hit)return;S.specials=S.specials.filter(q=>q!==hit);const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:hit.name,t:Date.now()});
     try{addBonus("Quête accomplie : "+hit.name,hit.xp,0,"autoq")}catch(err){}setTimeout(()=>{try{toast(`Quête accomplie au passage : <span class="p">${esc(hit.name)}</span> +${hit.xp} XP`);renderSpecials()}catch(err){}},1300)}
-  try{const _c=complete;complete=function(a,el,ev,sp,extra){const r=_c.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
-      let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
-      autoQuest(e)}}catch(err){}return r}}catch(e){}
+  
   // ===== Habitudes apprises
   const JRS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
   function habits(){const now=Date.now(),wd=new Date().getDay(),tk=dayKey(now),H={},P={};
@@ -460,9 +458,7 @@
       g.sm={d:tk};ch=true}
     if(ch){save();try{renderSpecials()}catch(e){}}}
   try{DQ_K.bd=["Anniversaire","#e0447a",'<path d="M4 21h16M5 21v-7h14v7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 11V8" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="5.5" r="1.8" fill="currentColor"/>'];DQ_ORD.bd=-2;DQ_K.smart=["Pour toi","#3fbf6a",'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z" fill="currentColor"/>'];DQ_ORD.smart=-.2}catch(e){}
-  try{const _cs=completeSpecial;completeSpecial=function(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
-      if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
-      if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return _cs.apply(this,arguments)}}catch(e){}
+  
   // Atelier de création : choisir une action avec la même recherche
   function qwTpl(kind,dom){const out=[];try{const doms=dom?[dom]:Object.keys(QC_TPL);doms.forEach(d=>(QC_TPL[d]||[]).forEach(t=>{if(t[1]===kind&&!out.some(x=>x.name===t[0]))out.push({name:t[0],cat:d,k:"tpl"})}))}catch(e){}return out}
   function qwFind(inp){const kind=/Courir/.test(inp.placeholder)?"act":"";if(!kind)return;
@@ -503,8 +499,8 @@
   // 3. Capacité : toucher le compteur d'Aujourd'hui
   document.addEventListener("click",e=>{const c=e.target.closest&&e.target.closest("#fqBox .head .count");if(!c)return;e.preventDefault();e.stopPropagation();const tk=dayKey(Date.now()),v=S.g.vie||(S.g.vie={}),cur=vieCap();
     pop(c,[1,2,3,5,8].map(n=>({l:n+" quête"+(n>1?"s":"")+" aujourd'hui",on:n===cur,f:()=>{v.capDay={d:tk,n};if(S.g.fq)S.g.fq.d="";save();render()}})),"Aujourd'hui")},true);
-  {const _vc=window.vieCap;window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return _vc()}}
-  try{const _es=enSet;enSet=function(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return _es(v)}}catch(e){}
+  
+  
   // 2, 4, 5. Menu « … » des quêtes du jour enrichi
   function fqExtra(){const L=(()=>{try{return fqList()}catch(e){return[]}})();document.querySelectorAll("#fqBox .fqr .fqno").forEach(m=>{if(m.querySelector("[data-ex]"))return;const r=m.closest(".fqr"),x=L[+r.dataset.i];if(!x)return;
       const add=(k,l,sub,f)=>{const b=document.createElement("button");b.type="button";b.className="btn";b.dataset.ex=k;b.innerHTML=`${l}<small>${sub}</small>`;b.onclick=e=>{e.stopPropagation();f()};m.prepend(b)};
@@ -561,7 +557,9 @@
       if(b.dataset.ask==="poste"){fEdit=true;try{showView("c");cGoSub("c","vie")}catch(e){}setTimeout(()=>{const x=document.getElementById("ficheBox");if(x)x.scrollIntoView({behavior:"smooth"})},200);try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
       try{render()}catch(e){}renderFiche();const t=document.getElementById("evToday");if(t)t.querySelectorAll(".fask").forEach(x=>x.remove())})}
   function askToday(){const b=document.getElementById("evToday");if(!b)return;const h=perAskCard();let c=b.querySelector(".fask");if(!h){if(c)c.remove();return}if(c)return;b.insertAdjacentHTML("afterbegin",h);bindAsk(b)}
-  window.renderFiche=function(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
+  // renderFiche : finitions autour de renderFicheBase (le cœur), ex-retouche de correctifs.js
+function renderFiche(){try{homeFix()}catch(e){console.warn("renderFiche",e)}const r=renderFicheBase.apply(this,arguments);try{autoTime();ficheMove()}catch(e){console.warn("renderFiche",e)}return r}
+function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
     const s=s0?{...s0}:{goals:[],pass:[]};if(!Array.isArray(s.with))s.with=[];s.home=homeOf(s);const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";const pri=(G.vie&&G.vie.pri)||[];
     const commit=()=>{const cur=sitOf()||{};G.sit={...cur,...s,t:Date.now()};if(G.fq)G.fq.d="";save()};
     const H=HOMEI[s.home]||HOMEI.seul,av=s.with.slice(0,4).map(n=>pAv(n,"fmini")).join("");
@@ -594,12 +592,11 @@
     const n=box.querySelector(".fnote");n.value=s.note||"";n.onchange=()=>{s.note=n.value.trim().slice(0,80);commit()};
     box.querySelector(".fart").onclick=()=>{try{sitSheet()}catch(e){}};
     box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
-    ficheMove()};
+    ficheMove()}
   function ficheTick(){try{autoTime()}catch(e){}try{ficheMove()}catch(e){}try{askToday()}catch(e){}}
   // ---- capacité déduite + suivi en cartes
   try{void 0;}catch(e){}
-  {const _vc2=window.vieCap;window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
-      if(v){v.cap=4;v.capW=2}let c=_vc2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}}}
+  
   function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)return;
     {let c=3;try{c=vieCap()}catch(e){}const e=enOf(),tk=dayKey(Date.now());let wd=false;try{wd=(S.g.vie.wd||[]).includes(new Date().getDay())&&c<=3}catch(_){}
       const why=[];try{const s=sitOf();if(s&&["poste","etud","indep"].includes(s.job)&&wd)why.push("jour de travail")}catch(_){}if(e===1)why.push("batterie basse");if(e===3)why.push("en forme");const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)why.push("nuit courte");
@@ -721,7 +718,7 @@
   // ---- Collection : « Badges » est une catégorie comme les autres
   function wrBadges(){const on=typeof wrCat!=="undefined"&&wrCat==="badges";document.documentElement.dataset.wrc=on?"badges":"wr"}
   window.wrBadges=wrBadges;
-  try{const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);try{wrBadges()}catch(e){}return r}}catch(e){}
+  
   // ---- Bilan du mois : toucher un jour pour noter (ou corriger) son humeur
   document.addEventListener("click",e=>{const c=e.target.closest(".bcd.mpk[data-k]");if(!c)return;try{moodPick(c.dataset.k)}catch(err){}});
   document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const c=e.target.closest&&e.target.closest(".bcd.mpk[data-k]");if(!c)return;e.preventDefault();try{moodPick(c.dataset.k)}catch(err){}});
@@ -751,9 +748,8 @@
   // ---- apprendre des refus : 3 refus d'une même famille en 30 jours = elle se met en retrait 3 semaines
   const famOfQ=x=>{try{const t=x.t||(x.q&&x.q.name)||"";const k=afMatch(t);return k?k.split(":")[1]:""}catch(e){return""}};
   const famCool=f=>{const R=(S.g&&S.g.fqFam)||{},L=(R[f]||[]).filter(t=>Date.now()-t<30*864e5);return L.length>=3&&Date.now()-L[L.length-1]<21*864e5};
-  try{const _fn=feedNo;feedNo=function(x,how){if(how==="today"||how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
-      if(!was&&famCool(f)){const F=(typeof FAM!=="undefined"?FAM.find(z=>z.id===f):null);setTimeout(()=>toast(`Compris : moins de quêtes « ${esc((F&&F.l)||f)} » pendant un moment`),900)}}}return _fn.apply(this,arguments)}}catch(e){}
-  try{const _fp=feedPick;feedPick=function(){const r=_fp.apply(this,arguments);try{if(r&&Array.isArray(r.L))r.L=r.L.filter(x=>x.done||x.k==="arc"||x.gift||!famCool(famOfQ(x)))}catch(e){}return r}}catch(e){}
+  
+  
   // ---- les quêtes du jour prennent place dans les creux de la journée (frise + « vers 18 h »)
   function fqSlots(){const box=document.getElementById("fqBox"),fr=document.querySelector("#qDay .frise .frt");if(!box||!S||!S.g)return;
     const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24),pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100));
@@ -771,19 +767,10 @@
     if(!fr)return;const sig=marks.map(m=>m.x+m.t+m.ic.length).join("|");if(fr.dataset.fq===sig&&fr.querySelector(".frq")||(!marks.length&&!fr.querySelector(".frq"))){fr.dataset.fq=sig;return}fr.dataset.fq=sig;fr.querySelectorAll(".frq").forEach(e=>e.remove());
     marks.forEach(m=>{const s=document.createElement("span");s.className="frq";s.style.left=pc(m.x)+"%";s.title=m.t+" · vers "+m.x+" h";s.innerHTML=m.ic;fr.appendChild(s)})}
   // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
-  try{const _rl=renderLife;renderLife=function(){const r=_rl.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}}catch(e){}
-  try{const _rs=renderSpecials;renderSpecials=function(){try{noBoss();smartQuests()}catch(e){}const r=_rs.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}}catch(e){}
-  try{const _rd=render;render=function(){const r=_rd.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}}catch(e){}
+  
+  
+  
   // ---- Moi : chaque bloc finit son propre rendu (plus de retouche globale après coup)
-  const after=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){const r=o.apply(this,arguments);try{fn()}catch(e){console.warn(name,e)}return r}}catch(e){}};
-  const before=(name,fn)=>{try{const o=window[name];if(typeof o!=="function")return;window[name]=function(){try{fn()}catch(e){console.warn(name,e)}return o.apply(this,arguments)}}catch(e){}};
-  after("renderIdentity",()=>idViz());
-  after("renderChap",()=>{bilKpi();bilMore();bilViz();realRecap()});
-  after("renderVie",()=>{vieViz();ficheMove()});
-  before("renderFiche",()=>homeFix());
-  after("renderFiche",()=>{autoTime();ficheMove()});
-  after("renderWardrobe",()=>wrViz());
-  after("renderBalance",()=>balViz());
   try{charLinks();moiTabs()}catch(e){}
   // ---- chaque bloc d'Aujourd'hui finit son propre rendu (plus de retouche globale après coup)
   function sqFinish(){idqCard();idqDress();idqWho();bdDress();natDress();dressQuests();sqMenus();sqEod()}
@@ -792,13 +779,10 @@
   function sqEod(){const L=(S.specials||[]).filter(q=>q.sm&&q.eod);if(!L.length)return;const tk=dayKey(Date.now());document.querySelectorAll("#sqBox .sq").forEach(c=>{const n=(c.querySelector(".sqn")||{}).textContent,q=L.find(x=>x.name===n);if(!q)return;const go=c.querySelector(".primary");if(!go||go.dataset.eod)return;go.dataset.eod=1;go.disabled=true;go.removeAttribute("data-tm");
       let st="ce soir";if(q.eod==="cig"){const n0=(S.g.cig||{})[tk]||0;st=n0+" / moins de "+q.eodv}if(q.eod==="bed")st="au coucher";go.textContent=st;go.classList.add("eodb")})}
    // ---- Proches et profil : chaque bloc finit son propre rendu
-  after("renderRelations",()=>relViz());
-  after("renderFG",()=>grpViz());
-  before("renderProfile",()=>homeFix());
-  after("renderProfile",()=>{profViz();profRemind();proFrame()});
   // Plus aucune retouche globale : chaque écran (Aujourd'hui, Moi, Proches, profil) se dessine dans sa forme finale.
   try{if(S&&S.g)render()}catch(e){console.warn("init",e)}
   try{renderFiche()}catch(e){}
 
 
-(function(){["gnOpen","stOpen","runOpen","mdOpen","puOpen"].forEach(k=>{const f=window[k];if(typeof f!=="function")return;window[k]=function(btn,n){const r=f.apply(this,arguments);try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}return r}})})();
+// Minuteurs (gainage, étirements, course, méditation, pompes) : bouton « Déjà fait » dans la fenêtre, appelé par gnOpen, stOpen, runOpen, mdOpen, puOpen
+function puDejaFait(btn){try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}}

@@ -50,7 +50,11 @@ function ensureGroupQuests(){
     if(!cur&&S[GROUPS[g].list].length&&!G.dq.done.some(x=>x.grp===g)){const q=groupQuest(g);if(q){q.d=tk;S.specials.unshift(q);added=true}}});
   return added;
 }
-function completeSpecial(q,el,ev){
+// completeSpecial : version complète (ex-réécriture de correctifs.js), completeSpecialBase = le cœur d'origine
+function completeSpecial(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
+      if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
+      if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return completeSpecialBase.apply(this,arguments)}
+function completeSpecialBase(q,el,ev){
   if(q.dz==="cine")filmSeen(q.name,true);
   if(q.lzs)lzGain(q.lzs,q.xp);
   if(q.sur)S.g.surDone=q.sur;if(q.org)S.g.orgDone=q.org;if(q.secret)S.g.secDone=(S.g.secDone||0)+1;
