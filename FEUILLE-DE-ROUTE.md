@@ -15,6 +15,18 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 
 ---
 
+## Suite réorganisée (26/10/2026)
+
+Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8, 3.10). Ordre retenu pour la suite :
+
+1. **Finitions rapides** : 2.8 (vue « t »), 7.5 (outils dans le projet), 7.1 README, 7.2 CHANGELOG, et les décisions courtes 2.9 / 2.10.
+2. **Vérifications sur l'iPhone** (liste en bas) : avant de toucher à l'organisation des écrans.
+3. **Décisions de la phase 6** (6.1 phrase du cœur, 6.2 rôle du jeu, 6.3 version 1, 6.12 décor animé) : une conversation, pas de code.
+4. **Refonte écran par écran** selon ces décisions (6.4 à 6.13), en passant chaque écran sur les composants `ui-` : ça règle au passage 3.7, 3.8 et 3.10. Ordre : Aujourd'hui → Moi → Proches → fenêtres.
+5. **Sécurité du projet** : 7.3 tests automatiques, 7.4 vérification à chaque mise en ligne.
+6. **Phase 4** (scripts), protégée par les tests.
+7. **Phase 8** (nouveautés), seulement si tu le décides.
+
 ## Phase 0 — Fait
 
 - [x] Retirer les captures de test du dépôt, ajouter `.gitignore` (25/10/2026)
@@ -57,10 +69,14 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [x] 3.6 (26/10/2026) Fenêtres → `fenetres.css` ; les 27 anciennes couches (principal, épure, maison…) fusionnées dans `base.css` dans leur ordre ; en-tête de page remis dans <head>
 - [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important`
 - [x] 3.9 (26/10/2026) Supprimer le CSS des fonctionnalités retirées (328 règles et 355 sélecteurs dont les classes n'existent plus dans le code)
+- [ ] 3.10 Les écrans n'utilisent pas encore les composants `ui-` (créés en 3.2) : à faire écran par écran, avec 3.7 et 3.8
 - [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds → à faire avec 3.7 (la règle universelle reste en attendant, elle marche)
 
 ## Phase 4 — Scripts
 
+- [ ] 2.8 Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer
+- [ ] 2.9 Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration
+- [ ] 2.10 « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)**
 - [ ] 4.1 Reporter chaque rustine de `correctifs.js` (139 Ko) dans sa fonction d'origine, puis supprimer le fichier
 - [ ] 4.2 Remplacer les 24 réécritures de fonctions globales par des modifications directes (`render` ×2 dans correctifs et assiette, `ICO`, `feedDo`, `badgeDefs`, `complete`, `famOf`…)
 - [ ] 4.3 Icônes pixel écrites à la source, suppression des observateurs DOM (`pxSwap`, `sqIcons`)
@@ -114,18 +130,22 @@ Lisibilité :
 - [ ] 6.8 Un seul chemin principal par action (repas : tuile / assiette / quête ; quête : bouton / « … » / appui long)
 - [ ] 6.9 Page « Aide » courte pour les gestes
 - [ ] 6.10 Proches triés par temps depuis le dernier contact **(décision)**
+- [ ] 6.12 Décor animé (ciel, scène) : il bouge tout seul alors que le standard dit « rien qui bouge tout seul », et c'est ce qui coûte le plus en batterie **(décision)** : garder, calmer, ou désactiver par défaut
+- [ ] 6.13 Seul le rythme des actions de « Cette semaine » reste accessible uniquement par appui long (reste de 5.8) → l'ajouter au menu « … »
 - [ ] 6.11 Stats de personnage → résumé concret (« ce mois-ci : 12 repas équilibrés, 4 sorties ») **(décision)**
 
 ## Phase 7 — Organisation du projet
 
 - [ ] 7.1 README : à quoi sert l'appli, installation sur iPhone
 - [ ] 7.2 CHANGELOG (ce qui a changé, quand)
+- [ ] 7.5 Ranger dans le projet les outils de vérification construits pendant la phase 3 (captures de 55 écrans + comparaison au pixel, styles calculés, tri du CSS)
 - [ ] 7.3 5 à 10 tests Playwright versionnés (valider un repas, une quête, annuler, assiette, sauvegarde…)
 - [ ] 7.4 GitHub Actions : build `--check` + tests à chaque envoi
 
 ## Phase 8 — Nouvelles fonctionnalités (seulement après, à valider)
 
 - [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan (correction du 25/10 : des onglets Semaine / Mois / Année existent déjà, à revoir plutôt qu'à créer)
+- [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
 - [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
 
 ## À vérifier sur l'iPhone d'Ilario (non vérifiable ici)
