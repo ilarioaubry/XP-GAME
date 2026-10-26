@@ -737,3 +737,34 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .rtq>.amb{
 .rtq-bas{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:16px}
 .rtq-bas .rtq-go,.rtq-bas .rtq-fin{grid-column:1/-1}
 @media (prefers-reduced-motion:reduce){.rtq-et{transition:none}}
+
+/* ===== Rituels : univers « cartes colorées » (choisi le 26/10) — chaque rituel a sa couleur et un motif pixel, comme les quêtes */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main{gap:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl :is(.rtile){position:relative;overflow:hidden;border:0!important;box-shadow:none!important;min-height:104px;
+  background:repeating-conic-gradient(rgba(255,255,255,.07) 0 25%,#0000 0 50%) 0 0/12px 12px,linear-gradient(180deg,color-mix(in srgb,var(--kc) 70%,#141428),color-mix(in srgb,var(--kc) 38%,#141428))!important;opacity:1!important;filter:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile::before{content:"";position:absolute;inset:auto 0 0 0;height:22px;background:rgba(0,0,0,.25);pointer-events:none}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtic svg{width:48px!important;height:48px!important;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile .rtn{position:relative;color:#fff!important;font-size:13px!important;text-shadow:0 1px 0 rgba(0,0,0,.5)}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile:not(.done) .xph{position:absolute!important;top:6px;right:6px;background:#141428!important;color:#ffd94a!important;font-size:11px!important;font-weight:700!important;padding:1px 4px!important;border:0!important}
+/* fait : la carte s'éteint, l'icône passe en gris, une coche or en haut à droite */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile.done{background:repeating-conic-gradient(rgba(255,255,255,.04) 0 25%,#0000 0 50%) 0 0/12px 12px,linear-gradient(180deg,#2a2c44,#1d1f33)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile.done .rtic{filter:grayscale(.75) brightness(.8)}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile.done .rtn{color:rgba(255,247,230,.6)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile.done>em{position:absolute!important;top:6px;right:6px;margin:0!important;color:#ffd94a!important;display:block!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile.done>em svg{width:24px!important;height:24px!important;color:#ffd94a!important}
+/* Routine : une tuile de la même hauteur, sur toute la ligne */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo{grid-column:1/-1!important;aspect-ratio:auto!important;min-height:104px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:12px!important;
+  background:repeating-conic-gradient(rgba(255,255,255,.12) 0 25%,#0000 0 50%) 0 0/12px 12px,linear-gradient(180deg,#ffe27a,#f0b830)!important;color:#1a1206!important;border:0!important;box-shadow:none!important;font-family:var(--f-pixel)!important;font-size:20px!important;text-transform:uppercase;letter-spacing:.04em}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo svg{width:32px!important;height:32px!important;color:#1a1206!important}
+/* le soir : les rituels du matin encore possibles, en petites cartes colorées (même univers) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar{background:none!important;border:0!important;padding:0!important;margin:0 0 12px!important;box-shadow:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh{padding:0 0 8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh span{font-size:13px!important;opacity:1!important;color:rgba(255,247,230,.75)!important;font-weight:700}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtl{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile{aspect-ratio:auto!important;min-height:64px!important;padding:6px 4px!important;display:grid!important;place-items:center!important;gap:2px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic{width:32px!important;height:32px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic svg{width:32px!important;height:32px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtn{display:block!important;font-size:11px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile::before{height:14px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtl.mini{background:none!important;padding:0!important;border:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmb{padding:0!important;margin:0!important;background:none!important;border:0!important}

@@ -206,7 +206,7 @@ function renderSpecialsBase(){schedNow();renderBalance();
    if(!PER&&h<8){const y=dayKey(Date.now()-864e5);if(!G.mb[y+":soir"])pend.push("soir:"+y)}
    pend.forEach(pp=>tr.appendChild(mbCard(pp)))}
   if(soirWait){const e=document.createElement("p");e.className=left===0?"dqend dqwait":"dqwait";e.innerHTML=`<span class="dqwi">${rkSvg("lune")}</span><b>${RIT_SOIR_H}h</b>`;tr.appendChild(e)}
-  if(RM.length){const w=document.createElement("div");w.className="dqmorn"+(dqMorn?" open":"");w.innerHTML=`<button type="button" class="dqmh" aria-expanded="${dqMorn}"><span>Matin</span><em>${RM.length}</em><i class="dqchev">${ICO("chev",14)}</i></button><div class="dqmb"></div>`;
+  if(RM.length){const w=document.createElement("div");w.className="dqmorn"+(dqMorn?" open":"");w.innerHTML=`<button type="button" class="dqmh" aria-expanded="${dqMorn}"><span>Encore possible du matin</span><em>${RM.length}</em><i class="dqchev">${ICO("chev",14)}</i></button><div class="dqmb"></div>`;
     w.classList.add("open","dqmbar");w.querySelector(".dqmh").onclick=()=>{};{const bd=w.querySelector(".dqmb");bd.appendChild(ritTiles(ritOrder(RM),"matin","mini"))}tr.prepend(w)}
   {const hide=sMood;$("sqBox").classList.toggle("vsoft",hide);
    if(sMood&&PER){const e=document.createElement("div");e.className="softc";e.innerHTML=`<b>Journée difficile</b><small>Juste l'essentiel${RT0.some(t=>t.core)?" : ton socle":""}.</small><button type="button" class="lnk">Voir tout quand même</button>`;e.querySelector("button").onclick=()=>{S.g.softAll=tk;save();render()};tr.prepend(e)}}
