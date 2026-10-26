@@ -39,7 +39,12 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Coins carrés partout** (pixel art). Jamais de mélange carré dehors / arrondi dedans. Seuls les vrais ronds (`border-radius:50%`) restent ; un nouveau rond doit être ajouté à la liste de `css/standards.css`.
 - **Titres de section** : tous identiques (police pixel, majuscules, losange à la couleur de la section), sans ombre ni fond.
 - **Même catégorie d'info = même taille et même alignement** (fiches de proches, cartes de quêtes, boutons d'action…), sans changer la taille des polices : texte trop long → titres de carte sur **2 lignes max**, noms dans les listes sur 1 ligne, puis « … ».
-- **Contenu centré** dans les éléments courts (bouton, tuile, compteur). Les cartes avec un titre et une description sont **alignées à gauche**.
+- **Contenu centré** dans les éléments courts (bouton, tuile, puce, onglet, compteur) : l'icône seule est centrée ; icône + texte forment **un groupe centré**, horizontalement et verticalement ; l'icône ne déborde jamais de sa case ; marges intérieures symétriques. Les cartes avec un titre et une description sont **alignées à gauche**, et toutes leurs lignes suivent le même alignement (la petite ligne au-dessus du titre aussi).
+- **En rangée ou côte à côte, l'alignement prime** : d'un élément à l'autre, icônes et textes sont à la même hauteur et à la même place (une tuile « Ajouter » s'aligne sur ses voisines).
+- **Icône seule quand elle se comprend** (une autre / rafraîchir, supprimer = poubelle, fermer, modifier, ajouter) : bouton carré 44, sans texte, avec `aria-label` et `title`. Le texte ne s'ajoute que si deux choix se ressemblent.
+- **Une seule ligne de séparation** : jamais deux lignes d'affilée (celle de la section + celle d'un bloc juste dessous) ; pas de ligne juste sous des onglets.
+- **Tuile pleine ligne** (Routine…) : même style que ses voisines, contenu centré, hauteur modérée (pas une tuile géante).
+- **Vérifier avant de livrer** : `python3 outils/centrage.py` doit afficher « 0 élément(s) mal centré(s) » (centrage, lignes doublées, ligne sous les onglets).
 - **Quêtes spéciales** : carrousel où la carte suivante dépasse un peu (on voit que ça glisse) ; chaque carte a une icône pixel en bas à droite (catégorie par défaut si la quête n'en a pas).
 - **Collections** (armoire, badges…) : on montre ce qui est obtenu, puis une seule tuile « +N » pour ce qui reste à trouver, jamais la liste des éléments verrouillés.
 - **Personnes associées à une action** : on les choisit au moment de « Fait » (fenêtre « Avec qui ? »), jamais suggérées avant.

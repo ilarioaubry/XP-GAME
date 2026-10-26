@@ -160,3 +160,19 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.back>
 /* supprimer : bouton icône poubelle, carré 44, style secondaire */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic{display:inline-grid!important;place-items:center!important;width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;background:var(--ui-fond,rgba(12,14,32,.8))!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;border-radius:0!important;box-shadow:none!important;text-decoration:none!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic svg{display:block!important}
+/* une seule ligne de séparation : pas de ligne sous les onglets, et le premier bloc d'une section ne redouble pas la ligne de la section */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .wrap>section.sans-sep{background-image:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #vieBox>.vie-c.premier{border-top:0!important;padding-top:0!important;margin-top:0!important}
+/* Quête spéciale « idée sortie » : l'icône « une autre » suffit (bouton carré 44) ; la ligne du haut est alignée à gauche comme le titre */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .sq.idq .idqr{width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important;flex:0 0 44px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #sqBox .sq .sqk{justify-content:flex-start!important;text-align:left!important;align-self:stretch!important}
+/* ===== Centrage (standard du 27/10) : dans un élément court (bouton, tuile, puce, onglet), l'icône seule est centrée,
+   icône + texte forment un groupe centré, horizontalement et verticalement. Vérifié par outils/centrage.py */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.mlp,.plf,.plr) :is(svg,img){display:block}
+/* l'icône ne déborde jamais de sa case (sinon le groupe paraît décentré) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .fjobs>button .fti{width:auto!important;height:auto!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .mlp .mli{width:48px!important;height:48px!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.evch.evadd,.plf.pladd){justify-content:center!important;align-content:center!important;align-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .evch.evadd{padding:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .plf.pladd>span{display:grid!important;place-items:center!important;line-height:1!important}

@@ -68,6 +68,8 @@ Composant : `.ui-entete` (titre + compteur + action).
 - Dans une carte : le bouton principal à droite, centré verticalement.
 - En bas d'une fenêtre plein écran : secondaire à gauche (1/3), principal à droite (2/3), comme l'assiette.
 - Le bouton dit son action, rien d'autre (pas de compteur, pas de minuteur, pas d'indicateur) ; un compteur se met à côté.
+- **Centrage** : icône seule centrée ; icône + texte = un groupe centré (horizontal et vertical), l'icône ne déborde pas de sa case, marges symétriques. En rangée, l'alignement entre éléments prime. Contrôle : `outils/centrage.py`.
+- **Icône seule** quand elle se comprend (rafraîchir, poubelle, fermer, crayon, +) : carré 44, `aria-label` + `title`, pas de texte.
 - **Puces de choix** (Étudiant·e, Geek…) : boutons secondaires de 44 px ; sélectionnée = bordure or.
 - **Bouton flottant « + »** : un seul dans l'appli, sur Aujourd'hui, en bas à droite au-dessus de la barre d'onglets, carré **56 px**, jaune.
 
@@ -78,6 +80,8 @@ Composant : `.ui-entete` (titre + compteur + action).
 - **Tuile** (un élément court : icône + mot) : carrée, même fond et même bordure, contenu centré, nom sur une ligne.
 - **Fiche d'un proche** et **ma fiche profil** : seules exceptions de grand cadre, bordure neutre 2 px ; l'aura équipée remplit le fond de ma fiche.
 - **Bordure or 2 px = actif / sélectionné**. Aucune autre bordure colorée.
+- **Une seule ligne de séparation** entre deux blocs : pas de ligne de bloc juste sous celle de la section, pas de ligne sous des onglets.
+- **Carte** : toutes ses lignes suivent le même alignement (à gauche).
 
 ## 6. Couleurs
 
@@ -135,4 +139,4 @@ Rien ne bouge tout seul (voir 6.12 de la feuille de route pour le décor) ; « r
 6. **XP** : barème de CLAUDE.md (petite action 2–5, repas / rituel ~10, quête 15–30).
 7. **Données** : nouvelle clé dans `S.g`, ajoutée à `DONNEES.md` ; fonctionnalité ajoutée à `FONCTIONNALITES.md`.
 8. **Style** : dans la feuille de la zone (`aujourdhui.css`, `moi.css`…), jamais dans `base.css`, jamais de `!important`.
-9. **Vérifier** : captures à 393 px, comparaison avant / après sur tous les écrans, audit des standards.
+9. **Vérifier** : captures à 393 px, comparaison avant / après sur tous les écrans, audit des standards, `outils/centrage.py` (0 écart), `outils/parcours.py` (0 échec).

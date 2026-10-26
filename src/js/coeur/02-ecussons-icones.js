@@ -40,7 +40,7 @@ function pxSprite(k){if(typeof pxU==="function")pxU(k);if(PXSPC[k])return PXSPC[
   r.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch!=="."){g.fillStyle=p[ch];g.fillRect(x,y,1,1)}}));return PXSPC[k]=c.toDataURL()}
 function pxImg(k,sc,cls){if(typeof pxU==="function")pxU(k);const[r,,w0]=PXSP[k];if(w0)sc=Math.max(1,Math.round(w0*sc/16));return`<img class="pxi ${cls||""}" src="${pxSprite(k)}" width="${r[0].length*sc}" height="${r.length*sc}" alt="" aria-hidden="true">`}
 // render = renderBase (le cœur) → finitions d'Aujourd'hui (renderBase2) → assiettes de la semaine. Ex-réécritures de correctifs.js et assiette.js.
-function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}
+function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}try{sepFirst()}catch(e){}return r}
 function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
 function renderBase(prevLevel){
   if(seedOnce())save();

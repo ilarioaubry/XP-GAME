@@ -768,3 +768,19 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile::before{height:14px}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtl.mini{background:none!important;padding:0!important;border:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmb{padding:0!important;margin:0!important;background:none!important;border:0!important}
+/* rituels (retouche) : contenu toujours centré (icône + nom forment un groupe centré), pas de bande en bas ; Routine plus basse, contenu centré */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile{display:grid!important;place-content:center!important;justify-items:center!important;align-items:center!important;gap:4px!important;padding:8px 4px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile::before{display:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile .rtic{display:grid!important;place-items:center!important;margin:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo{min-height:56px!important;font-family:var(--f-body)!important;font-size:15px!important;font-weight:800!important;text-transform:none!important;letter-spacing:0!important;gap:8px!important;padding:0 12px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo svg{width:24px!important;height:24px!important;display:block!important;flex:none!important}
+
+/* le soir, « Encore possible du matin » : après les rituels du soir, même cartes que le reste (un peu plus basses), titre + compteur or */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar{margin:12px 0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh{display:flex!important;align-items:center!important;gap:8px!important;justify-content:flex-start!important;padding:0 0 8px!important;text-transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh span{font-family:var(--f-body)!important;font-size:15px!important;font-weight:700!important;color:#fff7e6!important;letter-spacing:0!important;text-transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh em{display:inline!important;font-family:var(--f-pixel)!important;font-style:normal!important;font-size:15px!important;color:#ffd94a!important;background:none!important;padding:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile{min-height:88px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic svg{width:40px!important;height:40px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtn{font-size:13px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh :is(span,em){margin:0!important;flex:none!important;width:auto!important}

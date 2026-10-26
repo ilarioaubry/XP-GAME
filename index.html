@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 62a0c99</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 800a79c</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5186,7 +5186,7 @@ function pxSprite(k){if(typeof pxU==="function")pxU(k);if(PXSPC[k])return PXSPC[
   r.forEach((row,y)=>[...row].forEach((ch,x)=>{if(ch!=="."){g.fillStyle=p[ch];g.fillRect(x,y,1,1)}}));return PXSPC[k]=c.toDataURL()}
 function pxImg(k,sc,cls){if(typeof pxU==="function")pxU(k);const[r,,w0]=PXSP[k];if(w0)sc=Math.max(1,Math.round(w0*sc/16));return`<img class="pxi ${cls||""}" src="${pxSprite(k)}" width="${r[0].length*sc}" height="${r.length*sc}" alt="" aria-hidden="true">`}
 // render = renderBase (le cœur) → finitions d'Aujourd'hui (renderBase2) → assiettes de la semaine. Ex-réécritures de correctifs.js et assiette.js.
-function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}return r}
+function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}try{sepFirst()}catch(e){}return r}
 function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
 function renderBase(prevLevel){
   if(seedOnce())save();
@@ -6094,7 +6094,7 @@ function renderSpecialsBase(){schedNow();renderBalance();
    pend.forEach(pp=>tr.appendChild(mbCard(pp)))}
   if(soirWait){const e=document.createElement("p");e.className=left===0?"dqend dqwait":"dqwait";e.innerHTML=`<span class="dqwi">${rkSvg("lune")}</span><b>${RIT_SOIR_H}h</b>`;tr.appendChild(e)}
   if(RM.length){const w=document.createElement("div");w.className="dqmorn"+(dqMorn?" open":"");w.innerHTML=`<button type="button" class="dqmh" aria-expanded="${dqMorn}"><span>Encore possible du matin</span><em>${RM.length}</em><i class="dqchev">${ICO("chev",14)}</i></button><div class="dqmb"></div>`;
-    w.classList.add("open","dqmbar");w.querySelector(".dqmh").onclick=()=>{};{const bd=w.querySelector(".dqmb");bd.appendChild(ritTiles(ritOrder(RM),"matin","mini"))}tr.prepend(w)}
+    w.classList.add("open","dqmbar");w.querySelector(".dqmh").onclick=()=>{};{const bd=w.querySelector(".dqmb");bd.appendChild(ritTiles(ritOrder(RM),"matin","mini"))}{const mn=tr.querySelector(".rtl.main");if(mn)mn.after(w);else tr.prepend(w)}}
   {const hide=sMood;$("sqBox").classList.toggle("vsoft",hide);
    if(sMood&&PER){const e=document.createElement("div");e.className="softc";e.innerHTML=`<b>Journée difficile</b><small>Juste l'essentiel${RT0.some(t=>t.core)?" : ton socle":""}.</small><button type="button" class="lnk">Voir tout quand même</button>`;e.querySelector("button").onclick=()=>{S.g.softAll=tk;save();render()};tr.prepend(e)}}
   const all=!!PER&&tot>0&&left===0&&!soirWait;box.classList.toggle("voff",all&&G.endHide===tk+":"+PER);
@@ -12560,7 +12560,9 @@ const subs={c:"vie",q:"q"};try{Object.assign(subs,JSON.parse(localStorage.getIte
 if(subs.c==="prj")subs.c="vie";if(subs.c==="badges")subs.c="wr";if(!["vie","wr","bilan"].includes(subs.c))subs.c="vie";delete subs.t;subs.q="q";
 let lastNb=0;
 function badgeDots(){const n=(S.g&&S.g.nb||[]).length,grew=n>lastNb;lastNb=n;[["tabC",n],["subBadges",n]].forEach(([id,c])=>{const el=id==="subBadges"?document.querySelector('.subtabs button[data-sub="badges"]'):$(id);if(!el)return;let d=el.querySelector(".ndot");if(c&&!d){d=document.createElement("span");d.className="ndot";el.appendChild(d)}if(d){d.hidden=!c;d.textContent=c;if(grew&&c){d.classList.remove("pop");void d.offsetWidth;d.classList.add("pop")}}})}
-function applySub(){if(view==="c"&&subs.c==="badges"&&S.g&&S.g.nb&&S.g.nb.length){setTimeout(()=>{const t=document.querySelector("#bdgGrid .bdg.new");if(t)t.scrollIntoView({block:"center",behavior:"smooth"})},350)}document.querySelectorAll('[data-v][data-sub]').forEach(el=>el.hidden=view!==el.dataset.v||el.dataset.sub!==subs[el.dataset.v]);document.querySelectorAll(".subtabs").forEach(nv=>nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===subs[nv.dataset.v])));requestAnimationFrame(placeInds)}
+// sous des onglets, la première section visible ne trace pas sa ligne de séparation (les onglets séparent déjà)
+function sepFirst(){document.querySelectorAll("#vieBox").forEach(sec=>{let first=true;[...sec.children].forEach(c=>{if(!c.classList.contains("vie-c"))return;const v=c.offsetParent!==null;c.classList.toggle("premier",v&&first);if(v)first=false})});document.querySelectorAll(".wrap>.subtabs").forEach(t=>{let x=t.nextElementSibling,first=true;while(x){if(x.tagName==="SECTION"){const v=x.offsetParent!==null&&!x.hidden;x.classList.toggle("sans-sep",v&&first);if(v)first=false}x=x.nextElementSibling}})}
+function applySub(){if(view==="c"&&subs.c==="badges"&&S.g&&S.g.nb&&S.g.nb.length){setTimeout(()=>{const t=document.querySelector("#bdgGrid .bdg.new");if(t)t.scrollIntoView({block:"center",behavior:"smooth"})},350)}document.querySelectorAll('[data-v][data-sub]').forEach(el=>el.hidden=view!==el.dataset.v||el.dataset.sub!==subs[el.dataset.v]);document.querySelectorAll(".subtabs").forEach(nv=>nv.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===subs[nv.dataset.v])));requestAnimationFrame(placeInds);try{sepFirst()}catch(e){}}
 function goSub(v,sb){const old=subs[v];subs[v]=sb;try{localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}if(view!==v){showView(v);SCR.scrollTo(0,0);return}
   if(old===sb){applySub();return}
   const nv=document.querySelector('.subtabs[data-v="'+v+'"]'),bs=nv?[...nv.querySelectorAll("button")].map(b=>b.dataset.sub):[],dir=bs.indexOf(sb)>=bs.indexOf(old)?1:-1;
@@ -13738,6 +13740,22 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.back>
 /* supprimer : bouton icône poubelle, carré 44, style secondaire */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic{display:inline-grid!important;place-items:center!important;width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;background:var(--ui-fond,rgba(12,14,32,.8))!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;border-radius:0!important;box-shadow:none!important;text-decoration:none!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .btn.delic svg{display:block!important}
+/* une seule ligne de séparation : pas de ligne sous les onglets, et le premier bloc d'une section ne redouble pas la ligne de la section */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .wrap>section.sans-sep{background-image:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #vieBox>.vie-c.premier{border-top:0!important;padding-top:0!important;margin-top:0!important}
+/* Quête spéciale « idée sortie » : l'icône « une autre » suffit (bouton carré 44) ; la ligne du haut est alignée à gauche comme le titre */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .sq.idq .idqr{width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important;flex:0 0 44px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #sqBox .sq .sqk{justify-content:flex-start!important;text-align:left!important;align-self:stretch!important}
+/* ===== Centrage (standard du 27/10) : dans un élément court (bouton, tuile, puce, onglet), l'icône seule est centrée,
+   icône + texte forment un groupe centré, horizontalement et verticalement. Vérifié par outils/centrage.py */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.mlp,.plf,.plr) :is(svg,img){display:block}
+/* l'icône ne déborde jamais de sa case (sinon le groupe paraît décentré) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .fjobs>button .fti{width:auto!important;height:auto!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .mlp .mli{width:48px!important;height:48px!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.evch.evadd,.plf.pladd){justify-content:center!important;align-content:center!important;align-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .evch.evadd{padding:8px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .plf.pladd>span{display:grid!important;place-items:center!important;line-height:1!important}
 </style>
 <style id="z-haut">/* — depuis principal-02.css — */
 .qxp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20}
@@ -14758,6 +14776,22 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile::before{height:14px}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtl.mini{background:none!important;padding:0!important;border:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmb{padding:0!important;margin:0!important;background:none!important;border:0!important}
+/* rituels (retouche) : contenu toujours centré (icône + nom forment un groupe centré), pas de bande en bas ; Routine plus basse, contenu centré */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile{display:grid!important;place-content:center!important;justify-items:center!important;align-items:center!important;gap:4px!important;padding:8px 4px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile::before{display:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl .rtile .rtic{display:grid!important;place-items:center!important;margin:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo{min-height:56px!important;font-family:var(--f-body)!important;font-size:15px!important;font-weight:800!important;text-transform:none!important;letter-spacing:0!important;gap:8px!important;padding:0 12px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .rtl.main .rtmgo svg{width:24px!important;height:24px!important;display:block!important;flex:none!important}
+
+/* le soir, « Encore possible du matin » : après les rituels du soir, même cartes que le reste (un peu plus basses), titre + compteur or */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar{margin:12px 0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh{display:flex!important;align-items:center!important;gap:8px!important;justify-content:flex-start!important;padding:0 0 8px!important;text-transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh span{font-family:var(--f-body)!important;font-size:15px!important;font-weight:700!important;color:#fff7e6!important;letter-spacing:0!important;text-transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh em{display:inline!important;font-family:var(--f-pixel)!important;font-style:normal!important;font-size:15px!important;color:#ffd94a!important;background:none!important;padding:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile{min-height:88px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic svg{width:40px!important;height:40px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtn{font-size:13px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh :is(span,em){margin:0!important;flex:none!important;width:auto!important}
 </style>
 <style id="z-proches">/* — depuis principal-01.css — */
 .q{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:grid;gap:4px;min-height:76px;transition:transform .12s,border-color .12s;overflow:hidden}
@@ -16550,7 +16584,7 @@ function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;con
   if(Q.ok){if(c)c.remove();return}const sig=Q.o.join(",")+"|"+Q.p;if(c&&c.dataset.sig===sig&&c===tr.firstElementChild)return;
   if(!c){c=document.createElement("div");c.className="sq idq"}c.dataset.sig=sig;if(c!==tr.firstElementChild){const z=tr.scrollLeft<12;tr.prepend(c);if(z)tr.scrollLeft=0}const we=isWeekend(),h=dayH(),when=h>=15?"Ce soir":we?"Ce week-end":"Aujourd'hui";
   if(Q.p==null)Q.p=Q.o[0];const x=IDQ[Q.p];
-  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée">${ICO("refresh",16)}<span>Une autre</span></button></span>`;
+  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
   c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
     try{uniBurst(e.currentTarget,"divert")}catch(_){}addBonus("Sortie : "+x[0],x[3],0,"idq");save();try{toast(`Belle sortie <span class="p">+${x[3]} XP</span>`)}catch(_){}setTimeout(()=>{try{render(prev)}catch(_){}idqCard()},600)}}
@@ -16664,7 +16698,7 @@ function mealRow(){const tr=document.getElementById("spTrack");if(!tr||!S||!S.g)
   const st=MEALS.map(([k,per])=>mealState(k,per)+(h>=MEAL_H[k]?"":"|later")).join(",");let r=tr.querySelector(".mlrow");if(r&&r.dataset.k===st&&r.parentElement===tr){try{plateDay(r)}catch(e){}return}
   if(!r){r=document.createElement("div");r.className="mlrow"}r.dataset.k=st;tr.querySelectorAll(".mlpop").forEach(x=>x.remove());
   r.innerHTML=MEALS.map(([k,per,l,ic])=>{const s=mealState(k,per),later=h<MEAL_H[k];return`<button type="button" class="mlp st-${s||"none"}${later?" later":""}" data-k="${k}" data-per="${per}" ${later?"disabled":""} aria-label="${l}${s==="ok"?", pris":s==="ko"?", sauté":""}"><span class="mli">${pxImg(ic,3)}${s==="ko"?'<i class="mlx"></i>':""}${s==="ok"?`<span class="mlb">${vI("check")}</span>`:""}</span><small>${l}</small></button>`}).join("");
-  const anchor=tr.querySelector(".rtl.main");if(anchor)anchor.after(r);else tr.appendChild(r);
+  const anchor=tr.querySelector(".dqmorn")||tr.querySelector(".rtl.main");if(anchor)anchor.after(r);else tr.appendChild(r);
   r.querySelectorAll(".mlp:not([disabled])").forEach(b=>b.onclick=()=>{const s0=mealState(b.dataset.k,b.dataset.per);if(typeof plateOpen==="function"&&MB_PLM.includes(b.dataset.k)&&s0!=="ko"){tr.querySelectorAll(".mlpop").forEach(x=>x.remove());plateOpen(b.dataset.per,b.dataset.k,b);return}const ps=[...tr.querySelectorAll(".mlpop")],same=ps.some(x=>x.dataset.k===b.dataset.k);ps.forEach(x=>x.remove());if(same)return;const p=document.createElement("div");p.className="mlpop";p.dataset.k=b.dataset.k;const l=b.querySelector("small").textContent;
     const ic=pxImg(MEALS.find(m=>m[0]===b.dataset.k)[3],3),pl=MB_PLM.includes(b.dataset.k);
     p.innerHTML=`<button type="button" data-v="1"${s0==="ok"?' class="on"':""}><span>${ic}</span>${pl?"Remplir l'assiette":"Pris"}</button><button type="button" data-v="0"${s0==="ko"?' class="on"':""}><span class="mlskip">${ic}<i class="mlx"></i></span>Sauté</button>${s0?`<button type="button" data-v="x" class="mlclr">Effacer</button>`:""}`;r.after(p);
@@ -17126,7 +17160,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
       <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
       <p class="plhint">${tri?"Touche un aliment pour le masquer ou le remettre. Touche une recette pour la supprimer.":nd.length?`À midi il manquait : <b>${nd.map(s=>PL_SIDES.find(z=>z[0]===s)[1].toLowerCase()).join(", ")}</b>. C'est le moment d'en ajouter.`:edit?"Ajoute ou retire ce que tu as oublié.":"Touche ce que tu manges, ou une recette. Touche un aliment sur l'assiette pour le retirer."}</p>
       ${edit||tri?"":`<p class="plxp${bx>=MB_PLX*3+MB_PLB?" full":""}">${bx?`+${bx} XP d'assiette${bx>=MB_PLX*3+MB_PLB?" · complète !":""}`:"Chaque côté rempli rapporte de l'XP"}</p>`}
-      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2])=>`<div class="plside${nd.includes(s)&&!tri?" need":""}" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}${nd.includes(s)&&!tri?`<em>Il t'en manque aujourd'hui</em>`:""}</h3><div class="plfoods">${plFoods(s,tri,u).map(f=>{const h=plHid().includes(f.id);return`<button type="button" class="plf${h?" hid":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-add="${s}:${f.id}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="${s}" aria-expanded="${add===s}"><span>+</span><small>Ajouter</small></button></div>
+      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2])=>`<div class="plside${nd.includes(s)&&!tri?" need":""}" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}${nd.includes(s)&&!tri?`<em>Il t'en manque aujourd'hui</em>`:""}</h3><div class="plfoods">${plFoods(s,tri,u).map(f=>{const h=plHid().includes(f.id);return`<button type="button" class="plf${h?" hid":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-add="${s}:${f.id}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="${s}" aria-expanded="${add===s}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
         ${add===s?`<div class="plnew"><input type="text" maxlength="30" placeholder="Nom de l'aliment" aria-label="Nom de l'aliment" value="${esc(addName)}"><div class="plics" role="group" aria-label="Choisis une icône">${PL_ICONS.map(ic=>`<button type="button" data-ic="${ic}" class="${ic===addIc?"on":""}" aria-label="Icône ${ic}" aria-pressed="${ic===addIc}">${rkSvg(ic)}</button>`).join("")}</div><div class="plnewb"><button type="button" class="btn plnewno">Annuler</button><button type="button" class="btn primary plnewok">Ajouter</button></div></div>`:""}</div>`).join("")}</div>
       <div class="plbar">${edit?`<button type="button" class="btn plcl2">Annuler</button>`:`<button type="button" class="btn plskip">Sauté</button>`}<button type="button" class="btn primary plnext">Suite</button></div>`
     :`<div class="plxs">${PL_X.map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
