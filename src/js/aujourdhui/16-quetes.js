@@ -25,15 +25,6 @@ function rhPick(o,title,free,cb){const st=rhState(o,free),p=document.createEleme
 // ---- création rapide
 const DIFF=[["Geste",3,1],["Petit",10,2],["Moyen",20,3],["Gros",35,4]];
 const QC_DOM=[["sport","Sport"],["maison","Maison"],["soi","Soi"],["social","Amis"],["famille","Famille"],["travail","Travail"],["perso","Talent"],["nourriture","Cuisine"]];
-const QC_TPL={
- sport:[["Courir 20 min","act","sport",2,{m:"xw",n:3}],["Séance de muscu","act","sport",2,{m:"wd",wd:[0,3]}],["Préparer un 10 km","prj","sport",2,null,null,["Choisir une course et s'inscrire","Faire un plan de 6 semaines","Acheter de bonnes chaussures","Courir 5 km sans s'arrêter","Courir 8 km","Le jour J : 10 km"]]],
- maison:[["Faire la vaisselle","act","maison",0,{m:"day"}],["Lessive","act","maison",1,{m:"wd",wd:[2,6]}],["Courses de la semaine","act","maison",1,{m:"wd",wd:[5]}],["Ranger le garage","prj","maison",2,null,null,["Tout sortir et trier","Jeter ou donner","Installer des étagères","Tout ranger par zone"]]],
- soi:[["Journal du soir","act","soi",0,{m:"xw",n:4}],["Prendre rendez-vous chez le médecin","prj","soi",1,null,null,["Trouver un créneau","Appeler ou réserver en ligne","Préparer mes questions","Y aller"]]],
- social:[["Prendre des nouvelles d'un ami","act","social",1,{m:"xw",n:2}],["Proposer une sortie","act","social",1,{m:"xw",n:1}],["Organiser un anniversaire","prj","social",2,null,null,["Fixer la date","Faire la liste des invités","Envoyer les invitations","Réserver ou préparer le lieu","Le jour J"]]],
- famille:[["Appeler mes parents","act","famille",1,{m:"wd",wd:[6]}],["Repas en famille","act","famille",1,{m:"xw",n:1}],["Album photo de famille","prj","famille",2,null,null,["Rassembler les photos","Choisir les meilleures","Créer l'album","Commander","L'offrir"]]],
- travail:[["Bloc de concentration 1 h","act","travail",2,{m:"wd",wd:[0,1,2,3,4]}],["Boîte mail à zéro","act","travail",1,{m:"wd",wd:[4]}],["Refaire mon CV","prj","travail",2,null,null,["Lister mes expériences","Choisir un modèle","Rédiger","Faire relire","Envoyer 3 candidatures"]]],
- perso:[["Faire du son 30 min","act","perso",2,{m:"xw",n:3}],["Dessiner 15 min","act","perso",1,{m:"xw",n:3}],["Sortir un son","prj","perso",3,null,null,["Finir la prod","Écrire le texte","Enregistrer","Mixer","Faire la cover","Publier"]]],
- nourriture:[["Cuisiner un vrai repas","act","nourriture",1,{m:"xw",n:3}],["Préparer mes repas du dimanche","act","nourriture",2,{m:"wd",wd:[6]}],["Apprendre 5 recettes","prj","nourriture",2,null,null,["Choisir 5 recettes","Recette 1","Recette 2","Recette 3","Recette 4","Recette 5"]]]};
 const RIC_KEYS=["soleil","lune","dents","lit","douche","visage","barbe","fenetre","eau","sport","lire","medit","note","repas","ecran","vit"];
 function icFromName(n){for(const[k,re]of RK)if(re.test(n))return k;return null}
 // ---- création pas à pas (questionnaire)

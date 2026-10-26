@@ -107,16 +107,6 @@ function ritDots(t,N){return`<span class="rdots${N>14?" long":""}">${ritDays(t,N
 function ritAdd(name,when,n,ev){name=name.trim().slice(0,40);if(!name)return;const a=S.actions.find(x=>x.name.toLowerCase()===name.toLowerCase());ritTasks().push({id:"r"+Date.now().toString(36),name,n:n||1,when,ct:Date.now(),...(ev>1?{ev}:{}),...(a?{link:a.name}:{})});save()}
 // ---- Atelier des rituels : une tuile par rituel, une fiche par rituel, création pas à pas
 // Gestes proposés par famille (mêmes familles et mêmes couleurs que le « + » des actions) : [nom, icône, moment]
-const RIT_G={
- maison:[["Faire mon lit","lit","matin"],["Ouvrir la fenêtre","fenetre","matin"],["Arroser les plantes","plante","matin"],["Ranger 10 min","armoire","soir"],["Faire la vaisselle","assiette","soir"],["Sortir les poubelles","poubelle","soir"],["Préparer mes affaires","porte","soir"]],
- sport:[["10 pompes","sport","matin"],["20 squats","sport","matin"],["Gainage 1 min","halteres","matin"],["5 min d'étirements","tapis","both"],["Marcher 10 min","pas","soir"]],
- soi:[["Prendre ma douche","douche","matin"],["Se brosser les dents","dents","both"],["Se laver le visage","visage","both"],["Se raser","barbe","matin"],["Prendre mes vitamines","vit","matin"],["Méditer 5 min","medit","both"],["Respirer 3 min","medit","both"],["Écrire 3 choses positives","note","soir"],["Lâcher l'écran avant de dormir","ecran","soir"]],
- nourriture:[["Boire un grand verre d'eau","eau","matin"],["Petit-déjeuner sans écran","repas","matin"],["Manger un fruit","pomme","matin"],["Préparer le repas de demain","poele","soir"]],
- travail:[["Noter ma priorité du jour","note","matin"],["Planifier ma journée","calendrier","matin"],["Vider ma boîte mail","enveloppe","soir"],["Préparer demain","dossier","soir"]],
- divert:[["Lire 10 pages","lire","both"],["Écouter de la musique","casque","soir"],["Jouer 15 min","manette","soir"],["Un épisode","clap","soir"]],
- creer:[["Écrire 4 lignes","note","soir"],["Dessiner 5 min","pinceau","soir"],["Faire un peu de son","micro","soir"],["Prendre une photo","photo","matin"]],
- apprendre:[["Une leçon de langue","bulle","matin"],["Un nouveau mot","ampoule","matin"],["Réviser 10 min","ampoule","soir"]],
- proches:[["Envoyer un message à un proche","tel","soir"],["Appeler un proche","tel","soir"],["Dire un mot gentil","coeur","matin"]]};
 // couleurs des familles utilisées par le rituel lui-même (tuile de l'écran Aujourd'hui)
 const RIT_DC={maison:"#c08cff",sport:"#ff6a5c",soi:"#4fb4ff",nourriture:"#d9965a",travail:"#6f8fe0",divert:"#9a8cf8",creer:"#ffaa33",apprendre:"#4aa8ee",proches:"#2fe3d6"};
 const rwFam=()=>(window.DOMS||[]).filter(d=>RIT_G[d[0]]);

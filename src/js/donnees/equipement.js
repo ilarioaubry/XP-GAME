@@ -1,0 +1,85 @@
+// Données : équipement et options du personnage (GEAR, AV_OPT, AV_MAIN). Pas de code ici.
+const GEAR=[
+  // coiffes
+  {id:"beret",s:"tete",k:"hat",o:18,n:"Béret",r:0},{id:"straw",s:"tete",k:"hat",o:19,n:"Chapeau de paille",r:0},
+  {id:"phones",s:"tete",k:"hat",o:4,n:"Casque audio",r:1,set:"star"},{id:"cowboy",s:"tete",k:"hat",o:12,n:"Chapeau de cowboy",r:1},{id:"ninja",s:"tete",k:"hat",o:15,n:"Bandeau ninja",r:1,set:"ninja"},{id:"flowers",s:"tete",k:"hat",o:16,n:"Couronne de fleurs",r:1},
+  {id:"wizard",s:"tete",k:"hat",o:9,n:"Chapeau de magicien",r:2,set:"mage"},{id:"helmet",s:"tete",k:"hat",o:10,n:"Casque de chevalier",r:2,set:"knight"},{id:"viking",s:"tete",k:"hat",o:11,n:"Cornes de viking",r:2},{id:"pirate",s:"tete",k:"hat",o:17,n:"Chapeau de pirate",r:2},
+  {id:"crown",s:"tete",k:"hat",o:5,n:"Couronne",r:3,set:"king"},
+  {id:"toque",s:"tete",k:"hat",o:13,n:"Toque de chef",r:2,ex:"Cuisine 10"},{id:"halo",s:"tete",k:"hat",o:14,n:"Auréole",r:3,ex:"Série de 100 jours"},
+  // tenues
+  {id:"mariniere",s:"haut",k:"top",o:15,n:"Marinière",r:0},{id:"hawai",s:"haut",k:"top",o:16,n:"Chemise hawaïenne",r:0},
+  {id:"leather",s:"haut",k:"top",o:8,n:"Veste en cuir",r:1},{id:"kimono",s:"haut",k:"top",o:11,n:"Kimono",r:1,set:"ninja"},
+  {id:"armor",s:"haut",k:"top",o:9,n:"Armure",r:2,set:"knight"},{id:"robe",s:"haut",k:"top",o:13,n:"Robe de mage",r:2,set:"mage"},
+  {id:"cape",s:"haut",k:"top",o:10,n:"Cape royale",r:3,set:"king"},
+  {id:"briefcase",s:"haut",k:"top",o:12,n:"Costume",r:2,ex:"Travail 10"},{id:"towel",s:"haut",k:"top",o:14,n:"Peignoir",r:2,ex:"Maison 10"},
+  // lunettes
+  {id:"heartg",s:"yeux",k:"glasses",o:4,n:"Lunettes cœur",r:0},{id:"mask",s:"yeux",k:"glasses",o:5,n:"Masque",r:1,set:"ninja"},
+  {id:"monocle",s:"yeux",k:"glasses",o:6,n:"Monocle",r:2},{id:"cyber",s:"yeux",k:"glasses",o:7,n:"Visière cyber",r:3},
+  {id:"goldspecs",s:"yeux",k:"glasses",o:8,n:"Lunettes dorées",r:2,ex:"Style 10"},
+  // bijoux
+  {id:"pearls",s:"bijou",k:"bijou",o:5,n:"Collier de perles",r:0},{id:"chain",s:"bijou",k:"bijou",o:2,n:"Chaîne en or",r:1},
+  {id:"earring",s:"bijou",k:"bijou",o:6,n:"Boucles en diamant",r:2,set:"king"},{id:"medal",s:"bijou",k:"bijou",o:7,n:"Médaillon de famille",r:2,ex:"Famille 10"},
+  // objets en main
+  {id:"rose",s:"main",k:"main",o:16,n:"Rose",r:0},{id:"cup",s:"main",k:"main",o:17,n:"Tasse de café",r:0},{id:"balloon",s:"main",k:"main",o:18,n:"Ballon",r:0},
+  {id:"mic",s:"main",k:"main",o:1,n:"Micro",r:1,set:"star"},{id:"case",s:"main",k:"main",o:19,n:"Mallette",r:1},
+  {id:"sword",s:"main",k:"main",o:14,n:"Épée",r:2,set:"knight"},{id:"guitar",s:"main",k:"main",o:15,n:"Guitare",r:2},
+  {id:"disc",s:"main",k:"main",o:2,n:"Disque d'or",r:3,set:"star"},
+  {id:"pad",s:"main",k:"main",o:3,n:"Manette",r:2,ex:"Jeu vidéo 10"},{id:"clap",s:"main",k:"main",o:4,n:"Clap de cinéma",r:2,ex:"Cinéphile 10"},
+  {id:"book",s:"main",k:"main",o:5,n:"Grimoire",r:2,ex:"Lecture 10",set:"mage"},{id:"watch",s:"main",k:"main",o:6,n:"Montre en or",r:2,ex:"Organisation 10"},
+  {id:"compass",s:"main",k:"main",o:7,n:"Boussole",r:2,ex:"Exploration 10"},{id:"camera",s:"main",k:"main",o:8,n:"Appareil photo",r:2,ex:"Photo 10"},
+  {id:"dumbbell",s:"main",k:"main",o:9,n:"Haltère",r:2,ex:"Force 10"},{id:"fork",s:"main",k:"main",o:10,n:"Fourchette d'or",r:2,ex:"Nourriture 10"},
+  {id:"shieldf",s:"main",k:"main",o:11,n:"Bouclier de l'amitié",r:2,ex:"Ami 10"},{id:"brush",s:"main",k:"main",o:12,n:"Pinceau d'artiste",r:2,ex:"Talent 10"},
+  {id:"bottle",s:"main",k:"main",o:13,n:"Gourde",r:2,ex:"Eau 10"},
+  // fonds
+  {id:"bgcheck",s:"fond",k:"bgP",o:3,n:"Fond damier",r:0},{id:"bgstars",s:"fond",k:"bgP",o:4,n:"Fond étoilé",r:0},{id:"bggrad",s:"fond",k:"bgP",o:5,n:"Fond dégradé",r:0},
+  {id:"bgnight",s:"fond",k:"bgP",o:7,n:"Nuit étoilée",r:1},{id:"bgsunset",s:"fond",k:"bgP",o:8,n:"Coucher de soleil",r:1},{id:"bgcode",s:"fond",k:"bgP",o:9,n:"Fond code",r:2},
+  {id:"bgflame",s:"fond",k:"bgP",o:6,n:"Fond flammes",r:2,ex:"Série de 7 jours"},{id:"bgrainbow",s:"fond",k:"bgP",o:10,n:"Arc-en-ciel",r:3,ex:"Série de 30 jours"},
+  // auras
+  {id:"stars",s:"aura",n:"Étoiles",r:0,svg:'<g fill="#ffe27a" stroke="#8a6410" stroke-width=".8"><path d="M12 6 l2.5 6 l6 2.5 l-6 2.5 l-2.5 6 l-2.5 -6 l-6 -2.5 l6 -2.5 Z"/><path d="M106 14 l2 4.5 l4.5 2 l-4.5 2 l-2 4.5 l-2 -4.5 l-4.5 -2 l4.5 -2 Z"/><path d="M108 88 l2 4.5 l4.5 2 l-4.5 2 l-2 4.5 l-2 -4.5 l-4.5 -2 l4.5 -2 Z"/></g>'},
+  {id:"notes",s:"aura",n:"Notes de musique",r:1,svg:'<g shape-rendering="crispEdges"><rect x="13.7" y="7.1" width="4.4" height="2.2" fill="#5a3d08"/><rect x="13.7" y="9.3" width="6.6" height="2.2" fill="#5a3d08"/><rect x="13.7" y="11.5" width="2.2" height="2.2" fill="#5a3d08"/><rect x="18.1" y="11.5" width="2.2" height="2.2" fill="#5a3d08"/><rect x="13.7" y="13.7" width="2.2" height="2.2" fill="#5a3d08"/><rect x="13.7" y="15.9" width="2.2" height="2.2" fill="#5a3d08"/><rect x="9.3" y="18.1" width="6.6" height="2.2" fill="#5a3d08"/><rect x="7.1" y="20.3" width="8.8" height="2.2" fill="#5a3d08"/><rect x="7.1" y="22.5" width="8.8" height="2.2" fill="#5a3d08"/><rect x="9.3" y="24.7" width="4.4" height="2.2" fill="#5a3d08"/><rect x="12.6" y="6" width="4.4" height="2.2" fill="#e0b030"/><rect x="12.6" y="8.2" width="6.6" height="2.2" fill="#e0b030"/><rect x="12.6" y="10.4" width="2.2" height="2.2" fill="#e0b030"/><rect x="17" y="10.4" width="2.2" height="2.2" fill="#e0b030"/><rect x="12.6" y="12.6" width="2.2" height="2.2" fill="#e0b030"/><rect x="12.6" y="14.8" width="2.2" height="2.2" fill="#e0b030"/><rect x="8.2" y="17" width="6.6" height="2.2" fill="#e0b030"/><rect x="6" y="19.2" width="8.8" height="2.2" fill="#e0b030"/><rect x="6" y="21.4" width="8.8" height="2.2" fill="#e0b030"/><rect x="8.2" y="23.6" width="4.4" height="2.2" fill="#e0b030"/><rect x="99.7" y="11.1" width="13.2" height="2.2" fill="#5a3d08"/><rect x="99.7" y="13.3" width="13.2" height="2.2" fill="#5a3d08"/><rect x="99.7" y="15.5" width="2.2" height="2.2" fill="#5a3d08"/><rect x="110.7" y="15.5" width="2.2" height="2.2" fill="#5a3d08"/><rect x="99.7" y="17.7" width="2.2" height="2.2" fill="#5a3d08"/><rect x="110.7" y="17.7" width="2.2" height="2.2" fill="#5a3d08"/><rect x="99.7" y="19.9" width="2.2" height="2.2" fill="#5a3d08"/><rect x="110.7" y="19.9" width="2.2" height="2.2" fill="#5a3d08"/><rect x="95.3" y="22.1" width="6.6" height="2.2" fill="#5a3d08"/><rect x="106.3" y="22.1" width="6.6" height="2.2" fill="#5a3d08"/><rect x="93.1" y="24.3" width="8.8" height="2.2" fill="#5a3d08"/><rect x="104.1" y="24.3" width="8.8" height="2.2" fill="#5a3d08"/><rect x="93.1" y="26.5" width="8.8" height="2.2" fill="#5a3d08"/><rect x="104.1" y="26.5" width="8.8" height="2.2" fill="#5a3d08"/><rect x="95.3" y="28.7" width="4.4" height="2.2" fill="#5a3d08"/><rect x="106.3" y="28.7" width="4.4" height="2.2" fill="#5a3d08"/><rect x="98.6" y="10" width="13.2" height="2.2" fill="#e0b030"/><rect x="98.6" y="12.2" width="13.2" height="2.2" fill="#e0b030"/><rect x="98.6" y="14.4" width="2.2" height="2.2" fill="#e0b030"/><rect x="109.6" y="14.4" width="2.2" height="2.2" fill="#e0b030"/><rect x="98.6" y="16.6" width="2.2" height="2.2" fill="#e0b030"/><rect x="109.6" y="16.6" width="2.2" height="2.2" fill="#e0b030"/><rect x="98.6" y="18.8" width="2.2" height="2.2" fill="#e0b030"/><rect x="109.6" y="18.8" width="2.2" height="2.2" fill="#e0b030"/><rect x="94.2" y="21" width="6.6" height="2.2" fill="#e0b030"/><rect x="105.2" y="21" width="6.6" height="2.2" fill="#e0b030"/><rect x="92" y="23.2" width="8.8" height="2.2" fill="#e0b030"/><rect x="103" y="23.2" width="8.8" height="2.2" fill="#e0b030"/><rect x="92" y="25.4" width="8.8" height="2.2" fill="#e0b030"/><rect x="103" y="25.4" width="8.8" height="2.2" fill="#e0b030"/><rect x="94.2" y="27.6" width="4.4" height="2.2" fill="#e0b030"/><rect x="105.2" y="27.6" width="4.4" height="2.2" fill="#e0b030"/><rect x="106.3" y="80.9" width="3.6" height="1.8" fill="#5a3d08"/><rect x="106.3" y="82.7" width="5.4" height="1.8" fill="#5a3d08"/><rect x="106.3" y="84.5" width="1.8" height="1.8" fill="#5a3d08"/><rect x="109.9" y="84.5" width="1.8" height="1.8" fill="#5a3d08"/><rect x="106.3" y="86.3" width="1.8" height="1.8" fill="#5a3d08"/><rect x="106.3" y="88.1" width="1.8" height="1.8" fill="#5a3d08"/><rect x="102.7" y="89.9" width="5.4" height="1.8" fill="#5a3d08"/><rect x="100.9" y="91.7" width="7.2" height="1.8" fill="#5a3d08"/><rect x="100.9" y="93.5" width="7.2" height="1.8" fill="#5a3d08"/><rect x="102.7" y="95.3" width="3.6" height="1.8" fill="#5a3d08"/><rect x="105.4" y="80" width="3.6" height="1.8" fill="#e0b030"/><rect x="105.4" y="81.8" width="5.4" height="1.8" fill="#e0b030"/><rect x="105.4" y="83.6" width="1.8" height="1.8" fill="#e0b030"/><rect x="109" y="83.6" width="1.8" height="1.8" fill="#e0b030"/><rect x="105.4" y="85.4" width="1.8" height="1.8" fill="#e0b030"/><rect x="105.4" y="87.2" width="1.8" height="1.8" fill="#e0b030"/><rect x="101.8" y="89" width="5.4" height="1.8" fill="#e0b030"/><rect x="100" y="90.8" width="7.2" height="1.8" fill="#e0b030"/><rect x="100" y="92.6" width="7.2" height="1.8" fill="#e0b030"/><rect x="101.8" y="94.4" width="3.6" height="1.8" fill="#e0b030"/></g>'},
+  {id:"neon",s:"aura",n:"Néon cyan",r:1,glow:"#4cc9f0",svg:'<rect x="3" y="3" width="114" height="134" rx="13" fill="none" stroke="#4cc9f0" stroke-width="3"/>'},
+  {id:"goldaura",s:"aura",n:"Aura dorée",r:2,glow:"#e0b030",svg:'<rect x="3" y="3" width="114" height="134" rx="13" fill="none" stroke="#ffd75e" stroke-width="3"/>'},
+  {id:"hello",s:"aura",n:"Bulles polyglottes",r:2,ex:"Ami 5",svg:'<g font-family="monospace" font-weight="700" font-size="10"><rect x="2" y="4" width="34" height="15" rx="6" fill="#fff" stroke="#2a8fd6"/><text x="6" y="15" fill="#2a8fd6">Hola</text><rect x="80" y="12" width="38" height="15" rx="6" fill="#fff" stroke="#c2516b"/><text x="84" y="23" fill="#c2516b">Hello</text><rect x="84" y="84" width="34" height="15" rx="6" fill="#fff" stroke="#3c9a4f"/><text x="88" y="95" fill="#3c9a4f">Ciao</text></g>'},
+  {id:"lotus",s:"aura",n:"Aura zen",r:2,ex:"Soi 5",glow:"#f3a6c8",svg:'<g fill="#f3a6c8" stroke="#c2516b" stroke-width="1"><path d="M10 26 q-6-12 0-20 q6 8 0 20z"/><path d="M10 26 q-12-4-12-12 q10 2 12 12z"/><path d="M10 26 q12-4 12-12 q-10 2-12 12z"/><path d="M108 30 q-5-10 0-17 q5 7 0 17z"/><path d="M108 30 q-10-3-10-10 q8 2 10 10z"/><path d="M108 30 q10-3 10-10 q-8 2-10 10z"/></g>'},
+  {id:"flames",s:"aura",n:"Flammes",r:3,glow:"#ff7a1a",svg:'<g fill="#ff7a1a" stroke="#c43c0c" stroke-width="1"><path d="M0 140 Q2 112 10 104 Q10 118 18 120 Q16 100 28 92 Q26 116 36 140 Z"/><path d="M120 140 Q118 112 110 104 Q110 118 102 120 Q104 100 92 92 Q94 116 84 140 Z"/></g><g fill="#ffd75e"><path d="M8 140 Q10 124 16 120 Q18 132 24 140 Z"/><path d="M112 140 Q110 124 104 120 Q102 132 96 140 Z"/></g>'}
+];
+const AV_OPT={size:["Moyen","Grand","Très grand","Petit","Très petit"],
+  skin:[["#ffe3c8","#f2bf98"],["#f8cba4","#e0a57f"],["#e6ac80","#c98a60"],["#c88d60","#a96f48"],["#94603f","#77492d"],["#62402b","#4a2e1e"],["#ffe6d2","#eec3a2"],["#3f281c","#2d1b12"]],
+  hairC:["#2b2421","#5b3a22","#8c5c34","#e7c565","#c8571f","#ece7dd","#f28cc0","#4a8cf0","#36b679","#9a5ce0","#8a8f99","#c2185b"],
+  eyeC:["#5b3a22","#8a6a2a","#3a8a4a","#3a7ad0","#7a8a96","#9a3bd0"],
+  topC:["#2c2c34","#f2f0ea","#d63b3b","#2f6fd6","#2f9a5a","#f0b62e","#8a4fd0","#8a8f99","#e8762a","#f08cc0"],
+  accC:["#d63b3b","#2f6fd6","#2c2c34","#f2f0ea","#2f9a5a","#f0b62e","#8a4fd0","#f08cc0"],
+  bgC:["#7fc8f8","#ffd36e","#b5e48c","#f4a3c2","#c3a6ff","#ff9f6b","#3a3f58","#e8e2d0"],
+  bgP:["Uni","Rayures","Pois","Damier","Étoiles","Dégradé","Flammes","Nuit étoilée","Coucher de soleil","Code","Arc-en-ciel"],
+  hair:["Court","Rasé","Mèche","Long","Afro","Locks","Chignon","Crête","Bouclé","Chauve","Tresses","Queue de cheval","Frange","Dégradé","Mulet","Frange longue","Brosse","Raie sur le côté","Banane","Waves","Carré","Surfeur","Twists","Wolf cut","Long ondulé","Couettes","Demi-queue"],
+  beard:["Aucune","Moustache","Bouc","Courte","Fournie","3 jours"],
+  top:["T-shirt","Hoodie","Débardeur","Veste","Maillot","Chemise","Col roulé","Survêt","Veste en cuir","Armure","Cape royale","Kimono","Costume","Robe de mage","Peignoir","Marinière","Chemise hawaïenne"],
+  hat:["Aucun","Casquette","Bonnet","Bandana","Casque audio","Couronne","Bob","Casquette inversée","Durag","Chapeau de magicien","Casque de chevalier","Cornes de viking","Chapeau de cowboy","Toque de chef","Auréole","Bandeau ninja","Couronne de fleurs","Chapeau de pirate","Béret","Chapeau de paille"],
+  glasses:["Aucune","Rondes","Carrées","Soleil","Cœur","Masque","Monocle","Visière cyber","Lunettes dorées"],
+  bijou:["Aucun","Boucle","Chaîne","Les deux","Piercing nez","Perles","Boucles en diamant","Médaillon"],
+  main:["Rien","Micro","Disque d'or","Manette","Clap de cinéma","Grimoire","Montre en or","Boussole","Appareil photo","Haltère","Fourchette d'or","Bouclier","Pinceau","Gourde","Épée","Guitare","Rose","Tasse de café","Ballon","Mallette"],
+  mouth:["Sourire","Neutre","Grand sourire","Langue","Surpris"],
+  eyes:["Normaux","Heureux","Déterminés","Clin d'œil","Grands"],
+  mark:["Aucun","Taches de rousseur","Cicatrice","Grain de beauté","Pansement","Peinture"]
+};
+const AV_MAIN={
+ 1:[[".kkk.","kgwgk","kgggk","kgggk",".kkk.","..d..","..d..","..d..","..d..",".kdk."],{g:"#9aa4b0",w:"#fff",d:"#2c2c34"},23,22],
+ 2:[[".kkkkk.","kyyyyyk","kyykyyk","kykwkyk","kyykyyk","kyyyyyk",".kkkkk."],{y:"#f2c94c",w:"#fff6c8"},22,26],
+ 3:[[".kkkkkk.","kdwddrdk","kwwwdbdk","kdwddddk",".kk..kk."],{d:"#2c2c34",w:"#8a8f99",r:"#d63b3b",b:"#2f6fd6"},21,28],
+ 4:[["kwkwkwk","kkkkkkk","kdddddk","kdwwddk","kdddddk","kkkkkkk"],{w:"#f4f1e8",d:"#2c2c34"},22,27],
+ 5:[["kkkkkk","kppppk","kpyypk","kpyypk","kppppk","kppppk","kkkkkk"],{p:"#6a3aa8",y:"#f2c94c"},23,26],
+ 6:[[".kbk.",".kbk.","kkkkk","kywyk","kyyyk","kkkkk",".kbk.",".kbk."],{b:"#7a4a2a",y:"#f2c94c",w:"#fff6c8"},23,25],
+ 7:[[".kkkk.","kyyyyk","kyrwyk","kywryk","kyyyyk",".kkkk."],{y:"#c99a3a",r:"#d63b3b",w:"#f4f1e8"},23,27],
+ 8:[[".kk....","kkkkkkk","kdgkgdk","kdkbkdk","kdgkgdk","kkkkkkk"],{d:"#2c2c34",g:"#8a8f99",b:"#4cc9f0"},21,27],
+ 9:[["kk...kk","kgk.kgk","kgkkkgk","kgdddgk","kgkkkgk","kgk.kgk","kk...kk"],{g:"#5a5f6a",d:"#9aa4b0"},21,26],
+ 10:[["y.y.y","y.y.y","yyyyy",".yyy.","..y..","..y..","..y..","..y..","..y.."],{y:"#f2c94c"},23,24],
+ 11:[["kkkkkk","kbbwbk","kbwwbk","kbbwbk","kbbbbk",".kbbk.","..kk.."],{b:"#00a3a3",w:"#f4f1e8"},22,26],
+ 12:[["..r","..r",".kk",".bk",".bk",".bk","bk.","bk.","bk."],{r:"#e8402a",b:"#c98a5a"},25,24],
+ 13:[[".kk.","kwwk","kbbk","kbbk","kbbk","kbbk","kbbk",".kk."],{w:"#e8e2d0",b:"#3a8ad6"},24,26],
+ 14:[["..w..",".kwk.",".kwk.",".kwk.",".kwk.",".kwk.",".kwk.","kyyyk","..b..","..b..","..y.."],{w:"#d8e0e8",y:"#f2c94c",b:"#7a4a2a"},22,23],
+ 15:[[".k....",".kk...","..k...","..k...","..k...",".ooo..","ooooo.","oodoo.","ooooo.",".ooo.."],{o:"#e8762a",d:"#3a2414",k:"#5a3a1a"},22,24],
+ 16:[[".rr.","rrrr",".rr.","..g.",".gg.","..g.","..g.","..g."],{r:"#d63b3b",g:"#2f9a5a"},24,25],
+ 17:[["kkkkk.","kbbbkk","kwwwk.k","kwwwkk","kkkkk."],{b:"#5a3a1a",w:"#f4f1e8"},22,29],
+ 18:[[".kkk.","krrrk","krwrk","krrrk",".kkk.","..k..","...k.","..k..","...k."],{r:"#d63b3b",w:"#ff8a8a"},23,20],
+ 19:[[".kkk..","kk.kk.","kkkkkk","kbbbbk","kbybbk","kbbbbk","kkkkkk"],{b:"#5a3a1a",y:"#f2c94c"},22,28]
+};

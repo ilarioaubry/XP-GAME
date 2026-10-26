@@ -31,47 +31,7 @@
 
 // ---- Créateur de personnage pixel art (30 × 35)
 const AVW=30,AVH=35;
-const AV_OPT={size:["Moyen","Grand","Très grand","Petit","Très petit"],
-  skin:[["#ffe3c8","#f2bf98"],["#f8cba4","#e0a57f"],["#e6ac80","#c98a60"],["#c88d60","#a96f48"],["#94603f","#77492d"],["#62402b","#4a2e1e"],["#ffe6d2","#eec3a2"],["#3f281c","#2d1b12"]],
-  hairC:["#2b2421","#5b3a22","#8c5c34","#e7c565","#c8571f","#ece7dd","#f28cc0","#4a8cf0","#36b679","#9a5ce0","#8a8f99","#c2185b"],
-  eyeC:["#5b3a22","#8a6a2a","#3a8a4a","#3a7ad0","#7a8a96","#9a3bd0"],
-  topC:["#2c2c34","#f2f0ea","#d63b3b","#2f6fd6","#2f9a5a","#f0b62e","#8a4fd0","#8a8f99","#e8762a","#f08cc0"],
-  accC:["#d63b3b","#2f6fd6","#2c2c34","#f2f0ea","#2f9a5a","#f0b62e","#8a4fd0","#f08cc0"],
-  bgC:["#7fc8f8","#ffd36e","#b5e48c","#f4a3c2","#c3a6ff","#ff9f6b","#3a3f58","#e8e2d0"],
-  bgP:["Uni","Rayures","Pois","Damier","Étoiles","Dégradé","Flammes","Nuit étoilée","Coucher de soleil","Code","Arc-en-ciel"],
-  hair:["Court","Rasé","Mèche","Long","Afro","Locks","Chignon","Crête","Bouclé","Chauve","Tresses","Queue de cheval","Frange","Dégradé","Mulet","Frange longue","Brosse","Raie sur le côté","Banane","Waves","Carré","Surfeur","Twists","Wolf cut","Long ondulé","Couettes","Demi-queue"],
-  beard:["Aucune","Moustache","Bouc","Courte","Fournie","3 jours"],
-  top:["T-shirt","Hoodie","Débardeur","Veste","Maillot","Chemise","Col roulé","Survêt","Veste en cuir","Armure","Cape royale","Kimono","Costume","Robe de mage","Peignoir","Marinière","Chemise hawaïenne"],
-  hat:["Aucun","Casquette","Bonnet","Bandana","Casque audio","Couronne","Bob","Casquette inversée","Durag","Chapeau de magicien","Casque de chevalier","Cornes de viking","Chapeau de cowboy","Toque de chef","Auréole","Bandeau ninja","Couronne de fleurs","Chapeau de pirate","Béret","Chapeau de paille"],
-  glasses:["Aucune","Rondes","Carrées","Soleil","Cœur","Masque","Monocle","Visière cyber","Lunettes dorées"],
-  bijou:["Aucun","Boucle","Chaîne","Les deux","Piercing nez","Perles","Boucles en diamant","Médaillon"],
-  main:["Rien","Micro","Disque d'or","Manette","Clap de cinéma","Grimoire","Montre en or","Boussole","Appareil photo","Haltère","Fourchette d'or","Bouclier","Pinceau","Gourde","Épée","Guitare","Rose","Tasse de café","Ballon","Mallette"],
-  mouth:["Sourire","Neutre","Grand sourire","Langue","Surpris"],
-  eyes:["Normaux","Heureux","Déterminés","Clin d'œil","Grands"],
-  mark:["Aucun","Taches de rousseur","Cicatrice","Grain de beauté","Pansement","Peinture"]
-};
 const AV_DEF={faceW:0,size:0,skin:1,hairC:3,eyeC:0,topC:3,accC:0,bgC:0,bgP:0,hair:0,beard:1,top:0,hat:0,glasses:0,bijou:0,mouth:0,eyes:0,mark:0,main:0};
-const AV_MAIN={
- 1:[[".kkk.","kgwgk","kgggk","kgggk",".kkk.","..d..","..d..","..d..","..d..",".kdk."],{g:"#9aa4b0",w:"#fff",d:"#2c2c34"},23,22],
- 2:[[".kkkkk.","kyyyyyk","kyykyyk","kykwkyk","kyykyyk","kyyyyyk",".kkkkk."],{y:"#f2c94c",w:"#fff6c8"},22,26],
- 3:[[".kkkkkk.","kdwddrdk","kwwwdbdk","kdwddddk",".kk..kk."],{d:"#2c2c34",w:"#8a8f99",r:"#d63b3b",b:"#2f6fd6"},21,28],
- 4:[["kwkwkwk","kkkkkkk","kdddddk","kdwwddk","kdddddk","kkkkkkk"],{w:"#f4f1e8",d:"#2c2c34"},22,27],
- 5:[["kkkkkk","kppppk","kpyypk","kpyypk","kppppk","kppppk","kkkkkk"],{p:"#6a3aa8",y:"#f2c94c"},23,26],
- 6:[[".kbk.",".kbk.","kkkkk","kywyk","kyyyk","kkkkk",".kbk.",".kbk."],{b:"#7a4a2a",y:"#f2c94c",w:"#fff6c8"},23,25],
- 7:[[".kkkk.","kyyyyk","kyrwyk","kywryk","kyyyyk",".kkkk."],{y:"#c99a3a",r:"#d63b3b",w:"#f4f1e8"},23,27],
- 8:[[".kk....","kkkkkkk","kdgkgdk","kdkbkdk","kdgkgdk","kkkkkkk"],{d:"#2c2c34",g:"#8a8f99",b:"#4cc9f0"},21,27],
- 9:[["kk...kk","kgk.kgk","kgkkkgk","kgdddgk","kgkkkgk","kgk.kgk","kk...kk"],{g:"#5a5f6a",d:"#9aa4b0"},21,26],
- 10:[["y.y.y","y.y.y","yyyyy",".yyy.","..y..","..y..","..y..","..y..","..y.."],{y:"#f2c94c"},23,24],
- 11:[["kkkkkk","kbbwbk","kbwwbk","kbbwbk","kbbbbk",".kbbk.","..kk.."],{b:"#00a3a3",w:"#f4f1e8"},22,26],
- 12:[["..r","..r",".kk",".bk",".bk",".bk","bk.","bk.","bk."],{r:"#e8402a",b:"#c98a5a"},25,24],
- 13:[[".kk.","kwwk","kbbk","kbbk","kbbk","kbbk","kbbk",".kk."],{w:"#e8e2d0",b:"#3a8ad6"},24,26],
- 14:[["..w..",".kwk.",".kwk.",".kwk.",".kwk.",".kwk.",".kwk.","kyyyk","..b..","..b..","..y.."],{w:"#d8e0e8",y:"#f2c94c",b:"#7a4a2a"},22,23],
- 15:[[".k....",".kk...","..k...","..k...","..k...",".ooo..","ooooo.","oodoo.","ooooo.",".ooo.."],{o:"#e8762a",d:"#3a2414",k:"#5a3a1a"},22,24],
- 16:[[".rr.","rrrr",".rr.","..g.",".gg.","..g.","..g.","..g."],{r:"#d63b3b",g:"#2f9a5a"},24,25],
- 17:[["kkkkk.","kbbbkk","kwwwk.k","kwwwkk","kkkkk."],{b:"#5a3a1a",w:"#f4f1e8"},22,29],
- 18:[[".kkk.","krrrk","krwrk","krrrk",".kkk.","..k..","...k.","..k..","...k."],{r:"#d63b3b",w:"#ff8a8a"},23,20],
- 19:[[".kkk..","kk.kk.","kkkkkk","kbbbbk","kbybbk","kbbbbk","kkkkkk"],{b:"#5a3a1a",y:"#f2c94c"},22,28]
-};
 function avHex(h){h=h.replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
 function avMix(a,b,t){const A=avHex(a),B=avHex(b);return"#"+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,"0")).join("")}
 // ---- fonds en scène (12+)

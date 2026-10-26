@@ -27,47 +27,6 @@ const norm=t=>String(t||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""
 const IC={home:'<path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/>',force:'<path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/>',soi:'<path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/>',food:'<path d="M7 3v8a3 3 0 0 0 6 0V3M10 3v18M17 3c-2 2-2 6 0 8v10"/>',work:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',fun:'<rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M15.5 12h.01M18 13.5h.01"/>',make:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',learn:'<path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM4 19a2 2 0 0 1 2-2h12"/>',people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5.5 2 5.5 5"/>'};
 const DOMS=[["maison","Maison","var(--c-maison)","home","maison"],["sport","Force","var(--c-sport)","force","sport"],["soi","Soi","var(--c-soi)","soi","soi"],["nourriture","Nourriture","var(--c-food)","food","nourriture"],["travail","Travail","#6f8fe0","work","travail"],["divert","Divertissement","#7b6cf0","fun","soi"],["creer","Créer","var(--c-perso)","make","perso"],["apprendre","Apprendre","#2a8fd6","learn","soi"],["proches","Proches","var(--c-social)","people","social"]];
 // {id, dom, cat, l, xp, o:[label | [label, nom enregistré]], lz, fr:[jours orange, jours rouge], solo, who}
-const FAM=[
-  {id:"ranger",dom:"maison",cat:"maison",l:"Ranger",xp:10,o:["Chambre","Salon","Cuisine","Salle de bain","Bureau","Entrée","Placard","Voiture"],fr:[7,14]},
-  {id:"nettoyer",dom:"maison",cat:"maison",l:"Nettoyer",xp:10,o:["Sol","Cuisine","Salle de bain","Toilettes","Vitres","Frigo","Poussière"],fr:[7,14]},
-  {id:"linge",dom:"maison",cat:"maison",l:"Linge",xp:6,o:["Lancer une machine","Étendre","Plier et ranger","Repasser","Changer les draps"],fr:[5,10]},
-  {id:"vaisselle",dom:"maison",cat:"maison",l:"Vaisselle",xp:6,o:["Laver","Ranger","Lave-vaisselle"],fr:[2,4]},
-  {id:"mmaison",dom:"maison",cat:"maison",l:"Petites tâches",xp:5,o:["Sortir les poubelles","Courses","Arroser les plantes","Réparer un truc"],fr:[5,10]},
-  {id:"armoire",dom:"maison",cat:"maison",l:"Garde-robe",xp:8,o:["Trier l'armoire","Tenue soignée"],lz:"style"},
-  {id:"clarte",dom:"maison",cat:"maison",l:"Tri du téléphone",xp:10,o:["Photos","Notes","Messages et contacts","Mails","Applis","Réseaux","Notifications","Modes de concentration","Fond d'écran","Albums photos","Musique locale","Spotify","Cartes","Docs et Drive","Fichiers"],fr:[30,60],fro:{"Mails":[14,30],"Modes de concentration":[60,120],"Fond d'écran":[60,120],"Musique locale":[60,120],"Cartes":[60,120]},solo:1},
-  {id:"renfo",dom:"sport",cat:"sport",l:"Renforcement",xp:10,o:["Pompes","Squats","Gainage","Abdos","Tractions"],fr:[3,7],q:{Pompes:"reps",Squats:"reps",Abdos:"reps",Tractions:"reps"}},
-  {id:"cardio",dom:"sport",cat:"sport",l:"Cardio",xp:15,o:["Marche","Course","Vélo","Natation","Corde à sauter"],fr:[4,10],q:{Marche:"km",Course:"km",Vélo:"km",Natation:"km"}},
-  {id:"souple",dom:"sport",cat:"sport",l:"Souplesse",xp:8,o:["Étirements","Yoga","Mobilité"],fr:[4,10]},
-  {id:"sportco",dom:"sport",cat:"sport",l:"Sport à plusieurs",xp:20,o:["Foot","Basket","Escalade","Danse","Autre sport"],fr:[10,21]},
-  {id:"bouger",dom:"sport",cat:"sport",l:"Bouger au quotidien",xp:8,o:["Trajet à pied","Trajet à vélo","Escaliers"]},
-  {id:"calme",dom:"soi",cat:"soi",l:"Se poser",xp:10,o:["Méditer","Respirer","Pause sans écran"],fr:[3,7]},
-  {id:"sieste",dom:"soi",cat:"soi",l:"Sieste",xp:8,o:["Sieste"],nap:1},
-  {id:"soin",dom:"soi",cat:"soi",l:"Prendre soin de moi",xp:8,o:["Coiffeur","Masque","Bain","Ongles","Crème"],fr:[7,14],fro:{Coiffeur:[35,50],Ongles:[10,18],"Crème":[3,7]}},
-  {id:"sante",dom:"soi",cat:"soi",l:"Santé",xp:15,o:["Dentiste","Médecin","Kiné","Ophtalmo","Prise de sang"],fr:[150,240],fro:{"Médecin":[300,400],"Kiné":[14,30]}},
-  {id:"ecrire",dom:"soi",cat:"soi",l:"Écrire",xp:8,o:["Journal","Gratitude","Pensées"],fr:[4,10]},
-  {id:"dehors",dom:"soi",cat:"soi",l:"Prendre l'air",xp:8,o:["Balade","Soleil","Nature","Nouveau lieu"],lz:"explo",fr:[3,7],fro:{"Nouveau lieu":[14,30]}},
-  {id:"nuit",dom:"soi",cat:"soi",l:"Bien dormir",xp:10,o:["Coucher avant minuit","Pas d'écran au lit"],solo:1},
-  {id:"manger",dom:"nourriture",cat:"nourriture",l:"Bien manger",xp:10,o:["Repas équilibré","Repas végétarien","Fruit ou légume","Petit-déj complet"],fr:[2,4]},
-  {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
-  {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
-  {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans…",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
-  {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
-  {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
-  {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
-  {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante finie",xp:25,o:["Fini !"],quick:1},
-  {id:"lire",dom:"divert",cat:"soi",l:"Lire",xp:10,o:["Livre","BD ou manga","Article","Livre fini"],lz:"lect",fr:[3,7],fro:{"Livre fini":[30,60]},q:{Livre:"pages","BD ou manga":"pages"}},
-  {id:"regarder",dom:"divert",cat:"soi",l:"Regarder",xp:10,o:["Film","Épisode","Série finie","Documentaire"],lz:"cine"},
-  {id:"jouer",dom:"divert",cat:"soi",l:"Jouer",xp:10,o:["Jeu vidéo","Jeu de société","Jeu fini"],lz:"jeu"},
-  {id:"sorties",dom:"divert",cat:"soi",l:"Sortir",xp:20,lzo:{"Cinéma":"cine","Musée ou expo":"explo"},o:["Cinéma","Concert","Musée ou expo","Théâtre","Restaurant","Bar","Jam session","Stand-up","Soirée quiz","Karaoké","Bar à jeux","Escape game","Bowling ou billard","Arcade","Brocante","Friperie","Disquaire","Atelier","Escalade","Festival","Match","Excursion"],fr:[14,30],fro:{"Cinéma":[14,30],"Concert":[30,60]}},
-  {id:"ecouter",dom:"divert",cat:"soi",l:"Écouter",xp:8,o:["Album","Podcast","Concert"]},
-  {id:"musique",dom:"creer",cat:"perso",l:"Musique",xp:20,o:[["Faire du son","Faire du son (1 h)"],["Écrire un texte","Écrire un couplet"]],fr:[3,7]},
-  {id:"image",dom:"creer",cat:"perso",l:"Image",xp:12,o:["Séance photo","Vidéo","Montage"],lz:"photo"},
-  {id:"art",dom:"creer",cat:"perso",l:"Dessin et art",xp:12,o:["Dessin","Peinture","Bricolage"],fr:[7,14]},
-  {id:"langue",dom:"apprendre",cat:"soi",l:"Langue",xp:10,o:["Leçon","Film en VO","Conversation"],lz:"lang",fr:[3,7]},
-  {id:"cours",dom:"apprendre",cat:"soi",l:"Apprendre",xp:12,o:["Tuto","Formation","Lecture utile"]},
-  {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
-  {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
-  {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
 const DUR=[[0,"Rapide"],[15,"15 min"],[30,"30 min"],[60,"1 h"],[120,"2 h"],[180,"3 h +"]],NAP=[[10,"10 min"],[20,"20 min"],[30,"30 min"],[45,"45 min"],[60,"1 h"],[90,"1 h 30"]];
 const durXp=m=>m<=0?0:m<=60?m:Math.round(60+(m-60)*.65);
 const QTY={reps:{u:"rép.",o:[10,20,30,50,100],x:q=>Math.round(q/2)},km:{u:"km",o:[1,2,3,5,10,21],x:q=>q*8},pages:{u:"pages",o:[10,20,30,50,100],x:q=>Math.round(q/2)}};
@@ -157,16 +116,6 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
 try{const z=lzState();LZ.forEach(L=>{if(!z.on.includes(L.id))z.on.push(L.id)})}catch(e){}
 // ===== Univers visuels : icônes et décors par catégorie
 try{void 0;}catch(e){}
-const FIC={ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","Salle de bain":"bain",Bureau:"ecran","Entrée":"porte",Placard:"armoire",Voiture:"voiture"}],
-  nettoyer:["balai",{Sol:"balai",Cuisine:"casserole","Salle de bain":"bain",Toilettes:"wc",Vitres:"fenetre",Frigo:"frigo","Poussière":"plumeau"}],
-  linge:["machine",{"Changer les draps":"lit"}],vaisselle:["assiette",{}],mmaison:["poubelle",{"Sortir les poubelles":"poubelle",Courses:"panier","Arroser les plantes":"plante","Réparer un truc":"check"}],armoire:["armoire",{}],
-  renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
-  calme:["medit",{"Pause sans écran":"tel"}],sieste:["sieste",{}],soin:["visage",{Coiffeur:"ciseaux",Bain:"bain",Ongles:"pinceau"}],sante:["sante",{}],ecrire:["note",{}],dehors:["soleil",{Nature:"plante"}],nuit:["lune",{}],
-  manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],eau:["eau",{}],sans:["check",{}],
-  focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier"}],planif:["note",{}],fini:["check",{}],
-  lire:["lire",{}],regarder:["clap",{}],jouer:["manette",{}],ecouter:["casque",{}],sorties:["ticket",{Restaurant:"repas",Bar:"tasse",Concert:"casque"}],
-  musique:["micro",{"Écrire un texte":"note"}],image:["photo",{}],art:["pinceau",{}],langue:["bulle",{}],cours:["ampoule",{}],
-  contact:["tel",{Message:"bulle"}],voir:["tasse",{"Soirée":"coeur"}],service:["coeur",{}]};
 const DUNI={maison:{ic:"canape",w:"#3b2b48",f:"#6b4426",fx:"etoile"},sport:{ic:"halteres",w:"#173a5c",f:"#c0602a",fx:"eclair"},soi:{ic:"medit",w:"#1f4248",f:"#2f6a5a",fx:"bulle"},nourriture:{ic:"repas",w:"#4a2a1c",f:"#d8c8a8",fx:"etoile"},
   travail:{ic:"ecran",w:"#141c30",f:"#2a3450",fx:"check"},divert:{ic:"manette",w:"#2a1c4a",f:"#4a2a6a",fx:"etoile"},creer:{ic:"micro",w:"#160f26",f:"#5a1f5a",fx:"notec"},apprendre:{ic:"ampoule",w:"#2a2216",f:"#5a3f22",fx:"ampoule"},proches:{ic:"coeur",w:"#3a1c28",f:"#6a3a2a",fx:"coeur"}};
 const uIc=(fid,opt)=>{const F=FIC[fid];if(!F)return"";return(opt&&F[1][opt])||F[0]};
@@ -270,29 +219,6 @@ function natDress(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.dat
     if(!c.querySelector(".uiq")){const sp=document.createElement("span");sp.className="uiq";sp.innerHTML=rkSvg({moon:"lune",star:"etoile",meteor:"etoile",sun:"soleil",leaf:/^Cuisiner/i.test(t)?"courge":"plante",snow:"flocon"}[q.nat]||"etoile");c.appendChild(sp)}})}
 // ---- quête spéciale : idée de sortie (plusieurs propositions)
 // [nom, quand (s=soir, j=journée, w=week-end seulement), dedans(1)/dehors(0), xp, option d'action, icône]
-const IDQ=[
-  ["Une jam session ouverte dans un bar","s",1,35,"Jam session","mus"],["Une scène ouverte de stand-up, en spectateur","s",1,30,"Stand-up","mic"],
-  ["Une soirée quiz ou blind test dans un bar","s",1,30,"Soirée quiz","q"],["La dernière séance d'un film en VO","s",1,25,"Cinéma","cine"],
-  ["Un vieux film culte au ciné-club ou en rétrospective","s",1,30,"Cinéma","cine"],["Le concert d'un groupe local que tu ne connais pas","s",1,35,"Concert","mus"],
-  ["Un karaoké avec des potes","s",1,30,"Karaoké","mic"],["Un bar à jeux : tester un jeu de société inconnu","s",1,30,"Bar à jeux","dice"],
-  ["Un match d'impro théâtrale","s",1,30,"Théâtre","mask"],["Du jazz dans une cave ou un petit bar","s",1,30,"Concert","mus"],
-  ["Un escape game à deux ou plus","sj",1,35,"Escape game","key"],["Bowling ou billard, la revanche","sj",1,25,"Bowling ou billard","dice"],
-  ["Une soirée slam ou lecture en librairie","s",1,30,"Scène ouverte","mic"],["Un cours d'essai de salsa ou de danse","s",1,35,"Cours d'essai","mus"],
-  ["Une salle d'arcade ou des flippers","sj",1,25,"Arcade","dice"],["Un marché nocturne ou un food market","s",0,25,"Marché","food"],
-  ["Une brocante ou un vide-grenier","w",0,25,"Brocante","bag"],["Chiner un vinyle à moins de 5 € chez un disquaire","j",1,25,"Disquaire","mus"],
-  ["Une friperie : une tenue complète à moins de 20 €","j",1,25,"Friperie","bag"],["Une expo dans une petite galerie gratuite","j",1,25,"Musée ou expo","art"],
-  ["Un atelier d'initiation : poterie, sérigraphie ou cuisine","w",1,40,"Atelier","art"],["Une séance découverte en salle d'escalade","j",1,35,"Escalade","run"],
-  ["Louer un kayak ou un paddle","w",0,40,"Kayak ou paddle","run"],["Un restaurant d'une cuisine jamais goûtée (éthiopienne, géorgienne…)","js",1,30,"Restaurant","food"],
-  ["Prendre un train régional vers une ville à moins d'une heure","w",0,45,"Excursion","map"],["Une visite guidée de ta propre ville","w",0,35,"Visite guidée","map"],
-  ["Un match de sport amateur du coin (rugby, hand, foot)","w",0,25,"Match","run"],["Le planétarium ou une soirée d'observation des étoiles","s",1,35,"Planétarium","q"],
-  ["Accrobranche ou trampoline park","w",0,35,"Accrobranche","run"],["Un festival ou une fête de quartier ce week-end","w",0,35,"Festival","mus"],
-  ["La bibliothèque : un livre pris au hasard dans un rayon inconnu","j",1,20,"Bibliothèque","q"],["Un concert classique ou d'orgue gratuit dans une église","js",1,30,"Concert","mus"]];
-const IDI={mus:'<path d="M9 18V6l10-2v12" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="7" cy="18" r="2.6" fill="#fff"/><circle cx="17" cy="16" r="2.6" fill="#fff"/>',mic:'<rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#fff" stroke-width="2"/>',
-  q:'<circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 16.5v.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',cine:'<rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M10 9.5v6l5-3z" fill="#fff"/>',
-  dice:'<rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/><circle cx="9" cy="9" r="1.5" fill="#fff"/><circle cx="15" cy="15" r="1.5" fill="#fff"/><circle cx="12" cy="12" r="1.5" fill="#fff"/>',mask:'<path d="M4 5h16v6a8 8 0 0 1-16 0z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="9" cy="10" r="1.4" fill="#fff"/><circle cx="15" cy="10" r="1.4" fill="#fff"/><path d="M9 14q3 2.5 6 0" fill="none" stroke="#fff" stroke-width="2"/>',
-  key:'<circle cx="8" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 12h9M18 12v3M21 12v2" stroke="#fff" stroke-width="2"/>',food:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 3-3 6s1 4 3 4v8" fill="none" stroke="#fff" stroke-width="2"/>',
-  bag:'<path d="M5 8h14l-1 13H6z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 8a3 3 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2"/>',art:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 3 0 4-1 3-2 3-4a9 9 0 0 0-9-8z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="8" cy="10" r="1.4" fill="#fff"/><circle cx="12" cy="7" r="1.4" fill="#fff"/><circle cx="16" cy="10" r="1.4" fill="#fff"/>',
-  run:'<circle cx="14" cy="4.5" r="2" fill="#fff"/><path d="M6 21l3-6 3 2v4M9 15l2-6 4 3 3-1M11 9L7 11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 4v14M15 6v14" stroke="#fff" stroke-width="2"/>'};
 const idSvg=k=>'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">'+(IDI[k]||IDI.q)+'</svg>';
 function cIdPick(n){const g=S.g,h=dayH(),we=isWeekend();let wx=null;try{wx=wxNow()}catch(e){}const wet=wx&&["rain","storm","snow"].includes(wx.k),H=(g.idqH||[]);
   const ok=x=>(x[1].includes("w")?we:true)&&(x[1].includes("s")&&h>=15||x[1].includes("j")&&h<18||x[1]==="w"&&h<17)&&(!wet||x[2]);
