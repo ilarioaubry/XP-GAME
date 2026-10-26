@@ -31,7 +31,7 @@
   <section data-v="q" class="rit trkbox" id="trkBox" aria-label="Ton bandeau du jour"></section>
   <section data-v="q" class="evtoday" id="evToday" aria-label="Aujourd'hui"></section>
   <script>
-  @@include(js/ma-vie.js)@@
+  @@include(js/moi/ma-vie.js)@@
 </script>
   <section data-v="q" class="specials" id="dqBox" aria-label="Mon moment">
     <div class="head" id="dqHead"><h2 id="dqTitle">Matin<span class="count" id="spCount">0</span></h2><span class="rsk" id="ritSk" hidden></span><button type="button" class="dqed" id="ritEdBtn" aria-label="Modifier mes rituels"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="8" y="0" width="2" height="1.02"/><rect x="7" y="1" width="4" height="1.02"/><rect x="6" y="2" width="6" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="8" y="3" width="4" height="1.02"/><rect x="4" y="4" width="2" height="1.02"/><rect x="8" y="4" width="3" height="1.02"/><rect x="3" y="5" width="2" height="1.02"/><rect x="7" y="5" width="3" height="1.02"/><rect x="2" y="6" width="2" height="1.02"/><rect x="6" y="6" width="3" height="1.02"/><rect x="1" y="7" width="2" height="1.02"/><rect x="5" y="7" width="3" height="1.02"/><rect x="1" y="8" width="1" height="1.02"/><rect x="3" y="8" width="3" height="1.02"/><rect x="1" y="9" width="3" height="1.02"/><rect x="0" y="10" width="4" height="1.02"/></svg></button></div>
@@ -224,35 +224,35 @@
 </div>
 
 <script>
-  @@include(js/01-donnees-base.js)@@
-  @@include(js/02-ecussons-icones.js)@@
-  @@include(js/03-repas-barre-de-vie.js)@@
-  @@include(js/04-identites.js)@@
-  @@include(js/05-fetes.js)@@
-  @@include(js/06-creation-profil.js)@@
-  @@include(js/07-rituels-tuiles.js)@@
-  @@include(js/08-ambiance-scene.js)@@
-  @@include(js/09-cloture-soir.js)@@
-  @@include(js/10-evenements.js)@@
-  @@include(js/11-createur-personnage.js)@@
-  @@include(js/12-pixel-clair-moteur.js)@@
-  @@include(js/13-figurines-expressions.js)@@
-  @@include(js/14-pixel-clair-integration.js)@@
-  @@include(js/15-reglages-rituels.js)@@
-  @@include(js/16-quetes.js)@@
-  @@include(js/17-meteo.js)@@
-  @@include(js/18-quetes-pour-toi-histoire.js)@@
-  @@include(js/19-bilan.js)@@
-  @@include(js/20-calendrier-fiche.js)@@
-  @@include(js/21-contenu-collection.js)@@
-  @@include(js/22-icones-unifiees.js)@@
-  @@include(js/23-coffres-quetes-du-jour.js)@@
-  @@include(js/24-defis-skill-vie-perso.js)@@
-  @@include(js/25-chez-moi.js)@@
-  @@include(js/26-bibliotheque-badges.js)@@
-  @@include(js/27-garde-robe-quetes-timer.js)@@
-  @@include(js/28-sons-proches-validation.js)@@
-  @@include(js/29-defis-semaine-test-sauvegarde.js)@@
+  @@include(js/coeur/01-donnees-base.js)@@
+  @@include(js/coeur/02-ecussons-icones.js)@@
+  @@include(js/aujourdhui/03-repas-barre-de-vie.js)@@
+  @@include(js/moi/04-identites.js)@@
+  @@include(js/aujourdhui/05-fetes.js)@@
+  @@include(js/coeur/06-creation-profil.js)@@
+  @@include(js/aujourdhui/07-rituels-tuiles.js)@@
+  @@include(js/aujourdhui/08-ambiance-scene.js)@@
+  @@include(js/aujourdhui/09-cloture-soir.js)@@
+  @@include(js/aujourdhui/10-evenements.js)@@
+  @@include(js/moi/11-createur-personnage.js)@@
+  @@include(js/coeur/12-pixel-clair-moteur.js)@@
+  @@include(js/coeur/13-figurines-expressions.js)@@
+  @@include(js/coeur/14-pixel-clair-integration.js)@@
+  @@include(js/moi/15-reglages-rituels.js)@@
+  @@include(js/aujourdhui/16-quetes.js)@@
+  @@include(js/aujourdhui/17-meteo.js)@@
+  @@include(js/aujourdhui/18-quetes-pour-toi-histoire.js)@@
+  @@include(js/moi/19-bilan.js)@@
+  @@include(js/moi/20-calendrier-fiche.js)@@
+  @@include(js/coeur/21-contenu-collection.js)@@
+  @@include(js/coeur/22-icones-unifiees.js)@@
+  @@include(js/aujourdhui/23-coffres-quetes-du-jour.js)@@
+  @@include(js/moi/24-defis-skill-vie-perso.js)@@
+  @@include(js/moi/25-chez-moi.js)@@
+  @@include(js/moi/26-bibliotheque-badges.js)@@
+  @@include(js/moi/27-garde-robe-quetes-timer.js)@@
+  @@include(js/proches/28-sons-proches-validation.js)@@
+  @@include(js/coeur/29-defis-semaine-test-sauvegarde.js)@@
 </script>
 
 
@@ -276,13 +276,13 @@
   @@include(css/fenetres.css)@@
 </style>
 <script>
-  @@include(js/aujourdhui-finitions.js)@@
-  @@include(js/moi-finitions.js)@@
-  @@include(js/proches-finitions.js)@@
-  @@include(js/demarrage.js)@@
-  @@include(js/assiette.js)@@
-  @@include(js/icones-pixel.js)@@
-  @@include(js/standards.js)@@
-  @@include(js/migrations.js)@@
+  @@include(js/aujourdhui/aujourdhui-finitions.js)@@
+  @@include(js/moi/moi-finitions.js)@@
+  @@include(js/proches/proches-finitions.js)@@
+  @@include(js/coeur/demarrage.js)@@
+  @@include(js/aujourdhui/assiette.js)@@
+  @@include(js/coeur/icones-pixel.js)@@
+  @@include(js/coeur/standards.js)@@
+  @@include(js/coeur/migrations.js)@@
 </script>
 </body></html>

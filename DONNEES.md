@@ -1,11 +1,11 @@
 # Données d'XP (sauvegarde)
 
-Tout tient dans une seule clé du stockage local : `carnet-quetes`, au format JSON produit par `snapshot()` (`js/29-defis-semaine-test-sauvegarde.js`) et relu par `load()` / `loadCore()`.
+Tout tient dans une seule clé du stockage local : `carnet-quetes`, au format JSON produit par `snapshot()` (`js/coeur/29-defis-semaine-test-sauvegarde.js`) et relu par `load()` / `loadCore()`.
 
 **Règles** (voir CLAUDE.md) : nouvelles clés dans `S.g` ; jamais de renommage ni de changement de format ; toute réparation = une migration numérotée dans `js/migrations.js`.
 
 Statut : **active** = utilisée par une fonctionnalité visible · **héritée** = liée à une fonctionnalité retirée ou cachée, à trancher en phase 2 · **?** = rôle à confirmer en lisant le code.
-Fichiers : numéro du script (`03` = `03-repas-barre-de-vie.js`), ou nom court (`correctifs`, `assiette`…).
+Fichiers : numéro du script (`03` = `03-repas-barre-de-vie.js`), ou nom court (`finitions` = les fichiers `*-finitions.js`, ex-`correctifs`, `assiette`…).
 
 Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g`). Une clé lue par un autre alias peut manquer : compléter au fil des étapes.
 
@@ -42,14 +42,14 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `onb` | 06, 29 | Date de fin de l'accueil (création du profil) | active |
 | `help` | 27 | Nombre d'affichages des aides, pour les masquer après 3 | active |
 | `mute`, `ambS` | 02, 15, 28, 08 | Sons coupés, ambiance sonore de la scène | active |
-| `da` | 03, 08, correctifs | Style de l'appli (ciel / classique) | active |
+| `da` | 03, 08, finitions | Style de l'appli (ciel / classique) | active |
 | `wake`, `curfew` | 01, 03 | Heure de réveil (début de journée), alerte de couche tardive | active |
 
 ### Repas et assiette
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
-| `mb` | 02, 03, 04, 09, 26, assiette, correctifs | Repas validés : `"AAAA-MM-JJ:période"` → `{t}` | active |
-| `mbd` | 03, 09, 26, assiette, correctifs | Détail des repas par période (`m`, `ex`, `w`, `cr`) | active |
+| `mb` | 02, 03, 04, 09, 26, assiette, finitions | Repas validés : `"AAAA-MM-JJ:période"` → `{t}` | active |
+| `mbd` | 03, 09, 26, assiette, finitions | Détail des repas par période (`m`, `ex`, `w`, `cr`) | active |
 | `plt` | assiette | Assiettes : `plt[jour][dej|diner] = {f:[], p:[], l:[], x:{yaourt, fromage, eau}, r?}` | active |
 | `plr` | assiette | Recettes enregistrées | active |
 | `plf`, `plh` | assiette | Aliments ajoutés par toi, aliments masqués | active |
@@ -69,23 +69,23 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `offs`, `pz`, `rtr`, `abs` | 03, 15, 28 | Jours off, pauses, jours de reprise, absences | active |
 | `jok`, `jokD`, `jokS`, `jokChk` | 03, 28 | Jokers de série (jours rattrapés) | active |
 | `seen` | 28 | Dernier jour d'ouverture (calcul des absences) | active |
-| `sleep`, `bed`, `nap` | 02, 09, 13, 18, 19, 24, 26, correctifs | Sommeil, heure de coucher, siestes | active |
+| `sleep`, `bed`, `nap` | 02, 09, 13, 18, 19, 24, 26, finitions | Sommeil, heure de coucher, siestes | active |
 | `jr` | 08, 09, 18, 19 | Journal du soir par jour | active |
 | `en` | 19 | Énergie du jour | active ? |
 | `goalHit`, `goalN` | 02, 26 | Objectif du jour atteint (date, total) | active |
-| `cig` | correctifs | Compteur de cigarettes par jour | active |
-| `vie` | correctifs | Réglages de vie : jours de travail, compteurs suivis | active |
-| `per`, `perAsk` | correctifs, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
+| `cig` | finitions | Compteur de cigarettes par jour | active |
+| `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
+| `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
 | `last` | ma-vie | « Dernière fois que… » | active |
 | `tm` | 27 | Minuteur en cours | active |
 
 ### Quêtes
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
-| `fq`, `fqW`, `fqNo`, `fqNoT`, `fqFam` | 08, 18, 19, 20, 22, 28, assiette, correctifs | Quêtes pour toi : tirage du jour, poids appris, quêtes écartées | active |
+| `fq`, `fqW`, `fqNo`, `fqNoT`, `fqFam` | 08, 18, 19, 20, 22, 28, assiette, finitions | Quêtes pour toi : tirage du jour, poids appris, quêtes écartées | active |
 | `mq` | 08, 19 | Petites quêtes du moment faites par jour | active |
 | `dq` | 02, 09, 29 | Quêtes du jour | active |
-| `idq`, `idt` | correctifs, 04, 22 | Quête d'identité, suivi « qui tu deviens » | active |
+| `idq`, `idt` | finitions, 04, 22 | Quête d'identité, suivi « qui tu deviens » | active |
 | `surDone`, `surLast` | 02, 23, 29 | Quête surprise du jour | active |
 | `orgDone`, `secDone` | 23, 29, 26 | Quête d'organisation du jour ; quêtes secrètes faites | active |
 | `fgDone`, `fgLast`, `fgQ`, `fgr` | 06, 23, 26, 28, 29 | Quêtes de groupe d'amis, groupes | active |
@@ -95,17 +95,17 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `ev`, `evArc`, `evq`, `evmOff` | 10, 18, 19, 20 | Événements à venir, archivés, quêtes liées, mode événement masqué | active |
 | `duo` | 08, 18 | Défi à deux de la semaine | active ? |
 | `filmDay`, `filmSeen`, `filmDone` | 19, 24, 25 | Film du jour, films vus | active |
-| `taste`, `sit`, `normOff`, `lz`, `noMus`, `music` | 06, 18, 22, 28, correctifs | Goûts, situation, préférences, centres d'intérêt | active |
+| `taste`, `sit`, `normOff`, `lz`, `noMus`, `music` | 06, 18, 22, 28, finitions | Goûts, situation, préférences, centres d'intérêt | active |
 | `aiN` | — | Compteur mensuel des appels à Claude (code retiré à l'étape 1.7) | **héritée** |
-| `afLast`, `afMem`, `afCustom` | 18, 26, correctifs, ma-vie | Dernière fois par activité, avec qui, activités perso | active |
-| `cur`, `fini`, `dm` | correctifs | En cours (livre, série…), terminés, objectifs du mois | active |
-| `map` | 15, 18, correctifs | Sorties : lieux visités | active |
+| `afLast`, `afMem`, `afCustom` | 18, 26, finitions, ma-vie | Dernière fois par activité, avec qui, activités perso | active |
+| `cur`, `fini`, `dm` | finitions | En cours (livre, série…), terminés, objectifs du mois | active |
+| `map` | 15, 18, finitions | Sorties : lieux visités | active |
 | `ms` | 22 | Progression par étapes (`MS`) | ? |
 
 ### Proches
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
-| `rel` | 02, 04, 05, 24, 26, correctifs | Dernières sorties / liens par personne | active |
+| `rel` | 02, 04, 05, 24, 26, finitions | Dernières sorties / liens par personne | active |
 
 ### Profil, collections, récompenses
 | Clé | Fichiers | Contenu | Statut |
@@ -117,7 +117,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `nb` | 25, 26, 29 | Badges vus (« nouveau ») | active |
 | `cr` | 22 | Récompenses par catégorie déjà données | active |
 | `chests`, `chestLvl`, `lvcFix` | 05, 09, 16, 21, 23, 27, 29 | Coffres à ouvrir, niveau du dernier coffre, coffre offert une fois | active |
-| `bchests`, `opened`, `ol` | 23, 24, 26, 27, 29, correctifs | Coffres bonus, coffres ouverts, historique d'ouverture | active |
+| `bchests`, `opened`, `ol` | 23, 24, 26, 27, 29, finitions | Coffres bonus, coffres ouverts, historique d'ouverture | active |
 | `rare`, `rareN`, `boost` | 03, 23, 26, 29 | Journée rare du jour, compteur, XP doublée | active |
 | `hist` | 05, 19, 23, 26 | Bilan par semaine (XP, catégories) | active |
 | `chap`, `intn`, `wkSeen`, `mem` | 18, 19 | Chapitres du Bilan, intention de la semaine, bilan vu, souvenirs | active |
@@ -127,7 +127,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | Clé | Fichiers | Contenu | Statut |
 |---|---|---|---|
 | `hm` | 25 | Chez moi : événements, noms, plantes | active |
-| `book`, `books`, `rdp` | 04, 05, 25, 26, 27, correctifs | Livre en cours, livres finis, pages lues | active |
+| `book`, `books`, `rdp` | 04, 05, 25, 26, 27, finitions | Livre en cours, livres finis, pages lues | active |
 | `run`, `pu`, `sq`, `gn` | 04, 25, 26, 27 | Course (km), pompes, squats, gainage : records | active |
 | `md` | 04, 26, 27 | Méditation (minutes) | active |
 

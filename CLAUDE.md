@@ -7,7 +7,7 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 - Le code source est dans `src/` (`index.src.html`, `css/`, `js/`). `index.html` est GÉNÉRÉ : ne jamais l'éditer à la main.
 - Après toute modification dans `src/`, lancer `python3 build.py` puis committer `src/` ET `index.html` ensemble.
 - L'ordre des emplacements `@@include(...)@@` est l'ordre d'exécution. CSS : `base.css` (anciennes couches fusionnées, dans l'ordre) → `composants.css` (briques `ui-`) → une feuille par zone (`aujourdhui-haut`, `aujourdhui`, `proches`, `moi`, `fenetres`). Un nouveau style va dans la feuille de sa zone, ou dans `composants.css` s'il sert partout ; jamais dans `base.css`.
-- Tous les scripts partagent la portée globale (état `S`, `save()`, `load()`, clé localStorage `carnet-quetes`) ; `js/correctifs.js` est une grosse IIFE de rustines.
+- Scripts rangés par zone : `js/coeur/` (données, sauvegarde, rendu, icônes, migrations, démarrage), `js/aujourdhui/`, `js/moi/`, `js/proches/`. Tous partagent la portée globale (état `S`, `save()`, `load()`, clé localStorage `carnet-quetes`). Les fichiers `*-finitions.js` gardent les passes visuelles d'après rendu, à fondre dans leurs rendus lors de la refonte écran par écran. Jamais de réécriture d'une fonction globale (`const _f=f; f=function…`) : modifier la fonction elle-même ; `fBase` = son cœur quand une version complète l'entoure. Pas d'observateur DOM pour retoucher l'affichage : appeler la fonction au moment du rendu. Tests : `python3 outils/parcours.py` (0 échec).
 - Tester à largeur iPhone (≈393 px) avec Playwright avant de livrer. iOS en mode appli : la classe `fullh` + `100lvh` corrige la hauteur ; ne pas la retirer.
 - Ne pas casser les données existantes de l'utilisateur (format de sauvegarde localStorage).
 
@@ -62,11 +62,11 @@ Règles données par Ilario (à respecter sans redemander) :
 
 Conventions du code existant (à suivre) :
 
-- **Icônes 16×16** : aliments, rituels, objets → `RKI` (palette `RKP`, rendu `rkSvg`) : contour `o` foncé, reflet clair en haut à gauche, ombre en bas à droite. Badges → grille 16×16 dans `IC` (`26-bibliotheque-badges.js`, palette `PAL`, ombre auto) + couleur dans `FILL` : **tout nouveau badge a son icône**.
+- **Icônes 16×16** : aliments, rituels, objets → `RKI` (palette `RKP`, rendu `rkSvg`) : contour `o` foncé, reflet clair en haut à gauche, ombre en bas à droite. Badges → grille 16×16 dans `IC` (`moi/26-bibliotheque-badges.js`, palette `PAL`, ombre auto) + couleur dans `FILL` : **tout nouveau badge a son icône**.
 - **Couleurs** : celles des catégories (`--c-soi`, `--c-sport`, `--c-food`…) ; assiette : féculents jaune `#f0a020`, protéines rouge `#e8473a`, légumes vert `#4fb84a`.
 - **Typo** : `--f-pixel` (Lilita One) pour les titres, `--f-body` (Atkinson Hyperlegible) pour le texte.
 - **Textes** : tutoiement, phrases courtes, vocabulaire simple.
-- **Données** : nouvelles clés dans `S.g`, jamais de renommage ni de changement de format. Réparation ponctuelle = une migration numérotée ajoutée à la fin de `MIG` dans `js/migrations.js` (`S.g.ver` = nombre de migrations appliquées) ; ne jamais modifier ni réordonner une migration existante.
+- **Données** : nouvelles clés dans `S.g`, jamais de renommage ni de changement de format. Réparation ponctuelle = une migration numérotée ajoutée à la fin de `MIG` dans `js/coeur/migrations.js` (`S.g.ver` = nombre de migrations appliquées) ; ne jamais modifier ni réordonner une migration existante.
 - **Fonctionnalité retirée** : supprimée du code (HTML, JS, et CSS lors de la fusion), jamais seulement cachée ; ses données restent dans la sauvegarde. Tenir `FONCTIONNALITES.md` et `DONNEES.md` à jour.
 - **Ajout d'un élément visible** : vérifier qu'aucune règle CSS existante ne le masque (ex. Bilan masque les sections non listées).
 

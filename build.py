@@ -7,7 +7,7 @@
 Le code vit dans src/ :
   src/index.src.html   la page : balises HTML + emplacements @@include(chemin)@@
   src/css/*.css        les feuilles de style
-  src/js/*.js          les scripts
+  src/js/<zone>/*.js   les scripts, rangés par zone (coeur, aujourdhui, moi, proches)
 
 Chaque @@include(chemin)@@ est remplacé par le contenu exact du fichier
 (les espaces autour de l'emplacement sont absorbés). L'ordre des emplacements
@@ -39,7 +39,7 @@ def build():
     dup = {u for u in used if used.count(u) > 1}
     if dup:
         sys.exit("Fichier inclus deux fois : " + ", ".join(sorted(dup)))
-    on_disk = {str(p.relative_to(SRC)) for d in ("css", "js") for p in (SRC / d).glob("*") if p.is_file()}
+    on_disk = {str(p.relative_to(SRC)) for d in ("css", "js") for p in (SRC / d).rglob("*") if p.is_file()}
     orphan = sorted(on_disk - set(used))
     if orphan:
         sys.exit("Fichier non inclus dans src/index.src.html : " + ", ".join(orphan))
