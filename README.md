@@ -1,30 +1,26 @@
-# Carnet de Quêtes
+# XP
 
-Appli perso gamifiée (quêtes, XP, rituels, relations), en français, pensée pour le téléphone.
+Appli personnelle en pixel art pour prendre soin de soi et de ses proches, un jour à la fois : repas (assiette), rituels, quêtes du jour, projets, proches, bilan de la semaine. Chaque action rapporte un peu d'XP.
 
-## Utilisation
+## L'installer sur iPhone
 
-- L'appli publiée est une seule page : `index.html` (c'est elle que GitHub Pages sert).
-- Les données sont enregistrées dans le navigateur (stockage local de l'appareil).
-- **Sauvegarde** : onglet Moi > Bilan, tout en bas, « Copier mes données (sauvegarde) » puis « Restaurer ».
+1. Ouvrir **https://ilarioaubry.github.io/XP-GAME/** dans Safari.
+2. Partager → **Sur l'écran d'accueil**.
+3. Ouvrir « XP » depuis l'écran d'accueil : plein écran, fonctionne sans réseau.
 
-## Où est le code
+Les données restent sur le téléphone. **Sauvegarde** : Moi > Bilan > Données > « Exporter en fichier » (à ranger dans iCloud Drive). Pour récupérer : « Restaurer depuis un fichier ».
 
-Le code est découpé dans `src/` :
+## Le projet
 
-- `src/index.src.html` : la page, avec des emplacements `@@include(...)@@`
-- `src/css/` : les feuilles de style
-- `src/js/` : les scripts, numérotés dans l'ordre d'exécution
-
-**Ne modifie jamais `index.html` à la main.** Modifie les fichiers de `src/`, puis lance :
-
-```
-python3 build.py          # reconstruit index.html
-python3 build.py --check  # vérifie qu'index.html est à jour
-```
-
-Attention : l'ordre des fichiers CSS compte (les règles se superposent, les plus récentes gagnent) et les scripts partagent les mêmes variables globales.
-
-## Mise en ligne
-
-Hébergée avec GitHub Pages depuis la branche `main`.
+| Fichier | Rôle |
+|---|---|
+| `src/` | le code (page, styles, scripts) |
+| `index.html` | la page assemblée par `python3 build.py` (ne pas modifier à la main) |
+| `CLAUDE.md` | règles de travail et standards de l'appli |
+| `DESIGN.md` | guide de construction : tailles, boutons, espacements, couleurs, interactions |
+| `FEUILLE-DE-ROUTE.md` | le plan en cours |
+| `FONCTIONNALITES.md` | ce que fait l'appli, écran par écran |
+| `DONNEES.md` | ce que contient la sauvegarde |
+| `CHANGELOG.md` | ce qui a changé, et quand |
+| `outils/` | captures et vérifications automatiques |
+| `manifest.json`, `sw.js`, `icones/` | installation sur l'écran d'accueil et hors ligne |
