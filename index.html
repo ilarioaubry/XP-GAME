@@ -4489,7 +4489,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7fbbad7</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2dc1f37</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4565,7 +4565,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   </div>
 </div>
 
-<script>
+<script>// ---- Journal d'erreurs : les 5 dernières erreurs JavaScript, visibles dans Moi > Bilan > Données (pour diagnostiquer sur l'iPhone)
+function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")||"[]");const m=String((e&&(e.message||e.reason&&e.reason.message||e.reason))||e).slice(0,160);
+  L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
+addEventListener("error",e=>xpErr(e));addEventListener("unhandledrejection",e=>xpErr(e));
+
 const SCR=document.body;
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
 const CATS={sport:{label:"Force",c:"var(--c-sport)"},perso:{label:"Talent",c:"var(--c-perso)"},social:{label:"Ami",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
@@ -9227,6 +9231,8 @@ $("avcPhoto").onclick=()=>{if(avcWho==="__me")return;
 
 // ---- Réglages : limite, stockage, sauvegarde
 function renderData(){
+  {let E=[];try{E=JSON.parse(localStorage.getItem("xp-erreurs")||"[]")}catch(e){}let el=$("errLog");if(!el){el=document.createElement("p");el.id="errLog";el.className="hint";const st=$("storHint");st&&st.after(el)}
+   el.hidden=!E.length;if(E.length){const x=E[E.length-1],d=new Date(x.t);el.textContent=`Dernière erreur (${d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}) : ${x.m} ${x.s}`}}
   const sz=JSON.stringify(snapshot()).length,max=256*1024,p=Math.min(100,sz/max*100);
   $("storTxt").textContent=`Stockage : ${Math.round(sz/1024)} Ko / 256 Ko`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";
@@ -13012,6 +13018,7 @@ function renderProfile(force){
     <div id="delAsk" hidden style="display:none"><p>Supprimer ${fam?"ce proche":"cet ami"} ? Son XP et sa fiche seront perdus.</p>
     <div class="delrow"><button type="button" class="btn" id="delNo">Annuler</button><button type="button" class="danger" id="delYes">Oui, supprimer</button></div></div></div>`;
   $("pName").textContent=n;
+  try{fpExtras(n,P)}catch(e){xpErr(e)} // tôt : le bouton Fond marche même si une partie plus bas plante
   $("pGift").value=P.gifts||"";$("pGift").onchange=()=>{const v=$("pGift").value.trim();if(v)P.gifts=v;else delete P.gifts;save()};
   {const items=S.log.filter(e=>e.who===n&&(e.rel||e.fr)).slice(-8).reverse(),ul=$("pHist");$("pHistCard").hidden=!items.length;
    items.forEach(e=>{const d=new Date(e.t),li=document.createElement("li"),t=document.createElement("time"),nm=document.createElement("span"),x=document.createElement("span");t.textContent=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});nm.textContent=e.name;x.className="x";x.textContent="+"+e.xp;li.append(t,nm,x);ul.appendChild(li)})}
@@ -13047,7 +13054,7 @@ function renderProfile(force){
      L.forEach(g=>{const b=document.createElement("button");b.type="button";b.className="tg grp";b.style.setProperty("--gc",fgCol(g));b.setAttribute("aria-pressed",(P.grp||[]).includes(g.id));b.innerHTML=`<span class="tgi">${rkSvg("duo")}</span>`;b.append(g.n);
        b.onclick=()=>{const a=P.grp||(P.grp=[]),i=a.indexOf(g.id);if(i>=0)a.splice(i,1);else a.push(g.id);save();draw();renderRelations()};box.appendChild(b)})};
    draw();$("pGrpForm").onsubmit=e=>{e.preventDefault();const v=$("pGrpNew").value.trim();if(!v)return;const g=fgAdd(v);g.c=FG_COL[(fgList().length-1)%FG_COL.length];(P.grp||(P.grp=[])).push(g.id);$("pGrpNew").value="";save();draw();renderRelations()}}
-  fpExtras(n,P);
+  try{fpExtras(n,P)}catch(e){xpErr(e)}
 }
 const TALENTS_UI=["Dessin","Écriture","Code","Cuisine","Photo","Chant","Humour","Bricolage","Danse"];
 const FP_BG=["flames","stars","notes","neon","goldaura","lotus","hello"];

@@ -1,5 +1,7 @@
 // ---- Réglages : limite, stockage, sauvegarde
 function renderData(){
+  {let E=[];try{E=JSON.parse(localStorage.getItem("xp-erreurs")||"[]")}catch(e){}let el=$("errLog");if(!el){el=document.createElement("p");el.id="errLog";el.className="hint";const st=$("storHint");st&&st.after(el)}
+   el.hidden=!E.length;if(E.length){const x=E[E.length-1],d=new Date(x.t);el.textContent=`Dernière erreur (${d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}) : ${x.m} ${x.s}`}}
   const sz=JSON.stringify(snapshot()).length,max=256*1024,p=Math.min(100,sz/max*100);
   $("storTxt").textContent=`Stockage : ${Math.round(sz/1024)} Ko / 256 Ko`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";

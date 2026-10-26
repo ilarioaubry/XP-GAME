@@ -148,6 +148,7 @@ function renderProfile(force){
     <div id="delAsk" hidden style="display:none"><p>Supprimer ${fam?"ce proche":"cet ami"} ? Son XP et sa fiche seront perdus.</p>
     <div class="delrow"><button type="button" class="btn" id="delNo">Annuler</button><button type="button" class="danger" id="delYes">Oui, supprimer</button></div></div></div>`;
   $("pName").textContent=n;
+  try{fpExtras(n,P)}catch(e){xpErr(e)} // tôt : le bouton Fond marche même si une partie plus bas plante
   $("pGift").value=P.gifts||"";$("pGift").onchange=()=>{const v=$("pGift").value.trim();if(v)P.gifts=v;else delete P.gifts;save()};
   {const items=S.log.filter(e=>e.who===n&&(e.rel||e.fr)).slice(-8).reverse(),ul=$("pHist");$("pHistCard").hidden=!items.length;
    items.forEach(e=>{const d=new Date(e.t),li=document.createElement("li"),t=document.createElement("time"),nm=document.createElement("span"),x=document.createElement("span");t.textContent=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});nm.textContent=e.name;x.className="x";x.textContent="+"+e.xp;li.append(t,nm,x);ul.appendChild(li)})}
@@ -183,7 +184,7 @@ function renderProfile(force){
      L.forEach(g=>{const b=document.createElement("button");b.type="button";b.className="tg grp";b.style.setProperty("--gc",fgCol(g));b.setAttribute("aria-pressed",(P.grp||[]).includes(g.id));b.innerHTML=`<span class="tgi">${rkSvg("duo")}</span>`;b.append(g.n);
        b.onclick=()=>{const a=P.grp||(P.grp=[]),i=a.indexOf(g.id);if(i>=0)a.splice(i,1);else a.push(g.id);save();draw();renderRelations()};box.appendChild(b)})};
    draw();$("pGrpForm").onsubmit=e=>{e.preventDefault();const v=$("pGrpNew").value.trim();if(!v)return;const g=fgAdd(v);g.c=FG_COL[(fgList().length-1)%FG_COL.length];(P.grp||(P.grp=[])).push(g.id);$("pGrpNew").value="";save();draw();renderRelations()}}
-  fpExtras(n,P);
+  try{fpExtras(n,P)}catch(e){xpErr(e)}
 }
 const TALENTS_UI=["Dessin","Écriture","Code","Cuisine","Photo","Chant","Humour","Bricolage","Danse"];
 const FP_BG=["flames","stars","notes","neon","goldaura","lotus","hello"];

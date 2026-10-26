@@ -1,3 +1,7 @@
+// ---- Journal d'erreurs : les 5 dernières erreurs JavaScript, visibles dans Moi > Bilan > Données (pour diagnostiquer sur l'iPhone)
+function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")||"[]");const m=String((e&&(e.message||e.reason&&e.reason.message||e.reason))||e).slice(0,160);
+  L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
+addEventListener("error",e=>xpErr(e));addEventListener("unhandledrejection",e=>xpErr(e));
 
 const SCR=document.body;
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
