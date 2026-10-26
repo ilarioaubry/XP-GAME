@@ -221,17 +221,17 @@ function bondAction(n,A,el,ev){
   toast(`${esc(A.verb(n))} <span class="p">+${A.xp} XP</span>${nl>pl?` · ${esc(n)} niveau <span class="p">${nl}</span>`:""}`);
   render();renderProfile(true);
 }
-// Ajouter un ami : fenêtre plein écran (règle : champ texte = plein écran), Annuler à gauche, Ajouter à droite
-$("addFBtn").onclick=()=>{if(document.querySelector(".addfw"))return;
-  const w=document.createElement("form");w.className="ui-plein addfw";w.setAttribute("role","dialog");w.setAttribute("aria-label","Nouvel ami");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Nouvel ami</h2></div>
-    <div class="ui-plein__corps"><input class="ui-champ" id="addFName" maxlength="30" placeholder="Prénom de l'ami" aria-label="Prénom de l'ami" autocomplete="off"></div>
+// Ajouter un proche (famille ou ami) : fenêtre plein écran (règle : champ texte = plein écran), Annuler à gauche, Ajouter à droite
+function addPerson(fam){if(document.querySelector(".addfw"))return;
+  const w=document.createElement("form");w.className="ui-plein addfw";w.setAttribute("role","dialog");w.setAttribute("aria-label",fam?"Nouveau membre de la famille":"Nouvel ami");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${fam?"Famille":"Nouvel ami"}</h2></div>
+    <div class="ui-plein__corps"><input class="ui-champ" id="addFName" maxlength="30" placeholder="${fam?"Prénom ou surnom (Maman, Léa…)":"Prénom de l'ami"}" aria-label="Prénom" autocomplete="off"></div>
     <div class="ui-plein__bas"><button type="button" class="ui-btn addfno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">Ajouter</button></div>`;
   const close=()=>w.remove();w.querySelector(".addfno").onclick=close;
   w.onsubmit=e=>{e.preventDefault();const n=$("addFName").value.trim();if(!n)return;
-    if(S.friends.some(x=>x.toLowerCase()===n.toLowerCase())){toast("Cet ami existe déjà");return}
-    S.friends.push(n);close();ensureGroupQuests();save();render();toast(`<span class="p">${esc(n)}</span> ajouté`)};
-  document.body.appendChild(w);$("addFName").focus()};
+    if([...S.friends,...S.family].some(x=>x.toLowerCase()===n.toLowerCase())){toast(`<span class="p">${esc(n)}</span> est déjà dans tes proches`);return}
+    (fam?S.family:S.friends).push(n);close();ensureGroupQuests();save();render();toast(`<span class="p">${esc(n)}</span> ajouté`)};
+  document.body.appendChild(w);$("addFName").focus()}
 function removeFriend(n){
   S.friends=S.friends.filter(x=>x!==n);S.friendDone=S.friendDone.filter(x=>x!==n);
   delete S.bonds[n];delete S.bondsLast[n];delete S.profiles[n];if(S.g&&S.g.sit&&Array.isArray(S.g.sit.with))S.g.sit.with=S.g.sit.with.filter(x=>x!==n);
@@ -335,15 +335,17 @@ function renderRelations(){
   const srt=a=>a.sort((x,y)=>{const lx=S.bondsLast[x],ly=S.bondsLast[y];if(lx==null&&ly==null)return x.localeCompare(y,"fr");if(lx==null)return 1;if(ly==null)return -1;return lx-ly});
   const fam=srt(S.family.slice()),fr=srt(S.friends.filter(n=>!S.family.includes(n))),names=[...fam,...fr];
   $("relSub").textContent="";
-  if(!names.length){ul.innerHTML=`<li class="empty" style="padding:0">Ajoute des amis dans l'onglet Quêtes, « Mes amis ».</li>`;return}
-  const now=Date.now(),cur=(S.specials.find(q=>q.grp==="friends")||{}).who;
+  const now=Date.now();
   let curGrp="";
-  const heads={[fam[0]]:["Famille",fam.length,"famille"],[fr[0]]:["Amis",fr.length,"social"]};
-  names.forEach(n=>{
-    if(heads[n]){const key=heads[n][2],shut=relShut.includes(key);const hd=document.createElement("li");hd.className="rhd";hd.style.setProperty("--cat",CATS[key].c);
-      hd.innerHTML=`<button type="button" aria-expanded="${!shut}"><span class="chev" aria-hidden="true">${ICO("chev",16)}</span><span></span><b>${heads[n][1]}</b></button>`;hd.querySelector("span+span").textContent=heads[n][0];
-      hd.querySelector("button").onclick=()=>{relShut=shut?relShut.filter(x=>x!==key):[...relShut,key];renderRelations()};ul.appendChild(hd);curGrp=key}
-    if(relShut.includes(curGrp))return;
+  // Famille et Amis : en-tête de section comme Groupes (titre + bouton + pour ajouter), toujours ouverts
+  const heads=[["Famille",fam,"famille",true,"Aucun membre de la famille pour l'instant."],["Amis",fr,"social",false,"Aucun ami pour l'instant."]];
+  const rows=[];heads.forEach(([t,L,key,isF,vide])=>{rows.push({h:[t,L.length,key,isF,vide,!L.length]});L.forEach(n=>rows.push({n,key}))});
+  rows.forEach(r=>{
+    if(r.h){const [t,cnt,key,isF,vide,empty]=r.h;curGrp=key;const hd=document.createElement("li");hd.className="rgh";
+      hd.innerHTML=`<div class="fgh" style="--fc:${CATS[key].c}"><b></b><button type="button" class="addf fgplus" aria-label="${isF?"Ajouter un membre de la famille":"Ajouter un ami"}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>${empty?`<p class="vide"></p>`:""}`;
+      hd.querySelector("b").textContent=t;if(empty)hd.querySelector(".vide").textContent=vide;
+      hd.querySelector("button").onclick=()=>addPerson(isF);ul.appendChild(hd);return}
+    const n=r.n;
     const xp=S.bonds[n]||0,bi=bondInfo(xp);
     let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))%360;
     const last=S.bondsLast[n];const days=last?Math.floor((now-last)/864e5):null;

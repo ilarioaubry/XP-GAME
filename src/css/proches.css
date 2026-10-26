@@ -383,3 +383,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){background:rgb
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.addf){width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;display:inline-grid!important;place-items:center!important}
 
 html:not(#_a):not(#_b) body #relList>li.rhd .chev{width:24px!important;height:24px!important;flex:none!important;margin-right:4px!important}
+/* Famille / Amis : en-têtes de section comme Groupes (titre + bouton +), toute la largeur, 24 px au-dessus */
+html body #relList>li.rgh{grid-column:1/-1;list-style:none}
+html body #relList>li.rgh:not(:first-child){margin-top:16px}
+html body #relList>li.rgh .vide{margin:12px 0 0}
