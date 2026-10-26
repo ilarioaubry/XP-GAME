@@ -57,6 +57,9 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [x] 2.7 (25/10/2026) Renommer `17-spotify-meteo.js` (→ `17-meteo.js`) en fichier météo (Spotify retiré)
 - [x] 2.5 (25/10/2026) Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
 - [x] 2.6 (25/10/2026) Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
+- [ ] 2.8 Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer
+- [ ] 2.9 Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration
+- [ ] 2.10 « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)**
 
 ## Phase 3 — Composants et fusion des CSS (écran par écran, Aujourd'hui d'abord)
 
@@ -74,9 +77,6 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 
 ## Phase 4 — Scripts
 
-- [ ] 2.8 Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer
-- [ ] 2.9 Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration
-- [ ] 2.10 « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)**
 - [ ] 4.1 Reporter chaque rustine de `correctifs.js` (139 Ko) dans sa fonction d'origine, puis supprimer le fichier
 - [ ] 4.2 Remplacer les 24 réécritures de fonctions globales par des modifications directes (`render` ×2 dans correctifs et assiette, `ICO`, `feedDo`, `badgeDefs`, `complete`, `famOf`…)
 - [ ] 4.3 Icônes pixel écrites à la source, suppression des observateurs DOM (`pxSwap`, `sqIcons`)
