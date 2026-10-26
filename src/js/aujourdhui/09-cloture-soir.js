@@ -100,27 +100,52 @@ function swipeable(el,onR,onL){let x0=null,y0=0,dx=0,id=null,drag=false;el.style
   el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);
   el.addEventListener("click",e=>{if(el.__drag&&Date.now()-el.__drag<450){e.preventDefault();e.stopPropagation()}},true)}
 // mode routine
+// ---- Ma routine (refonte 26/10, style « liste à cocher ») : écran de départ avec toutes les étapes et le record,
+// puis on coche dans l'ordre (l'étape en cours est mise en avant), chrono en grand ; le repas du moment et un verre d'eau font partie des étapes ;
+// à la fin, récap des étapes, temps comparé au record, XP gagnée. XP et record : inchangés (ceux des rituels, du repas et de l'eau).
+function rtmSteps(per){const tk=dayKey(Date.now()),h=dayH(),L=[];
+  ritOrder(ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===per&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n)).forEach(t=>{const K=ritKind(t);L.push({k:"rit",t,name:t.name,ic:rkSvg(K.k,K.c),K})});
+  const mk=per==="matin"?"pdej":"diner",M=MEALS.find(m=>m[0]===mk);
+  if(M&&!mealState(mk,M[1])&&h>=MEAL_H[mk])L.push({k:"meal",mk,per:M[1],name:M[2],ic:pxImg(M[3],3),plate:MB_PLM.includes(mk)});
+  const w=ritTasks().find(t=>t.bar==="eau");if(w&&(S.daily.c[w.id]||0)<w.n)L.push({k:"eau",t:w,name:"Un verre d'eau",ic:rkSvg("eau"),K:ritKind(w)});
+  return L}
 function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".rtm"))return;
-  const Q=ritOrder(ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===per&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n));if(!Q.length){toast("Tous tes rituels sont déjà faits");return}
+  const Q=rtmSteps(per);if(!Q.length){toast("Tout est déjà fait pour ce moment");return}
   if(tmOn()){toast("Termine ton timer d'abord");return}
-  const t0=Date.now(),st={i:0,skip:0,done:0,xp0:S.xp};sfx("start");
-  const o=document.createElement("div");o.className="rtm";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Ma routine");document.body.appendChild(o);document.body.classList.add("rtmon");o.appendChild(ambEl(ambPhase()));const C=document.createElement("div");C.className="rtmin";o.appendChild(C);
-  const iv=setInterval(()=>{const c=o.querySelector(".rtmclk");if(c)c.textContent=rtmFmt(Date.now()-t0)},250);
+  const G=S.g,best=(G.rtb||{})[per],lab=per==="soir"?"Routine du soir":"Routine du matin";
+  const st={i:0,skip:0,done:0,xp0:S.xp,t0:0,run:false,end:false,res:Q.map(()=>"")};
+  const o=document.createElement("div");o.className="rtm rtq";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",lab);document.body.appendChild(o);document.body.classList.add("rtmon");try{o.appendChild(ambEl(ambPhase()))}catch(e){}const C=document.createElement("div");C.className="rtq-in";o.appendChild(C);
+  let iv=0;const clk=()=>st.t0?Date.now()-st.t0:0;
   const close=()=>{clearInterval(iv);o.remove();document.body.classList.remove("rtmon");render()};
-  const finish=()=>{clearInterval(iv);const ms=Date.now()-t0,G=S.g;if(!G.rtb||typeof G.rtb!=="object")G.rtb={};const best=G.rtb[per];let rec=0;
-    if(!st.skip&&st.done>=2&&(!best||ms<best)){G.rtb[per]=ms;rec=best?2:1}save();
-    C.innerHTML=`<div class="rtmend"><span class="rtmp">${per==="soir"?"Soir":"Matin"} bouclé</span><b class="rtmt">${rtmFmt(ms)}</b><small class="rtmrec${rec===2?" new":""}">${rec===2?"Nouveau record !":rec===1?"Premier temps enregistré":best?"Record : "+rtmFmt(best):"Fais tout sans passer pour enregistrer un temps"}</small><small>${st.done} rituel${st.done>1?"s":""} · +${S.xp-st.xp0} XP${st.skip?` · ${st.skip} passé${st.skip>1?"s":""}`:""}</small><button type="button" class="btn primary rtmfin">Terminer</button></div>`;
-    o.querySelector(".rtmfin").onclick=()=>{close();if(per==="soir"&&!ritTasks().some(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n))setTimeout(()=>closeOpen(1),300)};sfx(rec===2?"level":"moment")};
-  const draw=()=>{const t=Q[st.i];if(!t){finish();return}const K=ritKind(t),c=S.daily.c[t.id]||0;
-    C.innerHTML=`<div class="rtmh"><span class="rtmp">${per==="soir"?"Routine du soir":"Routine du matin"}</span><b class="rtmclk">${rtmFmt(Date.now()-t0)}</b><button type="button" class="rtmx" aria-label="Quitter la routine">${ICO("close",18)}</button></div>
-    <div class="rtmdots">${Q.map((x,i)=>`<i class="${i<st.i?"on":i===st.i?"cur":""}"></i>`).join("")}</div>
-    <div class="rtmstage"><div class="rtmc" style="--kc:${K.c}"><span class="rtmic">${rkSvg(K.k,K.c)}</span><b class="rtmn"></b>${t.n>1?`<small class="rtmcnt">${c} / ${t.n}</small>`:""}${t.core?`<small class="rtmcore">${STAR_SVG} Socle</small>`:""}</div><p class="rtmhint">Glisse à droite : fait · à gauche : passer</p></div>
-    <div class="rtmb"><button type="button" class="btn rtmskip">Passer</button><button type="button" class="btn primary rtmok">Fait</button></div>`;
-    o.querySelector(".rtmn").textContent=t.name;o.querySelector(".rtmx").onclick=close;const card=o.querySelector(".rtmc");let busy=false;
-    const ok=ev=>{if(busy)return;busy=true;rkFx(card,K);window.__ritSnd=1;try{ritTap(t,card,ev)}finally{window.__ritSnd=0}const full=(S.daily.c[t.id]||0)>=t.n;if(full){st.done++;st.i++}setTimeout(draw,full?320:150)};
-    const skip=()=>{if(busy)return;busy=true;st.skip++;st.i++;sfx("blip");setTimeout(draw,120)};
-    o.querySelector(".rtmok").onclick=ev=>{card.classList.add("fly");ok(ev)};o.querySelector(".rtmskip").onclick=()=>{card.classList.add("flyl");skip()};
-    swipeable(card,ev=>ok(ev),()=>skip())};
+  const draw=()=>{const n=Q.length,fait=st.res.filter(r=>r==="ok").length,cur=Q[st.i];
+    const head=st.end?(per==="soir"?"Soir bouclé":"Matin bouclé"):lab;
+    C.innerHTML=`<div class="rtq-haut"><h2 class="ui-titre rtq-titre">${head}</h2><button type="button" class="ui-btn ui-btn--icone rtq-x" aria-label="Quitter la routine">${ICO("close",24)}</button></div>
+    <div class="rtq-chrono"><b class="ui-chiffre rtq-clk">${rtmFmt(clk())}</b><small class="ui-info rtq-rec"></small></div>
+    <div class="rtq-prog"><span class="ui-barre rtq-barre"><i style="width:${Math.round(fait/n*100)}%"></i></span><span class="ui-compteur">${fait}/${n}</span></div>
+    <ol class="rtq-liste">${Q.map((x,i)=>{const r=st.res[i],now=st.run&&!st.end&&i===st.i,c=x.t?(S.daily.c[x.t.id]||0):0;
+      return`<li class="rtq-et${now?" cur":""}${r==="ok"?" ok":""}${r==="skip"?" skip":""}" data-i="${i}"><span class="rtq-ic">${x.ic}</span><span class="rtq-tx"><b></b><small class="ui-info">${r==="ok"?"Fait":r==="skip"?"Passé":x.k==="meal"?(x.plate?"Remplis ton assiette":"Pris ou sauté"):x.t&&x.t.n>1&&x.k==="rit"?c+" / "+x.t.n:""}</small></span><span class="rtq-etat">${r==="ok"?ICO("check",24):""}</span></li>`}).join("")}</ol>
+    <div class="rtq-bas">${st.end?`<button type="button" class="ui-btn ui-btn--principal rtq-fin">Terminer</button>`:!st.run?`<button type="button" class="ui-btn ui-btn--principal rtq-go">C'est parti</button>`:`<button type="button" class="ui-btn rtq-skip">Passer</button><button type="button" class="ui-btn ui-btn--principal rtq-ok">${cur&&cur.k==="meal"&&cur.plate?"Remplir l'assiette":"Fait"}</button>`}</div>`;
+    o.querySelectorAll(".rtq-et b").forEach((e,i)=>e.textContent=Q[i].name);
+    const rec=o.querySelector(".rtq-rec");
+    if(st.end){const ms=st.ms;rec.textContent=st.recN===2?"Nouveau record !":st.recN===1?"Premier temps enregistré":best?"Record : "+rtmFmt(best):"Fais tout sans passer pour enregistrer un temps";
+      o.querySelector(".rtq-clk").textContent=rtmFmt(ms);const g=S.xp-st.xp0;if(g>0)rec.textContent+=" · +"+g+" XP"}
+    else rec.textContent=best?"Record : "+rtmFmt(best):"Pas encore de record";
+    o.querySelector(".rtq-x").onclick=close;
+    const go=o.querySelector(".rtq-go");if(go)go.onclick=()=>{st.run=true;st.t0=Date.now();sfx("start");iv=setInterval(()=>{const c=o.querySelector(".rtq-clk");if(c&&!st.end)c.textContent=rtmFmt(clk())},250);draw()};
+    const fin=o.querySelector(".rtq-fin");if(fin)fin.onclick=()=>{close();if(per==="soir"&&!rtmSteps("soir").some(x=>x.k==="rit"))setTimeout(()=>closeOpen(1),300)};
+    const row=o.querySelector(".rtq-et.cur");if(row){row.scrollIntoView({block:"nearest"});swipeable(row,ev=>ok(ev),()=>skip())}
+    const okb=o.querySelector(".rtq-ok");if(okb)okb.onclick=ev=>ok(ev);const sk=o.querySelector(".rtq-skip");if(sk)sk.onclick=()=>skip()};
+  const next=()=>{st.i++;if(st.i>=Q.length)finish();else draw()};
+  let busy=false;
+  const ok=ev=>{if(busy)return;const x=Q[st.i];if(!x)return;const row=o.querySelector(".rtq-et.cur");
+    if(x.k==="meal"&&x.plate){plateOpen(x.per,x.mk,row,{onClose:()=>{if(plDone(dayKey(Date.now()),x.per,x.mk)){st.res[st.i]="ok";st.done++;next()}else draw()}});return}
+    busy=true;
+    if(x.k==="meal"){try{mealQuick(x.per,x.mk,row,1,ev)}catch(e){}st.res[st.i]="ok";st.done++;setTimeout(()=>{busy=false;next()},300);return}
+    try{rkFx(row&&row.querySelector(".rtq-ic"),x.K)}catch(e){}window.__ritSnd=1;try{ritTap(x.t,row,ev)}finally{window.__ritSnd=0}
+    const full=x.k==="eau"||(S.daily.c[x.t.id]||0)>=x.t.n;if(full){st.res[st.i]="ok";st.done++;setTimeout(()=>{busy=false;next()},300)}else setTimeout(()=>{busy=false;draw()},150)};
+  const skip=()=>{if(busy)return;st.res[st.i]="skip";st.skip++;sfx("blip");next()};
+  const finish=()=>{clearInterval(iv);st.ms=clk();st.end=true;if(!G.rtb||typeof G.rtb!=="object")G.rtb={};st.recN=0;
+    if(!st.skip&&st.done>=2&&(!best||st.ms<best)){G.rtb[per]=st.ms;st.recN=best?2:1}save();sfx(st.recN===2?"level":"moment");draw()};
   draw()}
 function rtmFmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 

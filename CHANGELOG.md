@@ -3,6 +3,9 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 26/10/2026
+- Ma routine refaite : écran de départ avec toutes les étapes et le record, liste à cocher avec l'étape en cours mise en avant, chrono en grand sur le ciel du moment, le repas du moment et un verre d'eau inclus, récap à la fin.
+- Ma fiche : prénom centré en haut, portrait + titre + badges, barre d'XP pleine largeur, catégories sur 2 colonnes ; aura = fond flouté.
+- Bouton retour aligné, poubelle à la place de « Supprimer », icônes recentrées.
 - Phase 4 (scripts, invisible à l'écran) : `correctifs.js` supprimé et rangé par zone, plus aucune réécriture de fonction, icônes pixel écrites à la source, observateurs DOM retirés, scripts rangés en dossiers (`coeur`, `aujourdhui`, `moi`, `proches`, `donnees`), gros fichiers découpés, code mort retiré.
 - Tests de parcours (`outils/parcours.py`).
 - Correction : un proche ajouté à la famille disparaissait au rechargement.

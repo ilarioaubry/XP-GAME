@@ -83,7 +83,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[],q=opt.q,u=plUse();
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);
   let step=1,tri=false,add="",addIc="",addName="",naming=false,recName="";
-  const close=()=>{o.remove();document.documentElement.classList.remove("plopen");document.removeEventListener("keydown",onKey)},onKey=e=>{if(e.key==="Escape")close()};
+  const close=()=>{o.remove();document.documentElement.classList.remove("plopen");document.removeEventListener("keydown",onKey);if(opt.onClose)setTimeout(()=>{try{opt.onClose()}catch(e){}},0)},onKey=e=>{if(e.key==="Escape")close()};
   const lv=()=>({f:plN(m,"f"),p:plN(m,"p"),l:plN(m,"l")});
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;

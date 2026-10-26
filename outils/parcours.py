@@ -38,6 +38,19 @@ with sync_playwright() as p:
     pg.click(".obnext"); pg.click(".obnext"); pg.wait_for_timeout(800)
     check("création du profil", pg.evaluate("S.g&&S.friends.length===2&&S.family.length===2"))
 
+    # 1b. Routine (liste à cocher) : départ, toutes les étapes faites, fin avec temps
+    pg.evaluate("rtmOpen()"); pg.wait_for_timeout(300)
+    okr = pg.is_visible(".rtq-go")
+    if okr:
+        pg.click(".rtq-go"); pg.wait_for_timeout(200)
+        for _ in range(8):
+            if pg.is_visible(".rtq-ok") and "assiette" not in (pg.text_content(".rtq-ok") or ""): pg.click(".rtq-ok"); pg.wait_for_timeout(500)
+            elif pg.is_visible(".rtq-skip"): pg.click(".rtq-skip"); pg.wait_for_timeout(200)
+            else: break
+        okr = pg.is_visible(".rtq-fin")
+        if pg.is_visible(".rtq-fin"): pg.click(".rtq-fin"); pg.wait_for_timeout(300)
+    check("routine : départ, étapes, fin", okr and not pg.is_visible(".rtq"))
+
     # 2. Rituel
     x0 = xp(pg); pg.click(".rtile >> nth=0"); pg.wait_for_timeout(1500)
     check("rituel validé (+XP)", xp(pg) > x0, f"{x0} → {xp(pg)}")
