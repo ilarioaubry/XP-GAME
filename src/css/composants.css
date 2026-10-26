@@ -122,3 +122,16 @@
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(svg.ic,svg.pxic):not(.rst *):not(.plr *):not(.pldx *){width:24px!important;height:24px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.rtic svg,.mli img,.slk svg,.uiq svg,.trk-ic svg,.plf span,.fti svg,.idi img){width:48px!important;height:48px!important;max-width:none!important;image-rendering:pixelated}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .chev{width:24px!important;height:24px!important;flex:none}
+
+/* ---------- Ajouts du guide de construction (DESIGN.md) ---------- */
+.ui-info{font-size:var(--ui-t-info);color:var(--ui-creme-2);line-height:1.3}
+.ui-chiffre{font-family:var(--f-pixel);font-size:var(--ui-t-chiffre);font-weight:400;line-height:1;color:var(--ui-creme)}
+/* En-tête de section : titre + compteur à gauche, une seule action (bouton icône 44×44) à droite */
+.ui-entete{display:flex;align-items:center;gap:var(--ui-e2);margin:0 0 var(--ui-e3)}
+.ui-entete>.ui-titre{margin:0}
+.ui-entete>.ui-btn--icone{margin-left:auto}
+/* Puce de choix : bouton secondaire de 44 px, sélectionnée = bordure or */
+.ui-puce{min-height:var(--ui-h-bouton);padding:0 var(--ui-e3);box-sizing:border-box;border:2px solid var(--ui-bord);border-radius:0;background:var(--ui-fond);color:var(--ui-creme);font-family:var(--f-body);font-size:var(--ui-t-texte);font-weight:700;cursor:pointer}
+.ui-puce[aria-pressed="true"]{border-color:var(--ui-or)}
+/* Bouton flottant : un seul, sur Aujourd'hui */
+.ui-fab{position:fixed;right:var(--ui-e4);bottom:calc(env(safe-area-inset-bottom,0px) + 72px);width:56px;height:56px;display:grid;place-items:center;border:0;border-radius:0;background:var(--ui-or);color:var(--ui-or-texte)}

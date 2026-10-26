@@ -118,6 +118,8 @@ Points d'uniformité restants :
 - [ ] 5.29 Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px)
 - [ ] 5.30 Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)**
 - [ ] 5.31 Un texte à 10,8 px dans « Ma situation » (hors échelle)
+- [ ] 5.32 Appliquer l'en-tête standard (DESIGN.md § 3) : le « + » de Relations est 10 px plus à gauche que les autres actions ; « Modifier » de Ma fiche est un bouton texte ; « Créer » (groupes, fiche proche) et « Ajouter » aussi
+- [ ] 5.33 Écart entre sections : 22 px aujourd'hui, 24 px dans le guide
 - [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
 
 Lisibilité :
