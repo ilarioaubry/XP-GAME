@@ -1,5 +1,6 @@
 
-(function(){
+// Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
+
   const EV=["sleepGo","enBox","nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
   const XPRE=/^\+\s?\d+(\s?XP)?$/;
   function oneEv(){let found=false;
@@ -16,9 +17,9 @@
     b.onclick=()=>{document.documentElement.classList.toggle("bilopen");lab()};hero.after(b)}
   function noBoss(){if(!S||!Array.isArray(S.specials))return;const n=S.specials.length;S.specials=S.specials.filter(q=>!q.bq&&!q.bs);if(S.specials.length!==n)save()}
   
-  function goSub(k,sb){if(sb!==undefined)return window.goSub(k,sb);try{subs.c=k;localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}try{applySub()}catch(e){}}
+  function cGoSub(k,sb){if(sb!==undefined)return window.goSub(k,sb);try{subs.c=k;localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}try{applySub()}catch(e){}}
   {let t=0;document.addEventListener("pointerdown",e=>{if(e.target&&e.target.id==="setTitle"){t=setTimeout(()=>{document.documentElement.classList.toggle("admin");try{toast(document.documentElement.classList.contains("admin")?"Mode admin":"Mode admin masqué")}catch(_){}},800)}});["pointerup","pointercancel","pointerleave"].forEach(n=>document.addEventListener(n,()=>clearTimeout(t)))}
-  try{const ms=document.getElementById("meSet");if(ms)ms.onclick=()=>{try{showView("c")}catch(e){}goSub("vie");setTimeout(()=>{const b=document.getElementById("setBox");if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},150)}}catch(e){}
+  try{const ms=document.getElementById("meSet");if(ms)ms.onclick=()=>{try{showView("c")}catch(e){}cGoSub("vie");setTimeout(()=>{const b=document.getElementById("setBox");if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},150)}}catch(e){}
   // ===== Noter une action : Action → Quoi → Avec qui → Pendant
   const LZ_KW=[["lect",/\b(lire|livre|lecture|pages?|bd|manga)\b/i],["cine",/(film|s[ée]rie|[ée]pisode|cin[ée]ma|documentaire)/i],["cuis",/(cuisin|nouveau plat|recette|repas maison|p[âa]tisser)/i],["jeu",/(jeu vid[ée]o|gaming)/i],["orga",/(planifi|organis|mails?|agenda|pr[ée]parer ma semaine|t[âa]che importante|dossier|administratif|papiers)/i],["style",/(tenue|armoire|v[êe]tement|look)/i],["explo",/(balade|d[ée]couvr|nouveau lieu|explor)/i],["photo",/(photo|montage)/i],["lang",/(anglais|espagnol|langue|duolingo|le[çc]on)/i]];
   window.lzGuess=function(a){try{if(!a||!a.name||/^(rit|mb|sleep|lz|sp|mq|fq|f:|tik|arc|duo|ev|af:)/.test(String(a.id||"")))return"";for(const[id,re]of LZ_KW)if(re.test(a.name))return id}catch(e){}return""};
@@ -263,7 +264,7 @@
   const METEOR=[[1,2,4,"Quadrantides"],[4,21,23,"Lyrides"],[5,5,7,"Êta Aquarides"],[8,10,14,"Perséides"],[10,20,23,"Orionides"],[11,16,18,"Léonides"],[12,12,15,"Géminides"]];
   const SOL={"3-20":["Le printemps commence : repérer 3 arbres en fleurs","Équinoxe de printemps","leaf"],"6-21":["Jour le plus long : dîner ou marcher dehors après 21h","Solstice d'été","sun"],"9-22":["L'automne commence : 20 min en forêt ou au parc","Équinoxe d'automne","leaf"],"12-21":["Jour le plus court : 20 min dehors avant 14h","Solstice d'hiver","sun"]};
   const PROD=[0,["du poireau","des oranges","des endives"],["du chou","du poireau","des pommes"],["des épinards","des radis","du poireau"],["des asperges","des radis","des petits pois"],["des fraises","des asperges","des courgettes"],["des cerises","des tomates","des courgettes"],["des pêches","du melon","des tomates"],["des aubergines","des figues","des poivrons"],["du raisin","des figues","des poivrons"],["de la courge","des champignons","des pommes"],["des châtaignes","du poireau","des poires"],["des clémentines","du chou","de la mâche"]];
-  const MOIS=["","janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+  const MOIS1=["","janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
   const NATM=[0,"Marcher 20 min au soleil d'hiver","Repérer les premiers bourgeons en balade","Trouver les premières fleurs en balade","Pique-nique ou repas dehors","Lire 20 min dans un parc","Marcher pieds nus dans l'herbe 5 min","Un bain de mer ou de lac","Dîner dehors à la fraîche","Cueillir des mûres ou des figues en balade","Ramasser des châtaignes ou des feuilles rouges en balade","Balade en forêt pour les couleurs d'automne","Aller voir les illuminations en ville"];
   function natQuests(add,wx,h){const t=new Date(),m=t.getMonth()+1,d=t.getDate(),wet=wx&&["rain","storm","snow"].includes(wx.k),we=isWeekend();
     // lune
@@ -277,8 +278,8 @@
     // solstices et équinoxes
     const so=SOL[m+"-"+d];if(so&&!(m===12&&h>=13))add({name:so[0],cat:"soi",xp:30,why:so[1],sc:6,nat:so[2]});
     // de saison
-    {const P=PROD[m],p=P[Math.floor(t/864e5)%P.length];add({name:"Cuisiner avec "+p,cat:"nourriture",xp:20,why:"De saison en "+MOIS[m],sc:4.1,nat:"leaf"})}
-    if(!wet&&(we||d%2===0)&&!inWork(h))add({name:NATM[m],cat:"sport",xp:25,why:"En "+MOIS[m],sc:we?4.4:3.6,nat:"leaf"});
+    {const P=PROD[m],p=P[Math.floor(t/864e5)%P.length];add({name:"Cuisiner avec "+p,cat:"nourriture",xp:20,why:"De saison en "+MOIS1[m],sc:4.1,nat:"leaf"})}
+    if(!wet&&(we||d%2===0)&&!inWork(h))add({name:NATM[m],cat:"sport",xp:25,why:"En "+MOIS1[m],sc:we?4.4:3.6,nat:"leaf"});
     if(wx&&wx.k==="snow")add({name:"Sortir 10 min voir la neige",cat:"sport",xp:20,why:"Il neige",sc:6.5,nat:"snow"});
     if(wx&&wx.k==="storm"&&h>=19)add({name:"Regarder l'orage depuis la fenêtre, lumières éteintes",cat:"soi",xp:10,why:"Orage ce soir",sc:3.5,nat:"star"})}
   const NATV={moon:["linear-gradient(160deg,#121a46,#2c2f72)","#f5e6a8",'<circle cx="12" cy="12" r="8" fill="#f5e6a8"/><circle cx="9" cy="10" r="1.6" fill="#d8c784"/><circle cx="14.5" cy="14" r="2.2" fill="#d8c784"/><circle cx="14" cy="8" r="1" fill="#d8c784"/>'],
@@ -317,18 +318,18 @@
     bag:'<path d="M5 8h14l-1 13H6z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 8a3 3 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2"/>',art:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 3 0 4-1 3-2 3-4a9 9 0 0 0-9-8z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="8" cy="10" r="1.4" fill="#fff"/><circle cx="12" cy="7" r="1.4" fill="#fff"/><circle cx="16" cy="10" r="1.4" fill="#fff"/>',
     run:'<circle cx="14" cy="4.5" r="2" fill="#fff"/><path d="M6 21l3-6 3 2v4M9 15l2-6 4 3 3-1M11 9L7 11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 4v14M15 6v14" stroke="#fff" stroke-width="2"/>'};
   const idSvg=k=>'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">'+(IDI[k]||IDI.q)+'</svg>';
-  function idPick(n){const g=S.g,h=dayH(),we=isWeekend();let wx=null;try{wx=wxNow()}catch(e){}const wet=wx&&["rain","storm","snow"].includes(wx.k),H=(g.idqH||[]);
+  function cIdPick(n){const g=S.g,h=dayH(),we=isWeekend();let wx=null;try{wx=wxNow()}catch(e){}const wet=wx&&["rain","storm","snow"].includes(wx.k),H=(g.idqH||[]);
     const ok=x=>(x[1].includes("w")?we:true)&&(x[1].includes("s")&&h>=15||x[1].includes("j")&&h<18||x[1]==="w"&&h<17)&&(!wet||x[2]);
     let L=IDQ.map((x,i)=>i).filter(i=>ok(IDQ[i]));if(L.length<n)L=IDQ.map((x,i)=>i).filter(i=>!wet||IDQ[i][2]);
     const fresh=L.filter(i=>!H.includes(i)),P=(fresh.length>=n?fresh:L).sort(()=>Math.random()-.5),out=[];
     for(const i of P){if(out.length>=n)break;if(out.some(j=>IDQ[j][4]===IDQ[i][4]))continue;out.push(i)}return out}
   function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;const g=S.g;if(!g)return;const tk=dayKey(Date.now());
-    if(!g.idq||g.idq.d!==tk){g.idq={d:tk,o:idPick(1),p:null,ok:0};try{save()}catch(e){}}const Q=g.idq;let c=tr.querySelector(".idq");
+    if(!g.idq||g.idq.d!==tk){g.idq={d:tk,o:cIdPick(1),p:null,ok:0};try{save()}catch(e){}}const Q=g.idq;let c=tr.querySelector(".idq");
     if(Q.ok){if(c)c.remove();return}const sig=Q.o.join(",")+"|"+Q.p;if(c&&c.dataset.sig===sig&&c===tr.firstElementChild)return;
     if(!c){c=document.createElement("div");c.className="sq idq"}c.dataset.sig=sig;if(c!==tr.firstElementChild){const z=tr.scrollLeft<12;tr.prepend(c);if(z)tr.scrollLeft=0}const we=isWeekend(),h=dayH(),when=h>=15?"Ce soir":we?"Ce week-end":"Aujourd'hui";
     if(Q.p==null)Q.p=Q.o[0];const x=IDQ[Q.p];
     c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée">${ICO("refresh",16)}<span>Une autre</span></button></span>`;
-    c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=idPick(1);Q.p=Q.o[0];save();idqCard()};
+    c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
     c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
       try{uniBurst(e.currentTarget,"divert")}catch(_){}addBonus("Sortie : "+x[0],x[3],0,"idq");save();try{toast(`Belle sortie <span class="p">+${x[3]} XP</span>`)}catch(_){}setTimeout(()=>{try{render(prev)}catch(_){}idqCard()},600)}}
 
@@ -341,7 +342,7 @@
     const conf="url(\"data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" opacity=".8">${P.join("")}</svg>`)+"\")";
     const F=["#ffd56b","#7fe0ff","#b8ff8a","#ff9de2"];const fl="url(\"data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="96" height="22"><path d="M0 2q48 10 96 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/>${F.map((c,i)=>{const x=i*24+4;const y=2+10*Math.sin(Math.PI*(x+8)/96)*.8;return `<path d="M${x} ${y.toFixed(1)}l16 0-8 12z" fill="${c}"/>`}).join("")}</svg>`)+"\")";
     return{conf,fl,grad:"linear-gradient(150deg,#ff4f9a,#b44be0 55%,#5b3bd6)"}})();
-  window.bdConf=el=>bdConf(el);
+  window.bdConf=bdConf;
   function bdConf(el){const r=el.getBoundingClientRect(),C=["#ffd56b","#7fe0ff","#b8ff8a","#fff","#ff9de2","#ffb347"];for(let i=0;i<26;i++){const d=document.createElement("i");d.className="bdcf";d.style.left=(r.left+r.width*Math.random())+"px";d.style.top=(r.top+r.height*.3)+"px";d.style.background=C[i%C.length];
       d.style.setProperty("--dx",(Math.random()-.5)*160+"px");d.style.setProperty("--dy",(-60-Math.random()*90)+"px");d.style.setProperty("--rt",(Math.random()*720-360)+"deg");document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}}
   function bdDress(){document.querySelectorAll("#sqBox .sq:not(.bdq)").forEach(c=>{const t=(c.querySelector(".sqn")||{}).textContent||"";const q=t&&(S.specials||[]).find(x=>x.name===t);if(!q||!(q.bd||/anniversaire/i.test(q.name)))return;c.dataset.uni=1;c.classList.remove("unicard");c.classList.add("bdq");c.querySelectorAll(".uiq").forEach(x=>x.remove());{const k=c.querySelector(".sqk svg");if(k)k.outerHTML='<span class="bdk">'+BDCAKE+'</span>'}if(!c.querySelector(".bdav")){const w=q.bd||q.who||(relNames().find(n=>t.includes(n))||"");const sp=document.createElement("span");sp.className="bdav";sp.innerHTML=(w?pAv(w,"bdp"):"")+'<span class="bdck">'+BDCAKE+'</span>';c.appendChild(sp)}});
@@ -365,8 +366,8 @@
     const G=S.g,ym=ymOf(Date.now()),el=document.createElement("div");el.className="afsk";let h="";
     if(B.son){const k=(S.skills||[]).find(x=>x.name==="Sons"),i=k?skInfo(k.xp):null,now=new Date(),mo=now.getMonth(),y=now.getFullYear(),dl=Math.ceil((new Date(y,mo+1,1)-now)/864e5),rel=(G.rel||{})[ym];
       if(i)h+=`<div class="sklv"><b>Musique</b><span>Nv ${i.l}</span><i><em style="width:${i.cur/i.need*100}%"></em></i></div>`;
-      h+=`<div class="skrow"><small>Sortie ${/^[ao]/.test(MOIS[mo+1])?"d'":"de "}${MOIS[mo+1]}</small>${rel?`<b class="skok">${ICO("check",14)} Sorti : <span></span></b>`:`<b>J-${dl} pour sortir un son</b><span class="skin"><input maxlength="40" placeholder="Titre du son" aria-label="Titre du son"><button type="button" class="btn primary skrel">Il est sorti ! +150</button></span>`}
-        <div class="skmo">${MOIS.slice(1).map((m,j)=>{const kk=y+"-"+String(j+1).padStart(2,"0");return`<span class="${(G.rel||{})[kk]?"on":""}${j===mo?" cur":""}">${m[0].toUpperCase()}</span>`}).join("")}</div></div>`;
+      h+=`<div class="skrow"><small>Sortie ${/^[ao]/.test(MOIS1[mo+1])?"d'":"de "}${MOIS1[mo+1]}</small>${rel?`<b class="skok">${ICO("check",14)} Sorti : <span></span></b>`:`<b>J-${dl} pour sortir un son</b><span class="skin"><input maxlength="40" placeholder="Titre du son" aria-label="Titre du son"><button type="button" class="btn primary skrel">Il est sorti ! +150</button></span>`}
+        <div class="skmo">${MOIS1.slice(1).map((m,j)=>{const kk=y+"-"+String(j+1).padStart(2,"0");return`<span class="${(G.rel||{})[kk]?"on":""}${j===mo?" cur":""}">${m[0].toUpperCase()}</span>`}).join("")}</div></div>`;
       el.innerHTML=h;aff.appendChild(el);if(rel)el.querySelector(".skok span").textContent=rel.n||"sans titre";
       const go=el.querySelector(".skrel");if(go)go.onclick=()=>{const n=el.querySelector("input").value.trim().slice(0,40),prev=levelInfo(S.xp).l,sg={visuel:4,prod:3,poly:1};if(!G.rel)G.rel={};Object.entries(sg).forEach(([kk,v])=>S.snd[kk]=(S.snd[kk]||0)+v);G.rel[ym]={n,t:Date.now()};
         S.xp+=150;S.log.push({a:"bonus",cat:null,name:"Son sorti"+(n?" : "+n:""),xp:150,t:Date.now(),bonus:1,out:ym,snd:sg});save();try{uniBurst(go,"creer")}catch(e){}render(prev);setTimeout(()=>toast(`Son sorti ! <span class="p">+150 XP</span>`),300);el.remove();afSkill()};return}
@@ -509,7 +510,7 @@
       const add=(k,l,sub,f)=>{const b=document.createElement("button");b.type="button";b.className="btn";b.dataset.ex=k;b.innerHTML=`${l}<small>${sub}</small>`;b.onclick=e=>{e.stopPropagation();f()};m.prepend(b)};
       add("rem","Me le rappeler","régulièrement",()=>{const g=S.g;if(!Array.isArray(g.last))g.last=[];if(!g.last.some(y=>y.name===x.t))g.last.push({id:"l"+Date.now().toString(36),name:x.t,n:1,u:"s",d:dayKey(Date.now())});save();try{renderTrk();renderVie()}catch(e){}toast("Ajouté à « La dernière fois que… »")});
       if(CATS[x.cat])add("more","Plus comme ça",esc(CATS[x.cat].label)+" en priorité",()=>{const v=S.g.vie||(S.g.vie={}),P=Array.isArray(v.pri)?v.pri:[];if(!P.includes(x.cat)){if(P.length>=3)P.shift();P.push(x.cat)}v.pri=P;if(S.g.fq)S.g.fq.d="";save();render();toast(esc(CATS[x.cat].label)+" passe en priorité")});
-      if(x.k==="arc"&&x.p)add("prj","Voir le projet","étapes, modifier",()=>{try{showView("c")}catch(e){}goSub("vie");setTimeout(()=>{const b=document.getElementById("prjBox2");if(b){b.scrollIntoView({behavior:"smooth",block:"start"});const h=b.querySelector('.prh[aria-expanded="false"]');if(h)h.click()}},200)})})}
+      if(x.k==="arc"&&x.p)add("prj","Voir le projet","étapes, modifier",()=>{try{showView("c")}catch(e){}cGoSub("vie");setTimeout(()=>{const b=document.getElementById("prjBox2");if(b){b.scrollIntoView({behavior:"smooth",block:"start"});const h=b.querySelector('.prh[aria-expanded="false"]');if(h)h.click()}},200)})})}
   // 7. Quêtes spéciales : un seul « … »
   function sqMenus(){document.querySelectorAll("#sqBox .sq").forEach(c=>{const x=c.querySelector(":scope>.sqx");if(!x||c.querySelector(".sqm"))return;const b=document.createElement("button");b.type="button";b.className="sqm";b.setAttribute("aria-label","Options");b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg>';
       b.onclick=e=>{e.stopPropagation();const lab=x.getAttribute("aria-label")||"Retirer";pop(b,[{l:/autre/i.test(lab)?ICO("refresh",14)+" Proposer autre chose":ICO("close",14)+" Retirer cette quête",f:()=>x.click()}])};c.appendChild(b)})}
@@ -532,7 +533,7 @@
     L=L.map(e=>e.k!=="bd"?e:{...e,n:"Anniversaire "+deN(e.who),sub:e.inD===0?"C'est aujourd'hui":e.inD===1?"Demain · pense au cadeau":"Dans "+e.inD+" jours · pense au cadeau"});
     const k=L.map(e=>e.id+e.n+(e.sub||"")).join("|");if(k===evK)return;evK=k;
     b.innerHTML=L.map(e=>{let c="var(--gold)";try{c=e.k==="bd"?"var(--c-autres)":evtOf(e.t||evtGuess(e.n))[2]}catch(_){}if(e.k==="bd")return`<button type="button" class="evtd bdy${e.inD===0?" bd0":""}"><span class="bdav">${pAv(e.who,"bdp")}<span class="bdck">${BDCAKE}</span></span><span class="bdtx"><b></b><small>${e.sub}</small></span></button>`;return`<button type="button" class="evtd" style="--ec:${c}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${e.k==="bd"?'<path d="M4 21h16M5 21v-7h14v7M12 14v-3M12 8a1.5 1.5 0 0 0 1.5-1.5C13.5 5 12 3 12 3s-1.5 2-1.5 3.5A1.5 1.5 0 0 0 12 8z"/>':'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>'}</svg><b></b></button>`}).join("");
-    b.querySelectorAll(".evtd b").forEach((x,i)=>x.textContent=L[i].n);b.querySelectorAll(".evtd").forEach((x,i)=>x.onclick=()=>{if(L[i].k==="bd"){try{bdConf(x)}catch(_){}setTimeout(()=>{try{openProfile(L[i].who)}catch(_){}},450);return}try{showView("c")}catch(_){}goSub("vie");setTimeout(()=>{const e=document.getElementById("evtBox");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},150)})}
+    b.querySelectorAll(".evtd b").forEach((x,i)=>x.textContent=L[i].n);b.querySelectorAll(".evtd").forEach((x,i)=>x.onclick=()=>{if(L[i].k==="bd"){try{bdConf(x)}catch(_){}setTimeout(()=>{try{openProfile(L[i].who)}catch(_){}},450);return}try{showView("c")}catch(_){}cGoSub("vie");setTimeout(()=>{const e=document.getElementById("evtBox");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},150)})}
   // Ma fiche : modifiable directement
   let fEdit=false;
   // ---- Ma fiche, version visuelle
@@ -557,7 +558,7 @@
   function autoTime(){const s=sitOf();if(!s)return;let wd=false;try{wd=vieCap()<3}catch(e){}const t=["poste","etud","indep"].includes(s.job)&&wd?"30":"plus";if(s.time!==t){s.time=t;save()}}
   function perAskCard(){const P=perEnded();const s=sitOf();if(!P||!s||s.job!=="poste")return"";return`<div class="fask" data-pid="${P.id}"><b>« ${esc(P.name||"Ta période")} » est terminé</b><small>Ta situation a changé ?</small><div class="fjobs mini">${[["poste","Toujours en poste"],["cherche","En recherche"],["pause","En pause"],["etud","Étudiant·e"]].map(([v,l])=>`<button type="button" data-ask="${v}"><span class="fti">${tileI(JOBI[v])}</span><span>${l}</span></button>`).join("")}</div></div>`}
   function bindAsk(root){root.querySelectorAll(".fask [data-ask]").forEach(b=>b.onclick=()=>{const c=b.closest(".fask"),G=S.g;if(!G.perAsk||typeof G.perAsk!=="object")G.perAsk={};G.perAsk[c.dataset.pid]=1;const cur=sitOf()||{};G.sit={...cur,job:b.dataset.ask,t:Date.now()};if(G.fq)G.fq.d="";save();
-      if(b.dataset.ask==="poste"){fEdit=true;try{showView("c");goSub("c","vie")}catch(e){}setTimeout(()=>{const x=document.getElementById("ficheBox");if(x)x.scrollIntoView({behavior:"smooth"})},200);try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
+      if(b.dataset.ask==="poste"){fEdit=true;try{showView("c");cGoSub("c","vie")}catch(e){}setTimeout(()=>{const x=document.getElementById("ficheBox");if(x)x.scrollIntoView({behavior:"smooth"})},200);try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
       try{render()}catch(e){}renderFiche();const t=document.getElementById("evToday");if(t)t.querySelectorAll(".fask").forEach(x=>x.remove())})}
   function askToday(){const b=document.getElementById("evToday");if(!b)return;const h=perAskCard();let c=b.querySelector(".fask");if(!h){if(c)c.remove();return}if(c)return;b.insertAdjacentHTML("afterbegin",h);bindAsk(b)}
   window.renderFiche=function(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
@@ -681,7 +682,7 @@
 
   // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
   function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;
-    c.addEventListener('click',e=>{const t=e.target.closest('#charTitle');if(!t)return;e.stopPropagation();e.preventDefault();goSub('c','wr');
+    c.addEventListener('click',e=>{const t=e.target.closest('#charTitle');if(!t)return;e.stopPropagation();e.preventDefault();cGoSub('c','wr');
       setTimeout(()=>{if(t.id==='charTitle'){const b=document.querySelector('#wrCats [data-c="titre"]');if(b)b.click();const w=document.querySelector('.wardrobe');if(w)w.scrollIntoView({behavior:'smooth',block:'start'})}else{const g=[...document.querySelectorAll('.colh h3,.col h3')].find(x=>/^\s*badges/i.test(x.textContent||''));if(g)(g.closest('.colh')||g).scrollIntoView({behavior:'smooth',block:'start'})}},420)},true)}
   // ---- les repas en une seule rangée d'assiettes (remplace les cartes repas, le bilan repas et « + Repas »)
   const MEALS=[["pdej","matin","Petit-déj","cup"],["dej","matin","Déjeuner","plate"],["gouter","soir","Goûter","cookie"],["diner","soir","Dîner","plate"]];
@@ -798,6 +799,6 @@
   // Plus aucune retouche globale : chaque écran (Aujourd'hui, Moi, Proches, profil) se dessine dans sa forme finale.
   try{if(S&&S.g)render()}catch(e){console.warn("init",e)}
   try{renderFiche()}catch(e){}
-})();
+
 
 (function(){["gnOpen","stOpen","runOpen","mdOpen","puOpen"].forEach(k=>{const f=window[k];if(typeof f!=="function")return;window[k]=function(btn,n){const r=f.apply(this,arguments);try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}return r}})})();
