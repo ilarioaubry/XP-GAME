@@ -133,15 +133,42 @@ Sur une carte de quête (265 px de texte, 2 lignes au plus) :
 
 ---
 
-## 5. Ton utilisation
+## 5. Ton utilisation (sauvegarde du 27/10/2026, 3 → 27 octobre)
 
-En attente de ta sauvegarde (Moi › Bilan › Données › Exporter). Avec elle, on mesurera :
+Chiffres seulement, sans détail personnel (ce fichier est dans le dépôt). Commande : `python3 outils/usage.py <sauvegarde.json>`.
 
-- les quêtes refusées avec « Pas pour moi » et celles qui baissent le plus à force de « Pas aujourd'hui » ;
-- les familles mises en retrait ;
-- les quêtes et bonnes actions faites souvent, rarement ou jamais ;
-- l'équilibre entre catégories ;
-- les quêtes spéciales remplacées par « Une autre ».
+**300 validations sur 24 jours actifs (sur 25).** D'où elles viennent :
+
+| Source | Validations | XP |
+|---|---|---|
+| Rituels | 92 | 303 |
+| Repas / assiette | 64 | 917 |
+| Bonus (journée terminée, bilan, barre pleine…) | 38 | 578 |
+| Bonnes actions | 31 | 370 |
+| Proches (voir, appeler, groupes) | 29 | 845 |
+| Sommeil | 16 | 225 |
+| Centres d'intérêt | 11 | 98 |
+| Quêtes du moment | 7 | 95 |
+| Panneau + (noter une action) | 7 | 239 |
+| Quêtes spéciales | 3 | 75 |
+| Projets | 2 | 40 |
+| **Quêtes pour toi** | **0** | **0** |
+
+Ce qui est mis de côté :
+
+1. **Les quêtes pour toi : 0 faite en 25 jours.** 3 à 5 sont proposées chaque jour (plus de 80 au total), mais elles ne sont ni faites ni refusées : une seule a reçu « Pas pour moi ». Elles sont simplement ignorées, si bien que l'appli n'apprend rien (ses poids restent à zéro).
+2. **Idée sortie : 20 fois « Une autre », 0 faite.**
+3. **Quêtes spéciales : 3 faites.** Une dizaine restent en attente (rangement, ménage, cuisine, prendre des nouvelles).
+4. **Bonnes actions : 18 sur 24 jamais validées**, dont les deux plus payées (« Faire du son (1 h) », « 1 h de travail concentré »). Six sont utilisées (verre d'eau, ranger 10 min, étirements, dossier…).
+5. **Catégories :**
+   - Force (sport) n'a reçu que 15 XP en 25 jours, Talent 60 XP.
+   - Famille n'a que 25 XP alors qu'elle fait partie des 3 priorités choisies dans la fiche. Une autre priorité, « chez moi », n'a qu'une petite part (10 %).
+   - Nourriture et Ami font chacune près d'un quart de l'XP.
+6. **Projets :** un projet perso est en cours (2 étapes faites).
+
+Ce qui marche : les **rituels**, l'**assiette**, les **proches** et le **sommeil**. Ce sont des choses qu'on fait de toute façon, avec un geste simple à l'endroit où on les fait.
+
+Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuille de route.
 
 ---
 
