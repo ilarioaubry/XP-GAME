@@ -46,10 +46,12 @@ with sync_playwright() as p:
     x0 = xp(pg); pg.click(".mlp >> nth=1"); pg.wait_for_timeout(400)
     check("l'assiette s'ouvre", pg.is_visible(".plo")); trait(pg, "assiette")
     for f in ("Pâtes", "Poulet", "Salade"): pg.evaluate("f=>[...document.querySelectorAll('.plo .plf')].find(b=>b.textContent.trim()===f).click()", f); pg.wait_for_timeout(150)
+    pg.evaluate("document.querySelector('.plo [data-sauce=pesto]').click()"); pg.wait_for_timeout(150)
     for _ in range(6):
         if pg.is_visible(".plo .plok"): break
         if pg.is_visible(".plo .plnext"): pg.click(".plo .plnext"); pg.wait_for_timeout(250)
     if pg.is_visible(".plo .plok"): pg.click(".plo .plok"); pg.wait_for_timeout(500)
+    check("sauce gardée dans l'assiette", pg.evaluate("(plDay(dayKey(Date.now())).dej||{}).s+''")=="pesto")
     check("assiette validée (+XP)", xp(pg) > x0 and not pg.is_visible(".plo"), f"{x0} → {xp(pg)}")
 
     # 1b. Routine (liste à cocher) : départ, toutes les étapes faites, fin avec temps

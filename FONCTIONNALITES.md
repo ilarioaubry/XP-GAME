@@ -18,7 +18,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Bandeau du jour | Compteurs suivis (cigarettes…), contrat en cours | — | active (réglé dans Ma vie) |
 | Énergie du matin | « Ta batterie » : Faible / Moyenne / Pleine | ? | module |
 | Mon moment (matin / soir) | Rituels en tuiles, repas, et « Ma routine » : liste à cocher plein écran (rituels du moment + repas du moment + un verre d'eau), chrono, record, récap à la fin | rituel 3 | active |
-| Repas et assiette | Petit-déj, déjeuner, goûter, dîner ; assiette (féculents, protéines, légumes, yaourt, fromage, eau), recettes | 2 par groupe, +4 si complète | active |
+| Repas et assiette | Petit-déj, déjeuner, goûter, dîner ; assiette (féculents, protéines, légumes, sauces, yaourt, fromage, eau), recettes | 2 par groupe, +4 si complète | active |
 | Événements du jour | Événement aujourd'hui, anniversaire d'un proche dans 3 jours | — | moment |
 | Mode événement | Le jour d'un événement important | — | moment |
 | Fin de journée | Invitation à aller dormir le soir | — | moment |

@@ -790,3 +790,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.fqa{grid-area:a!important;justify-self:end!important;align-self:end!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.uiq{left:12px!important;top:12px!important;transform:none!important;width:48px!important;height:48px!important;display:grid!important;place-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.uiq svg{width:48px!important;height:48px!important}
+/* assiette : en rangée, l'alignement prime — icônes alignées en haut, nom dessous (sur 1 ou 2 lignes) ; sauce choisie = bordure or */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plfoods .plf{align-content:start!important;justify-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf{border:2px solid transparent!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf.on{border-color:#ffd94a!important;background:rgba(255,217,74,.1)!important}

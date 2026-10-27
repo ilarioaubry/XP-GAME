@@ -50,7 +50,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 |---|---|---|---|
 | `mb` | 02, 03, 04, 09, 26, assiette, finitions | Repas validés : `"AAAA-MM-JJ:période"` → `{t}` | active |
 | `mbd` | 03, 09, 26, assiette, finitions | Détail des repas par période (`m`, `ex`, `w`, `cr`) | active |
-| `plt` | assiette | Assiettes : `plt[jour][dej|diner] = {f:[], p:[], l:[], x:{yaourt, fromage, eau}, r?}` | active |
+| `plt` | assiette | Assiettes : `plt[jour][dej|diner] = {f:[], p:[], l:[], s:[] (sauces, depuis le 27/10), x:{yaourt, fromage, eau}, r?}` | active |
 | `plr` | assiette | Recettes enregistrées | active |
 | `plf`, `plh` | assiette | Aliments ajoutés par toi, aliments masqués | active |
 | `rcp` | 25 | Recettes cuisinées (Chez moi) | active ? |

@@ -2,6 +2,11 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 27/10/2026
+- Assiette : catégorie « Sauces » (10 sauces en pixel art + les tiennes), à cocher ; ne change ni l'équilibre ni l'XP. Gardée dans les recettes.
+- Quêtes d'aujourd'hui : cartes plus grandes, plus de titres coupés.
+- Centrage des boutons et tuiles, lignes de séparation uniques, outil `centrage.py`.
+
 ## 26/10/2026
 - Ma routine refaite : écran de départ avec toutes les étapes et le record, liste à cocher avec l'étape en cours mise en avant, chrono en grand sur le ciel du moment, le repas du moment et un verre d'eau inclus, récap à la fin.
 - Ma fiche : prénom centré en haut, portrait + titre + badges, barre d'XP pleine largeur, catégories sur 2 colonnes ; aura = fond flouté.
