@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7641a36</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version f01297e</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4713,7 +4713,7 @@ const FAM=[
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
   {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
-  {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante finie",xp:25,o:["Fini !"],quick:1},
+  {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante",xp:25,o:["Fini !"],quick:1},
   {id:"lire",dom:"divert",cat:"soi",l:"Lire",xp:10,o:["Livre","BD ou manga","Article","Livre fini"],lz:"lect",fr:[3,7],fro:{"Livre fini":[30,60]},q:{Livre:"pages","BD ou manga":"pages"}},
   {id:"regarder",dom:"divert",cat:"soi",l:"Regarder",xp:10,o:["Film","Épisode","Série finie","Documentaire"],lz:"cine"},
   {id:"jouer",dom:"divert",cat:"soi",l:"Jouer",xp:10,o:["Jeu vidéo","Jeu de société","Jeu fini"],lz:"jeu"},
@@ -4724,7 +4724,7 @@ const FAM=[
   {id:"art",dom:"creer",cat:"perso",l:"Dessin et art",xp:12,o:["Dessin","Peinture","Bricolage"],fr:[7,14]},
   {id:"langue",dom:"apprendre",cat:"soi",l:"Langue",xp:10,o:["Leçon","Film en VO","Conversation"],lz:"lang",fr:[3,7]},
   {id:"cours",dom:"apprendre",cat:"soi",l:"Apprendre",xp:12,o:["Tuto","Formation","Lecture utile"]},
-  {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
+  {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",ls:"Des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
   {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
   {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
 const IDQ=[
@@ -4755,7 +4755,7 @@ const FIC={ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","
   linge:["machine",{"Changer les draps":"lit"}],vaisselle:["assiette",{}],mmaison:["poubelle",{"Sortir les poubelles":"poubelle",Courses:"panier","Arroser les plantes":"plante","Réparer un truc":"check"}],armoire:["armoire",{}],
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
   calme:["medit",{"Pause sans écran":"tel"}],sieste:["sieste",{}],soin:["visage",{Coiffeur:"ciseaux",Bain:"bain",Ongles:"pinceau"}],sante:["sante",{}],ecrire:["note",{}],dehors:["soleil",{Nature:"plante"}],nuit:["lune",{}],
-  manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],eau:["eau",{}],sans:["check",{}],
+  manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],clarte:["tel",{}],eau:["eau",{}],sans:["check",{}],
   focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier"}],planif:["note",{}],fini:["check",{}],
   lire:["lire",{}],regarder:["clap",{}],jouer:["manette",{}],ecouter:["casque",{}],sorties:["ticket",{Restaurant:"repas",Bar:"tasse",Concert:"casque"}],
   musique:["micro",{"Écrire un texte":"note"}],image:["photo",{}],art:["pinceau",{}],langue:["bulle",{}],cours:["ampoule",{}],
@@ -16279,12 +16279,14 @@ html:not(#_a):not(#_b) body #actFind .aft .uic svg{width:48px!important;height:4
 /* familles : 2 colonnes qui ne débordent jamais de l'écran (Travail, Force…) */
 html:not(#_a):not(#_b) body #actFind .afgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
 html:not(#_a):not(#_b) body #actFind .aft{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;padding:10px 12px 12px;min-width:0;min-height:0}  /* icône 48 au-dessus, nom dessous : les mots longs (Renforcement, Administratif) tiennent sans être coupés */
-html:not(#_a):not(#_b) body #actFind .aft b{min-width:0;padding-right:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html:not(#_a):not(#_b) body #actFind .aft b{min-width:0;max-width:100%;padding-right:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}  /* nom sur 1 ligne : toutes les tuiles ont la même hauteur */
 /* le panneau prend tout l'écran, fond compris, à chaque étape ; « Créer une action » reste en bas */
 html:not(#_a):not(#_b) body #plusSheet .ps-in{display:flex;flex-direction:column;padding-bottom:0!important}
 html:not(#_a):not(#_b) body #plusSheet #actFind{flex:1 0 auto;display:flex;flex-direction:column;gap:12px;border-radius:0;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 html:not(#_a):not(#_b) body #plusSheet #actFind>.afl{flex:1 0 auto;display:flex;flex-direction:column;gap:6px}
-html:not(#_a):not(#_b) body #plusSheet #actFind .afnew{margin-top:auto;position:sticky;bottom:0;z-index:1;background:var(--bg);width:100%}
+/* « Créer une action » : fixé en bas de l'écran comme la barre d'onglets, quoi qu'il y ait dans la page */
+html:not(#_a):not(#_b) body #plusSheet #actFind .afnew{position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;background:var(--bg);width:auto;margin:0}
+html:not(#_a):not(#_b) body #plusSheet #actFind:has(.afnew){padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 /* accueil (Récents / Pour commencer) : tuiles de même taille, 2 par ligne, nom sur 2 lignes max */
 html:not(#_a):not(#_b) body #actFind .afopts.afrec{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 html:not(#_a):not(#_b) body #actFind .afrec .afo{width:100%;min-height:56px;justify-content:flex-start;text-align:left;padding:8px 10px;font-size:15px;line-height:1.2}
@@ -16491,7 +16493,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
     box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afThen(it,b,ev)});
     box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="dur")afSel=null;else afStep=afFirst(it);renderAF()};return}
-  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);if(own.length)F.push({l:"Bonnes actions",c:(DOMS.find(d=>d[0]===id)||[])[2],its:own});return F};
+  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
   if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div><button type="button" class="afnew">+ Créer « <b></b> »</button>`}
@@ -16513,7 +16515,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     const ab=box.querySelector(".afadd");if(ab)ab.onclick=()=>{afAdd=true;renderAF();const i=document.querySelector("#actFind .afaddin input");if(i)i.focus()};
     const ai=box.querySelector(".afaddin input"),ao=box.querySelector(".afaddok");if(ai){const go=()=>{const v=ai.value.trim();if(!v){afAdd=false;renderAF();return}const L=CU();if(!L.some(x=>norm(x)===norm(v)))L.push(v.charAt(0).toUpperCase()+v.slice(1));save();afAdd=false;renderAF()};ao.onclick=go;ai.onkeydown=e=>{if(e.key==="Enter")go();if(e.key==="Escape"){afAdd=false;renderAF()}}}
     box.querySelectorAll(".afcux").forEach(b=>{const L=CU(),c=L[+b.dataset.cu];b.innerHTML=ICO("close",12)+" "+esc(c);b.onclick=()=>{L.splice(+b.dataset.cu,1);save();renderAF()}})}
-  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.l;b.onclick=ev=>{if(F.its.length===1){afPick(F.its[0],b,ev);return}afFam=F.l;renderAF()}})}
+  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.ls;b.onclick=ev=>{if(F.its.length===1){afPick(F.its[0],b,ev);return}afFam=F.l;renderAF()}})}
   box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{const[it,lab]=reg[i];b.querySelector("span").textContent=lab;
     b.onclick=ev=>afPick(it,b,ev)});
   const inp=box.querySelector(".afq");inp.value=afQ;inp.oninput=()=>{afQ=inp.value;const pos=inp.selectionStart;renderAF();const n=document.querySelector("#actFind .afq");if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}};
@@ -16545,7 +16547,7 @@ function dressAF(){const box=document.getElementById("actFind");if(!box)return;c
   box.classList.toggle("uni",!!(dom&&DUNI[dom]));box.style.setProperty("--uni",dom&&DUNI[dom]?decor(dom):"none");
   box.querySelectorAll("[data-afc]").forEach(b=>{if(b.querySelector(".uic"))return;const id=b.dataset.afc.split(":")[1],U=DUNI[id];if(!U)return;const sv=b.querySelector("svg");if(sv){const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(U.ic);sv.replaceWith(sp)}});
   const FF=(()=>{try{return afCat&&!afFam?FAM.filter(f=>f.dom===afCat.split(":")[1]):[]}catch(e){return[]}})();
-  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1])[+b.dataset.fam];const k=F?uIc(F.id):"etoile";if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
+  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1])[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const reg=box.__reg||[];box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{if(b.querySelector(".uic"))return;const it=(reg[i]||[])[0];if(!it)return;const k=it.k==="fam"?uIc(it.f.id,it.opt):"";if(!k)return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const dh=box.querySelector(".afdh");if(dh&&afSel&&!dh.querySelector(".uic")&&afSel.k==="fam"){const sp=document.createElement("span");sp.className="uic big";sp.innerHTML=rkSvg(uIc(afSel.f.id,afSel.opt));dh.querySelector("b").before(sp)}}
 function dressQuests(){document.querySelectorAll("#sqBox .sq,#fqBox .fqr").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn,.fqt b")||{}).textContent||"";if(!t)return;c.dataset.uni=1;

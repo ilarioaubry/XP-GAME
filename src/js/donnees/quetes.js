@@ -25,7 +25,7 @@ const FAM=[
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
   {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
-  {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante finie",xp:25,o:["Fini !"],quick:1},
+  {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante",xp:25,o:["Fini !"],quick:1},
   {id:"lire",dom:"divert",cat:"soi",l:"Lire",xp:10,o:["Livre","BD ou manga","Article","Livre fini"],lz:"lect",fr:[3,7],fro:{"Livre fini":[30,60]},q:{Livre:"pages","BD ou manga":"pages"}},
   {id:"regarder",dom:"divert",cat:"soi",l:"Regarder",xp:10,o:["Film","Épisode","Série finie","Documentaire"],lz:"cine"},
   {id:"jouer",dom:"divert",cat:"soi",l:"Jouer",xp:10,o:["Jeu vidéo","Jeu de société","Jeu fini"],lz:"jeu"},
@@ -36,7 +36,7 @@ const FAM=[
   {id:"art",dom:"creer",cat:"perso",l:"Dessin et art",xp:12,o:["Dessin","Peinture","Bricolage"],fr:[7,14]},
   {id:"langue",dom:"apprendre",cat:"soi",l:"Langue",xp:10,o:["Leçon","Film en VO","Conversation"],lz:"lang",fr:[3,7]},
   {id:"cours",dom:"apprendre",cat:"soi",l:"Apprendre",xp:12,o:["Tuto","Formation","Lecture utile"]},
-  {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
+  {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",ls:"Des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
   {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
   {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
 const IDQ=[
@@ -67,7 +67,7 @@ const FIC={ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","
   linge:["machine",{"Changer les draps":"lit"}],vaisselle:["assiette",{}],mmaison:["poubelle",{"Sortir les poubelles":"poubelle",Courses:"panier","Arroser les plantes":"plante","Réparer un truc":"check"}],armoire:["armoire",{}],
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
   calme:["medit",{"Pause sans écran":"tel"}],sieste:["sieste",{}],soin:["visage",{Coiffeur:"ciseaux",Bain:"bain",Ongles:"pinceau"}],sante:["sante",{}],ecrire:["note",{}],dehors:["soleil",{Nature:"plante"}],nuit:["lune",{}],
-  manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],eau:["eau",{}],sans:["check",{}],
+  manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],clarte:["tel",{}],eau:["eau",{}],sans:["check",{}],
   focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier"}],planif:["note",{}],fini:["check",{}],
   lire:["lire",{}],regarder:["clap",{}],jouer:["manette",{}],ecouter:["casque",{}],sorties:["ticket",{Restaurant:"repas",Bar:"tasse",Concert:"casque"}],
   musique:["micro",{"Écrire un texte":"note"}],image:["photo",{}],art:["pinceau",{}],langue:["bulle",{}],cours:["ampoule",{}],

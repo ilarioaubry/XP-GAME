@@ -98,7 +98,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
     box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afThen(it,b,ev)});
     box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="dur")afSel=null;else afStep=afFirst(it);renderAF()};return}
-  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);if(own.length)F.push({l:"Bonnes actions",c:(DOMS.find(d=>d[0]===id)||[])[2],its:own});return F};
+  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
   if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div><button type="button" class="afnew">+ Créer « <b></b> »</button>`}
@@ -120,7 +120,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     const ab=box.querySelector(".afadd");if(ab)ab.onclick=()=>{afAdd=true;renderAF();const i=document.querySelector("#actFind .afaddin input");if(i)i.focus()};
     const ai=box.querySelector(".afaddin input"),ao=box.querySelector(".afaddok");if(ai){const go=()=>{const v=ai.value.trim();if(!v){afAdd=false;renderAF();return}const L=CU();if(!L.some(x=>norm(x)===norm(v)))L.push(v.charAt(0).toUpperCase()+v.slice(1));save();afAdd=false;renderAF()};ao.onclick=go;ai.onkeydown=e=>{if(e.key==="Enter")go();if(e.key==="Escape"){afAdd=false;renderAF()}}}
     box.querySelectorAll(".afcux").forEach(b=>{const L=CU(),c=L[+b.dataset.cu];b.innerHTML=ICO("close",12)+" "+esc(c);b.onclick=()=>{L.splice(+b.dataset.cu,1);save();renderAF()}})}
-  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.l;b.onclick=ev=>{if(F.its.length===1){afPick(F.its[0],b,ev);return}afFam=F.l;renderAF()}})}
+  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.ls;b.onclick=ev=>{if(F.its.length===1){afPick(F.its[0],b,ev);return}afFam=F.l;renderAF()}})}
   box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{const[it,lab]=reg[i];b.querySelector("span").textContent=lab;
     b.onclick=ev=>afPick(it,b,ev)});
   const inp=box.querySelector(".afq");inp.value=afQ;inp.oninput=()=>{afQ=inp.value;const pos=inp.selectionStart;renderAF();const n=document.querySelector("#actFind .afq");if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}};
@@ -152,7 +152,7 @@ function dressAF(){const box=document.getElementById("actFind");if(!box)return;c
   box.classList.toggle("uni",!!(dom&&DUNI[dom]));box.style.setProperty("--uni",dom&&DUNI[dom]?decor(dom):"none");
   box.querySelectorAll("[data-afc]").forEach(b=>{if(b.querySelector(".uic"))return;const id=b.dataset.afc.split(":")[1],U=DUNI[id];if(!U)return;const sv=b.querySelector("svg");if(sv){const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(U.ic);sv.replaceWith(sp)}});
   const FF=(()=>{try{return afCat&&!afFam?FAM.filter(f=>f.dom===afCat.split(":")[1]):[]}catch(e){return[]}})();
-  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1])[+b.dataset.fam];const k=F?uIc(F.id):"etoile";if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
+  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1])[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const reg=box.__reg||[];box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{if(b.querySelector(".uic"))return;const it=(reg[i]||[])[0];if(!it)return;const k=it.k==="fam"?uIc(it.f.id,it.opt):"";if(!k)return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const dh=box.querySelector(".afdh");if(dh&&afSel&&!dh.querySelector(".uic")&&afSel.k==="fam"){const sp=document.createElement("span");sp.className="uic big";sp.innerHTML=rkSvg(uIc(afSel.f.id,afSel.opt));dh.querySelector("b").before(sp)}}
 function dressQuests(){document.querySelectorAll("#sqBox .sq,#fqBox .fqr").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn,.fqt b")||{}).textContent||"";if(!t)return;c.dataset.uni=1;
