@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 27/10/2026
+- Assiette et quêtes reliées : une quête nourriture (légume, équilibré, végétarien, cuisiner, nouvelle recette…) se valide en remplissant l'assiette, avec son objectif affiché ; « Cuisiné maison » et « Nouvelle recette » à cocher ; plus proposée quand les repas sont notés. Bonnes actions en doublon avec l'assiette retirées (migration 4).
 - Assiette : catégorie « Sauces » (10 sauces en pixel art + les tiennes), à cocher ; ne change ni l'équilibre ni l'XP. Gardée dans les recettes.
 - Quêtes d'aujourd'hui : cartes plus grandes, plus de titres coupés.
 - Centrage des boutons et tuiles, lignes de séparation uniques, outil `centrage.py`.

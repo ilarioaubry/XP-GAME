@@ -386,3 +386,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast){top:calc(env(
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast{transform:translate(-50%,-180%)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast.show{transform:translate(-50%,0)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,62px)!important}
+/* assiette : objectif de la quête reliée (27/10) — icône + texte, l'objectif en gras, la quête en petite info dessous ; coche or quand c'est bon */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq{display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;align-items:center!important;gap:12px!important;margin:0 0 12px!important;padding:12px!important;background:rgba(255,255,255,.04)!important;border:2px solid rgba(255,255,255,.17)!important;text-align:left!important;font-size:13px!important;color:rgba(255,247,230,.75)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok{border-color:#ffd94a!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:first-child{display:grid!important;place-items:center!important;color:rgba(255,247,230,.6)}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok>span:first-child{color:#ffd94a}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:last-child{display:grid!important;gap:2px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq b{color:#fff7e6!important;font-size:13px!important;font-weight:700!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq small{display:block!important;font-size:11px!important;color:rgba(255,247,230,.6)!important}

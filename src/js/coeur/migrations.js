@@ -15,6 +15,8 @@ const MIG=[
   G=>{if(G.voc1)return false;G.voc1=1;if(Array.isArray(G.rt))G.rt=G.rt.map(t=>t==="Dompteur de boss"?"Maître des projets":t);if(S.title==="Dompteur de boss")S.title="Maître des projets";return false},
   // 3 — ancienne clé de l'assiette (boss d'assiette retiré)
   G=>{if(!G.plb)return false;delete G.plb;return false},
+  // 4 — 27/10 : les bonnes actions qui faisaient doublon avec l'assiette sont retirées de la liste (l'historique et l'XP restent)
+  G=>{if(!Array.isArray(S.actions))return false;const n=S.actions.length;S.actions=S.actions.filter(a=>!PLATE_DUP.has(a.name));return S.actions.length!==n},
 ];
 function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.length)return;// sauvegarde à jour, ou plus récente que l'appli : on ne touche à rien
   let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}

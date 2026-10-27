@@ -794,3 +794,5 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plfoods .plf{align-content:start!important;justify-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf{border:2px solid transparent!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf.on{border-color:#ffd94a!important;background:rgba(255,217,74,.1)!important}
+/* bouton d'une quête : prend la largeur de son texte (« Remplir l'assiette ») */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr .fqgo{width:auto!important;min-width:84px!important;padding:0 16px!important;white-space:nowrap!important;flex:none!important}

@@ -159,6 +159,10 @@ Lisibilité :
 - [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
 - [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
 
+## Fait à la demande (hors phases)
+
+- [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
+
 ## Corrigé en passant
 
 - [x] (26/10/2026) La famille était remise à la liste d'origine à chaque chargement (`load()` ignorait `family`) : un proche ajouté à la famille disparaissait. Corrigé, trouvé par les tests de parcours

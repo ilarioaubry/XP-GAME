@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version cb4056e</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 8f5e340</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4707,7 +4707,6 @@ const FAM=[
   {id:"ecrire",dom:"soi",cat:"soi",l:"Écrire",xp:8,o:["Journal","Gratitude","Pensées"],fr:[4,10]},
   {id:"dehors",dom:"soi",cat:"soi",l:"Prendre l'air",xp:8,o:["Balade","Soleil","Nature","Nouveau lieu"],lz:"explo",fr:[3,7],fro:{"Nouveau lieu":[14,30]}},
   {id:"nuit",dom:"soi",cat:"soi",l:"Bien dormir",xp:10,o:["Coucher avant minuit","Pas d'écran au lit"],solo:1},
-  {id:"manger",dom:"nourriture",cat:"nourriture",l:"Bien manger",xp:10,o:["Repas équilibré","Repas végétarien","Fruit ou légume","Petit-déj complet"],fr:[2,4]},
   {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
   {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans…",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
@@ -5106,7 +5105,9 @@ const FAMILY=["Papa","Maman","Adri","Ingrid","Tiph","Raph","Gaby","Emy"];
 const MUSIC=["dans le style : shatta","dans le style : JUL","dans le style : vidéo club","dans le style : indie","dans le style : trap","dans le style : Lady Gaga","avec Octave"];
 const GROUPS={friends:{list:"friends",done:"friendDone",verb:"Prendre des nouvelles de ",title:"Mes amis",ph:"Ajouter un ami",cat:"social"},music:{list:"music",done:"musicDone",verb:"Faire un son ",title:"Sons",cat:"perso",hidden:true},family:{list:"family",done:"familyDone",verb:"Appeler ",title:"Ma famille",ph:"Ajouter un proche",cat:"famille",hidden:true}};
 const HYGIENE=[{id:"h0",name:"Se brosser les dents",cat:"maison",xp:5}];
-const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST];
+// actions déjà couvertes par l'assiette (27/10) : plus proposées
+const PLATE_DUP=new Set(["Petit-déjeuner complet","Repas équilibré","Fruit ou légume en plus","Repas végétarien","Cuisiner un vrai repas"]);
+const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name));
 
 // Niveau n -> n+1 coûte 50 + 50n XP (100, 150, 200…)
 const needFor=l=>50+50*l;
@@ -10268,7 +10269,7 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
 function fqList(){return feedPick().L}
 function feedIds(){try{const P=feedPick(),L=P.L,F=P.F,now=Date.now(),hd=id=>(F.sk||[]).includes(id)||(F.lt&&F.lt[id]>now),sp=new Set(L.filter(x=>x.k==="sp"&&!x.done).map(x=>x.q.id)),mq=new Set(L.filter(x=>x.k==="mq"&&!x.done).map(x=>x.q[0]));(S.specials||[]).forEach(q=>{if(hd("sp:"+q.id))sp.add(q.id)});mqActive().forEach(q=>{if(hd("mq:"+q[0]))mq.add(q[0])});return{sp,mq}}catch(e){return{sp:new Set(),mq:new Set()}}}
 // feedDo : version complète (ex-réécriture de assiette.js), feedDoBase = le cœur d'origine
-function feedDo(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=dayH()<16?"dej":"diner";plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return feedDoBase.apply(this,arguments)}
+function feedDo(x,go,ev){try{const dn=(S.g.fq&&S.g.fq.done)||[];if(x&&x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&plRule(x.t)){const k=(typeof plTarget==="function"&&plTarget())||(dayH()<16?"dej":"diner");plateOpen(k==="dej"?"matin":"soir",k,go,{q:x});return}}catch(e){}return feedDoBase.apply(this,arguments)}
 function feedDoBase(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later){toast(`Cette quête s'ouvre à partir de ${mqUntil(x.from)}`);return}
   if((F.done||[]).includes(x.id)||(go&&go.dataset.busy))return;if(go&&x.k!=="tik"){go.dataset.busy="1";go.disabled=true}
   const mark=()=>{F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:x.xp,k:x.k}];F.dnd=tk;fqWAdd(x.key,.2);if(F.lt)delete F.lt[x.id]};
@@ -10299,19 +10300,19 @@ function feedNoBase(x,how){const G=S.g,F=G.fq,now=Date.now();
     save();render();toast("Compris : je ne te la proposerai plus");sfx("blip")}}
 let fqMenu="";
 function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitOf();
-  const P=feedPick(),L=P.L,F=P.F,left=L.filter(x=>!x.done).length,c=fqCtx(),e=enOf();
+  const P=feedPick(),L=P.L.filter(x=>x.done||typeof plGone!=="function"||!plGone(x)),F=P.F,left=L.filter(x=>!x.done).length,c=fqCtx(),e=enOf();
   const ctxL=[e?["","batterie faible","batterie moyenne","batterie pleine"][e]:"",c.wx?`${WX_L[c.wx.k]||""} · ${c.wx.tc}°`:"",c.md?["","journée dure","journée bof","journée moyenne","bonne journée","super journée"][c.md]:"",c.tired?"nuit courte":"",typeof intNow==="function"&&intNow()?"intention : "+intNow():""].filter(Boolean).join(" · ");
   const nNo=Object.keys(fqNo()).length;
   box.innerHTML=`<div class="head"><h2>Aujourd'hui<span class="count">${L.length-left}/${L.length}</span></h2><button type="button" class="btn edbtn fqsit" aria-label="Ma situation" title="Ma situation">${ICO("edit",16)}</button></div>${ctxL?`<p class="fqctx"></p>`:""}
     ${L.length?`<div class="fql">${L.map((x,i)=>{const C=CATS[x.cat]||{},d=!!x.done,m=!d&&fqMenu===x.id;return`<div class="fqr k-${x.k}${d?" done":""}${x.later&&!d?" later":""}${m?" menu":""}" style="--zc:${C.c||"var(--gold)"}" data-i="${i}"><span class="fqt"><small class="fqw">${x.k==="ai"?`<em>Claude</em> · `:""}<span></span></small><b></b>${!d&&freeAlt(x.t)?`<small class="fqfree">Version gratuite : ${esc(freeAlt(x.t))}</small>`:""}${d&&x.k!=="tik"?`<button type="button" class="lnk fqmem">${memOf("q:"+dayKey(Date.now())+":"+x.id)?"Souvenir gardé · voir":"+ Un souvenir"}</button>`:""}</span>
-      <span class="fqa">${d?`<span class="fqok">${x.part?"½":ICO("check",18)}</span>`:`${(()=>{const cn=!x.later&&cntOf(x.t),dm0=!x.later&&!cn&&durOf(x.t),dm=dm0>=10?dm0:0;if(cn){const k=((F.cnt||{})[x.id])|0;return`<span class="ui-compteur fqcn">${k}/${cn.n}</span><button type="button" class="btn primary fqgo fqcnt" data-cnt="1">+${Math.min(cn.st,cn.n-k)}</button>`}return`<button type="button" class="btn primary fqgo"${dm?` data-tm="fq-${esc(x.id)}" data-tmn="${esc(x.t)}"`:""}>${x.later?"À partir de "+mqUntil(x.from).replace(/^(\d+)h$/,"$1 h"):dm?`${dm>=60?(dm/60).toLocaleString("fr-FR")+" h":dm+" min"}`:"Fait"} <small>+${x.xp}</small></button>`})()}<button type="button" class="fqrr" aria-label="Pas maintenant" aria-expanded="${m}" title="Pas maintenant"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg></button>`}</span>
+      <span class="fqa">${d?`<span class="fqok">${x.part?"½":ICO("check",18)}</span>`:`${(()=>{const cn=!x.later&&cntOf(x.t),dm0=!x.later&&!cn&&durOf(x.t),dm=dm0>=10?dm0:0;if(cn){const k=((F.cnt||{})[x.id])|0;return`<span class="ui-compteur fqcn">${k}/${cn.n}</span><button type="button" class="btn primary fqgo fqcnt" data-cnt="1">+${Math.min(cn.st,cn.n-k)}</button>`}return`<button type="button" class="btn primary fqgo"${dm?` data-tm="fq-${esc(x.id)}" data-tmn="${esc(x.t)}"`:""}>${x.later?"À partir de "+mqUntil(x.from).replace(/^(\d+)h$/,"$1 h"):dm?`${dm>=60?(dm/60).toLocaleString("fr-FR")+" h":dm+" min"}`:typeof plLinked==="function"&&plLinked(x)?"Remplir l'assiette":"Fait"} <small>+${x.xp}</small></button>`})()}<button type="button" class="fqrr" aria-label="Pas maintenant" aria-expanded="${m}" title="Pas maintenant"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg></button>`}</span>
       ${m?`<span class="fqno">${x.film?`<button type="button" class="btn" data-no="seen">Déjà vu<small>un autre film</small></button>`:""}${["fq","ai","mq","ev","cf"].includes(x.k)?`<button type="button" class="btn" data-no="part">En partie<small>moitié des XP</small></button>`:""}<button type="button" class="btn" data-no="later">Plus tard<small>revient ce soir</small></button><button type="button" class="btn" data-no="today">Pas aujourd'hui<small>un autre jour</small></button>${x.gift||x.nonever?"":`<button type="button" class="btn" data-no="never">Pas pour moi<small>ne revient plus</small></button>`}</span>`:""}</div>`}).join("")}</div>`:`<p class="fqempty">C'est tout pour l'instant.</p>`}
     ${s?"":`<button type="button" class="wkcta fqcta">${ICO("spark",18)}<span><b>Dis-m'en un peu plus sur toi</b><small>Pour des quêtes tirées de ta vie.</small></span></button>`}
     
     ${s&&s.note&&!arcCur()&&!evmOn()?`<button type="button" class="wkcta arccta"${arcBusy?" disabled":""}>${ICO("spark",18)}<span><b>${arcBusy?"Découpage…":"Faire de « "+esc(s.note.slice(0,40))+" » un arc"}</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
     ${nNo?`<button type="button" class="lnk fqrst">${nNo} quête${nNo>1?"s":""} écartée${nNo>1?"s":""} · les réautoriser</button>`:""}`;
   {const cx=box.querySelector(".fqctx");if(cx)cx.textContent=ctxL}
-  box.querySelectorAll(".fqr").forEach(r=>{const x=L[+r.dataset.i];r.querySelector(".fqt b").textContent=x.t;r.querySelector(".fqw span").textContent=x.why||"";
+  box.querySelectorAll(".fqr").forEach(r=>{const x=L[+r.dataset.i];r.querySelector(".fqt b").textContent=x.t;r.querySelector(".fqw span").textContent=(x.why||"")+(!x.done&&typeof plLinked==="function"&&plLinked(x)&&plTarget()?(x.why?" · ":"")+"pour le "+(plTarget()==="dej"?"déjeuner":"dîner"):"");
     const go=r.querySelector(".fqgo");if(go)go.onclick=ev=>{fqMenu="";if(go.dataset.cnt){const cn=cntOf(x.t);if(!F.cnt||typeof F.cnt!=="object")F.cnt={};const k=Math.min(cn.n,((F.cnt[x.id])|0)+cn.st);F.cnt[x.id]=k;sfx("blip");if(k>=cn.n){delete F.cnt[x.id];feedDo(x,go,ev)}else{save();renderFq()}return}feedDo(x,go,ev)};
     {const mm=r.querySelector(".fqmem");if(mm)mm.onclick=()=>memOpen({id:"q:"+dayKey(Date.now())+":"+x.id,q:x.t})}
     const rr=r.querySelector(".fqrr");if(rr)rr.onclick=()=>{fqMenu=fqMenu===x.id?"":x.id;renderFq()};
@@ -14804,6 +14805,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plfoods .plf{align-content:start!important;justify-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf{border:2px solid transparent!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plsauce .plf.on{border-color:#ffd94a!important;background:rgba(255,217,74,.1)!important}
+/* bouton d'une quête : prend la largeur de son texte (« Remplir l'assiette ») */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr .fqgo{width:auto!important;min-width:84px!important;padding:0 16px!important;white-space:nowrap!important;flex:none!important}
 </style>
 <style id="z-proches">/* — depuis principal-01.css — */
 .q{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:grid;gap:4px;min-height:76px;transition:transform .12s,border-color .12s;overflow:hidden}
@@ -16363,6 +16366,14 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast){top:calc(env(
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast{transform:translate(-50%,-180%)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast.show{transform:translate(-50%,0)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,62px)!important}
+/* assiette : objectif de la quête reliée (27/10) — icône + texte, l'objectif en gras, la quête en petite info dessous ; coche or quand c'est bon */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq{display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;align-items:center!important;gap:12px!important;margin:0 0 12px!important;padding:12px!important;background:rgba(255,255,255,.04)!important;border:2px solid rgba(255,255,255,.17)!important;text-align:left!important;font-size:13px!important;color:rgba(255,247,230,.75)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok{border-color:#ffd94a!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:first-child{display:grid!important;place-items:center!important;color:rgba(255,247,230,.6)}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok>span:first-child{color:#ffd94a}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:last-child{display:grid!important;gap:2px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq b{color:#fff7e6!important;font-size:13px!important;font-weight:700!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq small{display:block!important;font-size:11px!important;color:rgba(255,247,230,.6)!important}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, frise, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
@@ -17112,6 +17123,7 @@ const PL_SIDES=[["f","Féculents","#ffd94a","#f0a020",[["pates","Pâtes"],["riz"
   ["p","Protéines","#ff9ec0","#e8473a",[["viande","Poulet"],["steak","Viande"],["oeuf","Œuf"],["poisson","Poisson"],["jambon","Jambon"],["thon","Thon"],["crevette","Crevettes"],["tofu","Tofu"],["lentilles","Lentilles"],["poischiche","Pois chiches"]]],
   ["l","Légumes","#a8eb8a","#4fb84a",[["salade","Salade"],["carotte","Carotte"],["tomate","Tomate"],["legume","Brocoli"],["courgette","Courgette"],["poivron","Poivron"],["haricots","Haricots verts"],["champignon","Champignons"],["aubergine","Aubergine"]]]];
 const PL_X=[["yaourt","Yaourt","yaourt"],["fromage","Fromage","fromage"],["eau","Verre d'eau","verre"]];
+const PL_C=[["maison","Cuisiné maison","casserole"],["nouv","Nouvelle recette","cake"]];
 const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite, 90° = bas)
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
@@ -17147,7 +17159,16 @@ const plRec=()=>Array.isArray(S.g.plr)?S.g.plr:(S.g.plr=PL_REC0.map(r=>({...r}))
 // ---- quêtes nourriture que l'assiette peut vérifier
 const plNorm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim();
 const PL_MEAT=/viande|poulet|b(oe|œ)uf|porc|jambon|lardon|thon|poisson|saumon|crevette|steak|dinde|canard|merguez|saucisse|chorizo|bacon/i;
-function plRule(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m,s)).length,names=m=>["f","p","l"].flatMap(s=>((m&&m[s])||[]).map(id=>plFood(id).n));
+// Quêtes nourriture reliées à l'assiette (27/10) : le contenu (légume, équilibré…) et la cuisine (cocher « Cuisiné maison » ou « Nouvelle recette ») se valident en remplissant l'assiette
+function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
+  if(!nv&&!ck)return b;const box=nv?"nouv":"maison",lab=nv?"« Nouvelle recette »":"« Cuisiné maison »";
+  return{ok:m=>!!((m&&m.x)||{})[box]&&(!b||b.ok(m)),need:(b?b.need+", et ":"")+"coche "+lab+" à l'étape suivante",cook:box}}
+// le prochain repas à remplir aujourd'hui (déjeuner, puis dîner) ; null si les deux sont notés
+function plTarget(){const h=dayH();if(!mealState("dej","matin")&&h<16)return"dej";if(!mealState("diner","soir"))return"diner";return null}
+// une quête d'assiette n'est plus proposée quand il ne reste plus de repas à remplir
+function plLinked(x){return!!(x&&x.cat==="nourriture"&&plRule(x.t))}
+function plGone(x){return plLinked(x)&&!plTarget()}
+function plRuleBase(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m,s)).length,names=m=>["f","p","l"].flatMap(s=>((m&&m[s])||[]).map(id=>plFood(id).n));
   if(/équilibr/i.test(t))return{ok:m=>ns(m)===3,need:"les trois côtés"};
   if(/végé/i.test(t))return{ok:m=>ns(m)>0&&!names(m).some(n=>PL_MEAT.test(n)),need:"une assiette sans viande ni poisson"};
   if(/fruit ou légume/i.test(t))return{ok:m=>plN(m,"l")>=2,need:"au moins deux légumes"};
@@ -17169,7 +17190,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
     o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">${ICO("close",18)}</button></div>`+
-    (step===1?`${q?`<p class="plq">Quête : <b>${esc(q.t)}</b></p>`:""}
+    (step===1?`${q?(()=>{const r=plRule(q.t),ok=r&&r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r?r.need:q.t)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}
       <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?`<i>${ICO("close",10)}</i>`:""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
       ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">${ICO("close",14)}</button></div>`:""}
       <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
@@ -17180,7 +17201,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
         <div class="plside plsauce" style="--pc:#c8a060"><h3><i></i>Sauces${m.s.length?` <small>${m.s.length}</small>`:""}</h3><div class="plfoods">${plFoods("s",tri,u).map(f=>{const h=plHid().includes(f.id),on=m.s.includes(f.id);return`<button type="button" class="plf${h?" hid":""}${on&&!tri?" on":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-sauce="${f.id}" aria-pressed="${on}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="s" aria-expanded="${add==="s"}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
         ${add==="s"?`<div class="plnew"><input type="text" maxlength="30" placeholder="Nom de la sauce" aria-label="Nom de la sauce" value="${esc(addName)}"><div class="plics" role="group" aria-label="Choisis une icône">${PL_SAUCE.map(([ic])=>`<button type="button" data-ic="${ic}" class="${ic===addIc?"on":""}" aria-label="Icône ${ic}" aria-pressed="${ic===addIc}">${rkSvg(ic)}</button>`).join("")}</div><div class="plnewb"><button type="button" class="btn plnewno">Annuler</button><button type="button" class="btn primary plnewok">Ajouter</button></div></div>`:""}</div></div>
       <div class="plbar">${edit?`<button type="button" class="btn plcl2">Annuler</button>`:`<button type="button" class="btn plskip">Sauté</button>`}<button type="button" class="btn primary plnext">Suite</button></div>`
-    :`<div class="plxs">${PL_X.map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
+    :`${q&&(plRule(q.t)||{}).cook?(()=>{const r=plRule(q.t),ok=r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r.need)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}<div class="plxs">${[...PL_X,...PL_C].map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
       ${plWaterRit()?`<p class="plhint">Le verre d'eau compte aussi pour ton rituel « ${esc(plWaterRit().name)} ».</p>`:""}
       <div class="plbar"><button type="button" class="btn plback">Retour</button><button type="button" class="btn primary plok">${edit?"Enregistrer":"Valider"}</button></div>`)+`</div>`;
     const $o=sel=>o.querySelector(sel),on=(sel,f)=>o.querySelectorAll(sel).forEach(b=>b.onclick=f.bind(null,b));
@@ -17281,6 +17302,8 @@ const MIG=[
   G=>{if(G.voc1)return false;G.voc1=1;if(Array.isArray(G.rt))G.rt=G.rt.map(t=>t==="Dompteur de boss"?"Maître des projets":t);if(S.title==="Dompteur de boss")S.title="Maître des projets";return false},
   // 3 — ancienne clé de l'assiette (boss d'assiette retiré)
   G=>{if(!G.plb)return false;delete G.plb;return false},
+  // 4 — 27/10 : les bonnes actions qui faisaient doublon avec l'assiette sont retirées de la liste (l'historique et l'XP restent)
+  G=>{if(!Array.isArray(S.actions))return false;const n=S.actions.length;S.actions=S.actions.filter(a=>!PLATE_DUP.has(a.name));return S.actions.length!==n},
 ];
 function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.length)return;// sauvegarde à jour, ou plus récente que l'appli : on ne touche à rien
   let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}

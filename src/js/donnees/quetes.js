@@ -19,7 +19,6 @@ const FAM=[
   {id:"ecrire",dom:"soi",cat:"soi",l:"Écrire",xp:8,o:["Journal","Gratitude","Pensées"],fr:[4,10]},
   {id:"dehors",dom:"soi",cat:"soi",l:"Prendre l'air",xp:8,o:["Balade","Soleil","Nature","Nouveau lieu"],lz:"explo",fr:[3,7],fro:{"Nouveau lieu":[14,30]}},
   {id:"nuit",dom:"soi",cat:"soi",l:"Bien dormir",xp:10,o:["Coucher avant minuit","Pas d'écran au lit"],solo:1},
-  {id:"manger",dom:"nourriture",cat:"nourriture",l:"Bien manger",xp:10,o:["Repas équilibré","Repas végétarien","Fruit ou légume","Petit-déj complet"],fr:[2,4]},
   {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
   {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans…",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},

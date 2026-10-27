@@ -30,7 +30,9 @@ const FAMILY=["Papa","Maman","Adri","Ingrid","Tiph","Raph","Gaby","Emy"];
 const MUSIC=["dans le style : shatta","dans le style : JUL","dans le style : vidéo club","dans le style : indie","dans le style : trap","dans le style : Lady Gaga","avec Octave"];
 const GROUPS={friends:{list:"friends",done:"friendDone",verb:"Prendre des nouvelles de ",title:"Mes amis",ph:"Ajouter un ami",cat:"social"},music:{list:"music",done:"musicDone",verb:"Faire un son ",title:"Sons",cat:"perso",hidden:true},family:{list:"family",done:"familyDone",verb:"Appeler ",title:"Ma famille",ph:"Ajouter un proche",cat:"famille",hidden:true}};
 const HYGIENE=[{id:"h0",name:"Se brosser les dents",cat:"maison",xp:5}];
-const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST];
+// actions déjà couvertes par l'assiette (27/10) : plus proposées
+const PLATE_DUP=new Set(["Petit-déjeuner complet","Repas équilibré","Fruit ou légume en plus","Repas végétarien","Cuisiner un vrai repas"]);
+const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name));
 
 // Niveau n -> n+1 coûte 50 + 50n XP (100, 150, 200…)
 const needFor=l=>50+50*l;

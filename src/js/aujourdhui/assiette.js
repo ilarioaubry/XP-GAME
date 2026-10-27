@@ -34,6 +34,7 @@ const PL_SIDES=[["f","Féculents","#ffd94a","#f0a020",[["pates","Pâtes"],["riz"
   ["p","Protéines","#ff9ec0","#e8473a",[["viande","Poulet"],["steak","Viande"],["oeuf","Œuf"],["poisson","Poisson"],["jambon","Jambon"],["thon","Thon"],["crevette","Crevettes"],["tofu","Tofu"],["lentilles","Lentilles"],["poischiche","Pois chiches"]]],
   ["l","Légumes","#a8eb8a","#4fb84a",[["salade","Salade"],["carotte","Carotte"],["tomate","Tomate"],["legume","Brocoli"],["courgette","Courgette"],["poivron","Poivron"],["haricots","Haricots verts"],["champignon","Champignons"],["aubergine","Aubergine"]]]];
 const PL_X=[["yaourt","Yaourt","yaourt"],["fromage","Fromage","fromage"],["eau","Verre d'eau","verre"]];
+const PL_C=[["maison","Cuisiné maison","casserole"],["nouv","Nouvelle recette","cake"]];
 const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite, 90° = bas)
 const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
@@ -69,7 +70,16 @@ const plRec=()=>Array.isArray(S.g.plr)?S.g.plr:(S.g.plr=PL_REC0.map(r=>({...r}))
 // ---- quêtes nourriture que l'assiette peut vérifier
 const plNorm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim();
 const PL_MEAT=/viande|poulet|b(oe|œ)uf|porc|jambon|lardon|thon|poisson|saumon|crevette|steak|dinde|canard|merguez|saucisse|chorizo|bacon/i;
-function plRule(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m,s)).length,names=m=>["f","p","l"].flatMap(s=>((m&&m[s])||[]).map(id=>plFood(id).n));
+// Quêtes nourriture reliées à l'assiette (27/10) : le contenu (légume, équilibré…) et la cuisine (cocher « Cuisiné maison » ou « Nouvelle recette ») se valident en remplissant l'assiette
+function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
+  if(!nv&&!ck)return b;const box=nv?"nouv":"maison",lab=nv?"« Nouvelle recette »":"« Cuisiné maison »";
+  return{ok:m=>!!((m&&m.x)||{})[box]&&(!b||b.ok(m)),need:(b?b.need+", et ":"")+"coche "+lab+" à l'étape suivante",cook:box}}
+// le prochain repas à remplir aujourd'hui (déjeuner, puis dîner) ; null si les deux sont notés
+function plTarget(){const h=dayH();if(!mealState("dej","matin")&&h<16)return"dej";if(!mealState("diner","soir"))return"diner";return null}
+// une quête d'assiette n'est plus proposée quand il ne reste plus de repas à remplir
+function plLinked(x){return!!(x&&x.cat==="nourriture"&&plRule(x.t))}
+function plGone(x){return plLinked(x)&&!plTarget()}
+function plRuleBase(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m,s)).length,names=m=>["f","p","l"].flatMap(s=>((m&&m[s])||[]).map(id=>plFood(id).n));
   if(/équilibr/i.test(t))return{ok:m=>ns(m)===3,need:"les trois côtés"};
   if(/végé/i.test(t))return{ok:m=>ns(m)>0&&!names(m).some(n=>PL_MEAT.test(n)),need:"une assiette sans viande ni poisson"};
   if(/fruit ou légume/i.test(t))return{ok:m=>plN(m,"l")>=2,need:"au moins deux légumes"};
@@ -91,7 +101,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
   const recs=()=>plRec().slice().sort((a,b)=>(b.u||0)-(a.u||0));
   const draw=()=>{const L=lv(),nd=need.filter(s=>!L[s]),bx=plXp(L),empty=!L.f&&!L.p&&!L.l;
     o.innerHTML=`<div class="plin"><div class="plhd"><h2>${step===1?M[1]+(edit?" <small>· corriger</small>":""):"Et avec ça ?"}</h2>${step===1?`<button type="button" class="btn pltri${tri?" on":""}" aria-pressed="${tri}">${tri?"Terminé":"Trier"}</button>`:""}<button type="button" class="plcl" aria-label="Fermer">${ICO("close",18)}</button></div>`+
-    (step===1?`${q?`<p class="plq">Quête : <b>${esc(q.t)}</b></p>`:""}
+    (step===1?`${q?(()=>{const r=plRule(q.t),ok=r&&r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r?r.need:q.t)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}
       <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?`<i>${ICO("close",10)}</i>`:""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
       ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">${ICO("close",14)}</button></div>`:""}
       <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
@@ -102,7 +112,7 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
         <div class="plside plsauce" style="--pc:#c8a060"><h3><i></i>Sauces${m.s.length?` <small>${m.s.length}</small>`:""}</h3><div class="plfoods">${plFoods("s",tri,u).map(f=>{const h=plHid().includes(f.id),on=m.s.includes(f.id);return`<button type="button" class="plf${h?" hid":""}${on&&!tri?" on":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-sauce="${f.id}" aria-pressed="${on}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="s" aria-expanded="${add==="s"}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
         ${add==="s"?`<div class="plnew"><input type="text" maxlength="30" placeholder="Nom de la sauce" aria-label="Nom de la sauce" value="${esc(addName)}"><div class="plics" role="group" aria-label="Choisis une icône">${PL_SAUCE.map(([ic])=>`<button type="button" data-ic="${ic}" class="${ic===addIc?"on":""}" aria-label="Icône ${ic}" aria-pressed="${ic===addIc}">${rkSvg(ic)}</button>`).join("")}</div><div class="plnewb"><button type="button" class="btn plnewno">Annuler</button><button type="button" class="btn primary plnewok">Ajouter</button></div></div>`:""}</div></div>
       <div class="plbar">${edit?`<button type="button" class="btn plcl2">Annuler</button>`:`<button type="button" class="btn plskip">Sauté</button>`}<button type="button" class="btn primary plnext">Suite</button></div>`
-    :`<div class="plxs">${PL_X.map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
+    :`${q&&(plRule(q.t)||{}).cook?(()=>{const r=plRule(q.t),ok=r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r.need)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}<div class="plxs">${[...PL_X,...PL_C].map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
       ${plWaterRit()?`<p class="plhint">Le verre d'eau compte aussi pour ton rituel « ${esc(plWaterRit().name)} ».</p>`:""}
       <div class="plbar"><button type="button" class="btn plback">Retour</button><button type="button" class="btn primary plok">${edit?"Enregistrer":"Valider"}</button></div>`)+`</div>`;
     const $o=sel=>o.querySelector(sel),on=(sel,f)=>o.querySelectorAll(sel).forEach(b=>b.onclick=f.bind(null,b));
