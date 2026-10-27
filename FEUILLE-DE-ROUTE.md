@@ -85,7 +85,7 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [x] 4.5 (26/10/2026) `js/donnees/` : grilles d'icônes (RKI, PXUI, PXSP, PXI, BPX_M), équipement (GEAR, AV_OPT, AV_MAIN), quêtes (FAM, IDQ, IDI, FIC, QC_TPL, BOSS_CAT, DQ_K), contenu (IDS, FILMS, RIT_G, BOSS2). Restent dans le code, car mêlés à des fonctions : icônes des badges (IC), liste des badges (conditions), quêtes pour toi (FQ), aliments de l'assiette
 - [x] 4.6 (26/10/2026) Moteur Pixel Clair découpé en 6 fichiers, badges en 3, Chez moi en 3 ; 16 déclarations mortes retirées. Plus gros fichier restant : `aujourdhui-finitions.js` (78 Ko), qui fondra avec la refonte
 - [ ] 4.7 **(décision)** Un seul point d'état : déjà le cas (`load()` / `save()`, seule clé `carnet-quetes`) ✔. Modules JavaScript : déconseillé pour l'instant — l'appli est un seul fichier HTML, tout repose sur la portée globale (des centaines de noms à exporter / importer) ; gros risque pour un gain invisible. Proposition : abandonner ou reporter après la refonte
-- [ ] 4.8 **(question)** Les projets prennent l'apparence de créatures (`BOSS_CAT` : golem, slime…, et `BOSS2`) : héritage des anciens boss. Garder, ou remplacer par une icône d'objet ?
+- [x] 4.8 (27/10/2026, réponse : icône d'objet, voir Q.14) Les projets prennent l'apparence de créatures (`BOSS_CAT` : golem, slime…, et `BOSS2`) : héritage des anciens boss. Garder, ou remplacer par une icône d'objet ?
 
 ## Phase 5 — Standards précisés, uniformité, lisibilité
 
@@ -158,6 +158,26 @@ Lisibilité :
 - [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan (correction du 25/10 : des onglets Semaine / Mois / Année existent déjà, à revoir plutôt qu'à créer)
 - [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
 - [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
+
+## Refonte des quêtes et bonnes actions (décisions du QCM, 27/10/2026)
+
+Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
+
+- [ ] Q.1 Quêtes pour toi : **3 à 5 par jour, à la même place**, tirées de **mes priorités** (fiche : famille, chez moi, manger). Elles ne lui parlaient pas : les rendre **concrètes et courtes** (tâche précise, 5–15 min) ou **plaisir / envies** (ciné, sorties, jeux, musique)
+- [ ] Q.2 Idées sortie : **inspiration le week-end**, sans carte à valider
+- [ ] Q.3 Quêtes spéciales : carrousel gardé tel quel
+- [ ] Q.4 Bonnes actions : **Ilario choisit la liste** (présentée pour qu'il coche)
+- [ ] Q.5 Tri : **1 par jour au plus**
+- [ ] Q.6 XP : **30 max**, sauf grands exploits (livre fini, série finie, sortie loin) jusqu'à 50
+- [ ] Q.7 Catégories : marche = **Soi** ; lecture = **Soi**, album = **Talent** ; sorties = **Soi**, **Ami si « Avec qui ? »** rempli
+- [ ] Q.8 Quêtes qui durent (journée sans soda, 1 h sans réseaux, escaliers) : **engagement en début de journée, validation en fin de journée**
+- [ ] Q.9 Menu « … » simplifié : **Plus tard + Pas pour moi**
+- [ ] Q.10 Quêtes travail : gardées
+- [ ] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
+- [ ] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit
+- [ ] Q.13 Titres vagues ou longs : **Ilario valide chaque titre** (avant / après)
+- [ ] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8)
+- [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout)
 
 ## Fait à la demande (hors phases)
 
