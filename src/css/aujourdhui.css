@@ -784,3 +784,9 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtic svg{width:40px!important;height:40px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .rtile .rtn{font-size:13px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #dqBox .dqmorn.dqmbar .dqmh :is(span,em){margin:0!important;flex:none!important;width:auto!important}
+/* Quêtes d'aujourd'hui (27/10) : cartes plus grandes — le texte prend toute la largeur, les boutons passent dessous à droite ; icône 48 px en haut à gauche */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"t" "a"!important;row-gap:8px!important;padding:12px 12px 12px 72px!important;align-items:start!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.fqt{grid-area:t!important;min-width:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.fqa{grid-area:a!important;justify-self:end!important;align-self:end!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.uiq{left:12px!important;top:12px!important;transform:none!important;width:48px!important;height:48px!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr>.uiq svg{width:48px!important;height:48px!important}
