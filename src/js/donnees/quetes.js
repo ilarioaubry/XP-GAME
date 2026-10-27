@@ -21,7 +21,7 @@ const FAM=[
   {id:"nuit",dom:"soi",cat:"soi",l:"Bien dormir",xp:10,o:["Coucher avant minuit","Pas d'écran au lit"],solo:1},
   {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
   {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
-  {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans…",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
+  {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
   {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},

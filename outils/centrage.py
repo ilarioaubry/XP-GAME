@@ -15,7 +15,7 @@ const COURT='button,[role=button],[role=tab],.rtile,.mlp,.rtmgo,.pbs,label.tg,.u
 const vis=e=>{const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden'&&getComputedStyle(e).opacity!=='0'};
 const nm=e=>(e.classList.length||e.id?'':(e.parentElement.className?'.'+String(e.parentElement.className).split(' ')[0]+'>':''))+e.tagName.toLowerCase()+(e.id?'#'+e.id:'')+[...e.classList].slice(0,2).map(c=>'.'+c).join('');
 const out=[];
-document.querySelectorAll(COURT).forEach(e=>{if(!vis(e)||e.closest('svg')||/^H[1-6]$/.test(e.tagName)||e.matches('.hmslot,.rmt>button,.evch,.pladd,.plfoods .plf'))return;   // hors règle : titres repliables et cartes titre + texte (alignés à gauche), étiquettes de la maison, curseur du rappel, barre d'XP ; « Ajouter » de l'assiette aligné sur ses voisins (en rangée, l'alignement prime)
+document.querySelectorAll(COURT).forEach(e=>{if(!vis(e)||e.closest('svg')||/^H[1-6]$/.test(e.tagName)||e.matches('.hmslot,.rmt>button,.evch,.pladd,.plfoods .plf,.afrec .afo'))return;   // hors règle : tuiles « Récents » des Actions (icône + nom sur 2 lignes, alignées à gauche comme les familles), titres repliables et cartes titre + texte (alignés à gauche), étiquettes de la maison, curseur du rappel, barre d'XP ; « Ajouter » de l'assiette aligné sur ses voisins (en rangée, l'alignement prime)
   const t=(e.textContent||'').trim().replace(/\s+/g,' ');if(t.length>24)return;           // carte avec titre + texte : alignée à gauche, pas concernée
   if(e.querySelector(COURT))return;                                                        // conteneur d'autres boutons
   const r=e.getBoundingClientRect(),c=getComputedStyle(e);if(r.width<20||r.height<20)return;

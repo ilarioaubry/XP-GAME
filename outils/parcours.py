@@ -118,6 +118,25 @@ with sync_playwright() as p:
     check("créer une action : recherche sous le nom", pg.evaluate("!!document.querySelector('.qwname')&&!!document.querySelector('.qwfind')"))
     pg.evaluate("document.querySelectorAll('.qcw,.qcsh,.bpop').forEach(e=>e.remove())")
 
+    # 7a'. Panneau Actions : durée puis « Avec qui ? » (seulement pour les proches), XP au barème, Cuisiner → assiette
+    TAP = 't=>{const b=[...document.querySelectorAll("#plusSheet button")].filter(b=>b.offsetParent).find(b=>b.textContent.trim().replace(/\\s+/g," ").includes(t));if(b)b.click();return !!b}'
+    def tap(t): r = pg.evaluate("(" + TAP + ")(" + repr(t) + ")"); pg.wait_for_timeout(150); return r
+    def plus(on):
+        if pg.evaluate("document.documentElement.classList.contains('plusopen')") != on: pg.evaluate("showView('q');document.querySelector('.plusb').click()"); pg.wait_for_timeout(300)
+    plus(True)
+    check("Actions : accueil avec des actions prêtes", pg.evaluate("document.querySelectorAll('#actFind .afrec .afo').length>=4"))
+    tap("Maison"); tap("Ranger"); tap("Chambre")
+    check("Actions : la durée vient tout de suite (pas de « Avec qui ? » pour ranger)", pg.evaluate("!!document.querySelector('#actFind [data-d]')&&!document.querySelector('#actFind .afppl')"))
+    n = pg.evaluate("S.log.length"); tap("3 h +"); pg.wait_for_timeout(300)
+    e = pg.evaluate("S.log[S.log.length-1]")
+    check("Actions : 3 h de rangement plafonné à 30 XP", pg.evaluate("S.log.length") == n + 1 and e["xp"] <= (60 if e.get("x2") else 30), str(e))
+    plus(False); plus(True); tap("Proches"); tap("Voir quelqu"); tap("Café"); tap("1 h")
+    check("Actions : « Avec qui ? » après la durée pour les proches", pg.evaluate("!!document.querySelector('#actFind .afppl')"))
+    tap("Seul"); pg.wait_for_timeout(300)
+    plus(False); plus(True); tap("Nourriture"); tap("Cuisiner"); tap("Repas maison"); pg.wait_for_timeout(500)
+    check("Actions : Cuisiner un repas ouvre l'assiette", pg.evaluate("!!document.querySelector('.plo')||!plTarget()"))
+    pg.evaluate("document.querySelectorAll('.plo').forEach(e=>e.remove());document.documentElement.classList.remove('plopen')"); plus(False)
+
     # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
     n0 = len(errs)
     nb = pg.evaluate("""(()=>{showView('c');document.querySelector('[data-sub=wr][role=tab]').click();let n=0;

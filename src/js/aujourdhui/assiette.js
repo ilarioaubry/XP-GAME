@@ -92,7 +92,7 @@ function plQuests(m,el,q){let P=[];try{const L=feedPick().L,dn=(S.g.fq&&S.g.fq.d
   if(q&&!P.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
 
 function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#fqBox")||document.body;
-  const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{})},...(cur.r?{r:cur.r}:{})};
+  const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{}),...(opt.x||{})},...(cur.r?{r:cur.r}:{})};
   const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[],q=opt.q,u=plUse();
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);
   let step=1,tri=false,add="",addIc="",addName="",naming=false,recName="";

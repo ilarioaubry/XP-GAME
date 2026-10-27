@@ -28,20 +28,31 @@ const IC={home:'<path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/>',force:'<
 const DOMS=[["maison","Maison","var(--c-maison)","home","maison"],["sport","Force","var(--c-sport)","force","sport"],["soi","Soi","var(--c-soi)","soi","soi"],["nourriture","Nourriture","var(--c-food)","food","nourriture"],["travail","Travail","#6f8fe0","work","travail"],["divert","Divertissement","#7b6cf0","fun","soi"],["creer","Créer","var(--c-perso)","make","perso"],["apprendre","Apprendre","#2a8fd6","learn","soi"],["proches","Proches","var(--c-social)","people","social"]];
 // {id, dom, cat, l, xp, o:[label | [label, nom enregistré]], lz, fr:[jours orange, jours rouge], solo, who}
 const DUR=[[0,"Rapide"],[15,"15 min"],[30,"30 min"],[60,"1 h"],[120,"2 h"],[180,"3 h +"]],NAP=[[10,"10 min"],[20,"20 min"],[30,"30 min"],[45,"45 min"],[60,"1 h"],[90,"1 h 30"]];
-const durXp=m=>m<=0?0:m<=60?m:Math.round(60+(m-60)*.65);
-const QTY={reps:{u:"rép.",o:[10,20,30,50,100],x:q=>Math.round(q/2)},km:{u:"km",o:[1,2,3,5,10,21],x:q=>q*8},pages:{u:"pages",o:[10,20,30,50,100],x:q=>Math.round(q/2)}};
+const durXp=m=>m<=0?0:m<=15?8:m<=30?12:m<=60?18:m<=120?24:30; // barème : 30 XP au plus (feuille de route Q.5)
+const AF_MAX=30;
+const QTY={reps:{u:"rép.",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/4))},km:{u:"km",o:[1,2,3,5,10,21],x:q=>Math.min(AF_MAX,q*5)},pages:{u:"pages",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/3))}};
 let afCat="",afQ="",afSel=null,afWho=[],afDur=0,afAllP=false,afFam="",afStep="who",afQty=0,afAdd=false;
 function afClose(){setTimeout(()=>{const b=document.querySelector("#plusBox .plusb");if(b&&document.documentElement.classList.contains("plusopen"))b.click()},380)}
 function afFinish(it,el,ev){try{uniBurst(el,it.dom||domOfCat(it.cat))}catch(e){}afDo(it,el,ev,afDur,afWho,afQty);el.classList.add("pop");afSel=null;afWho=[];afDur=0;afQty=0;afAllP=false;afStep="who";afClose()}
 const qKind=it=>it&&it.k==="fam"&&it.f.q?it.f.q[it.opt]||"":"";
 const nextStep=it=>qKind(it)?"qty":"dur";
+// « Avec qui ? » vient après la durée (au moment de « Fait »), seulement pour ce qui se fait à plusieurs
+const afNeedWho=it=>it.k==="fam"?!!(it.f.who||it.f.dom==="proches"||/^(sorties|sportco)$/.test(it.f.id)):/^(social|famille)$/.test(it.cat);
+const afQuick=it=>it.k==="fam"&&!!(it.f.quick||/\bfini(e)?$/i.test(it.opt));
+const afFirst=it=>it.k==="fam"&&it.f.nap?"dur":afQuick(it)?(afNeedWho(it)?"who":"fin"):nextStep(it);
+const afThen=(it,el,ev)=>{if(afNeedWho(it)){afStep="who";renderAF()}else afFinish(it,el,ev)};
+// Cuisiner un repas : ça se note dans l'assiette du repas en cours
+function afCook(it,el){if(it.k!=="fam"||it.f.id!=="cuisiner"||!/^(Repas maison|Nouveau plat)$/.test(it.opt)||typeof plTarget!=="function")return false;const k=plTarget();if(!k)return false;
+  plateOpen(k==="dej"?"matin":"soir",k,el,{x:{[it.opt==="Nouveau plat"?"nouv":"maison"]:1}});afSel=null;afClose();return true}
+function afPick(it,el,ev){if(afCook(it,el))return;const st=afFirst(it);
+  if(st==="fin"){try{uniBurst(el,it.dom)}catch(e){}afDo(it,el,ev,0,[]);el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop","did");afClose();return}
+  afSel=it;afWho=[];afDur=0;afQty=0;afAllP=false;afStep=st;renderAF()}
 window.__AFB={FAM,DUR,QTY,afDo:(...a)=>afDo(...a),items:()=>afItems(),people:()=>people(),groups:()=>groups(),qKind};
-function afDefaults(){const L=[];try{[STARTER,MICRO,PERSO,NOURRITURE].forEach(A=>(A||[]).forEach(a=>L.push(a.name)))}catch(e){}return new Set(L)}
 const strip=n=>String(n).replace(/\s*\((\d+\s*(min|h))\)/i,"").replace(/\b\d+\s*(min|h)\b\s*(de\s*)?/i,"").replace(/\s{2,}/g," ").trim();
 const domOfCat=c=>({perso:"creer",social:"proches",famille:"proches",eau:"nourriture"}[c]||c);
-function afItems(){const out=[],def=afDefaults(),famW=[];
+function afItems(){const out=[],famW=[];
   FAM.forEach(f=>{famW.push(norm(f.l));[...f.o,...(((S.g&&S.g.afCustom)||{})[f.id]||[])].forEach(o=>{const[lab,log]=Array.isArray(o)?o:[o,null];famW.push(norm(lab));out.push({k:"fam",f,opt:lab,log,cat:f.cat,dom:f.dom,lz:(f.lzo&&f.lzo[lab])||f.lz||"",name:f.o.length===1&&(lab===f.l||f.nap||f.quick)?f.l:f.l+" · "+lab})})});
-  (S.actions||[]).forEach(a=>{if(def.has(a.name)||(typeof ACT_HIDE!=="undefined"&&ACT_HIDE.has(a.name)))return;const nn=norm(a.name);if(famW.some(w=>w.length>3&&nn.includes(w)))return;out.push({k:"own",a,cat:a.cat,dom:domOfCat(a.cat),name:strip(a.name),lz:lzGuess({id:"x",name:a.name})})});return out}
+  (S.actions||[]).forEach(a=>{if((typeof ACT_HIDE!=="undefined"&&ACT_HIDE.has(a.name))||(typeof PLATE_DUP!=="undefined"&&PLATE_DUP.has(a.name)))return;const nn=norm(a.name);if(famW.some(w=>w.length>3&&nn.includes(w)))return;out.push({k:"own",a,cat:a.cat,dom:DOMS.some(d=>d[0]===domOfCat(a.cat))?domOfCat(a.cat):"soi",name:strip(a.name),lz:lzGuess({id:"x",name:a.name})})});return out}
 function afCats(){const all=DOMS.map(([id,l,c,ic])=>({id:"dom:"+id,label:l,c,ic:IC[ic]}));return{D:all,Z:[],all}}
 const afKey=it=>it.k==="fam"?"af:"+it.f.id+":"+it.opt:it.a.id;
 function afLast(key){const L=(S.g.afLast||{})[key];return L||0}
@@ -53,7 +64,7 @@ function whoLabel(who){const G=groups().find(g=>g.m.length===who.length&&g.m.eve
 function people(){let L=[];try{L=relNames()}catch(e){L=[...(S.family||[]),...(S.friends||[])]}L=[...new Set(L)];return L.sort((a,b)=>((S.bondsLast||{})[b]||0)-((S.bondsLast||{})[a]||0))}
 function afDo(it,el,ev,dur,who,qty){
   const key=afKey(it),n=afToday(key);let base=it.k==="own"?((()=>{try{return actXp(it.a,n)}catch(e){return n<3?it.a.xp:0}})()):(it.f.cat==="eau"?it.f.xp:(n<3?it.f.xp:Math.round(it.f.xp/3)));
-  const qk=qKind(it);let xp=it.k==="fam"&&it.f.nap?(n<2?it.f.xp:0):qty&&qk?Math.max(base,QTY[qk].x(qty)):dur?Math.max(base,durXp(dur)):base;if(it.k==="fam"&&it.f.nap&&dur){if(!S.g.nap||typeof S.g.nap!=="object")S.g.nap={};const tk=dayKey(Date.now());S.g.nap[tk]=(S.g.nap[tk]||0)+dur}
+  const qk=qKind(it);let xp=it.k==="fam"&&it.f.nap?(n<2?it.f.xp:0):qty&&qk?Math.max(base,QTY[qk].x(qty)):dur?Math.max(base,durXp(dur)):base;xp=Math.min(AF_MAX,xp);if(it.k==="fam"&&it.f.nap&&dur){if(!S.g.nap||typeof S.g.nap!=="object")S.g.nap={};const tk=dayKey(Date.now());S.g.nap[tk]=(S.g.nap[tk]||0)+dur}
   let cat=it.cat;if(it.k==="fam"&&it.f.dom==="proches"&&who.length&&who.every(p=>{try{return isFam(p)}catch(e){return false}}))cat="famille";
   const name=(it.k==="fam"&&it.f.nap?"Sieste":it.k==="own"?it.a.name:(it.log||it.name))+(who.length?" avec "+whoLabel(who):"")+(qty&&qk?" · "+qty+" "+QTY[qk].u:"")+(dur&&!(qty&&qk)?" · "+([...DUR,...NAP].find(d=>d[0]===dur)||[0,dur+" min"])[1]:"");
   const a={id:key,cat,name:name+(()=>{try{return skTrack(it,qty)}catch(e){return""}})(),xp};
@@ -69,31 +80,34 @@ function renderAF(){try{return renderAF0()}finally{try{afSkill()}catch(e){}try{a
 function afWhoViz(){document.querySelectorAll('#actFind .afppl button[data-p]').forEach(b=>{const p=b.dataset.p;if(!p||b.querySelector('.pav'))return;b.insertAdjacentHTML('afterbegin',pAv(p,'fmini afav'))});document.querySelectorAll('#actFind .afppl .afgrp').forEach(b=>{if(b.querySelector('.afgi'))return;b.textContent=b.textContent.replace(/^\s*👥\s*/,'');b.insertAdjacentHTML('afterbegin','<span class="afgi">'+rkSvg('duo')+'</span>')})}
 function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!S.g)return;const C=afCats(),q=norm(afQ).trim(),items=afItems();
   // étape précisions : d'abord avec qui, puis combien de temps
-  if(afSel){const it=afSel,P0=people(),mw=(((S.g.afMem||{})[afKey(it)]||{}).w||[]),HM=(it.dom==="maison"?(()=>{try{const s=sitOf();return(Array.isArray(s.with)?s.with:[]).filter(p=>P0.includes(p)&&!mw.includes(p))}catch(e){return[]}})():[]),P=[...mw.filter(p=>P0.includes(p)),...HM,...P0.filter(p=>!mw.includes(p)&&!HM.includes(p))],shownP=afAllP?P:P.slice(0,10);const isWho=it.k==="fam"&&it.f.who,quickDur=it.k==="fam"&&(it.f.quick||/\bfini(e)?$/i.test(it.opt));
+  if(afSel){const it=afSel,P0=people(),mw=(((S.g.afMem||{})[afKey(it)]||{}).w||[]),HM=[],P=[...mw.filter(p=>P0.includes(p)),...HM,...P0.filter(p=>!mw.includes(p)&&!HM.includes(p))],shownP=afAllP?P:P.slice(0,10);const isWho=it.k==="fam"&&it.f.who;
     if(afStep==="who"){box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><div class="afdr"><small>Avec qui ?</small><div class="afppl">${isWho?"":`<button type="button" class="afsolo" data-p="">Seul·e</button>`}${groups().map((g,i)=>`<button type="button" class="afgrp" data-g="${i}" aria-pressed="${g.m.every(n=>afWho.includes(n))}"></button>`).join("")}${shownP.map(p=>`<button type="button" data-p="${esc(p)}" aria-pressed="${afWho.includes(p)}"></button>`).join("")}${!afAllP&&P.length>10?`<button type="button" class="afmore">+ ${P.length-10}</button>`:""}</div></div>${afWho.length?`<button type="button" class="btn primary afnext"></button>`:""}</div>`;
-      box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
-      box.querySelectorAll(".afppl [data-p]").forEach(b=>{const p=b.dataset.p;if(p)b.textContent=p;b.onclick=ev=>{if(!p){afWho=[];if(quickDur){afFinish(it,b,ev);return}afStep=nextStep(it);renderAF();return}afWho=afWho.includes(p)?afWho.filter(x=>x!==p):[...afWho,p];renderAF()}});
+      box.querySelector(".afdh b").textContent=it.name+(afQty&&qKind(it)?" · "+afQty+" "+QTY[qKind(it)].u:afDur?" · "+([...DUR,...NAP].find(d=>d[0]===afDur)||[0,""])[1].replace(/ /g,"\u00a0"):"");setTimeout(dressAF,0);
+      box.querySelectorAll(".afppl [data-p]").forEach(b=>{const p=b.dataset.p;if(p)b.textContent=p;b.onclick=ev=>{if(!p){afWho=[];afFinish(it,b,ev);return}afWho=afWho.includes(p)?afWho.filter(x=>x!==p):[...afWho,p];renderAF()}});
       {const GG=groups();box.querySelectorAll(".afppl [data-g]").forEach(b=>{const g=GG[+b.dataset.g];b.innerHTML=ICO("users",14)+" "+esc(g.n);b.onclick=()=>{const all=g.m.every(n=>afWho.includes(n));afWho=all?afWho.filter(n=>!g.m.includes(n)):[...new Set([...afWho,...g.m])];renderAF()}})}
-      {const nx=box.querySelector(".afnext");if(nx){{const wl=whoLabel(afWho);nx.textContent="Continuer avec "+(wl!==afWho.join(", ")?wl:afWho.length>2?afWho.slice(0,2).join(", ")+" +"+(afWho.length-2):afWho.join(" et "))+" →"}nx.onclick=ev=>{if(quickDur){afFinish(it,nx,ev);return}afStep=nextStep(it);renderAF()}}}
+      {const nx=box.querySelector(".afnext");if(nx){{const wl=whoLabel(afWho);nx.textContent="Fait avec "+(wl!==afWho.join(", ")?wl:afWho.length>2?afWho.slice(0,2).join(", ")+" +"+(afWho.length-2):afWho.join(" et "))}nx.onclick=ev=>afFinish(it,nx,ev)}}
       const m=box.querySelector(".afmore");if(m)m.onclick=()=>{afAllP=true;renderAF()};
-      box.querySelector(".afback").onclick=()=>{afSel=null;renderAF()};return}
+      box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="who")afSel=null;else afStep=afFirst(it);renderAF()};return}
     if(afStep==="qty"){const Q=QTY[qKind(it)];box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><div class="afdr"><small>Combien ?</small><div class="afdur big">${Q.o.map(v=>`<button type="button" data-q="${v}">${v} ${Q.u}</button>`).join("")}</div><div class="afqin"><input type="number" inputmode="decimal" min="0" placeholder="Autre" aria-label="Autre quantité"><button type="button" class="btn">OK</button></div><button type="button" class="lnk aftime">Noter en temps plutôt</button></div></div>`;
-      box.querySelector(".afdh b").textContent=it.name+(afWho.length?" avec "+whoLabel(afWho):"");
-      box.querySelectorAll("[data-q]").forEach(b=>b.onclick=ev=>{afQty=+b.dataset.q;afFinish(it,b,ev)});
-      {const qi=box.querySelector(".afqin input"),qb=box.querySelector(".afqin .btn");const go=ev=>{const v=parseFloat(String(qi.value).replace(",","."));if(v>0){afQty=v;afFinish(it,qb,ev)}};qb.onclick=go;qi.onkeydown=e=>{if(e.key==="Enter")go(e)}}
+      box.querySelector(".afdh b").textContent=it.name;
+      box.querySelectorAll("[data-q]").forEach(b=>b.onclick=ev=>{afQty=+b.dataset.q;afThen(it,b,ev)});
+      {const qi=box.querySelector(".afqin input"),qb=box.querySelector(".afqin .btn");const go=ev=>{const v=parseFloat(String(qi.value).replace(",","."));if(v>0){afQty=v;afThen(it,qb,ev)}};qb.onclick=go;qi.onkeydown=e=>{if(e.key==="Enter")go(e)}}
       box.querySelector(".aftime").onclick=()=>{afStep="dur";renderAF()};
-      box.querySelector(".afback").onclick=()=>{afStep="who";renderAF()};return}
+      box.querySelector(".afback").onclick=()=>{afSel=null;renderAF()};return}
     box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><div class="afdr"><small>Combien de temps ?</small><div class="afdur big">${(it.f&&it.f.nap?NAP:DUR).map(([m,l])=>`<button type="button" data-d="${m}">${l}</button>`).join("")}</div></div></div>`;
-    box.querySelector(".afdh b").textContent=it.name+(afWho.length?" avec "+whoLabel(afWho):"");setTimeout(dressAF,0);
-    box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afFinish(it,b,ev)});
-    box.querySelector(".afback").onclick=()=>{if(it.f&&it.f.nap){afSel=null}else afStep="who";renderAF()};return}
-  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);if(own.length)F.push({l:"Mes actions",c:(DOMS.find(d=>d[0]===id)||[])[2],its:own});return F};
+    box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
+    box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afThen(it,b,ev)});
+    box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="dur")afSel=null;else afStep=afFirst(it);renderAF()};return}
+  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id).map(f=>({l:f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);if(own.length)F.push({l:"Bonnes actions",c:(DOMS.find(d=>d[0]===id)||[])[2],its:own});return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
   if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div><button type="button" class="afnew">+ Créer « <b></b> »</button>`}
   else if(afCat&&afFam){const F=fams(afCat).find(F=>F.l===afFam);if(!F){afFam=""}else {const fid=F.its[0]&&F.its[0].k==="fam"?F.its[0].f.id:"",cu=((S.g.afCustom||{})[fid]||[]);body=`<div class="aff" style="--fc:${F.c||"var(--gold)"}"><div class="affh"><button type="button" class="afback afup" aria-label="Retour">${ICO("chev",18)}</button><b class="afft"></b></div><div class="afopts">${F.its.map(it=>chip(it,it.k==="fam"?it.opt:it.name)).join("")}${fid?(afAdd?`<span class="afaddin"><input maxlength="30" placeholder="Nouveau…" aria-label="Nouvelle option"><button type="button" class="btn primary afaddok">Ajouter</button></span>`:`<button type="button" class="afo afadd" aria-label="Ajouter une option">+</button>`):""}</div>${afAdd&&cu.length?`<div class="afcu"><small>Tes ajouts</small>${cu.map((c,i)=>`<button type="button" class="afcux" data-cu="${i}"></button>`).join("")}</div>`:""}</div>`;box.__fid=fid}}
   if(afCat&&!afFam&&!q){const FF=fams(afCat);body=`<div class="afgrid">${FF.map((F,i)=>{const red=F.its.filter(it=>afFresh(it)==="fr-r").length,org=F.its.filter(it=>afFresh(it)==="fr-o").length,dn=F.its.some(it=>afToday(afKey(it)));return`<button type="button" class="aft${red?" r":org?" o":""}${dn?" did":""}" data-fam="${i}" style="--fc:${F.c||"var(--gold)"}"><b></b>${red?`<i class="afred">${red}</i>`:org?`<i class="afor">${org}</i>`:dn?`<em>${ICO("check",12)}</em>`:""}</button>`}).join("")}</div><button type="button" class="afnew">+ Créer une action</button>`}
-  else if(!afCat&&!q){const cnt={};(S.log||[]).forEach(e=>{if(e.a)cnt[e.a]=(cnt[e.a]||0)+1});const L=items.filter(it=>cnt[afKey(it)]).sort((a,b)=>(habitRank(afKey(b))||cnt[afKey(b)])-(habitRank(afKey(a))||cnt[afKey(a)])).slice(0,8);body=L.length?`<small class="afh">Tes habituelles</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div>`:`<small class="afh">Choisis une catégorie</small>`}
+  else if(!afCat&&!q){const cnt={};(S.log||[]).forEach(e=>{if(e.a)cnt[e.a]=(cnt[e.a]||0)+1});const L=items.filter(it=>cnt[afKey(it)]).sort((a,b)=>(habitRank(afKey(b))||cnt[afKey(b)])-(habitRank(afKey(a))||cnt[afKey(a)])).slice(0,6);
+    // rien encore noté : une action courante par domaine pour commencer
+    const P=L.length?L:["maison","sport","soi","divert","travail","proches"].map(d=>{const f=FAM.find(x=>x.dom===d);return f&&items.find(it=>it.k==="fam"&&it.f===f)}).filter(Boolean);
+    body=`<small class="afh">${L.length?"Récents":"Pour commencer"}</small><div class="afopts afrec">${P.map(it=>chip(it,it.name)).join("")}</div>`}
   box.innerHTML=`<div class="afs"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" class="afq" placeholder="Chercher : cuisine, film, pompes…" autocomplete="off" enterkeyhint="search">${afQ?`<button type="button" class="afx" aria-label="Effacer">${ICO("close",14)}</button>`:""}</div>
     ${q?"":`<div class="afc">${C.D.map(c=>`<button type="button" data-afc="${c.id}" aria-pressed="${afCat===c.id}" style="--cc:${c.c}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${c.ic}</svg><span></span></button>`).join("")}</div>`}
     <div class="afl">${body}</div>`;
@@ -106,9 +120,9 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     const ab=box.querySelector(".afadd");if(ab)ab.onclick=()=>{afAdd=true;renderAF();const i=document.querySelector("#actFind .afaddin input");if(i)i.focus()};
     const ai=box.querySelector(".afaddin input"),ao=box.querySelector(".afaddok");if(ai){const go=()=>{const v=ai.value.trim();if(!v){afAdd=false;renderAF();return}const L=CU();if(!L.some(x=>norm(x)===norm(v)))L.push(v.charAt(0).toUpperCase()+v.slice(1));save();afAdd=false;renderAF()};ao.onclick=go;ai.onkeydown=e=>{if(e.key==="Enter")go();if(e.key==="Escape"){afAdd=false;renderAF()}}}
     box.querySelectorAll(".afcux").forEach(b=>{const L=CU(),c=L[+b.dataset.cu];b.innerHTML=ICO("close",12)+" "+esc(c);b.onclick=()=>{L.splice(+b.dataset.cu,1);save();renderAF()}})}
-  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.l;b.onclick=ev=>{if(F.its.length===1){const it=F.its[0];if(it.k==="fam"&&it.f.quick){try{uniBurst(b,it.dom)}catch(e){}afDo(it,b,ev,0,[]);b.classList.add("pop");afClose();return}const M=(S.g.afMem||{})[afKey(it)]||{};afSel=it;afWho=[];afDur=0;afAllP=false;afStep=it.k==="fam"&&it.f.nap?"dur":"who";renderAF();return}afFam=F.l;renderAF()}})}
+  if(afCat&&!q&&!afFam){const FF=fams(afCat);box.querySelectorAll(".aft").forEach(b=>{const F=FF[+b.dataset.fam];b.querySelector("b").textContent=F.l;b.onclick=ev=>{if(F.its.length===1){afPick(F.its[0],b,ev);return}afFam=F.l;renderAF()}})}
   box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{const[it,lab]=reg[i];b.querySelector("span").textContent=lab;
-    b.onclick=ev=>{if(it.k==="fam"&&it.f.quick&&!it.f.who){try{uniBurst(b,it.dom)}catch(e){}afDo(it,b,ev,0,[]);b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop","did");afClose();return}const M=(S.g.afMem||{})[afKey(it)]||{};afSel=it;afWho=[];afDur=0;afAllP=false;afStep=it.k==="fam"&&it.f.nap?"dur":"who";renderAF()}});
+    b.onclick=ev=>afPick(it,b,ev)});
   const inp=box.querySelector(".afq");inp.value=afQ;inp.oninput=()=>{afQ=inp.value;const pos=inp.selectionStart;renderAF();const n=document.querySelector("#actFind .afq");if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}};
   const x=box.querySelector(".afx");if(x)x.onclick=()=>{afQ="";renderAF()};
   box.querySelectorAll("[data-afc]").forEach(b=>b.onclick=()=>{afCat=afCat===b.dataset.afc?"":b.dataset.afc;afFam="";afAdd=false;renderAF()});

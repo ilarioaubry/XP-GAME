@@ -174,7 +174,8 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [ ] Q.9 Menu « … » simplifié : **Plus tard + Pas pour moi**
 - [ ] Q.10 Quêtes travail : gardées
 - [ ] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
-- [ ] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit
+- [x] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit (27/10 : les bonnes actions sont dans leur catégorie et dans la recherche)
+- [ ] Q.16 Page Actions (analyse du 27/10) : ~~« Avec qui ? » après la durée, seulement pour les proches et les sorties~~ (fait 27/10) · ~~Cuisiner un repas ouvre l'assiette~~ (fait) · ~~icônes 48 px, « Journée sans » non coupé~~ (fait) · ~~accueil « Récents » / « Pour commencer »~~ (fait) · ~~XP de l'action plafonnée à 30~~ (fait, le boost ×2 existant reste) · à confirmer : couleurs (tuile pleine, bordures gauches, décor) et messages empilés
 - [ ] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
 - [ ] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8)
 - [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout)
