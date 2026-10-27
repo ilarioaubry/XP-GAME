@@ -166,7 +166,7 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [ ] Q.1 Quêtes pour toi : **3 à 5 par jour, à la même place**, tirées de **mes priorités** (fiche : famille, chez moi, manger). Elles ne lui parlaient pas : les rendre **concrètes et courtes** (tâche précise, 5–15 min) ou **plaisir / envies** (ciné, sorties, jeux, musique)
 - [ ] Q.2 Idées sortie : **inspiration le week-end**, sans carte à valider
 - [ ] Q.3 Quêtes spéciales : carrousel gardé tel quel
-- [ ] Q.4 Bonnes actions : **Ilario choisit la liste** (présentée pour qu'il coche)
+- [ ] Q.4 Bonnes actions : Ilario garde 1, 4–10, 12, 14–26 ; **retirer** « Avancer sur le dossier (30 min) », « 1 verre d'eau », « Se coucher avant minuit », « Trajet à pied ou à vélo » (27/10)
 - [ ] Q.5 Tri : **1 par jour au plus**
 - [ ] Q.6 XP : **30 max**, sauf grands exploits (livre fini, série finie, sortie loin) jusqu'à 50
 - [ ] Q.7 Catégories : marche = **Soi** ; lecture = **Soi**, album = **Talent** ; sorties = **Soi**, **Ami si « Avec qui ? »** rempli
@@ -175,7 +175,7 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [ ] Q.10 Quêtes travail : gardées
 - [ ] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
 - [ ] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit
-- [ ] Q.13 Titres vagues ou longs : **Ilario valide chaque titre** (avant / après)
+- [ ] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
 - [ ] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8)
 - [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout)
 
