@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 27/10/2026
+- Page Actions : le panneau et son décor prennent tout l'écran à chaque étape ; « Créer une action » reste en bas ; tuiles des familles (Travail, Force…) qui ne débordent plus de l'écran, icône au-dessus du nom.
 - Page Actions : accueil avec tes actions récentes (ou quelques-unes pour commencer) ; les bonnes actions rangées dans leur catégorie ; la durée d'abord, « Avec qui ? » ensuite et seulement pour les proches et les sorties ; « Cuisiner un repas » ouvre l'assiette ; XP plafonnée à 30 ; icônes plus grandes, « Journée sans » en entier, nouvelle poêle.
 - Assiette et quêtes reliées : une quête nourriture (légume, équilibré, végétarien, cuisiner, nouvelle recette…) se valide en remplissant l'assiette, avec son objectif affiché ; « Cuisiné maison » et « Nouvelle recette » à cocher ; plus proposée quand les repas sont notés. Bonnes actions en doublon avec l'assiette retirées (migration 4).
 - Assiette : catégorie « Sauces » (10 sauces en pixel art + les tiennes), à cocher ; ne change ni l'équilibre ni l'XP. Gardée dans les recettes.
