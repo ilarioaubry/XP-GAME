@@ -74,7 +74,7 @@ Object.assign(RKI,{
   oncle:rkBust({h:"x",s:"r",t:"R",stache:1}),
   cousin:rkBust({h:"Y",s:"b",t:"B"})
 });
-const REL_FAM=[["pere","Père","pere"],["mere","Mère","mere"],["frere","Frère","frere"],["soeur","Sœur","soeur"],["grand","Grand-parent","grand"],["enfant","Enfant","enfant"],["oncle","Oncle · tante","oncle"],["cousin","Cousin·e","cousin"]];
+const REL_FAM=[["pere","Père","pere"],["mere","Mère","mere"],["frere","Frère","frere"],["soeur","Sœur","soeur"],["grand","Grand-parent","grand"],["enfant","Enfant","enfant"],["oncle","Oncle · tante","oncle"],["cousin","Cousin·e","cousin"],["neveu","Neveu · nièce","enfant"]];
 const REL_FR=[["couple","En couple","coeur"],["bestie","Meilleur ami","medaille"],["ami","Ami·e","duo"],["collegue","Collègue","dossier"]];
 function relOf(n){const P=S.profiles[n]||{},L=isFam(n)?REL_FAM:REL_FR;
   if(P.rel&&L.some(r=>r[0]===P.rel))return P.rel;

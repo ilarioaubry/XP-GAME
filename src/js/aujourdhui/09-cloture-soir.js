@@ -18,7 +18,7 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
   const ik=it=>it.f.id+"|"+it.opt;
   const EN=typeof engToday==="function"?engToday().filter(e=>e.res===undefined):[];W.en={};EN.forEach(e=>{if(engAuto(e))W.en[e.id]=engOk(e,tk)?1:0});
   const TD=typeof todoOpen==="function"?todoOpen():[];W.td={};TD.forEach(x=>W.td[x.id]="rep");
-  const stepList=()=>{const L=["mood","meals","quick"];CT.forEach(c=>{if(!W.cat[c[0]])return;L.push(c[0]+":a");if(c[4]||c[5])L.push(c[0]+":b")});if(EN.length)L.push("eng");if(TD.length)L.push("todo");L.push("end");return L};
+  const stepList=()=>{const L=["mood","meals","quick"];CT.forEach(c=>{if(!W.cat[c[0]])return;L.push(c[0]+":a");if((c[4]||c[5])&&(W.pick[c[0]]||[]).length)L.push(c[0]+":b")});if(EN.length)L.push("eng");if(TD.length)L.push("todo");L.push("end");return L};
   const o=document.createElement("div");o.className="clo clo2";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Bilan de la journée");
   o.prepend(ambEl("nuit"));document.body.appendChild(o);document.body.classList.add("rtmon");
   const close=()=>{o.remove();document.body.classList.remove("rtmon")};
