@@ -191,7 +191,7 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [x] R.6 Un titre à la section des rituels : « Rituels du matin » / « Rituels du soir » (28/10)
 
 Fonctionnalités (à proposer avant de construire) :
-- [ ] F.1 Finir un contrat donne des points de Travail : 50 XP, une fois à la date de fin
+- [x] F.1 Finir un contrat donne des points de Travail : au dernier jour (14/14), une coche à toucher, +50 XP Travail, puis la jauge disparaît (28/10)
 - [ ] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée) : à la fin de Bonne nuit
 - [ ] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain)
 - [ ] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8

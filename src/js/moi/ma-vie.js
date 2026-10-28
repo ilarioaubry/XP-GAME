@@ -74,6 +74,7 @@
       const lbl=tk<p.s?"À venir":tk>p.e?"Terminé":`${p.wd?"Jour de travail":"Jour"} ${Math.max(done,1)} sur ${tot}`;return{tot,done,left,pct,st,lbl}}
     const perCard=(p,tk,cls)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p ${cls||"trk-c"}${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : modifier"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b><small>${s.lbl} · ${s.st}</small></span><span class="trk-pct">${s.pct}%</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
     const perMini=(p,tk)=>{const s=perStat(p,tk);return`<button type="button" class="trk-p${tk>p.e?" over":""}" data-p="${p.id}" aria-label="${esc(p.name)} : ${s.lbl}, ${s.st}"><span class="trk-row"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b></span><span class="trk-pct">${tk>p.e?ICO("check",14):Math.max(s.done,1)+"/"+s.tot}</span></span><span class="trk-bar"><i style="width:${s.pct}%"></i></span></button>`};
+    const perFin=p=>`<div class="trk-row trk-fin"><span class="trk-ic">${ICS_PX[p.t]?rkSvg(ICS_PX[p.t]):ic(p.t)}</span><span class="trk-t"><b>${esc(p.name)}</b><small>Terminé, bravo</small></span><button type="button" class="btn primary trk-ok" data-pok="${p.id}" aria-label="Clore : ${esc(p.name)}" title="Clore">${ICO("check",24)}</button></div>`;
     function perForm(p){const tk=tkNow(),s=p?p.s:tk,e=p?p.e:addD(tk,13),t=p?p.t:"contrat";
       return`<form class="trk-c trk-f per-f"><label>Type<select name="t">${Object.keys(PT).map(k=>`<option value="${k}"${t===k?" selected":""}>${PT[k].l}</option>`).join("")}</select></label>
       <label>Nom<input type="text" name="n" maxlength="40" value="${p?esc(p.name):"Contrat"}" autocomplete="off"></label>
@@ -103,7 +104,9 @@
       const rows=[];
       const p=actPer(tk),T=p&&PT[p.t];
       if(v.track.cig){const n=g.cig[tk]||0,y=g.cig[addD(tk,-1)]||0;rows.push(`<div class="trk-row"><span class="trk-ic">${rkSvg("cigarette")}</span><span class="trk-t" aria-label="Cigarettes"><small>hier ${y}</small></span><button type="button" class="trk-b" data-c="-1" aria-label="Retirer une cigarette"${n?"":" disabled"}>−</button><span class="trk-n" aria-live="polite">${n}</span><button type="button" class="trk-b plus" data-c="1" aria-label="Ajouter une cigarette">+</button></div>`)}
-      const forms=[];if(v.track.per)g.per.filter(x=>x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2)).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(perMini(x,tk))});
+      // contrat fini (dernier jour compris) : une coche à toucher pour le clore, +50 XP Travail (28/10). Il reste affiché jusqu'à la coche (3 semaines au plus)
+      const pOk=g.perOk&&typeof g.perOk==="object"?g.perOk:{},cDone=x=>pOk[x.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+x.name),cFin=x=>x.t==="contrat"&&!cDone(x)&&perStat(x,tk).left===0&&tk>=x.s&&nDays(x.e,tk,false)<=21;
+      const forms=[];if(v.track.per)g.per.filter(x=>cFin(x)||(x.t!=="contrat"||!cDone(x))&&(x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2))).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(cFin(x)?perFin(x):perMini(x,tk))});
       const late=g.last.map(x=>({x,r:ratio(x,tk)})).filter(o=>o.r>=1&&o.x.d!==tk||o.x.d===tk&&o.x.pv!==undefined).filter(o=>!(S.specials||[]).some(q=>(q.name||"").toLowerCase().includes(String(o.x.name||"").toLowerCase()))).sort((a,b)=>b.r-a.r).slice(0,3);
       late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
       let mode="";const cap=vieCap();
@@ -116,6 +119,8 @@
       box.querySelectorAll("[data-pc]").forEach(b=>b.onclick=ev=>{const n=b.dataset.pc;try{bondAction(n,REL_ACTIONS.find(x=>x.k==="news"),b,ev)}catch(e){V().pc[n]=tk;save()}setTimeout(rt,50)});
       box.querySelectorAll("[data-pcgo]").forEach(b=>b.onclick=()=>{try{openProfile(b.dataset.pcgo)}catch(e){}});
       box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>goVie("vie-per"));
+      box.querySelectorAll("[data-pok]").forEach(b=>b.onclick=ev=>{const p=g.per.find(x=>x.id===b.dataset.pok);if(!p)return;if(!g.perOk||typeof g.perOk!=="object")g.perOk={};g.perOk[p.id]=Date.now();
+        try{complete({id:"contrat",cat:"travail",name:"Contrat terminé : "+p.name,xp:50},b,ev)}catch(e){save()}setTimeout(rt,60)});
       bindPer(box);bindLast(box,tk)};
     // ---- Page « Ma vie » (Profil)
     const renderVieBase=function(){

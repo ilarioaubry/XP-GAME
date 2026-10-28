@@ -248,3 +248,6 @@ html body :is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px soli
 html body :is(.scsnd,.trk-b){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
 /* barre d'XP d'Aujourd'hui : contenu centré dans son cadre (marges symétriques, pas de colonne vide en bout) */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #qxpBtn{grid-template-columns:auto minmax(0,1fr) auto!important;padding:6px 12px!important;align-items:center!important;align-content:center!important}
+
+/* contrat fini : coche à toucher (bouton principal carré 44) */
+html:not(#_u1):not(#_u2) body .bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}

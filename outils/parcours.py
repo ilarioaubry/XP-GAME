@@ -147,6 +147,12 @@ with sync_playwright() as p:
       hmRoom=null;renderHome(1);return n})()""")
     check("pièces de la maison et objets", len(errs) == n0 and nb > 10, f"{nb} objets")
 
+    # 7c. Contrat fini : une coche à toucher, +50 XP Travail, puis il disparaît
+    pg.evaluate("()=>{const tk=dayKey(Date.now()),d=new Date(Date.now()-13*864e5);const s=dayKey(d.getTime());S.g.vie=S.g.vie||{};S.g.vie.track=Object.assign({},S.g.vie.track,{per:true});S.g.per=[{id:'ptest',t:'contrat',name:'Contrat',s,e:tk}];save();showView('q');renderTrk()}")
+    x0 = xp(pg); ok1 = pg.evaluate("!!document.querySelector('#trkBox .trk-ok')")
+    if ok1: pg.evaluate("document.querySelector('#trkBox .trk-ok').click()"); pg.wait_for_timeout(300)
+    check("contrat fini : coche, +50 XP Travail, puis disparaît", ok1 and xp(pg) - x0 in (50, 100) and not pg.evaluate("!!document.querySelector('#trkBox .trk-fin')"), f"{ok1} {xp(pg)-x0}")
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

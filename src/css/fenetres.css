@@ -403,7 +403,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .bpop:has(textarea,input:
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast){top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:50%!important;max-width:min(92vw,420px)!important;background:rgba(14,16,36,.96)!important;color:#fff7e6!important;border:2px solid var(--gold,#ffd94a)!important;box-shadow:0 4px 0 #000!important;font-family:var(--f-body)!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;padding:10px 14px!important;z-index:260!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast{transform:translate(-50%,40%)!important}  /* messages en bas, juste au-dessus de la barre d'onglets (28/10) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast.show{transform:translate(-50%,0)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,-62px)!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,-76px)!important}
 /* fenêtres plein écran (routine, bilan du soir, assiette, panneau +) : au-dessus de leurs boutons du bas */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:is(.rtmon,:has(.plo)) :is(.toast,#undoBar),html.plusopen:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast,#undoBar){bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}
 /* assiette : objectif de la quête reliée (27/10) — icône + texte, l'objectif en gras, la quête en petite info dessous ; coche or quand c'est bon */
