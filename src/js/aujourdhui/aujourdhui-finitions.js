@@ -31,7 +31,7 @@ const DUR=[[0,"Rapide"],[15,"15 min"],[30,"30 min"],[60,"1 h"],[120,"2 h"],[180,
 const durXp=m=>m<=0?0:m<=15?8:m<=30?12:m<=60?18:m<=120?24:30; // barème : 30 XP au plus (feuille de route Q.5)
 const AF_MAX=30;
 const QTY={reps:{u:"rép.",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/4))},km:{u:"km",o:[1,2,3,5,10,21],x:q=>Math.min(AF_MAX,q*5)},pages:{u:"pages",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/3))}};
-let afCat="",afQ="",afSel=null,afWho=[],afDur=0,afAllP=false,afFam="",afStep="who",afQty=0,afAdd=false;
+let afMode="jour",afCat="",afQ="",afSel=null,afWho=[],afDur=0,afAllP=false,afFam="",afStep="who",afQty=0,afAdd=false;
 function afClose(){setTimeout(()=>{const b=document.querySelector("#plusBox .plusb");if(b&&document.documentElement.classList.contains("plusopen"))b.click()},380)}
 function afFinish(it,el,ev){try{uniBurst(el,it.dom||domOfCat(it.cat))}catch(e){}afDo(it,el,ev,afDur,afWho,afQty);el.classList.add("pop");afSel=null;afWho=[];afDur=0;afQty=0;afAllP=false;afStep="who";afClose()}
 const qKind=it=>it&&it.k==="fam"&&it.f.q?it.f.q[it.opt]||"":"";
@@ -44,7 +44,10 @@ const afThen=(it,el,ev)=>{if(afNeedWho(it)){afStep="who";renderAF()}else afFinis
 // Cuisiner un repas : ça se note dans l'assiette du repas en cours
 function afCook(it,el){if(it.k!=="fam"||it.f.id!=="cuisiner"||!/^(Repas maison|Nouveau plat)$/.test(it.opt)||typeof plTarget!=="function")return false;const k=plTarget();if(!k)return false;
   plateOpen(k==="dej"?"matin":"soir",k,el,{x:{[it.opt==="Nouveau plat"?"nouv":"maison"]:1}});afSel=null;afClose();return true}
-function afPick(it,el,ev){if(afCook(it,el))return;const st=afFirst(it);
+const afTodoOf=it=>({key:afKey(it),n:it.k==="fam"?it.name:it.a.name});
+function afPick(it,el,ev){if(afMode==="demain"){const ok=todoAdd(afTodoOf(it),todoDay(1));toast(ok?"Pour demain : « "+esc(it.name)+" »":"Déjà dans ta liste de demain");el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");return}
+  if(afMode==="jour"&&afFirst(it)==="fin"){afSel=it;afWho=[];afDur=0;afQty=0;afAllP=false;afStep="fin";renderAF();return}
+  if(afCook(it,el))return;const st=afFirst(it);
   if(st==="fin"){try{uniBurst(el,it.dom)}catch(e){}afDo(it,el,ev,0,[]);el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop","did");afClose();return}
   afSel=it;afWho=[];afDur=0;afQty=0;afAllP=false;afStep=st;renderAF()}
 window.__AFB={FAM,DUR,QTY,afDo:(...a)=>afDo(...a),items:()=>afItems(),people:()=>people(),groups:()=>groups(),qKind};
@@ -75,7 +78,9 @@ function afDo(it,el,ev,dur,who,qty){
   if(it.lz&&it.lz!=="son"&&xp>0){try{lzGain(it.lz,xp)}catch(e){}extra={...(extra||{}),lz:it.lz+":af",lzx:xp}}
   if(!xp){noXp(a,el,ev,extra);return}
   complete(a,el,ev,false,extra);if(who.length)setTimeout(()=>{try{toast(`Lien renforcé avec <span class="p">${esc(who.join(", "))}</span>`)}catch(e){}},900)}
-function renderAF(){try{return renderAF0()}finally{try{afSkill()}catch(e){}try{afWhoViz()}catch(e){}}}
+function afTodoBtn(box){if(afMode!=="jour"||!afSel||todoL().some(x=>x.d===todoDay(0)&&x.key===afKey(afSel)))return;const d=box.querySelector(".afd");if(!d||d.querySelector(".aftodo"))return;const b=document.createElement("button");b.type="button";b.className="btn aftodo";b.textContent="À faire plus tard";d.appendChild(b);
+  b.onclick=()=>{const it=afSel,ok=todoAdd(afTodoOf(it),todoDay(0));toast(ok?"Ajouté à faire : « "+esc(it.name)+" »":"Déjà dans ta liste");afSel=null;try{renderTodo()}catch(e){}renderAF()}}
+function renderAF(){try{return renderAF0()}finally{try{afTodoBtn(document.getElementById("actFind"))}catch(e){}try{afSkill()}catch(e){}try{afWhoViz()}catch(e){}}}
 // « Avec qui ? » : les avatars comme partout ailleurs, et l'icône pixel des groupes à la place de l'emoji
 function afWhoViz(){document.querySelectorAll('#actFind .afppl button[data-p]').forEach(b=>{const p=b.dataset.p;if(!p||b.querySelector('.pav'))return;b.insertAdjacentHTML('afterbegin',pAv(p,'fmini afav'))});document.querySelectorAll('#actFind .afppl .afgrp').forEach(b=>{if(b.querySelector('.afgi'))return;b.textContent=b.textContent.replace(/^\s*👥\s*/,'');b.insertAdjacentHTML('afterbegin','<span class="afgi">'+rkSvg('duo')+'</span>')})}
 const AF_OFF=new Set(["sans"]); // « Journée sans… » se coche à la fin de Bonne nuit (28/10)
@@ -89,6 +94,9 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
       {const nx=box.querySelector(".afnext");if(nx){{const wl=whoLabel(afWho);nx.textContent="Fait avec "+(wl!==afWho.join(", ")?wl:afWho.length>2?afWho.slice(0,2).join(", ")+" +"+(afWho.length-2):afWho.join(" et "))}nx.onclick=ev=>afFinish(it,nx,ev)}}
       const m=box.querySelector(".afmore");if(m)m.onclick=()=>{afAllP=true;renderAF()};
       box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="who")afSel=null;else afStep=afFirst(it);renderAF()};return}
+    if(afStep==="fin"){box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><button type="button" class="btn primary affait">Fait</button></div>`;
+      box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);box.querySelector(".afback").onclick=()=>{afSel=null;renderAF()};
+      box.querySelector(".affait").onclick=ev=>{const b=box.querySelector(".affait");if(afCook(it,b))return;afSel=null;try{uniBurst(b,it.dom)}catch(e){}afDo(it,b,ev,0,[]);afClose()};return}
     if(afStep==="qty"){const Q=QTY[qKind(it)];box.innerHTML=`<div class="afd"><div class="afdh"><button type="button" class="afback" aria-label="Retour">${ICO("chev",18)}</button><b></b></div><div class="afdr"><small>Combien ?</small><div class="afdur big">${Q.o.map(v=>`<button type="button" data-q="${v}">${v} ${Q.u}</button>`).join("")}</div><div class="afqin"><input type="number" inputmode="decimal" min="0" placeholder="Autre" aria-label="Autre quantité"><button type="button" class="btn">OK</button></div><button type="button" class="lnk aftime">Noter en temps plutôt</button></div></div>`;
       box.querySelector(".afdh b").textContent=it.name;
       box.querySelectorAll("[data-q]").forEach(b=>b.onclick=ev=>{afQty=+b.dataset.q;afThen(it,b,ev)});
@@ -102,19 +110,19 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
   const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id&&!AF_OFF.has(f.id)).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
-  if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div><button type="button" class="afnew">+ Créer « <b></b> »</button>`}
+  if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div>${afMode!=="hier"?`<button type="button" class="btn aftodofree">À faire ${afMode==="demain"?"demain":"aujourd'hui"} : « ${esc(afQ.trim())} »</button>`:""}<button type="button" class="afnew">+ Créer « <b></b> »</button>`}
   else if(afCat&&afFam){const F=fams(afCat).find(F=>F.l===afFam);if(!F){afFam=""}else {const fid=F.its[0]&&F.its[0].k==="fam"?F.its[0].f.id:"",cu=((S.g.afCustom||{})[fid]||[]);body=`<div class="aff" style="--fc:${F.c||"var(--gold)"}"><div class="affh"><button type="button" class="afback afup" aria-label="Retour">${ICO("chev",18)}</button><b class="afft"></b></div><div class="afopts">${F.its.map(it=>chip(it,it.k==="fam"?it.opt:it.name)).join("")}${fid?(afAdd?`<span class="afaddin"><input maxlength="30" placeholder="Nouveau…" aria-label="Nouvelle option"><button type="button" class="btn primary afaddok">Ajouter</button></span>`:`<button type="button" class="afo afadd" aria-label="Ajouter une option">+</button>`):""}</div>${afAdd&&cu.length?`<div class="afcu"><small>Tes ajouts</small>${cu.map((c,i)=>`<button type="button" class="afcux" data-cu="${i}"></button>`).join("")}</div>`:""}</div>`;box.__fid=fid}}
   if(afCat&&!afFam&&!q){const FF=fams(afCat);body=`<div class="afgrid">${FF.map((F,i)=>{const red=F.its.filter(it=>afFresh(it)==="fr-r").length,org=F.its.filter(it=>afFresh(it)==="fr-o").length,dn=F.its.some(it=>afToday(afKey(it)));return`<button type="button" class="aft${red?" r":org?" o":""}${dn?" did":""}" data-fam="${i}" style="--fc:${F.c||"var(--gold)"}"><b></b>${red?`<i class="afred">${red}</i>`:org?`<i class="afor">${org}</i>`:dn?`<em>${ICO("check",12)}</em>`:""}</button>`}).join("")}</div><button type="button" class="afnew">+ Créer une action</button>`}
   else if(!afCat&&!q){const cnt={};(S.log||[]).forEach(e=>{if(e.a)cnt[e.a]=(cnt[e.a]||0)+1});const L=items.filter(it=>cnt[afKey(it)]).sort((a,b)=>(habitRank(afKey(b))||cnt[afKey(b)])-(habitRank(afKey(a))||cnt[afKey(a)])).slice(0,6);
     // rien encore noté : une action courante par domaine pour commencer
     const P=L.length?L:["maison","sport","soi","divert","travail","proches"].map(d=>{const f=FAM.find(x=>x.dom===d);return f&&items.find(it=>it.k==="fam"&&it.f===f)}).filter(Boolean);
     body=`<small class="afh">${L.length?"Récents":"Pour commencer"}</small><div class="afopts afrec">${P.map(it=>chip(it,it.name)).join("")}</div>`}
-  box.innerHTML=`<div class="afs"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" class="afq" placeholder="Chercher : cuisine, film, pompes…" autocomplete="off" enterkeyhint="search">${afQ?`<button type="button" class="afx" aria-label="Effacer">${ICO("close",14)}</button>`:""}</div>
+  box.innerHTML=`<div class="afjour" role="tablist" aria-label="Pour quel jour ?">${[["hier","Hier"],["jour","Aujourd'hui"],["demain","Demain"]].map(([k,l])=>`<button type="button" role="tab" data-mode="${k}" aria-selected="${afMode===k}">${l}</button>`).join("")}</div><div class="afs"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="text" class="afq" placeholder="Chercher : cuisine, film, pompes…" autocomplete="off" enterkeyhint="search">${afQ?`<button type="button" class="afx" aria-label="Effacer">${ICO("close",14)}</button>`:""}</div>
     ${q?"":`<div class="afc">${C.D.map(c=>`<button type="button" data-afc="${c.id}" aria-pressed="${afCat===c.id}" style="--cc:${c.c}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${c.ic}</svg><span></span></button>`).join("")}</div>`}
     <div class="afl">${body}</div>`;
   box.querySelectorAll("[data-afc] span").forEach((s,i)=>s.textContent=C.all[i].label);setTimeout(dressAF,0);
   box.querySelectorAll("[data-afc]").forEach(b=>{const id=b.dataset.afc.split(":")[1];const red=items.filter(it=>it.k==="fam"&&it.f.dom===id&&afFresh(it)==="fr-r").length;if(red)b.insertAdjacentHTML("beforeend",`<i class="afred">${red}</i>`)});
-  {const h=document.querySelector("#plusSheet .ps-h b");if(h){let x=0;try{x=xpToday()}catch(e){}h.innerHTML=`Actions <small class="psxp">${window.__dayShift?"pour hier":x+" XP aujourd'hui"}</small><button type="button" class="afday" aria-pressed="${!!window.__dayShift}">Hier</button>`}}
+  {const h=document.querySelector("#plusSheet .ps-h b");if(h){let x=0;try{x=xpToday()}catch(e){}h.innerHTML=`Actions <small class="psxp">${afMode==="hier"?"pour hier":afMode==="demain"?"pour demain":x+" XP aujourd'hui"}</small>`}}
   box.__reg=reg;
   if(afCat&&!q&&afFam){const t=box.querySelector(".aff .afft");if(t)t.textContent=afFam;const up=box.querySelector(".afup");if(up)up.onclick=()=>{afFam="";afAdd=false;renderAF()};
     const fid=box.__fid,CU=()=>{if(!S.g.afCustom||typeof S.g.afCustom!=="object")S.g.afCustom={};return S.g.afCustom[fid]=S.g.afCustom[fid]||[]};
@@ -126,6 +134,8 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     b.onclick=ev=>afPick(it,b,ev)});
   const inp=box.querySelector(".afq");inp.value=afQ;inp.oninput=()=>{afQ=inp.value;const pos=inp.selectionStart;renderAF();const n=document.querySelector("#actFind .afq");if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}}};
   const x=box.querySelector(".afx");if(x)x.onclick=()=>{afQ="";renderAF()};
+  box.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{afMode=b.dataset.mode;window.__dayShift=afMode==="hier"?1:0;afSel=null;try{navigator.vibrate&&navigator.vibrate(10)}catch(e){}renderAF()});
+  {const tf=box.querySelector(".aftodofree");if(tf)tf.onclick=()=>{const n=afQ.trim();if(!n)return;const ok=todoAdd({n:n.charAt(0).toUpperCase()+n.slice(1)},todoDay(afMode==="demain"?1:0));toast(ok?(afMode==="demain"?"Pour demain : « ":"Ajouté à faire : « ")+esc(n)+" »":"Déjà dans ta liste");afQ="";try{renderTodo()}catch(e){}renderAF()}}
   box.querySelectorAll("[data-afc]").forEach(b=>b.onclick=()=>{afCat=afCat===b.dataset.afc?"":b.dataset.afc;afFam="";afAdd=false;renderAF()});
   const nb=box.querySelector(".afnew");if(nb){const nbB=nb.querySelector("b");if(nbB)nbB.textContent=afQ.trim();nb.onclick=()=>{const name=afQ.trim();try{qcOpen("act")}catch(e){}if(name)setTimeout(()=>{const i=document.querySelector(".qwname");if(i){i.value=name;i.dispatchEvent(new Event("input",{bubbles:true}))}},80)}}}
 try{const z=lzState();LZ.forEach(L=>{if(!z.on.includes(L.id))z.on.push(L.id)})}catch(e){}
@@ -326,7 +336,7 @@ function plusSheet(){const open=document.documentElement.classList.contains("plu
     let y0=null;const pi=sh.querySelector(".ps-in");pi.addEventListener("touchstart",e=>{y0=pi.scrollTop<=0?e.touches[0].clientY:null},{passive:true});pi.addEventListener("touchend",e=>{if(y0!=null&&e.changedTouches[0].clientY-y0>90)cl();y0=null})}
   const pw=sh.querySelector(".ps-wrap"),wrap=document.querySelector("body>.wrap")||document.querySelector(".wrap:not(.ps-wrap)"),plus=document.getElementById("plusBox");
   const secs=PLUS_IDS.map(id=>document.getElementById(id)).filter(Boolean);
-  if(open){secs.forEach(x=>{if(x.parentNode!==pw)pw.appendChild(x)});if(!sh.__af){afQ="";afCat="";afSel=null;afFam="";afStep="who";renderAF()}sh.__af=1}
+  if(open){secs.forEach(x=>{if(x.parentNode!==pw)pw.appendChild(x)});if(!sh.__af){afMode="jour";window.__dayShift=0;afQ="";afCat="";afSel=null;afFam="";afStep="who";renderAF()}sh.__af=1}
   else if(wrap&&plus){sh.__af=0;secs.forEach(x=>{if(x.parentNode===pw)wrap.insertBefore(x,plus.nextSibling)})}}
 // plusSheet est appelé quand le panneau + s'ouvre ou se ferme (19-bilan.js)
 // Événement du jour, en haut d'Aujourd'hui
@@ -401,7 +411,7 @@ document.addEventListener("click",e=>{const go=e.target.closest("#fqBox .fqr .fq
       who.forEach(p=>{S.bonds[p]=(S.bonds[p]||0)+Math.max(5,Math.round(xp/2));S.bondsLast[p]=Date.now()});save();
       toast(who.length===1?`Avec ${esc(who[0])} · lien +${Math.max(5,Math.round(xp/2))}`:`Avec ${who.length} personnes · liens +${Math.max(5,Math.round(xp/2))}`)}catch(err){console.warn("questWho",err)}},120)})},true);
 // ---- noter une action pour hier depuis le +
-document.addEventListener("click",e=>{if(e.target.closest("#afFab")){window.__dayShift=0;return}const b=e.target.closest(".afday");if(!b)return;e.preventDefault();window.__dayShift=window.__dayShift?0:1;b.setAttribute("aria-pressed",!!window.__dayShift);const s=b.parentElement.querySelector(".psxp");if(s){let x=0;try{x=xpToday()}catch(er){}s.textContent=window.__dayShift?"pour hier":x+" XP aujourd'hui"}try{navigator.vibrate&&navigator.vibrate(10)}catch(er){}},true);
+document.addEventListener("click",e=>{if(e.target.closest("#afFab"))window.__dayShift=0},true);
 document.addEventListener("click",e=>{if(e.target.closest("#plusSheet .ps-x"))window.__dayShift=0},true);
 // ---- apprendre des refus : 3 refus d'une même famille en 30 jours = elle se met en retrait 3 semaines
 const famOfQ=x=>{try{const t=x.t||(x.q&&x.q.name)||"";const k=afMatch(t);return k?k.split(":")[1]:""}catch(e){return""}};

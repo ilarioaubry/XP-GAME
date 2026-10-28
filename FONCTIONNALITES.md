@@ -31,6 +31,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Quêtes pour toi | 3 quêtes du jour choisies selon ta situation, la météo, tes proches. Les quêtes nourriture sur le contenu du repas ou la cuisine se valident en remplissant l'assiette (« Remplir l'assiette », objectif affiché, plus proposées quand les repas sont notés) | 10–30 | active |
 | Quêtes spéciales | Carrousel : amis, famille, groupes, surprise du jour, anniversaires (« Avec qui ? » au moment de Fait) | 15–30, anniversaire 30 | module |
 | Panneau « + » | Plus de quêtes, Cette semaine, Défi à deux, Bonnes actions | — | module (chaque bloc) |
+| À faire | Liste du jour remplie depuis Actions (Aujourd'hui / Demain) ou en tâche libre ; cocher ouvre le parcours de l'action ; reste proposé dans Bonne nuit | XP de l'action, tâche libre 5 | active |
 | Ta journée | Bilan en fin de Bonne nuit : XP, actions par catégorie, badges, messages gardés de la journée, proches, repas | — (bilan +10) | active |
 | Contrat fini | Au dernier jour d'un contrat, une coche dans le bandeau d'Aujourd'hui : +50 XP Travail, une fois | 50 | active |
 | Bonnes actions | Dans le panneau Actions, trouvables par la recherche et dans les Récents ; création de tes propres actions (celles qui faisaient doublon avec l'assiette sont retirées, 27/10) | 2 à 30 au choix | active |

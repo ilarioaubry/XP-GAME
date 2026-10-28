@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 28/10/2026
+- À faire : dans Actions, choisis Hier, Aujourd'hui ou Demain. Aujourd'hui : « Fait » ou « À faire plus tard » ; Demain : l'action va dans la liste du lendemain ; une tâche libre s'écrit dans la recherche (5 XP). Section « À faire » dans Aujourd'hui ; ce qui reste est proposé dans Bonne nuit (Demain / Retirer).
 - Bilan de journée : à la fin de Bonne nuit, un écran « Ta journée » (XP, actions par catégorie, badges, ce qui s'est passé, proches, repas). Les messages « en passant » (lien renforcé, objectif atteint, record…) ne s'empilent plus et attendent ce bilan ; les niveaux s'affichent toujours sur le moment.
 - Contrat fini : au dernier jour, une coche à toucher dans le bandeau, +50 XP Travail, puis il disparaît (« Annuler » remet la coche).
 - La section des rituels s'appelle « Rituels du matin » / « Rituels du soir ».

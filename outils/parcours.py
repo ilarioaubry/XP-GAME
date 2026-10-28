@@ -159,6 +159,12 @@ with sync_playwright() as p:
     check("bilan de journée : messages gardés, « Ta journée » en fin de Bonne nuit", r[0] and r[1] >= 2 and pg.evaluate("!!document.querySelector('.jrc')"), str(r))
     pg.evaluate("document.querySelectorAll('.jrc').forEach(e=>e.remove());document.body.classList.remove('rtmon')")
 
+    # 7e. À faire : tâche libre ajoutée, cochée = +5 XP ; une action mise « pour demain » n'apparaît pas aujourd'hui
+    pg.evaluate("()=>{showView('q');todoAdd({n:'Tâche test'},todoDay(0));todoAdd({key:'af:ranger:Chambre',n:'Ranger · Chambre'},todoDay(1));renderTodo()}")
+    x0 = xp(pg); n0 = pg.evaluate("document.querySelectorAll('#todoBox .todor').length")
+    pg.evaluate("[...document.querySelectorAll('#todoBox .todor')].find(r=>/Tâche test/.test(r.textContent)).querySelector('.todock').click()"); pg.wait_for_timeout(400)
+    check("à faire : tâche libre cochée +5 XP, demain pas affiché aujourd'hui", n0 == 1 and xp(pg) - x0 in (5, 10) and pg.evaluate("/1\\/1/.test(document.querySelector('#todoBox .count').textContent)"), f"{n0} {xp(pg)-x0}")
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

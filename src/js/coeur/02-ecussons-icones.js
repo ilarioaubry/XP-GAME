@@ -84,7 +84,7 @@ function renderJournal(){
 // rendu par vue : seule la page visible est redessinée, les autres le sont quand on y va
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
-  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList()},
+  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderTodo==="function")renderTodo()}catch(e){}},
   c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
