@@ -135,7 +135,7 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
   let C=evmOn()?[...ev,...tik]:[...ev,...tik,...cf,...arc,...sp.slice(0,1),...(useAi?ai:[]),...duo,...mq.slice(0,1),...base,...sp.slice(1),...mq.slice(1)];
   const back=C.filter(x=>F.lt[x.id]&&F.lt[x.id]<=now);C=[...back,...C.filter(x=>!back.includes(x))];
   const seen=new Set(),out=[];
-  const CAP=window.vieCap?vieCap():3;
+  const CAP=Math.max(3,Math.min(5,window.vieCap?vieCap():3));   // 3 à 5 par jour (Q.1)
   F.dn.forEach(x=>{if(out.length<CAP&&!seen.has(x.id)){out.push({...x,done:1});seen.add(x.id)}});
   C.forEach(x=>{if(done.has(x.id)&&!seen.has(x.id)&&out.length<CAP){out.push({...x,done:1});seen.add(x.id)}});
   let open=C.filter(x=>!seen.has(x.id)&&!done.has(x.id)&&!hid(x.id));
@@ -143,7 +143,9 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
   {const ids=new Set();open=open.filter(x=>{if(ids.has(x.id))return false;ids.add(x.id);return normOk(x.t)})}
   {const W=/verre d'eau|boire/i;if([...F.dn,...out].some(x=>W.test(x.t||"")))open=open.filter(x=>!W.test(x.t||""));else{let one=false;open=open.filter(x=>{if(!W.test(x.t||""))return true;if(one)return false;one=true;return true})}}
   {const pos=[],fq=[];open.forEach((x,i)=>{if(x.k==="fq"||x.k==="ai"){pos.push(i);fq.push([x,fq.length])}});if(window.viePri){fq.sort((a,b)=>viePri(a[0].cat)-viePri(b[0].cat)||a[1]-b[1]);pos.forEach((p,i)=>open[p]=fq[i][0])}}
-  const fill=[];for(const x of open){if(out.length+fill.length>=CAP)break;if(x.k==="mq"&&fill.some(y=>y.k==="mq"))continue;if(x.k==="sp"&&fill.some(y=>y.k==="sp")&&!x.gift)continue;fill.push(x)}
+  // au moins 2 places pour les « quêtes pour toi » (Q.1) quand il y en a
+  const nFq=open.filter(x=>x.k==="fq"||x.k==="ai").length,keep=Math.min(2,nFq);
+  const fill=[];for(const x of open){if(out.length+fill.length>=CAP)break;if(x.k!=="fq"&&x.k!=="ai"&&!x.gift&&out.filter(y=>y.k!=="fq"&&y.k!=="ai").length+fill.filter(y=>y.k!=="fq"&&y.k!=="ai").length>=CAP-keep)continue;if(x.k==="mq"&&fill.some(y=>y.k==="mq"))continue;if(x.k==="sp"&&fill.some(y=>y.k==="sp")&&!x.gift)continue;fill.push(x)}
   fill.forEach(x=>{out.push(x);seen.add(x.id)});
   return{L:out,rest:open.filter(x=>!seen.has(x.id)).length,F}}
 function fqList(){return feedPick().L}
@@ -164,15 +166,11 @@ function feedDoBase(x,go,ev){const G=S.g,F=G.fq,tk=dayKey(Date.now());if(x.later
   if(/verre d'eau/i.test(x.t)){const wt=ritTasks().find(t=>t.bar==="eau");if(wt)S.daily.c[wt.id]=Math.min(wt.n,(S.daily.c[wt.id]||0)+1)}
   complete({id:"fq-"+x.id.split(":")[0],cat:x.cat,name:x.t,xp:x.xp},go,ev,0,{fq:1});skyCheer()}
 // feedNo : version complète (ex-réécriture de correctifs.js), feedNoBase = le cœur d'origine
-function feedNo(x,how){if(how==="today"||how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
+function feedNo(x,how){if(how==="never"){const f=famOfQ(x);if(f){const G=S.g;if(!G.fqFam||typeof G.fqFam!=="object")G.fqFam={};const was=famCool(f);G.fqFam[f]=[...(G.fqFam[f]||[]).filter(t=>Date.now()-t<30*864e5),Date.now()].slice(-6);
       if(!was&&famCool(f)){const F=(typeof FAM!=="undefined"?FAM.find(z=>z.id===f):null);setTimeout(()=>toast(`Compris : moins de quêtes « ${esc((F&&F.l)||f)} » pendant un moment`),900)}}}return feedNoBase.apply(this,arguments)}
 function feedNoBase(x,how){const G=S.g,F=G.fq,now=Date.now();
   if(how==="seen"){filmSeen(x.t);G.filmDay=null;save();renderFq();toast("Noté comme déjà vu : voici un autre film");return}
-  if(how==="part"){if((F.done||[]).includes(x.id))return;const tk=dayKey(now),hx=Math.max(1,Math.round(x.xp/2));F.done=[...(F.done||[]),x.id];F.dn=[...(F.dn||[]),{id:x.id,t:x.t,why:x.why,cat:x.cat,xp:hx,k:x.k,part:1}];F.dnd=tk;if(F.lt)delete F.lt[x.id];
-    if(x.k==="mq"){if(!G.mq||typeof G.mq!=="object")G.mq={};if(!G.mq[tk])G.mq[tk]=[];G.mq[tk].push(x.q[0])}if(x.ev){if(!G.evq||typeof G.evq!=="object")G.evq={};G.evq[x.ev]=[...(G.evq[x.ev]||[]),x.tpl]}
-    complete({id:"fq-part",cat:x.cat,name:x.t+" (en partie)",xp:hx},document.querySelector("#fqBox .fqr")||document.body,null,0,{fq:1,part:1});return}
   if(how==="later"){const d=new Date();const h=dayH();let t;if(h<17){d.setHours(18,0,0,0);t=d.getTime()}else t=now+2*36e5;F.lt[x.id]=t;save();renderFq();toast(h<17?"Elle revient ce soir, vers 18 h":"Elle revient dans 2 heures");return}
-  if(how==="today"){F.sk=[...F.sk,x.id];fqWAdd(x.key,-.25);save();renderFq();toast("Pas aujourd'hui : elle reviendra un autre jour");sfx("blip");return}
   if(how==="never"){const NO=fqNo();if(x.key)NO[x.key]=1;if(x.k==="cf")NO["c:"+x.t]=1;F.sk=[...F.sk,x.id];fqWAdd(x.key,-1);
     if(!Array.isArray(G.fqNoT))G.fqNoT=[];G.fqNoT=[...G.fqNoT.filter(t=>t!==x.t),x.t].slice(-15);
     if(x.k==="sp"&&!x.gift){S.specials=S.specials.filter(q=>q.id!==x.q.id)}
@@ -186,7 +184,7 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
   box.innerHTML=`<div class="head"><h2>Aujourd'hui<span class="count">${L.length-left}/${L.length}</span></h2><button type="button" class="btn edbtn fqsit" aria-label="Ma situation" title="Ma situation">${ICO("edit",16)}</button></div>${ctxL?`<p class="fqctx"></p>`:""}
     ${L.length?`<div class="fql">${L.map((x,i)=>{const C=CATS[x.cat]||{},d=!!x.done,m=!d&&fqMenu===x.id;return`<div class="fqr k-${x.k}${d?" done":""}${x.later&&!d?" later":""}${m?" menu":""}" style="--zc:${C.c||"var(--gold)"}" data-i="${i}"><span class="fqt"><small class="fqw">${x.k==="ai"?`<em>Claude</em> · `:""}<span></span></small><b></b>${!d&&freeAlt(x.t)?`<small class="fqfree">Version gratuite : ${esc(freeAlt(x.t))}</small>`:""}${d&&x.k!=="tik"?`<button type="button" class="lnk fqmem">${memOf("q:"+dayKey(Date.now())+":"+x.id)?"Souvenir gardé · voir":"+ Un souvenir"}</button>`:""}</span>
       <span class="fqa">${d?`<span class="fqok">${x.part?"½":ICO("check",18)}</span>`:`${(()=>{const cn=!x.later&&cntOf(x.t),dm0=!x.later&&!cn&&durOf(x.t),dm=dm0>=10?dm0:0;if(cn){const k=((F.cnt||{})[x.id])|0;return`<span class="ui-compteur fqcn">${k}/${cn.n}</span><button type="button" class="btn primary fqgo fqcnt" data-cnt="1">+${Math.min(cn.st,cn.n-k)}</button>`}return`<button type="button" class="btn primary fqgo"${dm?` data-tm="fq-${esc(x.id)}" data-tmn="${esc(x.t)}"`:""}>${x.later?"À partir de "+mqUntil(x.from).replace(/^(\d+)h$/,"$1 h"):dm?`${dm>=60?(dm/60).toLocaleString("fr-FR")+" h":dm+" min"}`:typeof plLinked==="function"&&plLinked(x)?"Remplir l'assiette":"Fait"} <small>+${x.xp}</small></button>`})()}<button type="button" class="fqrr" aria-label="Pas maintenant" aria-expanded="${m}" title="Pas maintenant"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg></button>`}</span>
-      ${m?`<span class="fqno">${x.film?`<button type="button" class="btn" data-no="seen">Déjà vu<small>un autre film</small></button>`:""}${["fq","ai","mq","ev","cf"].includes(x.k)?`<button type="button" class="btn" data-no="part">En partie<small>moitié des XP</small></button>`:""}<button type="button" class="btn" data-no="later">Plus tard<small>revient ce soir</small></button><button type="button" class="btn" data-no="today">Pas aujourd'hui<small>un autre jour</small></button>${x.gift||x.nonever?"":`<button type="button" class="btn" data-no="never">Pas pour moi<small>ne revient plus</small></button>`}</span>`:""}</div>`}).join("")}</div>`:`<p class="fqempty">C'est tout pour l'instant.</p>`}
+      ${m?`<span class="fqno">${x.film?`<button type="button" class="btn" data-no="seen">Déjà vu<small>un autre film</small></button>`:""}<button type="button" class="btn" data-no="later">Plus tard<small>revient ce soir</small></button>${x.gift||x.nonever?"":`<button type="button" class="btn" data-no="never">Pas pour moi<small>ne revient plus</small></button>`}</span>`:""}</div>`}).join("")}</div>`:`<p class="fqempty">C'est tout pour l'instant.</p>`}
     ${s?"":`<button type="button" class="wkcta fqcta">${ICO("spark",18)}<span><b>Dis-m'en un peu plus sur toi</b><small>Pour des quêtes tirées de ta vie.</small></span></button>`}
     
     ${s&&s.note&&!arcCur()&&!evmOn()?`<button type="button" class="wkcta arccta"${arcBusy?" disabled":""}>${ICO("spark",18)}<span><b>${arcBusy?"Découpage…":"Faire de « "+esc(s.note.slice(0,40))+" » un arc"}</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
