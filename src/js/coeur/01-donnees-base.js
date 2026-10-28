@@ -32,7 +32,9 @@ const GROUPS={friends:{list:"friends",done:"friendDone",verb:"Prendre des nouvel
 const HYGIENE=[{id:"h0",name:"Se brosser les dents",cat:"maison",xp:5}];
 // actions déjà couvertes par l'assiette (27/10) : plus proposées
 const PLATE_DUP=new Set(["Petit-déjeuner complet","Repas équilibré","Fruit ou légume en plus","Repas végétarien","Cuisiner un vrai repas"]);
-const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name));
+// bonnes actions retirées à la refonte (Q.4, 28/10) ; « 1 verre d'eau » reste : c'est l'action derrière le rituel des verres d'eau (déjà masquée de la liste)
+const ACT_RETIRE=new Set(["Avancer sur le dossier (30 min)","Se coucher avant minuit","Trajet à pied ou à vélo"]);
+const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name)&&!ACT_RETIRE.has(a.name));
 
 // Niveau n -> n+1 coûte 50 + 50n XP (100, 150, 200…)
 const needFor=l=>50+50*l;

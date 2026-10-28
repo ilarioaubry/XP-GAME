@@ -390,7 +390,15 @@ function recomputeDays(){const ex=new Set([dayKey(Date.now()),...(window.__jDay?
 function complete(a,el,ev,sp,extra){const r=completeBase.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
       let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
       autoQuest(e)}}catch(err){}return r}
-function completeBase(a,el,ev,sp,extra){
+// Barème et catégories (refonte Q.6 / Q.7, 28/10) : 30 XP au plus par validation, 50 pour un exploit (livre, jeu ou série fini, son sorti, objectif du mois, contrat fini, sortie loin) ;
+// marche et lecture en Soi, album en Talent, partout où elles apparaissent
+const XP_EXPLOIT=/^(Livre (terminé|fini)|Jeu fini|Série finie|Son sorti|Objectif du mois|Contrat terminé)|train régional/i;
+function xpRules(a){const n=String(a.name||"");let cat=a.cat;
+  if(/\bmarch(e|er)\b/i.test(n)&&/^(sport|soi)$/.test(cat))cat="soi";
+  else if(/\b(lire|lecture|pages?|livres?)\b/i.test(n)&&/^(perso|soi)$/.test(cat))cat="soi";
+  else if(/\balbums?\b/i.test(n)&&/^(perso|soi)$/.test(cat))cat="perso";
+  const xp=a.xp>0?Math.min(a.xp,XP_EXPLOIT.test(n)?50:30):a.xp;return cat!==a.cat||xp!==a.xp?{...a,cat,xp}:a}
+function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   {const k=String(a.id||"")+"|"+(a.name||"")+"|"+(a.who||"");if(!/^rit/.test(String(a.id||""))&&window.__lastC&&window.__lastC.k===k&&Date.now()-window.__lastC.t<700)return;window.__lastC={k,t:Date.now()}}
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
@@ -447,7 +455,7 @@ function jokCheck(){const G=S.g;if(!G)return;if(typeof G.jok!=="number")G.jok=0;
 function streakLine(){const G=S.g,P=protDays(),F=new Set([...S.days,...P]),s=streak(),best=Math.max(bestRun(new Set(S.days)),s),l40=lastN(F,40);
   return`Série ${s} j · record ${best} j · actif ${l40} jours sur 40${G&&G.jok?` · ${G.jok} joker${G.jok>1?"s":""}`:""}`}
 const STREAK_MS=[[7,1],[30,2],[100,3]];
-function addBonus(name,xp,eurAmt,flag){S.xp+=xp;if(eurAmt)S.extraMoney=Math.round((S.extraMoney+eurAmt)*100)/100;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(eurAmt?{eur:eurAmt}:{}),...(flag?{[flag]:1}:{})})}
+function addBonus(name,xp,eurAmt,flag){if(xp>0)xp=Math.min(xp,50);S.xp+=xp;if(eurAmt)S.extraMoney=Math.round((S.extraMoney+eurAmt)*100)/100;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(eurAmt?{eur:eurAmt}:{}),...(flag?{[flag]:1}:{})})}
 function streakBonusCheck(){
   const n=streak();let msg="";
   STREAK_MS.forEach(([m,xp])=>{

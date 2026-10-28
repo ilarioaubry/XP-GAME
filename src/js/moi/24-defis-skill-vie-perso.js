@@ -1,6 +1,7 @@
 // ===== Défis par skill (même principe que le Son : tirer un défi + objectif du mois) =====
-function filmPick(not){const G=S.g,seen=new Set([...(G.filmSeen||[]),...(G.filmDone||[]),...(not||[])]);const L=FILMS.filter(f=>!seen.has(f));return L.length?L[Math.floor(Math.random()*L.length)]:pick(FILMS)}
-function filmSeen(t,done){const G=S.g,k=done?"filmDone":"filmSeen";if(!Array.isArray(G[k]))G[k]=[];if(!G[k].includes(t))G[k].push(t);G[k]=G[k].slice(-300)}
+function filmPick(not){const G=S.g,seen=new Set([...(G.filmSeen||[]),...(G.filmDone||[]),...(not||[]).map(filmT)]);const L=FILMS.filter(f=>!seen.has(f));return L.length?L[Math.floor(Math.random()*L.length)]:pick(FILMS)}
+const filmT=t=>String(t||"").replace(/^Regarder /,""); // titre de quête « Regarder [film] » → le film (refonte Q.13)
+function filmSeen(t,done){t=filmT(t);const G=S.g,k=done?"filmDone":"filmSeen";if(!Array.isArray(G[k]))G[k]=[];if(!G[k].includes(t))G[k].push(t);G[k]=G[k].slice(-300)}
 function filmOfDay(){const G=S.g,tk=dayKey(Date.now());if(!G.filmDay||G.filmDay.d!==tk||(G.filmSeen||[]).includes(G.filmDay.t))G.filmDay={d:tk,t:filmPick()};return G.filmDay.t}
 
 

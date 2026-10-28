@@ -51,7 +51,10 @@ function ensureGroupQuests(){
   return added;
 }
 // completeSpecial : version complète (ex-réécriture de correctifs.js), completeSpecialBase = le cœur d'origine
-function completeSpecial(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
+function completeSpecial(q,el,ev){
+  // quête nourriture reliée à l'assiette : elle se remplit dans l'assiette du repas en cours, qui la valide
+  if(q&&q.cat==="nourriture"&&!window.__plSp&&typeof plRule==="function"&&plRule(q.name)&&typeof plTarget==="function"){const k=plTarget();if(k){plateOpen(k==="dej"?"matin":"soir",k,el,{q:{t:q.name,id:q.id}});return}}
+  if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
       if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
       if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return completeSpecialBase.apply(this,arguments)}
 function completeSpecialBase(q,el,ev){

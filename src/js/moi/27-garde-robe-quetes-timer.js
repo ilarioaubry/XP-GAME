@@ -49,7 +49,7 @@ function renderWardrobeBase(){
 }
 
 // ---- Quêtes chronométrées : le timer remplace la validation directe
-function durOf(n){n=(n||"").toLowerCase();let t=0;const h=n.match(/(\d+(?:[.,]\d+)?)\s*h(?![a-zà-ü])/);if(h)t+=parseFloat(h[1].replace(",","."))*60;const m=n.match(/(\d+)\s*min/);if(m)t+=+m[1];if(!t&&/dents/.test(n))t=2;return Math.round(t)}
+function durOf(n){n=(n||"").toLowerCase();let t=0;const h=n.match(/(\d+(?:[.,]\d+)?)\s*h(?![a-zà-ü])/);if(h)t+=parseFloat(h[1].replace(",","."))*60;const m=n.match(/(\d+)\s*min/);if(m)t+=+m[1];if(!t&&/\bune demi-heure\b/.test(n))t=30;else if(!t&&/\bun quart d.heure\b/.test(n))t=15;else if(!t&&/\bune heure\b/.test(n))t=60;if(!t&&/dents/.test(n))t=2;return Math.round(t)}
 const tmOn=()=>!!(S.g&&S.g.tm);
 let tmIv=0;
 function tmFmt(ms){const s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+":"+String(m).padStart(2,"0"):String(m))+":"+String(x).padStart(2,"0")}
@@ -83,7 +83,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&tmOn())tm
 const qName=b=>(b.dataset.tmn||b.dataset.n||b.textContent||"").trim();
 const isRead=n=>!/fini|relire|élire| ou |premières/i.test(n)&&/(^|[\s:])lire(\s|$)|^lecture\b|séance de lecture/i.test(n);
 const isBookEnd=n=>/livre fini|finir le livre|un livre en entier/i.test(n);
-const isPush=n=>/pompes|squats/i.test(n)&&!/ou \d+ min|marche rapide demain/i.test(n);
+const isPush=n=>/pompes|squats/i.test(n)&&!/ou \d+ min|marche rapide demain/i.test(n)&&!/\d+\s*min\b/i.test(n);
 function qPass(b,xp,add){window.__qPass=true;window.__xpP=(xp!=null||add)?{ov:xp,add,t:Date.now()}:null;try{b.click()}finally{window.__qPass=false}}
 document.addEventListener("click",e=>{if(window.__qPass||window.__tmPass||window.__holdPass)return;const b=e.target.closest&&e.target.closest("[data-tm]");if(!b||b.disabled)return;const n=qName(b);
   {const sp=qSpecialOpen(b,n);if(sp){e.preventDefault();e.stopImmediatePropagation();return}}
@@ -102,7 +102,7 @@ document.addEventListener("contextmenu",e=>{if(e.target.closest&&e.target.closes
 // ---------- quêtes interactives (corps, esprit, relations, cadeau)
 const isPlank=n=>/gainage|planche/i.test(n)&&!/ et |record de pompes|note tes/i.test(n);
 const isStretch=n=>/étirement/i.test(n);
-const isRun=n=>/(courir|course|footing|marche-courir)/i.test(n)&&!durOf(n);
+const isRun=n=>/(courir|\bcourse\b|footing|marche-courir)/i.test(n)&&!/\bcourses\b/i.test(n)&&!durOf(n);
 const isMed=n=>/médit/i.test(n)&&!/ ou /i.test(n);
 const isGift=n=>/^acheter un cadeau pour /i.test(n);
 const isContact=n=>!!cbWho(n)&&/écri|appel|vocal|nouvelles|message|contact|envoie|envoyer|demande|propose|recommand|raconte|parle|dis /i.test(n)&&!isGift(n);

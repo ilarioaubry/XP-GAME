@@ -166,19 +166,19 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [ ] Q.1 Quêtes pour toi : **3 à 5 par jour, à la même place**, tirées de **mes priorités** (fiche : famille, chez moi, manger). Elles ne lui parlaient pas : les rendre **concrètes et courtes** (tâche précise, 5–15 min) ou **plaisir / envies** (ciné, sorties, jeux, musique)
 - [ ] Q.2 Idées sortie : **inspiration le week-end**, sans carte à valider
 - [ ] Q.3 Quêtes spéciales : carrousel gardé tel quel
-- [ ] Q.4 Bonnes actions : Ilario garde 1, 4–10, 12, 14–26 ; **retirer** « Avancer sur le dossier (30 min) », « 1 verre d'eau », « Se coucher avant minuit », « Trajet à pied ou à vélo » (27/10)
+- [x] Q.4 Bonnes actions : Ilario garde 1, 4–10, 12, 14–26 ; **retirer** « Avancer sur le dossier (30 min) », « 1 verre d'eau », « Se coucher avant minuit », « Trajet à pied ou à vélo » (27/10) — fait 28/10 (migration 5) ; « 1 verre d'eau » reste caché derrière le rituel des verres d'eau
 - [ ] Q.5 Tri : **1 par jour au plus**
-- [ ] Q.6 XP : **30 max**, sauf grands exploits (livre fini, série finie, sortie loin) jusqu'à 50
-- [ ] Q.7 Catégories : marche = **Soi** ; lecture = **Soi**, album = **Talent** ; sorties = **Soi**, **Ami si « Avec qui ? »** rempli
+- [x] Q.6 XP : **30 max**, sauf grands exploits (livre fini, série finie, sortie loin) jusqu'à 50 — fait 28/10, règle à la validation (`xpRules`), bonus plafonnés à 50 (son sorti, objectif du mois)
+- [x] Q.7 Catégories : marche = **Soi** ; lecture = **Soi**, album = **Talent** ; sorties = **Soi**, **Ami si « Avec qui ? »** rempli
 - [ ] Q.8 Quêtes qui durent (journée sans soda, 1 h sans réseaux, escaliers) : **engagement en début de journée, validation en fin de journée**
 - [ ] Q.9 Menu « … » simplifié : **Plus tard + Pas pour moi**
 - [ ] Q.10 Quêtes travail : gardées
 - [ ] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
 - [x] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit (27/10 : les bonnes actions sont dans leur catégorie et dans la recherche)
 - [ ] Q.16 Page Actions (analyse du 27/10) : ~~« Avec qui ? » après la durée, seulement pour les proches et les sorties~~ (fait 27/10) · ~~Cuisiner un repas ouvre l'assiette~~ (fait) · ~~icônes 48 px, « Journée sans » non coupé~~ (fait) · ~~accueil « Récents » / « Pour commencer »~~ (fait) · ~~XP de l'action plafonnée à 30~~ (fait, le boost ×2 existant reste) · à confirmer : couleurs (tuile pleine, bordures gauches, décor) et messages empilés
-- [ ] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
+- [x] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
 - [ ] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8)
-- [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout)
+- [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout) — 28/10 : 4.1.1 à 4.1.5 corrigés, catégories et plafond partout ; reste : un seul titre et une seule XP par action en double (4.5)
 
 ## Demandes du 28/10/2026
 

@@ -38,7 +38,7 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
       <div class="skmo">${MOIS1.slice(1).map((m,j)=>{const kk=y+"-"+String(j+1).padStart(2,"0");return`<span class="${(G.rel||{})[kk]?"on":""}${j===mo?" cur":""}">${m[0].toUpperCase()}</span>`}).join("")}</div></div>`;
     el.innerHTML=h;aff.appendChild(el);if(rel)el.querySelector(".skok span").textContent=rel.n||"sans titre";
     const go=el.querySelector(".skrel");if(go)go.onclick=()=>{const n=el.querySelector("input").value.trim().slice(0,40),prev=levelInfo(S.xp).l,sg={visuel:4,prod:3,poly:1};if(!G.rel)G.rel={};Object.entries(sg).forEach(([kk,v])=>S.snd[kk]=(S.snd[kk]||0)+v);G.rel[ym]={n,t:Date.now()};
-      S.xp+=150;S.log.push({a:"bonus",cat:null,name:"Son sorti"+(n?" : "+n:""),xp:150,t:Date.now(),bonus:1,out:ym,snd:sg});save();try{uniBurst(go,"creer")}catch(e){}render(prev);setTimeout(()=>toast(`Son sorti ! <span class="p">+150 XP</span>`),300);el.remove();afSkill()};return}
+      S.xp+=50;S.log.push({a:"bonus",cat:null,name:"Son sorti"+(n?" : "+n:""),xp:50,t:Date.now(),bonus:1,out:ym,snd:sg});save();try{uniBurst(go,"creer")}catch(e){}render(prev);setTimeout(()=>toast(`Son sorti ! <span class="p">+50 XP</span>`),300);el.remove();afSkill()};return}
   const z=lzState(),L=lzOf(B.z),i=skInfo(z.xp[B.z]||0);
   h+=`<div class="sklv"><b>${esc(L?L.n:"")}</b><span>Nv ${i.l}</span><i><em style="width:${i.cur/i.need*100}%"></em></i></div>`;
   if(B.c){const cur=(G.cur||{})[B.c.k],nf=((G.fini||{})[B.c.k]||[]).length;
@@ -49,7 +49,7 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
   if(B.c){const cur=(G.cur||{})[B.c.k];if(cur)el.querySelector(".skcur span").textContent=cur.t;
     const set=el.querySelector(".skset");if(set){const inp=el.querySelector("input");const ok=()=>{const t=inp.value.trim().slice(0,40);if(!t)return;if(!G.cur||typeof G.cur!=="object")G.cur={};G.cur[B.c.k]={t,n:0,s:Date.now()};save();el.remove();afSkill()};set.onclick=ok;inp.onkeydown=e=>{if(e.key==="Enter")ok()}}
     const ch=el.querySelector(".skch");if(ch)ch.onclick=()=>{delete G.cur[B.c.k];save();el.remove();afSkill()}}
-  const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),100);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+100 XP</span>`);el.remove();afSkill()}}
+  const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),50);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+50 XP</span>`);el.remove();afSkill()}}
 // le bilan reprend la série et les coffres
 function bilKpi(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;let st=0;try{st=streak()}catch(e){}const o=S.g.opened||0,k=st+"|"+o;let r=b.querySelector(".bilkpi");if(r&&r.dataset.k===k&&r===b.firstElementChild)return;
   if(!r){r=document.createElement("div");r.className="bilkpi"}r.dataset.k=k;let fl="",ch="";try{fl=pxImg("flame",2,"ic");ch=pxImg("chest",2,"ic")}catch(e){}

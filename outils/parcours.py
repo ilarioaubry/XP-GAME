@@ -171,6 +171,10 @@ with sync_playwright() as p:
     pg.evaluate("()=>{document.querySelector('[data-en=soda][data-v=\"1\"]').click();document.querySelectorAll('.clo').forEach(e=>e.remove());document.body.classList.remove('rtmon')}")
     check("engagements : carte du jour et étape dans Bonne nuit", ok)
 
+    # 7g. Refonte étape 1 : courses ≠ course à pied, durée dans le titre = minuteur, « une heure » lue, barème 30 / 50, catégories
+    r = pg.evaluate("[isRun('Courses de la semaine'),isPush('15 min de sport à la maison'),durOf('Une heure sans réseaux'),xpRules({name:'1 h de travail concentré',cat:'travail',xp:35}).xp,xpRules({name:'Livre terminé : X',cat:'soi',xp:80}).xp,xpRules({name:'30 min de marche',cat:'sport',xp:25}).cat,xpRules({name:'Écouter un album en entier',cat:'soi',xp:10}).cat]")
+    check("refonte : courses, minuteur, une heure, barème, catégories", r == [False, False, 60, 30, 50, "soi", "perso"], str(r))
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

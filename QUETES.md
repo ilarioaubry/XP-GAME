@@ -176,7 +176,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 
 <!-- INVENTAIRE (généré par outils/inventaire.py, ne pas éditer à la main) -->
 
-430 éléments au total. Colonnes : titre tel qu'affiché (les [crochets] sont remplis par l'appli), catégorie (barre de stat), XP, créneau, comment on la réalise, lignes du titre sur une carte de quête (265 px).
+424 éléments au total. Colonnes : titre tel qu'affiché (les [crochets] sont remplis par l'appli), catégorie (barre de stat), XP, créneau, comment on la réalise, lignes du titre sur une carte de quête (265 px).
 
 ### Quêtes pour toi (59)
 
@@ -186,7 +186,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Un album de [artiste] en entier, sans écran — Tu écoutes [artiste] | Talent | 15 | 10–24 h | Fait | 2 |
 | Découvrir 3 artistes proches de [artiste] — Tu écoutes [artiste] | Talent | 10 | 9–24 h | Compteur 3 | 2 |
 | Faire un beat dans l'esprit de [artiste] (30 min) — Tu fais du son et tu écoutes [artiste] | Talent | 30 | 10–24 h | Minuteur 30 min | 2 |
-| Décortiquer un son de [artiste] : intro, couplet, refrain, ce qui t'accroche — Pour nourrir ton son | Talent | 15 | 10–24 h | Fait | 3 |
+| Décortiquer un son de [artiste] — Pour nourrir ton son | Talent | 15 | 10–24 h | Fait | 1 |
 | Regarder un live ou un concert filmé de [artiste] — Tu écoutes [artiste] | Talent | 15 | 18–24 h | Fait | 2 |
 | Envoyer 2 candidatures — Tu cherches un travail | Travail | 30 | 9–18 h | Compteur 2 | 1 |
 | Repérer 5 offres qui te donnent envie — Tu cherches un travail | Travail | 15 | 9–20 h | Compteur 5 | 2 |
@@ -198,17 +198,17 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Vider ta boîte mail pendant 10 min — Tu travailles | Travail | 10 | 9–18 h | Minuteur 10 min | 1 |
 | 45 min sur ton projet principal — Tu es à ton compte | Travail | 30 | 9–19 h | Minuteur 45 min | 1 |
 | Marche rapide de 20 min dehors — Pour ta forme | Force | 15 | 8–20 h | Minuteur 20 min | 1 |
-| 15 min de sport à la maison : pompes, squats, gainage — Pour ta forme | Force | 15 | 8–22 h | Compteur de pompes | 2 |
+| 15 min de sport à la maison — Pour ta forme | Force | 15 | 8–22 h | Minuteur 15 min | 1 |
 | 10 min d'étirements avant de dormir — Pour ta forme et ton sommeil | Force | 10 | 20–24 h | Étirements guidés | 1 |
 | Écrans coupés 30 min avant de dormir — Pour mieux dormir | Soi | 15 | 21–24 h | Minuteur 30 min | 2 |
 | Aérer ta chambre 5 min avant de te coucher — Pour mieux dormir | Maison | 5 | 20–24 h | Fait | 2 |
 | Une sieste de 20 min, pas plus — Ta nuit a été courte | Soi | 10 | 12–16 h | Minuteur 20 min | 1 |
-| Une heure sans réseaux, à partir de maintenant — Moins d'écrans | Soi | 15 | 13–18 h | Fait | 2 |
+| Une heure sans réseaux, à partir de maintenant — Moins d'écrans | Soi | 15 | 13–18 h | Minuteur 60 min | 2 |
 | Proposer une sortie ce week-end à un ami — Pour tes potes | Ami | 15 | 10–22 h | Fait + Avec qui ? | 2 |
 | Voir un ami dehors aujourd'hui — Il fait beau, profites-en à deux | Ami | 25 | 11–21 h | Fait + Avec qui ? | 1 |
 | Appeler un pote 10 min, juste pour parler — Pour tes potes | Ami | 15 | 11–23 h | Minuteur 10 min + Avec qui ? | 2 |
 | Envoyer une photo de ta journée à ta famille — Pour ta famille | Famille | 10 | 12–22 h | Fait + Avec qui ? | 2 |
-| Rendre un petit service à quelqu'un chez toi — À la maison | Maison | 10 | 10–22 h | Fait | 2 |
+| Faire une tâche à la place de [W] — À la maison | Maison | 10 | 10–22 h | Fait | 1 |
 | Noter tes dépenses de la semaine — Pour tes finances | Maison | 15 | 10–22 h | Fait | 1 |
 | Repérer un abonnement que tu peux arrêter — Pour tes finances | Maison | 15 | 10–22 h | Fait | 2 |
 | 20 min sur une compétence : un tuto, un cours, une vidéo — Tu veux apprendre | Talent | 20 | 9–23 h | Minuteur 20 min | 2 |
@@ -217,7 +217,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | 10 min au soleil, sans rien faire — Il fait beau dehors | Soi | 10 | 9–18 h | Minuteur 10 min | 1 |
 | Cuisiner un vrai repas maison — Pour manger mieux | Nourriture | 20 | 11–21 h | Assiette | 1 |
 | Tester une recette que tu n'as jamais faite — Tu aimes cuisiner | Nourriture | 25 | 11–21 h | Assiette | 2 |
-| Matrix (1999) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
+| Regarder Do the Right Thing (1989) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
 | Lire 20 pages — Tu aimes lire | Talent | 15 | 9–24 h | Lecture (pages) | 1 |
 | Finir une mission en jeu, après tes rituels — Tu as bien bossé | Talent | 10 | 17–24 h | Fait | 2 |
 | Dessiner 15 min — Tu aimes dessiner | Talent | 15 | 9–24 h | Minuteur 15 min | 1 |
@@ -225,13 +225,13 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Balade dans un parc ou en forêt — Tu aimes la nature | Force | 20 | 9–19 h | Fait | 1 |
 | Préparer ta tenue de demain — Tu aimes la mode | Soi | 10 | 19–24 h | Fait | 1 |
 | Faire du son pendant 30 min — Ta musique avance | Talent | 30 | 10–24 h | Minuteur 30 min | 1 |
-| [note] : 20 min pour avancer — Ce qui compte pour toi en ce moment | Talent | 25 | 9–23 h | Minuteur 20 min | 1 |
-| Trier 50 photos : doublons, flous et captures d'écran à la corbeille — Tri : photos | Maison | 15 | 9–23 h | Compteur 50 | 2 |
+| 20 min pour [note] — Ce qui compte pour toi en ce moment | Talent | 25 | 9–23 h | Minuteur 20 min | 1 |
+| Trier 50 photos — Tri : photos | Maison | 15 | 9–23 h | Compteur 50 | 1 |
 | Faire le tri dans tes notes : 10 à supprimer ou à ranger — Tri : notes | Maison | 10 | 9–23 h | Fait | 2 |
 | Archiver les vieilles conversations et nettoyer 10 contacts — Tri : messages et contacts | Maison | 10 | 9–23 h | Fait | 2 |
 | Te désabonner de 5 newsletters et vider ta boîte de réception — Tri : mails | Maison | 15 | 9–23 h | Fait | 2 |
 | Supprimer les applis que tu n'as pas ouvertes depuis un mois — Tri : applis | Maison | 10 | 9–23 h | Fait | 2 |
-| Trier un réseau : 10 abonnements en moins, et un œil sur tes abonnés — Tri : réseaux | Maison | 10 | 9–23 h | Fait | 2 |
+| Trier un réseau : 10 abonnements en moins — Tri : réseaux | Maison | 10 | 9–23 h | Fait | 2 |
 | Couper les notifications de 5 applis qui ne servent à rien — Tri : notifications | Maison | 10 | 9–23 h | Fait | 2 |
 | Régler un mode de concentration pour le soir ou le travail — Tri : modes de concentration | Maison | 10 | 9–23 h | Fait | 2 |
 | Choisir un nouveau fond d'écran qui te ressemble — Tri : fond d'écran | Maison | 5 | 9–23 h | Fait | 2 |
@@ -258,12 +258,12 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
-| Trier 50 photos : doublons, flous et captures d'écran à la corbeille — Tri : Photos | Maison | 15 |  | Compteur 50 | 2 |
+| Trier 50 photos — Tri : Photos | Maison | 15 |  | Compteur 50 | 1 |
 | Faire le tri dans tes notes : 10 à supprimer ou à ranger — Tri : Notes | Maison | 10 |  | Fait | 2 |
 | Archiver les vieilles conversations et nettoyer 10 contacts — Tri : Messages et contacts | Maison | 10 |  | Fait | 2 |
 | Te désabonner de 5 newsletters et vider ta boîte de réception — Tri : Mails | Maison | 15 |  | Fait | 2 |
 | Supprimer les applis que tu n'as pas ouvertes depuis un mois — Tri : Applis | Maison | 10 |  | Fait | 2 |
-| Trier un réseau : 10 abonnements en moins, et un œil sur tes abonnés — Tri : Réseaux | Maison | 10 |  | Fait | 2 |
+| Trier un réseau : 10 abonnements en moins — Tri : Réseaux | Maison | 10 |  | Fait | 2 |
 | Couper les notifications de 5 applis qui ne servent à rien — Tri : Notifications | Maison | 10 |  | Fait | 2 |
 | Régler un mode de concentration pour le soir ou le travail — Tri : Modes de concentration | Maison | 10 |  | Fait | 2 |
 | Choisir un nouveau fond d'écran qui te ressemble — Tri : Fond d'écran | Maison | 5 |  | Fait | 2 |
@@ -299,40 +299,39 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Envoyer une photo souvenir à la famille | Famille | 10 |  | Fait + Avec qui ? | 2 |
 | Aider à une tâche chez tes parents | Famille | 20 |  | Fait + Avec qui ? | 1 |
 
-### Idée sortie (32)
+### Idée sortie (31)
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
-| Une jam session ouverte dans un bar — Jam session | Ami | 35 |  | Fait + Avec qui ? | 2 |
+| Une jam session ouverte dans un bar — Jam session | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | Une scène ouverte de stand-up, en spectateur — Stand-up | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | Une soirée quiz ou blind test dans un bar — Soirée quiz | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | La dernière séance d'un film en VO — Cinéma | Ami | 25 |  | Fait + Avec qui ? | 1 |
 | Un vieux film culte au ciné-club ou en rétrospective — Cinéma | Ami | 30 |  | Fait + Avec qui ? | 2 |
-| Le concert d'un groupe local que tu ne connais pas — Concert | Ami | 35 |  | Fait + Avec qui ? | 2 |
+| Le concert d'un groupe local que tu ne connais pas — Concert | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | Un karaoké avec des potes — Karaoké | Ami | 30 |  | Fait + Avec qui ? | 1 |
 | Un bar à jeux : tester un jeu de société inconnu — Bar à jeux | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | Un match d'impro théâtrale — Théâtre | Ami | 30 |  | Fait + Avec qui ? | 1 |
 | Du jazz dans une cave ou un petit bar — Concert | Ami | 30 |  | Fait + Avec qui ? | 2 |
-| Un escape game à deux ou plus — Escape game | Ami | 35 |  | Fait + Avec qui ? | 1 |
+| Un escape game à deux ou plus — Escape game | Ami | 30 |  | Fait + Avec qui ? | 1 |
 | Bowling ou billard, la revanche — Bowling ou billard | Ami | 25 |  | Fait + Avec qui ? | 1 |
 | Une soirée slam ou lecture en librairie — Scène ouverte | Ami | 30 |  | Fait + Avec qui ? | 2 |
-| Un cours d'essai de salsa ou de danse — Cours d'essai | Ami | 35 |  | Fait + Avec qui ? | 2 |
+| Un cours d'essai de salsa ou de danse — Cours d'essai | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | Une salle d'arcade ou des flippers — Arcade | Ami | 25 |  | Fait + Avec qui ? | 1 |
 | Un marché nocturne ou un food market — Marché | Ami | 25 |  | Fait + Avec qui ? | 2 |
 | Une brocante ou un vide-grenier — Brocante | Ami | 25 |  | Fait + Avec qui ? | 1 |
 | Chiner un vinyle à moins de 5 € chez un disquaire — Disquaire | Ami | 25 |  | Fait + Avec qui ? | 2 |
 | Une friperie : une tenue complète à moins de 20 € — Friperie | Ami | 25 |  | Fait + Avec qui ? | 2 |
 | Une expo dans une petite galerie gratuite — Musée ou expo | Ami | 25 |  | Fait + Avec qui ? | 2 |
-| Un atelier d'initiation : poterie, sérigraphie ou cuisine — Atelier | Ami | 40 |  | Fait + Avec qui ? | 2 |
-| Une séance découverte en salle d'escalade — Escalade | Ami | 35 |  | Fait + Avec qui ? | 2 |
-| Louer un kayak ou un paddle — Kayak ou paddle | Ami | 40 |  | Fait + Avec qui ? | 1 |
-| Un restaurant d'une cuisine jamais goûtée (éthiopienne, géorgienne…) — Restaurant | Ami | 30 |  | Fait + Avec qui ? | 2 |
-| Prendre un train régional vers une ville à moins d'une heure — Excursion | Ami | 45 |  | Fait + Avec qui ? | 2 |
-| Une visite guidée de ta propre ville — Visite guidée | Ami | 35 |  | Fait + Avec qui ? | 1 |
+| Un atelier d'initiation : poterie, sérigraphie ou cuisine — Atelier | Ami | 30 |  | Fait + Avec qui ? | 2 |
+| Une séance découverte en salle d'escalade — Escalade | Ami | 30 |  | Fait + Avec qui ? | 2 |
+| Louer un kayak ou un paddle — Kayak ou paddle | Ami | 30 |  | Fait + Avec qui ? | 1 |
+| Prendre un train régional vers une ville à moins d'une heure — Excursion | Ami | 45 |  | Minuteur 60 min + Avec qui ? | 2 |
+| Une visite guidée de ta propre ville — Visite guidée | Ami | 30 |  | Fait + Avec qui ? | 1 |
 | Un match de sport amateur du coin (rugby, hand, foot) — Match | Ami | 25 |  | Fait + Avec qui ? | 2 |
-| Le planétarium ou une soirée d'observation des étoiles — Planétarium | Ami | 35 |  | Fait + Avec qui ? | 2 |
-| Accrobranche ou trampoline park — Accrobranche | Ami | 35 |  | Fait + Avec qui ? | 1 |
-| Un festival ou une fête de quartier ce week-end — Festival | Ami | 35 |  | Fait + Avec qui ? | 2 |
+| Le planétarium ou une soirée d'observation des étoiles — Planétarium | Ami | 30 |  | Fait + Avec qui ? | 2 |
+| Accrobranche ou trampoline park — Accrobranche | Ami | 30 |  | Fait + Avec qui ? | 1 |
+| Un festival ou une fête de quartier ce week-end — Festival | Ami | 30 |  | Fait + Avec qui ? | 2 |
 | La bibliothèque : un livre pris au hasard dans un rayon inconnu — Bibliothèque | Ami | 20 |  | Fait + Avec qui ? | 2 |
 | Un concert classique ou d'orgue gratuit dans une église — Concert | Ami | 30 |  | Fait + Avec qui ? | 2 |
 
@@ -341,7 +340,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
 | 30 min de marche | Force | 25 |  | Minuteur 30 min | 1 |
-| 20 pompes, 20 squats, 1 min de gainage | Force | 20 |  | Compteur de pompes | 2 |
+| 20 pompes, 20 squats, 1 min de gainage | Force | 20 |  | Minuteur gainage | 2 |
 
 ### Objectif « sommeil » (1)
 
@@ -557,7 +556,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Faire un son [prénom] — groupe masqué | Talent | 35 |  | Fait | 1 |
 | Appeler [prénom] — groupe masqué | Famille | 25 |  | Fait + Avec qui ? | 1 |
 
-### Projets (étapes) (103)
+### Projets (étapes) (101)
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
@@ -655,8 +654,6 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Répondre aux mails urgents — Te concentrer (« Bipbip ») | Travail | — |  | Fait | 1 |
 | Fermer les onglets inutiles — Te concentrer (« Bipbip ») | Travail | — |  | Fait | 1 |
 | Lister les tâches repoussées — Débloquer ce qui traîne (« Demainou ») | Travail | — |  | Fait | 1 |
-| Faire la plus petite — Débloquer ce qui traîne (« Demainou ») | Travail | — |  | Fait | 1 |
-| Faire la plus redoutée — Débloquer ce qui traîne (« Demainou ») | Travail | — |  | Fait | 1 |
 | Bloquer 1 h dans l'agenda — Débloquer ce qui traîne (« Demainou ») | Travail | — |  | Minuteur 60 min | 1 |
 | Finir une tâche en entier — Débloquer ce qui traîne (« Demainou ») | Travail | — |  | Fait | 1 |
 | Définir l'objectif du dossier — Boucler un dossier (« Paperasson ») | Travail | — |  | Fait | 1 |
@@ -674,7 +671,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Préparer un 10 km — projet | Force | — |  | Fait | 1 |
 | Faire la vaisselle — action | Maison | — |  | Fait | 1 |
 | Lessive — action | Maison | — |  | Fait | 1 |
-| Courses de la semaine — action | Maison | — |  | Course guidée | 1 |
+| Courses de la semaine — action | Maison | — |  | Fait | 1 |
 | Ranger le garage — projet | Maison | — |  | Fait | 1 |
 | Journal du soir — action | Soi | — |  | Fait | 1 |
 | Prendre rendez-vous chez le médecin — projet | Soi | — |  | Fait | 2 |
@@ -702,7 +699,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Nettoyer → Sol, Cuisine, Salle de bain, Toilettes, Vitres, Frigo… — rappel après 7 / 14 j | Maison | 10 |  | Fait | 2 |
 | Linge → Lancer une machine, Étendre, Plier et ranger, Repasser, Changer les draps — rappel après 5 / 10 j | Maison | 6 |  | Fait | 3 |
 | Vaisselle → Laver, Ranger, Lave-vaisselle — rappel après 2 / 4 j | Maison | 6 |  | Fait | 2 |
-| Petites tâches → Sortir les poubelles, Courses, Arroser les plantes, Réparer un truc — rappel après 5 / 10 j | Maison | 5 |  | Course guidée | 3 |
+| Petites tâches → Sortir les poubelles, Courses, Arroser les plantes, Réparer un truc — rappel après 5 / 10 j | Maison | 5 |  | Fait | 3 |
 | Garde-robe → Trier l'armoire, Tenue soignée | Maison | 8 |  | Fait | 2 |
 | Tri du téléphone → Photos, Notes, Messages et contacts, Mails, Applis, Réseaux… — rappel après 30 / 60 j | Maison | 10 |  | Fait | 3 |
 | Renforcement → Pompes, Squats, Gainage, Abdos, Tractions — rappel après 3 / 7 j | Force | 10 |  | Compteur de pompes | 2 |
@@ -719,11 +716,11 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Bien dormir → Coucher avant minuit, Pas d'écran au lit | Soi | 10 |  | Fait | 2 |
 | Cuisiner → Repas maison, Nouveau plat, Pâtisserie, Préparer demain — rappel après 3 / 7 j | Nourriture | 12 |  | Assiette | 2 |
 | Boire de l'eau → Un verre | Eau | 3 |  | Fait | 1 |
-| Journée sans… → Soda, Sucre, Grignotage | Nourriture | 10 |  | Fait | 2 |
+| Journée sans → Soda, Sucre, Grignotage | Nourriture | 10 |  | Fait | 2 |
 | Travail concentré → Dossier, Candidature, Révisions, Projet perso | Travail | 15 |  | Fait | 2 |
 | Administratif → Mails, Papiers, Rendez-vous pris, Factures — rappel après 3 / 7 j | Travail | 10 |  | Fait | 2 |
 | Planifier → Ma journée, Ma semaine | Travail | 8 |  | Fait | 1 |
-| Tâche importante finie → Fini ! | Travail | 25 |  | Fait | 1 |
+| Tâche importante → Fini ! | Travail | 25 |  | Fait | 1 |
 | Lire → Livre, BD ou manga, Article, Livre fini — rappel après 3 / 7 j | Soi | 10 |  | Fait | 2 |
 | Regarder → Film, Épisode, Série finie, Documentaire | Soi | 10 |  | Fait | 2 |
 | Jouer → Jeu vidéo, Jeu de société, Jeu fini | Soi | 10 |  | Fait | 2 |
@@ -738,11 +735,10 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Voir quelqu'un → Café, Repas, Soirée, Activité, Visite | Ami | 20 |  | Fait + Avec qui ? | 2 |
 | Rendre service → Un coup de main | Ami | 15 |  | Fait + Avec qui ? | 1 |
 
-### Bonnes actions (liste) (24)
+### Bonnes actions (liste) (21)
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
-| Avancer sur le dossier (30 min) | Travail | 20 |  | Minuteur 30 min | 1 |
 | Se brosser les dents | Soi | 3 |  | Fait | 1 |
 | 1 verre d'eau | Eau | 3 |  | Fait | 1 |
 | 10 pompes | Force | 3 |  | Compteur de pompes | 1 |
@@ -752,9 +748,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | 5 min d'étirements | Force | 3 |  | Étirements guidés | 1 |
 | Lire | Soi | 10 |  | Lecture (pages) | 1 |
 | Méditer 10 min | Soi | 10 |  | Méditation guidée | 1 |
-| Se coucher avant minuit | Soi | 10 |  | Fait | 1 |
 | Trier ses déchets | Maison | 3 |  | Fait | 1 |
-| Trajet à pied ou à vélo | Force | 10 |  | Fait | 1 |
 | Faire la vaisselle | Maison | 10 |  | Fait | 1 |
 | Ranger sa chambre | Maison | 10 |  | Fait | 1 |
 | Faire une lessive | Maison | 10 |  | Fait | 1 |

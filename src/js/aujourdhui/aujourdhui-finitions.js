@@ -258,7 +258,7 @@ function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;con
   c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
   c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
-    try{uniBurst(e.currentTarget,"divert")}catch(_){}addBonus("Sortie : "+x[0],x[3],0,"idq");save();try{toast(`Belle sortie <span class="p">+${x[3]} XP</span>`)}catch(_){}setTimeout(()=>{try{render(prev)}catch(_){}idqCard()},600)}}
+    const go=e.currentTarget;try{uniBurst(go,"divert")}catch(_){}complete({id:"af:sorties:"+x[4],cat:"soi",name:"Sortie : "+x[0],xp:x[3]},go,e);setTimeout(()=>{try{idqCard()}catch(_){}},600)}}
 
 // ---- anniversaires : fond de fête
 try{RKI.cake=["................", "....y...y...y...", "...yY..yY..yY...", "...mm..bb..gg...", "...wm..wb..wg...", "...mm..bb..gg...", ".oooooooooooooo.", ".owwwwbwwwwwgwo.", ".owrwvwwwywrwwo.", ".owwmwwmwwmwwmo.", ".ommmmmmmmmmmmo.", ".oyyyyyyyyyyyyo.", ".ommmmmmmmmmmmo.", ".oMMMMMMMMMMMMo.", "kkkkkkkkkkkkkkkk", ".KKKKKKKKKKKKKK."]}catch(e){}

@@ -1,7 +1,7 @@
 // ---- Rituels en tuiles : icônes, sons, tampons, ordre appris, routine
 const RK=[["dents",/dent/i,"#4fb4ff"],["lit",/\blit\b/i,"#b48cff"],["douche",/douche|bain/i,"#3cc0f0"],["visage",/visage|masque|crème|creme|peau/i,"#ff8fb8"],
  ["barbe",/barbe|raser|rasage/i,"#d9965a"],["fenetre",/fenêtre|fenetre|aérer|aerer/i,"#7cc8ff"],["eau",/\beau\b|verre/i,"#1a8cff"],
- ["sport",/pompe|squat|gainage|étirement|etirement|sport|abdos|marche|course|yoga/i,"#ff6a5c"],["lire",/lire|lecture|pages?\b|livre/i,"#f0b73d"],
+ ["sport",/pompe|squat|gainage|étirement|etirement|sport|abdos|marche|\bcourse\b|yoga/i,"#ff6a5c"],["lire",/lire|lecture|pages?\b|livre/i,"#f0b73d"],
  ["medit",/médit|medit|respir/i,"#4fd07a"],["note",/noter|écrire|ecrire|journal|priorit|liste|planifier/i,"#ffc94a"],["repas",/déjeuner|dejeuner|petit-déj|manger|repas/i,"#5fae4f"],
  ["ecran",/écran|ecran|téléphone|telephone/i,"#9aa3ad"],["vit",/vitamine|médicament|medicament|pilule/i,"#ff7aa8"]];
 function ritKind(t){if(t.ic&&RKI[t.ic]){const r=RK.find(x=>x[0]===t.ic);return{k:t.ic,c:t.c||(r?r[2]:(t.ic==="lune"?"#8f7ef0":"#f0a020"))}}const n=t.name||"";for(const[k,re,c]of RK)if(re.test(n))return{k,c};return ritPer(t)==="soir"?{k:"lune",c:"#8f7ef0"}:{k:"soleil",c:"#f0a020"}}

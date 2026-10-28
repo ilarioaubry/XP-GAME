@@ -71,7 +71,7 @@ const plRec=()=>Array.isArray(S.g.plr)?S.g.plr:(S.g.plr=PL_REC0.map(r=>({...r}))
 const plNorm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim();
 const PL_MEAT=/viande|poulet|b(oe|œ)uf|porc|jambon|lardon|thon|poisson|saumon|crevette|steak|dinde|canard|merguez|saucisse|chorizo|bacon/i;
 // Quêtes nourriture reliées à l'assiette (27/10) : le contenu (légume, équilibré…) et la cuisine (cocher « Cuisiné maison » ou « Nouvelle recette ») se valident en remplissant l'assiette
-function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
+function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|nouveau plat|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
   if(!nv&&!ck)return b;const box=nv?"nouv":"maison",lab=nv?"« Nouvelle recette »":"« Cuisiné maison »";
   return{ok:m=>!!((m&&m.x)||{})[box]&&(!b||b.ok(m)),need:(b?b.need+", et ":"")+"coche "+lab+" à l'étape suivante",cook:box}}
 // le prochain repas à remplir aujourd'hui (déjeuner, puis dîner) ; null si les deux sont notés
@@ -89,7 +89,10 @@ function plRuleBase(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m
   return null}
 function plQuests(m,el,q){let P=[];try{const L=feedPick().L,dn=(S.g.fq&&S.g.fq.done)||[];P=L.filter(x=>x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&(r=>r&&r.ok(m))(plRule(x.t)))}catch(e){}
   P.forEach((x,i)=>setTimeout(()=>{try{(window.__plFd||feedDo)(x,el,null)}catch(e){}},1300+i*900));
-  if(q&&!P.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
+  // quêtes spéciales nourriture (ex. « Cuisine : Nouveau plat ») : validées aussi par l'assiette (refonte 4.1.4)
+  const SP=(S.specials||[]).filter(x=>x.cat==="nourriture"&&(r=>r&&r.ok(m))(plRule(x.name)));
+  SP.forEach((x,i)=>setTimeout(()=>{try{window.__plSp=1;completeSpecial(x,el,null)}catch(e){}finally{window.__plSp=0}},1300+(P.length+i)*900));
+  if(q&&!P.some(x=>x.id===q.id)&&!SP.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
 
 function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#fqBox")||document.body;
   const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{}),...(opt.x||{})},...(cur.r?{r:cur.r}:{})};

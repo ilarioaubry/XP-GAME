@@ -37,7 +37,7 @@ const FQ=[
  ["a_album",c=>`Un album de ${c.A} en entier, sans écran`,"perso",15,[10,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{}],
  ["a_simil",c=>`Découvrir 3 artistes proches de ${c.A}`,"perso",10,[9,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{short:1}],
  ["a_beat",c=>`Faire un beat dans l'esprit de ${c.A} (30 min)`,"perso",30,[10,24],c=>c.A&&(c.p.creer||c.g.son),c=>`Tu fais du son et tu écoutes ${c.A}`,{in:1}],
- ["a_struct",c=>`Décortiquer un son de ${c.A} : intro, couplet, refrain, ce qui t'accroche`,"perso",15,[10,24],c=>c.A&&(c.p.creer||c.p.rap),c=>`Pour nourrir ton son`,{}],
+ ["a_struct",c=>`Décortiquer un son de ${c.A}`,"perso",15,[10,24],c=>c.A&&(c.p.creer||c.p.rap),c=>`Pour nourrir ton son`,{}],
  ["a_live",c=>`Regarder un live ou un concert filmé de ${c.A}`,"perso",15,[18,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{in:1}],
  ["j_cand","Envoyer 2 candidatures","travail",30,[9,18],c=>c.job==="cherche"||c.g.job,c=>"Tu cherches un travail",{wd:1,cour:1}],
  ["j_offres","Repérer 5 offres qui te donnent envie","travail",15,[9,20],c=>c.job==="cherche"||c.g.job,c=>"Tu cherches un travail",{short:1}],
@@ -49,7 +49,7 @@ const FQ=[
  ["w_mail","Vider ta boîte mail pendant 10 min","travail",10,[9,18],c=>c.job==="poste"||c.job==="indep",c=>"Tu travailles",{short:1,wd:1}],
  ["i_client","45 min sur ton projet principal","travail",30,[9,19],c=>c.job==="indep",c=>"Tu es à ton compte",{wd:1}],
  ["f_out","Marche rapide de 20 min dehors","sport",15,[8,20],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.good?`${c.wx.tc}° et beau temps`:"Pour ta forme",{out:1}],
- ["f_in","15 min de sport à la maison : pompes, squats, gainage","sport",15,[8,22],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.wet?"Il pleut : on bouge à l'intérieur":"Pour ta forme",{in:1}],
+ ["f_in","15 min de sport à la maison","sport",15,[8,22],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.wet?"Il pleut : on bouge à l'intérieur":"Pour ta forme",{in:1}],
  ["f_stretch","10 min d'étirements avant de dormir","sport",10,[20,24],c=>c.g.forme||c.g.sommeil,c=>"Pour ta forme et ton sommeil",{short:1}],
  ["s_screen","Écrans coupés 30 min avant de dormir","soi",15,[21,24],c=>c.g.sommeil||c.g.ecrans,c=>"Pour mieux dormir",{}],
  ["s_air","Aérer ta chambre 5 min avant de te coucher","maison",5,[20,24],c=>c.g.sommeil,c=>"Pour mieux dormir",{short:1}],
@@ -59,7 +59,7 @@ const FQ=[
  ["p_dehors","Voir un ami dehors aujourd'hui","social",25,[11,21],c=>c.g.potes&&c.wx&&c.wx.good,c=>"Il fait beau, profites-en à deux",{out:1,we:1}],
  ["p_appel","Appeler un pote 10 min, juste pour parler","social",15,[11,23],c=>c.g.potes,c=>c.wx&&c.wx.wet?"Il pleut : parfait pour un appel":"Pour tes potes",{in:1}],
  ["c_photo","Envoyer une photo de ta journée à ta famille","famille",10,[12,22],c=>(c.g.famille||c.home==="seul")&&c.home!=="parents",c=>"Pour ta famille",{short:1}],
- ["c_aide","Rendre un petit service à quelqu'un chez toi","maison",10,[10,22],c=>c.home==="coloc"||c.home==="parents"||c.home==="couple",c=>c.home==="coloc"?"En coloc":"À la maison",{short:1}],
+ ["c_aide",c=>`Faire une tâche à la place de ${c.W}`,"maison",10,[10,22],c=>!!c.W&&(c.home==="coloc"||c.home==="parents"||c.home==="couple"),c=>c.home==="coloc"?"En coloc":"À la maison",{short:1}],
  ["m_depenses","Noter tes dépenses de la semaine","maison",15,[10,22],c=>c.g.argent,c=>"Pour tes finances",{}],
  ["m_abo","Repérer un abonnement que tu peux arrêter","maison",15,[10,22],c=>c.g.argent,c=>"Pour tes finances",{short:1}],
  ["l_tuto","20 min sur une compétence : un tuto, un cours, une vidéo","perso",20,[9,23],c=>c.g.apprendre,c=>"Tu veux apprendre",{in:1}],
@@ -68,7 +68,7 @@ const FQ=[
  ["o_soleil","10 min au soleil, sans rien faire","soi",10,[9,18],c=>(c.g.moral||c.md&&c.md<=2)&&c.wx&&c.wx.good&&c.wx.day,c=>"Il fait beau dehors",{out:1,short:1}],
  ["r_cuisine","Cuisiner un vrai repas maison","nourriture",20,[11,21],c=>c.g.manger||c.p.cuisine,c=>c.p.cuisine?"Tu aimes cuisiner":"Pour manger mieux",{in:1}],
  ["r_recette","Tester une recette que tu n'as jamais faite","nourriture",25,[11,21],c=>c.p.cuisine,c=>c.wx&&c.wx.wet?"Temps parfait pour cuisiner":"Tu aimes cuisiner",{in:1}],
- ["v_film",c=>filmOfDay(),"perso",20,[18,24],c=>c.p.cine,c=>c.wx&&c.wx.wet?"Soirée pluvieuse : un film culte à voir":"Un film culte à voir",{in:1,film:1}],
+ ["v_film",c=>"Regarder "+filmOfDay(),"perso",20,[18,24],c=>c.p.cine,c=>c.wx&&c.wx.wet?"Soirée pluvieuse : un film culte à voir":"Un film culte à voir",{in:1,film:1}],
  ["v_lire","Lire 20 pages","perso",15,[9,24],c=>c.p.lecture,c=>c.wx&&c.wx.wet?"Il pleut : un livre":"Tu aimes lire",{in:1}],
  ["v_jeu","Finir une mission en jeu, après tes rituels","perso",10,[17,24],c=>c.p.jeux,c=>"Tu as bien bossé",{in:1}],
  ["v_dessin","Dessiner 15 min","perso",15,[9,24],c=>c.p.dessin,c=>"Tu aimes dessiner",{in:1}],
@@ -76,14 +76,14 @@ const FQ=[
  ["v_parc","Balade dans un parc ou en forêt","sport",20,[9,19],c=>c.p.nature&&c.wx&&!c.wx.wet,c=>"Tu aimes la nature",{out:1}],
  ["v_style","Préparer ta tenue de demain","soi",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
  ["v_son","Faire du son pendant 30 min","perso",30,[10,24],c=>c.p.creer||c.g.son,c=>c.wx&&c.wx.wet?"Il pleut : studio":"Ta musique avance",{in:1}],
- ["n_note",c=>`${cap(c.note)} : 20 min pour avancer`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
+ ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
-const CLAR=[["photos","Photos","Trier 50 photos : doublons, flous et captures d'écran à la corbeille",15,[30,60]],
+const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],
  ["msg","Messages et contacts","Archiver les vieilles conversations et nettoyer 10 contacts",10,[30,60]],
  ["mails","Mails","Te désabonner de 5 newsletters et vider ta boîte de réception",15,[14,30]],
  ["apps","Applis","Supprimer les applis que tu n'as pas ouvertes depuis un mois",10,[30,60]],
- ["reseaux","Réseaux","Trier un réseau : 10 abonnements en moins, et un œil sur tes abonnés",10,[30,60]],
+ ["reseaux","Réseaux","Trier un réseau : 10 abonnements en moins",10,[30,60]],
  ["notifs","Notifications","Couper les notifications de 5 applis qui ne servent à rien",10,[30,60]],
  ["focus","Modes de concentration","Régler un mode de concentration pour le soir ou le travail",10,[60,120]],
  ["fond","Fond d'écran","Choisir un nouveau fond d'écran qui te ressemble",5,[60,120]],
@@ -98,7 +98,7 @@ CLAR.forEach(([k,l,t,xp,fr])=>FQ.push(["t_"+k,t,"maison",xp,[9,23],c=>{const L=c
 function clarWt(id){const k=id.slice(2),L=clarLast(k);return L?Math.min(1.5,(Date.now()-L)/864e5/60):1.5}
 function fqCtx(){const G=S.g,s=sitOf()||{goals:[],pass:[]},w=typeof wxNow==="function"?wxNow():null,tk=dayKey(Date.now()),sl=G.sleep&&G.sleep[tk];
   const g={},p={};(s.goals||[]).forEach(x=>g[x]=1);(s.pass||[]).forEach(x=>p[x]=1);const art=((G.taste&&G.taste.art)||[]);
-  return{arc:typeof arcCur==="function"&&!!arcCur(),en:typeof enOf==="function"?enOf():0,job:s.job,home:s.home,g,p,free:s.time,note:(s.note||"").trim(),art,h:dayH(),we:isWeekend(),md:(G.mood||{})[tk]|0,tired:!!(sl&&sl.h<6),
+  return{W:(Array.isArray(s.with)&&s.with[0])||"",arc:typeof arcCur==="function"&&!!arcCur(),en:typeof enOf==="function"?enOf():0,job:s.job,home:s.home,g,p,free:s.time,note:(s.note||"").trim(),art,h:dayH(),we:isWeekend(),md:(G.mood||{})[tk]|0,tired:!!(sl&&sl.h<6),
     wx:w?{...w,good:(w.k==="clear"||w.k==="partly")&&w.tc>=8&&w.tc<=30,wet:["rain","storm","snow"].includes(w.k)}:null}}
 function fqText(q,c){return typeof q[1]==="function"?q[1](c):q[1]}
 function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=="object")G.fq={};const F=G.fq;

@@ -4501,7 +4501,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 664d025</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 290b852</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4735,21 +4735,21 @@ const FAM=[
   {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
   {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
 const IDQ=[
-  ["Une jam session ouverte dans un bar","s",1,35,"Jam session","mus"],["Une scène ouverte de stand-up, en spectateur","s",1,30,"Stand-up","mic"],
+  ["Une jam session ouverte dans un bar","s",1,30,"Jam session","mus"],["Une scène ouverte de stand-up, en spectateur","s",1,30,"Stand-up","mic"],
   ["Une soirée quiz ou blind test dans un bar","s",1,30,"Soirée quiz","q"],["La dernière séance d'un film en VO","s",1,25,"Cinéma","cine"],
-  ["Un vieux film culte au ciné-club ou en rétrospective","s",1,30,"Cinéma","cine"],["Le concert d'un groupe local que tu ne connais pas","s",1,35,"Concert","mus"],
+  ["Un vieux film culte au ciné-club ou en rétrospective","s",1,30,"Cinéma","cine"],["Le concert d'un groupe local que tu ne connais pas","s",1,30,"Concert","mus"],
   ["Un karaoké avec des potes","s",1,30,"Karaoké","mic"],["Un bar à jeux : tester un jeu de société inconnu","s",1,30,"Bar à jeux","dice"],
   ["Un match d'impro théâtrale","s",1,30,"Théâtre","mask"],["Du jazz dans une cave ou un petit bar","s",1,30,"Concert","mus"],
-  ["Un escape game à deux ou plus","sj",1,35,"Escape game","key"],["Bowling ou billard, la revanche","sj",1,25,"Bowling ou billard","dice"],
-  ["Une soirée slam ou lecture en librairie","s",1,30,"Scène ouverte","mic"],["Un cours d'essai de salsa ou de danse","s",1,35,"Cours d'essai","mus"],
+  ["Un escape game à deux ou plus","sj",1,30,"Escape game","key"],["Bowling ou billard, la revanche","sj",1,25,"Bowling ou billard","dice"],
+  ["Une soirée slam ou lecture en librairie","s",1,30,"Scène ouverte","mic"],["Un cours d'essai de salsa ou de danse","s",1,30,"Cours d'essai","mus"],
   ["Une salle d'arcade ou des flippers","sj",1,25,"Arcade","dice"],["Un marché nocturne ou un food market","s",0,25,"Marché","food"],
   ["Une brocante ou un vide-grenier","w",0,25,"Brocante","bag"],["Chiner un vinyle à moins de 5 € chez un disquaire","j",1,25,"Disquaire","mus"],
   ["Une friperie : une tenue complète à moins de 20 €","j",1,25,"Friperie","bag"],["Une expo dans une petite galerie gratuite","j",1,25,"Musée ou expo","art"],
-  ["Un atelier d'initiation : poterie, sérigraphie ou cuisine","w",1,40,"Atelier","art"],["Une séance découverte en salle d'escalade","j",1,35,"Escalade","run"],
-  ["Louer un kayak ou un paddle","w",0,40,"Kayak ou paddle","run"],["Un restaurant d'une cuisine jamais goûtée (éthiopienne, géorgienne…)","js",1,30,"Restaurant","food"],
-  ["Prendre un train régional vers une ville à moins d'une heure","w",0,45,"Excursion","map"],["Une visite guidée de ta propre ville","w",0,35,"Visite guidée","map"],
-  ["Un match de sport amateur du coin (rugby, hand, foot)","w",0,25,"Match","run"],["Le planétarium ou une soirée d'observation des étoiles","s",1,35,"Planétarium","q"],
-  ["Accrobranche ou trampoline park","w",0,35,"Accrobranche","run"],["Un festival ou une fête de quartier ce week-end","w",0,35,"Festival","mus"],
+  ["Un atelier d'initiation : poterie, sérigraphie ou cuisine","w",1,30,"Atelier","art"],["Une séance découverte en salle d'escalade","j",1,30,"Escalade","run"],
+  ["Louer un kayak ou un paddle","w",0,30,"Kayak ou paddle","run"],
+  ["Prendre un train régional vers une ville à moins d'une heure","w",0,45,"Excursion","map"],["Une visite guidée de ta propre ville","w",0,30,"Visite guidée","map"],
+  ["Un match de sport amateur du coin (rugby, hand, foot)","w",0,25,"Match","run"],["Le planétarium ou une soirée d'observation des étoiles","s",1,30,"Planétarium","q"],
+  ["Accrobranche ou trampoline park","w",0,30,"Accrobranche","run"],["Un festival ou une fête de quartier ce week-end","w",0,30,"Festival","mus"],
   ["La bibliothèque : un livre pris au hasard dans un rayon inconnu","j",1,20,"Bibliothèque","q"],["Un concert classique ou d'orgue gratuit dans une église","js",1,30,"Concert","mus"]];
 const IDI={mus:'<path d="M9 18V6l10-2v12" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="7" cy="18" r="2.6" fill="#fff"/><circle cx="17" cy="16" r="2.6" fill="#fff"/>',mic:'<rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#fff" stroke-width="2"/>',
   q:'<circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 16.5v.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>',cine:'<rect x="3" y="6" width="18" height="13" rx="2" fill="none" stroke="#fff" stroke-width="2"/><path d="M10 9.5v6l5-3z" fill="#fff"/>',
@@ -4776,7 +4776,7 @@ const QC_TPL={
  travail:[["Bloc de concentration 1 h","act","travail",2,{m:"wd",wd:[0,1,2,3,4]}],["Boîte mail à zéro","act","travail",1,{m:"wd",wd:[4]}],["Refaire mon CV","prj","travail",2,null,null,["Lister mes expériences","Choisir un modèle","Rédiger","Faire relire","Envoyer 3 candidatures"]]],
  perso:[["Faire du son 30 min","act","perso",2,{m:"xw",n:3}],["Dessiner 15 min","act","perso",1,{m:"xw",n:3}],["Sortir un son","prj","perso",3,null,null,["Finir la prod","Écrire le texte","Enregistrer","Mixer","Faire la cover","Publier"]]],
  nourriture:[["Cuisiner un vrai repas","act","nourriture",1,{m:"xw",n:3}],["Préparer mes repas du dimanche","act","nourriture",2,{m:"wd",wd:[6]}],["Apprendre 5 recettes","prj","nourriture",2,null,null,["Choisir 5 recettes","Recette 1","Recette 2","Recette 3","Recette 4","Recette 5"]]]};
-const BOSS_CAT={"sport":[["golem_canape","Canapix","golem","#8a7a66","Se remettre en mouvement",["Marcher 20 min","3 séries de 10 pompes","10 min d'étirements","Prendre les escaliers toute la journée","20 min de sport"]],["gelee_courb","Courbatou","slime","#c95a8a","Construire ton programme",["Noter 3 objectifs sportifs","Choisir 3 jours fixes d'entraînement","Lister 5 exercices","Tester une séance complète","Noter tes séries et répétitions"]],["dragon_endu","Souffléon","dragon","#d1493f","Repousser tes limites",["30 min de marche rapide ou de course","Battre ton record de pompes","2 min de gainage","45 min de sport"]]],"perso":[["spectre_page","Blanchou","ghost","#9a8fd0","Écrire un son",["Écrire 4 lignes","Trouver une instru qui te plaît","Enregistrer une maquette voix","Finir un couplet","Faire écouter la maquette à {a1}"]],["gelee_mix","Grésillon","slime","#e8762a","Mettre de l'ordre dans tes sons",["Ranger tes projets audio","Renommer proprement tes fichiers","Faire un premier mix","Comparer avec un son de référence","Exporter une version propre"]],["dragon_sortie","Timidrake","dragon","#f0b62e","Sortir un son",["Choisir le son à sortir","Créer la cover","Écrire la description","Programmer la sortie","Envoyer le son à {a2}"]]],"social":[["fantome_silence","Silencio","ghost","#4fb3b3","Reprendre contact",["Écrire à {a1}","Écrire à {a2}","Écrire à {a3}","Envoyer un vocal à {a4}","Proposer un appel à {a5}"]],["golem_agenda","Plutardos","golem","#4f8f86","Organiser une sortie",["Proposer une sortie à {a1}","Fixer une date avec {a1}","Choisir le lieu de la sortie","Proposer la sortie {g1}","Ajouter la sortie à ton agenda"]],["chauve_distance","Lointin","bat","#3a6a8a","Entretenir les liens",["Reprendre contact avec {a1}","Faire un appel vidéo avec {a2}","Envoyer une petite attention à {a3}","Proposer à {a4} de passer le voir","Demander la date d'anniversaire de {anb}"]]],"famille":[["spectre_nouv","Quoidneuf","ghost","#7a8ad6","Donner des nouvelles",["Appeler {f1}","Appeler {f2}","Envoyer une photo à {f3}","Prendre des nouvelles de {f4}","Proposer un repas de famille à {f1}"]],["gelee_souv","Nostalgelée","slime","#c9a24a","Garder les souvenirs",["Retrouver 5 vieilles photos de famille","Créer un album partagé","Envoyer une vieille photo à {f1}","Demander une histoire de famille à {f2}","Demander la recette préférée de {f3}"]],["dragon_retro","Câlinours","dragon","#4a55f5","Préparer des retrouvailles",["Proposer une date à {f1} pour se voir","Choisir une activité à faire ensemble","Trouver une idée de petit cadeau pour {f1}","Appeler {f1} pour caler les détails","Noter la date dans ton agenda"]]],"maison":[["bouillie_bordel","Bazardine","slime","#c97a1a","Ranger ta chambre",["Vider le sol","Faire la poussière","Ranger le bureau","Trier une étagère","Passer l'aspirateur"]],["golem_tel","Stockagros","golem","#5a6a7a","Trier ton téléphone",["Trier les photos","Vider la boîte mail","Supprimer les applis inutiles","Nettoyer l'écran et la coque","Ranger l'écran d'accueil","Sauvegarder le téléphone"]],["crane_placard","Fripouille","skull","#e8e2d0","Trier tes vêtements",["Sortir les vêtements trop petits","Plier et ranger","Faire un sac de dons","Ranger les vêtements de l'autre saison","Organiser les chaussures"]]],"soi":[["spectre_scroll","Scrollito","ghost","#7fa3c9","Reprendre ton attention",["1 h sans réseaux sociaux","Couper les notifications inutiles","Lire 10 pages","10 min de méditation","Téléphone dans une autre pièce pendant 1 h"]],["champi_sommeil","Roupillon","shroom","#9a5ce0","Mieux dormir",["Préparer tes affaires pour demain","Pas d'écran 30 min avant de dormir","Régler un réveil à heure fixe","Aérer la chambre"]],["dragon_doute","Peut-Êtron","dragon","#5a4a8a","Avancer vers un objectif",["Écrire 3 qualités que tu as","Noter un objectif à 3 mois","Découper l'objectif en étapes","Faire la première étape"]]],"travail":[["troll_notif","Bipbip","golem","#4f8f86","Te concentrer",["Ranger le bureau de l'ordi","Faire la to-do du jour","25 min de travail concentré","Répondre aux mails urgents","Fermer les onglets inutiles"]],["gelee_procra","Demainou","slime","#5fae4f","Débloquer ce qui traîne",["Lister les tâches repoussées","Faire la plus petite","Faire la plus redoutée","Bloquer 1 h dans l'agenda","Finir une tâche en entier"]],["dragon_dossier","Paperasson","dragon","#6f8fe0","Boucler un dossier",["Définir l'objectif du dossier","Rassembler les documents","Faire un premier jet","Relire et corriger","Envoyer le dossier"]]]};
+const BOSS_CAT={"sport":[["golem_canape","Canapix","golem","#8a7a66","Se remettre en mouvement",["Marcher 20 min","3 séries de 10 pompes","10 min d'étirements","Prendre les escaliers toute la journée","20 min de sport"]],["gelee_courb","Courbatou","slime","#c95a8a","Construire ton programme",["Noter 3 objectifs sportifs","Choisir 3 jours fixes d'entraînement","Lister 5 exercices","Tester une séance complète","Noter tes séries et répétitions"]],["dragon_endu","Souffléon","dragon","#d1493f","Repousser tes limites",["30 min de marche rapide ou de course","Battre ton record de pompes","2 min de gainage","45 min de sport"]]],"perso":[["spectre_page","Blanchou","ghost","#9a8fd0","Écrire un son",["Écrire 4 lignes","Trouver une instru qui te plaît","Enregistrer une maquette voix","Finir un couplet","Faire écouter la maquette à {a1}"]],["gelee_mix","Grésillon","slime","#e8762a","Mettre de l'ordre dans tes sons",["Ranger tes projets audio","Renommer proprement tes fichiers","Faire un premier mix","Comparer avec un son de référence","Exporter une version propre"]],["dragon_sortie","Timidrake","dragon","#f0b62e","Sortir un son",["Choisir le son à sortir","Créer la cover","Écrire la description","Programmer la sortie","Envoyer le son à {a2}"]]],"social":[["fantome_silence","Silencio","ghost","#4fb3b3","Reprendre contact",["Écrire à {a1}","Écrire à {a2}","Écrire à {a3}","Envoyer un vocal à {a4}","Proposer un appel à {a5}"]],["golem_agenda","Plutardos","golem","#4f8f86","Organiser une sortie",["Proposer une sortie à {a1}","Fixer une date avec {a1}","Choisir le lieu de la sortie","Proposer la sortie {g1}","Ajouter la sortie à ton agenda"]],["chauve_distance","Lointin","bat","#3a6a8a","Entretenir les liens",["Reprendre contact avec {a1}","Faire un appel vidéo avec {a2}","Envoyer une petite attention à {a3}","Proposer à {a4} de passer le voir","Demander la date d'anniversaire de {anb}"]]],"famille":[["spectre_nouv","Quoidneuf","ghost","#7a8ad6","Donner des nouvelles",["Appeler {f1}","Appeler {f2}","Envoyer une photo à {f3}","Prendre des nouvelles de {f4}","Proposer un repas de famille à {f1}"]],["gelee_souv","Nostalgelée","slime","#c9a24a","Garder les souvenirs",["Retrouver 5 vieilles photos de famille","Créer un album partagé","Envoyer une vieille photo à {f1}","Demander une histoire de famille à {f2}","Demander la recette préférée de {f3}"]],["dragon_retro","Câlinours","dragon","#4a55f5","Préparer des retrouvailles",["Proposer une date à {f1} pour se voir","Choisir une activité à faire ensemble","Trouver une idée de petit cadeau pour {f1}","Appeler {f1} pour caler les détails","Noter la date dans ton agenda"]]],"maison":[["bouillie_bordel","Bazardine","slime","#c97a1a","Ranger ta chambre",["Vider le sol","Faire la poussière","Ranger le bureau","Trier une étagère","Passer l'aspirateur"]],["golem_tel","Stockagros","golem","#5a6a7a","Trier ton téléphone",["Trier les photos","Vider la boîte mail","Supprimer les applis inutiles","Nettoyer l'écran et la coque","Ranger l'écran d'accueil","Sauvegarder le téléphone"]],["crane_placard","Fripouille","skull","#e8e2d0","Trier tes vêtements",["Sortir les vêtements trop petits","Plier et ranger","Faire un sac de dons","Ranger les vêtements de l'autre saison","Organiser les chaussures"]]],"soi":[["spectre_scroll","Scrollito","ghost","#7fa3c9","Reprendre ton attention",["1 h sans réseaux sociaux","Couper les notifications inutiles","Lire 10 pages","10 min de méditation","Téléphone dans une autre pièce pendant 1 h"]],["champi_sommeil","Roupillon","shroom","#9a5ce0","Mieux dormir",["Préparer tes affaires pour demain","Pas d'écran 30 min avant de dormir","Régler un réveil à heure fixe","Aérer la chambre"]],["dragon_doute","Peut-Êtron","dragon","#5a4a8a","Avancer vers un objectif",["Écrire 3 qualités que tu as","Noter un objectif à 3 mois","Découper l'objectif en étapes","Faire la première étape"]]],"travail":[["troll_notif","Bipbip","golem","#4f8f86","Te concentrer",["Ranger le bureau de l'ordi","Faire la to-do du jour","25 min de travail concentré","Répondre aux mails urgents","Fermer les onglets inutiles"]],["gelee_procra","Demainou","slime","#5fae4f","Débloquer ce qui traîne",["Lister les tâches repoussées","Bloquer 1 h dans l'agenda","Finir une tâche en entier"]],["dragon_dossier","Paperasson","dragon","#6f8fe0","Boucler un dossier",["Définir l'objectif du dossier","Rassembler les documents","Faire un premier jet","Relire et corriger","Envoyer le dossier"]]]};
 const DQ_K={fgq:["Groupe d'amis","#ff7aa8",'<circle cx="8" cy="9" r="3" fill="currentColor"/><circle cx="16" cy="9" r="3" fill="currentColor"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6zM10 20c0-3.3 2.7-6 6-6s6 2.7 6 6z" fill="currentColor"/>'],secret:["Rare","#9b5de5",'<path d="M12 2l2.4 5.6L20 8.5l-4.3 3.9L17 18l-5-3-5 3 1.3-5.6L4 8.5l5.6-.9z" fill="currentColor"/>'],org:["Organisation","#2f7fb5",'<rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="2"/><path d="M8 14l2.5 2.5L16 12" fill="none" stroke="currentColor" stroke-width="2.2"/>'],gift:["Anniversaire aujourd'hui","#e0447a",'<rect x="3" y="9" width="18" height="12" rx="2" fill="currentColor"/><rect x="2" y="7" width="20" height="4" rx="1.5" fill="currentColor" opacity=".8"/><path d="M12 7v14" stroke="var(--surface)" stroke-width="2"/><path d="M12 7c-2-4-6-4-6-1.5S10 7 12 7zm0 0c2-4 6-4 6-1.5S14 7 12 7z" fill="none" stroke="currentColor" stroke-width="1.8"/>'],sur:["XP ×2","#2a8fd6",'<path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z" fill="currentColor"/>'],
   bq:["Quête spéciale","#e8382f",'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>'],
   music:["Musique","#f08300",'<path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="currentColor"/><circle cx="17" cy="16" r="3" fill="currentColor"/>'],
@@ -5114,7 +5114,9 @@ const GROUPS={friends:{list:"friends",done:"friendDone",verb:"Prendre des nouvel
 const HYGIENE=[{id:"h0",name:"Se brosser les dents",cat:"maison",xp:5}];
 // actions déjà couvertes par l'assiette (27/10) : plus proposées
 const PLATE_DUP=new Set(["Petit-déjeuner complet","Repas équilibré","Fruit ou légume en plus","Repas végétarien","Cuisiner un vrai repas"]);
-const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name));
+// bonnes actions retirées à la refonte (Q.4, 28/10) ; « 1 verre d'eau » reste : c'est l'action derrière le rituel des verres d'eau (déjà masquée de la liste)
+const ACT_RETIRE=new Set(["Avancer sur le dossier (30 min)","Se coucher avant minuit","Trajet à pied ou à vélo"]);
+const STARTER=[...PERSO,...NOURRITURE,...HYGIENE,...MICRO,...STARTER_REST].filter(a=>!PLATE_DUP.has(a.name)&&!ACT_RETIRE.has(a.name));
 
 // Niveau n -> n+1 coûte 50 + 50n XP (100, 150, 200…)
 const needFor=l=>50+50*l;
@@ -5725,7 +5727,7 @@ function obFinish(st){const G=S.g;S.name=st.name.trim().slice(0,14);G.avc={...st
 // ---- Rituels en tuiles : icônes, sons, tampons, ordre appris, routine
 const RK=[["dents",/dent/i,"#4fb4ff"],["lit",/\blit\b/i,"#b48cff"],["douche",/douche|bain/i,"#3cc0f0"],["visage",/visage|masque|crème|creme|peau/i,"#ff8fb8"],
  ["barbe",/barbe|raser|rasage/i,"#d9965a"],["fenetre",/fenêtre|fenetre|aérer|aerer/i,"#7cc8ff"],["eau",/\beau\b|verre/i,"#1a8cff"],
- ["sport",/pompe|squat|gainage|étirement|etirement|sport|abdos|marche|course|yoga/i,"#ff6a5c"],["lire",/lire|lecture|pages?\b|livre/i,"#f0b73d"],
+ ["sport",/pompe|squat|gainage|étirement|etirement|sport|abdos|marche|\bcourse\b|yoga/i,"#ff6a5c"],["lire",/lire|lecture|pages?\b|livre/i,"#f0b73d"],
  ["medit",/médit|medit|respir/i,"#4fd07a"],["note",/noter|écrire|ecrire|journal|priorit|liste|planifier/i,"#ffc94a"],["repas",/déjeuner|dejeuner|petit-déj|manger|repas/i,"#5fae4f"],
  ["ecran",/écran|ecran|téléphone|telephone/i,"#9aa3ad"],["vit",/vitamine|médicament|medicament|pilule/i,"#ff7aa8"]];
 function ritKind(t){if(t.ic&&RKI[t.ic]){const r=RK.find(x=>x[0]===t.ic);return{k:t.ic,c:t.c||(r?r[2]:(t.ic==="lune"?"#8f7ef0":"#f0a020"))}}const n=t.name||"";for(const[k,re,c]of RK)if(re.test(n))return{k,c};return ritPer(t)==="soir"?{k:"lune",c:"#8f7ef0"}:{k:"soleil",c:"#f0a020"}}
@@ -9981,7 +9983,7 @@ const FQ=[
  ["a_album",c=>`Un album de ${c.A} en entier, sans écran`,"perso",15,[10,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{}],
  ["a_simil",c=>`Découvrir 3 artistes proches de ${c.A}`,"perso",10,[9,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{short:1}],
  ["a_beat",c=>`Faire un beat dans l'esprit de ${c.A} (30 min)`,"perso",30,[10,24],c=>c.A&&(c.p.creer||c.g.son),c=>`Tu fais du son et tu écoutes ${c.A}`,{in:1}],
- ["a_struct",c=>`Décortiquer un son de ${c.A} : intro, couplet, refrain, ce qui t'accroche`,"perso",15,[10,24],c=>c.A&&(c.p.creer||c.p.rap),c=>`Pour nourrir ton son`,{}],
+ ["a_struct",c=>`Décortiquer un son de ${c.A}`,"perso",15,[10,24],c=>c.A&&(c.p.creer||c.p.rap),c=>`Pour nourrir ton son`,{}],
  ["a_live",c=>`Regarder un live ou un concert filmé de ${c.A}`,"perso",15,[18,24],c=>c.A,c=>`Tu écoutes ${c.A}`,{in:1}],
  ["j_cand","Envoyer 2 candidatures","travail",30,[9,18],c=>c.job==="cherche"||c.g.job,c=>"Tu cherches un travail",{wd:1,cour:1}],
  ["j_offres","Repérer 5 offres qui te donnent envie","travail",15,[9,20],c=>c.job==="cherche"||c.g.job,c=>"Tu cherches un travail",{short:1}],
@@ -9993,7 +9995,7 @@ const FQ=[
  ["w_mail","Vider ta boîte mail pendant 10 min","travail",10,[9,18],c=>c.job==="poste"||c.job==="indep",c=>"Tu travailles",{short:1,wd:1}],
  ["i_client","45 min sur ton projet principal","travail",30,[9,19],c=>c.job==="indep",c=>"Tu es à ton compte",{wd:1}],
  ["f_out","Marche rapide de 20 min dehors","sport",15,[8,20],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.good?`${c.wx.tc}° et beau temps`:"Pour ta forme",{out:1}],
- ["f_in","15 min de sport à la maison : pompes, squats, gainage","sport",15,[8,22],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.wet?"Il pleut : on bouge à l'intérieur":"Pour ta forme",{in:1}],
+ ["f_in","15 min de sport à la maison","sport",15,[8,22],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.wet?"Il pleut : on bouge à l'intérieur":"Pour ta forme",{in:1}],
  ["f_stretch","10 min d'étirements avant de dormir","sport",10,[20,24],c=>c.g.forme||c.g.sommeil,c=>"Pour ta forme et ton sommeil",{short:1}],
  ["s_screen","Écrans coupés 30 min avant de dormir","soi",15,[21,24],c=>c.g.sommeil||c.g.ecrans,c=>"Pour mieux dormir",{}],
  ["s_air","Aérer ta chambre 5 min avant de te coucher","maison",5,[20,24],c=>c.g.sommeil,c=>"Pour mieux dormir",{short:1}],
@@ -10003,7 +10005,7 @@ const FQ=[
  ["p_dehors","Voir un ami dehors aujourd'hui","social",25,[11,21],c=>c.g.potes&&c.wx&&c.wx.good,c=>"Il fait beau, profites-en à deux",{out:1,we:1}],
  ["p_appel","Appeler un pote 10 min, juste pour parler","social",15,[11,23],c=>c.g.potes,c=>c.wx&&c.wx.wet?"Il pleut : parfait pour un appel":"Pour tes potes",{in:1}],
  ["c_photo","Envoyer une photo de ta journée à ta famille","famille",10,[12,22],c=>(c.g.famille||c.home==="seul")&&c.home!=="parents",c=>"Pour ta famille",{short:1}],
- ["c_aide","Rendre un petit service à quelqu'un chez toi","maison",10,[10,22],c=>c.home==="coloc"||c.home==="parents"||c.home==="couple",c=>c.home==="coloc"?"En coloc":"À la maison",{short:1}],
+ ["c_aide",c=>`Faire une tâche à la place de ${c.W}`,"maison",10,[10,22],c=>!!c.W&&(c.home==="coloc"||c.home==="parents"||c.home==="couple"),c=>c.home==="coloc"?"En coloc":"À la maison",{short:1}],
  ["m_depenses","Noter tes dépenses de la semaine","maison",15,[10,22],c=>c.g.argent,c=>"Pour tes finances",{}],
  ["m_abo","Repérer un abonnement que tu peux arrêter","maison",15,[10,22],c=>c.g.argent,c=>"Pour tes finances",{short:1}],
  ["l_tuto","20 min sur une compétence : un tuto, un cours, une vidéo","perso",20,[9,23],c=>c.g.apprendre,c=>"Tu veux apprendre",{in:1}],
@@ -10012,7 +10014,7 @@ const FQ=[
  ["o_soleil","10 min au soleil, sans rien faire","soi",10,[9,18],c=>(c.g.moral||c.md&&c.md<=2)&&c.wx&&c.wx.good&&c.wx.day,c=>"Il fait beau dehors",{out:1,short:1}],
  ["r_cuisine","Cuisiner un vrai repas maison","nourriture",20,[11,21],c=>c.g.manger||c.p.cuisine,c=>c.p.cuisine?"Tu aimes cuisiner":"Pour manger mieux",{in:1}],
  ["r_recette","Tester une recette que tu n'as jamais faite","nourriture",25,[11,21],c=>c.p.cuisine,c=>c.wx&&c.wx.wet?"Temps parfait pour cuisiner":"Tu aimes cuisiner",{in:1}],
- ["v_film",c=>filmOfDay(),"perso",20,[18,24],c=>c.p.cine,c=>c.wx&&c.wx.wet?"Soirée pluvieuse : un film culte à voir":"Un film culte à voir",{in:1,film:1}],
+ ["v_film",c=>"Regarder "+filmOfDay(),"perso",20,[18,24],c=>c.p.cine,c=>c.wx&&c.wx.wet?"Soirée pluvieuse : un film culte à voir":"Un film culte à voir",{in:1,film:1}],
  ["v_lire","Lire 20 pages","perso",15,[9,24],c=>c.p.lecture,c=>c.wx&&c.wx.wet?"Il pleut : un livre":"Tu aimes lire",{in:1}],
  ["v_jeu","Finir une mission en jeu, après tes rituels","perso",10,[17,24],c=>c.p.jeux,c=>"Tu as bien bossé",{in:1}],
  ["v_dessin","Dessiner 15 min","perso",15,[9,24],c=>c.p.dessin,c=>"Tu aimes dessiner",{in:1}],
@@ -10020,14 +10022,14 @@ const FQ=[
  ["v_parc","Balade dans un parc ou en forêt","sport",20,[9,19],c=>c.p.nature&&c.wx&&!c.wx.wet,c=>"Tu aimes la nature",{out:1}],
  ["v_style","Préparer ta tenue de demain","soi",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
  ["v_son","Faire du son pendant 30 min","perso",30,[10,24],c=>c.p.creer||c.g.son,c=>c.wx&&c.wx.wet?"Il pleut : studio":"Ta musique avance",{in:1}],
- ["n_note",c=>`${cap(c.note)} : 20 min pour avancer`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
+ ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
-const CLAR=[["photos","Photos","Trier 50 photos : doublons, flous et captures d'écran à la corbeille",15,[30,60]],
+const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],
  ["msg","Messages et contacts","Archiver les vieilles conversations et nettoyer 10 contacts",10,[30,60]],
  ["mails","Mails","Te désabonner de 5 newsletters et vider ta boîte de réception",15,[14,30]],
  ["apps","Applis","Supprimer les applis que tu n'as pas ouvertes depuis un mois",10,[30,60]],
- ["reseaux","Réseaux","Trier un réseau : 10 abonnements en moins, et un œil sur tes abonnés",10,[30,60]],
+ ["reseaux","Réseaux","Trier un réseau : 10 abonnements en moins",10,[30,60]],
  ["notifs","Notifications","Couper les notifications de 5 applis qui ne servent à rien",10,[30,60]],
  ["focus","Modes de concentration","Régler un mode de concentration pour le soir ou le travail",10,[60,120]],
  ["fond","Fond d'écran","Choisir un nouveau fond d'écran qui te ressemble",5,[60,120]],
@@ -10042,7 +10044,7 @@ CLAR.forEach(([k,l,t,xp,fr])=>FQ.push(["t_"+k,t,"maison",xp,[9,23],c=>{const L=c
 function clarWt(id){const k=id.slice(2),L=clarLast(k);return L?Math.min(1.5,(Date.now()-L)/864e5/60):1.5}
 function fqCtx(){const G=S.g,s=sitOf()||{goals:[],pass:[]},w=typeof wxNow==="function"?wxNow():null,tk=dayKey(Date.now()),sl=G.sleep&&G.sleep[tk];
   const g={},p={};(s.goals||[]).forEach(x=>g[x]=1);(s.pass||[]).forEach(x=>p[x]=1);const art=((G.taste&&G.taste.art)||[]);
-  return{arc:typeof arcCur==="function"&&!!arcCur(),en:typeof enOf==="function"?enOf():0,job:s.job,home:s.home,g,p,free:s.time,note:(s.note||"").trim(),art,h:dayH(),we:isWeekend(),md:(G.mood||{})[tk]|0,tired:!!(sl&&sl.h<6),
+  return{W:(Array.isArray(s.with)&&s.with[0])||"",arc:typeof arcCur==="function"&&!!arcCur(),en:typeof enOf==="function"?enOf():0,job:s.job,home:s.home,g,p,free:s.time,note:(s.note||"").trim(),art,h:dayH(),we:isWeekend(),md:(G.mood||{})[tk]|0,tired:!!(sl&&sl.h<6),
     wx:w?{...w,good:(w.k==="clear"||w.k==="partly")&&w.tc>=8&&w.tc<=30,wet:["rain","storm","snow"].includes(w.k)}:null}}
 function fqText(q,c){return typeof q[1]==="function"?q[1](c):q[1]}
 function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=="object")G.fq={};const F=G.fq;
@@ -10908,8 +10910,9 @@ function renderGame(){
 }
 
 // ===== Défis par skill (même principe que le Son : tirer un défi + objectif du mois) =====
-function filmPick(not){const G=S.g,seen=new Set([...(G.filmSeen||[]),...(G.filmDone||[]),...(not||[])]);const L=FILMS.filter(f=>!seen.has(f));return L.length?L[Math.floor(Math.random()*L.length)]:pick(FILMS)}
-function filmSeen(t,done){const G=S.g,k=done?"filmDone":"filmSeen";if(!Array.isArray(G[k]))G[k]=[];if(!G[k].includes(t))G[k].push(t);G[k]=G[k].slice(-300)}
+function filmPick(not){const G=S.g,seen=new Set([...(G.filmSeen||[]),...(G.filmDone||[]),...(not||[]).map(filmT)]);const L=FILMS.filter(f=>!seen.has(f));return L.length?L[Math.floor(Math.random()*L.length)]:pick(FILMS)}
+const filmT=t=>String(t||"").replace(/^Regarder /,""); // titre de quête « Regarder [film] » → le film (refonte Q.13)
+function filmSeen(t,done){t=filmT(t);const G=S.g,k=done?"filmDone":"filmSeen";if(!Array.isArray(G[k]))G[k]=[];if(!G[k].includes(t))G[k].push(t);G[k]=G[k].slice(-300)}
 function filmOfDay(){const G=S.g,tk=dayKey(Date.now());if(!G.filmDay||G.filmDay.d!==tk||(G.filmSeen||[]).includes(G.filmDay.t))G.filmDay={d:tk,t:filmPick()};return G.filmDay.t}
 
 
@@ -12699,7 +12702,7 @@ function renderWardrobeBase(){
 }
 
 // ---- Quêtes chronométrées : le timer remplace la validation directe
-function durOf(n){n=(n||"").toLowerCase();let t=0;const h=n.match(/(\d+(?:[.,]\d+)?)\s*h(?![a-zà-ü])/);if(h)t+=parseFloat(h[1].replace(",","."))*60;const m=n.match(/(\d+)\s*min/);if(m)t+=+m[1];if(!t&&/dents/.test(n))t=2;return Math.round(t)}
+function durOf(n){n=(n||"").toLowerCase();let t=0;const h=n.match(/(\d+(?:[.,]\d+)?)\s*h(?![a-zà-ü])/);if(h)t+=parseFloat(h[1].replace(",","."))*60;const m=n.match(/(\d+)\s*min/);if(m)t+=+m[1];if(!t&&/\bune demi-heure\b/.test(n))t=30;else if(!t&&/\bun quart d.heure\b/.test(n))t=15;else if(!t&&/\bune heure\b/.test(n))t=60;if(!t&&/dents/.test(n))t=2;return Math.round(t)}
 const tmOn=()=>!!(S.g&&S.g.tm);
 let tmIv=0;
 function tmFmt(ms){const s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return(h?h+":"+String(m).padStart(2,"0"):String(m))+":"+String(x).padStart(2,"0")}
@@ -12733,7 +12736,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&tmOn())tm
 const qName=b=>(b.dataset.tmn||b.dataset.n||b.textContent||"").trim();
 const isRead=n=>!/fini|relire|élire| ou |premières/i.test(n)&&/(^|[\s:])lire(\s|$)|^lecture\b|séance de lecture/i.test(n);
 const isBookEnd=n=>/livre fini|finir le livre|un livre en entier/i.test(n);
-const isPush=n=>/pompes|squats/i.test(n)&&!/ou \d+ min|marche rapide demain/i.test(n);
+const isPush=n=>/pompes|squats/i.test(n)&&!/ou \d+ min|marche rapide demain/i.test(n)&&!/\d+\s*min\b/i.test(n);
 function qPass(b,xp,add){window.__qPass=true;window.__xpP=(xp!=null||add)?{ov:xp,add,t:Date.now()}:null;try{b.click()}finally{window.__qPass=false}}
 document.addEventListener("click",e=>{if(window.__qPass||window.__tmPass||window.__holdPass)return;const b=e.target.closest&&e.target.closest("[data-tm]");if(!b||b.disabled)return;const n=qName(b);
   {const sp=qSpecialOpen(b,n);if(sp){e.preventDefault();e.stopImmediatePropagation();return}}
@@ -12752,7 +12755,7 @@ document.addEventListener("contextmenu",e=>{if(e.target.closest&&e.target.closes
 // ---------- quêtes interactives (corps, esprit, relations, cadeau)
 const isPlank=n=>/gainage|planche/i.test(n)&&!/ et |record de pompes|note tes/i.test(n);
 const isStretch=n=>/étirement/i.test(n);
-const isRun=n=>/(courir|course|footing|marche-courir)/i.test(n)&&!durOf(n);
+const isRun=n=>/(courir|\bcourse\b|footing|marche-courir)/i.test(n)&&!/\bcourses\b/i.test(n)&&!durOf(n);
 const isMed=n=>/médit/i.test(n)&&!/ ou /i.test(n);
 const isGift=n=>/^acheter un cadeau pour /i.test(n);
 const isContact=n=>!!cbWho(n)&&/écri|appel|vocal|nouvelles|message|contact|envoie|envoyer|demande|propose|recommand|raconte|parle|dis /i.test(n)&&!isGift(n);
@@ -13326,7 +13329,15 @@ function recomputeDays(){const ex=new Set([dayKey(Date.now()),...(window.__jDay?
 function complete(a,el,ev,sp,extra){const r=completeBase.apply(this,arguments);try{const e=S.log[S.log.length-1];if(e&&e.name===a.name&&!e.bonus&&!/^(mb|sleep|bonus)/.test(String(e.a||""))){
       let k=String(e.a||"").startsWith("af:")?e.a:afMatch(e.name);if(k){e.af=k;const g=S.g;if(!g.afLast||typeof g.afLast!=="object")g.afLast={};g.afLast[k]=e.t;(g.last||[]).forEach(x=>{if(afMatch(x.name)===k&&x.d!==dayKey(e.t)){x.pv=x.d;x.d=dayKey(e.t)}});if(!String(e.a).startsWith("af:")){const L=k.split(":")[3]?null:FAM.find(f=>f.id===k.split(":")[1]);if(L&&L.lz&&!e.lz&&a.xp>0){try{lzGain(L.lz,a.xp)}catch(_){}e.lz=L.lz+":link";e.lzx=a.xp}}}
       autoQuest(e)}}catch(err){}return r}
-function completeBase(a,el,ev,sp,extra){
+// Barème et catégories (refonte Q.6 / Q.7, 28/10) : 30 XP au plus par validation, 50 pour un exploit (livre, jeu ou série fini, son sorti, objectif du mois, contrat fini, sortie loin) ;
+// marche et lecture en Soi, album en Talent, partout où elles apparaissent
+const XP_EXPLOIT=/^(Livre (terminé|fini)|Jeu fini|Série finie|Son sorti|Objectif du mois|Contrat terminé)|train régional/i;
+function xpRules(a){const n=String(a.name||"");let cat=a.cat;
+  if(/\bmarch(e|er)\b/i.test(n)&&/^(sport|soi)$/.test(cat))cat="soi";
+  else if(/\b(lire|lecture|pages?|livres?)\b/i.test(n)&&/^(perso|soi)$/.test(cat))cat="soi";
+  else if(/\balbums?\b/i.test(n)&&/^(perso|soi)$/.test(cat))cat="perso";
+  const xp=a.xp>0?Math.min(a.xp,XP_EXPLOIT.test(n)?50:30):a.xp;return cat!==a.cat||xp!==a.xp?{...a,cat,xp}:a}
+function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   {const k=String(a.id||"")+"|"+(a.name||"")+"|"+(a.who||"");if(!/^rit/.test(String(a.id||""))&&window.__lastC&&window.__lastC.k===k&&Date.now()-window.__lastC.t<700)return;window.__lastC={k,t:Date.now()}}
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
@@ -13383,7 +13394,7 @@ function jokCheck(){const G=S.g;if(!G)return;if(typeof G.jok!=="number")G.jok=0;
 function streakLine(){const G=S.g,P=protDays(),F=new Set([...S.days,...P]),s=streak(),best=Math.max(bestRun(new Set(S.days)),s),l40=lastN(F,40);
   return`Série ${s} j · record ${best} j · actif ${l40} jours sur 40${G&&G.jok?` · ${G.jok} joker${G.jok>1?"s":""}`:""}`}
 const STREAK_MS=[[7,1],[30,2],[100,3]];
-function addBonus(name,xp,eurAmt,flag){S.xp+=xp;if(eurAmt)S.extraMoney=Math.round((S.extraMoney+eurAmt)*100)/100;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(eurAmt?{eur:eurAmt}:{}),...(flag?{[flag]:1}:{})})}
+function addBonus(name,xp,eurAmt,flag){if(xp>0)xp=Math.min(xp,50);S.xp+=xp;if(eurAmt)S.extraMoney=Math.round((S.extraMoney+eurAmt)*100)/100;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(eurAmt?{eur:eurAmt}:{}),...(flag?{[flag]:1}:{})})}
 function streakBonusCheck(){
   const n=streak();let msg="";
   STREAK_MS.forEach(([m,xp])=>{
@@ -13446,7 +13457,10 @@ function ensureGroupQuests(){
   return added;
 }
 // completeSpecial : version complète (ex-réécriture de correctifs.js), completeSpecialBase = le cœur d'origine
-function completeSpecial(q,el,ev){if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
+function completeSpecial(q,el,ev){
+  // quête nourriture reliée à l'assiette : elle se remplit dans l'assiette du repas en cours, qui la valide
+  if(q&&q.cat==="nourriture"&&!window.__plSp&&typeof plRule==="function"&&plRule(q.name)&&typeof plTarget==="function"){const k=plTarget();if(k){plateOpen(k==="dej"?"matin":"soir",k,el,{q:{t:q.name,id:q.id}});return}}
+  if(q&&q.sm){const g=S.g;if(!Array.isArray(g.smHist))g.smHist=[];g.smHist.push({n:q.name,t:Date.now()});g.smHist=g.smHist.slice(-40);
       if(q.who){S.bonds[q.who]=(S.bonds[q.who]||0)+10;S.bondsLast[q.who]=Date.now()}if(q.afk){if(!g.afLast)g.afLast={};g.afLast[q.afk]=Date.now()}
       if(q.lk){const x=(g.last||[]).find(y=>y.id===q.lk);if(x){x.pv=x.d;x.d=dayKey(Date.now())}}if(q.nap){if(!g.nap)g.nap={};const tk=dayKey(Date.now());g.nap[tk]=(g.nap[tk]||0)+q.nap}}return completeSpecialBase.apply(this,arguments)}
 function completeSpecialBase(q,el,ev){
@@ -16755,7 +16769,7 @@ function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;con
   c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
   c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
-    try{uniBurst(e.currentTarget,"divert")}catch(_){}addBonus("Sortie : "+x[0],x[3],0,"idq");save();try{toast(`Belle sortie <span class="p">+${x[3]} XP</span>`)}catch(_){}setTimeout(()=>{try{render(prev)}catch(_){}idqCard()},600)}}
+    const go=e.currentTarget;try{uniBurst(go,"divert")}catch(_){}complete({id:"af:sorties:"+x[4],cat:"soi",name:"Sortie : "+x[0],xp:x[3]},go,e);setTimeout(()=>{try{idqCard()}catch(_){}},600)}}
 
 // ---- anniversaires : fond de fête
 try{RKI.cake=["................", "....y...y...y...", "...yY..yY..yY...", "...mm..bb..gg...", "...wm..wb..wg...", "...mm..bb..gg...", ".oooooooooooooo.", ".owwwwbwwwwwgwo.", ".owrwvwwwywrwwo.", ".owwmwwmwwmwwmo.", ".ommmmmmmmmmmmo.", ".oyyyyyyyyyyyyo.", ".ommmmmmmmmmmmo.", ".oMMMMMMMMMMMMo.", "kkkkkkkkkkkkkkkk", ".KKKKKKKKKKKKKK."]}catch(e){}
@@ -16982,7 +16996,7 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
       <div class="skmo">${MOIS1.slice(1).map((m,j)=>{const kk=y+"-"+String(j+1).padStart(2,"0");return`<span class="${(G.rel||{})[kk]?"on":""}${j===mo?" cur":""}">${m[0].toUpperCase()}</span>`}).join("")}</div></div>`;
     el.innerHTML=h;aff.appendChild(el);if(rel)el.querySelector(".skok span").textContent=rel.n||"sans titre";
     const go=el.querySelector(".skrel");if(go)go.onclick=()=>{const n=el.querySelector("input").value.trim().slice(0,40),prev=levelInfo(S.xp).l,sg={visuel:4,prod:3,poly:1};if(!G.rel)G.rel={};Object.entries(sg).forEach(([kk,v])=>S.snd[kk]=(S.snd[kk]||0)+v);G.rel[ym]={n,t:Date.now()};
-      S.xp+=150;S.log.push({a:"bonus",cat:null,name:"Son sorti"+(n?" : "+n:""),xp:150,t:Date.now(),bonus:1,out:ym,snd:sg});save();try{uniBurst(go,"creer")}catch(e){}render(prev);setTimeout(()=>toast(`Son sorti ! <span class="p">+150 XP</span>`),300);el.remove();afSkill()};return}
+      S.xp+=50;S.log.push({a:"bonus",cat:null,name:"Son sorti"+(n?" : "+n:""),xp:50,t:Date.now(),bonus:1,out:ym,snd:sg});save();try{uniBurst(go,"creer")}catch(e){}render(prev);setTimeout(()=>toast(`Son sorti ! <span class="p">+50 XP</span>`),300);el.remove();afSkill()};return}
   const z=lzState(),L=lzOf(B.z),i=skInfo(z.xp[B.z]||0);
   h+=`<div class="sklv"><b>${esc(L?L.n:"")}</b><span>Nv ${i.l}</span><i><em style="width:${i.cur/i.need*100}%"></em></i></div>`;
   if(B.c){const cur=(G.cur||{})[B.c.k],nf=((G.fini||{})[B.c.k]||[]).length;
@@ -16993,7 +17007,7 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
   if(B.c){const cur=(G.cur||{})[B.c.k];if(cur)el.querySelector(".skcur span").textContent=cur.t;
     const set=el.querySelector(".skset");if(set){const inp=el.querySelector("input");const ok=()=>{const t=inp.value.trim().slice(0,40);if(!t)return;if(!G.cur||typeof G.cur!=="object")G.cur={};G.cur[B.c.k]={t,n:0,s:Date.now()};save();el.remove();afSkill()};set.onclick=ok;inp.onkeydown=e=>{if(e.key==="Enter")ok()}}
     const ch=el.querySelector(".skch");if(ch)ch.onclick=()=>{delete G.cur[B.c.k];save();el.remove();afSkill()}}
-  const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),100);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+100 XP</span>`);el.remove();afSkill()}}
+  const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),50);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+50 XP</span>`);el.remove();afSkill()}}
 // le bilan reprend la série et les coffres
 function bilKpi(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;let st=0;try{st=streak()}catch(e){}const o=S.g.opened||0,k=st+"|"+o;let r=b.querySelector(".bilkpi");if(r&&r.dataset.k===k&&r===b.firstElementChild)return;
   if(!r){r=document.createElement("div");r.className="bilkpi"}r.dataset.k=k;let fl="",ch="";try{fl=pxImg("flame",2,"ic");ch=pxImg("chest",2,"ic")}catch(e){}
@@ -17297,7 +17311,7 @@ const plRec=()=>Array.isArray(S.g.plr)?S.g.plr:(S.g.plr=PL_REC0.map(r=>({...r}))
 const plNorm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim();
 const PL_MEAT=/viande|poulet|b(oe|œ)uf|porc|jambon|lardon|thon|poisson|saumon|crevette|steak|dinde|canard|merguez|saucisse|chorizo|bacon/i;
 // Quêtes nourriture reliées à l'assiette (27/10) : le contenu (légume, équilibré…) et la cuisine (cocher « Cuisiné maison » ou « Nouvelle recette ») se valident en remplissant l'assiette
-function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
+function plRule(t){t=String(t||"");const b=plRuleBase(t),nv=/jamais fait|nouvelle recette|nouveau plat|recette que tu n'as jamais|tester une recette/i.test(t),ck=!nv&&/cuisin|fait maison|repas maison/i.test(t);
   if(!nv&&!ck)return b;const box=nv?"nouv":"maison",lab=nv?"« Nouvelle recette »":"« Cuisiné maison »";
   return{ok:m=>!!((m&&m.x)||{})[box]&&(!b||b.ok(m)),need:(b?b.need+", et ":"")+"coche "+lab+" à l'étape suivante",cook:box}}
 // le prochain repas à remplir aujourd'hui (déjeuner, puis dîner) ; null si les deux sont notés
@@ -17315,7 +17329,10 @@ function plRuleBase(t){t=String(t||"");const ns=m=>["f","p","l"].filter(s=>plN(m
   return null}
 function plQuests(m,el,q){let P=[];try{const L=feedPick().L,dn=(S.g.fq&&S.g.fq.done)||[];P=L.filter(x=>x.cat==="nourriture"&&!x.later&&!dn.includes(x.id)&&(r=>r&&r.ok(m))(plRule(x.t)))}catch(e){}
   P.forEach((x,i)=>setTimeout(()=>{try{(window.__plFd||feedDo)(x,el,null)}catch(e){}},1300+i*900));
-  if(q&&!P.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
+  // quêtes spéciales nourriture (ex. « Cuisine : Nouveau plat ») : validées aussi par l'assiette (refonte 4.1.4)
+  const SP=(S.specials||[]).filter(x=>x.cat==="nourriture"&&(r=>r&&r.ok(m))(plRule(x.name)));
+  SP.forEach((x,i)=>setTimeout(()=>{try{window.__plSp=1;completeSpecial(x,el,null)}catch(e){}finally{window.__plSp=0}},1300+(P.length+i)*900));
+  if(q&&!P.some(x=>x.id===q.id)&&!SP.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
 
 function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#fqBox")||document.body;
   const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{}),...(opt.x||{})},...(cur.r?{r:cur.r}:{})};
@@ -17498,6 +17515,8 @@ const MIG=[
   G=>{if(!G.plb)return false;delete G.plb;return false},
   // 4 — 27/10 : les bonnes actions qui faisaient doublon avec l'assiette sont retirées de la liste (l'historique et l'XP restent)
   G=>{if(!Array.isArray(S.actions))return false;const n=S.actions.length;S.actions=S.actions.filter(a=>!PLATE_DUP.has(a.name));return S.actions.length!==n},
+  // 5 — 28/10 : refonte, bonnes actions retirées par Ilario (l'historique et l'XP restent)
+  G=>{if(!Array.isArray(S.actions))return false;const n=S.actions.length;S.actions=S.actions.filter(a=>!ACT_RETIRE.has(a.name));return S.actions.length!==n},
 ];
 function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.length)return;// sauvegarde à jour, ou plus récente que l'appli : on ne touche à rien
   let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}
