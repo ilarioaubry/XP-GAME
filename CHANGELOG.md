@@ -2,6 +2,9 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 28/10/2026
+- Correction : à l'ouverture de l'appli, les tuiles des repas (et l'assiette) n'apparaissaient pas tant qu'on n'avait rien touché. Le démarrage se lance maintenant après tous les scripts.
+
 ## 27/10/2026
 - Page Actions : « Créer une action » fixé en bas de l'écran ; tuiles des familles toutes de même hauteur (nom sur une ligne : « Tâche importante », « Des nouvelles ») ; icône pour Tri du téléphone ; tuile « Bonnes actions » retirée (elles restent dans la recherche et les Récents).
 - Page Actions : le panneau et son décor prennent tout l'écran à chaque étape ; « Créer une action » reste en bas ; tuiles des familles (Travail, Force…) qui ne débordent plus de l'écran, icône au-dessus du nom.

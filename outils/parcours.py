@@ -149,6 +149,10 @@ with sync_playwright() as p:
     pg.reload(); pg.wait_for_timeout(1500)
     apres = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     check("sauvegarde gardée après rechargement", apres == avant, avant + " / " + apres)
+    # 8a. Ouverture avec une sauvegarde : le premier rendu complet va jusqu'au bout (démarrage chargé en dernier), les repas sont là
+    init = []; pg.on("console", lambda m: m.type == "warning" and m.text.startswith("init") and init.append(m.text[:160]))
+    pg.reload(); pg.wait_for_timeout(1500)
+    check("rendu de démarrage sans erreur, tuiles des repas présentes", not init and pg.evaluate("showView('q');!!document.querySelector('#spTrack .mlrow')"), "; ".join(init))
 
     # 9. Export puis restauration
     with pg.expect_download() as dl:

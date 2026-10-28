@@ -4494,7 +4494,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version f01297e</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version bc2fd8d</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -17111,14 +17111,6 @@ function grpViz(){document.querySelectorAll(".fgcard small").forEach(s=>{const t
     r.style.setProperty("--rc",col);r.style.setProperty("--rp",pc+"%");r.title=t;r.innerHTML=`<i></i><b>${d==null?"–":d+"j"}</b>`})}
 // ---- cadre du profil : couleur Famille ou Ami
 function proFrame(){const c=document.getElementById("pCardF");if(!c)return;const n=(document.getElementById("pName")||{}).textContent||"";c.style.setProperty("--fc",n&&isFam(n)?"var(--c-famille)":"var(--c-social)")}
-// Démarrage : premier rendu complet une fois tous les scripts chargés, et bouton « Déjà fait » des minuteurs.
-// Plus aucune retouche globale : chaque écran (Aujourd'hui, Moi, Proches, profil) se dessine dans sa forme finale.
-try{if(S&&S.g)render()}catch(e){console.warn("init",e)}
-try{renderFiche()}catch(e){}
-
-
-// Minuteurs (gainage, étirements, course, méditation, pompes) : bouton « Déjà fait » dans la fenêtre, appelé par gnOpen, stOpen, runOpen, mdOpen, puOpen
-function puDejaFait(btn){try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}}
 // ---- Assiette : au déjeuner et au dîner, on pose ce qu'on mange ; chaque côté (féculents, protéines, légumes) se remplit.
 // Données : S.g.plt["AAAA-MM-JJ"][repas] = {f:[ids], p:[ids], l:[ids], x:{yaourt:1, fromage:1, eau:1}}
 Object.assign(RKI,{
@@ -17340,5 +17332,13 @@ const MIG=[
 function runMig(){try{const G=S&&S.g;if(!G)return;const v=+G.ver||0;if(v>=MIG.length)return;// sauvegarde à jour, ou plus récente que l'appli : on ne touche à rien
   let r=false;for(let i=v;i<MIG.length;i++){try{if(MIG[i](G))r=true}catch(e){}G.ver=i+1}save();if(r){try{render()}catch(e){}}}catch(e){}}
 runMig();
+// Démarrage : premier rendu complet une fois tous les scripts chargés, et bouton « Déjà fait » des minuteurs.
+// Plus aucune retouche globale : chaque écran (Aujourd'hui, Moi, Proches, profil) se dessine dans sa forme finale.
+try{if(S&&S.g)render()}catch(e){console.warn("init",e)}
+try{renderFiche()}catch(e){}
+
+
+// Minuteurs (gainage, étirements, course, méditation, pompes) : bouton « Déjà fait » dans la fenêtre, appelé par gnOpen, stOpen, runOpen, mdOpen, puOpen
+function puDejaFait(btn){try{const o=[...document.querySelectorAll(".pu")].pop(),pb=o&&o.querySelector(".pub");if(pb&&btn&&!pb.querySelector(".pudone")){const d=document.createElement("button");d.type="button";d.className="lnk pudone";d.textContent="Déjà fait";d.onclick=()=>{o.remove();qPass(btn)};pb.appendChild(d);o.addEventListener("click",e=>{if(e.target.closest("#puOk,.pupad"))d.hidden=true},true)}}catch(e){}}
 </script>
 </body></html>
