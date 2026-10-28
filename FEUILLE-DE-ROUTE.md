@@ -180,6 +180,22 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [ ] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8)
 - [ ] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout)
 
+## Demandes du 28/10/2026
+
+À régler :
+- [ ] R.1 Messages (toasts) en bas, juste au-dessus de la barre d'onglets dans Aujourd'hui
+- [ ] R.2 « Bonne nuit » (clôture du soir) en fin de liste de la routine du soir
+- [ ] R.3 Pastilles rouges de nouveauté : montrer le chemin (pastille sur Moi, puis sur Chez moi, puis sur la catégorie, puis sur l'objet)
+- [ ] R.4 L'assiette dans « Bonne nuit » (le dîner se remplit dans l'assiette)
+- [ ] R.5 « Journée sans… » : à la fin de « Bonne nuit », plus dans les actions
+- [ ] R.6 Un titre à la section Routine
+
+Fonctionnalités (à proposer avant de construire) :
+- [ ] F.1 Finir un contrat donne des points de Travail
+- [ ] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée)
+- [ ] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain)
+- [ ] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
