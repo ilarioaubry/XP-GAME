@@ -76,6 +76,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `cig` | finitions | Compteur de cigarettes par jour | active |
 | `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
 | `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
+| `dlog` | coeur/29, cloture-soir | Messages gardés pour le bilan du soir (jour → liste), 7 derniers jours | active |
 | `perOk` | ma-vie | Contrats clos par la coche (id → date), +50 XP Travail une fois | active |
 | `last` | ma-vie | « Dernière fois que… » | active |
 | `tm` | 27 | Minuteur en cours | active |

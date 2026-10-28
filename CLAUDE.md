@@ -53,6 +53,7 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Barres de progression** : un seul modèle (contour crème 2 px, fond sombre), deux tailles : grande 18 px pour les niveaux (XP, proches), petite 10 px pour tout le reste.
 - **Échelle de texte à 4 niveaux** : titre de section 20 px · titre de carte 15 px · texte 13 px · petite info 11 px. Seuls les grands chiffres décoratifs (≥ 22 px) font exception ; les champs restent à 16 px. Le 11 px seulement sur fond sombre ; sur le ciel, 13 px minimum.
 - **Messages** : un seul emplacement (en bas, juste au-dessus de la barre d'onglets ; au-dessus des boutons du bas dans les fenêtres plein écran) et un seul style pour les toasts et la barre « Annuler ».
+- **Messages « en passant »** (lien renforcé, objectif atteint, record…) : gardés pour « Ta journée » (bilan du soir), pas de toast ; seuls la validation (avec « Annuler »), les niveaux et les réponses directes s'affichent sur le moment. Nouveau message de ce genre → l'ajouter à `TOAST_DIFF`.
 - **Pastilles de nouveauté** : elles montrent le chemin jusqu'à l'objet (onglet, sous-onglet, pièce, catégorie, puis l'objet).
 - **États vides** : classe `vide`, phrase courte centrée du type « Aucun … pour l'instant. », suivie du bouton pour agir s'il existe.
 - **Choix rapides** (menus « … », Pris / Sauté…) : petite fenêtre centrée sur fond assombri ; un toucher à côté la ferme sans rien déclencher derrière.

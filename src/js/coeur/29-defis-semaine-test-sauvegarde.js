@@ -75,7 +75,10 @@ function floatXp(xp,ev,el){
   const fp=window.__tmFloat;f.style.left=(fp?fp.x:(ev&&ev.clientX)||r.left+r.width/2)-30+"px";f.style.top=(fp?fp.y:(ev&&ev.clientY)||r.top)-20+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000);
 }
 let toastT,tq=[],tBusy=false,tLast="";
-function toast(html){if(!html||/joker/i.test(html))return;if(html===tLast&&tBusy||tq.includes(html))return;tq.push(html);if(tq.length>4)tq.splice(1,1);if(!tBusy)nextToast()}
+// Bilan de journée (28/10) : les messages « en passant » ne s'empilent plus, ils sont gardés pour le bilan du soir (S.g.dlog) ; les niveaux s'affichent aussi tout de suite
+const TOAST_DIFF=/Lien renforcé|Quête accomplie au passage|Défi d'hier réussi|Objectif du jour atteint|Journée parfaite|Socle tenu|Barre de vie pleine|Nouveau titre|Nouveau record|Objet exclusif|Couché avant minuit|dans les coffres|Case \d+ réussie/i,TOAST_NIV=/niveau <span|Niveau <span/i;
+function toastKeep(html){try{const G=S.g;if(!G)return;const tk=dayKey(Date.now());if(!G.dlog||typeof G.dlog!=="object")G.dlog={};const L=G.dlog[tk]=G.dlog[tk]||[];if(!L.includes(html)&&L.length<40)L.push(html);const ks=Object.keys(G.dlog).sort();while(ks.length>7)delete G.dlog[ks.shift()]}catch(e){}}
+function toast(html){if(!html||/joker/i.test(html))return;if(TOAST_NIV.test(html))toastKeep(html);else if(TOAST_DIFF.test(html)){toastKeep(html);return}if(html===tLast&&tBusy||tq.includes(html))return;tq.push(html);if(tq.length>4)tq.splice(1,1);if(!tBusy)nextToast()}
 function nextToast(){const t=$("toast");clearTimeout(toastT);if(!tq.length){tBusy=false;tLast="";t.classList.remove("show");return}
   tBusy=true;tLast=tq.shift();t.innerHTML=tLast;t.classList.add("show");toastT=setTimeout(()=>{t.classList.remove("show");toastT=setTimeout(nextToast,250)},tq.length?1800:2600)}
 $("toast").addEventListener("click",()=>{clearTimeout(toastT);$("toast").classList.remove("show");toastT=setTimeout(nextToast,150)});

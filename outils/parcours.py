@@ -153,6 +153,12 @@ with sync_playwright() as p:
     if ok1: pg.evaluate("document.querySelector('#trkBox .trk-ok').click()"); pg.wait_for_timeout(300)
     check("contrat fini : coche, +50 XP Travail, puis disparaît", ok1 and xp(pg) - x0 in (50, 100) and not pg.evaluate("!!document.querySelector('#trkBox .trk-fin')"), f"{ok1} {xp(pg)-x0}")
 
+    # 7d. Bilan de journée : les messages « en passant » attendent le bilan, les niveaux s'affichent tout de suite ; Bonne nuit finit sur « Ta journée »
+    r = pg.evaluate("()=>{tq.length=0;toast('Lien renforcé avec <span class=p>Léa</span>');const a=document.getElementById('toast').textContent;toast('Soi niveau <span class=p>9</span> !');return [!/Lien/.test(a),((S.g.dlog||{})[dayKey(Date.now())]||[]).length]}")
+    pg.evaluate("()=>{document.querySelectorAll('.clo,.rtm').forEach(e=>e.remove());closeOpen(1);for(let i=0;i<8&&document.querySelector('.clo .clogo');i++){const b=document.querySelector('.clo .clogo');if(b.textContent==='Bonne nuit'){b.click();break}b.click()}}"); pg.wait_for_timeout(1500)
+    check("bilan de journée : messages gardés, « Ta journée » en fin de Bonne nuit", r[0] and r[1] >= 2 and pg.evaluate("!!document.querySelector('.jrc')"), str(r))
+    pg.evaluate("document.querySelectorAll('.jrc').forEach(e=>e.remove());document.body.classList.remove('rtmon')")
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

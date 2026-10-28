@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 28/10/2026
+- Bilan de journée : à la fin de Bonne nuit, un écran « Ta journée » (XP, actions par catégorie, badges, ce qui s'est passé, proches, repas). Les messages « en passant » (lien renforcé, objectif atteint, record…) ne s'empilent plus et attendent ce bilan ; les niveaux s'affichent toujours sur le moment.
 - Contrat fini : au dernier jour, une coche à toucher dans le bandeau, +50 XP Travail, puis il disparaît (« Annuler » remet la coche).
 - La section des rituels s'appelle « Rituels du matin » / « Rituels du soir ».
 - Messages et barre « Annuler » en bas, au-dessus de la barre d'onglets.

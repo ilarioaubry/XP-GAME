@@ -53,9 +53,23 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
     SANS.forEach(it=>{if(W.sans[it.opt]&&!sansDone(it))Q.push(()=>AFB.afDo(it,FK,null,0,[],0))});
     const FK={getBoundingClientRect:()=>({left:innerWidth/2-20,width:40,top:innerHeight*.45}),classList:{add(){}}};
     const prev=levelInfo(S.xp).l;if(first)addBonus("Bilan de la journée",10,0,"jr");close();save();render(prev);sfx("moment");
-    toast(first?`Journée close <span class="p">+10 XP</span>${Q.length?` · ${Q.length} ajout${Q.length>1?"s":""}`:""}. Bonne nuit.`:"Bilan mis à jour");
-    Q.forEach((f,i)=>setTimeout(()=>{try{f()}catch(e){}},500+i*600))}
+    Q.forEach((f,i)=>setTimeout(()=>{try{f()}catch(e){}},300+i*450));
+    setTimeout(()=>{try{dayRecap(first)}catch(e){toast("Bilan mis à jour")}},450+Q.length*450)}
   draw()}
+// ---- Ta journée : le bilan qui remplace les messages empilés (fin de Bonne nuit)
+function dayRecap(first){if(document.querySelector(".jrc"))return;const tk=dayKey(Date.now()),G=S.g,L=(S.log||[]).filter(e=>dayKey(e.t)===tk),xp=L.filter(e=>e.xp>0).reduce((a,e)=>a+e.xp,0),li=levelInfo(S.xp);
+  const acts=L.filter(e=>!e.bonus&&e.xp>0),bc={};acts.forEach(e=>{const c=CATS[e.cat]?e.cat:"";if(c)bc[c]=(bc[c]||0)+e.xp});const BC=Object.entries(bc).sort((a,b)=>b[1]-a[1]),mx=BC.length?BC[0][1]:1;
+  const ppl=[...new Set(L.flatMap(e=>e.withp||[]))];let nM=0;try{nM=MEALS.filter(([k,per])=>mealState(k,per)==="ok").length}catch(e){}
+  let bd=[];try{bd=badgeDefs().filter(b=>S.badges[b.id]&&dayKey(S.badges[b.id])===tk).map(b=>b.name)}catch(e){}
+  const notes=((G.dlog||{})[tk]||[]).slice(-8),line=(ic,h)=>`<li class="jrl"><span class="jri">${ic}</span><span>${h}</span></li>`;
+  const o=document.createElement("div");o.className="clo clo2 jrc";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Ta journée");o.prepend(ambEl("nuit"));document.body.appendChild(o);document.body.classList.add("rtmon");
+  const d=document.createElement("div");d.className="cloin";
+  d.innerHTML=`<div class="qwh"><span></span><span></span><button type="button" class="qwback clox" aria-label="Fermer">×</button></div><div class="qwbody"><h2 class="qwq">Ta journée</h2><p class="qwsub">${esc(new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}))}</p>
+    <div class="jrxp"><b class="ui-chiffre">+${xp} XP</b><small class="ui-info">${acts.length} action${acts.length>1?"s":""}${first?" · bilan +10 XP":""} · encore ${Math.max(0,li.need-li.cur)} XP avant le niveau ${li.l+1}</small></div>
+    ${BC.length?`<ul class="jrcat">${BC.map(([c,x])=>`<li><span class="jrn">${esc(CATS[c].label)}</span><span class="ui-barre jrb" style="--cc:${CATS[c].c}"><i style="width:${Math.round(x/mx*100)}%"></i></span><span class="ui-compteur">${x}</span></li>`).join("")}</ul>`:`<p class="vide">Aucune action notée aujourd'hui.</p>`}
+    <ul class="jrlist">${[...bd.map(n=>line(rkSvg("etoile"),"Badge : <b>"+esc(n)+"</b>")),...notes.map(h=>line(rkSvg("check"),h)),ppl.length?line(rkSvg("coeur"),"Avec "+esc(ppl.slice(0,4).join(", "))+(ppl.length>4?" +"+(ppl.length-4):"")):"",line(rkSvg("repas"),nM+" repas sur 4 notés")].join("")}</ul></div>
+    <button type="button" class="btn primary clogo">Bonne nuit</button>`;
+  o.appendChild(d);const close=()=>{o.remove();document.body.classList.remove("rtmon")};d.querySelector(".clox").onclick=close;d.querySelector(".clogo").onclick=close}
 function rkSnd(k){if(!sfxOn())return;const c=sfxCtx();if(!c)return;const t=c.currentTime+.01;SFX.last=performance.now();
   switch(k){
    case"dents":for(let i=0;i<4;i++)noise(c,t+i*.07,.06,.09,i%2?3800:2600);tone(c,1319,t+.3,.12,"square",.05);break;
