@@ -198,8 +198,8 @@ Fonctionnalités (à proposer avant de construire) :
 
 ## Journal de bord (demande du 28/10/2026)
 
-- [ ] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A (par moments), B (tableau de bord), C (fil du jour) proposées, à choisir
-- [ ] J.2 Enchaînements de rituels (douche → barbe), dents proposées à la fin d'un repas, compteur de cigarettes dans l'engagement lié
+- [x] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A à G proposées ; **D, la liste du carnet**, choisie et faite le 28/10 (Ce matin / Mes engagements / Plus tard aujourd'hui). Reste : retirer le code des anciens blocs (rituels en tuiles, rangée des repas, énergie, à faire, fin de journée, rattrapage), aujourd'hui masqués et encore utilisés en coulisse
+- [ ] J.2 Enchaînements de rituels (douche → barbe) ~~fait 28/10~~, dents proposées à la fin d'un repas (à faire), compteur de cigarettes dans l'engagement lié ~~fait 28/10~~
 
 ## Fait à la demande (hors phases)
 

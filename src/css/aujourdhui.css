@@ -829,3 +829,37 @@ html:not(#_u1):not(#_u2) body #engBox .engt b{font-size:15px;white-space:nowrap;
 /* place : les engagements juste avant les rituels, la liste à faire juste après les quêtes du jour */
 html:not(#_a) .wrap>#engBox{order:-21}
 html:not(#_a) .wrap>#todoBox{order:-18}
+
+/* Journal de bord (28/10, piste D) : la journée en liste */
+html:not(#_a) .wrap>#jdNow{order:-24}
+html:not(#_a) .wrap>#jdEng{order:-23}
+html:not(#_a) .wrap>#jdLater{order:-22}
+html:not(#_a) body .wrap>:is(#dqBox,#engBox,#enBox,#todoBox,#sleepGo,#rtrBox){display:none!important}
+html:not(#_u1):not(#_u2) body .jdbox .jdlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+html:not(#_u1):not(#_u2) body .jdbox .jdl{display:flex;align-items:center;gap:14px;min-height:68px;padding:8px 12px;background:rgba(14,16,36,.82);border:1px solid rgba(255,255,255,.17);color:#fff7e6}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.sub{margin-left:40px;min-height:56px}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.ok{opacity:.55}
+html:not(#_u1):not(#_u2) body .jdbox .jdi,html:not(#_u1):not(#_u2) body .jdbox .jdi :is(svg,img){width:48px;height:48px;flex:none;display:block}
+html:not(#_u1):not(#_u2) body .jdbox .jdt{flex:1;min-width:0;display:grid;gap:2px}
+html:not(#_u1):not(#_u2) body .jdbox .jdt b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html:not(#_u1):not(#_u2) body .jdbox .jdt small{font-size:13px;color:#cfc6b8}
+html:not(#_u1):not(#_u2) body .jdbox .jdck{width:44px;height:44px;min-height:44px;padding:0;flex:none;display:grid;place-items:center;color:var(--gold)}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.ok .jdck{border-color:var(--gold)}
+html:not(#_u1):not(#_u2) body .jdbox .jdmini{display:flex;gap:6px;flex:none}
+html:not(#_u1):not(#_u2) body .jdbox .jdmini .btn{min-height:44px;padding:0 10px;font-size:13px}
+html:not(#_u1):not(#_u2) body .jdbox .jdpm{display:flex;align-items:center;gap:8px;flex:none}
+html:not(#_u1):not(#_u2) body .jdbox .jdpm .btn{width:44px;height:44px;min-height:44px;padding:0;font-size:20px}
+html:not(#_u1):not(#_u2) body .jdbox .jdpm .ui-compteur{min-width:24px;text-align:center}
+html:not(#_u1):not(#_u2) body .jdbox .jdbar{display:block;margin-top:6px}
+html:not(#_u1):not(#_u2) body .jdbox .jdrtm{width:100%;margin-top:10px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px}
+html:not(#_u1):not(#_u2) body .jdbox .jdgo{min-height:44px;padding:0 12px;flex:none}
+html:not(#_u1):not(#_u2) body .jdbox .jdmore{min-height:0;padding:0;background:none;border:0}
+html:not(#_u1):not(#_u2) body .jdbox .jdfold{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;background:none;border:1px dashed rgba(255,255,255,.25);color:#fff7e6;font:inherit;font-size:13px}
+html:not(#_u1):not(#_u2) body .jdbox .jdchev{display:inline-grid;transform:rotate(-90deg)}
+html:not(#_u1):not(#_u2) body .jdbox .jdchev.up{transform:rotate(90deg)}
+html:not(#_u1):not(#_u2) body .jdbox .jdnuit #ritLife{margin:4px 0 0;padding:0;background:none;border:0}
+html:not(#_u1):not(#_u2) body .jdbox #engBox{display:block!important;margin:0 0 8px}
+html:not(#_u1):not(#_u2) body .jdbox #engBox>.head{display:none}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.w{flex-wrap:wrap}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.w .jdmini{width:100%;padding-left:62px;box-sizing:border-box}
+html:not(#_u1):not(#_u2) body .jdbox .jdl.w .jdmini .btn{flex:1}

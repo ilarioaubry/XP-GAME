@@ -39,11 +39,11 @@ with sync_playwright() as p:
     check("création du profil", pg.evaluate("S.g&&S.friends.length===2&&S.family.length===2"))
 
     # 2. Rituel
-    x0 = xp(pg); pg.click(".rtile >> nth=0"); pg.wait_for_timeout(1500)
+    x0 = xp(pg); pg.click("#jdNow .jdl:not(.ok) .jdck >> nth=0"); pg.wait_for_timeout(1500)
     check("rituel validé (+XP)", xp(pg) > x0, f"{x0} → {xp(pg)}")
 
     # 3. Assiette du déjeuner
-    x0 = xp(pg); pg.click(".mlp >> nth=1"); pg.wait_for_timeout(400)
+    x0 = xp(pg); pg.click("#jdNow li:has-text('Déjeuner') .jdmini .btn"); pg.wait_for_timeout(400)
     check("l'assiette s'ouvre", pg.is_visible(".plo")); trait(pg, "assiette")
     for f in ("Pâtes", "Poulet", "Salade"): pg.evaluate("f=>[...document.querySelectorAll('.plo .plf')].find(b=>b.textContent.trim()===f).click()", f); pg.wait_for_timeout(150)
     pg.evaluate("document.querySelector('.plo [data-sauce=pesto]').click()"); pg.wait_for_timeout(150)
@@ -68,8 +68,9 @@ with sync_playwright() as p:
     check("routine : départ, étapes, fin", okr and not pg.is_visible(".rtq"))
 
     # 3b. Revenir sur un repas : sauté → pris → effacé
-    r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const tap=async v=>{document.querySelector('.mlp[data-k=pdej]').click();await W(100);const b=document.querySelector('.mlpop [data-v="'+v+'"]');if(!b)return false;b.click();await W(400);return true};
-      const o=[];await tap('0');const x0=S.xp;o.push(mealState('pdej','matin'));await tap('1');o.push(mealState('pdej','matin'),S.xp>x0);await tap('x');o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
+    r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const li=()=>[...document.querySelectorAll('#jdNow .jdl')].find(l=>/Petit-déj/.test(l.textContent));
+      const btn=t=>{const l=li();const b=l&&[...l.querySelectorAll('.jdmini .btn')].find(b=>b.textContent.trim()===t);if(b)b.click();return!!b},row=()=>{const l=li();const b=l&&l.querySelector('.jdck');if(b)b.click()};
+      jdOpenDone=true;mealClear(dayKey(Date.now()),'matin','pdej');save();render();await W(200);const o=[];btn('Sauté');await W(400);const x0=S.xp;o.push(mealState('pdej','matin'));row();await W(400);btn('Pris');await W(400);o.push(mealState('pdej','matin'),S.xp>x0);row();await W(400);o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
     check("revenir sur un repas (sauté → pris → effacé)", r == "ko,ok,true,vide,true", r)
 
     # 4. Quête du jour puis Annuler
@@ -148,10 +149,10 @@ with sync_playwright() as p:
     check("pièces de la maison et objets", len(errs) == n0 and nb > 10, f"{nb} objets")
 
     # 7c. Contrat fini : une coche à toucher, +50 XP Travail, puis il disparaît
-    pg.evaluate("()=>{const tk=dayKey(Date.now()),d=new Date(Date.now()-13*864e5);const s=dayKey(d.getTime());S.g.vie=S.g.vie||{};S.g.vie.track=Object.assign({},S.g.vie.track,{per:true});S.g.per=[{id:'ptest',t:'contrat',name:'Contrat',s,e:tk}];save();showView('q');renderTrk()}")
-    x0 = xp(pg); ok1 = pg.evaluate("!!document.querySelector('#trkBox .trk-ok')")
-    if ok1: pg.evaluate("document.querySelector('#trkBox .trk-ok').click()"); pg.wait_for_timeout(300)
-    check("contrat fini : coche, +50 XP Travail, puis disparaît", ok1 and xp(pg) - x0 in (50, 100) and not pg.evaluate("!!document.querySelector('#trkBox .trk-fin')"), f"{ok1} {xp(pg)-x0}")
+    pg.evaluate("()=>{const tk=dayKey(Date.now()),d=new Date(Date.now()-13*864e5);const s=dayKey(d.getTime());S.g.vie=S.g.vie||{};S.g.vie.track=Object.assign({},S.g.vie.track,{per:true});S.g.per=[{id:'ptest',t:'contrat',name:'Contrat',s,e:tk}];save();showView('q');renderJdb()}")
+    x0 = xp(pg); ok1 = pg.evaluate("!!document.querySelector('#jdEng [aria-label^=Clore]')")
+    if ok1: pg.evaluate("document.querySelector('#jdEng [aria-label^=Clore]').click()"); pg.wait_for_timeout(300)
+    check("contrat fini : coche, +50 XP Travail, puis disparaît", ok1 and xp(pg) - x0 in (50, 100) and not pg.evaluate("!!document.querySelector('#jdEng [aria-label^=Clore]')"), f"{ok1} {xp(pg)-x0}")
 
     # 7d. Bilan de journée : les messages « en passant » attendent le bilan, les niveaux s'affichent tout de suite ; Bonne nuit finit sur « Ta journée »
     r = pg.evaluate("()=>{tq.length=0;toast('Lien renforcé avec <span class=p>Léa</span>');const a=document.getElementById('toast').textContent;toast('Soi niveau <span class=p>9</span> !');return [!/Lien/.test(a),((S.g.dlog||{})[dayKey(Date.now())]||[]).length]}")
@@ -161,13 +162,13 @@ with sync_playwright() as p:
 
     # 7e. À faire : tâche libre ajoutée, cochée = +5 XP ; une action mise « pour demain » n'apparaît pas aujourd'hui
     pg.evaluate("()=>{showView('q');todoAdd({n:'Tâche test'},todoDay(0));todoAdd({key:'af:ranger:Chambre',n:'Ranger · Chambre'},todoDay(1));renderTodo()}")
-    x0 = xp(pg); n0 = pg.evaluate("document.querySelectorAll('#todoBox .todor').length")
-    pg.evaluate("[...document.querySelectorAll('#todoBox .todor')].find(r=>/Tâche test/.test(r.textContent)).querySelector('.todock').click()"); pg.wait_for_timeout(400)
-    check("à faire : tâche libre cochée +5 XP, demain pas affiché aujourd'hui", n0 == 1 and xp(pg) - x0 in (5, 10) and pg.evaluate("/1\\/1/.test(document.querySelector('#todoBox .count').textContent)"), f"{n0} {xp(pg)-x0}")
+    pg.evaluate("renderJdb()"); x0 = xp(pg); n0 = pg.evaluate("[...document.querySelectorAll('#jdLater .jdl')].filter(r=>/Tâche test|Ranger · Chambre/.test(r.textContent)).length")
+    pg.evaluate("[...document.querySelectorAll('#jdLater .jdl')].find(r=>/Tâche test/.test(r.textContent)).querySelector('.jdck').click()"); pg.wait_for_timeout(400)
+    check("à faire : tâche libre cochée +5 XP, demain pas affiché aujourd'hui", n0 == 1 and xp(pg) - x0 in (5, 10) and pg.evaluate("[...document.querySelectorAll('#jdLater .jdl.ok')].some(r=>/Tâche test/.test(r.textContent))"), f"{n0} {xp(pg)-x0}")
 
     # 7f. Engagements : affichés dans la journée, validés dans Bonne nuit (+15 XP chacun tenu)
-    pg.evaluate("()=>{document.querySelectorAll('.clo,.jrc').forEach(e=>e.remove());engS().d[dayKey(Date.now())]=[{id:'soda',k:'sans',n:'Sans soda'}];save();showView('q');renderEng();closeOpen(1);for(let i=0;i<8&&!/engagements/.test(document.querySelector('.cloin h2').textContent);i++)document.querySelector('.clogo').click()}")
-    ok = pg.evaluate("!!document.querySelector('#engBox .engr')&&!!document.querySelector('[data-en=soda]')")
+    pg.evaluate("()=>{document.querySelectorAll('.clo,.jrc').forEach(e=>e.remove());engS().d[dayKey(Date.now())]=[{id:'soda',k:'sans',n:'Sans soda'}];save();showView('q');renderEng();renderJdb();closeOpen(1);for(let i=0;i<8&&!/engagements/.test(document.querySelector('.cloin h2').textContent);i++)document.querySelector('.clogo').click()}")
+    ok = pg.evaluate("[...document.querySelectorAll('#jdEng .jdl')].some(r=>/Sans soda/.test(r.textContent))&&!!document.querySelector('[data-en=soda]')")
     pg.evaluate("()=>{document.querySelector('[data-en=soda][data-v=\"1\"]').click();document.querySelectorAll('.clo').forEach(e=>e.remove());document.body.classList.remove('rtmon')}")
     check("engagements : carte du jour et étape dans Bonne nuit", ok)
 
@@ -183,7 +184,7 @@ with sync_playwright() as p:
     # 8a. Ouverture avec une sauvegarde : le premier rendu complet va jusqu'au bout (démarrage chargé en dernier), les repas sont là
     init = []; pg.on("console", lambda m: m.type == "warning" and m.text.startswith("init") and init.append(m.text[:160]))
     pg.reload(); pg.wait_for_timeout(1500)
-    check("rendu de démarrage sans erreur, tuiles des repas présentes", not init and pg.evaluate("showView('q');!!document.querySelector('#spTrack .mlrow')"), "; ".join(init))
+    check("rendu de démarrage sans erreur, tuiles des repas présentes", not init and pg.evaluate("showView('q');!!document.querySelector('#jdNow .jdl')"), "; ".join(init))
 
     # 9. Export puis restauration
     with pg.expect_download() as dl:
