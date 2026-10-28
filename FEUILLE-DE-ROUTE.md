@@ -196,6 +196,11 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain) ; tâche libre 5 XP ; ce qui n'est pas fait est proposé dans Bonne nuit (Demain / Retirer) (28/10)
 - [x] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8 : carte le matin (jusqu'à midi, 3 au plus, « Moins de N cigarettes » avec −/+, les tiens écrits), validés dans Bonne nuit, +15 XP chacun tenu (28/10)
 
+## Journal de bord (demande du 28/10/2026)
+
+- [ ] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A (par moments), B (tableau de bord), C (fil du jour) proposées, à choisir
+- [ ] J.2 Enchaînements de rituels (douche → barbe), dents proposées à la fin d'un repas, compteur de cigarettes dans l'engagement lié
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
