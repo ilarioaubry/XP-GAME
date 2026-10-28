@@ -172,7 +172,7 @@ function renderSpecialsBase(){schedNow();renderBalance();
   const tot0=PER?RTc.length+2:0,left0=PER?RLc.length+(lifeOk?0:1)+(mbOk?0:1):0;
   const _ml=PER?MB[PER].filter(([k])=>dayH()>=MEAL_H[k]):[],_mll=_ml.filter(([k])=>{const dr=(S.g.mbd||{})[tk+":"+PER];return!(G.mb&&G.mb[tk+":"+PER])&&!(dr&&dr.m&&(dr.m[k]===0||dr.m[k]===1))});
   const tot=tot0+_ml.length,left=left0+_mll.length,nd=tot-left;
-  $("dqTitle").firstChild.textContent=PER==="soir"?"Soir":"Matin";box.setAttribute("aria-label",PER==="soir"?"Ce soir":"Ce matin");
+  $("dqTitle").firstChild.textContent=PER==="soir"?"Rituels du soir":"Rituels du matin";box.setAttribute("aria-label",PER==="soir"?"Rituels du soir":"Rituels du matin");
   $("spCount").textContent=nd+"/"+tot;{const sk=ritStreak(),e=$("ritSk");e.hidden=!sk;e.innerHTML=STAR_SVG+"<span>"+sk+" j</span>";e.title="Série des essentiels";$("ritEdBtn").onclick=()=>ritAtelier()}
   const red=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
   const leave=(d,go,run,ev)=>{if(d.classList.contains("leave"))return;d.classList.add("leave");go.disabled=true;if(red()){run();return}const last=tr.querySelectorAll(".dqi:not(.leave)").length===0;

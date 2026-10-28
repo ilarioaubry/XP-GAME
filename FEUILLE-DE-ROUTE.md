@@ -188,7 +188,7 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [x] R.3 Pastilles rouges de nouveauté : montrer le chemin (pastille sur Moi, puis sur Chez moi, puis sur la catégorie, puis sur l'objet)
 - [x] R.4 L'assiette dans « Bonne nuit » (le dîner se remplit dans l'assiette)
 - [x] R.5 « Journée sans… » : à la fin de « Bonne nuit », plus dans les actions
-- [ ] R.6 Un titre à la section Routine
+- [x] R.6 Un titre à la section des rituels : « Rituels du matin » / « Rituels du soir » (28/10)
 
 Fonctionnalités (à proposer avant de construire) :
 - [ ] F.1 Finir un contrat donne des points de Travail : 50 XP, une fois à la date de fin
