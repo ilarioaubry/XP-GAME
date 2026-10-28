@@ -1,9 +1,9 @@
 // ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
 const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
-  GEAR.push({id:"fig_"+id,s:"main",k:"main",o:idx,n:"Figurine : "+n.replace(/^(Le|La|L') ?/,""),r:3,ex:"Vaincre "+n});
+  GEAR.push({id:"fig_"+id,s:"main",k:"main",o:idx,n:"Figurine : "+n.replace(/^(Le|La|L') ?/,""),r:3,ex:"Finir le projet « "+th+" »"});
   AV_OPT.main.push("Figurine dorée : "+n);const gi=AV_OPT.main.length-1;o.gi=gi;AV_MAIN[gi]=[SPRITES[sp],{"#":"#f2c230",o:"#fff",x:"#1a1a1a"},20,26];
-  GEAR.push({id:"fig_"+id+"_or",s:"main",k:"main",o:gi,n:"Figurine dorée : "+n,r:3,ex:"Vaincre "+n+" II"})}));
+  GEAR.push({id:"fig_"+id+"_or",s:"main",k:"main",o:gi,n:"Figurine dorée : "+n,r:3,ex:"Finir deux fois le projet « "+th+" »"})}));
 SPRITES.bougon=["....##....","..######..",".##o##o##.",".##x##x##.","##########","###xxxx###",".#x####x#.","..##..##.."];
 AV_OPT.hat.push("Bonnet de Noël","Bois de renne");AV_OPT.top.push("Pull de Noël");AV_OPT.bijou.push("Écharpe");AV_OPT.bgP.push("Neige","Nuages","Montagnes","Ville la nuit","Plage","Forêt","Studio","Aurore boréale","Rétro","Bokeh","Nuit de Noël","Feu d'artifice");
 AV_OPT.main.push("Sucre d'orge");const XM_CANE=AV_OPT.main.length-1;AV_MAIN[XM_CANE]=[[".kkk.","krwrk","kk.wk","...rk","...wk","...rk","...wk","...rk","...kk"],{r:"#d63b3b",w:"#f4f1e8"},22,24];

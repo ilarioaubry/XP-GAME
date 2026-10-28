@@ -197,15 +197,15 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Noter les 3 choses importantes de demain — Pour attaquer demain sans réfléchir | Travail | 10 | 18–24 h | Compteur 3 | 2 |
 | Vider ta boîte mail pendant 10 min — Tu travailles | Travail | 10 | 9–18 h | Minuteur 10 min | 1 |
 | 45 min sur ton projet principal — Tu es à ton compte | Travail | 30 | 9–19 h | Minuteur 45 min | 1 |
-| Marche rapide de 20 min dehors — Pour ta forme | Force | 15 | 8–20 h | Minuteur 20 min | 1 |
+| 20 min de marche dehors — Pour ta forme | Soi | 15 | 8–20 h | Minuteur 20 min | 1 |
 | 15 min de sport à la maison — Pour ta forme | Force | 15 | 8–22 h | Minuteur 15 min | 1 |
 | 10 min d'étirements avant de dormir — Pour ta forme et ton sommeil | Force | 10 | 20–24 h | Étirements guidés | 1 |
-| Écrans coupés 30 min avant de dormir — Pour mieux dormir | Soi | 15 | 21–24 h | Minuteur 30 min | 2 |
+| Pas d'écran 30 min avant de dormir — Pour mieux dormir | Soi | 15 | 21–24 h | Minuteur 30 min | 1 |
 | Aérer ta chambre 5 min avant de te coucher — Pour mieux dormir | Maison | 5 | 20–24 h | Fait | 2 |
 | Une sieste de 20 min, pas plus — Ta nuit a été courte | Soi | 10 | 12–16 h | Minuteur 20 min | 1 |
 | Une heure sans réseaux, à partir de maintenant — Moins d'écrans | Soi | 15 | 13–18 h | Minuteur 60 min | 2 |
 | Proposer une sortie ce week-end à un ami — Pour tes potes | Ami | 15 | 10–22 h | Fait + Avec qui ? | 2 |
-| Voir un ami dehors aujourd'hui — Il fait beau, profites-en à deux | Ami | 25 | 11–21 h | Fait + Avec qui ? | 1 |
+| Voir quelqu'un en vrai aujourd'hui — Il fait beau, profites-en à deux | Ami | 25 | 11–21 h | Fait + Avec qui ? | 1 |
 | Appeler un pote 10 min, juste pour parler — Pour tes potes | Ami | 15 | 11–23 h | Minuteur 10 min + Avec qui ? | 2 |
 | Envoyer une photo de ta journée à ta famille — Pour ta famille | Famille | 10 | 12–22 h | Fait + Avec qui ? | 2 |
 | Faire une tâche à la place de [W] — À la maison | Maison | 10 | 10–22 h | Fait | 1 |
@@ -217,13 +217,13 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | 10 min au soleil, sans rien faire — Il fait beau dehors | Soi | 10 | 9–18 h | Minuteur 10 min | 1 |
 | Cuisiner un vrai repas maison — Pour manger mieux | Nourriture | 20 | 11–21 h | Assiette | 1 |
 | Tester une recette que tu n'as jamais faite — Tu aimes cuisiner | Nourriture | 25 | 11–21 h | Assiette | 2 |
-| Regarder Do the Right Thing (1989) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
-| Lire 20 pages — Tu aimes lire | Talent | 15 | 9–24 h | Lecture (pages) | 1 |
+| Regarder Akira (1988) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
+| Lire 20 pages — Tu aimes lire | Soi | 15 | 9–24 h | Lecture (pages) | 1 |
 | Finir une mission en jeu, après tes rituels — Tu as bien bossé | Talent | 10 | 17–24 h | Fait | 2 |
 | Dessiner 15 min — Tu aimes dessiner | Talent | 15 | 9–24 h | Minuteur 15 min | 1 |
 | Sortir faire 10 photos de ton quartier — Belle lumière dehors | Talent | 20 | 9–19 h | Compteur 10 | 1 |
 | Balade dans un parc ou en forêt — Tu aimes la nature | Force | 20 | 9–19 h | Fait | 1 |
-| Préparer ta tenue de demain — Tu aimes la mode | Soi | 10 | 19–24 h | Fait | 1 |
+| Préparer tes affaires pour demain — Tu aimes la mode | Maison | 10 | 19–24 h | Fait | 1 |
 | Faire du son pendant 30 min — Ta musique avance | Talent | 30 | 10–24 h | Minuteur 30 min | 1 |
 | 20 min pour [note] — Ce qui compte pour toi en ce moment | Talent | 25 | 9–23 h | Minuteur 20 min | 1 |
 | Trier 50 photos — Tri : photos | Maison | 15 | 9–23 h | Compteur 50 | 1 |
@@ -248,9 +248,9 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 |---|---|---|---|---|---|
 | 5 min dehors à la lumière du matin | Soi | 15 | 7–10.5 h | Fait | 1 |
 | Manger dehors ou près d'une fenêtre | Soi | 15 | 12–14.5 h | Fait | 1 |
-| 10 min de marche autour du pâté de maisons | Force | 10 | 15–17 h | Minuteur 10 min | 2 |
+| 10 min de marche dehors | Force | 10 | 15–17 h | Minuteur 10 min | 1 |
 | 5 min dehors au coucher du soleil | Soi | 20 | 18.3–20.3 h | Fait | 1 |
-| Préparer ta tenue et ton sac pour demain | Maison | 10 | 21–23.5 h | Fait | 2 |
+| Préparer tes affaires pour demain | Maison | 10 | 21–23.5 h | Fait | 1 |
 | Aller au marché ou à la boulangerie à pied | Force | 25 | 10–18 h | Fait | 2 |
 | Voir quelqu'un en vrai aujourd'hui | Ami | 25 | 11–22 h | Fait + Avec qui ? | 1 |
 
@@ -284,19 +284,19 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Refaire un son connu à ta façon | Talent | 20 |  | Fait | 1 |
 | 16 mesures en 20 min chrono | Talent | 10 |  | Minuteur 20 min | 1 |
 | Poster un extrait de son | Talent | 20 |  | Fait | 1 |
-| 20 min de marche sans téléphone | Force | 10 |  | Minuteur 20 min | 1 |
+| 20 min de marche dehors | Soi | 15 |  | Minuteur 20 min | 1 |
 | Battre ton record de pompes | Force | 10 |  | Compteur de pompes | 1 |
-| Étirements avant de dormir | Force | 10 |  | Étirements guidés | 1 |
-| 20 min de marche dehors | Soi | 10 |  | Minuteur 20 min | 1 |
+| 10 min d'étirements avant de dormir | Force | 10 |  | Étirements guidés | 1 |
+| 20 min de marche dehors | Soi | 15 |  | Minuteur 20 min | 1 |
 | Lire 10 pages | Soi | 10 |  | Lecture (pages) | 1 |
-| Couper le téléphone 1 h avant de dormir | Soi | 10 |  | Minuteur 60 min | 2 |
+| Pas d'écran 30 min avant de dormir | Soi | 15 |  | Minuteur 30 min | 1 |
 | Prendre un rendez-vous médecin ou dentiste en retard | Soi | 20 |  | Fait | 2 |
 | Trier un tiroir ou une étagère | Maison | 10 |  | Fait | 1 |
 | Vider entièrement l'évier | Maison | 10 |  | Fait | 1 |
 | Laver ta gourde ou ta tasse | Maison | 3 |  | Fait | 1 |
 | Envoyer un vocal à quelqu'un perdu de vue | Ami | 20 |  | Fait + Avec qui ? | 2 |
 | Ramener un café ou une viennoiserie à quelqu'un | Ami | 20 |  | Fait + Avec qui ? | 2 |
-| Envoyer une photo souvenir à la famille | Famille | 10 |  | Fait + Avec qui ? | 2 |
+| Envoyer une photo de ta journée à ta famille | Famille | 10 |  | Fait + Avec qui ? | 2 |
 | Aider à une tâche chez tes parents | Famille | 20 |  | Fait + Avec qui ? | 1 |
 
 ### Idée sortie (31)
@@ -339,7 +339,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
-| 30 min de marche | Force | 25 |  | Minuteur 30 min | 1 |
+| 30 min de marche | Soi | 20 |  | Minuteur 30 min | 1 |
 | 20 pompes, 20 squats, 1 min de gainage | Force | 20 |  | Minuteur gainage | 2 |
 
 ### Objectif « sommeil » (1)

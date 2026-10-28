@@ -4504,7 +4504,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version c192304</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version e899652</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5865,7 +5865,7 @@ function ambSnd(on){clearTimeout(ambT);if(!on)return;const loop=()=>{ambT=setTim
   if(n<.4){if(Math.random()<.65){const f=2300+Math.random()*1300,k=2+(Math.random()*3|0);for(let i=0;i<k;i++)tone(c,f+i*90,t+i*.085,.06,"sine",.022,f*1.28)}if(Math.random()<.3)noise(c,t,1.4,.012,450)}
   else{for(let i=0;i<5;i++)tone(c,4100+Math.random()*120,t+i*.05,.022,"sine",.011);if(n>.9&&Math.random()<.07){tone(c,390,t+.3,.32,"sine",.035,340);tone(c,380,t+.8,.42,"sine",.035,320)}if(n<.8&&Math.random()<.3)noise(c,t,1.2,.01,350)}};loop()}
 // ---- Quêtes du moment
-const MQ=[["lumiere","5 min dehors à la lumière du matin",[7,10.5],15,"soi"],["dejdehors","Manger dehors ou près d'une fenêtre",[12,14.5],15,"soi"],["pause","10 min de marche autour du pâté de maisons",[15,17],10,"sport"],["coucher","5 min dehors au coucher du soleil",[18.3,20.3],20,"soi"],["etoiles","Préparer ta tenue et ton sac pour demain",[21,23.5],10,"maison"],["balade","Aller au marché ou à la boulangerie à pied",[10,18],25,"sport","we"],["sortie","Voir quelqu'un en vrai aujourd'hui",[11,22],25,"social","we"]];
+const MQ=[["lumiere","5 min dehors à la lumière du matin",[7,10.5],15,"soi"],["dejdehors","Manger dehors ou près d'une fenêtre",[12,14.5],15,"soi"],["pause","10 min de marche dehors",[15,17],10,"sport"],["coucher","5 min dehors au coucher du soleil",[18.3,20.3],20,"soi"],["etoiles","Préparer tes affaires pour demain",[21,23.5],10,"maison"],["balade","Aller au marché ou à la boulangerie à pied",[10,18],25,"sport","we"],["sortie","Voir quelqu'un en vrai aujourd'hui",[11,22],25,"social","we"]];
 function mqActive(){if(!S.g)return[];const h=dayH(),we=isWeekend(),tk=dayKey(Date.now()),done=((S.g.mq||{})[tk])||[];const w=typeof wxNow==="function"?wxNow():null,wet=w&&["rain","storm","snow"].includes(w.k),grey=w&&["cloudy","fog"].includes(w.k),fo=typeof fqHasOut==="function"&&fqHasOut();return MQ.concat(typeof wxQuests==="function"?wxQuests():[]).filter(q=>!((wet||grey)&&(q[0]==="coucher"||q[0]==="etoiles"))&&!((wet||fo)&&(q[0]==="lumiere"||q[0]==="balade"))&&!(fo&&q[0]==="wxsun")).filter(q=>h>=q[2][0]&&h<q[2][1]&&(!q[5]||we)&&!done.includes(q[0])&&!((S.g.fqNo||{})["m:"+q[0]])&&normOk(q[1]))}
 function mqUntil(b){const r=(b+wakeH()-8+48)%24,hh=Math.floor(r),mm=Math.round((r-hh)*60);return hh+"h"+(mm?String(mm).padStart(2,"0"):"")}
 function mqCards(st){const FI=typeof feedIds==="function"?feedIds():{mq:new Set()};mqActive().filter(q=>!FI.mq.has(q[0])).forEach(q=>{const d=document.createElement("div");d.className="sq mq";d.innerHTML=`<span class="sqk"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg><span>avant ${mqUntil(q[2][1])}</span></span><span class="sqn"></span><span class="sqr"><span class="sqc">+${XPE(q[3])} XP</span><button class="btn primary" type="button">Fait</button></span>`;
@@ -9771,7 +9771,7 @@ function qcOpen(kind,opt){opt=opt||{};const E=opt.edit||null;
     else if(n==="due"){q="Pour quand ?";h=opt3([["none","Pas de date",""],["week","Cette semaine","Avant dimanche"],["month","Ce mois-ci","Avant la fin du mois"],["pick","Choisir une date",""]],st.dueM,"due")+(st.dueM==="pick"?`<input type="date" class="qcdue qwx" value="${st.due}" aria-label="Échéance"><button type="button" class="btn primary qwnext"${st.due?"":" disabled"}>Suivant</button>`:"")}
     else if(n==="recap"){q=E?"Tout est bon ?":"Ta nouvelle quête";const k=st.k,c=cat(),C=CATS[c]||{},I=ic(),kd=k==="prj"?prjKind({id:"x"+st.name.length,cat:c}):null,x=DIFF[diff()][1];
       const full=!E&&k==="prj"&&(S.g.prj||[]).filter(x=>!x.won).length>=3;
-      h=`<div class="qwcard" style="--zc:${C.c||"var(--gold)"}">${k==="prj"?`<span class="qwmon">${bossFrames(kd[0],kd[1],3)}</span>`:`<button type="button" class="qwic" data-ed="ic" aria-label="Changer l'icône">${I?rkSvg(I):(typeof CAT_IC!=="undefined"&&CAT_IC[c]?`<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--zc)">${CAT_IC[c]}</svg>`:ICO("spark",22))}</button>`}<span class="qwct"><small>${k==="act"?"Bonne action":"Projet"} · <button type="button" class="lnk qwcat" data-ed="cat">${esc(C.label||"Soi")}</button></small><b></b><em>${k==="prj"?`${st.steps.length} étapes · +${x} XP chacune${st.due?" · avant le "+new Date(st.due+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"}):""}`:`${[({any:"",matin:"Le matin",aprem:"L'après-midi",soir:"Le soir"})[st.mo],rhL()].filter(Boolean).join(" · ")} · +${x} XP`}</em></span></div>
+      h=`<div class="qwcard" style="--zc:${C.c||"var(--gold)"}">${k==="prj"?`<span class="qwmon">${rkSvg((typeof SQ_IC!=="undefined"&&SQ_IC[c])||"dossier")}</span>`:`<button type="button" class="qwic" data-ed="ic" aria-label="Changer l'icône">${I?rkSvg(I):(typeof CAT_IC!=="undefined"&&CAT_IC[c]?`<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--zc)">${CAT_IC[c]}</svg>`:ICO("spark",22))}</button>`}<span class="qwct"><small>${k==="act"?"Bonne action":"Projet"} · <button type="button" class="lnk qwcat" data-ed="cat">${esc(C.label||"Soi")}</button></small><b></b><em>${k==="prj"?`${st.steps.length} étapes · +${x} XP chacune${st.due?" · avant le "+new Date(st.due+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"}):""}`:`${[({any:"",matin:"Le matin",aprem:"L'après-midi",soir:"Le soir"})[st.mo],rhL()].filter(Boolean).join(" · ")} · +${x} XP`}</em></span></div>
         ${st.pick==="ic"&&k!=="prj"?`<div class="qcic">${RIC_KEYS.map(v=>`<button type="button" data-ic="${v}" aria-pressed="${I===v}" aria-label="Icône ${v}">${rkSvg(v)}</button>`).join("")}</div>`:""}
         ${st.pick==="cat"?`<div class="qcdom">${QC_DOM.map(([d,l])=>`<button type="button" class="qchip sm" data-cat="${d}" aria-pressed="${c===d}">${l}</button>`).join("")}</div>`:""}
         <p class="qwsub">Touche l'icône ou le domaine pour changer.</p>${full?`<p class="hint">Déjà 3 projets en cours.</p>`:""}
@@ -9865,7 +9865,7 @@ function prjStep(p,i,card,btn,ev){if(!p.st[i]||p.st[i].d)return;p.st[i].d=Date.n
   try{sfx("hit")}catch(e){}
   setTimeout(()=>{complete({id:"prj-"+p.id,name:p.n+" · "+p.st[i].t,cat:CATS[p.cat]?p.cat:"soi",xp:x},btn,ev,0,{prj:p.id,ps:i});if(last){p.won=Date.now();S.g.chests=(S.g.chests||0)+1;save();setTimeout(()=>prjWin(p),500)}},380)}
 function prjWin(p){const kd=prjKind(p),bonus=DIFF[p.d||0][1]*2;sfx("open",3);skyCheer(true);const o=document.createElement("div");o.className="bpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Projet terminé");
-  o.innerHTML=`<div class="bpc prwin" style="--tc:var(--gold)"><div class="prwm">${bossSvg(kd[0],kd[1],7)}</div><p class="bph">Projet terminé</p><h3></h3><p class="bpd">${p.st.length} étapes bouclées. Tu gagnes un coffre et +${bonus} XP.</p><button type="button" class="btn primary">Récupérer</button></div>`;
+  o.innerHTML=`<div class="bpc prwin" style="--tc:var(--gold)"><div class="prwm">${rkSvg((typeof SQ_IC!=="undefined"&&SQ_IC[p.cat])||"dossier")}</div><p class="bph">Projet terminé</p><h3></h3><p class="bpd">${p.st.length} étapes bouclées. Tu gagnes un coffre et +${bonus} XP.</p><button type="button" class="btn primary">Récupérer</button></div>`;
   o.querySelector("h3").textContent=p.n;document.body.appendChild(o);const go=o.querySelector("button");go.focus({preventScroll:true});
   go.onclick=ev=>{o.remove();complete({id:"prjwin-"+p.id,name:"Projet terminé · "+p.n,cat:CATS[p.cat]?p.cat:"soi",xp:bonus},document.querySelector(".qxp")||document.body,ev,0,{prj:p.id,win:1})}}
 // ===== Météo réelle (Open-Meteo : gratuit, sans compte) : ciel, avatar, quêtes =====
@@ -9997,15 +9997,15 @@ const FQ=[
  ["w_plan","Noter les 3 choses importantes de demain","travail",10,[18,24],c=>c.job==="poste"||c.job==="indep",c=>"Pour attaquer demain sans réfléchir",{short:1,wd:1}],
  ["w_mail","Vider ta boîte mail pendant 10 min","travail",10,[9,18],c=>c.job==="poste"||c.job==="indep",c=>"Tu travailles",{short:1,wd:1}],
  ["i_client","45 min sur ton projet principal","travail",30,[9,19],c=>c.job==="indep",c=>"Tu es à ton compte",{wd:1}],
- ["f_out","Marche rapide de 20 min dehors","sport",15,[8,20],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.good?`${c.wx.tc}° et beau temps`:"Pour ta forme",{out:1}],
+ ["f_out","20 min de marche dehors","soi",15,[8,20],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.good?`${c.wx.tc}° et beau temps`:"Pour ta forme",{out:1}],
  ["f_in","15 min de sport à la maison","sport",15,[8,22],c=>c.g.forme||c.p.sport,c=>c.wx&&c.wx.wet?"Il pleut : on bouge à l'intérieur":"Pour ta forme",{in:1}],
  ["f_stretch","10 min d'étirements avant de dormir","sport",10,[20,24],c=>c.g.forme||c.g.sommeil,c=>"Pour ta forme et ton sommeil",{short:1}],
- ["s_screen","Écrans coupés 30 min avant de dormir","soi",15,[21,24],c=>c.g.sommeil||c.g.ecrans,c=>"Pour mieux dormir",{}],
+ ["s_screen","Pas d'écran 30 min avant de dormir","soi",15,[21,24],c=>c.g.sommeil||c.g.ecrans,c=>"Pour mieux dormir",{}],
  ["s_air","Aérer ta chambre 5 min avant de te coucher","maison",5,[20,24],c=>c.g.sommeil,c=>"Pour mieux dormir",{short:1}],
  ["s_nap","Une sieste de 20 min, pas plus","soi",10,[12,16],c=>c.tired&&(c.we||!["poste","etud"].includes(c.job)),c=>"Ta nuit a été courte",{short:1}],
  ["x_noreseau","Une heure sans réseaux, à partir de maintenant","soi",15,[13,18],c=>c.g.ecrans,c=>"Moins d'écrans",{}],
  ["p_sortie","Proposer une sortie ce week-end à un ami","social",15,[10,22],c=>c.g.potes,c=>"Pour tes potes",{short:1}],
- ["p_dehors","Voir un ami dehors aujourd'hui","social",25,[11,21],c=>c.g.potes&&c.wx&&c.wx.good,c=>"Il fait beau, profites-en à deux",{out:1,we:1}],
+ ["p_dehors","Voir quelqu'un en vrai aujourd'hui","social",25,[11,21],c=>c.g.potes&&c.wx&&c.wx.good,c=>"Il fait beau, profites-en à deux",{out:1,we:1}],
  ["p_appel","Appeler un pote 10 min, juste pour parler","social",15,[11,23],c=>c.g.potes,c=>c.wx&&c.wx.wet?"Il pleut : parfait pour un appel":"Pour tes potes",{in:1}],
  ["c_photo","Envoyer une photo de ta journée à ta famille","famille",10,[12,22],c=>(c.g.famille||c.home==="seul")&&c.home!=="parents",c=>"Pour ta famille",{short:1}],
  ["c_aide",c=>`Faire une tâche à la place de ${c.W}`,"maison",10,[10,22],c=>!!c.W&&(c.home==="coloc"||c.home==="parents"||c.home==="couple"),c=>c.home==="coloc"?"En coloc":"À la maison",{short:1}],
@@ -10018,12 +10018,12 @@ const FQ=[
  ["r_cuisine","Cuisiner un vrai repas maison","nourriture",20,[11,21],c=>c.g.manger||c.p.cuisine,c=>c.p.cuisine?"Tu aimes cuisiner":"Pour manger mieux",{in:1}],
  ["r_recette","Tester une recette que tu n'as jamais faite","nourriture",25,[11,21],c=>c.p.cuisine,c=>c.wx&&c.wx.wet?"Temps parfait pour cuisiner":"Tu aimes cuisiner",{in:1}],
  ["v_film",c=>"Regarder "+filmOfDay(),"perso",20,[18,24],c=>c.p.cine,c=>c.wx&&c.wx.wet?"Soirée pluvieuse : un film culte à voir":"Un film culte à voir",{in:1,film:1}],
- ["v_lire","Lire 20 pages","perso",15,[9,24],c=>c.p.lecture,c=>c.wx&&c.wx.wet?"Il pleut : un livre":"Tu aimes lire",{in:1}],
+ ["v_lire","Lire 20 pages","soi",15,[9,24],c=>c.p.lecture,c=>c.wx&&c.wx.wet?"Il pleut : un livre":"Tu aimes lire",{in:1}],
  ["v_jeu","Finir une mission en jeu, après tes rituels","perso",10,[17,24],c=>c.p.jeux,c=>"Tu as bien bossé",{in:1}],
  ["v_dessin","Dessiner 15 min","perso",15,[9,24],c=>c.p.dessin,c=>"Tu aimes dessiner",{in:1}],
  ["v_photo","Sortir faire 10 photos de ton quartier","perso",20,[9,19],c=>c.p.photo&&c.wx&&c.wx.good,c=>"Belle lumière dehors",{out:1}],
  ["v_parc","Balade dans un parc ou en forêt","sport",20,[9,19],c=>c.p.nature&&c.wx&&!c.wx.wet,c=>"Tu aimes la nature",{out:1}],
- ["v_style","Préparer ta tenue de demain","soi",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
+ ["v_style","Préparer tes affaires pour demain","maison",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
  ["v_son","Faire du son pendant 30 min","perso",30,[10,24],c=>c.p.creer||c.g.son,c=>c.wx&&c.wx.wet?"Il pleut : studio":"Ta musique avance",{in:1}],
  ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
@@ -10630,7 +10630,7 @@ function seed1(){
   const T=ritTasks(),has=n=>T.some(t=>t.name===n);
   if(!has("Ouvrir la fenêtre"))T.push({id:"r7",name:"Ouvrir la fenêtre",n:1});
   if(!has("Se laver le visage"))T.push({id:"r8",name:"Se laver le visage",n:2});
-  [["Ranger 10 min","maison",5],["Écouter un album en entier","soi",10],["Écrire un couplet","perso",15]].forEach(([name,cat,xp],i)=>{
+  [["Ranger 10 min","maison",5],["Écouter un album en entier","perso",15],["Écrire un couplet","perso",15]].forEach(([name,cat,xp],i)=>{
     if(!S.actions.some(a=>a.name===name))S.actions.push({id:"a"+Date.now().toString(36)+i,name,cat,xp})});
   if(!S.specials.some(q=>q.name==="Proposer une sortie à un ami"))S.specials.push({id:"q"+Date.now().toString(36)+"s",name:"Proposer une sortie à un ami",cat:"social",xp:25});
   return true;
@@ -10796,7 +10796,7 @@ const WR_CATS=[["tete","Coiffes"],["haut","Tenues"],["yeux","Lunettes"],["bijou"
 const STREAK_IT={7:"bgflame",30:"bgrainbow",100:"halo"};
 const RARE_TITLES=["Barde légendaire","Maître du flow","Prince de la topline","Chevalier du studio","Roi du shatta","Maître des projets","Seigneur du canapé","Âme d'artiste"];
 
-const SURPRISE=[["Finir une instru laissée de côté","perso",20,"son"],["Enregistrer une maquette voix","perso",20,"son"],["Faire écouter un son à quelqu'un","perso",20,"son"],["Refaire un son connu à ta façon","perso",20,"son"],["16 mesures en 20 min chrono","perso",10,"son"],["Poster un extrait de son","perso",20,"son"],["20 min de marche sans téléphone","sport",10,"out"],["Battre ton record de pompes","sport",10],["Étirements avant de dormir","sport",10],["20 min de marche dehors","soi",10,"out"],["Lire 10 pages","soi",10],["Couper le téléphone 1 h avant de dormir","soi",10],["Prendre un rendez-vous médecin ou dentiste en retard","soi",20],["Trier un tiroir ou une étagère","maison",10],["Vider entièrement l'évier","maison",10],["Laver ta gourde ou ta tasse","maison",3],["Envoyer un vocal à quelqu'un perdu de vue","social",20,"cour"],["Ramener un café ou une viennoiserie à quelqu'un","social",20],["Envoyer une photo souvenir à la famille","famille",10,"loin"],["Aider à une tâche chez tes parents","famille",20,"parents"]];
+const SURPRISE=[["Finir une instru laissée de côté","perso",20,"son"],["Enregistrer une maquette voix","perso",20,"son"],["Faire écouter un son à quelqu'un","perso",20,"son"],["Refaire un son connu à ta façon","perso",20,"son"],["16 mesures en 20 min chrono","perso",10,"son"],["Poster un extrait de son","perso",20,"son"],["20 min de marche dehors","soi",15,"out"],["Battre ton record de pompes","sport",10],["10 min d'étirements avant de dormir","sport",10],["20 min de marche dehors","soi",15,"out"],["Lire 10 pages","soi",10],["Pas d'écran 30 min avant de dormir","soi",15],["Prendre un rendez-vous médecin ou dentiste en retard","soi",20],["Trier un tiroir ou une étagère","maison",10],["Vider entièrement l'évier","maison",10],["Laver ta gourde ou ta tasse","maison",3],["Envoyer un vocal à quelqu'un perdu de vue","social",20,"cour"],["Ramener un café ou une viennoiserie à quelqu'un","social",20],["Envoyer une photo de ta journée à ta famille","famille",10,"loin"],["Aider à une tâche chez tes parents","famille",20,"parents"]];
 function surOk(x){if(!normOk(x[0]))return false;if(S.g&&(S.g.fqNo||{})["s:"+x[0]])return false;const s=typeof sitOf==="function"?sitOf():null,w=typeof wxNow==="function"?wxNow():null,t=x[3];if(t==="son")return s?!!((s.pass||[]).includes("creer")||(s.pass||[]).includes("rap")||(s.goals||[]).includes("son")):!(S.g&&S.g.noMus);
   if(t==="out")return!(w&&["rain","storm","snow"].includes(w.k))&&!(typeof fqHasOut==="function"&&fqHasOut());if(t==="parents")return!s||s.home==="parents"||(s.goals||[]).includes("famille");if(t==="loin")return!s||s.home!=="parents";return true}
 const SPRITES={
@@ -10810,9 +10810,9 @@ const SPRITES={
 // ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
 const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
-  GEAR.push({id:"fig_"+id,s:"main",k:"main",o:idx,n:"Figurine : "+n.replace(/^(Le|La|L') ?/,""),r:3,ex:"Vaincre "+n});
+  GEAR.push({id:"fig_"+id,s:"main",k:"main",o:idx,n:"Figurine : "+n.replace(/^(Le|La|L') ?/,""),r:3,ex:"Finir le projet « "+th+" »"});
   AV_OPT.main.push("Figurine dorée : "+n);const gi=AV_OPT.main.length-1;o.gi=gi;AV_MAIN[gi]=[SPRITES[sp],{"#":"#f2c230",o:"#fff",x:"#1a1a1a"},20,26];
-  GEAR.push({id:"fig_"+id+"_or",s:"main",k:"main",o:gi,n:"Figurine dorée : "+n,r:3,ex:"Vaincre "+n+" II"})}));
+  GEAR.push({id:"fig_"+id+"_or",s:"main",k:"main",o:gi,n:"Figurine dorée : "+n,r:3,ex:"Finir deux fois le projet « "+th+" »"})}));
 SPRITES.bougon=["....##....","..######..",".##o##o##.",".##x##x##.","##########","###xxxx###",".#x####x#.","..##..##.."];
 AV_OPT.hat.push("Bonnet de Noël","Bois de renne");AV_OPT.top.push("Pull de Noël");AV_OPT.bijou.push("Écharpe");AV_OPT.bgP.push("Neige","Nuages","Montagnes","Ville la nuit","Plage","Forêt","Studio","Aurore boréale","Rétro","Bokeh","Nuit de Noël","Feu d'artifice");
 AV_OPT.main.push("Sucre d'orge");const XM_CANE=AV_OPT.main.length-1;AV_MAIN[XM_CANE]=[[".kkk.","krwrk","kk.wk","...rk","...wk","...rk","...wk","...rk","...kk"],{r:"#d63b3b",w:"#f4f1e8"},22,24];
@@ -16545,6 +16545,10 @@ html:not(#_u1):not(#_u2) body #actFind .afjour button{min-height:44px;border:1px
 html:not(#_u1):not(#_u2) body #actFind .afjour button[aria-selected="true"]{background:var(--gold);border-color:var(--gold);color:#1a1210}
 html:not(#_u1):not(#_u2) body #actFind :is(.aftodo,.aftodofree,.affait){width:100%;min-height:44px}
 html:not(#_u1):not(#_u2) body #actFind .aftodofree{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* projets : l'icône d'objet du thème (plus de créature, Q.14) */
+html:not(#_u1):not(#_u2):not(#_u3) body .prwin .prwm{animation:none}
+html:not(#_u1):not(#_u2):not(#_u3) body .prwin .prwm svg{width:96px;height:96px;filter:none!important;transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3) body .qwcard .qwmon svg{width:64px;height:64px}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, frise, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
@@ -16617,6 +16621,7 @@ function afDo(it,el,ev,dur,who,qty){
   const key=afKey(it),n=afToday(key);let base=it.k==="own"?((()=>{try{return actXp(it.a,n)}catch(e){return n<3?it.a.xp:0}})()):(it.f.cat==="eau"?it.f.xp:(n<3?it.f.xp:Math.round(it.f.xp/3)));
   const qk=qKind(it);let xp=it.k==="fam"&&it.f.nap?(n<2?it.f.xp:0):qty&&qk?Math.max(base,QTY[qk].x(qty)):dur?Math.max(base,durXp(dur)):base;xp=Math.min(AF_MAX,xp);if(it.k==="fam"&&it.f.nap&&dur){if(!S.g.nap||typeof S.g.nap!=="object")S.g.nap={};const tk=dayKey(Date.now());S.g.nap[tk]=(S.g.nap[tk]||0)+dur}
   let cat=it.cat;if(it.k==="fam"&&it.f.dom==="proches"&&who.length&&who.every(p=>{try{return isFam(p)}catch(e){return false}}))cat="famille";
+  else if(it.k==="fam"&&it.f.id==="sorties"&&who.length)cat=who.every(p=>{try{return isFam(p)}catch(e){return false}})?"famille":"social";   // sortie : Soi seul, Ami avec quelqu'un (Q.7)
   const name=(it.k==="fam"&&it.f.nap?"Sieste":it.k==="own"?it.a.name:(it.log||it.name))+(who.length?" avec "+whoLabel(who):"")+(qty&&qk?" · "+qty+" "+QTY[qk].u:"")+(dur&&!(qty&&qk)?" · "+([...DUR,...NAP].find(d=>d[0]===dur)||[0,dur+" min"])[1]:"");
   const a={id:key,cat,name:name+(()=>{try{return skTrack(it,qty)}catch(e){return""}})(),xp};
   if(!S.g.afLast||typeof S.g.afLast!=="object")S.g.afLast={};S.g.afLast[key]=Date.now();if(!S.g.afMem||typeof S.g.afMem!=="object")S.g.afMem={};S.g.afMem[key]={w:who.slice(0,3),d:dur||0};try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}
@@ -16753,7 +16758,7 @@ function habitQuests(add){const{H,P,wd,tk}=habits(),h=new Date().getHours();
 // ordre des « habituelles » : ce que tu fais d'habitude à ce moment-là
 window.habitRank=function(key){const{H,wd}=habits(),o=H[key];if(!o)return 0;const h=new Date().getHours(),avg=o.hr.reduce((a,b)=>a+b,0)/o.hr.length;return o.n+(o.wd[wd]||0)*3+Math.max(0,4-Math.abs(avg-h))}
 // ===== Quêtes spéciales intelligentes
-const GOALQ={forme:[["30 min de marche","sport",25],["20 pompes, 20 squats, 1 min de gainage","sport",20]],sommeil:[["@bed"]],ecrans:[["Poser le téléphone dans une autre pièce pendant 1 h","soi",15]],manger:[["Cuisiner un repas maison avec un légume","nourriture",20]],chez:[["@room"]],argent:[["Noter tes dépenses de la semaine","travail",15]],apprendre:[["Regarder un tuto de 20 min et le refaire","soi",20]],moral:[["15 min dehors sans écouteurs","soi",15]],job:[["Envoyer une candidature","travail",25]],son:[["30 min sur un morceau en cours","perso",25]]};
+const GOALQ={forme:[["30 min de marche","soi",20],["20 pompes, 20 squats, 1 min de gainage","sport",20]],sommeil:[["@bed"]],ecrans:[["Poser le téléphone dans une autre pièce pendant 1 h","soi",15]],manger:[["Cuisiner un repas maison avec un légume","nourriture",20]],chez:[["@room"]],argent:[["Noter tes dépenses de la semaine","travail",15]],apprendre:[["Regarder un tuto de 20 min et le refaire","soi",20]],moral:[["15 min dehors sans écouteurs","soi",15]],job:[["Envoyer une candidature","travail",25]],son:[["30 min sur un morceau en cours","perso",25]]};
 
 // ---- ciel et nature
 function sunSet(d){const r=Math.PI/180,lat=43.6,lon=3.88,J=d.getTime()/864e5+2440587.5,n=Math.round(J-2451545),Js=n-lon/360,M=(357.5291+0.98560028*Js)%360,C=1.9148*Math.sin(M*r)+0.02*Math.sin(2*M*r)+0.0003*Math.sin(3*M*r),L=(M+C+282.9372)%360,Jt=2451545+Js+0.0053*Math.sin(M*r)-0.0069*Math.sin(2*L*r),sd=Math.sin(L*r)*Math.sin(23.44*r),cd=Math.cos(Math.asin(sd)),w=Math.acos((Math.sin(-0.833*r)-Math.sin(lat*r)*sd)/(Math.cos(lat*r)*cd))/r;
@@ -16799,14 +16804,17 @@ function cIdPick(n){const g=S.g,h=dayH(),we=isWeekend();let wx=null;try{wx=wxNow
   const fresh=L.filter(i=>!H.includes(i)),P=(fresh.length>=n?fresh:L).sort(()=>Math.random()-.5),out=[];
   for(const i of P){if(out.length>=n)break;if(out.some(j=>IDQ[j][4]===IDQ[i][4]))continue;out.push(i)}return out}
 function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;const g=S.g;if(!g)return;const tk=dayKey(Date.now());
+  if(!isWeekend()){const c0=tr.querySelector(".idq");if(c0)c0.remove();return}   // inspiration du week-end seulement (refonte Q.2)
   if(!g.idq||g.idq.d!==tk){g.idq={d:tk,o:cIdPick(1),p:null,ok:0};try{save()}catch(e){}}const Q=g.idq;let c=tr.querySelector(".idq");
+  {const x0=IDQ[Q.p==null?Q.o[0]:Q.p];if(x0&&(S.log||[]).some(e=>e.a==="af:sorties:"+x0[4]&&dayKey(e.t)===tk))Q.ok=1}
   if(Q.ok){if(c)c.remove();return}const sig=Q.o.join(",")+"|"+Q.p;if(c&&c.dataset.sig===sig&&c===tr.firstElementChild)return;
   if(!c){c=document.createElement("div");c.className="sq idq"}c.dataset.sig=sig;if(c!==tr.firstElementChild){const z=tr.scrollLeft<12;tr.prepend(c);if(z)tr.scrollLeft=0}const we=isWeekend(),h=dayH(),when=h>=15?"Ce soir":we?"Ce week-end":"Aujourd'hui";
   if(Q.p==null)Q.p=Q.o[0];const x=IDQ[Q.p];
-  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
+  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée pour ${we?"ton week-end":"ce soir"}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn idqf" type="button">Je l'ai fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
-  c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
-    const go=e.currentTarget;try{uniBurst(go,"divert")}catch(_){}complete({id:"af:sorties:"+x[4],cat:"soi",name:"Sortie : "+x[0],xp:x[3]},go,e);setTimeout(()=>{try{idqCard()}catch(_){}},600)}}
+  // « Je l'ai fait » : la sortie se note dans Actions (durée, puis « Avec qui ? » : seul → Soi, avec quelqu'un → Ami)
+  c.querySelector(".idqf").onclick=e=>{const f=FAM.find(z=>z.id==="sorties");if(!f)return;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);const it=afItems().find(z=>z.k==="fam"&&z.f===f&&z.opt===x[4])||{k:"fam",f,opt:x[4],log:null,cat:f.cat,dom:f.dom,lz:f.lz||"",name:f.l+" · "+x[4]};
+    if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,e.currentTarget,e)},60)}}
 
 // ---- anniversaires : fond de fête
 try{RKI.cake=["................", "....y...y...y...", "...yY..yY..yY...", "...mm..bb..gg...", "...wm..wb..wg...", "...mm..bb..gg...", ".oooooooooooooo.", ".owwwwbwwwwwgwo.", ".owrwvwwwywrwwo.", ".owwmwwmwwmwwmo.", ".ommmmmmmmmmmmo.", ".oyyyyyyyyyyyyo.", ".ommmmmmmmmmmmo.", ".oMMMMMMMMMMMMo.", "kkkkkkkkkkkkkkkk", ".KKKKKKKKKKKKKK."]}catch(e){}

@@ -80,7 +80,7 @@ function seed1(){
   const T=ritTasks(),has=n=>T.some(t=>t.name===n);
   if(!has("Ouvrir la fenêtre"))T.push({id:"r7",name:"Ouvrir la fenêtre",n:1});
   if(!has("Se laver le visage"))T.push({id:"r8",name:"Se laver le visage",n:2});
-  [["Ranger 10 min","maison",5],["Écouter un album en entier","soi",10],["Écrire un couplet","perso",15]].forEach(([name,cat,xp],i)=>{
+  [["Ranger 10 min","maison",5],["Écouter un album en entier","perso",15],["Écrire un couplet","perso",15]].forEach(([name,cat,xp],i)=>{
     if(!S.actions.some(a=>a.name===name))S.actions.push({id:"a"+Date.now().toString(36)+i,name,cat,xp})});
   if(!S.specials.some(q=>q.name==="Proposer une sortie à un ami"))S.specials.push({id:"q"+Date.now().toString(36)+"s",name:"Proposer une sortie à un ami",cat:"social",xp:25});
   return true;

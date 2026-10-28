@@ -69,6 +69,7 @@ function afDo(it,el,ev,dur,who,qty){
   const key=afKey(it),n=afToday(key);let base=it.k==="own"?((()=>{try{return actXp(it.a,n)}catch(e){return n<3?it.a.xp:0}})()):(it.f.cat==="eau"?it.f.xp:(n<3?it.f.xp:Math.round(it.f.xp/3)));
   const qk=qKind(it);let xp=it.k==="fam"&&it.f.nap?(n<2?it.f.xp:0):qty&&qk?Math.max(base,QTY[qk].x(qty)):dur?Math.max(base,durXp(dur)):base;xp=Math.min(AF_MAX,xp);if(it.k==="fam"&&it.f.nap&&dur){if(!S.g.nap||typeof S.g.nap!=="object")S.g.nap={};const tk=dayKey(Date.now());S.g.nap[tk]=(S.g.nap[tk]||0)+dur}
   let cat=it.cat;if(it.k==="fam"&&it.f.dom==="proches"&&who.length&&who.every(p=>{try{return isFam(p)}catch(e){return false}}))cat="famille";
+  else if(it.k==="fam"&&it.f.id==="sorties"&&who.length)cat=who.every(p=>{try{return isFam(p)}catch(e){return false}})?"famille":"social";   // sortie : Soi seul, Ami avec quelqu'un (Q.7)
   const name=(it.k==="fam"&&it.f.nap?"Sieste":it.k==="own"?it.a.name:(it.log||it.name))+(who.length?" avec "+whoLabel(who):"")+(qty&&qk?" · "+qty+" "+QTY[qk].u:"")+(dur&&!(qty&&qk)?" · "+([...DUR,...NAP].find(d=>d[0]===dur)||[0,dur+" min"])[1]:"");
   const a={id:key,cat,name:name+(()=>{try{return skTrack(it,qty)}catch(e){return""}})(),xp};
   if(!S.g.afLast||typeof S.g.afLast!=="object")S.g.afLast={};S.g.afLast[key]=Date.now();if(!S.g.afMem||typeof S.g.afMem!=="object")S.g.afMem={};S.g.afMem[key]={w:who.slice(0,3),d:dur||0};try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}
@@ -205,7 +206,7 @@ function habitQuests(add){const{H,P,wd,tk}=habits(),h=new Date().getHours();
 // ordre des « habituelles » : ce que tu fais d'habitude à ce moment-là
 window.habitRank=function(key){const{H,wd}=habits(),o=H[key];if(!o)return 0;const h=new Date().getHours(),avg=o.hr.reduce((a,b)=>a+b,0)/o.hr.length;return o.n+(o.wd[wd]||0)*3+Math.max(0,4-Math.abs(avg-h))}
 // ===== Quêtes spéciales intelligentes
-const GOALQ={forme:[["30 min de marche","sport",25],["20 pompes, 20 squats, 1 min de gainage","sport",20]],sommeil:[["@bed"]],ecrans:[["Poser le téléphone dans une autre pièce pendant 1 h","soi",15]],manger:[["Cuisiner un repas maison avec un légume","nourriture",20]],chez:[["@room"]],argent:[["Noter tes dépenses de la semaine","travail",15]],apprendre:[["Regarder un tuto de 20 min et le refaire","soi",20]],moral:[["15 min dehors sans écouteurs","soi",15]],job:[["Envoyer une candidature","travail",25]],son:[["30 min sur un morceau en cours","perso",25]]};
+const GOALQ={forme:[["30 min de marche","soi",20],["20 pompes, 20 squats, 1 min de gainage","sport",20]],sommeil:[["@bed"]],ecrans:[["Poser le téléphone dans une autre pièce pendant 1 h","soi",15]],manger:[["Cuisiner un repas maison avec un légume","nourriture",20]],chez:[["@room"]],argent:[["Noter tes dépenses de la semaine","travail",15]],apprendre:[["Regarder un tuto de 20 min et le refaire","soi",20]],moral:[["15 min dehors sans écouteurs","soi",15]],job:[["Envoyer une candidature","travail",25]],son:[["30 min sur un morceau en cours","perso",25]]};
 
 // ---- ciel et nature
 function sunSet(d){const r=Math.PI/180,lat=43.6,lon=3.88,J=d.getTime()/864e5+2440587.5,n=Math.round(J-2451545),Js=n-lon/360,M=(357.5291+0.98560028*Js)%360,C=1.9148*Math.sin(M*r)+0.02*Math.sin(2*M*r)+0.0003*Math.sin(3*M*r),L=(M+C+282.9372)%360,Jt=2451545+Js+0.0053*Math.sin(M*r)-0.0069*Math.sin(2*L*r),sd=Math.sin(L*r)*Math.sin(23.44*r),cd=Math.cos(Math.asin(sd)),w=Math.acos((Math.sin(-0.833*r)-Math.sin(lat*r)*sd)/(Math.cos(lat*r)*cd))/r;
@@ -251,14 +252,17 @@ function cIdPick(n){const g=S.g,h=dayH(),we=isWeekend();let wx=null;try{wx=wxNow
   const fresh=L.filter(i=>!H.includes(i)),P=(fresh.length>=n?fresh:L).sort(()=>Math.random()-.5),out=[];
   for(const i of P){if(out.length>=n)break;if(out.some(j=>IDQ[j][4]===IDQ[i][4]))continue;out.push(i)}return out}
 function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;const g=S.g;if(!g)return;const tk=dayKey(Date.now());
+  if(!isWeekend()){const c0=tr.querySelector(".idq");if(c0)c0.remove();return}   // inspiration du week-end seulement (refonte Q.2)
   if(!g.idq||g.idq.d!==tk){g.idq={d:tk,o:cIdPick(1),p:null,ok:0};try{save()}catch(e){}}const Q=g.idq;let c=tr.querySelector(".idq");
+  {const x0=IDQ[Q.p==null?Q.o[0]:Q.p];if(x0&&(S.log||[]).some(e=>e.a==="af:sorties:"+x0[4]&&dayKey(e.t)===tk))Q.ok=1}
   if(Q.ok){if(c)c.remove();return}const sig=Q.o.join(",")+"|"+Q.p;if(c&&c.dataset.sig===sig&&c===tr.firstElementChild)return;
   if(!c){c=document.createElement("div");c.className="sq idq"}c.dataset.sig=sig;if(c!==tr.firstElementChild){const z=tr.scrollLeft<12;tr.prepend(c);if(z)tr.scrollLeft=0}const we=isWeekend(),h=dayH(),when=h>=15?"Ce soir":we?"Ce week-end":"Aujourd'hui";
   if(Q.p==null)Q.p=Q.o[0];const x=IDQ[Q.p];
-  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée sortie · ${when}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn primary idqf" type="button">Fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
+  c.innerHTML=`<span class="sqk">${idSvg(x[5])}<span>Idée pour ${we?"ton week-end":"ce soir"}</span></span><span class="sqn">${esc(x[0])}</span><span class="sqr"><button class="btn idqf" type="button">Je l'ai fait</button><button type="button" class="idqr" aria-label="Une autre idée" title="Une autre idée">${ICO("refresh",24)}</button></span>`;
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard()};
-  c.querySelector(".idqf").onclick=e=>{const prev=levelInfo(S.xp).l;Q.ok=1;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);if(!g.afLast)g.afLast={};g.afLast["af:sorties:"+x[4]]=Date.now();
-    const go=e.currentTarget;try{uniBurst(go,"divert")}catch(_){}complete({id:"af:sorties:"+x[4],cat:"soi",name:"Sortie : "+x[0],xp:x[3]},go,e);setTimeout(()=>{try{idqCard()}catch(_){}},600)}}
+  // « Je l'ai fait » : la sortie se note dans Actions (durée, puis « Avec qui ? » : seul → Soi, avec quelqu'un → Ami)
+  c.querySelector(".idqf").onclick=e=>{const f=FAM.find(z=>z.id==="sorties");if(!f)return;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);const it=afItems().find(z=>z.k==="fam"&&z.f===f&&z.opt===x[4])||{k:"fam",f,opt:x[4],log:null,cat:f.cat,dom:f.dom,lz:f.lz||"",name:f.l+" · "+x[4]};
+    if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,e.currentTarget,e)},60)}}
 
 // ---- anniversaires : fond de fête
 try{RKI.cake=["................", "....y...y...y...", "...yY..yY..yY...", "...mm..bb..gg...", "...wm..wb..wg...", "...mm..bb..gg...", ".oooooooooooooo.", ".owwwwbwwwwwgwo.", ".owrwvwwwywrwwo.", ".owwmwwmwwmwwmo.", ".ommmmmmmmmmmmo.", ".oyyyyyyyyyyyyo.", ".ommmmmmmmmmmmo.", ".oMMMMMMMMMMMMo.", "kkkkkkkkkkkkkkkk", ".KKKKKKKKKKKKKK."]}catch(e){}
