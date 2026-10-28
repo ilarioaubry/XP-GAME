@@ -201,6 +201,21 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A à G proposées ; **D, la liste du carnet**, choisie et faite le 28/10 (Ce matin / Mes engagements / Plus tard aujourd'hui). Reste : retirer le code des anciens blocs (rituels en tuiles, rangée des repas, énergie, à faire, fin de journée, rattrapage), aujourd'hui masqués et encore utilisés en coulisse
 - [ ] J.2 Enchaînements de rituels (douche → barbe) ~~fait 28/10~~, dents proposées à la fin d'un repas (à faire), compteur de cigarettes dans l'engagement lié ~~fait 28/10~~
 
+## Idées utiles (proposées le 28/10/2026, à choisir)
+
+- [ ] U.1 Liste de courses tirée de l'assiette et des recettes (ce qui revient souvent, ce qui manque : légumes…), cochée en magasin
+- [ ] U.2 « Je mange quoi ? » : 3 idées de repas depuis tes recettes, ce que tu as mangé cette semaine et ce qui manque
+- [ ] U.3 Cigarettes : courbe de la semaine, argent économisé, bouton « envie » (3 min pour la laisser passer)
+- [ ] U.4 Heure de coucher conseillée selon le réveil de demain (calendrier, travail) dans Ce soir
+- [ ] U.5 Suivi des candidatures et contrats : envoyée, relance à J+7, entretien, réponse ; prochain contrat à trouver
+- [ ] U.6 Carnet de sons : idée rapide (phrase, vocal), étapes maquette → mix → sortie, tracklist
+- [ ] U.7 Capture rapide : noter une idée en 2 s, triée plus tard (à faire, courses, son, note)
+- [ ] U.8 Proches : idées cadeaux notées au fil de l'eau, rappel à J-7 de l'anniversaire avec ces idées
+- [ ] U.9 Maison : ce qui revient (draps, frigo, plantes) proposé tout seul quand c'est le moment, d'après « La dernière fois que… »
+- [ ] U.10 Dimanche soir : bilan de la semaine et 3 choses à prévoir pour la suivante
+- [ ] U.11 Rendez-vous et rappels vers le calendrier de l'iPhone (fichier .ics), puisque l'appli web ne peut pas sonner seule
+- [ ] U.12 Visites d'appart : notes par critère (prix, quartier, lumière, bruit) et comparaison
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
