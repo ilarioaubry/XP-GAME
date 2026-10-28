@@ -165,6 +165,12 @@ with sync_playwright() as p:
     pg.evaluate("[...document.querySelectorAll('#todoBox .todor')].find(r=>/Tâche test/.test(r.textContent)).querySelector('.todock').click()"); pg.wait_for_timeout(400)
     check("à faire : tâche libre cochée +5 XP, demain pas affiché aujourd'hui", n0 == 1 and xp(pg) - x0 in (5, 10) and pg.evaluate("/1\\/1/.test(document.querySelector('#todoBox .count').textContent)"), f"{n0} {xp(pg)-x0}")
 
+    # 7f. Engagements : affichés dans la journée, validés dans Bonne nuit (+15 XP chacun tenu)
+    pg.evaluate("()=>{document.querySelectorAll('.clo,.jrc').forEach(e=>e.remove());engS().d[dayKey(Date.now())]=[{id:'soda',k:'sans',n:'Sans soda'}];save();showView('q');renderEng();closeOpen(1);for(let i=0;i<8&&!/engagements/.test(document.querySelector('.cloin h2').textContent);i++)document.querySelector('.clogo').click()}")
+    ok = pg.evaluate("!!document.querySelector('#engBox .engr')&&!!document.querySelector('[data-en=soda]')")
+    pg.evaluate("()=>{document.querySelector('[data-en=soda][data-v=\"1\"]').click();document.querySelectorAll('.clo').forEach(e=>e.remove());document.body.classList.remove('rtmon')}")
+    check("engagements : carte du jour et étape dans Bonne nuit", ok)
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

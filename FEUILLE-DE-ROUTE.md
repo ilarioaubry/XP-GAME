@@ -194,7 +194,7 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] F.1 Finir un contrat donne des points de Travail : au dernier jour (14/14), une coche à toucher, +50 XP Travail, puis la jauge disparaît (28/10)
 - [x] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée) : à la fin de Bonne nuit, écran « Ta journée » ; les messages « en passant » y sont gardés, les niveaux s'affichent aussi sur le moment (28/10)
 - [x] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain) ; tâche libre 5 XP ; ce qui n'est pas fait est proposé dans Bonne nuit (Demain / Retirer) (28/10)
-- [ ] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8
+- [x] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8 : carte le matin (jusqu'à midi, 3 au plus, « Moins de N cigarettes » avec −/+, les tiens écrits), validés dans Bonne nuit, +15 XP chacun tenu (28/10)
 
 ## Fait à la demande (hors phases)
 

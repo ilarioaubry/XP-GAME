@@ -4384,6 +4384,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     window.renderVie=function(){const r=renderVieBase.apply(this,arguments);try{vieViz();ficheMove()}catch(e){console.warn("renderVie",e)}return r};
   })();
   </script>
+  <section data-v="q" class="rit engbox voff" id="engBox" aria-label="Engagements"></section>
   <section data-v="q" class="specials" id="dqBox" aria-label="Mon moment">
     <div class="head" id="dqHead"><h2 id="dqTitle">Rituels du matin<span class="count" id="spCount">0</span></h2><span class="rsk" id="ritSk" hidden></span><button type="button" class="dqed" id="ritEdBtn" aria-label="Modifier mes rituels"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="8" y="0" width="2" height="1.02"/><rect x="7" y="1" width="4" height="1.02"/><rect x="6" y="2" width="6" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="8" y="3" width="4" height="1.02"/><rect x="4" y="4" width="2" height="1.02"/><rect x="8" y="4" width="3" height="1.02"/><rect x="3" y="5" width="2" height="1.02"/><rect x="7" y="5" width="3" height="1.02"/><rect x="2" y="6" width="2" height="1.02"/><rect x="6" y="6" width="3" height="1.02"/><rect x="1" y="7" width="2" height="1.02"/><rect x="5" y="7" width="3" height="1.02"/><rect x="1" y="8" width="1" height="1.02"/><rect x="3" y="8" width="3" height="1.02"/><rect x="1" y="9" width="3" height="1.02"/><rect x="0" y="10" width="4" height="1.02"/></svg></button></div>
     <div class="dql" id="spTrack"></div>
@@ -4500,7 +4501,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 96c308d</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 664d025</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5237,7 +5238,7 @@ function renderJournal(){
 // rendu par vue : seule la page visible est redessinée, les autres le sont quand on y va
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
-  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderTodo==="function")renderTodo()}catch(e){}},
+  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderTodo==="function")renderTodo()}catch(e){}try{if(typeof renderEng==="function")renderEng()}catch(e){}},
   c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
@@ -5910,8 +5911,9 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
   const SANS=(AFB?AFB.items():[]).filter(it=>it.k==="fam"&&it.f.id==="sans"),sansDone=it=>(S.log||[]).some(e=>e.a==="af:sans:"+it.opt&&dayKey(e.t)===tk);let si=0;
   const itemsOf=c=>(AFB?AFB.items():[]).filter(it=>it.k==="fam"&&c[3].includes(it.f.id));
   const ik=it=>it.f.id+"|"+it.opt;
+  const EN=typeof engToday==="function"?engToday().filter(e=>e.res===undefined):[];W.en={};EN.forEach(e=>{if(engAuto(e))W.en[e.id]=engOk(e,tk)?1:0});
   const TD=typeof todoOpen==="function"?todoOpen():[];W.td={};TD.forEach(x=>W.td[x.id]="rep");
-  const stepList=()=>{const L=["mood","meals","quick"];CT.forEach(c=>{if(!W.cat[c[0]])return;L.push(c[0]+":a");if(c[4]||c[5])L.push(c[0]+":b")});if(TD.length)L.push("todo");L.push("end");return L};
+  const stepList=()=>{const L=["mood","meals","quick"];CT.forEach(c=>{if(!W.cat[c[0]])return;L.push(c[0]+":a");if(c[4]||c[5])L.push(c[0]+":b")});if(EN.length)L.push("eng");if(TD.length)L.push("todo");L.push("end");return L};
   const o=document.createElement("div");o.className="clo clo2";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Bilan de la journée");
   o.prepend(ambEl("nuit"));document.body.appendChild(o);document.body.classList.add("rtmon");
   const close=()=>{o.remove();document.body.classList.remove("rtmon")};
@@ -5926,14 +5928,16 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
       let h="";if(c[4])h+=P.map(it=>{const qk=AFB.qKind(it),opts=qk?AFB.QTY[qk].o.map(v=>[v,v+" "+AFB.QTY[qk].u]):AFB.DUR.filter(d=>d[0]>0),cur=W.amt[cid+"|"+ik(it)];return`<div class="bsrow"><small>${esc(it.opt)}</small><div class="bswrap">${opts.map(([v,l])=>chip(l,cur===v,`data-am="${esc(cid+"|"+ik(it))}" data-v="${v}" data-qk="${qk?1:0}"`)).join("")}</div></div>`}).join("");
       if(c[5]){const Wh=W.who[cid]||(W.who[cid]=[]),pp=AFB.people().slice(0,10),gg=AFB.groups();h+=`<div class="bsrow"><small>Avec qui ?</small><div class="bswrap">${gg.map((g,i)=>chip(g.n,g.m.every(n=>Wh.includes(n)),`data-wg="${i}"`)).join("")}${pp.map(p=>chip(p,Wh.includes(p),`data-wp="${esc(p)}"`)).join("")}</div></div>`}
       body=h;next=cid==="gens"&&!(W.who[cid]||[]).length?"Continuer sans nom":"Continuer"}
+    else if(st==="eng"){title="Tes engagements";sub="Comment ça s'est passé ?";body=`<div class="bsmeals">${EN.map(e=>`<div class="bsmr"><b></b>${engAuto(e)?`<span class="bsdone">${W.en[e.id]?pxImg("check",1,"inl")+" tenu":"pas cette fois"}${e.id==="cigmax"?" · "+engCig(tk)+"/"+e.lim:""}</span>`:`<div class="bsyn">${chip("Tenu",W.en[e.id]===1,`data-en="${esc(e.id)}" data-v="1"`)}${chip("Pas cette fois",W.en[e.id]===0,`data-en="${esc(e.id)}" data-v="0"`)}</div>`}</div>`).join("")}</div>`}
     else if(st==="todo"){title="Ta liste à faire";sub="Pas fait aujourd'hui : on le garde pour demain ?";body=`<div class="bsmeals">${TD.map(x=>`<div class="bsmr"><b></b><div class="bsyn">${chip("Demain",W.td[x.id]==="rep",`data-td="${x.id}" data-v="rep"`)}${chip("Retirer",W.td[x.id]==="del",`data-td="${x.id}" data-v="del"`)}</div></div>`).join("")}</div>`}
-    else if(st==="end"){const n=ML.filter(m=>W.meal[m[0]]!==undefined&&!mDone(m[0],m[1])).length+CT.reduce((a,c)=>a+(W.cat[c[0]]?(W.pick[c[0]]||[]).length:0),0);title="Ta journée en une phrase";sub=n?`${n} chose${n>1?"s":""} à ajouter à ton journal.`:"";const SL=SANS.filter(it=>!sansDone(it));body=`<textarea class="clot" maxlength="220" rows="3" placeholder="Ce dont tu te souviendras"></textarea>${SL.length?`<div class="bsrow closans"><small>Journée sans…</small><div class="bswrap">${SL.map(it=>chip(it.opt,W.sans[it.opt],`data-sans="${esc(it.opt)}"`)).join("")}</div></div>`:""}`;next="Bonne nuit"}
+    else if(st==="end"){const n=ML.filter(m=>W.meal[m[0]]!==undefined&&!mDone(m[0],m[1])).length+CT.reduce((a,c)=>a+(W.cat[c[0]]?(W.pick[c[0]]||[]).length:0),0);title="Ta journée en une phrase";sub=n?`${n} chose${n>1?"s":""} à ajouter à ton journal.`:"";const EG=(typeof engToday==="function"?engToday():[]).map(e=>e.id),SL=SANS.filter(it=>!sansDone(it)&&!EG.includes({Soda:"soda",Sucre:"sucre",Grignotage:"grign"}[it.opt]));body=`<textarea class="clot" maxlength="220" rows="3" placeholder="Ce dont tu te souviendras"></textarea>${SL.length?`<div class="bsrow closans"><small>Journée sans…</small><div class="bswrap">${SL.map(it=>chip(it.opt,W.sans[it.opt],`data-sans="${esc(it.opt)}"`)).join("")}</div></div>`:""}`;next="Bonne nuit"}
     o.querySelector(".cloin")?.remove();const d=document.createElement("div");d.className="cloin";
     d.innerHTML=`<div class="qwh">${si>0?`<button type="button" class="qwback" aria-label="Retour">${ICO("chev",18)}</button>`:"<span></span>"}<span class="qwprog" aria-label="Étape ${si+1} sur ${L.length}">${L.map((_,i)=>`<i class="${i<=si?"on":""}"></i>`).join("")}</span><button type="button" class="qwback clox" aria-label="Plus tard">×</button></div><div class="qwbody"${still?' style="animation:none"':""}><h2 class="qwq">${esc(title)}</h2>${sub?`<p class="qwsub">${esc(sub)}</p>`:""}${body}</div><button type="button" class="btn primary clogo">${esc(next)}</button>`;
     o.appendChild(d);const T=d.querySelector(".clot");if(T)T.value=W.t;
     d.querySelector(".clox").onclick=close;const bk=d.querySelector(".qwback:not(.clox)");if(bk)bk.onclick=()=>go(-1);
     d.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{W.md=+b.dataset.m;sfx("blip");d.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b));setTimeout(()=>go(1),260)});
-    d.querySelectorAll(".bsmr").forEach((r,i)=>{if(st==="todo"&&TD[i])r.querySelector("b").textContent=TD[i].n});
+    d.querySelectorAll(".bsmr").forEach((r,i)=>{if(st==="todo"&&TD[i])r.querySelector("b").textContent=TD[i].n;if(st==="eng"&&EN[i])r.querySelector("b").textContent=EN[i].n});
+    d.querySelectorAll("[data-en]").forEach(b=>b.onclick=()=>{const k=b.dataset.en,v=+b.dataset.v;W.en[k]=W.en[k]===v?undefined:v;sfx("blip");draw(1)});
     d.querySelectorAll("[data-td]").forEach(b=>b.onclick=()=>{W.td[b.dataset.td]=b.dataset.v;sfx("blip");draw(1)});
     d.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>plateOpen(b.dataset.per,b.dataset.pl,b,{onClose:()=>draw(1)}));
     d.querySelectorAll("[data-sans]").forEach(b=>b.onclick=()=>{const k=b.dataset.sans;W.sans[k]=!W.sans[k];sfx("blip");b.setAttribute("aria-pressed",!!W.sans[k])});
@@ -5948,6 +5952,7 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
     {const ks=Object.keys(G.jr).sort();while(ks.length>400)delete G.jr[ks.shift()]}
     const Q=[];ML.forEach(([k,per,l,p])=>{const v=W.meal[k];if(v===undefined||mDone(k,per))return;Q.push(()=>{const dr=mbDr(tk+":"+per);dr.m[k]=v;dr.cr[k]=1;if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p},FK,null);else save()})});
     CT.forEach(c=>{if(!W.cat[c[0]])return;const who=(W.who[c[0]]||[]).slice();(W.pick[c[0]]||[]).forEach(k=>{const it=itemsOf(c).find(x=>ik(x)===k);if(!it)return;const v=W.amt[c[0]+"|"+k],qk=AFB.qKind(it);Q.push(()=>AFB.afDo(it,FK,null,qk?0:(v||0),c[5]?who:[],qk?(v||0):0))})});
+    if(EN.length){const T=engToday();EN.forEach(e=>{const v=W.en[e.id];if(v===undefined)return;const y=T.find(z=>z.id===e.id);if(!y)return;y.res=v;if(v===1)Q.push(()=>complete({id:"eng:"+e.id,cat:"soi",name:"Engagement tenu : "+e.n,xp:ENG_XP},FK,null))})}
     if(TD.length){const tm=todoDay(1);S.g.todo=todoL().filter(x=>!(W.td[x.id]==="del"));TD.forEach(x=>{if(W.td[x.id]!=="rep")return;const y=todoL().find(z=>z.id===x.id);if(!y)return;if(todoL().some(z=>z.d===tm&&z!==y&&(y.key?z.key===y.key:z.n===y.n)))S.g.todo=todoL().filter(z=>z!==y);else{y.d=tm;y.c=Date.now()}})}
     SANS.forEach(it=>{if(W.sans[it.opt]&&!sansDone(it))Q.push(()=>AFB.afDo(it,FK,null,0,[],0))});
     const FK={getBoundingClientRect:()=>({left:innerWidth/2-20,width:40,top:innerHeight*.45}),classList:{add(){}}};
@@ -14855,6 +14860,29 @@ html:not(#_u1):not(#_u2) body #todoBox .todot{display:grid;gap:2px;min-width:0}
 html:not(#_u1):not(#_u2) body #todoBox .todot b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html:not(#_u1):not(#_u2) body #todoBox .todor.ok .todot b{opacity:.6;text-decoration:line-through}
 html:not(#_u1):not(#_u2) body #todoBox .todox{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
+
+/* Engagements (28/10) */
+html:not(#_u1):not(#_u2) body #engBox .engx{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
+html:not(#_u1):not(#_u2) body #engBox .engsub{margin:0 0 10px;font-size:13px}
+html:not(#_u1):not(#_u2) body #engBox .engch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engo{min-height:56px;display:flex;align-items:center;gap:8px;padding:6px 10px;text-align:left;background:var(--surface);border:1px solid rgba(255,255,255,.17);color:var(--ink);font:inherit;font-size:15px;font-weight:700}
+html:not(#_u1):not(#_u2) body #engBox .engo>span:last-child{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.2}
+html:not(#_u1):not(#_u2) body #engBox .engo[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+html:not(#_u1):not(#_u2) body #engBox .engi,html:not(#_u1):not(#_u2) body #engBox .engi svg{flex:none;width:32px;height:32px;display:block}
+html:not(#_u1):not(#_u2) body #engBox .engplus{min-height:56px;border-style:dashed;display:grid;place-items:center}
+html:not(#_u1):not(#_u2) body #engBox .engin{grid-column:1/-1;display:flex;gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engin input{flex:1;min-width:0;font-size:16px;min-height:44px}
+html:not(#_u1):not(#_u2) body #engBox .englim{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px}
+html:not(#_u1):not(#_u2) body #engBox .englim .btn{width:44px;height:44px;min-height:44px;padding:0}
+html:not(#_u1):not(#_u2) body #engBox .enggo{width:100%;margin-top:12px}
+html:not(#_u1):not(#_u2) body #engBox .engl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engr{display:flex;align-items:center;gap:10px;min-height:56px;padding:6px 10px;background:var(--surface);border:1px solid rgba(255,255,255,.17)}
+html:not(#_u1):not(#_u2) body #engBox .engr .engi,html:not(#_u1):not(#_u2) body #engBox .engr .engi svg{width:48px;height:48px}
+html:not(#_u1):not(#_u2) body #engBox .engt{display:grid;gap:2px;min-width:0}
+html:not(#_u1):not(#_u2) body #engBox .engt b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* place : les engagements juste avant les rituels, la liste à faire juste après les quêtes du jour */
+html:not(#_a) .wrap>#engBox{order:-21}
+html:not(#_a) .wrap>#todoBox{order:-18}
 </style>
 <style id="z-proches">/* — depuis principal-01.css — */
 .q{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:grid;gap:4px;min-height:76px;transition:transform .12s,border-color .12s;overflow:hidden}
@@ -17398,6 +17426,39 @@ function renderTodo(){const box=document.getElementById("todoBox");if(!box||!S||
   box.querySelectorAll(".todor").forEach((r,i)=>{const x=L[i];r.querySelector(".todot b").textContent=x.n;
     r.querySelector(".todock").onclick=ev=>todoGo(x,r.querySelector(".todock"),ev);
     r.querySelector(".todox").onclick=()=>undoAfter("Retiré de la liste",()=>{S.g.todo=todoL().filter(y=>y.id!==x.id);save();renderTodo()})})}
+// Engagements (28/10, point Q.8) : le matin tu choisis 1 à 3 engagements, le soir Bonne nuit les valide (+15 XP chacun tenu).
+// « Sans cigarette » et « Moins de N cigarettes » se vérifient tout seuls avec le compteur ; les autres : « Tenu » ou « Pas cette fois ».
+// Données : S.g.eng = {lib:[{id,n}] (tes engagements écrits), d:{jour:[{id,k:"sans"|"max",n,lim?,res?}]}, skip: jour où la carte a été fermée}
+const ENG_XP=15,ENG_MAX=3;
+const ENG_DEF=[["cig","Sans cigarette","cigarette",1],["cigmax","Moins de N cigarettes","cigarette",1],["soda","Sans soda","soda"],["sucre","Sans sucre","cookie"],["grign","Sans grignotage","cookie"],["res","Sans réseaux","tel"]];
+let engPick=[],engLim=5,engAdd=false;
+function engS(){const G=S.g;if(!G.eng||typeof G.eng!=="object")G.eng={};const E=G.eng;if(!Array.isArray(E.lib))E.lib=[];if(!E.d||typeof E.d!=="object")E.d={};return E}
+function engToday(){return engS().d[dayKey(Date.now())]||[]}
+function engCig(tk){return((S.g.cig||{})[tk||dayKey(Date.now())])||0}
+function engAuto(e){return e.id==="cig"||e.id==="cigmax"}
+function engOk(e,tk){return e.id==="cig"?engCig(tk)===0:e.id==="cigmax"?engCig(tk)<e.lim:null}
+function engIc(id){const D=ENG_DEF.find(x=>x[0]===id);return rkSvg(D&&RKI[D[2]]?D[2]:"etoile")}
+function engOpts(){const cig=!!(((S.g.vie||{}).track||{}).cig);return[...ENG_DEF.filter(d=>cig||!d[3]).map(([id,n])=>({id,n})),...engS().lib]}
+function engName(o){return o.id==="cigmax"?"Moins de "+engLim+" cigarettes":o.n}
+function renderEng(){const box=document.getElementById("engBox");if(!box||!S||!S.g)return;const E=engS(),tk=dayKey(Date.now()),T=E.d[tk]||[];
+  const choose=!T.length&&E.skip!==tk&&dayH()<12;
+  if(!T.length&&!choose){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
+  if(choose){const O=engOpts();
+    box.innerHTML=`<div class="head"><h2>Engagements<span class="count">${engPick.length}/${ENG_MAX}</span></h2><button type="button" class="btn engx" aria-label="Pas aujourd'hui" title="Pas aujourd'hui">${ICO("close",24)}</button></div><p class="engsub">Pour aujourd'hui, tu t'engages à…</p>
+      <div class="engch">${O.map(o=>`<button type="button" class="engo" data-e="${esc(o.id)}" aria-pressed="${engPick.includes(o.id)}"><span class="engi">${engIc(o.id)}</span><span></span></button>`).join("")}${engAdd?`<span class="engin"><input maxlength="40" placeholder="ex. Pas de téléphone au lit" aria-label="Ton engagement"><button type="button" class="btn primary engok">Ajouter</button></span>`:`<button type="button" class="btn engplus" aria-label="Écrire un engagement" title="Écrire un engagement">${ICO("plus",24)}</button>`}</div>
+      ${engPick.includes("cigmax")?`<div class="englim"><span>Moins de</span><button type="button" class="btn" data-l="-1" aria-label="Moins">−</button><b class="ui-compteur">${engLim}</b><button type="button" class="btn" data-l="1" aria-label="Plus">+</button><span>cigarettes</span></div>`:""}
+      <button type="button" class="btn primary enggo"${engPick.length?"":" disabled"}>Je m'engage</button>`;
+    box.querySelectorAll(".engo").forEach((b,i)=>{b.querySelector("span:last-child").textContent=engName(O[i]);b.onclick=()=>{const id=O[i].id;if(engPick.includes(id))engPick=engPick.filter(x=>x!==id);else{if(engPick.length>=ENG_MAX){toast(ENG_MAX+" engagements au plus");return}engPick.push(id);if(id==="cig")engPick=engPick.filter(x=>x!=="cigmax");if(id==="cigmax")engPick=engPick.filter(x=>x!=="cig")}try{sfx("blip")}catch(e){}renderEng()}});
+    box.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{engLim=Math.max(1,Math.min(30,engLim+(+b.dataset.l)));renderEng()});
+    box.querySelector(".engx").onclick=()=>{E.skip=tk;save();renderEng()};
+    const pl=box.querySelector(".engplus");if(pl)pl.onclick=()=>{engAdd=true;renderEng();const i=box.querySelector(".engin input");if(i)i.focus()};
+    const ai=box.querySelector(".engin input");if(ai){const go=()=>{const v=ai.value.trim();engAdd=false;if(v){const o={id:"u"+Date.now().toString(36),n:v.charAt(0).toUpperCase()+v.slice(1)};E.lib.push(o);while(E.lib.length>12)E.lib.shift();if(engPick.length<ENG_MAX)engPick.push(o.id);save()}renderEng()};box.querySelector(".engok").onclick=go;ai.onkeydown=e=>{if(e.key==="Enter")go();if(e.key==="Escape"){engAdd=false;renderEng()}}}
+    box.querySelector(".enggo").onclick=ev=>{const O2=engOpts();E.d[tk]=engPick.map(id=>{const o=O2.find(x=>x.id===id);return{id,k:id==="cigmax"?"max":"sans",n:engName(o),...(id==="cigmax"?{lim:engLim}:{})}});engPick=[];
+      const ks=Object.keys(E.d).sort();while(ks.length>60)delete E.d[ks.shift()];save();try{sfx("blip")}catch(e){}toast("C'est noté. On en reparle ce soir.");renderEng()};return}
+  box.innerHTML=`<div class="head"><h2>Engagements<span class="count">${T.filter(e=>e.res===1||e.res===undefined&&engOk(e)===true).length}/${T.length}</span></h2></div><ul class="engl">${T.map(e=>{const a=engAuto(e),c=engCig(tk);
+    const st=e.res===1?"Tenu":e.res===0?"Pas cette fois":e.id==="cigmax"?c+" / "+e.lim+" aujourd'hui":e.id==="cig"?(c?c+" aujourd'hui":"0 aujourd'hui"):"Ce soir dans Bonne nuit";
+    return`<li class="engr${e.res===1?" ok":""}"><span class="engi">${engIc(e.id)}</span><span class="engt"><b></b><small class="ui-info">${st}</small></span></li>`}).join("")}</ul>`;
+  box.querySelectorAll(".engr b").forEach((b,i)=>b.textContent=T[i].n)}
 // ---- Icônes d'interface en pixel art (standard « tout en pixel art ») : grilles 12×12, une seule couleur (currentColor),
 // pour garder les couleurs et états actuels des boutons. Remplace ICO() et les anciennes icônes vectorielles au trait.
 function pxIco(n,s,cls){const R=PXUI[n];if(!R)return"";let r="";R.forEach((row,y)=>{let x=0;while(x<12){if(row[x]!=="#"){x++;continue}let w=1;while(x+w<12&&row[x+w]==="#")w++;r+=`<rect x="${x}" y="${y}" width="${w}" height="1.02"/>`;x+=w}});

@@ -806,3 +806,26 @@ html:not(#_u1):not(#_u2) body #todoBox .todot{display:grid;gap:2px;min-width:0}
 html:not(#_u1):not(#_u2) body #todoBox .todot b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 html:not(#_u1):not(#_u2) body #todoBox .todor.ok .todot b{opacity:.6;text-decoration:line-through}
 html:not(#_u1):not(#_u2) body #todoBox .todox{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
+
+/* Engagements (28/10) */
+html:not(#_u1):not(#_u2) body #engBox .engx{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
+html:not(#_u1):not(#_u2) body #engBox .engsub{margin:0 0 10px;font-size:13px}
+html:not(#_u1):not(#_u2) body #engBox .engch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engo{min-height:56px;display:flex;align-items:center;gap:8px;padding:6px 10px;text-align:left;background:var(--surface);border:1px solid rgba(255,255,255,.17);color:var(--ink);font:inherit;font-size:15px;font-weight:700}
+html:not(#_u1):not(#_u2) body #engBox .engo>span:last-child{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.2}
+html:not(#_u1):not(#_u2) body #engBox .engo[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+html:not(#_u1):not(#_u2) body #engBox .engi,html:not(#_u1):not(#_u2) body #engBox .engi svg{flex:none;width:32px;height:32px;display:block}
+html:not(#_u1):not(#_u2) body #engBox .engplus{min-height:56px;border-style:dashed;display:grid;place-items:center}
+html:not(#_u1):not(#_u2) body #engBox .engin{grid-column:1/-1;display:flex;gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engin input{flex:1;min-width:0;font-size:16px;min-height:44px}
+html:not(#_u1):not(#_u2) body #engBox .englim{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px}
+html:not(#_u1):not(#_u2) body #engBox .englim .btn{width:44px;height:44px;min-height:44px;padding:0}
+html:not(#_u1):not(#_u2) body #engBox .enggo{width:100%;margin-top:12px}
+html:not(#_u1):not(#_u2) body #engBox .engl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+html:not(#_u1):not(#_u2) body #engBox .engr{display:flex;align-items:center;gap:10px;min-height:56px;padding:6px 10px;background:var(--surface);border:1px solid rgba(255,255,255,.17)}
+html:not(#_u1):not(#_u2) body #engBox .engr .engi,html:not(#_u1):not(#_u2) body #engBox .engr .engi svg{width:48px;height:48px}
+html:not(#_u1):not(#_u2) body #engBox .engt{display:grid;gap:2px;min-width:0}
+html:not(#_u1):not(#_u2) body #engBox .engt b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* place : les engagements juste avant les rituels, la liste à faire juste après les quêtes du jour */
+html:not(#_a) .wrap>#engBox{order:-21}
+html:not(#_a) .wrap>#todoBox{order:-18}
