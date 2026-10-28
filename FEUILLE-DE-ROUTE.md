@@ -216,6 +216,18 @@ Fonctionnalités (à proposer avant de construire) :
 - [ ] U.11 Rendez-vous et rappels vers le calendrier de l'iPhone (fichier .ics), puisque l'appli web ne peut pas sonner seule
 - [ ] U.12 Visites d'appart : notes par critère (prix, quartier, lumière, bruit) et comparaison
 
+## Appli plus intelligente (analyse du 28/10/2026, à choisir)
+
+- [ ] I.1 Journal trié par l'heure où tu fais vraiment chaque chose (heures apprises), et une ligne « Maintenant » en tête
+- [ ] I.2 Engagements proposés d'après ce que tu tiens (ex. « moins de N » = ta moyenne − 1)
+- [ ] I.3 Journée allégée toute seule : nuit courte, humeur basse la veille, jour chargé au calendrier → moins de quêtes, plus douces
+- [ ] I.4 À faire reporté 3 fois → proposer de le découper, de le mettre en projet ou de le retirer
+- [ ] I.5 Repas : l'équilibre de la semaine (assiette) oriente les idées de repas et les quêtes nourriture
+- [ ] I.6 Proches : rythme naturel de chaque personne appris → rappel quand il est dépassé
+- [ ] I.7 « Ce que j'ai appris de ta semaine » dans Bilan (sommeil ↔ rituels, cigarettes ↔ travail ou humeur…), en phrases simples
+- [ ] I.8 Ce qui n'est jamais utilisé depuis 30 jours : proposé au retrait (rituel, bonne action, famille de quêtes)
+- [ ] I.9 Chaque proposition dit pourquoi en petite info (« tu le fais souvent le jeudi »)
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
