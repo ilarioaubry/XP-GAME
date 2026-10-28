@@ -134,8 +134,11 @@ with sync_playwright() as p:
     check("Actions : « Avec qui ? » après la durée pour les proches", pg.evaluate("!!document.querySelector('#actFind .afppl')"))
     tap("Seul"); pg.wait_for_timeout(300)
     plus(False); plus(True); tap("Nourriture"); tap("Cuisiner"); tap("Repas maison"); pg.wait_for_timeout(500)
+    check("Routine du soir : Bonne nuit en dernière étape", pg.evaluate("(()=>{const L=rtmSteps('soir');return L.length&&L[L.length-1].k==='night'})()"))
     check("Actions : Cuisiner un repas ouvre l'assiette", pg.evaluate("!!document.querySelector('.plo')||!plTarget()"))
     pg.evaluate("document.querySelectorAll('.plo').forEach(e=>e.remove());document.documentElement.classList.remove('plopen')"); plus(False)
+    plus(True); tap("Nourriture")
+    check("Actions : « Journée sans » n'est plus dans Nourriture (elle est dans Bonne nuit)", pg.evaluate("[...document.querySelectorAll('#actFind .aft')].length>0&&![...document.querySelectorAll('#actFind .aft')].some(b=>/Journée sans/.test(b.textContent))")); plus(False)
 
     # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
     n0 = len(errs)

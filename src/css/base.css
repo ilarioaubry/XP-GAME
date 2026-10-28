@@ -4163,7 +4163,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .mlpop{position:fixed!imp
 
 
 /* 12 · Messages : un seul emplacement (en haut) et un seul style, pour les toasts comme pour « Annuler » */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#undoBar){top:calc(env(safe-area-inset-top,0px) + 10px)!important;bottom:auto!important;left:50%!important;max-width:min(92vw,420px)!important;background:rgba(14,16,36,.96)!important;color:#fff7e6!important;border:2px solid var(--gold,#ffd94a)!important;box-shadow:0 4px 0 #000!important;font-family:var(--f-body)!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;padding:10px 14px!important;z-index:260!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#undoBar){top:auto!important;bottom:calc(72px + env(safe-area-inset-bottom,0px))!important;left:50%!important;max-width:min(92vw,420px)!important;background:rgba(14,16,36,.96)!important;color:#fff7e6!important;border:2px solid var(--gold,#ffd94a)!important;box-shadow:0 4px 0 #000!important;font-family:var(--f-body)!important;font-size:13px!important;font-weight:700!important;letter-spacing:0!important;padding:10px 14px!important;z-index:260!important}
 
 
 

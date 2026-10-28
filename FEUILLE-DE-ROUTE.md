@@ -183,16 +183,16 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 ## Demandes du 28/10/2026
 
 À régler :
-- [ ] R.1 Messages (toasts) en bas, juste au-dessus de la barre d'onglets dans Aujourd'hui
-- [ ] R.2 « Bonne nuit » (clôture du soir) en fin de liste de la routine du soir
-- [ ] R.3 Pastilles rouges de nouveauté : montrer le chemin (pastille sur Moi, puis sur Chez moi, puis sur la catégorie, puis sur l'objet)
-- [ ] R.4 L'assiette dans « Bonne nuit » (le dîner se remplit dans l'assiette)
-- [ ] R.5 « Journée sans… » : à la fin de « Bonne nuit », plus dans les actions
+- [x] R.1 Messages (toasts) en bas, juste au-dessus de la barre d'onglets, partout (28/10)
+- [x] R.2 « Bonne nuit » (clôture du soir) en fin de liste de la routine du soir
+- [x] R.3 Pastilles rouges de nouveauté : montrer le chemin (pastille sur Moi, puis sur Chez moi, puis sur la catégorie, puis sur l'objet)
+- [x] R.4 L'assiette dans « Bonne nuit » (le dîner se remplit dans l'assiette)
+- [x] R.5 « Journée sans… » : à la fin de « Bonne nuit », plus dans les actions
 - [ ] R.6 Un titre à la section Routine
 
 Fonctionnalités (à proposer avant de construire) :
-- [ ] F.1 Finir un contrat donne des points de Travail
-- [ ] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée)
+- [ ] F.1 Finir un contrat donne des points de Travail : 50 XP, une fois à la date de fin
+- [ ] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée) : à la fin de Bonne nuit
 - [ ] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain)
 - [ ] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8
 

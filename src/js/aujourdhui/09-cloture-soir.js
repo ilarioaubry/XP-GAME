@@ -12,7 +12,8 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
     ["lu","Lu","Quoi ?",["lire"],1,0,"lire"],
     ["maison","Fait du ménage","Quoi de fait ?",["ranger","nettoyer","linge","vaisselle","mmaison"],0,0,"fenetre"],
     ["travail","Bossé","Sur quoi ?",["focus","admin"],1,0,"sablier"]];
-  const W={md:G.mood[tk]||0,meal:{},cat:{},pick:{},amt:{},who:{},t:J.t||""};let si=0;
+  const W={md:G.mood[tk]||0,meal:{},cat:{},pick:{},amt:{},who:{},sans:{},t:J.t||""};
+  const SANS=(AFB?AFB.items():[]).filter(it=>it.k==="fam"&&it.f.id==="sans"),sansDone=it=>(S.log||[]).some(e=>e.a==="af:sans:"+it.opt&&dayKey(e.t)===tk);let si=0;
   const itemsOf=c=>(AFB?AFB.items():[]).filter(it=>it.k==="fam"&&c[3].includes(it.f.id));
   const ik=it=>it.f.id+"|"+it.opt;
   const stepList=()=>{const L=["mood","meals","quick"];CT.forEach(c=>{if(!W.cat[c[0]])return;L.push(c[0]+":a");if(c[4]||c[5])L.push(c[0]+":b")});L.push("end");return L};
@@ -23,19 +24,21 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
   const go=n=>{si=Math.max(0,Math.min(stepList().length-1,si+n));draw()};
   function draw(still){const L=stepList(),st=L[si],[cid,ph]=st.split(":"),c=CT.find(x=>x[0]===cid);let title="",sub="",body="",next="Continuer",nx=()=>go(1);
     if(st==="mood"){title="Comment s'est passée ta journée ?";sub=dl;body=`<div class="mrow clomd picked">${MOODS.map((m,i)=>`<button type="button" data-m="${i+1}" aria-pressed="${W.md===i+1}" aria-label="${m[1]}" style="--mc:${m[2]}">${moodFace(i+1,44)}</button>`).join("")}</div>`;next=W.md?"Continuer":"Passer"}
-    else if(st==="meals"){title="Tes repas";sub="Touche ce que tu as mangé, même si tu rattrapes ta journée.";body=`<div class="bsmeals">${ML.map(([k,per,l,p])=>{const d=mDone(k,per);return`<div class="bsmr"><b>${l}</b>${d?`<span class="bsdone">${pxImg("check",1,"inl")} noté</span>`:`<div class="bsyn"><button type="button" class="bsch" data-ml="${k}" data-v="1" aria-pressed="${W.meal[k]===1}">Mangé</button><button type="button" class="bsch" data-ml="${k}" data-v="0" aria-pressed="${W.meal[k]===0}">Sauté</button></div>`}</div>`}).join("")}</div>`}
+    else if(st==="meals"){title="Tes repas";sub="Touche ce que tu as mangé, même si tu rattrapes ta journée.";body=`<div class="bsmeals">${ML.map(([k,per,l,p])=>{const d=mDone(k,per);return`<div class="bsmr"><b>${l}</b>${d?`<span class="bsdone">${pxImg("check",1,"inl")} noté</span>`:`<div class="bsyn">${typeof plateOpen==="function"&&MB_PLM.includes(k)&&W.meal[k]!==0?`<button type="button" class="bsch" data-pl="${k}" data-per="${per}">Remplir l'assiette</button>`:`<button type="button" class="bsch" data-ml="${k}" data-v="1" aria-pressed="${W.meal[k]===1}">Mangé</button>`}<button type="button" class="bsch" data-ml="${k}" data-v="0" aria-pressed="${W.meal[k]===0}">Sauté</button></div>`}</div>`}).join("")}</div>`}
     else if(st==="quick"){title="Dans ta journée, il y a eu…";sub="Touche ce qui est vrai. On détaille juste après.";body=`<div class="bsq">${CT.map(c=>`<button type="button" class="bsqb" data-c="${c[0]}" aria-pressed="${!!W.cat[c[0]]}"><span class="bsqi">${rkSvg(c[6])}</span><b>${c[1]}</b></button>`).join("")}</div>`;next=CT.some(c=>W.cat[c[0]])?"Continuer":"Rien d'autre"}
     else if(ph==="a"){title=c[2];sub="Plusieurs choix possibles.";const P=W.pick[cid]||(W.pick[cid]=[]);body=`<div class="bswrap">${itemsOf(c).map(it=>chip(it.opt,P.includes(ik(it)),`data-pk="${esc(ik(it))}"`)).join("")}</div>`;next=P.length?"Continuer":"Passer"}
     else if(ph==="b"){title="Un peu de détail";sub="Facultatif : touche, ou continue.";const P=(W.pick[cid]||[]).map(k=>itemsOf(c).find(it=>ik(it)===k)).filter(Boolean);
       let h="";if(c[4])h+=P.map(it=>{const qk=AFB.qKind(it),opts=qk?AFB.QTY[qk].o.map(v=>[v,v+" "+AFB.QTY[qk].u]):AFB.DUR.filter(d=>d[0]>0),cur=W.amt[cid+"|"+ik(it)];return`<div class="bsrow"><small>${esc(it.opt)}</small><div class="bswrap">${opts.map(([v,l])=>chip(l,cur===v,`data-am="${esc(cid+"|"+ik(it))}" data-v="${v}" data-qk="${qk?1:0}"`)).join("")}</div></div>`}).join("");
       if(c[5]){const Wh=W.who[cid]||(W.who[cid]=[]),pp=AFB.people().slice(0,10),gg=AFB.groups();h+=`<div class="bsrow"><small>Avec qui ?</small><div class="bswrap">${gg.map((g,i)=>chip(g.n,g.m.every(n=>Wh.includes(n)),`data-wg="${i}"`)).join("")}${pp.map(p=>chip(p,Wh.includes(p),`data-wp="${esc(p)}"`)).join("")}</div></div>`}
       body=h;next=cid==="gens"&&!(W.who[cid]||[]).length?"Continuer sans nom":"Continuer"}
-    else if(st==="end"){const n=ML.filter(m=>W.meal[m[0]]!==undefined&&!mDone(m[0],m[1])).length+CT.reduce((a,c)=>a+(W.cat[c[0]]?(W.pick[c[0]]||[]).length:0),0);title="Ta journée en une phrase";sub=n?`${n} chose${n>1?"s":""} à ajouter à ton journal.`:"";body=`<textarea class="clot" maxlength="220" rows="3" placeholder="Ce dont tu te souviendras"></textarea>`;next="Bonne nuit"}
+    else if(st==="end"){const n=ML.filter(m=>W.meal[m[0]]!==undefined&&!mDone(m[0],m[1])).length+CT.reduce((a,c)=>a+(W.cat[c[0]]?(W.pick[c[0]]||[]).length:0),0);title="Ta journée en une phrase";sub=n?`${n} chose${n>1?"s":""} à ajouter à ton journal.`:"";const SL=SANS.filter(it=>!sansDone(it));body=`<textarea class="clot" maxlength="220" rows="3" placeholder="Ce dont tu te souviendras"></textarea>${SL.length?`<div class="bsrow closans"><small>Journée sans…</small><div class="bswrap">${SL.map(it=>chip(it.opt,W.sans[it.opt],`data-sans="${esc(it.opt)}"`)).join("")}</div></div>`:""}`;next="Bonne nuit"}
     o.querySelector(".cloin")?.remove();const d=document.createElement("div");d.className="cloin";
     d.innerHTML=`<div class="qwh">${si>0?`<button type="button" class="qwback" aria-label="Retour">${ICO("chev",18)}</button>`:"<span></span>"}<span class="qwprog" aria-label="Étape ${si+1} sur ${L.length}">${L.map((_,i)=>`<i class="${i<=si?"on":""}"></i>`).join("")}</span><button type="button" class="qwback clox" aria-label="Plus tard">×</button></div><div class="qwbody"${still?' style="animation:none"':""}><h2 class="qwq">${esc(title)}</h2>${sub?`<p class="qwsub">${esc(sub)}</p>`:""}${body}</div><button type="button" class="btn primary clogo">${esc(next)}</button>`;
     o.appendChild(d);const T=d.querySelector(".clot");if(T)T.value=W.t;
     d.querySelector(".clox").onclick=close;const bk=d.querySelector(".qwback:not(.clox)");if(bk)bk.onclick=()=>go(-1);
     d.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{W.md=+b.dataset.m;sfx("blip");d.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b));setTimeout(()=>go(1),260)});
+    d.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>plateOpen(b.dataset.per,b.dataset.pl,b,{onClose:()=>draw(1)}));
+    d.querySelectorAll("[data-sans]").forEach(b=>b.onclick=()=>{const k=b.dataset.sans;W.sans[k]=!W.sans[k];sfx("blip");b.setAttribute("aria-pressed",!!W.sans[k])});
     d.querySelectorAll("[data-ml]").forEach(b=>b.onclick=()=>{const k=b.dataset.ml,v=+b.dataset.v;W.meal[k]=W.meal[k]===v?undefined:v;sfx("blip");draw(1)});
     d.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const k=b.dataset.c;W.cat[k]=!W.cat[k];sfx("blip");b.setAttribute("aria-pressed",!!W.cat[k]);d.querySelector(".clogo").textContent=CT.some(c=>W.cat[c[0]])?"Continuer":"Rien d'autre"});
     d.querySelectorAll("[data-pk]").forEach(b=>b.onclick=()=>{const P=W.pick[cid],k=b.dataset.pk,i=P.indexOf(k);if(i>=0)P.splice(i,1);else P.push(k);sfx("blip");b.setAttribute("aria-pressed",i<0);d.querySelector(".clogo").textContent=P.length?"Continuer":"Passer"});
@@ -47,6 +50,7 @@ function closeOpen(fromLast,bed){if(document.querySelector(".clo")||!S.g)return;
     {const ks=Object.keys(G.jr).sort();while(ks.length>400)delete G.jr[ks.shift()]}
     const Q=[];ML.forEach(([k,per,l,p])=>{const v=W.meal[k];if(v===undefined||mDone(k,per))return;Q.push(()=>{const dr=mbDr(tk+":"+per);dr.m[k]=v;dr.cr[k]=1;if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p},FK,null);else save()})});
     CT.forEach(c=>{if(!W.cat[c[0]])return;const who=(W.who[c[0]]||[]).slice();(W.pick[c[0]]||[]).forEach(k=>{const it=itemsOf(c).find(x=>ik(x)===k);if(!it)return;const v=W.amt[c[0]+"|"+k],qk=AFB.qKind(it);Q.push(()=>AFB.afDo(it,FK,null,qk?0:(v||0),c[5]?who:[],qk?(v||0):0))})});
+    SANS.forEach(it=>{if(W.sans[it.opt]&&!sansDone(it))Q.push(()=>AFB.afDo(it,FK,null,0,[],0))});
     const FK={getBoundingClientRect:()=>({left:innerWidth/2-20,width:40,top:innerHeight*.45}),classList:{add(){}}};
     const prev=levelInfo(S.xp).l;if(first)addBonus("Bilan de la journée",10,0,"jr");close();save();render(prev);sfx("moment");
     toast(first?`Journée close <span class="p">+10 XP</span>${Q.length?` · ${Q.length} ajout${Q.length>1?"s":""}`:""}. Bonne nuit.`:"Bilan mis à jour");
@@ -108,6 +112,7 @@ function rtmSteps(per){const tk=dayKey(Date.now()),h=dayH(),L=[];
   const mk=per==="matin"?"pdej":"diner",M=MEALS.find(m=>m[0]===mk);
   if(M&&!mealState(mk,M[1])&&h>=MEAL_H[mk])L.push({k:"meal",mk,per:M[1],name:M[2],ic:pxImg(M[3],3),plate:MB_PLM.includes(mk)});
   const w=ritTasks().find(t=>t.bar==="eau");if(w&&(S.daily.c[w.id]||0)<w.n)L.push({k:"eau",t:w,name:"Un verre d'eau",ic:rkSvg("eau"),K:ritKind(w)});
+  if(per==="soir"&&!((S.g.jr||{})[tk]||{}).at)L.push({k:"night",name:"Bonne nuit",ic:rkSvg("lune")});
   return L}
 function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".rtm"))return;
   const Q=rtmSteps(per);if(!Q.length){toast("Tout est déjà fait pour ce moment");return}
@@ -123,8 +128,8 @@ function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".
     <div class="rtq-chrono"><b class="ui-chiffre rtq-clk">${rtmFmt(clk())}</b><small class="ui-info rtq-rec"></small></div>
     <div class="rtq-prog"><span class="ui-barre rtq-barre"><i style="width:${Math.round(fait/n*100)}%"></i></span><span class="ui-compteur">${fait}/${n}</span></div>
     <ol class="rtq-liste">${Q.map((x,i)=>{const r=st.res[i],now=st.run&&!st.end&&i===st.i,c=x.t?(S.daily.c[x.t.id]||0):0;
-      return`<li class="rtq-et${now?" cur":""}${r==="ok"?" ok":""}${r==="skip"?" skip":""}" data-i="${i}"><span class="rtq-ic">${x.ic}</span><span class="rtq-tx"><b></b><small class="ui-info">${r==="ok"?"Fait":r==="skip"?"Passé":x.k==="meal"?(x.plate?"Remplis ton assiette":"Pris ou sauté"):x.t&&x.t.n>1&&x.k==="rit"?c+" / "+x.t.n:""}</small></span><span class="rtq-etat">${r==="ok"?ICO("check",24):""}</span></li>`}).join("")}</ol>
-    <div class="rtq-bas">${st.end?`<button type="button" class="ui-btn ui-btn--principal rtq-fin">Terminer</button>`:!st.run?`<button type="button" class="ui-btn ui-btn--principal rtq-go">C'est parti</button>`:`<button type="button" class="ui-btn rtq-skip">Passer</button><button type="button" class="ui-btn ui-btn--principal rtq-ok">${cur&&cur.k==="meal"&&cur.plate?"Remplir l'assiette":"Fait"}</button>`}</div>`;
+      return`<li class="rtq-et${now?" cur":""}${r==="ok"?" ok":""}${r==="skip"?" skip":""}" data-i="${i}"><span class="rtq-ic">${x.ic}</span><span class="rtq-tx"><b></b><small class="ui-info">${r==="ok"?"Fait":r==="skip"?"Passé":x.k==="meal"?(x.plate?"Remplis ton assiette":"Pris ou sauté"):x.k==="night"?"Ton bilan de la journée":x.t&&x.t.n>1&&x.k==="rit"?c+" / "+x.t.n:""}</small></span><span class="rtq-etat">${r==="ok"?ICO("check",24):""}</span></li>`}).join("")}</ol>
+    <div class="rtq-bas">${st.end?`<button type="button" class="ui-btn ui-btn--principal rtq-fin">Terminer</button>`:!st.run?`<button type="button" class="ui-btn ui-btn--principal rtq-go">C'est parti</button>`:`<button type="button" class="ui-btn rtq-skip">Passer</button><button type="button" class="ui-btn ui-btn--principal rtq-ok">${cur&&cur.k==="meal"&&cur.plate?"Remplir l'assiette":cur&&cur.k==="night"?"Bonne nuit":"Fait"}</button>`}</div>`;
     o.querySelectorAll(".rtq-et b").forEach((e,i)=>e.textContent=Q[i].name);
     const rec=o.querySelector(".rtq-rec");
     if(st.end){const ms=st.ms;rec.textContent=st.recN===2?"Nouveau record !":st.recN===1?"Premier temps enregistré":best?"Record : "+rtmFmt(best):"Fais tout sans passer pour enregistrer un temps";
@@ -132,12 +137,13 @@ function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".
     else rec.textContent=best?"Record : "+rtmFmt(best):"Pas encore de record";
     o.querySelector(".rtq-x").onclick=close;
     const go=o.querySelector(".rtq-go");if(go)go.onclick=()=>{st.run=true;st.t0=Date.now();sfx("start");iv=setInterval(()=>{const c=o.querySelector(".rtq-clk");if(c&&!st.end)c.textContent=rtmFmt(clk())},250);draw()};
-    const fin=o.querySelector(".rtq-fin");if(fin)fin.onclick=()=>{close();if(per==="soir"&&!rtmSteps("soir").some(x=>x.k==="rit"))setTimeout(()=>closeOpen(1),300)};
+    const fin=o.querySelector(".rtq-fin");if(fin)fin.onclick=()=>{close();if(per==="soir"&&!rtmSteps("soir").some(x=>x.k==="rit"||x.k==="night"))setTimeout(()=>closeOpen(1),300)};
     const row=o.querySelector(".rtq-et.cur");if(row){row.scrollIntoView({block:"nearest"});swipeable(row,ev=>ok(ev),()=>skip())}
     const okb=o.querySelector(".rtq-ok");if(okb)okb.onclick=ev=>ok(ev);const sk=o.querySelector(".rtq-skip");if(sk)sk.onclick=()=>skip()};
   const next=()=>{st.i++;if(st.i>=Q.length)finish();else draw()};
   let busy=false;
   const ok=ev=>{if(busy)return;const x=Q[st.i];if(!x)return;const row=o.querySelector(".rtq-et.cur");
+    if(x.k==="night"){st.res[st.i]="ok";st.done++;clearInterval(iv);st.ms=clk();if(!G.rtb||typeof G.rtb!=="object")G.rtb={};if(!st.skip&&st.done>=3&&(!best||st.ms<best))G.rtb[per]=st.ms;save();close();setTimeout(()=>closeOpen(1),300);return}
     if(x.k==="meal"&&x.plate){plateOpen(x.per,x.mk,row,{onClose:()=>{if(plDone(dayKey(Date.now()),x.per,x.mk)){st.res[st.i]="ok";st.done++;next()}else draw()}});return}
     busy=true;
     if(x.k==="meal"){try{mealQuick(x.per,x.mk,row,1,ev)}catch(e){}st.res[st.i]="ok";st.done++;setTimeout(()=>{busy=false;next()},300);return}

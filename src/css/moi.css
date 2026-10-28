@@ -775,3 +775,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) .statlist{padding:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf){background:linear-gradient(rgba(12,14,32,.5),rgba(12,14,32,.5)),var(--aubg)!important;background-color:var(--surface)!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::before,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::after{filter:blur(2px)!important}
+
+/* chemin vers un nouveau badge : Moi → Chez moi → Chambre → Armoire > Badges → famille → badge (28/10) */
+html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"]){counter-reset:nb var(--nb)}
+html.anb:not(#_u1):not(#_u2) body #wrCats [data-c="badges"]{position:relative}
+html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"])::after{content:counter(nb);position:absolute;top:4px;right:4px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:50%;background:var(--c-sport);color:#fff;font:700 11px/18px var(--f-body);text-align:center;pointer-events:none;z-index:2}

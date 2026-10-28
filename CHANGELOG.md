@@ -3,6 +3,9 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 28/10/2026
+- Messages et barre « Annuler » en bas, au-dessus de la barre d'onglets.
+- Routine du soir : « Bonne nuit » en dernière étape (ouvre le bilan de la journée). Dans Bonne nuit : déjeuner et dîner se remplissent dans l'assiette ; « Journée sans… » (soda, sucre, grignotage) se coche à la fin, et n'est plus dans les actions.
+- Nouveau badge : pastille sur Moi, Chez moi, la Chambre et la tuile Badges de l'armoire, pour suivre le chemin.
 - Correction : à l'ouverture de l'appli, les tuiles des repas (et l'assiette) n'apparaissaient pas tant qu'on n'avait rien touché. Le démarrage se lance maintenant après tous les scripts.
 
 ## 27/10/2026

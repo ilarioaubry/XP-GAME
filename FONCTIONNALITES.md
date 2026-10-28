@@ -32,7 +32,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Quêtes spéciales | Carrousel : amis, famille, groupes, surprise du jour, anniversaires (« Avec qui ? » au moment de Fait) | 15–30, anniversaire 30 | module |
 | Panneau « + » | Plus de quêtes, Cette semaine, Défi à deux, Bonnes actions | — | module (chaque bloc) |
 | Bonnes actions | Dans le panneau Actions, trouvables par la recherche et dans les Récents ; création de tes propres actions (celles qui faisaient doublon avec l'assiette sont retirées, 27/10) | 2 à 30 au choix | active |
-| Actions (panneau +) | Accueil « Récents » (ou « Pour commencer »), catégorie → action → durée ; « Avec qui ? » ensuite pour les proches et les sorties ; Cuisiner un repas ouvre l'assiette | 8 à 30 selon la durée | active |
+| Actions (panneau +) | Accueil « Récents » (ou « Pour commencer »), catégorie → action → durée ; « Avec qui ? » ensuite pour les proches et les sorties ; Cuisiner un repas ouvre l'assiette ; « Journée sans… » se coche dans Bonne nuit | 8 à 30 selon la durée | active |
 | Annuler | Barre « Annuler » quelques secondes après une validation ou une suppression | — | active |
 
 ## Moi > Ma vie

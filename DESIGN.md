@@ -112,7 +112,7 @@ Jamais de couleur pour la rareté (étoiles), jamais la couleur du ciel dans l'i
 | Appui long | un raccourci seulement ; **toujours aussi dans le menu « … »** |
 | « … » | petite fenêtre centrée ; toucher à côté la ferme sans rien déclencher |
 | Valider (Fait) | petit son + petite animation (≤ 300 ms), XP affichée à ce moment-là |
-| Supprimer | immédiat + barre « Annuler » 5 s en haut ; jamais de confirmation |
+| Supprimer | immédiat + barre « Annuler » 5 s en bas (au-dessus de la barre d'onglets) ; jamais de confirmation |
 | Saisir du texte | fenêtre plein écran (automatique dès qu'il y a un champ) |
 | Revenir | bouton secondaire « ← Écran » en haut à gauche |
 | Associer des personnes | au moment de « Fait », fenêtre « Avec qui ? » |

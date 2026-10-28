@@ -52,7 +52,8 @@ Règles données par Ilario (à respecter sans redemander) :
 - **Une seule étiquette** (vers 14 h, NOUVEAU, Ami du mois…) : texte 11 px gras, fond sombre, sans bordure. **Un seul compteur** (0/3, 15/117…) : police pixel 15 px, or, sans fond.
 - **Barres de progression** : un seul modèle (contour crème 2 px, fond sombre), deux tailles : grande 18 px pour les niveaux (XP, proches), petite 10 px pour tout le reste.
 - **Échelle de texte à 4 niveaux** : titre de section 20 px · titre de carte 15 px · texte 13 px · petite info 11 px. Seuls les grands chiffres décoratifs (≥ 22 px) font exception ; les champs restent à 16 px. Le 11 px seulement sur fond sombre ; sur le ciel, 13 px minimum.
-- **Messages** : un seul emplacement (en haut) et un seul style pour les toasts et la barre « Annuler ».
+- **Messages** : un seul emplacement (en bas, juste au-dessus de la barre d'onglets ; au-dessus des boutons du bas dans les fenêtres plein écran) et un seul style pour les toasts et la barre « Annuler ».
+- **Pastilles de nouveauté** : elles montrent le chemin jusqu'à l'objet (onglet, sous-onglet, pièce, catégorie, puis l'objet).
 - **États vides** : classe `vide`, phrase courte centrée du type « Aucun … pour l'instant. », suivie du bouton pour agir s'il existe.
 - **Choix rapides** (menus « … », Pris / Sauté…) : petite fenêtre centrée sur fond assombri ; un toucher à côté la ferme sans rien déclencher derrière.
 - **Vocabulaire** : français et neutre. Pas de « boss », « monstre », « skill » : projet, compétence, essentiels, tri.
