@@ -6,6 +6,13 @@
 const JD_CHAIN={douche:["barbe"]};   // enchaînements : la barbe suit la douche
 let jdOpenDone=false,jdOpenMorn=false;
 const jdEl=ev=>(ev&&ev.currentTarget)||document.body;
+// rituel coché : la ligne glisse et se replie, puis rejoint « N faits » ; la barre d'XP brille, le compteur rebondit
+let jdPop=false;
+function jdRit(t,ev){const el=jdEl(ev),li=el.closest&&el.closest("li.jdl"),still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const go=()=>{const w=(S.daily.c[t.id]||0)+1>=t.n;jdPop=w&&!still;ritTap(t,li||el,ev);if(!w)return;
+    const b=document.querySelector(".qxp .qbar");if(b&&!still){b.classList.remove("glow");void b.offsetWidth;b.classList.add("glow");setTimeout(()=>b.classList.remove("glow"),900)}};
+  if(!li||still||(S.daily.c[t.id]||0)+1<t.n)return go();
+  li.style.height=li.offsetHeight+"px";li.classList.add("jdgo");li.style.pointerEvents="none";setTimeout(go,380)}
 function jdFmt(t){const d=new Date(t);return d.getHours()+" h "+String(d.getMinutes()).padStart(2,"0")}
 function jdLast(name,tk){const e=[...(S.log||[])].reverse().find(x=>dayKey(x.t)===tk&&x.name===name);return e?e.t:0}
 function jdDays(s,e,wd){let n=0;for(let d=new Date(s+"T12:00");dayKey(d.getTime())<=e;d.setDate(d.getDate()+1)){const w=d.getDay();if(!wd||(w>0&&w<6))n++}return n}
@@ -29,10 +36,10 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const RT=ritOn?ritOrder(ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===PER&&ritDue(t))):[];
   const kindOf=t=>{try{return ritKind(t).k}catch(e){return""}},used=new Set();
   RT.forEach(t=>{if(used.has(t.id))return;used.add(t.id);const c=S.daily.c[t.id]||0,ok=c>=t.n,K=kindOf(t),at=ok?jdLast(t.name,tk):0;
-    const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else ritTap(t,jdEl(ev),ev)})});
+    const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else jdRit(t,ev)})});
     const chain=(JD_CHAIN[K]||[]).map(k=>RT.find(x=>!used.has(x.id)&&kindOf(x)===k)).filter(Boolean);
     (ok?done:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
-    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?done:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else ritTap(x,jdEl(ev),ev)})}))})});
+    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?done:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée
@@ -41,11 +48,12 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
     else now.push(jdRow({c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:pl?"Remplir l'assiette":"Pris ou sauté",r:`<span class="jdmini">${pl?"":`<button type="button" class="btn" data-k="${reg(ev=>mealQuick(per,k,jdEl(ev),0,ev))}">Sauté</button>`}<button type="button" class="btn ${pl?"primary":""}" data-k="${reg(ev=>pl?plateOpen(per,k,jdEl(ev)):mealQuick(per,k,jdEl(ev),1,ev))}">${pl?"Assiette":"Pris"}</button></span>`}))});
   // le soir avant 20 h : ce qui reste du matin, replié
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
-    if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>ritTap(t,jdEl(ev),ev))})).join(""):"")}
+    if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
-  const tot=now.length+done.length,shownDone=done.length>3&&!jdOpenDone?`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenDone=true;renderJdb()})}"><span>${done.length} faits</span><span class="jdchev">${ICO("chev",18)}</span></button></li>`:done.join("");
+  const tot=now.length+done.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
   const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?done.length+"/"+tot:"")}<ul class="jdlist">${shownDone}${now.join("")}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:""}`;
+  A.innerHTML=`${jdHead(ttl,tot?done.length+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:""}`;
+  if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : ceux du jour, les cigarettes, le contrat
   const eng=[];const T=typeof engToday==="function"?engToday():[],cigOn=!!(((G.vie||{}).track||{}).cig),cig=(G.cig||{})[tk]||0,cy=(G.cig||{})[dayKey(Date.now()-864e5)]||0;
