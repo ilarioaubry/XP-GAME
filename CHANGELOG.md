@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 30/10/2026
+- Journal de bord plus visuel, même structure : chaque icône sur une tuile pixel à la couleur du rituel (ou du repas, de l'engagement…), ligne légèrement teintée, ombre pixel, vraie case à cocher pixel (dorée quand c'est fait).
 - « J'ai… » dans ma fiche (Moi > Ma vie > Modifier) : animaux, maison, transport, santé, famille, activité. Chaque fait coché ajoute ses actions dans le panneau +, ses rituels (sortir le chien, prendre mon traitement…), ses rappels à rythme (arroser, litière, pression des pneus, lentilles…) qui arrivent dans « Plus tard aujourd'hui » quand c'est le moment, et ses quêtes. Décoché, tout repart.
 
 ## 28/10/2026
