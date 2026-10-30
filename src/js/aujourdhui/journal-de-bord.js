@@ -68,6 +68,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   try{evList().filter(e=>e.inD===0&&!e.done).forEach(e=>later.push(jdRow({ic:rkSvg(e.k==="bd"?"cake":"calendrier"),n:e.n,s:e.k==="bd"?"C'est aujourd'hui":"Dans ton calendrier",r:"",k:reg(()=>{if(e.k==="bd"){try{openProfile(e.who)}catch(_){}}else{try{showView("c");cGoSub("vie");setTimeout(()=>{const x=document.getElementById("evtBox");if(x)x.scrollIntoView({behavior:"smooth",block:"start"})},150)}catch(_){}}})})))}catch(e){}
   if(typeof todoL==="function"){todoL().filter(x=>x.d===tk).forEach(x=>{const d=todoDone(x),it=todoItem(x),ik=it&&it.k==="fam"?uIc(it.f.id,it.opt):"etoile";
     later.push(jdRow({ic:RKI[ik]?rkSvg(ik):rkSvg("etoile"),n:x.n,s:d?"Fait":"À faire",ok:d,r:d?"":undefined,k:d?"":reg(ev=>todoGo(x,jdEl(ev),ev))}))})}
+  if(typeof lastDue==="function")lastDue().forEach(x=>{const h=x.have&&typeof haveOf==="function"?haveOf(x.have):null;later.push(jdRow({ic:rkSvg(h&&RKI[h.ic]?h.ic:"sablier"),n:x.name,s:x.d?"C'est le moment":"Jamais noté",k:reg(()=>{lastDone(x.id);try{sfx("blip")}catch(e){}render()})}))});
   {const J=(G.jr||{})[tk]||{};later.push(jdRow({ic:rkSvg("lune"),n:"Bonne nuit",s:J.at?"Journée close · touche pour revoir":"Ton bilan de la journée",ok:!!J.at,r:J.at?"":`<button type="button" class="btn jdgo" data-k="${reg(()=>closeOpen(1))}">Bonne nuit</button>`,k:J.at?reg(()=>{try{dayRecap(false)}catch(e){}}):""}))}
   C.innerHTML=`${jdHead("Plus tard aujourd'hui")}<ul class="jdlist">${later.join("")}</ul>`;
   // ---- actions

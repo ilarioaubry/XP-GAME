@@ -230,8 +230,8 @@ Fonctionnalités (à proposer avant de construire) :
 
 ## Ma vie → actions adaptées (idée du 28/10/2026, à choisir)
 
-- [ ] V.1 Nouvelle question dans « Ma situation » : « Chez moi, j'ai… » (chien, chat, petit animal, plantes, jardin, voiture, vélo, lave-vaisselle, bébé ou enfant à garder…) en tuiles pixel
-- [ ] V.2 Chaque réponse ajoute ses actions (panneau +), ses rituels proposés, ses quêtes et ses rappels à rythme (voir la liste du 28/10 dans la conversation)
+- [x] V.1 Nouvelle question dans « Ma situation » : « Chez moi, j'ai… » (chien, chat, petit animal, plantes, jardin, voiture, vélo, lave-vaisselle, bébé ou enfant à garder…) en tuiles pixel
+- [x] V.2 Chaque réponse ajoute ses actions (panneau +), ses rituels proposés, ses quêtes et ses rappels à rythme — fait 30/10 : animaux (chien, chat, petit animal), maison (plantes, jardin, lave-vaisselle), transport (voiture, vélo, transports en commun), santé (lentilles, traitement, végé, sans gluten), famille (enfant à garder), activité (club, instrument) ; reste : jours de garde partagée, régime appliqué à l'assiette
 - [ ] V.3 L'appli le déduit aussi : si tu notes souvent « sortir le chien », elle propose de l'ajouter à ta fiche
 - [ ] V.4 Autres faits utiles : lunettes ou lentilles, traitement à prendre, régime (végé, sans gluten), sport pratiqué en club, instrument, études (examens), jours de garde partagée
 

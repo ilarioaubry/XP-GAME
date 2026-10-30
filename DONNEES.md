@@ -76,6 +76,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `cig` | finitions | Compteur de cigarettes par jour | active |
 | `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
 | `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
+| `sit.have` | vie-faits, moi-finitions | Faits « J'ai… » cochés (chien, plantes…) ; les rituels et rappels qu'ils créent portent `have` | active |
 | `eng` | engagements, cloture-soir | {lib: engagements écrits, d: jour → [{id,k,n,lim?,res?}], skip: jour où la carte a été fermée} | active |
 | `todo` | a-faire, cloture-soir | Liste à faire : [{id, d jour, c créée le, n nom, key action du panneau}] ; « fait » se lit dans le journal | active |
 | `dlog` | coeur/29, cloture-soir | Messages gardés pour le bilan du soir (jour → liste), 7 derniers jours | active |

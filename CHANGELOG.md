@@ -2,6 +2,9 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 30/10/2026
+- « J'ai… » dans ma fiche (Moi > Ma vie > Modifier) : animaux, maison, transport, santé, famille, activité. Chaque fait coché ajoute ses actions dans le panneau +, ses rituels (sortir le chien, prendre mon traitement…), ses rappels à rythme (arroser, litière, pression des pneus, lentilles…) qui arrivent dans « Plus tard aujourd'hui » quand c'est le moment, et ses quêtes. Décoché, tout repart.
+
 ## 28/10/2026
 - Refonte des quêtes, étape 2 : 3 à 5 quêtes du jour, dont au moins 2 « pour toi » ; tes priorités, les quêtes courtes et les envies passent devant ; un tri par jour au plus ; une quête sport et une de musique poussées si ta semaine n'en a pas ; menu « … » réduit à Plus tard / Pas pour moi (« Déjà vu » reste pour les films, « Voir le projet » pour les étapes de projet).
 - Refonte des quêtes, étapes 4 et 5 : l'idée sortie devient une inspiration du samedi et du dimanche ; « Je l'ai fait » ouvre Actions › Sortir (seul : Soi, avec quelqu'un : Ami). Les projets montrent l'icône de leur thème, plus de créature. Doublons fusionnés : une seule version de « préparer demain », « pas d'écran 30 min avant de dormir », « 20 min de marche dehors », étirements, lecture, album, photo à la famille, « voir quelqu'un en vrai ».

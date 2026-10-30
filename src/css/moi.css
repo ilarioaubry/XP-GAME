@@ -780,3 +780,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"]){counter-reset:nb var(--nb)}
 html.anb:not(#_u1):not(#_u2) body #wrCats [data-c="badges"]{position:relative}
 html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"])::after{content:counter(nb);position:absolute;top:4px;right:4px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:50%;background:var(--c-sport);color:#fff;font:700 11px/18px var(--f-body);text-align:center;pointer-events:none;z-index:2}
+/* J'ai… (30/10) */
+html:not(#_u1):not(#_u2) body .fhave .fhg{display:block;margin:10px 0 6px;font-size:11px;color:var(--muted,#cfc6b8)}
+html:not(#_u1):not(#_u2) body .fhaves .fhc{display:inline-flex;align-items:center;gap:6px}
+html:not(#_u1):not(#_u2) body .fhaves .fhc svg{width:24px;height:24px}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs{grid-template-columns:repeat(4,minmax(0,1fr))}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs button{font-size:11px;line-height:1.2;padding:4px;text-align:center;overflow:hidden}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs .fti{width:32px;height:32px}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs .fti svg{width:32px;height:32px}

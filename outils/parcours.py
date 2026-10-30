@@ -176,6 +176,10 @@ with sync_playwright() as p:
     r = pg.evaluate("[isRun('Courses de la semaine'),isPush('15 min de sport à la maison'),durOf('Une heure sans réseaux'),xpRules({name:'1 h de travail concentré',cat:'travail',xp:35}).xp,xpRules({name:'Livre terminé : X',cat:'soi',xp:80}).xp,xpRules({name:'30 min de marche',cat:'sport',xp:25}).cat,xpRules({name:'Écouter un album en entier',cat:'soi',xp:10}).cat]")
     check("refonte : courses, minuteur, une heure, barème, catégories", r == [False, False, 60, 30, 50, "soi", "perso"], str(r))
 
+    # 7h. « J'ai… » : un chien coché ajoute ses rituels, ses rappels et « Mon chien » dans Actions ; décoché, tout repart
+    r = pg.evaluate("()=>{const G=S.g;G.sit=G.sit||{goals:[],pass:[]};G.sit.have=['chien'];haveApply('chien',true);const a=S.daily.tasks.filter(t=>t.have==='chien').length,b=G.last.filter(x=>x.have==='chien').length,c=afItems().some(it=>it.k==='fam'&&it.f.id==='chien');G.sit.have=[];haveApply('chien',false);return [a,b,c,S.daily.tasks.some(t=>t.have==='chien'),afItems().some(it=>it.k==='fam'&&it.f.id==='chien')]}")
+    check("j'ai un chien : rituels, rappels, actions, puis retirés", r == [2, 2, True, False, False], str(r))
+
     # 8. Sauvegarde : tout est encore là après rechargement
     avant = pg.evaluate("JSON.stringify([S.xp,S.friends,S.family])")
     pg.reload(); pg.wait_for_timeout(1500)

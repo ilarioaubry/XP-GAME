@@ -108,7 +108,7 @@
       const pOk=g.perOk&&typeof g.perOk==="object"?g.perOk:{},cDone=x=>pOk[x.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+x.name),cFin=x=>x.t==="contrat"&&!cDone(x)&&perStat(x,tk).left===0&&tk>=x.s&&nDays(x.e,tk,false)<=21;
       const forms=[];if(v.track.per)g.per.filter(x=>!(x.t==="contrat"&&document.getElementById("jdEng"))).filter(x=>cFin(x)||(x.t!=="contrat"||!cDone(x))&&(x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2))).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(cFin(x)?perFin(x):perMini(x,tk))});
       const late=g.last.map(x=>({x,r:ratio(x,tk)})).filter(o=>o.r>=1&&o.x.d!==tk||o.x.d===tk&&o.x.pv!==undefined).filter(o=>!(S.specials||[]).some(q=>(q.name||"").toLowerCase().includes(String(o.x.name||"").toLowerCase()))).sort((a,b)=>b.r-a.r).slice(0,3);
-      late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
+      if(!document.getElementById("jdLater"))late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
       let mode="";const cap=vieCap();
       if(T&&p.t!=="contrat"&&p.t!=="autre")mode=`${ic(p.t,16)}<span>${esc(PT[p.t].l.split(" /")[0])}</span>`;
       else if(workDay(tk))mode=`${ic("contrat",16)}<span>${hh(v.wf)}–${hh(v.wt)}</span>`;

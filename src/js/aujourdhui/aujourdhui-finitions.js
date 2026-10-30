@@ -53,8 +53,10 @@ function afPick(it,el,ev){if(afMode==="demain"){const ok=todoAdd(afTodoOf(it),to
 window.__AFB={FAM,DUR,QTY,afDo:(...a)=>afDo(...a),items:()=>afItems(),people:()=>people(),groups:()=>groups(),qKind};
 const strip=n=>String(n).replace(/\s*\((\d+\s*(min|h))\)/i,"").replace(/\b\d+\s*(min|h)\b\s*(de\s*)?/i,"").replace(/\s{2,}/g," ").trim();
 const domOfCat=c=>({perso:"creer",social:"proches",famille:"proches",eau:"nourriture"}[c]||c);
+// famille visible : pas retirée du panneau, et son fait « J'ai… » est coché s'il en dépend
+const famVis=f=>!AF_OFF.has(f.id)&&(!f.have||(typeof haveOn==="function"&&haveOn(f.have)));
 function afItems(){const out=[],famW=[];
-  FAM.forEach(f=>{famW.push(norm(f.l));[...f.o,...(((S.g&&S.g.afCustom)||{})[f.id]||[])].forEach(o=>{const[lab,log]=Array.isArray(o)?o:[o,null];famW.push(norm(lab));out.push({k:"fam",f,opt:lab,log,cat:f.cat,dom:f.dom,lz:(f.lzo&&f.lzo[lab])||f.lz||"",name:f.o.length===1&&(lab===f.l||f.nap||f.quick)?f.l:f.l+" · "+lab})})});
+  FAM.forEach(f=>{if(f.have&&!(typeof haveOn==="function"&&haveOn(f.have)))return;famW.push(norm(f.l));[...f.o,...(typeof haveOpts==="function"?haveOpts(f.id):[]),...(((S.g&&S.g.afCustom)||{})[f.id]||[])].forEach(o=>{const[lab,log]=Array.isArray(o)?o:[o,null];famW.push(norm(lab));out.push({k:"fam",f,opt:lab,log,cat:f.cat,dom:f.dom,lz:(f.lzo&&f.lzo[lab])||f.lz||"",name:f.o.length===1&&(lab===f.l||f.nap||f.quick)?f.l:f.l+" · "+lab})})});
   (S.actions||[]).forEach(a=>{if((typeof ACT_HIDE!=="undefined"&&ACT_HIDE.has(a.name))||(typeof PLATE_DUP!=="undefined"&&PLATE_DUP.has(a.name)))return;const nn=norm(a.name);if(famW.some(w=>w.length>3&&nn.includes(w)))return;out.push({k:"own",a,cat:a.cat,dom:DOMS.some(d=>d[0]===domOfCat(a.cat))?domOfCat(a.cat):"soi",name:strip(a.name),lz:lzGuess({id:"x",name:a.name})})});return out}
 function afCats(){const all=DOMS.map(([id,l,c,ic])=>({id:"dom:"+id,label:l,c,ic:IC[ic]}));return{D:all,Z:[],all}}
 const afKey=it=>it.k==="fam"?"af:"+it.f.id+":"+it.opt:it.a.id;
@@ -108,7 +110,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
     box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afThen(it,b,ev)});
     box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="dur")afSel=null;else afStep=afFirst(it);renderAF()};return}
-  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id&&!AF_OFF.has(f.id)).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
+  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id&&famVis(f)).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
   if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div>${afMode!=="hier"?`<button type="button" class="btn aftodofree">À faire ${afMode==="demain"?"demain":"aujourd'hui"} : « ${esc(afQ.trim())} »</button>`:""}<button type="button" class="afnew">+ Créer « <b></b> »</button>`}
@@ -164,7 +166,7 @@ function dressAF(){const box=document.getElementById("actFind");if(!box)return;c
   box.classList.toggle("uni",!!(dom&&DUNI[dom]));box.style.setProperty("--uni",dom&&DUNI[dom]?decor(dom):"none");
   box.querySelectorAll("[data-afc]").forEach(b=>{if(b.querySelector(".uic"))return;const id=b.dataset.afc.split(":")[1],U=DUNI[id];if(!U)return;const sv=b.querySelector("svg");if(sv){const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(U.ic);sv.replaceWith(sp)}});
   const FF=(()=>{try{return afCat&&!afFam?FAM.filter(f=>f.dom===afCat.split(":")[1]):[]}catch(e){return[]}})();
-  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1]&&!AF_OFF.has(f.id))[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
+  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1]&&famVis(f))[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const reg=box.__reg||[];box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{if(b.querySelector(".uic"))return;const it=(reg[i]||[])[0];if(!it)return;const k=it.k==="fam"?uIc(it.f.id,it.opt):"";if(!k)return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const dh=box.querySelector(".afdh");if(dh&&afSel&&!dh.querySelector(".uic")&&afSel.k==="fam"){const sp=document.createElement("span");sp.className="uic big";sp.innerHTML=rkSvg(uIc(afSel.f.id,afSel.opt));dh.querySelector("b").before(sp)}}
 function dressQuests(){document.querySelectorAll("#sqBox .sq,#fqBox .fqr").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn,.fqt b")||{}).textContent||"";if(!t)return;c.dataset.uni=1;

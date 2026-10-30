@@ -4328,7 +4328,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
       const pOk=g.perOk&&typeof g.perOk==="object"?g.perOk:{},cDone=x=>pOk[x.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+x.name),cFin=x=>x.t==="contrat"&&!cDone(x)&&perStat(x,tk).left===0&&tk>=x.s&&nDays(x.e,tk,false)<=21;
       const forms=[];if(v.track.per)g.per.filter(x=>!(x.t==="contrat"&&document.getElementById("jdEng"))).filter(x=>cFin(x)||(x.t!=="contrat"||!cDone(x))&&(x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2))).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(cFin(x)?perFin(x):perMini(x,tk))});
       const late=g.last.map(x=>({x,r:ratio(x,tk)})).filter(o=>o.r>=1&&o.x.d!==tk||o.x.d===tk&&o.x.pv!==undefined).filter(o=>!(S.specials||[]).some(q=>(q.name||"").toLowerCase().includes(String(o.x.name||"").toLowerCase()))).sort((a,b)=>b.r-a.r).slice(0,3);
-      late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
+      if(!document.getElementById("jdLater"))late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
       let mode="";const cap=vieCap();
       if(T&&p.t!=="contrat"&&p.t!=="autre")mode=`${ic(p.t,16)}<span>${esc(PT[p.t].l.split(" /")[0])}</span>`;
       else if(workDay(tk))mode=`${ic("contrat",16)}<span>${hh(v.wf)}–${hh(v.wt)}</span>`;
@@ -4504,7 +4504,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2179fa5</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version cc7bf89</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5083,6 +5083,27 @@ shroom:[[
   ".....ocdoooocdo.....",
   "......oo....oo......"]]
 };
+// Données : « J'ai… » dans ma fiche (30/10). Chaque fait ajoute ses actions (panneau +), ses rituels, ses rappels à rythme (« La dernière fois que… ») et ses quêtes. Pas de code ici.
+// {k, l: libellé, ic: icône RKI, g: groupe, fam: famille d'actions, opt: options ajoutées à une famille existante, rit: [[nom, matin|soir]], last: [[nom, n, j|s|m]], fq: [[id, titre, cat, xp, [h0,h1], {opts}]]}
+const HAVE=[
+  {k:"chien",l:"Un chien",ic:"chien",g:"Animaux",fam:{id:"chien",dom:"maison",cat:"maison",l:"Mon chien",xp:8,o:["Sortie","Longue balade","Nourrir","Jouer","Véto"]},rit:[["Sortir le chien","matin"],["Sortir le chien","soir"]],last:[["Vermifuge du chien",3,"m"],["Croquettes du chien",3,"s"]],fq:[["h_chien","Une longue balade avec ton chien","soi",15,[9,19],{we:1,out:1}]]},
+  {k:"chat",l:"Un chat",ic:"chat",g:"Animaux",fam:{id:"chat",dom:"maison",cat:"maison",l:"Mon chat",xp:5,o:["Litière","Nourrir","Jouer","Véto"]},last:[["Litière du chat",3,"j"],["Croquettes du chat",3,"s"],["Véto du chat",12,"m"]]},
+  {k:"petit",l:"Petit animal ou poissons",ic:"poisson",g:"Animaux",fam:{id:"petitanimal",dom:"maison",cat:"maison",l:"Mon petit animal",xp:5,o:["Nourrir","Nettoyer la cage","Nettoyer l'aquarium"]},last:[["Nettoyer la cage ou l'aquarium",2,"s"]]},
+  {k:"plantes",l:"Des plantes",ic:"plante",g:"Maison",fam:{id:"plantes",dom:"maison",cat:"maison",l:"Mes plantes",xp:3,o:["Arroser","Rempoter","Tailler"]},last:[["Arroser les plantes",4,"j"]],fq:[["h_rempot","Rempoter une plante qui étouffe","maison",10,[10,20],{short:1}]]},
+  {k:"jardin",l:"Un jardin ou un balcon",ic:"panier",g:"Maison",fam:{id:"jardin",dom:"maison",cat:"maison",l:"Jardin, balcon",xp:10,o:["Tondre","Désherber","Ranger le balcon"]},last:[["Tondre ou désherber",2,"s"]]},
+  {k:"lavev",l:"Un lave-vaisselle",ic:"assiette",g:"Maison",opt:{vaisselle:["Lancer le lave-vaisselle","Vider le lave-vaisselle"]}},
+  {k:"voiture",l:"Une voiture",ic:"voiture",g:"Transport",fam:{id:"voiture",dom:"maison",cat:"maison",l:"Ma voiture",xp:5,o:["Plein","Pression des pneus","Nettoyer","Garage"]},last:[["Pression des pneus",1,"m"],["Contrôle technique",24,"m"],["Assurance voiture",12,"m"]]},
+  {k:"velo",l:"Un vélo",ic:"velo",g:"Transport",last:[["Regonfler et graisser le vélo",1,"m"]]},
+  {k:"tc",l:"Transports en commun",ic:"ticket",g:"Transport",last:[["Recharger l'abonnement",1,"m"]]},
+  {k:"lentilles",l:"Des lentilles",ic:"lunettes",g:"Santé",last:[["Changer de lentilles",1,"m"],["Racheter des lentilles",3,"m"]]},
+  {k:"traitement",l:"Un traitement",ic:"sante",g:"Santé",rit:[["Prendre mon traitement","matin"]],last:[["Racheter mon traitement",1,"m"]]},
+  {k:"vege",l:"Je mange végé",ic:"legume",g:"Santé",fq:[["h_vege","Tester une recette végé que tu ne connais pas","nourriture",15,[11,21],{in:1}]]},
+  {k:"gluten",l:"Je mange sans gluten",ic:"pain",g:"Santé"},
+  {k:"enfant",l:"Un enfant à garder",ic:"enfant",g:"Famille",fam:{id:"enfant",dom:"proches",cat:"famille",l:"Avec mon enfant",xp:10,o:["École","Devoirs","Jeux","Bain","Histoire du soir"]},rit:[["Histoire du soir","soir"]]},
+  {k:"club",l:"Du sport en club",ic:"ballon",g:"Activité",fam:{id:"club",dom:"sport",cat:"sport",l:"Mon club",xp:20,o:["Entraînement","Match","Préparer mon sac"]},fq:[["h_club","Préparer ton sac pour l'entraînement","sport",5,[17,23],{short:1}]]},
+  {k:"instru",l:"Un instrument",ic:"notec",g:"Activité",fam:{id:"instru",dom:"creer",cat:"perso",l:"Mon instrument",xp:10,o:["Pratiquer","Apprendre un morceau","Jouer pour quelqu'un"]},fq:[["h_instru","15 min de pratique sur ton instrument","perso",10,[10,22],{short:1}]]}
+];
+const HAVE_G=["Animaux","Maison","Transport","Santé","Famille","Activité"];
 // ---- Journal d'erreurs : les 5 dernières erreurs JavaScript, visibles dans Moi > Bilan > Données (pour diagnostiquer sur l'iPhone)
 function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")||"[]");const m=String((e&&(e.message||e.reason&&e.reason.message||e.reason))||e).slice(0,160);
   L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
@@ -16111,6 +16132,14 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"]){counter-reset:nb var(--nb)}
 html.anb:not(#_u1):not(#_u2) body #wrCats [data-c="badges"]{position:relative}
 html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c="badges"])::after{content:counter(nb);position:absolute;top:4px;right:4px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:50%;background:var(--c-sport);color:#fff;font:700 11px/18px var(--f-body);text-align:center;pointer-events:none;z-index:2}
+/* J'ai… (30/10) */
+html:not(#_u1):not(#_u2) body .fhave .fhg{display:block;margin:10px 0 6px;font-size:11px;color:var(--muted,#cfc6b8)}
+html:not(#_u1):not(#_u2) body .fhaves .fhc{display:inline-flex;align-items:center;gap:6px}
+html:not(#_u1):not(#_u2) body .fhaves .fhc svg{width:24px;height:24px}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs{grid-template-columns:repeat(4,minmax(0,1fr))}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs button{font-size:11px;line-height:1.2;padding:4px;text-align:center;overflow:hidden}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs .fti{width:32px;height:32px}
+html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs .fti svg{width:32px;height:32px}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
@@ -16607,8 +16636,10 @@ function afPick(it,el,ev){if(afMode==="demain"){const ok=todoAdd(afTodoOf(it),to
 window.__AFB={FAM,DUR,QTY,afDo:(...a)=>afDo(...a),items:()=>afItems(),people:()=>people(),groups:()=>groups(),qKind};
 const strip=n=>String(n).replace(/\s*\((\d+\s*(min|h))\)/i,"").replace(/\b\d+\s*(min|h)\b\s*(de\s*)?/i,"").replace(/\s{2,}/g," ").trim();
 const domOfCat=c=>({perso:"creer",social:"proches",famille:"proches",eau:"nourriture"}[c]||c);
+// famille visible : pas retirée du panneau, et son fait « J'ai… » est coché s'il en dépend
+const famVis=f=>!AF_OFF.has(f.id)&&(!f.have||(typeof haveOn==="function"&&haveOn(f.have)));
 function afItems(){const out=[],famW=[];
-  FAM.forEach(f=>{famW.push(norm(f.l));[...f.o,...(((S.g&&S.g.afCustom)||{})[f.id]||[])].forEach(o=>{const[lab,log]=Array.isArray(o)?o:[o,null];famW.push(norm(lab));out.push({k:"fam",f,opt:lab,log,cat:f.cat,dom:f.dom,lz:(f.lzo&&f.lzo[lab])||f.lz||"",name:f.o.length===1&&(lab===f.l||f.nap||f.quick)?f.l:f.l+" · "+lab})})});
+  FAM.forEach(f=>{if(f.have&&!(typeof haveOn==="function"&&haveOn(f.have)))return;famW.push(norm(f.l));[...f.o,...(typeof haveOpts==="function"?haveOpts(f.id):[]),...(((S.g&&S.g.afCustom)||{})[f.id]||[])].forEach(o=>{const[lab,log]=Array.isArray(o)?o:[o,null];famW.push(norm(lab));out.push({k:"fam",f,opt:lab,log,cat:f.cat,dom:f.dom,lz:(f.lzo&&f.lzo[lab])||f.lz||"",name:f.o.length===1&&(lab===f.l||f.nap||f.quick)?f.l:f.l+" · "+lab})})});
   (S.actions||[]).forEach(a=>{if((typeof ACT_HIDE!=="undefined"&&ACT_HIDE.has(a.name))||(typeof PLATE_DUP!=="undefined"&&PLATE_DUP.has(a.name)))return;const nn=norm(a.name);if(famW.some(w=>w.length>3&&nn.includes(w)))return;out.push({k:"own",a,cat:a.cat,dom:DOMS.some(d=>d[0]===domOfCat(a.cat))?domOfCat(a.cat):"soi",name:strip(a.name),lz:lzGuess({id:"x",name:a.name})})});return out}
 function afCats(){const all=DOMS.map(([id,l,c,ic])=>({id:"dom:"+id,label:l,c,ic:IC[ic]}));return{D:all,Z:[],all}}
 const afKey=it=>it.k==="fam"?"af:"+it.f.id+":"+it.opt:it.a.id;
@@ -16662,7 +16693,7 @@ function renderAF0(){const box=document.getElementById("actFind");if(!box||!S||!
     box.querySelector(".afdh b").textContent=it.name;setTimeout(dressAF,0);
     box.querySelectorAll("[data-d]").forEach(b=>b.onclick=ev=>{afDur=+b.dataset.d;afThen(it,b,ev)});
     box.querySelector(".afback").onclick=()=>{if(afFirst(it)==="dur")afSel=null;else afStep=afFirst(it);renderAF()};return}
-  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id&&!AF_OFF.has(f.id)).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
+  const fams=c=>{const id=c.split(":")[1];const F=FAM.filter(f=>f.dom===id&&famVis(f)).map(f=>({l:f.l,ls:f.ls||f.l,c:(DOMS.find(d=>d[0]===id)||[])[2],its:items.filter(it=>it.k==="fam"&&it.f===f)}));const own=items.filter(it=>it.k==="own"&&it.dom===id);return F};
   const reg=[];const chip=(it,lab)=>{reg.push([it,lab]);const n=afToday(afKey(it));return`<button type="button" class="afo ${afFresh(it)}${n?" did":""}"><span></span>${n?`<em>${n>1?"×"+n:ICO("check",12)}</em>`:""}</button>`};
   let body="";
   if(q){const L=items.filter(it=>norm(it.name).includes(q)).slice(0,30);body=`<small class="afh">${L.length} résultat${L.length>1?"s":""}</small><div class="afopts">${L.map(it=>chip(it,it.name)).join("")}</div>${afMode!=="hier"?`<button type="button" class="btn aftodofree">À faire ${afMode==="demain"?"demain":"aujourd'hui"} : « ${esc(afQ.trim())} »</button>`:""}<button type="button" class="afnew">+ Créer « <b></b> »</button>`}
@@ -16718,7 +16749,7 @@ function dressAF(){const box=document.getElementById("actFind");if(!box)return;c
   box.classList.toggle("uni",!!(dom&&DUNI[dom]));box.style.setProperty("--uni",dom&&DUNI[dom]?decor(dom):"none");
   box.querySelectorAll("[data-afc]").forEach(b=>{if(b.querySelector(".uic"))return;const id=b.dataset.afc.split(":")[1],U=DUNI[id];if(!U)return;const sv=b.querySelector("svg");if(sv){const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(U.ic);sv.replaceWith(sp)}});
   const FF=(()=>{try{return afCat&&!afFam?FAM.filter(f=>f.dom===afCat.split(":")[1]):[]}catch(e){return[]}})();
-  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1]&&!AF_OFF.has(f.id))[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
+  box.querySelectorAll(".aft").forEach((b,i)=>{if(b.querySelector(".uic"))return;const F=FAM.filter(f=>f.dom===(afCat||"").split(":")[1]&&famVis(f))[+b.dataset.fam];if(!F)return;const k=uIc(F.id);if(!RKI[k])return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const reg=box.__reg||[];box.querySelectorAll(".afo:not(.afadd)").forEach((b,i)=>{if(b.querySelector(".uic"))return;const it=(reg[i]||[])[0];if(!it)return;const k=it.k==="fam"?uIc(it.f.id,it.opt):"";if(!k)return;const sp=document.createElement("span");sp.className="uic";sp.innerHTML=rkSvg(k);b.prepend(sp)});
   const dh=box.querySelector(".afdh");if(dh&&afSel&&!dh.querySelector(".uic")&&afSel.k==="fam"){const sp=document.createElement("span");sp.className="uic big";sp.innerHTML=rkSvg(uIc(afSel.f.id,afSel.opt));dh.querySelector("b").before(sp)}}
 function dressQuests(){document.querySelectorAll("#sqBox .sq,#fqBox .fqr").forEach(c=>{if(c.dataset.uni)return;const t=(c.querySelector(".sqn,.fqt b")||{}).textContent||"";if(!t)return;c.dataset.uni=1;
@@ -17111,7 +17142,7 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
       <div class="fsum"><div class="fsq"><span class="fti">${tileI(JOBI[s.job]||"autre")}</span><small>${esc(lab("job",s.job)||"Situation ?")}</small></div>
       <div class="fsq"><span class="fti">${tileI(H[0])}</span><small>${H[1]}</small>${av?`<span class="fav">${av}</span>`:""}</div>
       <div class="fsq fpr">${pri.length?`<span class="fpri3">${pri.map(k=>`<span class="fti sm" title="${esc(CATS[k]?CATS[k].label:"")}">${tileI(PRII[k]||"etoile")}</span>`).join("")}</span>`:`<span class="fti">${tileI("etoile")}</span>`}<small>${pri.length?"Priorités":"Pas de priorité"}</small></div></div>
-      ${perH}${gl.length?`<div class="fcs">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</div>`:""}${!s0?`<span class="fnone">Touche Modifier pour la remplir</span>`:""}</div>`;
+      ${perH}${gl.length?`<div class="fcs">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</div>`:""}${(s.have||[]).length&&typeof haveOf==="function"?`<div class="fcs fhaves">${s.have.map(k=>{const h=haveOf(k);return h?`<span class="fchip fhc">${tileI(h.ic)}<span>${esc(h.l)}</span></span>`:""}).join("")}</div>`:""}${!s0?`<span class="fnone">Touche Modifier pour la remplir</span>`:""}</div>`;
     if(P&&box.querySelector(".fper b"))box.querySelector(".fper b").textContent=P.name||"Ma période";
     box.querySelector(".fced").onclick=()=>{fEdit=true;renderFiche()};bindAsk(box);ficheMove();return}
   const row=(k,title,multi,max)=>`<div class="fr2"><small>${title}${max?` · ${max} max`:""}</small><div class="fopts">${SIT_Q[k].map(([v,l])=>{const on=multi?(s[k]||[]).includes(v):s[k]===v;return`<button type="button" data-fk="${k}" data-fv="${v}" aria-pressed="${on}">${esc(l)}</button>`}).join("")}</div></div>`;
@@ -17119,12 +17150,14 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
     <div class="fr2"><small>Ma situation</small><div class="fjobs">${SIT_Q.job.map(([v,l])=>`<button type="button" data-job="${v}" aria-pressed="${s.job===v}"><span class="fti">${tileI(JOBI[v])}</span><span>${esc(l.replace("En recherche d'emploi","En recherche"))}</span></button>`).join("")}</div>
       ${s.job==="poste"?`<div class="fposte"></div>`:""}</div>
     <div class="fr2"><small>Chez moi</small><div class="fhome"><div class="fsq"><span class="fti">${tileI(H[0])}</span><small>${H[1]}</small></div><div class="fwho">${s.with.map(n=>`<span class="fwp" data-n="${esc(n)}">${pAv(n,"fmini")}<b></b>${isFam(n)?"":`<button type="button" class="flove" aria-pressed="${!!((S.profiles||{})[n]||{}).love}" aria-label="En couple avec ${esc(n)}">${tileI("coeur")}</button>`}<button type="button" class="fwx2" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}<button type="button" class="fadd">+ Ajouter quelqu'un</button></div></div><small class="fhint">Seul·e par défaut. Papa ou maman : en famille · des amis : en coloc · le cœur : en couple.</small></div>
+    ${typeof HAVE!=="undefined"?`<div class="fr2 fhave"><small>J'ai… · l'appli ajoute les actions, rituels et rappels qui vont avec</small>${HAVE_G.map(g=>{const L=HAVE.filter(h=>h.g===g);return L.length?`<small class="fhg">${g}</small><div class="fjobs">${L.map(h=>`<button type="button" data-fh="${h.k}" aria-pressed="${(s.have||[]).includes(h.k)}"><span class="fti">${tileI(h.ic)}</span><span>${esc(h.l)}</span></button>`).join("")}</div>`:""}).join("")}</div>`:""}
     <div class="fr2"><small>Mes priorités · 3 max · ces quêtes passent en premier</small><div class="fjobs fpris">${Object.keys(PRII).filter(k=>CATS[k]).map(k=>`<button type="button" data-fp="${k}" aria-pressed="${pri.includes(k)}"><span class="fti">${tileI(PRII[k])}</span><span>${esc(CATS[k].label)}</span></button>`).join("")}</div></div>
     ${row("goals","Ce que je veux améliorer",1,3)}${row("pass","Ce que j'aime",1)}
     <div class="fr2"><small>Ce qui compte en ce moment</small><input class="fnote" maxlength="80" placeholder="Ex. trouver un appart à Montpellier"></div>
     <div class="fr2 frow2"><button type="button" class="btn fart">${ICO("edit",14)}<span>Mes artistes</span></button></div></div>`;
   box.querySelectorAll(".fwp").forEach(x=>x.querySelector("b").textContent=x.dataset.n);
   box.querySelectorAll("[data-job]").forEach(b=>b.onclick=()=>{s.job=b.dataset.job;commit();renderFiche()});
+  box.querySelectorAll("[data-fh]").forEach(b=>b.onclick=()=>{const k=b.dataset.fh,a=Array.isArray(s.have)?s.have.slice():[],i=a.indexOf(k),on=i<0;if(on)a.push(k);else a.splice(i,1);s.have=a;commit();try{haveApply(k,on);save()}catch(e){}renderFiche()});
   box.querySelectorAll("[data-fk]").forEach(b=>b.onclick=()=>{const k=b.dataset.fk,v=b.dataset.fv;const a=(s[k]||[]).slice(),i=a.indexOf(v);if(i>=0)a.splice(i,1);else{if(k==="goals"&&a.length>=3){try{toast("3 maximum")}catch(e){}return}a.push(v)}s[k]=a;commit();renderFiche()});
   box.querySelectorAll("[data-fp]").forEach(b=>b.onclick=()=>{if(!G.vie||typeof G.vie!=="object")G.vie={};const Q=Array.isArray(G.vie.pri)?G.vie.pri.slice():[],k=b.dataset.fp,i=Q.indexOf(k);if(i>=0)Q.splice(i,1);else{if(Q.length>=3){try{toast("3 priorités maximum")}catch(e){}return}Q.push(k)}G.vie.pri=Q;save();renderFiche()});
   box.querySelector(".fadd").onclick=()=>fPick(s,commit);
@@ -17591,11 +17624,35 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   try{evList().filter(e=>e.inD===0&&!e.done).forEach(e=>later.push(jdRow({ic:rkSvg(e.k==="bd"?"cake":"calendrier"),n:e.n,s:e.k==="bd"?"C'est aujourd'hui":"Dans ton calendrier",r:"",k:reg(()=>{if(e.k==="bd"){try{openProfile(e.who)}catch(_){}}else{try{showView("c");cGoSub("vie");setTimeout(()=>{const x=document.getElementById("evtBox");if(x)x.scrollIntoView({behavior:"smooth",block:"start"})},150)}catch(_){}}})})))}catch(e){}
   if(typeof todoL==="function"){todoL().filter(x=>x.d===tk).forEach(x=>{const d=todoDone(x),it=todoItem(x),ik=it&&it.k==="fam"?uIc(it.f.id,it.opt):"etoile";
     later.push(jdRow({ic:RKI[ik]?rkSvg(ik):rkSvg("etoile"),n:x.n,s:d?"Fait":"À faire",ok:d,r:d?"":undefined,k:d?"":reg(ev=>todoGo(x,jdEl(ev),ev))}))})}
+  if(typeof lastDue==="function")lastDue().forEach(x=>{const h=x.have&&typeof haveOf==="function"?haveOf(x.have):null;later.push(jdRow({ic:rkSvg(h&&RKI[h.ic]?h.ic:"sablier"),n:x.name,s:x.d?"C'est le moment":"Jamais noté",k:reg(()=>{lastDone(x.id);try{sfx("blip")}catch(e){}render()})}))});
   {const J=(G.jr||{})[tk]||{};later.push(jdRow({ic:rkSvg("lune"),n:"Bonne nuit",s:J.at?"Journée close · touche pour revoir":"Ton bilan de la journée",ok:!!J.at,r:J.at?"":`<button type="button" class="btn jdgo" data-k="${reg(()=>closeOpen(1))}">Bonne nuit</button>`,k:J.at?reg(()=>{try{dayRecap(false)}catch(e){}}):""}))}
   C.innerHTML=`${jdHead("Plus tard aujourd'hui")}<ul class="jdlist">${later.join("")}</ul>`;
   // ---- actions
   [A,B,C].forEach(box=>{box.querySelectorAll("[data-k]").forEach(b=>{const f=act[b.dataset.k];if(f)b.onclick=ev=>{ev.stopPropagation();f(ev)}});
     box.querySelectorAll("li[data-j]").forEach(li=>{const f=act[li.dataset.j];if(!f)return;const ck=li.querySelector(".jdck:not([data-k])");if(ck)ck.onclick=ev=>{ev.stopPropagation();f(ev)};else if(!li.querySelector("[data-k]"))li.onclick=ev=>f(ev)})})}
+// « J'ai… » (30/10) : ce que la fiche sait de ta vie fait apparaître les actions, rituels, rappels et quêtes qui vont avec (données : donnees/vie-faits.js).
+// Ajouter un fait crée ses rituels et ses rappels (marqués have:k) ; le retirer les enlève. Les familles d'actions et les quêtes n'apparaissent que si le fait est coché.
+Object.assign(RKI,{
+  chien:["................","..oo........oo..",".oNno......onNo.",".oNnnoooooonnNo.",".oNnnnnnnnnnnNo.","..onnnnnnnnnno..","..onwonnnnowno..","..onoonnnnoono..","..onnnnnnnnnno..","..onnnwwwwnnno..","...onwwoowwno...","...onwwwwwwno...","....onwmmwno....",".....oommoo.....","......oooo......","................"],
+  chat:["................",".oo..........oo.",".oko........oko.",".okko......okko.",".okkkoooooookkko",".okkkkkkkkkkkko.",".okgokkkkkkgoko.",".okkkkkkkkkkkko.",".okkkkkmmkkkkko.","..okkkkookkkko..","..oKkkkkkkkkKo..","...oKKkkkkKKo...","....ooKKKKoo....","......oooo......","................","................"],
+  poisson:["................","................",".....oooooo.....","...ooYyyyyYoo.oo","..oYyyyyyyyyYoYo",".oYyywoyyyyyyYYo",".oYyyooyyyyyyYYo",".oYyyyyyyyyyyYYo","..oYyyyyyyyyYoYo","...ooYYYYYYoo.oo",".....oooooo.....","................","................","................","................","................"]});
+const haveL=()=>{const s=typeof sitOf==="function"?sitOf():null;return s&&Array.isArray(s.have)?s.have:[]};
+const haveOn=k=>haveL().includes(k);
+const haveOf=k=>HAVE.find(h=>h.k===k);
+// familles d'actions, icônes et quêtes ajoutées une fois pour toutes ; elles ne s'affichent que si le fait est coché
+HAVE.forEach(h=>{
+  if(h.fam&&!FAM.some(f=>f.id===h.fam.id)){FAM.push({...h.fam,have:h.k});try{FIC[h.fam.id]=[h.ic,{}]}catch(e){}}
+  (h.fq||[]).forEach(([id,t,cat,xp,hr,o])=>{if(!FQ.some(q=>q[0]===id))FQ.push([id,t,cat,xp,hr,()=>haveOn(h.k),()=>h.l.replace(/^(Un|Une|Des|Du|Je mange) /,"").replace(/^./,c=>c.toUpperCase()),o||{}])})});
+function haveOpts(fid){const o=[];HAVE.forEach(h=>{if(h.opt&&h.opt[fid]&&haveOn(h.k))o.push(...h.opt[fid])});return o}
+// cocher ou décocher un fait : ses rituels et ses rappels suivent
+function haveApply(k,on){const h=haveOf(k);if(!h)return;const G=S.g,tk=dayKey(Date.now());if(!Array.isArray(G.last))G.last=[];
+  if(on){(h.rit||[]).forEach(([n,w])=>{if(!S.daily.tasks.some(t=>t.name===n&&t.when===w))S.daily.tasks.push({id:"r"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:n,n:1,when:w,ct:Date.now(),have:k})});
+    (h.last||[]).forEach(([n,num,u])=>{if(!G.last.some(x=>x.name===n))G.last.push({id:"l"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name:n,n:num,u,d:tk,have:k})});
+    const parts=[(h.rit||[]).length?"rituels":"",(h.last||[]).length?"rappels":"",h.fam||h.opt?"actions":""].filter(Boolean);if(parts.length)try{toast(esc(h.l)+" : "+parts.join(", ")+" ajoutés")}catch(e){}}
+  else{S.daily.tasks=S.daily.tasks.filter(t=>t.have!==k);G.last=G.last.filter(x=>x.have!==k)}}
+// rappels à rythme arrivés à échéance (pour le journal)
+function lastDue(){const G=S.g,tk=dayKey(Date.now()),U={j:1,s:7,m:30};return(Array.isArray(G.last)?G.last:[]).filter(x=>{if(x.d===tk)return false;if(!x.d)return true;const n=Math.round((new Date(tk+"T12:00")-new Date(x.d+"T12:00"))/864e5);return n>=x.n*(U[x.u]||1)})}
+function lastDone(id){const G=S.g,x=(G.last||[]).find(y=>y.id===id);if(!x)return;x.pv=x.d;x.d=dayKey(Date.now());save()}
 // ---- Icônes d'interface en pixel art (standard « tout en pixel art ») : grilles 12×12, une seule couleur (currentColor),
 // pour garder les couleurs et états actuels des boutons. Remplace ICO() et les anciennes icônes vectorielles au trait.
 function pxIco(n,s,cls){const R=PXUI[n];if(!R)return"";let r="";R.forEach((row,y)=>{let x=0;while(x<12){if(row[x]!=="#"){x++;continue}let w=1;while(x+w<12&&row[x+w]==="#")w++;r+=`<rect x="${x}" y="${y}" width="${w}" height="1.02"/>`;x+=w}});
