@@ -3,7 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 30/10/2026
-- Cases majeures du journal en pixel art, même taille : Ta nuit et Bonne nuit sur un ciel étoilé, l'énergie en batterie à 3 cellules (rouge, orange, vert), le contrat avec une bande de chantier et une case par jour.
+- Cases majeures du journal en pixel art, même taille : Ta nuit et Bonne nuit sur un ciel étoilé ; l'énergie en trois batteries pixel (rouge, orange, verte) à toucher, sans texte ; le contrat avec une case par jour.
 - Journal de bord plus visuel, même structure : ligne légèrement teintée à la couleur du rituel (ou du repas, de l'engagement…), vraie case à cocher pixel (dorée quand c'est fait).
 - « J'ai… » dans ma fiche (Moi > Ma vie > Modifier) : animaux, maison, transport, santé, famille, activité. Chaque fait coché ajoute ses actions dans le panneau +, ses rituels (sortir le chien, prendre mon traitement…), ses rappels à rythme (arroser, litière, pression des pneus, lentilles…) qui arrivent dans « Plus tard aujourd'hui » quand c'est le moment, et ses quêtes. Décoché, tout repart.
 
