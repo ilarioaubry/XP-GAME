@@ -201,6 +201,7 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A à G proposées ; **D, la liste du carnet**, choisie et faite le 28/10 (Ce matin / Mes engagements / Plus tard aujourd'hui). Reste : retirer le code des anciens blocs (rituels en tuiles, rangée des repas, énergie, à faire, fin de journée, rattrapage), aujourd'hui masqués et encore utilisés en coulisse
 - [x] J.3 Rituels plus visuels dans le journal (30/10) : pistes A, B, C refusées ; fait : même structure, icônes sur tuiles pixel à la couleur du rituel, ligne teintée, case à cocher pixel
 - [x] J.4 Cases majeures du journal (30/10) : même taille que les autres lignes, aspect pixel art (ciel étoilé pour Ta nuit et Bonne nuit, trois batteries pixel rouge → vert pour l'énergie, une case par jour pour le contrat)
+- [ ] J.5 Rituels et routine satisfaisants (analyse du 30/10) : la ligne cochée reste à sa place, « +3 XP » qui vole vers la barre, « Annuler » dans la ligne, moment bouclé ; routine avec étape en cours en grand, pile des faits, barre en étapes, fin fêtée (propositions à valider)
 - [ ] J.2 Enchaînements de rituels (douche → barbe) ~~fait 28/10~~, dents proposées à la fin d'un repas (à faire), compteur de cigarettes dans l'engagement lié ~~fait 28/10~~
 
 ## Idées utiles (proposées le 28/10/2026, à choisir)
