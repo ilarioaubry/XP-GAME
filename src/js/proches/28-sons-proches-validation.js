@@ -425,7 +425,7 @@ function undoAfter(label,fn,restore){const snap=restore?null:JSON.stringify(snap
   b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=label;b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");try{if(restore)restore();else{load(JSON.parse(snap));save();render()}}catch(e){}toast("Annulé")}}
 function undoOffer(e,rc){if(!e||e.bonus)return;let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
-  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":" validé");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
+  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":e.xp?" validé":" noté");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");const li=[...document.querySelectorAll("#log li")].find(x=>x.__e===e);if(!li){toast("Trop tard pour annuler ici : passe par le journal");return}
     if(rc){S.daily.c[rc.id]=rc.c;ritMark(rc.id,0,1);if(S.g.rcore&&!ritCore().every(t=>(ritH()[dayKey(Date.now())]||{})[t.id]))S.g.rcore=S.g.rcore.filter(k=>k!==dayKey(Date.now()))}
     li.querySelector(".undo").click();toast("Annulé")}}

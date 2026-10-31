@@ -651,6 +651,38 @@ sleep7:{r:[ // bed + sleeper
 mood30:{f:function(){var g=grid(13,13);disc(g,6,6,6.4,'y');
   put(g,3,4,["oo...oo","oo...oo"]);  // deux yeux identiques, symétriques (31/10)
   put(g,2,7,["p.......p"]);put(g,3,8,["o.....o",".o...o.","..ooo.."]);g[2][3]='h';g[3][2]='h';return toRows(g);} },
+/* ---- Assiettes (01/11) ---- */
+plveg:{r:[ // brocoli
+"...eeeee...",
+"..eeEeeEe..",
+".eeeeeeeeE.",
+".eEeeeEeeE.",
+"..eeeeeeE..",
+"....fEf....",
+"....fEf....",
+"....fEf....",
+"...fffEE..."]},
+plchef:{r:[ // toque
+"..wwwwwww..",
+".wwwwwwwwW.",
+"wwwwwwwwwwW",
+"wwwwwwwwwWW",
+".wwwwwwwWW.",
+"..wwwwwwW..",
+"..wwwwwwW..",
+"..WWWWWWW..",
+"..wwwwwwW..",
+"..WWWWWWW.."]},
+plfast:{r:[ // burger
+"...yyyyyy...",
+".yyywyyyyyY.",
+"yyyyyyyywyYY",
+"YYYYYYYYYYYY",
+"eeeeeeeeeeeE",
+"bbbbbbbbbbbB",
+"rrrrrrrrrrrR",
+"yyyyyyyyyyYY",
+".YYYYYYYYYY."]},
 /* ---- Aventure & collection ---- */
 buy1:{r:[ // t-shirt
 "...rrr.rrr...",
@@ -807,6 +839,7 @@ var FILL={
  streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',goal7:'#4f6ed8',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
  bond1:'#ef6aa4',bond3:'#d84a70',bond5:'#b8325a',bond20:'#8e2a5a',circle:'#2fa0a0',loyal:'#7f56d0',reunion:'#e07a3a',grp1:'#3a9a5a',grptour:'#3a72d0',bday:'#5ab0e0',
  pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',bossrev:'#a83a3a',
+ plveg:'#3a9a4a',plchef:'#c8a030',plfast:'#e0702a',
  bossleg:'#4a3a6a',clutch:'#5f6fb8',lucky3:'#2f6f8a',secret1:'#5a4a8a',rest1:'#2a3a7a',
  skill1:'#f08300',skill3:'#3a6ab0',chall:'#2f9a5a',out1:'#c2185b',out3:'#9a1a6a',out12:'#6a1a4a',lz5:'#8a4fd0',lz3x3:'#36b679',
  buy1:'#3aa0c0',buy5:'#7a5ac8',buy15:'#3f8a6a',boss1:'#8a2a2a',boss4:'#4a2a5a',chest1:'#3a7a9a',gear4:'#4cc9f0',legend:'#ff9f1a'

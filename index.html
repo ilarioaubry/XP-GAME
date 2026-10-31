@@ -4501,7 +4501,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version d934903</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 13d330a</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4577,7 +4577,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
 </div>
 
 <script>// Données : grilles des icônes pixel (RKI rituels/aliments/objets 16×16, PXUI interface 12×12, PXSP, PXI, BPX_M). Pas de code ici.
-const RKI={"dents":["................","..........ccc...",".........cwwwc..",".........owwwwo.","........owWWWWo.","........oBBBBo..",".......oBbBo....","......oBbBo.....",".....oBbBo......","....oBbBo.......","...oBbBo........","..oBbBo.........",".oBbBo..........",".oBBo...........","..oo............","................"],"lit":["................","................","oo..............","oNo.............","oNo.wwwW........","oNowwwwWW.......","oNovvvvvvvvvvvo.","oNovbvvvvvvvvvVo","oNovvvvvvvvvvvVo","oNoVVVVVVVVVVVVo","oNnnnnnnnnnnnnNo","oNNNNNNNNNNNNNNo","oNoooooooooooNNo","oNo..........oNo","ooo..........ooo","................"],"douche":["....oooo........","...oKkkKo.......","...oKo.oKo......","...oKo..oKo.....","...oKo..ooooo...","...oKo.okkkkko..","...oKo.oKKKKKo..","...oKo..ooooo...","...oKo..b.b.b...","...oKo.b.b.b....","...oKo..b.b.b...","...oKo.b.b.b....","...oKo..b.b.b...","..oKKKo.........","..ooooo.........","................"],"visage":["................",".....oooooo.....","....oKkkkkKo....",".....ooKKoo.....",".......oKo......",".......obo......","..b....bb...b...","........b.......",".b.....bb.....b.","oooooooooooooooo","oWwwwwbbbbwwwwWo",".oWwwwbbbbwwwWo.","..oWwwwwwwwwWo..","...oWWWWWWWWo...","......oKKo......",".....oKKKKo....."],"barbe":["................","..oooooooooooo..",".okkkkkkkkkkkKo.",".oWWWWWWWWWWWWo.",".oKKKKKKKKKKKKo.","..oooooKKooooo..","......oKko......","......oKko......","......orRo......","......orRo......","......orRo......","......orRo......","......orRo......","......oRRo......",".......oo.......","................"],"fenetre":["oooooooooooooooo","onnnnnnnnnnnnnNo","onbbbbbbonbbbbNo","onbwbbbbonbbbbNo","onbbwbbbonbbwbNo","onbbbbbbonbbbbNo","onbbbbbbonbbbbNo","onnnnnnnnnnnnnNo","oncccccconcccbNo","onccccccocccbbNo","oncccccconcbbbNo","oncccccconbbbbNo","onnnnnnnnnnnnnNo","oNNNNNNNNNNNNNNo","oooooooooooooooo","................"],"eau":["................","..oooooooooooo..","..oWw......wWo..","..oW........Wo..","..oW........Wo..","..obbbbbbbbbbo..","..obwbbbbbbbBo..","...obwbbbbbBo...","...obbbbbbbBo...","...obbbbbbbBo...","...obbbbbbbBo...","....obbbbbBo....","....oBBBBBBo....","....oooooooo....","................","................"],"sport":["................","................","..oo........oo..",".orRo......orRo.",".orRoo....oorRo.","orrRRo....orrRRo","orrRRooooooRrRRo","orrRRkkkkkkRrRRo","orrRRKKKKKKRrRRo","orrRRooooooRrRRo","orrRRo....orrRRo",".orRoo....oorRo.",".orRo......orRo.","..oo........oo..","................","................"],"lire":["................","................",".ooooooo.ooooooo","oWwwwwwwowwwwwWo","oWwKKKKwowKKKwWo","oWwwwwwwowwwwwWo","oWwKKKKwowKKKKWo","oWwwwwwwowwwwwWo","oWwKKKwwowKKKKWo","oWwwwwwwowwwwwWo","oWWWWWWWoWWWWWWo","orrrrrrrorrrrrro",".oRRRRRRoRRRRRo.","..ooooooooooooo.","................","................"],"medit":["................",".......oo.......","......omMo......","......omMo......","..oo.omMMMo.oo..",".omMooMmMMooMMo.",".omMMoMmMMoMMMo.","..omMMMmMMMMMo..","...omMMMMMMMo...","....oMMMMMMo....","..ooGGGGGGGGoo..",".oggggggggggggo.","..oGGGGGGGGGGo..","...oooooooooo...","................","................"],"note":["................",".ooooooooo......",".oWwwwwwwo......",".oWKKKKKwo......",".oWwwwwwwo....oo",".oWKKKKwwo...oYo",".oWwwwwwwo..oyYo",".oWKKKKKwo.oyYo.",".oWwwwwwwooyYo..",".oWKKKwwwoyYo...",".oWwwwwwopyo....",".oWWWWWWopo.....",".oooooooooo.....","................","................","................"],"repas":["................",".....w..w..w....","......w..w..w...",".....w..w..w....","................",".oooooooooooooo.","oyyyYyyyGgyyrYyo","owwwwwwwwwwwwwWo",".owwwwwwwwwwwWo.","..owwwwwwwwwWo..","...oWWWWWWWWo...","....oooooooo....","................","................","................","................"],"ecran":["....oooooooo....","...oKKKKKKKKo...","...oKxxxxxxKo...","...oKxBbbbxKo...","...oKxbBbbxKo...","...oKxbbBbxKo...","...oKxbbbBxKo...","...oKxxxxxxKo...","...oKKKkkKKKo...","....oooooooo....","..........r..r..","...........rr...","...........rr...","..........r..r..","................","................"],"vit":["................","................","........oooo....",".......orrrRo...","......orrrrRo...",".....owrrrRo....","....owwoRRo.....","...owwwwoo......","..owwwwWo.......","..owwwWo........","...oWWo.........","....oo..........","................","................","................","................"],"soleil":[".......YY.......",".......YY.......","..Y....YY....Y..","...Y........Y...","......oooo......",".....oyyyyo.....","YY..oyyyyyYo..YY","YY..oyywyyYo..YY","....oyyyyyYo....",".....oYYYYo.....","......oooo......","...Y........Y...","..Y....YY....Y..",".......YY.......",".......YY.......","................"],"lune":["................","......ooooo.....","....ooyyyyo..w..","...oyyyyoo......","..oyyyyo........","..oyyyo.....w...",".oyyyyo.........",".oyyyyo.........",".oyyyyyo........",".oYyyyyyo.....oo","..oYyyyyyooooyo.","..oYYyyyyyyyyo..","...ooYYYYYYoo...",".....oooooo.....","................","................"]};
+const RKI={"cesar":["................",".......oo.......","......owwo......","......owwo......",".....owwwwo.....","....oppppppo....","....opwpppPo....","....opwpppPo....","....oggggggo....","....oggggggo....","....opppppPo....","....opppppPo....","....opppppPo....","....oppppPPo....",".....oooooo.....","................"],"curry":["................",".......oo.......","......owwo......","......owwo......",".....owwwwo.....","....oyyyyyyo....","....oywyyyYo....","....oywyyyYo....","....onnnnnno....","....onnnnnno....","....oyyyyyYo....","....oyyyyyYo....","....oyyyyyYo....","....oyyyyYYo....",".....oooooo.....","................"],"frites":["................","....o..o..o.....","...oyooyooyo....","...oyoyyoyyoo...","..oyyoyYoyYoyo..","..oyYoyYoyYoYo..","..oooooooooooo..","..orrrrrrrrrRo..","..orwrrrrrrrRo..","...orrwwwwrRo...","...orrwrrwrRo...","...orrwwwwrRo...","...orrrrrrrRo...","....orrrrrRo....","....oooooooo....","................"],"sandwich":["................","................","................","...oooooooooo...","..oPpPPPPpPPPo..",".oPpPPPPPPPPPPo.",".oggGggggGgggGo.",".orrrrmmrrrrmro.",".oyyyyyyyyyyyYo.",".oPPPPPPPPPPPNo.","..oNNNNNNNNNNo..","...oooooooooo...","................","................","................","................"],"saumon":["................","................","................","................","...........ooo..","........ooomPo..","....ooommwmmPo..","..oommwmmwmmPPo.",".omwmmwmmwmmPPo.",".omwmmwmmwmmPPo.",".oKkkkkkkkkkKKo.","..oooooooooooo..","................","................","................","................"],"ail":["................",".......oo.......","......owWo......","......owWo......",".....owwWWo.....","....owwwWWWo....","...owwWwwWWWo...","..owwwWwwwWWWo..","..owwWwwWwwWWo..","..owwWwwWwwWWo..","..oWwWwwWwWWKo..","...oWWWWWWWKo...","....oKKKKKKo....",".....oooooo.....","......o.o.o.....","................"],"glace":["................","......oooo......","....oommmmoo....","...omwmmmmmMo...","...ommmmmmmMo...","..oommmmmmMMoo..","..oMMMMMMMMMMo..","...oYyYYyYYYo...","...oYYyYYyYNo...","....oyYYyYYo....","....oYyYYyNo....",".....oYYyYo.....",".....oyYYNo.....","......oYYo......",".......oo.......","................"],"chocolat":["................","................","..oooooooooooo..","..onnNnnNnnNNo..","..onnNnnNnnNNo..","..oNNNNNNNNNNo..","..onnNnnNnnNNo..","..onnNnnNnnNNo..","..oNNNNNNNNNNo..","..oBBBBBBBBBBo..","..oBwBBBBBBBdo..","..oBBBBBBBBBdo..","..oddddddddddo..","..oooooooooooo..","................","................"],"falafel":["................","................","......oooo......",".....onnnno.....","....onGnnnno....","....onnnGnNo....","....onnnnNNo....","...ooonnNNooo...","..onnnoooonnno..",".onGnnnoonGnnno.",".onnnGnoonnnGno.",".onnnnNoonnnnNo.",".onnnNNoonnnNNo.","..onNNo..onNNo..","...ooo....ooo...","................"],"dents":["................","..........ccc...",".........cwwwc..",".........owwwwo.","........owWWWWo.","........oBBBBo..",".......oBbBo....","......oBbBo.....",".....oBbBo......","....oBbBo.......","...oBbBo........","..oBbBo.........",".oBbBo..........",".oBBo...........","..oo............","................"],"lit":["................","................","oo..............","oNo.............","oNo.wwwW........","oNowwwwWW.......","oNovvvvvvvvvvvo.","oNovbvvvvvvvvvVo","oNovvvvvvvvvvvVo","oNoVVVVVVVVVVVVo","oNnnnnnnnnnnnnNo","oNNNNNNNNNNNNNNo","oNoooooooooooNNo","oNo..........oNo","ooo..........ooo","................"],"douche":["....oooo........","...oKkkKo.......","...oKo.oKo......","...oKo..oKo.....","...oKo..ooooo...","...oKo.okkkkko..","...oKo.oKKKKKo..","...oKo..ooooo...","...oKo..b.b.b...","...oKo.b.b.b....","...oKo..b.b.b...","...oKo.b.b.b....","...oKo..b.b.b...","..oKKKo.........","..ooooo.........","................"],"visage":["................",".....oooooo.....","....oKkkkkKo....",".....ooKKoo.....",".......oKo......",".......obo......","..b....bb...b...","........b.......",".b.....bb.....b.","oooooooooooooooo","oWwwwwbbbbwwwwWo",".oWwwwbbbbwwwWo.","..oWwwwwwwwwWo..","...oWWWWWWWWo...","......oKKo......",".....oKKKKo....."],"barbe":["................","..oooooooooooo..",".okkkkkkkkkkkKo.",".oWWWWWWWWWWWWo.",".oKKKKKKKKKKKKo.","..oooooKKooooo..","......oKko......","......oKko......","......orRo......","......orRo......","......orRo......","......orRo......","......orRo......","......oRRo......",".......oo.......","................"],"fenetre":["oooooooooooooooo","onnnnnnnnnnnnnNo","onbbbbbbonbbbbNo","onbwbbbbonbbbbNo","onbbwbbbonbbwbNo","onbbbbbbonbbbbNo","onbbbbbbonbbbbNo","onnnnnnnnnnnnnNo","oncccccconcccbNo","onccccccocccbbNo","oncccccconcbbbNo","oncccccconbbbbNo","onnnnnnnnnnnnnNo","oNNNNNNNNNNNNNNo","oooooooooooooooo","................"],"eau":["................","..oooooooooooo..","..oWw......wWo..","..oW........Wo..","..oW........Wo..","..obbbbbbbbbbo..","..obwbbbbbbbBo..","...obwbbbbbBo...","...obbbbbbbBo...","...obbbbbbbBo...","...obbbbbbbBo...","....obbbbbBo....","....oBBBBBBo....","....oooooooo....","................","................"],"sport":["................","................","..oo........oo..",".orRo......orRo.",".orRoo....oorRo.","orrRRo....orrRRo","orrRRooooooRrRRo","orrRRkkkkkkRrRRo","orrRRKKKKKKRrRRo","orrRRooooooRrRRo","orrRRo....orrRRo",".orRoo....oorRo.",".orRo......orRo.","..oo........oo..","................","................"],"lire":["................","................",".ooooooo.ooooooo","oWwwwwwwowwwwwWo","oWwKKKKwowKKKwWo","oWwwwwwwowwwwwWo","oWwKKKKwowKKKKWo","oWwwwwwwowwwwwWo","oWwKKKwwowKKKKWo","oWwwwwwwowwwwwWo","oWWWWWWWoWWWWWWo","orrrrrrrorrrrrro",".oRRRRRRoRRRRRo.","..ooooooooooooo.","................","................"],"medit":["................",".......oo.......","......omMo......","......omMo......","..oo.omMMMo.oo..",".omMooMmMMooMMo.",".omMMoMmMMoMMMo.","..omMMMmMMMMMo..","...omMMMMMMMo...","....oMMMMMMo....","..ooGGGGGGGGoo..",".oggggggggggggo.","..oGGGGGGGGGGo..","...oooooooooo...","................","................"],"note":["................",".ooooooooo......",".oWwwwwwwo......",".oWKKKKKwo......",".oWwwwwwwo....oo",".oWKKKKwwo...oYo",".oWwwwwwwo..oyYo",".oWKKKKKwo.oyYo.",".oWwwwwwwooyYo..",".oWKKKwwwoyYo...",".oWwwwwwopyo....",".oWWWWWWopo.....",".oooooooooo.....","................","................","................"],"repas":["................",".....w..w..w....","......w..w..w...",".....w..w..w....","................",".oooooooooooooo.","oyyyYyyyGgyyrYyo","owwwwwwwwwwwwwWo",".owwwwwwwwwwwWo.","..owwwwwwwwwWo..","...oWWWWWWWWo...","....oooooooo....","................","................","................","................"],"ecran":["....oooooooo....","...oKKKKKKKKo...","...oKxxxxxxKo...","...oKxBbbbxKo...","...oKxbBbbxKo...","...oKxbbBbxKo...","...oKxbbbBxKo...","...oKxxxxxxKo...","...oKKKkkKKKo...","....oooooooo....","..........r..r..","...........rr...","...........rr...","..........r..r..","................","................"],"vit":["................","................","........oooo....",".......orrrRo...","......orrrrRo...",".....owrrrRo....","....owwoRRo.....","...owwwwoo......","..owwwwWo.......","..owwwWo........","...oWWo.........","....oo..........","................","................","................","................"],"soleil":[".......YY.......",".......YY.......","..Y....YY....Y..","...Y........Y...","......oooo......",".....oyyyyo.....","YY..oyyyyyYo..YY","YY..oyywyyYo..YY","....oyyyyyYo....",".....oYYYYo.....","......oooo......","...Y........Y...","..Y....YY....Y..",".......YY.......",".......YY.......","................"],"lune":["................","......ooooo.....","....ooyyyyo..w..","...oyyyyoo......","..oyyyyo........","..oyyyo.....w...",".oyyyyo.........",".oyyyyo.........",".oyyyyyo........",".oYyyyyyo.....oo","..oYyyyyyooooyo.","..oYYyyyyyyyyo..","...ooYYYYYYoo...",".....oooooo.....","................","................"]};
 const PXUI={
 close:["##........##","###......###",".###....###.","..###..###..","...######...","....####....","....####....","...######...","..###..###..",".###....###.","###......###","##........##"],
 check:["............","..........##",".........###","........###.",".......###..","##....###...","###..###....",".######.....","..####......","...##.......","............","............"],
@@ -4718,6 +4718,7 @@ const FAM=[
   {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
   {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
+  {id:"grignotage",dom:"nourriture",cat:"nourriture",l:"Grignotage",xp:0,o:["Fruit","Gâteau","Chips","Chocolat","Autre"],quick:1},
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
   {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
@@ -4734,7 +4735,8 @@ const FAM=[
   {id:"cours",dom:"apprendre",cat:"soi",l:"Apprendre",xp:12,o:["Tuto","Formation","Lecture utile"]},
   {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",ls:"Des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
   {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
-  {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
+  {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1},
+  {id:"recevoir",dom:"proches",cat:"social",l:"Recevoir chez moi",xp:15,o:["Apéro","Repas","Soirée jeux"],who:1}];
 const IDQ=[
   ["Une jam session ouverte dans un bar","s",1,30,"Jam session","mus"],["Une scène ouverte de stand-up, en spectateur","s",1,30,"Stand-up","mic"],
   ["Une soirée quiz ou blind test dans un bar","s",1,30,"Soirée quiz","q"],["La dernière séance d'un film en VO","s",1,25,"Cinéma","cine"],
@@ -4758,7 +4760,7 @@ const IDI={mus:'<path d="M9 18V6l10-2v12" fill="none" stroke="#fff" stroke-width
   key:'<circle cx="8" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 12h9M18 12v3M21 12v2" stroke="#fff" stroke-width="2"/>',food:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 3-3 6s1 4 3 4v8" fill="none" stroke="#fff" stroke-width="2"/>',
   bag:'<path d="M5 8h14l-1 13H6z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 8a3 3 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2"/>',art:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 3 0 4-1 3-2 3-4a9 9 0 0 0-9-8z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="8" cy="10" r="1.4" fill="#fff"/><circle cx="12" cy="7" r="1.4" fill="#fff"/><circle cx="16" cy="10" r="1.4" fill="#fff"/>',
   run:'<circle cx="14" cy="4.5" r="2" fill="#fff"/><path d="M6 21l3-6 3 2v4M9 15l2-6 4 3 3-1M11 9L7 11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 4v14M15 6v14" stroke="#fff" stroke-width="2"/>'};
-const FIC={ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","Salle de bain":"bain",Bureau:"ecran","Entrée":"porte",Placard:"armoire",Voiture:"voiture"}],
+const FIC={grignotage:["cookie",{Fruit:"pomme","Gâteau":"cake",Chips:"patate",Chocolat:"chocolat",Autre:"cookie"}],recevoir:["maisonp",{"Apéro":"cocktail",Repas:"repas","Soirée jeux":"manette"}],ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","Salle de bain":"bain",Bureau:"ecran","Entrée":"porte",Placard:"armoire",Voiture:"voiture"}],
   nettoyer:["balai",{Sol:"balai",Cuisine:"casserole","Salle de bain":"bain",Toilettes:"wc",Vitres:"fenetre",Frigo:"frigo","Poussière":"plumeau"}],
   linge:["machine",{"Changer les draps":"lit"}],vaisselle:["assiette",{}],mmaison:["poubelle",{"Sortir les poubelles":"poubelle",Courses:"panier","Arroser les plantes":"plante","Réparer un truc":"check"}],armoire:["armoire",{}],
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
@@ -5095,13 +5097,16 @@ const HAVE=[
   {k:"tc",l:"Transports",ic:"ticket",g:"Transport",last:[["Recharger l'abonnement",1,"m"]]},
   {k:"lentilles",l:"Des lentilles",ic:"lunettes",g:"Santé",last:[["Changer de lentilles",1,"m"],["Racheter des lentilles",3,"m"]]},
   {k:"traitement",l:"Un traitement",ic:"sante",g:"Santé",rit:[["Prendre mon traitement","matin"]],last:[["Racheter mon traitement",1,"m"]]},
-  {k:"vege",l:"Végétarien",ic:"legume",g:"Santé",fq:[["h_vege","Tester une recette végé que tu ne connais pas","nourriture",15,[11,21],{in:1}]]},
-  {k:"gluten",l:"Sans gluten",ic:"pain",g:"Santé"},
+  {k:"vege",l:"Végétarien",ic:"legume",g:"Alimentation",fq:[["h_vege","Tester une recette végé que tu ne connais pas","nourriture",15,[11,21],{in:1}]]},
+  {k:"gluten",l:"Sans gluten",ic:"pain",g:"Alimentation"},
+  {k:"vegan",l:"Vegan",ic:"salade",g:"Alimentation"},
+  {k:"halal",l:"Halal",ic:"steak",g:"Alimentation"},
+  {k:"lactose",l:"Sans lactose",ic:"yaourt",g:"Alimentation"},
   {k:"enfant",l:"Garde d'enfant",ic:"enfant",g:"Famille",fam:{id:"enfant",dom:"proches",cat:"famille",l:"Avec mon enfant",xp:10,o:["École","Devoirs","Jeux","Bain","Histoire du soir"]},rit:[["Histoire du soir","soir"]]},
   {k:"club",l:"Sport en club",ic:"ballon",g:"Activité",fam:{id:"club",dom:"sport",cat:"sport",l:"Mon club",xp:20,o:["Entraînement","Match","Préparer mon sac"]},fq:[["h_club","Préparer ton sac pour l'entraînement","sport",5,[17,23],{short:1}]]},
   {k:"instru",l:"Un instrument",ic:"notec",g:"Activité",fam:{id:"instru",dom:"creer",cat:"perso",l:"Mon instrument",xp:10,o:["Pratiquer","Apprendre un morceau","Jouer pour quelqu'un"]},fq:[["h_instru","15 min de pratique sur ton instrument","perso",10,[10,22],{short:1}]]}
 ];
-const HAVE_G=["Animaux","Maison","Transport","Santé","Famille","Activité"];
+const HAVE_G=["Animaux","Maison","Transport","Santé","Alimentation","Famille","Activité"];
 // ---- Journal d'erreurs : les 5 dernières erreurs JavaScript, visibles dans Moi > Bilan > Données (pour diagnostiquer sur l'iPhone)
 function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")||"[]");const m=String((e&&(e.message||e.reason&&e.reason.message||e.reason))||e).slice(0,160);
   L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
@@ -5995,7 +6000,7 @@ function dayRecap(first){if(document.querySelector(".jrc"))return;const tk=dayKe
   d.innerHTML=`<div class="qwh"><span></span><span></span><button type="button" class="qwback clox" aria-label="Fermer">×</button></div><div class="qwbody"><h2 class="qwq">Ta journée</h2><p class="qwsub">${esc(new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}))}</p>
     <div class="jrxp"><b class="ui-chiffre">+${xp} XP</b><small class="ui-info">${acts.length} action${acts.length>1?"s":""}${first?" · bilan +10 XP":""} · encore ${Math.max(0,li.need-li.cur)} XP avant le niveau ${li.l+1}</small></div>
     ${BC.length?`<ul class="jrcat">${BC.map(([c,x])=>`<li><span class="jrn">${esc(CATS[c].label)}</span><span class="ui-barre jrb" style="--cc:${CATS[c].c}"><i style="width:${Math.round(x/mx*100)}%"></i></span><span class="ui-compteur">${x}</span></li>`).join("")}</ul>`:`<p class="vide">Aucune action notée aujourd'hui.</p>`}
-    <ul class="jrlist">${[...bd.map(n=>line(rkSvg("etoile"),"Badge : <b>"+esc(n)+"</b>")),...notes.map(h=>line(rkSvg("check"),h)),ppl.length?line(rkSvg("coeur"),"Avec "+esc(ppl.slice(0,4).join(", "))+(ppl.length>4?" +"+(ppl.length-4):"")):"",line(rkSvg("repas"),nM+" repas sur 4 notés")].join("")}</ul></div>
+    <ul class="jrlist">${[...bd.map(n=>line(rkSvg("etoile"),"Badge : <b>"+esc(n)+"</b>")),...notes.map(h=>line(rkSvg("check"),h)),ppl.length?line(rkSvg("coeur"),"Avec "+esc(ppl.slice(0,4).join(", "))+(ppl.length>4?" +"+(ppl.length-4):"")):"",line(rkSvg("repas"),nM+" repas sur 4 notés"),(n=>n?line(rkSvg("tasse"),n+" café"+(n>1?"s":"")):"")(typeof cafeN==="function"?cafeN(tk):0)].join("")}</ul></div>
     <button type="button" class="btn primary clogo">Bonne nuit</button>`;
   o.appendChild(d);const close=()=>{o.remove();document.body.classList.remove("rtmon")};d.querySelector(".clox").onclick=close;d.querySelector(".clogo").onclick=close}
 function rkSnd(k){if(!sfxOn())return;const c=sfxCtx();if(!c)return;const t=c.currentTime+.01;SFX.last=performance.now();
@@ -11513,6 +11518,10 @@ function badgeDefsBase(){
   B.push({id:"out3",name:"Artiste régulier",desc:"Sortir 3 sons",ic:"trophy",t:2,ok:()=>Object.keys(S.g.rel).length>=3});
   B.push({id:"out12",name:"Une année de sons",desc:"Sortir 12 sons",ic:"trophy",t:3,ok:()=>Object.keys(S.g.rel).length>=12});
   B.push({id:"sleep7",name:"Gros dormeur",desc:"7 nuits de 7 h ou plus",ic:"face",t:1,ok:()=>Object.values(S.g.sleep).filter(x=>x.h>=7).length>=7});
+  // types d'assiette (N.8, 01/11)
+  B.push({id:"plveg",name:"Végétarien",desc:"Une assiette végétarienne",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("veg")});
+  B.push({id:"plchef",name:"Chef cuisinier",desc:"Une assiette cuisinée maison",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("chef")});
+  B.push({id:"plfast",name:"Sur le pouce",desc:"Une assiette fast-food",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("fast")});
   B.push({id:"mood30",name:"Introspection",desc:"Noter ton humeur 30 jours",ic:"face",t:2,ok:()=>Object.keys(S.g.mood||{}).length>=30});
   B.push({id:"lz5",name:"Passionné",desc:"Une compétence au niveau 5",ic:"book",t:2,ok:()=>Object.values(lzState().xp).some(x=>skInfo(x).l>=5)});
   B.push({id:"lz3x3",name:"Touche-à-tout",desc:"3 skills au niveau 3",ic:"star",t:2,ok:()=>Object.values(lzState().xp).filter(x=>skInfo(x).l>=3).length>=3});
@@ -12246,6 +12255,38 @@ sleep7:{r:[ // bed + sleeper
 mood30:{f:function(){var g=grid(13,13);disc(g,6,6,6.4,'y');
   put(g,3,4,["oo...oo","oo...oo"]);  // deux yeux identiques, symétriques (31/10)
   put(g,2,7,["p.......p"]);put(g,3,8,["o.....o",".o...o.","..ooo.."]);g[2][3]='h';g[3][2]='h';return toRows(g);} },
+/* ---- Assiettes (01/11) ---- */
+plveg:{r:[ // brocoli
+"...eeeee...",
+"..eeEeeEe..",
+".eeeeeeeeE.",
+".eEeeeEeeE.",
+"..eeeeeeE..",
+"....fEf....",
+"....fEf....",
+"....fEf....",
+"...fffEE..."]},
+plchef:{r:[ // toque
+"..wwwwwww..",
+".wwwwwwwwW.",
+"wwwwwwwwwwW",
+"wwwwwwwwwWW",
+".wwwwwwwWW.",
+"..wwwwwwW..",
+"..wwwwwwW..",
+"..WWWWWWW..",
+"..wwwwwwW..",
+"..WWWWWWW.."]},
+plfast:{r:[ // burger
+"...yyyyyy...",
+".yyywyyyyyY.",
+"yyyyyyyywyYY",
+"YYYYYYYYYYYY",
+"eeeeeeeeeeeE",
+"bbbbbbbbbbbB",
+"rrrrrrrrrrrR",
+"yyyyyyyyyyYY",
+".YYYYYYYYYY."]},
 /* ---- Aventure & collection ---- */
 buy1:{r:[ // t-shirt
 "...rrr.rrr...",
@@ -12402,6 +12443,7 @@ var FILL={
  streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',goal7:'#4f6ed8',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
  bond1:'#ef6aa4',bond3:'#d84a70',bond5:'#b8325a',bond20:'#8e2a5a',circle:'#2fa0a0',loyal:'#7f56d0',reunion:'#e07a3a',grp1:'#3a9a5a',grptour:'#3a72d0',bday:'#5ab0e0',
  pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',bossrev:'#a83a3a',
+ plveg:'#3a9a4a',plchef:'#c8a030',plfast:'#e0702a',
  bossleg:'#4a3a6a',clutch:'#5f6fb8',lucky3:'#2f6f8a',secret1:'#5a4a8a',rest1:'#2a3a7a',
  skill1:'#f08300',skill3:'#3a6ab0',chall:'#2f9a5a',out1:'#c2185b',out3:'#9a1a6a',out12:'#6a1a4a',lz5:'#8a4fd0',lz3x3:'#36b679',
  buy1:'#3aa0c0',buy5:'#7a5ac8',buy15:'#3f8a6a',boss1:'#8a2a2a',boss4:'#4a2a5a',chest1:'#3a7a9a',gear4:'#4cc9f0',legend:'#ff9f1a'
@@ -13366,7 +13408,7 @@ function undoAfter(label,fn,restore){const snap=restore?null:JSON.stringify(snap
   b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=label;b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");try{if(restore)restore();else{load(JSON.parse(snap));save();render()}}catch(e){}toast("Annulé")}}
 function undoOffer(e,rc){if(!e||e.bonus)return;let b=$("undoBar");if(!b){b=document.createElement("div");b.id="undoBar";b.setAttribute("role","status");document.body.appendChild(b)}
-  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":" validé");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
+  b.innerHTML=`<span></span><button type="button">Annuler</button>`;b.querySelector("span").textContent=e.name+(e.yd?" noté pour hier":e.xp?" validé":" noté");b.classList.add("show");clearTimeout(undoT);undoT=setTimeout(()=>b.classList.remove("show"),5000);
   b.querySelector("button").onclick=()=>{clearTimeout(undoT);b.classList.remove("show");const li=[...document.querySelectorAll("#log li")].find(x=>x.__e===e);if(!li){toast("Trop tard pour annuler ici : passe par le journal");return}
     if(rc){S.daily.c[rc.id]=rc.c;ritMark(rc.id,0,1);if(S.g.rcore&&!ritCore().every(t=>(ritH()[dayKey(Date.now())]||{})[t.id]))S.g.rcore=S.g.rcore.filter(k=>k!==dayKey(Date.now()))}
     li.querySelector(".undo").click();toast("Annulé")}}
@@ -16607,6 +16649,23 @@ html:not(#_u1):not(#_u2):not(#_u3) body .qwcard .qwmon svg{width:64px;height:64p
 /* N.1 (31/10) : pas de barre de défilement visible dans l'assiette */
 .plo,.plo *{scrollbar-width:none}
 .plo::-webkit-scrollbar,.plo *::-webkit-scrollbar{display:none;width:0;height:0}
+/* Lot 3 assiette (01/11) : rangées qui glissent (la suivante dépasse), type d'assiette, sections après l'assiette, « Pour qui ? » */
+.plo .plrow{display:grid;gap:2px;margin-top:4px}
+.plo .plrl{display:block;font-size:11px;font-weight:700;color:#cfc6b8;margin:2px 0 0}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar{display:flex;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;gap:4px;margin:0 -16px;padding:0 16px}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf{flex:0 0 74px;scroll-snap-align:start;min-width:0}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plo .pltype{margin:6px auto 0;width:fit-content;font-size:11px;font-weight:700;color:var(--tc);background:#141632;padding:3px 8px}
+.plo .plx2{margin-top:10px}
+.plwho .plwl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.plwho .plwp{display:flex;align-items:center;justify-content:flex-start;gap:8px;text-align:left;min-height:44px;padding:8px 4px;background:#141632;border:1px solid rgba(255,255,255,.17);color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-width:0}
+.plwho .plwp[aria-pressed="true"]{border-color:var(--gold)}
+.plwho .plwp .plwn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plwho .plwb{display:grid;grid-template-columns:1fr 2fr;gap:8px}
+.plo .plin,.plo .plsides,.plo .plrow{grid-template-columns:minmax(0,1fr)}
+.plo .plside,.plo .plrow{min-width:0}
+.plwho .ui-fenetre{overflow:hidden}
+.plwho .plwl{max-height:52vh;overflow-y:auto;overscroll-behavior:contain}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, frise, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
@@ -17382,10 +17441,19 @@ crevette:["................","................",".....oooo.......","...ooYYYYoo.
 Object.assign(RKI,{courge:["................",".......oo.......",".......oGo......","......oNNo......",".....oYYYYo.....",".....oYyYYo.....",".....oYyYYo.....",".....oYYYYo.....","....oYYYYYYo....","...oYyYYYYYYo...","...oYyYYYYYYo...","...oYYYYYYYYo...","...oYYYYYYYYo...","....oYYYYYYo....",".....oooooo.....","................"]});
 // Sauces : icônes 16×16 (flacon souple, pot, bouteille) et catalogue. Une sauce se note dans l'assiette (m.s), sans changer l'équilibre ni l'XP.
 Object.assign(RKI,{"ketchup":["................",".......oo.......","......owwo......","......owwo......",".....owwwwo.....","....orrrrrro....","....orwrrrRo....","....orwrrrRo....","....oWWWWWWo....","....oWWWWWWo....","....orrrrrRo....","....orrrrrRo....","....orrrrrRo....","....orrrrRRo....",".....oooooo.....","................"],"mayo":["................",".......oo.......","......oyyo......","......oyyo......",".....oyyyyo.....","....oWWWWWWo....","....oWwWWWko....","....oWwWWWko....","....oyyyyyyo....","....oyyyyyyo....","....oWWWWWko....","....oWWWWWko....","....oWWWWWko....","....oWWWWkko....",".....oooooo.....","................"],"bbq":["................",".......oo.......","......oYYo......","......oYYo......",".....oYYYYo.....","....oNNNNNNo....","....oNwNNNoo....","....oNwNNNoo....","....oYYYYYYo....","....oYYYYYYo....","....oNNNNNoo....","....oNNNNNoo....","....oNNNNNoo....","....oNNNNooo....",".....oooooo.....","................"],"moutarde":["................","................","....oooooooo....","...oNNNNNNNNo...","...oNNNNNNNNo...","....oooooooo....","...oyyyyyyyyo...","...oywyyyyyYo...","...owwwwwwwwo...","...owwwwwwwwo...","...oywyyyyyYo...","...oyyyyyyyYo...","...oyyyyyyYYo...","....oooooooo....","................","................"],"pesto":["................","................","....oooooooo....","...oKKKKKKKKo...","...oKKKKKKKKo...","....oooooooo....","...oggggggggo...","...ogwgggggGo...","...owwwwwwwwo...","...owwwwwwwwo...","...ogwgggggGo...","...ogggggggGo...","...oggggggGGo...","....oooooooo....","................","................"],"stomate":["................","................","....oooooooo....","...oYYYYYYYYo...","...oYYYYYYYYo...","....oooooooo....","...orrrrrrrro...","...orwrrrrrRo...","...owwwwwwwwo...","...owwwwwwwwo...","...orwrrrrrRo...","...orrrrrrrRo...","...orrrrrrRRo...","....oooooooo....","................","................"],"creme":["................","................","....oooooooo....","...oBBBBBBBBo...","...oBBBBBBBBo...","....oooooooo....","...owwwwwwwwo...","...owwwwwwwWo...","...obbbbbbbbo...","...obbbbbbbbo...","...owwwwwwwWo...","...owwwwwwwWo...","...owwwwwwWWo...","....oooooooo....","................","................"],"vinaigrette":["................",".......oo.......","......oGGo......","......oGGo......","......oyyo......",".....oyyyyo.....","....oyyyyyyo....","....oywyyyYo....","....oggggggo....","....oggggggo....","....oywyyyYo....","....oyyyyyYo....","....oyyyyyYo....","....oyyyyYYo....",".....oooooo.....","................"],"huile":["................",".......oo.......","......oNNo......","......oNNo......","......oggo......",".....oggggo.....","....oggggggo....","....ogwgggGo....","....oyyyyyyo....","....oyyyyyyo....","....ogwgggGo....","....ogggggGo....","....ogggggGo....","....oggggGGo....",".....oooooo.....","................"],"soja":["................",".......oo.......","......orro......","......orro......","......oNNo......",".....oNNNNo.....","....oNNNNNNo....","....oNwNNNoo....","....orrrrrro....","....orrrrrro....","....oNwNNNoo....","....oNNNNNoo....","....oNNNNNoo....","....oNNNNooo....",".....oooooo.....","................"]});
-const PL_SAUCE=[["ketchup","Ketchup"],["mayo","Mayonnaise"],["moutarde","Moutarde"],["stomate","Sauce tomate"],["pesto","Pesto"],["creme","Crème"],["vinaigrette","Vinaigrette"],["huile","Huile d'olive"],["soja","Sauce soja"],["bbq","Barbecue"]];
-const PL_SIDES=[["f","Féculents","#ffd94a","#f0a020",[["pates","Pâtes"],["riz","Riz"],["pain","Pain"],["patate","Patates"],["gnocchi","Gnocchi"],["semoule","Semoule"]]],
-  ["p","Protéines","#ff9ec0","#e8473a",[["viande","Poulet"],["steak","Viande"],["oeuf","Œuf"],["poisson","Poisson"],["jambon","Jambon"],["thon","Thon"],["crevette","Crevettes"],["tofu","Tofu"],["lentilles","Lentilles"],["poischiche","Pois chiches"]]],
-  ["l","Légumes","#a8eb8a","#4fb84a",[["salade","Salade"],["carotte","Carotte"],["tomate","Tomate"],["legume","Brocoli"],["courgette","Courgette"],["poivron","Poivron"],["haricots","Haricots verts"],["champignon","Champignons"],["aubergine","Aubergine"]]]];
+const PL_SAUCE=[["ketchup","Ketchup"],["mayo","Mayonnaise"],["moutarde","Moutarde"],["stomate","Sauce tomate"],["pesto","Pesto"],["creme","Crème fraîche"],["vinaigrette","Vinaigrette"],["huile","Huile d'olive"],["soja","Sauce soja"],["bbq","Barbecue"],["cesar","César"],["curry","Curry coco"]];
+const PL_SIDES=[["f","Féculents","#ffd94a","#f0a020",[["pain","Pain","pain"],["sandwich","Sandwich","pain"],["pates","Pâtes","cla"],["riz","Riz","cla"],["patate","Patates","cla"],["frites","Frites","cla"],["semoule","Semoule","cla"],["gnocchi","Gnocchi","aty"]]],
+  ["p","Protéines","#ff9ec0","#e8473a",[["viande","Poulet","vi"],["steak","Steak","vi"],["jambon","Jambon","vi"],["oeuf","Œuf","vi"],["tofu","Tofu","ve"],["lentilles","Lentilles","ve"],["poischiche","Pois chiches","ve"],["falafel","Falafel","ve"],["poisson","Poisson","mer"],["saumon","Saumon","mer"],["thon","Thon","mer"],["crevette","Crevettes","mer"]]],
+  ["l","Légumes","#a8eb8a","#4fb84a",[["salade","Salade"],["carotte","Carotte"],["tomate","Tomate"],["legume","Brocoli"],["courgette","Courgette"],["poivron","Poivron"],["haricots","Haricots verts"],["champignon","Champignons"],["aubergine","Aubergine"],["ail","Ail"]]]];
+// rangées des carrousels (N.2, 01/11) : un aliment sans groupe (ajouté par toi) va dans la dernière rangée
+const PL_GRP={f:[["pain","Pain"],["cla","Classiques"],["aty","Atypiques"]],p:[["vi","Viande et œuf"],["ve","Végétal"],["mer","De la mer"]]};
+// après l'assiette : dessert, où (N.5, N.7)
+const PL_DES=[["glace","Glace","glace"],["yaourt","Yaourt","yaourt"],["fruit","Fruit","pomme"],["chocolat","Chocolat","chocolat"]];
+const PL_OU=[["maison","Maison","maisonp"],["resto","Restaurant","repas"],["fast","Fast-food","burger"],["pouce","Sur le pouce","sandwich"]];
+// types d'assiette (N.8) : bord de l'assiette à leur couleur
+const PL_TY={equi:["Assiette équilibrée",["#fff1a8","#ffd94a","#f0a020"]],veg:["Assiette végétarienne",["#b8f0a0","#6ccf5a","#2f8a3a"]],fast:["Assiette fast-food",["#ffc89a","#ff8a3d","#c85a1a"]]};
+// habitudes alimentaires (J'ai… > Alimentation, N.10) : aliments masqués
+const PL_DIET={vege:["viande","steak","jambon","poisson","saumon","thon","crevette"],vegan:["viande","steak","jambon","poisson","saumon","thon","crevette","oeuf","mayo","creme","cesar","fromage","yaourt","glace"],halal:["jambon"],gluten:["pain","sandwich","pates","gnocchi","semoule"],lactose:["creme","cesar","fromage","yaourt","glace"]};
 const PL_X=[["yaourt","Yaourt","yaourt"],["fromage","Fromage","fromage"],["eau","Verre d'eau","verre"]];
 const PL_C=[["maison","Cuisiné maison","casserole"],["nouv","Nouvelle recette","cake"]];
 const PL_A={f:210,p:330,l:90};// angle du milieu de chaque côté (0° = droite, 90° = bas)
@@ -17393,8 +17461,8 @@ const plDay=d=>{const P=S.g.plt=S.g.plt||{};return P[d]||{}};
 const plN=(m,q)=>((m||{})[q]||[]).length;
 // assiette pixel 64×64 : rebord éclairé en haut à gauche ; chaque côté se remplit du centre vers le bord selon le nombre de portions (3 = plein)
 // rendu en image (canvas mis en cache) : net et stable sur iPhone, contrairement à un SVG de mille rectangles
-function plSvg(lv){const key=["f","p","l"].map(k=>Math.min(3,lv[k]||0)).join("");if(PL_IMG[key])return PL_IMG[key];const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
-  if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
+function plSvg(lv,ty){const RC=ty&&PL_TY[ty]?PL_TY[ty][1]:null,key=["f","p","l"].map(k=>Math.min(3,lv[k]||0)).join("")+(ty||"");if(PL_IMG[key])return PL_IMG[key];const N=64,c=31.5,rows=[];for(let y=0;y<N;y++){const row=[];for(let x=0;x<N;x++){const dx=x-c,dy=y-c,d=Math.hypot(dx,dy);let col="";
+  if(d>31.4)col="";else if(d>29.6)col="#2a1606";else if(d>25.8){const l=(-dx-dy)/(d||1);col=RC?(l>.55?RC[0]:l>-.35?RC[1]:RC[2]):l>.55?"#ffffff":l>-.35?((x+y)%2?"#f2f5f8":"#ffffff"):l>-.75?"#dfe8f0":"#c9d3dd"}
   else if(d>24.6)col=(-dx-dy)>0?"#b8c4cf":"#e3eaf0";else{const a=(Math.atan2(dy,dx)*180/Math.PI+360)%360;
     const div=[30,150,270].some(b=>d*Math.abs(Math.sin((a-b)*Math.PI/180))<.9&&Math.cos((a-b)*Math.PI/180)>0);
     if(div)col="#c9d3dd";else{const s=a>=30&&a<150?"l":a>=150&&a<270?"f":"p",S2=PL_SIDES.find(z=>z[0]===s),n=Math.min(3,lv[s]||0),R=24.6*n/3;
@@ -17410,11 +17478,30 @@ const plXp=L=>{const n=["f","p","l"].filter(s=>L[s]).length;return n*MB_PLX+(n==
 // ---- catalogue : aliments de base + les tiens (S.g.plf), masqués (S.g.plh), triés par usage
 const plCus=()=>Array.isArray(S.g.plf)?S.g.plf:(S.g.plf=[]);
 const plHid=()=>Array.isArray(S.g.plh)?S.g.plh:(S.g.plh=[]);
-const plAll=s=>(s==="s"?PL_SAUCE:PL_SIDES.find(z=>z[0]===s)[4]).map(([id,n])=>({id,n,ic:id})).concat(plCus().filter(c=>c.s===s).map(c=>({id:c.id,n:c.n,ic:c.ic,cus:1})));
+const plAll=s=>(s==="s"?PL_SAUCE:PL_SIDES.find(z=>z[0]===s)[4]).map(([id,n,g])=>({id,n,ic:id,g})).concat(plCus().filter(c=>c.s===s).map(c=>({id:c.id,n:c.n,ic:c.ic,cus:1})));
 function plFood(id){for(const s of ["f","p","l","s"]){const f=plAll(s).find(x=>x.id===id);if(f)return f}return{id,n:id,ic:RKI[id]?id:"assiette"}}
 const plIc=id=>plFood(id).ic;
 function plUse(){const u={};Object.values(S.g.plt||{}).forEach(D=>Object.values(D||{}).forEach(m=>["f","p","l","s"].forEach(s=>((m&&m[s])||[]).forEach(id=>u[id]=(u[id]||0)+1))));return u}
-const plFoods=(s,all,u)=>plAll(s).filter(f=>all||!plHid().includes(f.id)).map((f,i)=>[f,i]).sort((a,b)=>((u[b[0].id]||0)-(u[a[0].id]||0))||a[1]-b[1]).map(x=>x[0]);
+function plDiet(){let h=[];try{h=(sitOf()||{}).have||[]}catch(e){}return new Set(h.flatMap(k=>PL_DIET[k]||[]))}
+const plFoods=(s,all,u)=>{const dt=plDiet();return plAll(s).filter(f=>!dt.has(f.id)&&(all||!plHid().includes(f.id))).map((f,i)=>[f,i]).sort((a,b)=>((u[b[0].id]||0)-(u[a[0].id]||0))||a[1]-b[1]).map(x=>x[0])};
+// une catégorie en rangées qui glissent, chacune sur une ligne
+function plRowsHTML(s,list,btn,addB){const G=PL_GRP[s];if(!G)return`<div class="plfoods plcar">${list.map(btn).join("")}${addB}</div>`;const last=G[G.length-1][0];
+  return G.map(([g,l])=>{const L=list.filter(f=>(f.g||last)===g);if(!L.length&&g!==last)return"";return`<div class="plrow"><small class="plrl">${l}</small><div class="plfoods plcar">${L.map(btn).join("")}${g===last?addB:""}</div></div>`}).join("")}
+function plType(m){if(!m)return"";if(m.w==="fast")return"fast";const ids=["f","p","l"].flatMap(s=>m[s]||[]),n=["f","p","l"].filter(s=>plN(m,s)).length;if(!ids.length)return"";
+  const meat=ids.some(id=>PL_MEAT.test(id)||PL_MEAT.test(plFood(id).n));if(!meat&&n>=2&&plN(m,"p"))return"veg";return n===3?"equi":""}
+// badges (N.8) : première assiette de chaque type ; « chef » = première assiette cuisinée maison
+function plMark(m){const G=S.g;if(!G.plT||typeof G.plT!=="object")G.plT={};const t=plType(m),now=Date.now();if(t&&!G.plT[t])G.plT[t]=now;if(m.x&&m.x.maison&&!G.plT.chef)G.plT.chef=now}
+function plSeen(t){const G=S.g||{};if((G.plT||{})[t])return true;return Object.values(G.plt||{}).some(D=>Object.values(D||{}).some(m=>t==="chef"?!!(m&&m.x&&m.x.maison):plType(m)===t))}
+// cuisiné maison → « Pour qui ? » au moment de valider : +5 XP Ami ou Famille et du lien (N.9)
+function plForWho(el){const L=relNames();if(!L.length)return;const v=document.createElement("div");v.className="ui-voile plwho";const pick=new Set();
+  const draw=()=>{v.innerHTML=`<div class="ui-fenetre" role="dialog" aria-modal="true" aria-label="Cuisiné pour qui ?"><h3 class="ui-fenetre__titre">Cuisiné pour qui ?</h3><div class="plwl">${L.map(n=>`<button type="button" class="plwp" data-n="${esc(n)}" aria-pressed="${pick.has(n)}">${pAv(n,"fmini")}<span class="plwn"></span></button>`).join("")}</div><div class="plwb"><button type="button" class="btn plwno">Pour moi</button><button type="button" class="btn primary plwok"${pick.size?"":" disabled"}>Valider</button></div></div>`;
+    v.querySelectorAll(".plwp").forEach(b=>{b.querySelector(".plwn").textContent=b.dataset.n;b.onclick=()=>{const n=b.dataset.n;if(pick.has(n))pick.delete(n);else pick.add(n);draw()}});
+    v.querySelector(".plwno").onclick=()=>v.remove();
+    v.querySelector(".plwok").onclick=ev=>{const P=[...pick];v.remove();P.forEach(n=>{S.bonds[n]=(S.bonds[n]||0)+10;S.bondsLast[n]=Date.now()});complete({id:"cuisine-pour",cat:P.every(n=>isFam(n))?"famille":"social",name:"Cuisiné pour "+P.join(", "),xp:5},el,ev);try{render()}catch(e){}}};
+  draw();v.onclick=e=>{if(e.target===v)v.remove()};document.body.appendChild(v)}
+// cafés du jour (N.6) : un compteur, sans XP ; « Annuler » enlève le dernier
+function cafeN(tk){return((S.g.cafe||{})[tk||dayKey(Date.now())])||0}
+function cafeAdd(){const G=S.g,tk=dayKey(Date.now());undoAfter("Café noté",()=>{if(!G.cafe||typeof G.cafe!=="object")G.cafe={};G.cafe[tk]=(G.cafe[tk]||0)+1;const ks=Object.keys(G.cafe).sort();while(ks.length>120)delete G.cafe[ks.shift()];save();try{sfx("blip")}catch(e){}try{renderJdb()}catch(e){}},()=>{G.cafe[tk]=Math.max(0,(G.cafe[tk]||1)-1);save();try{renderJdb()}catch(e){}})}
 const PL_ICONS=[...new Set([...PL_SIDES.flatMap(z=>z[4].map(f=>f[0])),"pomme","burger","assiette","casserole","poele","cookie","cake","fromage","yaourt","soda"])].filter(k=>RKI[k]);
 // ---- recettes (S.g.plr) : une assiette toute prête, en un toucher
 const PL_REC0=[{id:"r1",n:"Pâtes courgettes à la crème",f:["pates"],p:[],l:["courgette"]},{id:"r2",n:"Gnocchi pesto rouge",f:["gnocchi"],p:[],l:["tomate"]},
@@ -17448,7 +17535,7 @@ function plQuests(m,el,q){let P=[];try{const L=feedPick().L,dn=(S.g.fq&&S.g.fq.d
   if(q&&!P.some(x=>x.id===q.id)&&!SP.some(x=>x.id===q.id)){const r=plRule(q.t);if(r)setTimeout(()=>toast(`Quête « ${esc(q.t)} » pas encore remplie : il faut ${r.need}`),1300)}}
 
 function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#fqBox")||document.body;
-  const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{}),...(opt.x||{})},...(cur.r?{r:cur.r}:{})};
+  const tk=dayKey(Date.now()),M=MB[per].find(m=>m[0]===k),cur=plDay(tk)[k]||{},m={f:[...(cur.f||[])],p:[...(cur.p||[])],l:[...(cur.l||[])],s:[...(cur.s||[])],x:{...(cur.x||{}),...(opt.x||{})},...(cur.r?{r:cur.r}:{}),...(cur.w?{w:cur.w}:{})};
   const edit=plDone(tk,per,k),lunch=k==="diner"?plDay(tk).dej:null,need=lunch?PL_SIDES.filter(([s])=>!plN(lunch,s)).map(([s])=>s):[],q=opt.q,u=plUse();
   const o=document.createElement("div");o.className="plo";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label",M[1]);
   let step=1,tri=false,add="",addIc="",addName="",naming=false,recName="";
@@ -17460,15 +17547,19 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
     (step===1?`${q?(()=>{const r=plRule(q.t),ok=r&&r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r?r.need:q.t)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}
       <div class="plrec" aria-label="Mes recettes">${recs().map(r=>`<button type="button" class="plr${tri?" del":""}${m.r===r.id?" on":""}" data-rec="${r.id}"${tri?` aria-label="Supprimer ${esc(r.n)}"`:""}><span>${["f","p","l"].flatMap(s=>r[s]||[]).slice(0,3).map(id=>rkSvg(plIc(id))).join("")}</span><b>${esc(r.n)}</b>${tri?`<i>${ICO("close",10)}</i>`:""}</button>`).join("")}${tri?"":`<button type="button" class="plr plsv"${empty?" disabled":""}><span>+</span><b>Enregistrer cette assiette</b></button>`}</div>
       ${naming?`<div class="plname"><input type="text" maxlength="40" placeholder="Nom de la recette" aria-label="Nom de la recette" value="${esc(recName)}"><button type="button" class="btn primary plnok">OK</button><button type="button" class="btn plnno" aria-label="Annuler">${ICO("close",14)}</button></div>`:""}
-      <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L)}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
+      <div class="plate" aria-label="Assiette : ${PL_SIDES.map(([s,l])=>l+" "+L[s]).join(", ")}">${plSvg(L,plType(m))}${PL_SIDES.map(([s])=>{const n=L[s],sl=plSlots(s,Math.min(n,3));return m[s].slice(0,3).map((id,i)=>`<button type="button" class="plit" data-rm="${s}:${i}" style="left:${sl[i][0]}%;top:${sl[i][1]}%" aria-label="Retirer ${esc(plName(s,id))}">${rkSvg(plIc(id))}</button>`).join("")+(n>3?`<b class="plmore" style="left:${plSlots(s,4)[3][0]}%;top:${plSlots(s,4)[3][1]}%">+${n-3}</b>`:"")}).join("")}</div>
+      ${(t=>t?`<p class="pltype" style="--tc:${PL_TY[t][1][1]}">${PL_TY[t][0]}</p>`:"")(plType(m))}
       <p class="plhint">${tri?"Touche un aliment pour le masquer ou le remettre. Touche une recette pour la supprimer.":nd.length?`À midi il manquait : <b>${nd.map(s=>PL_SIDES.find(z=>z[0]===s)[1].toLowerCase()).join(", ")}</b>. C'est le moment d'en ajouter.`:edit?"Ajoute ou retire ce que tu as oublié.":"Touche ce que tu manges, ou une recette. Touche un aliment sur l'assiette pour le retirer."}</p>
       ${edit||tri?"":`<p class="plxp${bx>=MB_PLX*3+MB_PLB?" full":""}">${bx?`+${bx} XP d'assiette${bx>=MB_PLX*3+MB_PLB?" · complète !":""}`:"Chaque côté rempli rapporte de l'XP"}</p>`}
-      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2])=>`<div class="plside${nd.includes(s)&&!tri?" need":""}" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}${nd.includes(s)&&!tri?`<em>Il t'en manque aujourd'hui</em>`:""}</h3><div class="plfoods">${plFoods(s,tri,u).map(f=>{const h=plHid().includes(f.id);return`<button type="button" class="plf${h?" hid":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-add="${s}:${f.id}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="${s}" aria-expanded="${add===s}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
+      <div class="plsides">${PL_SIDES.map(([s,l,c1,c2])=>`<div class="plside${nd.includes(s)&&!tri?" need":""}" style="--pc:${c2}"><h3><i></i>${l}${L[s]?` <small>${L[s]}</small>`:""}${nd.includes(s)&&!tri?`<em>Il t'en manque aujourd'hui</em>`:""}</h3>${plRowsHTML(s,plFoods(s,tri,u),f=>{const h=plHid().includes(f.id);return`<button type="button" class="plf${h?" hid":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-add="${s}:${f.id}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`},`<button type="button" class="plf pladd" data-new="${s}" aria-expanded="${add===s}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button>`)}
         ${add===s?`<div class="plnew"><input type="text" maxlength="30" placeholder="${s==="s"?"Nom de la sauce":"Nom de l'aliment"}" aria-label="Nom de l'aliment" value="${esc(addName)}"><div class="plics" role="group" aria-label="Choisis une icône">${PL_ICONS.map(ic=>`<button type="button" data-ic="${ic}" class="${ic===addIc?"on":""}" aria-label="Icône ${ic}" aria-pressed="${ic===addIc}">${rkSvg(ic)}</button>`).join("")}</div><div class="plnewb"><button type="button" class="btn plnewno">Annuler</button><button type="button" class="btn primary plnewok">Ajouter</button></div></div>`:""}</div>`).join("")}
-        <div class="plside plsauce" style="--pc:#c8a060"><h3><i></i>Sauces${m.s.length?` <small>${m.s.length}</small>`:""}</h3><div class="plfoods">${plFoods("s",tri,u).map(f=>{const h=plHid().includes(f.id),on=m.s.includes(f.id);return`<button type="button" class="plf${h?" hid":""}${on&&!tri?" on":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-sauce="${f.id}" aria-pressed="${on}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="s" aria-expanded="${add==="s"}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
+        <div class="plside plsauce" style="--pc:#c8a060"><h3><i></i>Sauces${m.s.length?` <small>${m.s.length}</small>`:""}</h3><div class="plfoods plcar">${plFoods("s",tri,u).map(f=>{const h=plHid().includes(f.id),on=m.s.includes(f.id);return`<button type="button" class="plf${h?" hid":""}${on&&!tri?" on":""}" ${tri?`data-hide="${f.id}" aria-pressed="${!h}"`:`data-sauce="${f.id}" aria-pressed="${on}"`}><span>${rkSvg(f.ic)}</span><small>${esc(f.n)}</small></button>`}).join("")}<button type="button" class="plf pladd" data-new="s" aria-expanded="${add==="s"}"><span>${ICO("plus",24)}</span><small>Ajouter</small></button></div>
         ${add==="s"?`<div class="plnew"><input type="text" maxlength="30" placeholder="Nom de la sauce" aria-label="Nom de la sauce" value="${esc(addName)}"><div class="plics" role="group" aria-label="Choisis une icône">${PL_SAUCE.map(([ic])=>`<button type="button" data-ic="${ic}" class="${ic===addIc?"on":""}" aria-label="Icône ${ic}" aria-pressed="${ic===addIc}">${rkSvg(ic)}</button>`).join("")}</div><div class="plnewb"><button type="button" class="btn plnewno">Annuler</button><button type="button" class="btn primary plnewok">Ajouter</button></div></div>`:""}</div></div>
       <div class="plbar">${edit?`<button type="button" class="btn plcl2">Annuler</button>`:`<button type="button" class="btn plskip">Sauté</button>`}<button type="button" class="btn primary plnext">Suite</button></div>`
-    :`${q&&(plRule(q.t)||{}).cook?(()=>{const r=plRule(q.t),ok=r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r.need)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}<div class="plxs">${[...PL_X,...PL_C].map(([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`).join("")}</div>
+    :`${q&&(plRule(q.t)||{}).cook?(()=>{const r=plRule(q.t),ok=r.ok(m);return`<p class="plq${ok?" ok":""}"><span>${ICO(ok?"check":"star",24)}</span><span><b>Objectif : ${esc(r.need)}</b><small>Quête : ${esc(q.t)}</small></span></p>`})():""}${(()=>{const dt=plDiet(),xb=([id,l,ic])=>`<button type="button" class="plx${m.x[id]?" on":""}" data-x="${id}" aria-pressed="${!!m.x[id]}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.x[id]?"Oui":"Non"}</em></button>`,sec=(t,c,h)=>`<div class="plside plx2" style="--pc:${c}"><h3><i></i>${t}</h3><div class="plxs">${h}</div></div>`;
+      return sec("Dessert","#ff7eb0",PL_DES.filter(z=>!dt.has(z[0])).map(xb).join(""))+sec("Avec","#2f8fe0",PL_X.filter(z=>z[0]!=="yaourt"&&!dt.has(z[0])).map(xb).join(""))
+        +sec("Où","#c8a060",PL_OU.map(([id,l,ic])=>`<button type="button" class="plx${m.w===id?" on":""}" data-w="${id}" aria-pressed="${m.w===id}"><span>${rkSvg(ic)}</span><b>${l}</b><em>${m.w===id?"Oui":"Non"}</em></button>`).join(""))
+        +sec("En cuisine","#f0a020",PL_C.map(xb).join(""))})()}
       ${plWaterRit()?`<p class="plhint">Le verre d'eau compte aussi pour ton rituel « ${esc(plWaterRit().name)} ».</p>`:""}
       <div class="plbar"><button type="button" class="btn plback">Retour</button><button type="button" class="btn primary plok">${edit?"Enregistrer":"Valider"}</button></div>`)+`</div>`;
     const $o=sel=>o.querySelector(sel),on=(sel,f)=>o.querySelectorAll(sel).forEach(b=>b.onclick=f.bind(null,b));
@@ -17489,14 +17580,15 @@ function plateOpen(per,k,btn,opt){opt=opt||{};btn=btn||document.querySelector("#
     on("[data-ic]",b=>{addIc=b.dataset.ic;draw();const i=$o(".plnew input");if(i&&!addName)i.focus()});
     on(".plnewno",()=>{add="";draw()});
     on(".plnewok",()=>{const n=addName.trim();if(!n){if(ai)ai.focus();return}const f={id:"c"+Date.now().toString(36),s:add,n,ic:addIc||(add==="s"?"ketchup":PL_SIDES.find(z=>z[0]===add)[4][0][0])};plCus().push(f);if(!tri){m[add].push(f.id);delete m.r}add="";save();toast(`« ${esc(n)} » ajouté`);draw()});
+    on("[data-w]",b=>{const w=b.dataset.w;if(m.w===w)delete m.w;else m.w=w;try{sfx("blip")}catch(e){}draw()});
     on("[data-x]",b=>{const id=b.dataset.x;if(m.x[id])delete m.x[id];else m.x[id]=1;try{sfx("blip")}catch(e){}draw()});
     on(".plnext",()=>{step=2;tri=false;add="";naming=false;draw()});
     on(".plback",()=>{step=1;draw()});
     const sk=$o(".plskip");if(sk)sk.onclick=ev=>{close();try{mealQuick(per,k,btn,0,ev)}catch(e){}};
-    const ok=$o(".plok");if(ok)ok.onclick=ev=>{const water=m.x.eau&&!(cur.x||{}).eau;if(m.r&&m.r!==cur.r){const r=plRec().find(x=>x.id===m.r);if(r)r.u=(r.u||0)+1}plSave(tk,k,m);close();
+    const ok=$o(".plok");if(ok)ok.onclick=ev=>{const water=m.x.eau&&!(cur.x||{}).eau;if(m.r&&m.r!==cur.r){const r=plRec().find(x=>x.id===m.r);if(r)r.u=(r.u||0)+1}plSave(tk,k,m);plMark(m);close();const cook=!edit&&m.x.maison&&!(cur.x||{}).maison;
       if(edit){try{render()}catch(e){}toast("Assiette corrigée")}else{try{mealQuick(per,k,btn,1,ev,plXp(lv()),{plk:tk+":"+k,plp:per})}catch(e){}}
       if(water)setTimeout(()=>{try{const t=plWaterRit();if(t)ritTap(t,btn,null)}catch(e){}},900);
-      plQuests(m,btn,q)}};
+      plQuests(m,btn,q);if(cook)setTimeout(()=>{try{plForWho(btn)}catch(e){}},1100)}};
   draw();o.onclick=e=>{if(e.target===o)close()};document.addEventListener("keydown",onKey);document.body.appendChild(o);document.documentElement.classList.add("plopen");try{sfx("open")}catch(e){}}
 // une quête nourriture vérifiable ouvre l'assiette du repas en cours au lieu de se valider d'un coup
 window.__plFd=feedDoBase;
@@ -17565,8 +17657,10 @@ let engPick=[],engLim=5,engAdd=false;
 function engS(){const G=S.g;if(!G.eng||typeof G.eng!=="object")G.eng={};const E=G.eng;if(!Array.isArray(E.lib))E.lib=[];if(!E.d||typeof E.d!=="object")E.d={};return E}
 function engToday(){return engS().d[dayKey(Date.now())]||[]}
 function engCig(tk){return((S.g.cig||{})[tk||dayKey(Date.now())])||0}
-function engAuto(e){return e.id==="cig"||e.id==="cigmax"}
-function engOk(e,tk){return e.id==="cig"?engCig(tk)===0:e.id==="cigmax"?engCig(tk)<e.lim:null}
+// « Sans grignotage » : un grignotage noté dans le panneau + le règle tout seul (N.7)
+function engGrign(tk){tk=tk||dayKey(Date.now());return(S.log||[]).some(x=>String(x.a||"").startsWith("af:grignotage")&&dayKey(x.t)===tk)}
+function engAuto(e){return e.id==="cig"||e.id==="cigmax"||(e.id==="grign"&&engGrign())}
+function engOk(e,tk){return e.id==="grign"?(engGrign(tk)?false:null):e.id==="cig"?engCig(tk)===0:e.id==="cigmax"?engCig(tk)<e.lim:null}
 function engIc(id){const D=ENG_DEF.find(x=>x[0]===id);return rkSvg(D&&RKI[D[2]]?D[2]:"etoile")}
 function engOpts(){const cig=!!(((S.g.vie||{}).track||{}).cig);return[...ENG_DEF.filter(d=>cig||!d[3]).map(([id,n])=>({id,n})),...engS().lib]}
 function engName(o){return o.id==="cigmax"?"Moins de "+engLim+" cigarettes":o.n}
@@ -17586,7 +17680,7 @@ function renderEng(){const box=document.getElementById("engBox");if(!box||!S||!S
     box.querySelector(".enggo").onclick=ev=>{const O2=engOpts();E.d[tk]=engPick.map(id=>{const o=O2.find(x=>x.id===id);return{id,k:id==="cigmax"?"max":"sans",n:engName(o),...(id==="cigmax"?{lim:engLim}:{})}});engPick=[];
       const ks=Object.keys(E.d).sort();while(ks.length>60)delete E.d[ks.shift()];save();try{sfx("blip")}catch(e){}toast("C'est noté. On en reparle ce soir.");renderEng()};return}
   box.innerHTML=`<div class="head"><h2>Engagements<span class="count">${T.filter(e=>e.res===1||e.res===undefined&&engOk(e)===true).length}/${T.length}</span></h2></div><ul class="engl">${T.map(e=>{const a=engAuto(e),c=engCig(tk);
-    const st=e.res===1?"Tenu":e.res===0?"Pas cette fois":e.id==="cigmax"?c+" / "+e.lim+" aujourd'hui":e.id==="cig"?(c?c+" aujourd'hui":"0 aujourd'hui"):"Ce soir dans Bonne nuit";
+    const st=e.res===1?"Tenu":e.res===0||(e.id==="grign"&&engGrign(tk))?"Pas cette fois":e.id==="cigmax"?c+" / "+e.lim+" aujourd'hui":e.id==="cig"?(c?c+" aujourd'hui":"0 aujourd'hui"):"Ce soir dans Bonne nuit";
     return`<li class="engr${e.res===1?" ok":""}"><span class="engi">${engIc(e.id)}</span><span class="engt"><b></b><small class="ui-info">${st}</small></span></li>`}).join("")}</ul>`;
   box.querySelectorAll(".engr b").forEach((b,i)=>b.textContent=T[i].n)}
 // Journal de bord (28/10, piste D) : la journée en liste, comme un carnet.
@@ -17614,7 +17708,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   {const rl=document.getElementById("ritLife"),dq=document.getElementById("dqBox"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
   const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer(),PER=P==="nuit"?null:P,act={};let id=0;const reg=(f)=>{const k="j"+(id++);act[k]=f;return k};
   // ---- le moment
-  const now=[],done=[],gone=[];  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
+  const now=[],done=[],gone=[],side=[];  // side : lignes hors compteur (les cafés)  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
   if(P==="matin"&&!(G.sleep||{})[tk]||P==="matin"&&typeof sleepEdit!=="undefined"&&sleepEdit)now.push(`<li class="jdl jdnuit jx-nuit" style="--jc:#8f7ef0"><span class="jdi">${rkSvg("lune")}</span><span class="jdt"><b>Ta nuit</b><span class="jdph" data-ph="ritLife"></span></span></li>`);
   else if(P==="matin"&&(G.sleep||{})[tk])done.push(jdRow({x:"jx-nuit",c:"#8f7ef0",ic:rkSvg("lune"),n:"Ta nuit",s:fmtH(G.sleep[tk].h)+" de sommeil",ok:1,k:reg(()=>{try{sleepEdit=true;renderLife();renderJdb()}catch(e){}})}));
   {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en)now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
@@ -17633,6 +17727,8 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
     chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
+  // les cafés : un compteur sans XP (N.6), hors du compteur du titre
+  if(PER&&typeof cafeN==="function"){const n=cafeN();side.push(jdRow({c:"#8a5a3a",ic:rkSvg("tasse"),n:"Cafés",s:n?n+" aujourd'hui":"Aucun pour l'instant",r:`<button type="button" class="btn jdck" aria-label="Un café" title="Un café" data-k="${reg(()=>cafeAdd())}">${ICO("plus",24)}</button>`}))}
   // repas dont l'heure est passée
   MEALS.forEach(([k,per,l,ic])=>{if(h<MEAL_H[k])return;const s=mealState(k,per),pl=typeof plateOpen==="function"&&MB_PLM.includes(k);
     if(s)done.push(jdRow({c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:s==="ok"?"Pris":"Sauté",ok:1,k:reg(()=>{if(pl&&s==="ok")plateOpen(per,k,document.body);else{try{mealClear(dayKey(Date.now()),per,k);save();render()}catch(e){}}})}));
@@ -17643,7 +17739,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
   const tot=now.length+done.length+gone.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
   const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
+  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"")}<ul class="jdlist">${now.join("")}${side.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : ceux du jour, les cigarettes, le contrat

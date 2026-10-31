@@ -53,6 +53,9 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `plt` | assiette | Assiettes : `plt[jour][dej|diner] = {f:[], p:[], l:[], s:[] (sauces, depuis le 27/10), x:{yaourt, fromage, eau, maison, nouv (Cuisiné maison / Nouvelle recette, depuis le 27/10)}, r?}` | active |
 | `plr` | assiette | Recettes enregistrées | active |
 | `plf`, `plh` | assiette | Aliments ajoutés par toi, aliments masqués | active |
+| `plt[…].w`, `plt[…].x.glace/fruit/chocolat` | assiette | Où (maison, resto, fast, pouce) et desserts d'une assiette (depuis le 01/11) | active |
+| `plT` | assiette | Premier jour de chaque type d'assiette : `veg`, `equi`, `fast`, et `chef` (cuisiné maison) ; sert aux badges | active |
+| `cafe` | assiette, journal-de-bord | Cafés par jour : `cafe[jour] = n` (120 jours) | active |
 | `rcp` | 25 | Recettes cuisinées (Chez moi) | active ? |
 | `hpFull`, `hpWarn` | 03 | Barre de vie : bonus « pleine » du jour, alerte « basse » du jour | active |
 
@@ -76,7 +79,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `cig` | finitions | Compteur de cigarettes par jour | active |
 | `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
 | `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
-| `sit.have` | vie-faits, moi-finitions | Faits « J'ai… » cochés (chien, plantes…) ; les rituels et rappels qu'ils créent portent `have` | active |
+| `sit.have` | vie-faits, moi-finitions | Faits « J'ai… » cochés (chien, plantes…, habitudes alimentaires vege, vegan, halal, gluten, lactose qui masquent des aliments) ; les rituels et rappels qu'ils créent portent `have` | active |
 | `eng` | engagements, cloture-soir | {lib: engagements écrits, d: jour → [{id,k,n,lim?,res?}], skip: jour où la carte a été fermée} | active |
 | `todo` | a-faire, cloture-soir | Liste à faire : [{id, d jour, c créée le, n nom, key action du panneau}] ; « fait » se lit dans le journal | active |
 | `dlog` | coeur/29, cloture-soir | Messages gardés pour le bilan du soir (jour → liste), 7 derniers jours | active |

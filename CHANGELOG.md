@@ -2,6 +2,14 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 01/11/2026
+- Assiette : aliments en rangées qui glissent, une par ligne (pain → classiques → atypiques ; viande et œuf → végétal → de la mer). Nouveaux : frites, sandwich, saumon, falafel, ail ; sauces césar et curry coco ; « Crème fraîche ».
+- Après l'assiette : dessert (glace, yaourt, fruit, chocolat), où (maison, restaurant, fast-food, sur le pouce). Cuisiné maison → « Cuisiné pour qui ? » : +5 XP Ami ou Famille et du lien.
+- Types d'assiette : bord or (équilibrée), vert (végétarienne), orange (fast-food), avec l'étiquette sous l'assiette. Badges Végétarien, Chef cuisinier (cuisiné maison), Sur le pouce.
+- J'ai… > Alimentation : végétarien, vegan, halal, sans gluten, sans lactose ; l'assiette masque ce qui ne va pas.
+- Cafés : compteur du jour dans le journal (sans XP), repris dans « Ta journée ».
+- Panneau + : Grignotage (sans XP, règle « Sans grignotage ») et Recevoir chez moi (apéro, repas, soirée jeux).
+
 ## 31/10/2026
 - Mon personnage reste visible sur la scène (il disparaissait entre deux actions).
 - « Ma situation » ouvre Ma fiche en modification : un seul formulaire. Ma fiche reçoit le temps libre, « ce qui ne me concerne pas » et les artistes (puces avec une croix, ajout direct).

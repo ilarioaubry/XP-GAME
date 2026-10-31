@@ -270,18 +270,18 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] E.1 (31/10) Badge humeur 30 j : yeux de l'emoji refaits, identiques
 - [x] E.2 (31/10) Armoire (auras et toutes les catégories) : surlignage jaune seul, plus de coche en haut à droite
 
-### Assiette et nourriture (N) — idées à proposer avant de construire
+### Assiette et nourriture (N) — proposition validée le 01/11 (fast-food = orange, café sans XP, badge « Sur le pouce », tout le lot d'un coup)
 - [x] N.1 (31/10) Masquer la barre de défilement verticale
-- [ ] N.2 Carrousels par catégorie, une ligne chacun, ordre logique : pain → féculent classique → atypique ; viande → végétal → de la mer
-- [ ] N.3 Nouveaux aliments : frites, steak, saumon, falafel, champignons, ail, sandwich
-- [ ] N.4 Sauces : soja, ketchup, mayo, BBQ, huile d'olive, césar, crème fraîche, curry coco
-- [ ] N.5 Dessert : glace, yaourt, fruit, chocolat
-- [ ] N.6 Compteur café
-- [ ] N.7 Où : maison, restaurant, fast-food… ; grignotage
-- [ ] N.8 Types d'assiette (équilibrée = or, végétarienne = vert, fast-food = rouge ou mieux), chaque nouveau type débloque un badge (Végétarien, Chef cuisinier, fast-food)
-- [ ] N.9 XP en plus quand je cuisine pour quelqu'un
-- [ ] N.10 Habitude alimentaire (dans J'ai… / Ma vie)
-- [ ] N.11 Inviter des amis chez soi (action)
+- [x] N.2 (01/11) Carrousels par catégorie, une ligne chacun, ordre logique : pain → féculent classique → atypique ; viande → végétal → de la mer
+- [x] N.3 (01/11) Nouveaux aliments : frites, steak, saumon, falafel, champignons, ail, sandwich
+- [x] N.4 (01/11) Sauces : soja, ketchup, mayo, BBQ, huile d'olive, césar, crème fraîche, curry coco
+- [x] N.5 (01/11) Dessert : glace, yaourt, fruit, chocolat
+- [x] N.6 (01/11) Compteur café
+- [x] N.7 (01/11) Où : maison, restaurant, fast-food… ; grignotage
+- [x] N.8 (01/11) Types d'assiette (équilibrée = or, végétarienne = vert, fast-food = rouge ou mieux), chaque nouveau type débloque un badge (Végétarien, Chef cuisinier, fast-food)
+- [x] N.9 (01/11) XP en plus quand je cuisine pour quelqu'un
+- [x] N.10 (01/11) Habitude alimentaire (dans J'ai… / Ma vie)
+- [x] N.11 (01/11) Inviter des amis chez soi (action)
 
 ## Fait à la demande (hors phases)
 

@@ -7,8 +7,10 @@ let engPick=[],engLim=5,engAdd=false;
 function engS(){const G=S.g;if(!G.eng||typeof G.eng!=="object")G.eng={};const E=G.eng;if(!Array.isArray(E.lib))E.lib=[];if(!E.d||typeof E.d!=="object")E.d={};return E}
 function engToday(){return engS().d[dayKey(Date.now())]||[]}
 function engCig(tk){return((S.g.cig||{})[tk||dayKey(Date.now())])||0}
-function engAuto(e){return e.id==="cig"||e.id==="cigmax"}
-function engOk(e,tk){return e.id==="cig"?engCig(tk)===0:e.id==="cigmax"?engCig(tk)<e.lim:null}
+// « Sans grignotage » : un grignotage noté dans le panneau + le règle tout seul (N.7)
+function engGrign(tk){tk=tk||dayKey(Date.now());return(S.log||[]).some(x=>String(x.a||"").startsWith("af:grignotage")&&dayKey(x.t)===tk)}
+function engAuto(e){return e.id==="cig"||e.id==="cigmax"||(e.id==="grign"&&engGrign())}
+function engOk(e,tk){return e.id==="grign"?(engGrign(tk)?false:null):e.id==="cig"?engCig(tk)===0:e.id==="cigmax"?engCig(tk)<e.lim:null}
 function engIc(id){const D=ENG_DEF.find(x=>x[0]===id);return rkSvg(D&&RKI[D[2]]?D[2]:"etoile")}
 function engOpts(){const cig=!!(((S.g.vie||{}).track||{}).cig);return[...ENG_DEF.filter(d=>cig||!d[3]).map(([id,n])=>({id,n})),...engS().lib]}
 function engName(o){return o.id==="cigmax"?"Moins de "+engLim+" cigarettes":o.n}
@@ -28,6 +30,6 @@ function renderEng(){const box=document.getElementById("engBox");if(!box||!S||!S
     box.querySelector(".enggo").onclick=ev=>{const O2=engOpts();E.d[tk]=engPick.map(id=>{const o=O2.find(x=>x.id===id);return{id,k:id==="cigmax"?"max":"sans",n:engName(o),...(id==="cigmax"?{lim:engLim}:{})}});engPick=[];
       const ks=Object.keys(E.d).sort();while(ks.length>60)delete E.d[ks.shift()];save();try{sfx("blip")}catch(e){}toast("C'est noté. On en reparle ce soir.");renderEng()};return}
   box.innerHTML=`<div class="head"><h2>Engagements<span class="count">${T.filter(e=>e.res===1||e.res===undefined&&engOk(e)===true).length}/${T.length}</span></h2></div><ul class="engl">${T.map(e=>{const a=engAuto(e),c=engCig(tk);
-    const st=e.res===1?"Tenu":e.res===0?"Pas cette fois":e.id==="cigmax"?c+" / "+e.lim+" aujourd'hui":e.id==="cig"?(c?c+" aujourd'hui":"0 aujourd'hui"):"Ce soir dans Bonne nuit";
+    const st=e.res===1?"Tenu":e.res===0||(e.id==="grign"&&engGrign(tk))?"Pas cette fois":e.id==="cigmax"?c+" / "+e.lim+" aujourd'hui":e.id==="cig"?(c?c+" aujourd'hui":"0 aujourd'hui"):"Ce soir dans Bonne nuit";
     return`<li class="engr${e.res===1?" ok":""}"><span class="engi">${engIc(e.id)}</span><span class="engt"><b></b><small class="ui-info">${st}</small></span></li>`}).join("")}</ul>`;
   box.querySelectorAll(".engr b").forEach((b,i)=>b.textContent=T[i].n)}

@@ -12,10 +12,13 @@ const HAVE=[
   {k:"tc",l:"Transports",ic:"ticket",g:"Transport",last:[["Recharger l'abonnement",1,"m"]]},
   {k:"lentilles",l:"Des lentilles",ic:"lunettes",g:"Santé",last:[["Changer de lentilles",1,"m"],["Racheter des lentilles",3,"m"]]},
   {k:"traitement",l:"Un traitement",ic:"sante",g:"Santé",rit:[["Prendre mon traitement","matin"]],last:[["Racheter mon traitement",1,"m"]]},
-  {k:"vege",l:"Végétarien",ic:"legume",g:"Santé",fq:[["h_vege","Tester une recette végé que tu ne connais pas","nourriture",15,[11,21],{in:1}]]},
-  {k:"gluten",l:"Sans gluten",ic:"pain",g:"Santé"},
+  {k:"vege",l:"Végétarien",ic:"legume",g:"Alimentation",fq:[["h_vege","Tester une recette végé que tu ne connais pas","nourriture",15,[11,21],{in:1}]]},
+  {k:"gluten",l:"Sans gluten",ic:"pain",g:"Alimentation"},
+  {k:"vegan",l:"Vegan",ic:"salade",g:"Alimentation"},
+  {k:"halal",l:"Halal",ic:"steak",g:"Alimentation"},
+  {k:"lactose",l:"Sans lactose",ic:"yaourt",g:"Alimentation"},
   {k:"enfant",l:"Garde d'enfant",ic:"enfant",g:"Famille",fam:{id:"enfant",dom:"proches",cat:"famille",l:"Avec mon enfant",xp:10,o:["École","Devoirs","Jeux","Bain","Histoire du soir"]},rit:[["Histoire du soir","soir"]]},
   {k:"club",l:"Sport en club",ic:"ballon",g:"Activité",fam:{id:"club",dom:"sport",cat:"sport",l:"Mon club",xp:20,o:["Entraînement","Match","Préparer mon sac"]},fq:[["h_club","Préparer ton sac pour l'entraînement","sport",5,[17,23],{short:1}]]},
   {k:"instru",l:"Un instrument",ic:"notec",g:"Activité",fam:{id:"instru",dom:"creer",cat:"perso",l:"Mon instrument",xp:10,o:["Pratiquer","Apprendre un morceau","Jouer pour quelqu'un"]},fq:[["h_instru","15 min de pratique sur ton instrument","perso",10,[10,22],{short:1}]]}
 ];
-const HAVE_G=["Animaux","Maison","Transport","Santé","Famille","Activité"];
+const HAVE_G=["Animaux","Maison","Transport","Santé","Alimentation","Famille","Activité"];

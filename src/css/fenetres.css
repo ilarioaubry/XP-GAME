@@ -433,3 +433,20 @@ html:not(#_u1):not(#_u2):not(#_u3) body .qwcard .qwmon svg{width:64px;height:64p
 /* N.1 (31/10) : pas de barre de défilement visible dans l'assiette */
 .plo,.plo *{scrollbar-width:none}
 .plo::-webkit-scrollbar,.plo *::-webkit-scrollbar{display:none;width:0;height:0}
+/* Lot 3 assiette (01/11) : rangées qui glissent (la suivante dépasse), type d'assiette, sections après l'assiette, « Pour qui ? » */
+.plo .plrow{display:grid;gap:2px;margin-top:4px}
+.plo .plrl{display:block;font-size:11px;font-weight:700;color:#cfc6b8;margin:2px 0 0}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar{display:flex;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;gap:4px;margin:0 -16px;padding:0 16px}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf{flex:0 0 74px;scroll-snap-align:start;min-width:0}
+html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plo .pltype{margin:6px auto 0;width:fit-content;font-size:11px;font-weight:700;color:var(--tc);background:#141632;padding:3px 8px}
+.plo .plx2{margin-top:10px}
+.plwho .plwl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.plwho .plwp{display:flex;align-items:center;justify-content:flex-start;gap:8px;text-align:left;min-height:44px;padding:8px 4px;background:#141632;border:1px solid rgba(255,255,255,.17);color:inherit;font:inherit;font-size:13px;font-weight:700;cursor:pointer;min-width:0}
+.plwho .plwp[aria-pressed="true"]{border-color:var(--gold)}
+.plwho .plwp .plwn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plwho .plwb{display:grid;grid-template-columns:1fr 2fr;gap:8px}
+.plo .plin,.plo .plsides,.plo .plrow{grid-template-columns:minmax(0,1fr)}
+.plo .plside,.plo .plrow{min-width:0}
+.plwho .ui-fenetre{overflow:hidden}
+.plwho .plwl{max-height:52vh;overflow-y:auto;overscroll-behavior:contain}

@@ -22,6 +22,7 @@ const FAM=[
   {id:"cuisiner",dom:"nourriture",cat:"nourriture",l:"Cuisiner",xp:12,o:["Repas maison","Nouveau plat","Pâtisserie","Préparer demain"],lz:"cuis",fr:[3,7],fro:{"Nouveau plat":[14,30],"Pâtisserie":[21,45]}},
   {id:"eau",dom:"nourriture",cat:"eau",l:"Boire de l'eau",xp:3,o:["Un verre"],quick:1},
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
+  {id:"grignotage",dom:"nourriture",cat:"nourriture",l:"Grignotage",xp:0,o:["Fruit","Gâteau","Chips","Chocolat","Autre"],quick:1},
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
   {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
@@ -38,7 +39,8 @@ const FAM=[
   {id:"cours",dom:"apprendre",cat:"soi",l:"Apprendre",xp:12,o:["Tuto","Formation","Lecture utile"]},
   {id:"contact",dom:"proches",cat:"social",l:"Prendre des nouvelles",ls:"Des nouvelles",xp:10,o:["Message","Appel","Vocal"],who:1},
   {id:"voir",dom:"proches",cat:"social",l:"Voir quelqu'un",xp:20,o:["Café","Repas","Soirée","Activité","Visite"],who:1},
-  {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1}];
+  {id:"service",dom:"proches",cat:"social",l:"Rendre service",xp:15,o:["Un coup de main"],who:1},
+  {id:"recevoir",dom:"proches",cat:"social",l:"Recevoir chez moi",xp:15,o:["Apéro","Repas","Soirée jeux"],who:1}];
 const IDQ=[
   ["Une jam session ouverte dans un bar","s",1,30,"Jam session","mus"],["Une scène ouverte de stand-up, en spectateur","s",1,30,"Stand-up","mic"],
   ["Une soirée quiz ou blind test dans un bar","s",1,30,"Soirée quiz","q"],["La dernière séance d'un film en VO","s",1,25,"Cinéma","cine"],
@@ -62,7 +64,7 @@ const IDI={mus:'<path d="M9 18V6l10-2v12" fill="none" stroke="#fff" stroke-width
   key:'<circle cx="8" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><path d="M12 12h9M18 12v3M21 12v2" stroke="#fff" stroke-width="2"/>',food:'<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 0-3 3-3 6s1 4 3 4v8" fill="none" stroke="#fff" stroke-width="2"/>',
   bag:'<path d="M5 8h14l-1 13H6z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 8a3 3 0 0 1 6 0" fill="none" stroke="#fff" stroke-width="2"/>',art:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 3 0 4-1 3-2 3-4a9 9 0 0 0-9-8z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="8" cy="10" r="1.4" fill="#fff"/><circle cx="12" cy="7" r="1.4" fill="#fff"/><circle cx="16" cy="10" r="1.4" fill="#fff"/>',
   run:'<circle cx="14" cy="4.5" r="2" fill="#fff"/><path d="M6 21l3-6 3 2v4M9 15l2-6 4 3 3-1M11 9L7 11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 4v14M15 6v14" stroke="#fff" stroke-width="2"/>'};
-const FIC={ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","Salle de bain":"bain",Bureau:"ecran","Entrée":"porte",Placard:"armoire",Voiture:"voiture"}],
+const FIC={grignotage:["cookie",{Fruit:"pomme","Gâteau":"cake",Chips:"patate",Chocolat:"chocolat",Autre:"cookie"}],recevoir:["maisonp",{"Apéro":"cocktail",Repas:"repas","Soirée jeux":"manette"}],ranger:["armoire",{Chambre:"lit",Salon:"canape",Cuisine:"casserole","Salle de bain":"bain",Bureau:"ecran","Entrée":"porte",Placard:"armoire",Voiture:"voiture"}],
   nettoyer:["balai",{Sol:"balai",Cuisine:"casserole","Salle de bain":"bain",Toilettes:"wc",Vitres:"fenetre",Frigo:"frigo","Poussière":"plumeau"}],
   linge:["machine",{"Changer les draps":"lit"}],vaisselle:["assiette",{}],mmaison:["poubelle",{"Sortir les poubelles":"poubelle",Courses:"panier","Arroser les plantes":"plante","Réparer un truc":"check"}],armoire:["armoire",{}],
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],

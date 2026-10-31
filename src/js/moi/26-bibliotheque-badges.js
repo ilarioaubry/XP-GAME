@@ -99,6 +99,10 @@ function badgeDefsBase(){
   B.push({id:"out3",name:"Artiste régulier",desc:"Sortir 3 sons",ic:"trophy",t:2,ok:()=>Object.keys(S.g.rel).length>=3});
   B.push({id:"out12",name:"Une année de sons",desc:"Sortir 12 sons",ic:"trophy",t:3,ok:()=>Object.keys(S.g.rel).length>=12});
   B.push({id:"sleep7",name:"Gros dormeur",desc:"7 nuits de 7 h ou plus",ic:"face",t:1,ok:()=>Object.values(S.g.sleep).filter(x=>x.h>=7).length>=7});
+  // types d'assiette (N.8, 01/11)
+  B.push({id:"plveg",name:"Végétarien",desc:"Une assiette végétarienne",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("veg")});
+  B.push({id:"plchef",name:"Chef cuisinier",desc:"Une assiette cuisinée maison",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("chef")});
+  B.push({id:"plfast",name:"Sur le pouce",desc:"Une assiette fast-food",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("fast")});
   B.push({id:"mood30",name:"Introspection",desc:"Noter ton humeur 30 jours",ic:"face",t:2,ok:()=>Object.keys(S.g.mood||{}).length>=30});
   B.push({id:"lz5",name:"Passionné",desc:"Une compétence au niveau 5",ic:"book",t:2,ok:()=>Object.values(lzState().xp).some(x=>skInfo(x).l>=5)});
   B.push({id:"lz3x3",name:"Touche-à-tout",desc:"3 skills au niveau 3",ic:"star",t:2,ok:()=>Object.values(lzState().xp).filter(x=>skInfo(x).l>=3).length>=3});
