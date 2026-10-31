@@ -310,17 +310,6 @@ html:not(#_a):not(#_b):not(#_c) body #relList>li.rl.gfam{--fc:var(--c-famille)!i
 .pf2 .tagrow .tg{display:inline-flex;align-items:center;gap:6px}
 .pf2 .tagrow .tg[aria-pressed="false"] .tgi{opacity:.55;filter:grayscale(.6)}
 .pf2 .tagrow .tg.grp[aria-pressed="true"]{border-color:var(--gc);background:color-mix(in srgb,var(--gc) 24%,var(--surface))}
-.pf2tog{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px;color:var(--ink);font:inherit;cursor:pointer}
-.pf2tog .fti{width:40px;height:40px;flex:none;display:grid}
-.pf2tog .fti svg{width:100%;height:100%}
-.pf2tog[aria-pressed="false"] .fti{filter:grayscale(1);opacity:.5}
-.pf2tog .pf2t{flex:1;display:grid;gap:2px}
-.pf2tog .pf2t small{opacity:.7;font-size:13px}
-.pf2sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex:none}
-.pf2sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform 120ms}
-.pf2tog[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 16%,var(--surface))}
-.pf2tog[aria-pressed="true"] .pf2sw{background:var(--gold)}
-.pf2tog[aria-pressed="true"] .pf2sw::after{transform:translateX(18px)}
 .pf2sug{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:2px dashed var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--surface))}
 .pf2sug[hidden]{display:none}
 .pf2sug .fti{width:30px;height:30px;flex:none;display:grid}
@@ -355,7 +344,7 @@ html:not(#_a):not(#_b) body .pf2 .fjobs .fti{width:44px;height:44px}
 html:not(#_a):not(#_b) body .pf2 .fjobs button{font-size:11px;padding:4px;text-align:center;line-height:1.15}
 /* — depuis standards.css — */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.rwr i){border-radius:50%!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf2sw::after,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .p-pic.editable::after{border-radius:50%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .p-pic.editable::after{border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl{grid-template-columns:52px minmax(0,1fr)!important;grid-template-rows:auto auto!important;grid-template-areas:"av nm" "bar bar"!important;align-items:start!important;column-gap:10px!important;row-gap:12px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rb{align-content:start!important;grid-template-rows:26px 30px!important;row-gap:4px!important;min-width:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #relList>li.rl .rn{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;min-width:0!important;height:26px!important}
@@ -389,3 +378,28 @@ html body #relList>li.rgh:not(:first-child){margin-top:16px}
 html body #relList>li.rgh .vide{margin:12px 0 0}
 /* « Nv N » centré dans la barre : la boîte fait la hauteur de la barre (18 px) */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #relList>li.rl .rx{height:18px!important}
+/* Profil d'un proche (retours du 31/10) */
+/* P.1 : le texte d'XP centré dans sa barre (il se centrait sur toute la rangée) */
+html:not(#_a):not(#_b):not(#_c) body #prof .fp-xp .bar{position:relative}
+/* P.2 : le statut juste au-dessus de la barre d'XP */
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf .fp-st{display:block;font-size:13px;font-weight:700;color:var(--muted,#cfc6b8);margin:4px 0 -2px;position:relative;z-index:2}
+/* P.3 : un seul voile flouté derrière toute la fiche ; plus de cadres autour du prénom, du badge, de la barre */
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf .fp-veil{display:none}
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf.aura-on .fp-veil{display:block;position:absolute;inset:0;z-index:1;pointer-events:none;background:color-mix(in srgb,var(--surface) 50%,transparent);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf.aura-on>:not(.fp-veil){position:relative;z-index:2}
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf.aura-on :is(.pf-name,.statlist,.pf-xp,.fp-bd:not(:empty),.fp-when){background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;margin:0;padding:0}
+html:not(#_a):not(#_b):not(#_c) body #prof .fpf.aura-on .fp-bd:not(:empty){padding:revert}
+/* P.4 : rappel — la ligne passe derrière des cases pleines, jamais au travers */
+html:not(#_a):not(#_b):not(#_c) body .premind .rmt button{opacity:1}
+html:not(#_a):not(#_b):not(#_c) body .premind .rmt button:not([aria-pressed="true"]) span{opacity:.6}
+html:not(#_a):not(#_b):not(#_c) body .premind .rmt i{position:relative;z-index:1;background:#141632}
+html:not(#_a):not(#_b):not(#_c) body .premind .rmt button[aria-pressed="true"] i{background:var(--gold)}
+/* P.7-P.8 : univers et talents en icône seule, plus grande (le nom reste pour ceux sans icône) */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #prof .tg.tgo{width:56px;height:56px;padding:0!important;display:grid!important;place-items:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #prof .tg.tgo .tgi{display:grid!important;place-items:center;margin:0!important;line-height:0;width:40px;height:40px;transform:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #prof .tg.tgo .tgi svg{width:40px;height:40px}
+/* P.9 : page d'un groupe — nom en grand comme le prénom d'un proche, sans pointillés ; croix de retrait plus petite */
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .grpcard .grpin2{font-family:var(--f-pixel)!important;font-size:30px!important;letter-spacing:.03em;text-transform:uppercase;line-height:1.1;background:transparent!important;border:0!important;border-bottom:2px solid transparent!important;padding:0!important;min-height:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .grpcard .grpin2:focus{border-bottom-color:var(--gc)!important;outline:0}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx{width:16px!important;height:16px!important;min-width:0!important;min-height:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx svg{width:8px!important;height:8px!important}

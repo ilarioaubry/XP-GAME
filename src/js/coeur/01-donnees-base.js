@@ -54,7 +54,7 @@ let S={xp:0,actions:STARTER,log:[],days:[],perLevel:1,rankBonus:5,wishes:STARTER
 const statNeed=l=>30+20*l;
 // Relations : chaque ami a son XP. Niveau l → l+1 coûte 15 × (l+1) XP (30, 45, 60…)
 const PICS={};
-const REL_ACTIONS=[{k:"news",label:"Prendre des nouvelles",verb:n=>"Prendre des nouvelles de "+n,xp:10},{k:"call",label:"Appeler",verb:n=>"Appeler "+n,xp:20},{k:"meet",label:"Vu en vrai",verb:n=>"Voir "+n,xp:40}];
+const REL_ACTIONS=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles de "+n,xp:10},{k:"call",label:"Appeler",verb:n=>"Appeler "+n,xp:20},{k:"meet",label:"Vu en vrai",verb:n=>"Voir "+n,xp:40}];
 let profName=null;
 const bondNeed=l=>15*(l+1);
 function bondInfo(xp){let l=1,r=xp;while(r>=bondNeed(l)){r-=bondNeed(l);l++}return{l,cur:r,need:bondNeed(l)}}

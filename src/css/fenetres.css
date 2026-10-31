@@ -214,8 +214,6 @@ html body #plusSheet .head .count{display:none!important}
 #actFind .afc{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 #actFind .afo{border-left:5px solid var(--line)}
 #actFind .afo.fr-g{border-left-color:#3fbf6a}
-#actFind .afo.fr-o{border-left-color:#f0a020}
-#actFind .afo.fr-r{border-left-color:#e5483a;background:color-mix(in srgb,#e5483a 14%,var(--surface-2))}
 #actFind .afd{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px 14px}
 #actFind .afdh{display:flex;align-items:center;gap:10px}
 #actFind .afdh b{font-family:var(--f-pixel);font-size:20px;line-height:1.15}
@@ -235,15 +233,12 @@ html.plusopen #afFab{display:none}
 #plusSheet .psxp{font-family:var(--f-body);font-size:13px;color:var(--gold);font-weight:700}
 #actFind .afs{position:sticky;top:56px;z-index:2;background:var(--surface)}
 #actFind .afc button{position:relative}
-#actFind .afred{position:absolute;top:4px;right:6px;min-width:18px;height:18px;border-radius:9px;background:#e5483a;color:#fff;font-style:normal;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 4px}
 #actFind .afo{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #actFind .afgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #actFind .aft{position:relative;text-align:left;min-height:64px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--fc);background:var(--surface);color:var(--ink);padding:12px 12px;font:inherit;display:flex;align-items:center}
 #actFind .aft b{font-size:15px;line-height:1.2;padding-right:22px}
 #actFind .aft.r{border-left-color:#e5483a}
 #actFind .aft.o{border-left-color:#f0a020}
-#actFind .aft .afor{position:absolute;top:6px;right:8px;min-width:18px;height:18px;border-radius:9px;background:#f0a020;color:#1a1210;font-style:normal;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 4px}
-#actFind .aft .afred{top:6px;right:8px}
 #actFind .aft em{position:absolute;top:6px;right:10px;font-style:normal;color:var(--accent);font-weight:800}
 #actFind .aft.pop{animation:afPop .45s ease}
 #actFind .affh{display:flex;align-items:center;gap:10px}
@@ -280,9 +275,6 @@ html.plusopen #afFab{display:none}
 #actFind .afo{gap:8px;background:rgba(24,20,40,.7)}
 #actFind .afo .uic{width:24px;height:24px;border-radius:7px;padding:1px;box-shadow:0 0 0 2px transparent}
 #actFind .afo.fr-g .uic{box-shadow:0 0 0 2px #3fbf6a}
-#actFind .afo.fr-o .uic{box-shadow:0 0 0 2px #f0a020,0 0 8px #f0a020}
-#actFind .afo.fr-r .uic{box-shadow:0 0 0 2px #e5483a,0 0 10px #e5483a}
-#actFind .afo.fr-g,#actFind .afo.fr-o,#actFind .afo.fr-r{border-left-width:1px!important;border-left-color:var(--line)!important}
 #actFind .afd{background:rgba(20,16,34,.72)}
 /* — depuis epure-03.css — */
 html:not(#_a):not(#_b) body #actFind .afppl button[data-p]:not([data-p=""]){display:inline-flex;align-items:center;gap:6px;padding-left:4px!important}
@@ -437,3 +429,9 @@ html:not(#_u1):not(#_u2) body #actFind .aftodofree{white-space:nowrap;overflow:h
 html:not(#_u1):not(#_u2):not(#_u3) body .prwin .prwm{animation:none}
 html:not(#_u1):not(#_u2):not(#_u3) body .prwin .prwm svg{width:96px;height:96px;filter:none!important;transform:none!important}
 html:not(#_u1):not(#_u2):not(#_u3) body .qwcard .qwmon svg{width:64px;height:64px}
+
+/* A.1 (31/10) : plus de rouge « en retard » ; une petite info neutre « il y a N j » sous l'option */
+#actFind .afo .afago{display:block;font-size:11px;font-weight:400;color:var(--muted,#b9b4c8);line-height:1.2;margin-top:2px}
+/* N.1 (31/10) : pas de barre de défilement visible dans l'assiette */
+.plo,.plo *{scrollbar-width:none}
+.plo::-webkit-scrollbar,.plo *::-webkit-scrollbar{display:none;width:0;height:0}

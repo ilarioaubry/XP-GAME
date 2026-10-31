@@ -2,6 +2,18 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 31/10/2026
+- Panneau + : plus de rouge « en retard » ; une petite info « il y a N j » sous les options pas faites depuis longtemps.
+- Idée de sortie : bouton « Fait » en jaune ; « une autre idée » garde l'icône en bas à droite.
+- Ma fiche (édition) : plus rien ne déborde à droite ; « J'ai… » en tuiles rectangulaires avec le nom sur une ligne ; poisson recentré.
+- Ma situation : retirer un artiste ou toucher une puce ne renvoie plus en haut.
+- Profil d'un proche : XP centrée dans sa barre, statut au-dessus de la barre, un seul voile flouté derrière toute la fiche (plus de cadres), cases du rappel pleines, « Nouvelles », « Vit avec moi » retiré (se règle dans Ma vie), univers et talents en icônes seules plus grandes (avion pour Voyageur, nouvelle icône Danse).
+- Page d'un groupe : nom en grand sans pointillés, petite croix pour retirer un membre.
+- Journal : « Annuler » devient une icône retour pixel.
+- Quête spéciale « Voir quelqu'un en vrai » : même fond et même icône en bas à droite que les autres.
+- Armoire : l'objet porté est surligné en jaune, sans coche.
+- Assiette : plus de barre de défilement visible.
+
 ## 30/10/2026
 - Rituels : un rituel coché glisse et se replie, puis se range dans « N faits » en bas de la liste (à déplier pour le retrouver, ou « Annuler » en bas). La barre d'XP brille un instant et le compteur du titre rebondit. Tout est coupé avec « réduire les animations ».
 - Cases majeures du journal en pixel art, même taille : Ta nuit et Bonne nuit sur un ciel étoilé ; l'énergie en trois batteries pixel (rouge, orange, verte) à toucher, sans texte ; le contrat avec une case par jour.

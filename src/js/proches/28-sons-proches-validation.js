@@ -94,7 +94,7 @@ function setWith(n,on){const G=S.g;if(!G.sit||typeof G.sit!=="object")G.sit={goa
   const i=s.with.indexOf(n);if(on&&i<0)s.with.push(n);if(!on&&i>=0)s.with.splice(i,1);
   if(typeof window.homeOf==="function")s.home=window.homeOf(s);s.t=Date.now();if(G.fq)G.fq.d="";save();try{renderFiche()}catch(e){}}
 /* tags de personnalité : pictos + déduction depuis ce qu'on fait ensemble */
-const TGI=[[/geek|jeu|gamer/i,"manette"],[/cin[ée]/i,"clap"],[/musi|chant|^sons?$/i,"micro"],[/sport/i,"halteres"],[/artiste|^art$|dessin|peint/i,"pinceau"],[/voyag/i,"valise"],[/gourm/i,"repas"],[/cuisin/i,"casserole"],[/f[êe]tard/i,"cocktail"],[/intello|lect/i,"lire"],[/[ée]cri/i,"notec"],[/code/i,"laptop"],[/nature/i,"plante"],[/danse/i,"pas"],[/humour/i,"bulle"],[/photo/i,"photo"],[/brico/i,"ciseaux"]];
+const TGI=[[/geek|jeu|gamer/i,"manette"],[/cin[ée]/i,"clap"],[/musi|chant|^sons?$/i,"micro"],[/sport/i,"halteres"],[/artiste|^art$|dessin|peint/i,"pinceau"],[/voyag/i,"avion"],[/gourm/i,"repas"],[/cuisin/i,"casserole"],[/f[êe]tard/i,"cocktail"],[/intello|lect/i,"lire"],[/[ée]cri/i,"notec"],[/code/i,"laptop"],[/nature/i,"plante"],[/danse/i,"danse"],[/humour/i,"bulle"],[/photo/i,"photo"],[/brico/i,"ciseaux"]];
 const tgIc=t=>(TGI.find(([r])=>r.test(t))||[0,"etoile"])[1];
 const TAGX=[["Geek",/jeux? ?vid|vid[ée]o ?game|manette|console|gaming|jouer (à|en ligne)|\bLAN\b|donjons/i],["Cinéphile",/\bfilm|cin[ée]ma|\bs[ée]rie|netflix|s[ée]ance/i],["Musique",/concert|musique|karaok|festival|\bjam\b/i],["Sportif",/sport|courir|footing|v[ée]lo|salle de|muscu|\bfoot\b|basket|tennis|nager|piscine|escalade|yoga/i],["Gourmand",/resto|brunch|cuisin|pizza|sushi|g[âa]teau/i],["Fêtard",/soir[ée]e|\bf[êe]te\b|\bbar\b|\bverre\b|\bclub\b|danser/i],["Artiste",/expo|mus[ée]e|dessin|peind|peinture|th[ée][âa]tre|atelier/i],["Voyageur",/voyage|week-?end|road ?trip|visiter/i],["Intello",/\blivre|lecture|d[ée]bat|conf[ée]rence|biblioth|\b[ée]checs/i],["Nature",/balade|randonn|jardin|pique-?nique|for[êe]t|plage|camping/i]];
 function tagSug(n){const P=S.profiles[n]||{},have=[...(P.types||[]),...(P.talents||[])],no=P.nope||[],t0=Date.now()-150*864e5,cnt={};
@@ -125,20 +125,19 @@ function renderProfileBase(force){
   const fam=isFam(n),RL=fam?REL_FAM:REL_FR,rk=relOf(n),ri=relInfo(n),st=statusOf(n);
   root.style.setProperty("--h",`hsl(${hueOf(n)} 55% 50%)`);
   root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
-  <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF">
-    <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="ctitle">${bondTitle(bi.l)}</span><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
+  <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF"><i class="fp-veil" aria-hidden="true"></i>
+    <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
       <div class="fp-btns"><button type="button" class="me-set" id="pBgBtn" aria-label="Changer le fond" aria-expanded="false" title="Fond"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.3-1.7-.4-1 .2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button></div></div>
     <div class="fp-bgpick" id="pBgPick" hidden></div>
     <div class="pf-body fp-body"><div class="pf-side"><div class="p-pic" id="pPic"></div>${P.pic?`<button type="button" class="lnk" id="pPicDel">Retirer la photo</button>`:""}</div></div>
-    <div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar" title="${when}"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
+    <span class="ctitle fp-st">${bondTitle(bi.l)}</span><div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar" title="${when}"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
     <div class="fp-bd" id="pBdBox"></div>
     <div class="pf2bded" id="pBdEd" hidden></div>
     <small class="fp-when">${when}</small>
   </div>
   <div class="ract" id="pActs"></div>
   <section class="set-card pf2" id="pLien"><h3>Lien</h3>
-    <div class="fjobs fpris" id="pRel">${RL.map(([k,l,ic])=>`<button type="button" data-rel="${k}" aria-pressed="${rk===k}"><span class="fti">${rkSvg(ic)}</span><span>${esc(l)}</span></button>`).join("")}</div>
-    <button type="button" class="pf2tog" id="pHome" aria-pressed="${!!st}"><span class="fti">${rkSvg(st?st.ic:"maisonp")}</span><span class="pf2t"><b>Vit avec moi</b><small>${st?"Statut : "+st.l:fam?"Ajouter à mon foyer":"Ajouter à mon foyer : statut coloc"}</small></span><i class="pf2sw" aria-hidden="true"></i></button></section>
+    <div class="fjobs fpris" id="pRel">${RL.map(([k,l,ic])=>`<button type="button" data-rel="${k}" aria-pressed="${rk===k}"><span class="fti">${rkSvg(ic)}</span><span>${esc(l)}</span></button>`).join("")}</div></section>
   <section class="set-card pf2" id="pTags"><h3>Ses univers</h3><div class="pf2sug" id="pSug" hidden></div><div class="tagrow" id="tgTypes"></div>
     <h3>Ses talents</h3><div class="tagrow" id="tgTal"></div>
     <form class="tagadd" id="tgForm"><input id="tgNew" maxlength="20" placeholder="Autre talent…" aria-label="Autre talent"><button class="btn" type="submit">Ajouter</button></form></section>
@@ -160,14 +159,13 @@ function renderProfileBase(force){
   pp.classList.add("editable");pp.classList.toggle("px",!!P.avc);pp.tabIndex=0;pp.setAttribute("role","button");pp.setAttribute("aria-label","Créer l'avatar de "+n);pp.onclick=()=>openAvc(n);pp.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openAvc(n)}};
   const pd=$("pPicDel");if(pd)pd.onclick=()=>{delete P.pic;delete P.avc;save();renderProfile(true);renderRelations()};
   REL_ACTIONS.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span>${A.label}</span><b>+${A.xp} XP</b>`;b.onclick=ev=>bondAction(n,A,b,ev);$("pActs").appendChild(b)});
-  // lien + foyer
+  // lien (le foyer se règle dans Ma vie)
   $("pRel").querySelectorAll("[data-rel]").forEach(b=>b.onclick=()=>{const k=b.dataset.rel;setRel(n,fam||relOf(n)!==k?k:null);renderProfile(true);renderRelations()});
-  $("pHome").onclick=()=>{setWith(n,!statusOf(n));renderProfile(true);renderRelations()};
   // univers & talents
   const drawTags=()=>{
     const mk=(box,list,key,cls)=>{box.innerHTML="";const sel=P[key]||[];
       list.concat(sel.filter(x=>!list.includes(x))).forEach(x=>{const b=document.createElement("button");b.type="button";b.className="tg "+cls;b.setAttribute("aria-pressed",sel.includes(x));
-        b.innerHTML=`<span class="tgi">${rkSvg(tgIc(x))}</span>`;b.append(x);
+        const ik=tgIc(x);b.innerHTML=`<span class="tgi">${rkSvg(ik)}</span>`;if(ik==="etoile"||!list.includes(x))b.append(x);else{b.classList.add("tgo");b.setAttribute("aria-label",x);b.title=x}
         b.onclick=()=>{const a=P[key]||[],i=a.indexOf(x);if(i>=0)a.splice(i,1);else a.push(x);if(a.length)P[key]=a;else delete P[key];save();drawTags();renderRelations()};box.appendChild(b)})};
     mk($("tgTypes"),TYPES,"types","typ");mk($("tgTal"),TALENTS_UI,"talents","tal");
     const sg=tagSug(n),sb=$("pSug");sb.hidden=!sg;
@@ -272,7 +270,7 @@ function renderRemind(){
   box.appendChild(spot);
 }
 const FG_COL=["#ff7aa8","#e0447a","#f08a2a","#f2c94c","#5fae4f","#4fb3b3","#2a8fd6","#9b5de5"];
-const FG_ACT=[{k:"news",label:"Prendre des nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:40}];
+const FG_ACT=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:40}];
 const fgCol=g=>g.c||FG_COL[0];
 function openGroup(id,edit){profName="@g:"+id;showView("p");if(edit)setTimeout(()=>{const i=$("gName");if(i){i.focus();i.select()}},150)}
 function fgAct(g,A,el){const M=fgMembers(g.id);if(!M.length){toast("Ajoute d'abord des membres au groupe");return}

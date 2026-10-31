@@ -242,36 +242,36 @@ Fonctionnalités (à proposer avant de construire) :
 ## Retours du 31/10/2026
 
 ### Retouches (A)
-- [ ] A.1 Actions qui se mettent en rouge : comprendre ce que c'est et le rendre clair (à préciser avec Ilario)
-- [ ] A.2 Idée de sortie : « Fait » en jaune au lieu de « Je l'ai fait » ; « une autre » garde l'icône en bas à droite
+- [x] A.1 (31/10) Panneau + : le rouge voulait dire « pas fait depuis longtemps ». Retiré (pastilles rouges, halo, fond rouge) ; à la place, petite info neutre « il y a N j » sous l'option
+- [x] A.2 (31/10) Idée de sortie : « Fait » en jaune au lieu de « Je l'ai fait » ; « une autre » garde l'icône en bas à droite
 - [ ] A.3 Mon personnage visible en permanence sur la scène (pas seulement pendant les actions)
 - [ ] A.4 « Ma situation » (Aujourd'hui) et « Ma fiche » (Moi) au même format, celui de « Ma fiche »
-- [ ] A.5 J'ai… : « Petit animal » seul, poisson recentré
-- [ ] A.6 Tuiles « Rencontre » (à préciser) : tout dans son cadre, titre sur une ligne, rectangle plutôt que carré
-- [ ] A.7 Retirer un artiste ne doit pas renvoyer en haut de la page
+- [x] A.5 (31/10) J'ai… : « Petit animal » seul, poisson recentré
+- [x] A.6 (31/10) J'ai… : tout rentre dans le cadre (la fiche en édition débordait à droite), tuiles rectangulaires 2 par ligne, nom sur une ligne (libellés raccourcis)
+- [x] A.7 (31/10) Retirer un artiste ne doit pas renvoyer en haut de la page
 
 ### Profil d'ami (P)
-- [ ] P.1 XP centrée dans sa barre
-- [ ] P.2 Statut (« Ami proche »…) au-dessus de la barre d'XP
-- [ ] P.3 Le flou derrière la barre d'XP sur toute la fiche ; plus de cadre autour du prénom et du badge
-- [ ] P.4 Rappel : la ligne entre les cases ne passe pas dans les cases non cochées
-- [ ] P.5 « Prendre des nouvelles » → « Nouvelles »
-- [ ] P.6 Retirer « Vit avec moi » (se règle dans Ma vie)
-- [ ] P.7 Univers : icônes seules, plus grandes ; voyage = avion au lieu de la valise
-- [ ] P.8 Talents : icônes seules, plus grandes ; nouvelle icône danse
-- [ ] P.9 Groupes : croix plus petite, plus de pointillés sous le titre du groupe, « … plus grand » (message coupé, à préciser)
+- [x] P.1 (31/10) XP centrée dans sa barre
+- [x] P.2 (31/10) Statut (« Ami proche »…) au-dessus de la barre d'XP
+- [x] P.3 (31/10) Le flou derrière la barre d'XP sur toute la fiche ; plus de cadre autour du prénom et du badge
+- [x] P.4 (31/10) Rappel : la ligne entre les cases ne passe pas dans les cases non cochées
+- [x] P.5 (31/10) « Prendre des nouvelles » → « Nouvelles »
+- [x] P.6 (31/10) Retirer « Vit avec moi » (se règle dans Ma vie)
+- [x] P.7 (31/10) Univers : icônes seules, plus grandes ; voyage = avion au lieu de la valise
+- [x] P.8 (31/10) Talents : icônes seules, plus grandes ; nouvelle icône danse
+- [x] P.9 (31/10) Groupes : croix plus petite, plus de pointillés sous le titre du groupe, nom du groupe en grand
 
 ### Aujourd'hui (T)
-- [ ] T.1 Journal : « Annuler » souligné → icône retour pixel art
-- [ ] T.2 Rituels faits : disparaissent complètement de la liste (plus de « N faits »), retrouvables via l'historique / Annuler
-- [ ] T.3 Quête spéciale « Voir quelqu'un en vrai » : même modèle que les autres (icône en bas à droite, même fond, même taille)
+- [x] T.1 (31/10) Journal : « Annuler » souligné → icône retour pixel art
+- [ ] T.2 Rituels faits : disparaissent complètement de la liste (plus de « N faits ») ; « Annuler » les fait revenir dans les rituels
+- [x] T.3 (31/10) Quête spéciale « Voir quelqu'un en vrai » : même modèle que les autres (icône en bas à droite, même fond, même taille)
 
 ### Esthétique (E)
 - [ ] E.1 Badge humeur 30 j : yeux de l'emoji refaits, identiques
-- [ ] E.2 Auras (chambre) : surlignage jaune seul, sans coche en haut à droite
+- [x] E.2 (31/10) Armoire (auras et toutes les catégories) : surlignage jaune seul, plus de coche en haut à droite
 
 ### Assiette et nourriture (N) — idées à proposer avant de construire
-- [ ] N.1 Masquer la barre de défilement verticale
+- [x] N.1 (31/10) Masquer la barre de défilement verticale
 - [ ] N.2 Carrousels par catégorie, une ligne chacun, ordre logique : pain → féculent classique → atypique ; viande → végétal → de la mer
 - [ ] N.3 Nouveaux aliments : frites, steak, saumon, falafel, champignons, ail, sandwich
 - [ ] N.4 Sauces : soja, ketchup, mayo, BBQ, huile d'olive, césar, crème fraîche, curry coco

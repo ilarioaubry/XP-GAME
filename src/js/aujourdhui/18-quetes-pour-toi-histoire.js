@@ -10,7 +10,7 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
   const st=JSON.parse(JSON.stringify(sitOf()||{job:"",home:"",goals:[],pass:pre,time:"30",note:""}));if(!G.taste||typeof G.taste!=="object")G.taste={art:[]};const art=G.taste.art.slice();let artMsg="",busy=false;const nf=[...(G.normOff||[])];
   const close=()=>{p.remove();done&&done()};p.onclick=e=>{if(e.target===p)close()};
   const chips=(k,multi,max)=>`<div class="qcdom">${SIT_Q[k].map(([v,l])=>`<button type="button" class="qchip sm" data-k="${k}" data-v="${v}" aria-pressed="${multi?st[k].includes(v):st[k]===v}">${l}</button>`).join("")}</div>${multi&&max?`<p class="hint sith">${st[k].length}/${max} au maximum</p>`:""}`;
-  const draw=()=>{p.innerHTML=`<div class="bpc rap qc"><div class="raph"><h3>Ma situation</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
+  const draw=()=>{const o=p.querySelector(".bpc"),y0=o?o.scrollTop:0,y1=p.scrollTop;p.innerHTML=`<div class="bpc rap qc"><div class="raph"><h3>Ma situation</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
     <p class="qcsub">1 minute pour des quêtes tirées de ta vie.</p>
     <h4>En ce moment, tu es</h4>${chips("job")}<h4>Tu vis</h4>${chips("home")}
     <h4>Ce que tu veux faire avancer</h4>${chips("goals",true,4)}<h4>Tes passions</h4>${chips("pass",true)}
@@ -21,6 +21,7 @@ function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p
     ${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
     <h4>Ce qui compte pour toi en ce moment <small>facultatif</small></h4><input class="qcname sitnote" maxlength="80" placeholder="Ex. je prépare mon premier concert">
     <button type="button" class="btn primary qcgo">Enregistrer</button></div>`;
+    {const o2=p.querySelector(".bpc");if(o2)o2.scrollTop=y0;p.scrollTop=y1}  // une puce touchée ou un artiste retiré : on reste au même endroit
     p.querySelector(".raclose").onclick=close;p.querySelectorAll(".sita b").forEach((b,i)=>b.textContent=art[i]);
     const nt=p.querySelector(".sitnote");nt.value=st.note||"";nt.oninput=()=>{st.note=nt.value};
     p.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k,v=b.dataset.v;if(Array.isArray(st[k])){if(st[k].includes(v))st[k]=st[k].filter(x=>x!==v);else{if(k==="goals"&&st[k].length>=4){toast("4 au maximum : choisis ce qui compte le plus");return}st[k].push(v)}}else st[k]=st[k]===v?"":v;draw()});

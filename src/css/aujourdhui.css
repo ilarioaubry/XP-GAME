@@ -10,7 +10,7 @@ form.add input,form.add select{font:inherit;color:var(--ink);background:var(--bg
 .log time{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
 .log .n{min-width:0;overflow-wrap:anywhere}
 .log .x{font-family:var(--f-pixel);color:var(--gold);font-weight:700}
-.log .undo{border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline}
+.log .undo{border:0;background:none;color:var(--muted);width:44px;height:44px;padding:0;display:grid;place-items:center}
 .bar-d .bh{justify-content:space-between;font-size:15px;flex-wrap:wrap}
 .bar-d .bh b{color:var(--cat)}
 .bar-d .bh small{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
