@@ -239,6 +239,50 @@ Fonctionnalités (à proposer avant de construire) :
 - [ ] V.3 L'appli le déduit aussi : si tu notes souvent « sortir le chien », elle propose de l'ajouter à ta fiche
 - [ ] V.4 Autres faits utiles : lunettes ou lentilles, traitement à prendre, régime (végé, sans gluten), sport pratiqué en club, instrument, études (examens), jours de garde partagée
 
+## Retours du 31/10/2026
+
+### Retouches (A)
+- [ ] A.1 Actions qui se mettent en rouge : comprendre ce que c'est et le rendre clair (à préciser avec Ilario)
+- [ ] A.2 Idée de sortie : « Fait » en jaune au lieu de « Je l'ai fait » ; « une autre » garde l'icône en bas à droite
+- [ ] A.3 Mon personnage visible en permanence sur la scène (pas seulement pendant les actions)
+- [ ] A.4 « Ma situation » (Aujourd'hui) et « Ma fiche » (Moi) au même format, celui de « Ma fiche »
+- [ ] A.5 J'ai… : « Petit animal » seul, poisson recentré
+- [ ] A.6 Tuiles « Rencontre » (à préciser) : tout dans son cadre, titre sur une ligne, rectangle plutôt que carré
+- [ ] A.7 Retirer un artiste ne doit pas renvoyer en haut de la page
+
+### Profil d'ami (P)
+- [ ] P.1 XP centrée dans sa barre
+- [ ] P.2 Statut (« Ami proche »…) au-dessus de la barre d'XP
+- [ ] P.3 Le flou derrière la barre d'XP sur toute la fiche ; plus de cadre autour du prénom et du badge
+- [ ] P.4 Rappel : la ligne entre les cases ne passe pas dans les cases non cochées
+- [ ] P.5 « Prendre des nouvelles » → « Nouvelles »
+- [ ] P.6 Retirer « Vit avec moi » (se règle dans Ma vie)
+- [ ] P.7 Univers : icônes seules, plus grandes ; voyage = avion au lieu de la valise
+- [ ] P.8 Talents : icônes seules, plus grandes ; nouvelle icône danse
+- [ ] P.9 Groupes : croix plus petite, plus de pointillés sous le titre du groupe, « … plus grand » (message coupé, à préciser)
+
+### Aujourd'hui (T)
+- [ ] T.1 Journal : « Annuler » souligné → icône retour pixel art
+- [ ] T.2 Rituels faits : disparaissent complètement de la liste (plus de « N faits »), retrouvables via l'historique / Annuler
+- [ ] T.3 Quête spéciale « Voir quelqu'un en vrai » : même modèle que les autres (icône en bas à droite, même fond, même taille)
+
+### Esthétique (E)
+- [ ] E.1 Badge humeur 30 j : yeux de l'emoji refaits, identiques
+- [ ] E.2 Auras (chambre) : surlignage jaune seul, sans coche en haut à droite
+
+### Assiette et nourriture (N) — idées à proposer avant de construire
+- [ ] N.1 Masquer la barre de défilement verticale
+- [ ] N.2 Carrousels par catégorie, une ligne chacun, ordre logique : pain → féculent classique → atypique ; viande → végétal → de la mer
+- [ ] N.3 Nouveaux aliments : frites, steak, saumon, falafel, champignons, ail, sandwich
+- [ ] N.4 Sauces : soja, ketchup, mayo, BBQ, huile d'olive, césar, crème fraîche, curry coco
+- [ ] N.5 Dessert : glace, yaourt, fruit, chocolat
+- [ ] N.6 Compteur café
+- [ ] N.7 Où : maison, restaurant, fast-food… ; grignotage
+- [ ] N.8 Types d'assiette (équilibrée = or, végétarienne = vert, fast-food = rouge ou mieux), chaque nouveau type débloque un badge (Végétarien, Chef cuisinier, fast-food)
+- [ ] N.9 XP en plus quand je cuisine pour quelqu'un
+- [ ] N.10 Habitude alimentaire (dans J'ai… / Ma vie)
+- [ ] N.11 Inviter des amis chez soi (action)
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
