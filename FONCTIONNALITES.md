@@ -46,7 +46,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Fonctionnalité | Ce qu'elle fait | Statut |
 |---|---|---|
 | Personnage | Ton avatar, son titre, son cadre | active |
-| Ma fiche | Ton profil | active |
+| Ma fiche | Ton profil, seul formulaire de ta situation (métier, chez moi, J'ai…, priorités, ce que tu aimes, temps libre, ce qui ne te concerne pas, artistes). « Ma situation » ouvre ce formulaire (l'ancienne fenêtre est retirée) | active |
 | Ce que tu deviens | Identités qui montent avec tes actions | active |
 | Ma vie | Rythme (réveil, travail), périodes (contrat…), compteurs suivis, « La dernière fois que… », Mes modules | active |
 | Mes projets | Projets en étapes, abandon avec Annuler | active |
@@ -74,7 +74,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Fonctionnalité | Ce qu'elle fait | Statut |
 |---|---|---|
 | Relations | Liste des proches, niveaux de lien (barre 18 px), groupes | active |
-| Fiche d'un proche | Cadre, relation, centres d'intérêt, anniversaire, actions (prendre des nouvelles, appeler, se voir) | active |
+| Fiche d'un proche | Cadre, relation, centres d'intérêt, anniversaire, actions (nouvelles, appeler, se voir) ; « Vit avec moi » se règle dans Ma vie | active |
 | Groupes | Photo de classe, actions de groupe | active |
 
 ## Hors écran

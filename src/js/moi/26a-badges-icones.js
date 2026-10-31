@@ -649,7 +649,7 @@ sleep7:{r:[ // bed + sleeper
 "llllllllllllll",
 "l............l"]},
 mood30:{f:function(){var g=grid(13,13);disc(g,6,6,6.4,'y');
-  put(g,3,4,["o...o","o...o"]);put(g,3,4,["o....","o...."]);g[4][8]='o';g[5][8]='o';
+  put(g,3,4,["oo...oo","oo...oo"]);  // deux yeux identiques, symétriques (31/10)
   put(g,2,7,["p.......p"]);put(g,3,8,["o.....o",".o...o.","..ooo.."]);g[2][3]='h';g[3][2]='h';return toRows(g);} },
 /* ---- Aventure & collection ---- */
 buy1:{r:[ // t-shirt

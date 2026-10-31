@@ -3,6 +3,10 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 31/10/2026
+- Mon personnage reste visible sur la scène (il disparaissait entre deux actions).
+- « Ma situation » ouvre Ma fiche en modification : un seul formulaire. Ma fiche reçoit le temps libre, « ce qui ne me concerne pas » et les artistes (puces avec une croix, ajout direct).
+- Rituels : un rituel fait disparaît de la liste (le compteur du titre le compte) ; « Annuler » le fait revenir.
+- Badge Introspection (humeur 30 j) : deux yeux identiques.
 - Panneau + : plus de rouge « en retard » ; une petite info « il y a N j » sous les options pas faites depuis longtemps.
 - Idée de sortie : bouton « Fait » en jaune ; « une autre idée » garde l'icône en bas à droite.
 - Ma fiche (édition) : plus rien ne déborde à droite ; « J'ai… » en tuiles rectangulaires avec le nom sur une ligne ; poisson recentré.

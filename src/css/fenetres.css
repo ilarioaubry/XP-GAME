@@ -130,8 +130,6 @@ html:not(#_a):not(#_b) body .wxd span svg{width:26px;height:24px;display:block}
 html:not(#_a):not(#_b) body .wxd small{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html:not(#_a):not(#_b) body .wxd em{font-style:normal;font-weight:800;font-size:13px;white-space:nowrap}
 html:not(#_a):not(#_b) body .wxc .sppl{margin-top:12px}
-html:not(#_a):not(#_b) body .sitart{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
-html:not(#_a):not(#_b) body .sith{margin:4px 0 0;font-size:13px}
 /* — depuis principal-09.css — */
 html:not(#_a):not(#_b) body .trgsh .bpc{display:grid;gap:10px}
 #skyBg{overflow:hidden}

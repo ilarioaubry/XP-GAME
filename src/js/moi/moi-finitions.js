@@ -111,6 +111,7 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
       ${perH}${gl.length?`<div class="fcs">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</div>`:""}${(s.have||[]).length&&typeof haveOf==="function"?`<div class="fcs fhaves">${s.have.map(k=>{const h=haveOf(k);return h?`<span class="fchip fhc">${tileI(h.ic)}<span>${esc(h.l)}</span></span>`:""}).join("")}</div>`:""}${!s0?`<span class="fnone">Touche Modifier pour la remplir</span>`:""}</div>`;
     if(P&&box.querySelector(".fper b"))box.querySelector(".fper b").textContent=P.name||"Ma période";
     box.querySelector(".fced").onclick=()=>{fEdit=true;renderFiche()};bindAsk(box);ficheMove();return}
+  if(!G.taste||typeof G.taste!=="object"||!Array.isArray(G.taste.art))G.taste={art:[]};const art=G.taste.art,nf=Array.isArray(G.normOff)?G.normOff:[];
   const row=(k,title,multi,max)=>`<div class="fr2"><small>${title}${max?` · ${max} max`:""}</small><div class="fopts">${SIT_Q[k].map(([v,l])=>{const on=multi?(s[k]||[]).includes(v):s[k]===v;return`<button type="button" data-fk="${k}" data-fv="${v}" aria-pressed="${on}">${esc(l)}</button>`}).join("")}</div></div>`;
   box.innerHTML=`<div class="fcard fedit fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn primary fcok">Terminé</button></div>
     <div class="fr2"><small>Ma situation</small><div class="fjobs">${SIT_Q.job.map(([v,l])=>`<button type="button" data-job="${v}" aria-pressed="${s.job===v}"><span class="fti">${tileI(JOBI[v])}</span><span>${esc(l.replace("En recherche d'emploi","En recherche"))}</span></button>`).join("")}</div>
@@ -120,7 +121,9 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
     <div class="fr2"><small>Mes priorités · 3 max · ces quêtes passent en premier</small><div class="fjobs fpris">${Object.keys(PRII).filter(k=>CATS[k]).map(k=>`<button type="button" data-fp="${k}" aria-pressed="${pri.includes(k)}"><span class="fti">${tileI(PRII[k])}</span><span>${esc(CATS[k].label)}</span></button>`).join("")}</div></div>
     ${row("goals","Ce que je veux améliorer",1,3)}${row("pass","Ce que j'aime",1)}
     <div class="fr2"><small>Ce qui compte en ce moment</small><input class="fnote" maxlength="80" placeholder="Ex. trouver un appart à Montpellier"></div>
-    <div class="fr2 frow2"><button type="button" class="btn fart">${ICO("edit",14)}<span>Mes artistes</span></button></div></div>`;
+    <div class="fr2"><small>Mon temps libre en semaine</small><div class="fopts">${SIT_Q.time.map(([v,l])=>`<button type="button" data-ft="${v}" aria-pressed="${s.time===v}">${esc(l)}</button>`).join("")}</div></div>
+    <div class="fr2"><small>Ce qui ne me concerne pas · ces quêtes ne sont plus proposées</small><div class="fopts">${NORMS.map(([k,l])=>`<button type="button" data-fn="${k}" aria-pressed="${nf.includes(k)}">${esc(l)}</button>`).join("")}</div></div>
+    <div class="fr2"><small>Mes artistes · pour des quêtes musique</small>${art.length?`<div class="fopts">${art.map((a,i)=>`<button type="button" class="fartx" data-ra="${i}" aria-pressed="true"><span></span>${ICO("close",12)}</button>`).join("")}</div>`:""}<form class="qcadd fartf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter" title="Ajouter">${ICO("plus",24)}</button></form></div></div>`;
   box.querySelectorAll(".fwp").forEach(x=>x.querySelector("b").textContent=x.dataset.n);
   box.querySelectorAll("[data-job]").forEach(b=>b.onclick=()=>{s.job=b.dataset.job;commit();renderFiche()});
   box.querySelectorAll("[data-fh]").forEach(b=>b.onclick=()=>{const k=b.dataset.fh,a=Array.isArray(s.have)?s.have.slice():[],i=a.indexOf(k),on=i<0;if(on)a.push(k);else a.splice(i,1);s.have=a;commit();try{haveApply(k,on);save()}catch(e){}renderFiche()});
@@ -130,7 +133,10 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
   box.querySelectorAll(".fwp .fwx2").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;s.with=s.with.filter(x=>x!==n);s.home=homeOf(s);commit();renderFiche()});
   box.querySelectorAll(".fwp .flove").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;setRel(n,relOf(n)==="couple"?null:"couple");s.home=homeOf(s);commit();renderFiche()});
   const n=box.querySelector(".fnote");n.value=s.note||"";n.onchange=()=>{s.note=n.value.trim().slice(0,80);commit()};
-  box.querySelector(".fart").onclick=()=>{try{sitSheet()}catch(e){}};
+  box.querySelectorAll(".fartx").forEach((b,i)=>{b.querySelector("span").textContent=art[i];b.setAttribute("aria-label","Retirer "+art[i]);b.onclick=()=>{G.taste={art:art.filter((_,j)=>j!==i),t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()}});
+  box.querySelector(".fartf").onsubmit=e=>{e.preventDefault();const v=e.target.querySelector("input").value.trim().slice(0,40);if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))G.taste={art:[...art,v],t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()};
+  box.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{s.time=s.time===b.dataset.ft?"":b.dataset.ft;commit();renderFiche()});
+  box.querySelectorAll("[data-fn]").forEach(b=>b.onclick=()=>{const k=b.dataset.fn,a=nf.slice(),i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);G.normOff=a;if(G.fq)G.fq.d="";save();renderFiche()});
   box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
   ficheMove()}
 // ---- capacité déduite + suivi en cartes

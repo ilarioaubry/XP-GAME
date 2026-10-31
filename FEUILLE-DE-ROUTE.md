@@ -244,8 +244,8 @@ Fonctionnalités (à proposer avant de construire) :
 ### Retouches (A)
 - [x] A.1 (31/10) Panneau + : le rouge voulait dire « pas fait depuis longtemps ». Retiré (pastilles rouges, halo, fond rouge) ; à la place, petite info neutre « il y a N j » sous l'option
 - [x] A.2 (31/10) Idée de sortie : « Fait » en jaune au lieu de « Je l'ai fait » ; « une autre » garde l'icône en bas à droite
-- [ ] A.3 Mon personnage visible en permanence sur la scène (pas seulement pendant les actions)
-- [ ] A.4 « Ma situation » (Aujourd'hui) et « Ma fiche » (Moi) au même format, celui de « Ma fiche »
+- [x] A.3 (31/10) Mon personnage visible en permanence sur la scène (pas seulement pendant les actions)
+- [x] A.4 (31/10) « Ma situation » (Aujourd'hui) et « Ma fiche » (Moi) au même format, celui de « Ma fiche »
 - [x] A.5 (31/10) J'ai… : « Petit animal » seul, poisson recentré
 - [x] A.6 (31/10) J'ai… : tout rentre dans le cadre (la fiche en édition débordait à droite), tuiles rectangulaires 2 par ligne, nom sur une ligne (libellés raccourcis)
 - [x] A.7 (31/10) Retirer un artiste ne doit pas renvoyer en haut de la page
@@ -263,11 +263,11 @@ Fonctionnalités (à proposer avant de construire) :
 
 ### Aujourd'hui (T)
 - [x] T.1 (31/10) Journal : « Annuler » souligné → icône retour pixel art
-- [ ] T.2 Rituels faits : disparaissent complètement de la liste (plus de « N faits ») ; « Annuler » les fait revenir dans les rituels
+- [x] T.2 (31/10) Rituels faits : disparaissent complètement de la liste (plus de « N faits ») ; « Annuler » les fait revenir dans les rituels
 - [x] T.3 (31/10) Quête spéciale « Voir quelqu'un en vrai » : même modèle que les autres (icône en bas à droite, même fond, même taille)
 
 ### Esthétique (E)
-- [ ] E.1 Badge humeur 30 j : yeux de l'emoji refaits, identiques
+- [x] E.1 (31/10) Badge humeur 30 j : yeux de l'emoji refaits, identiques
 - [x] E.2 (31/10) Armoire (auras et toutes les catégories) : surlignage jaune seul, plus de coche en haut à droite
 
 ### Assiette et nourriture (N) — idées à proposer avant de construire

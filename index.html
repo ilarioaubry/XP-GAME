@@ -2152,8 +2152,6 @@ html:not(#_a):not(#_b) body .wxres{display:grid;gap:6px;margin-top:10px}html:not
 
 html:not(#_a):not(#_b) body .fqok{display:grid;place-items:center;width:36px;height:36px;color:#2a1c0c;background:var(--gold)}
 
-html:not(#_a):not(#_b) body .sita{display:inline-flex;align-items:center;gap:2px;padding:2px 2px 2px 10px;font-size:13px;background:var(--surface);border:2px solid var(--line)}
-html:not(#_a):not(#_b) body .sita button{width:28px;height:28px;display:grid;place-items:center;color:var(--muted);background:none;border:0;cursor:pointer}
 
 
 html:not(#_a):not(#_b) body .calnav{display:flex;align-items:center;justify-content:space-between;margin:2px 0 8px}html:not(#_a):not(#_b) body .calnav b{font-size:15px}
@@ -4503,7 +4501,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 64ad9fb</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version d934903</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9975,31 +9973,8 @@ const SIT_Q={job:[["etud","Étudiant·e"],["poste","En poste"],["cherche","En re
  pass:[["rap","Rap"],["creer","Créer du son"],["cine","Ciné, séries"],["lecture","Lecture"],["jeux","Jeux vidéo"],["cuisine","Cuisine"],["sport","Sport"],["dessin","Dessin"],["mode","Mode"],["nature","Nature"],["photo","Photo"],["voyage","Voyage"]],
  time:[["peu","Très peu"],["30","30 min"],["60","1 h"],["plus","Plus"]]};
 function sitOf(){const G=S.g;if(!G.sit||typeof G.sit!=="object")return null;return G.sit}
-function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p=document.createElement("div");p.className="bpop rapop sitsh";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-label","Ma situation");document.body.appendChild(p);
-  const lz=((G.lz||[])+"").toLowerCase(),pre=[];if(/mus|son/.test(lz))pre.push("creer");if(/lect/.test(lz))pre.push("lecture");if(/cin/.test(lz))pre.push("cine");if(/cuis/.test(lz))pre.push("cuisine");if(/jeu/.test(lz))pre.push("jeux");
-  const st=JSON.parse(JSON.stringify(sitOf()||{job:"",home:"",goals:[],pass:pre,time:"30",note:""}));if(!G.taste||typeof G.taste!=="object")G.taste={art:[]};const art=G.taste.art.slice();let artMsg="",busy=false;const nf=[...(G.normOff||[])];
-  const close=()=>{p.remove();done&&done()};p.onclick=e=>{if(e.target===p)close()};
-  const chips=(k,multi,max)=>`<div class="qcdom">${SIT_Q[k].map(([v,l])=>`<button type="button" class="qchip sm" data-k="${k}" data-v="${v}" aria-pressed="${multi?st[k].includes(v):st[k]===v}">${l}</button>`).join("")}</div>${multi&&max?`<p class="hint sith">${st[k].length}/${max} au maximum</p>`:""}`;
-  const draw=()=>{const o=p.querySelector(".bpc"),y0=o?o.scrollTop:0,y1=p.scrollTop;p.innerHTML=`<div class="bpc rap qc"><div class="raph"><h3>Ma situation</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
-    <p class="qcsub">1 minute pour des quêtes tirées de ta vie.</p>
-    <h4>En ce moment, tu es</h4>${chips("job")}<h4>Tu vis</h4>${chips("home")}
-    <h4>Ce que tu veux faire avancer</h4>${chips("goals",true,4)}<h4>Tes passions</h4>${chips("pass",true)}
-    <h4>Ton temps libre en semaine</h4>${chips("time")}
-    <h4>Ce qui ne te concerne pas <small>ces quêtes ne te seront plus proposées</small></h4><div class="qcdom">${NORMS.map(([k,l])=>`<button type="button" class="qchip sm" data-norm="${k}" aria-pressed="${nf.includes(k)}">${l}</button>`).join("")}</div>
-    <h4>Tes artistes <small>pour des quêtes musique</small></h4><div class="sitart">${art.map((a,i)=>`<span class="sita"><b></b><button type="button" data-ra="${i}" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}</div>
-    <form class="qcadd sitaf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter">${ICO("check",16)}</button></form>
-    ${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
-    <h4>Ce qui compte pour toi en ce moment <small>facultatif</small></h4><input class="qcname sitnote" maxlength="80" placeholder="Ex. je prépare mon premier concert">
-    <button type="button" class="btn primary qcgo">Enregistrer</button></div>`;
-    {const o2=p.querySelector(".bpc");if(o2)o2.scrollTop=y0;p.scrollTop=y1}  // une puce touchée ou un artiste retiré : on reste au même endroit
-    p.querySelector(".raclose").onclick=close;p.querySelectorAll(".sita b").forEach((b,i)=>b.textContent=art[i]);
-    const nt=p.querySelector(".sitnote");nt.value=st.note||"";nt.oninput=()=>{st.note=nt.value};
-    p.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k,v=b.dataset.v;if(Array.isArray(st[k])){if(st[k].includes(v))st[k]=st[k].filter(x=>x!==v);else{if(k==="goals"&&st[k].length>=4){toast("4 au maximum : choisis ce qui compte le plus");return}st[k].push(v)}}else st[k]=st[k]===v?"":v;draw()});
-    p.querySelectorAll("[data-ra]").forEach(b=>b.onclick=()=>{art.splice(+b.dataset.ra,1);draw()});
-    p.querySelectorAll("[data-norm]").forEach(b=>b.onclick=()=>{const k=b.dataset.norm,i=nf.indexOf(k);if(i>=0)nf.splice(i,1);else nf.push(k);draw()});
-    p.querySelector(".sitaf").onsubmit=e=>{e.preventDefault();const i=e.target.querySelector("input"),v=i.value.trim();if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))art.push(v.slice(0,40));draw()};
-    p.querySelector(".qcgo").onclick=()=>{G.normOff=nf.slice();G.sit={...st,note:(st.note||"").trim().slice(0,80),t:Date.now()};G.taste={art:art.slice(0,12),t:Date.now()};if(G.fq)G.fq.d="";save();close();render();toast("Situation enregistrée : tes quêtes vont suivre")}};
-  draw()}
+// « Ma situation » = Ma fiche (31/10, A.4) : un seul formulaire, celui de Moi > Ma vie, ouvert en modification
+function sitSheet(){showView("c");const t=document.querySelector('[data-sub="vie"][role="tab"]');if(t)t.click();fEdit=true;renderFiche();setTimeout(()=>{const b=document.getElementById("ficheBox");if(b)b.scrollIntoView({block:"start"})},60)}
 
 const cap=t=>(t=String(t||"").trim())?t[0].toUpperCase()+t.slice(1):t;
 // --- modèles de quêtes : [id, texte, cat, xp, [hDébut,hFin], condition(ctx), pourquoi, {out,in,short,we,wd}]
@@ -12269,7 +12244,7 @@ sleep7:{r:[ // bed + sleeper
 "llllllllllllll",
 "l............l"]},
 mood30:{f:function(){var g=grid(13,13);disc(g,6,6,6.4,'y');
-  put(g,3,4,["o...o","o...o"]);put(g,3,4,["o....","o...."]);g[4][8]='o';g[5][8]='o';
+  put(g,3,4,["oo...oo","oo...oo"]);  // deux yeux identiques, symétriques (31/10)
   put(g,2,7,["p.......p"]);put(g,3,8,["o.....o",".o...o.","..ooo.."]);g[2][3]='h';g[3][2]='h';return toRows(g);} },
 /* ---- Aventure & collection ---- */
 buy1:{r:[ // t-shirt
@@ -14090,6 +14065,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 
 /* contrat fini : coche à toucher (bouton principal carré 44) */
 html:not(#_u1):not(#_u2) body .bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}
+/* A.3 (31/10) : mon personnage reste visible sur la scène (debout, sans bouger tout seul) ; les actions, le salut et le bâillement le remplacent un instant */
+html body .scav .f0{opacity:1}
 </style>
 <style id="z-aujourdhui">/* — depuis principal-01.css — */
 .filters{display:flex;gap:6px;flex-wrap:wrap}
@@ -15922,8 +15899,6 @@ html body #ficheBox .fr2>small{color:var(--muted);font-size:13px}
 html body #ficheBox .fopts button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--muted);min-height:36px}
 html body #ficheBox .fopts button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 html body #ficheBox .fnote{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
-html body #ficheBox .frow2{grid-template-columns:1fr 1fr}
-html body #ficheBox .frow2 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;font-size:13px}
 
 html body #chapBox .bstory{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;margin-top:10px}
 html body #chapBox .bstory small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
@@ -16192,6 +16167,10 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3) body .fedit .fjobs{grid-template-columns:repeat(3,minmax(0,1fr))}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs.fpris{grid-template-columns:repeat(4,minmax(0,1fr))}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs>button{min-width:0}
+/* A.4 (31/10) : Ma situation fusionnée dans Ma fiche — artistes en puces avec une croix */
+html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartx{display:inline-flex;align-items:center;gap:6px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #ficheBox .fartx svg{width:10px!important;height:10px!important;opacity:.7}
+html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartf{margin-top:8px}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
@@ -16325,8 +16304,6 @@ html:not(#_a):not(#_b) body .wxd span svg{width:26px;height:24px;display:block}
 html:not(#_a):not(#_b) body .wxd small{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html:not(#_a):not(#_b) body .wxd em{font-style:normal;font-weight:800;font-size:13px;white-space:nowrap}
 html:not(#_a):not(#_b) body .wxc .sppl{margin-top:12px}
-html:not(#_a):not(#_b) body .sitart{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
-html:not(#_a):not(#_b) body .sith{margin:4px 0 0;font-size:13px}
 /* — depuis principal-09.css — */
 html:not(#_a):not(#_b) body .trgsh .bpc{display:grid;gap:10px}
 #skyBg{overflow:hidden}
@@ -17195,6 +17172,7 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
       ${perH}${gl.length?`<div class="fcs">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</div>`:""}${(s.have||[]).length&&typeof haveOf==="function"?`<div class="fcs fhaves">${s.have.map(k=>{const h=haveOf(k);return h?`<span class="fchip fhc">${tileI(h.ic)}<span>${esc(h.l)}</span></span>`:""}).join("")}</div>`:""}${!s0?`<span class="fnone">Touche Modifier pour la remplir</span>`:""}</div>`;
     if(P&&box.querySelector(".fper b"))box.querySelector(".fper b").textContent=P.name||"Ma période";
     box.querySelector(".fced").onclick=()=>{fEdit=true;renderFiche()};bindAsk(box);ficheMove();return}
+  if(!G.taste||typeof G.taste!=="object"||!Array.isArray(G.taste.art))G.taste={art:[]};const art=G.taste.art,nf=Array.isArray(G.normOff)?G.normOff:[];
   const row=(k,title,multi,max)=>`<div class="fr2"><small>${title}${max?` · ${max} max`:""}</small><div class="fopts">${SIT_Q[k].map(([v,l])=>{const on=multi?(s[k]||[]).includes(v):s[k]===v;return`<button type="button" data-fk="${k}" data-fv="${v}" aria-pressed="${on}">${esc(l)}</button>`}).join("")}</div></div>`;
   box.innerHTML=`<div class="fcard fedit fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn primary fcok">Terminé</button></div>
     <div class="fr2"><small>Ma situation</small><div class="fjobs">${SIT_Q.job.map(([v,l])=>`<button type="button" data-job="${v}" aria-pressed="${s.job===v}"><span class="fti">${tileI(JOBI[v])}</span><span>${esc(l.replace("En recherche d'emploi","En recherche"))}</span></button>`).join("")}</div>
@@ -17204,7 +17182,9 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
     <div class="fr2"><small>Mes priorités · 3 max · ces quêtes passent en premier</small><div class="fjobs fpris">${Object.keys(PRII).filter(k=>CATS[k]).map(k=>`<button type="button" data-fp="${k}" aria-pressed="${pri.includes(k)}"><span class="fti">${tileI(PRII[k])}</span><span>${esc(CATS[k].label)}</span></button>`).join("")}</div></div>
     ${row("goals","Ce que je veux améliorer",1,3)}${row("pass","Ce que j'aime",1)}
     <div class="fr2"><small>Ce qui compte en ce moment</small><input class="fnote" maxlength="80" placeholder="Ex. trouver un appart à Montpellier"></div>
-    <div class="fr2 frow2"><button type="button" class="btn fart">${ICO("edit",14)}<span>Mes artistes</span></button></div></div>`;
+    <div class="fr2"><small>Mon temps libre en semaine</small><div class="fopts">${SIT_Q.time.map(([v,l])=>`<button type="button" data-ft="${v}" aria-pressed="${s.time===v}">${esc(l)}</button>`).join("")}</div></div>
+    <div class="fr2"><small>Ce qui ne me concerne pas · ces quêtes ne sont plus proposées</small><div class="fopts">${NORMS.map(([k,l])=>`<button type="button" data-fn="${k}" aria-pressed="${nf.includes(k)}">${esc(l)}</button>`).join("")}</div></div>
+    <div class="fr2"><small>Mes artistes · pour des quêtes musique</small>${art.length?`<div class="fopts">${art.map((a,i)=>`<button type="button" class="fartx" data-ra="${i}" aria-pressed="true"><span></span>${ICO("close",12)}</button>`).join("")}</div>`:""}<form class="qcadd fartf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter" title="Ajouter">${ICO("plus",24)}</button></form></div></div>`;
   box.querySelectorAll(".fwp").forEach(x=>x.querySelector("b").textContent=x.dataset.n);
   box.querySelectorAll("[data-job]").forEach(b=>b.onclick=()=>{s.job=b.dataset.job;commit();renderFiche()});
   box.querySelectorAll("[data-fh]").forEach(b=>b.onclick=()=>{const k=b.dataset.fh,a=Array.isArray(s.have)?s.have.slice():[],i=a.indexOf(k),on=i<0;if(on)a.push(k);else a.splice(i,1);s.have=a;commit();try{haveApply(k,on);save()}catch(e){}renderFiche()});
@@ -17214,7 +17194,10 @@ function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box
   box.querySelectorAll(".fwp .fwx2").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;s.with=s.with.filter(x=>x!==n);s.home=homeOf(s);commit();renderFiche()});
   box.querySelectorAll(".fwp .flove").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;setRel(n,relOf(n)==="couple"?null:"couple");s.home=homeOf(s);commit();renderFiche()});
   const n=box.querySelector(".fnote");n.value=s.note||"";n.onchange=()=>{s.note=n.value.trim().slice(0,80);commit()};
-  box.querySelector(".fart").onclick=()=>{try{sitSheet()}catch(e){}};
+  box.querySelectorAll(".fartx").forEach((b,i)=>{b.querySelector("span").textContent=art[i];b.setAttribute("aria-label","Retirer "+art[i]);b.onclick=()=>{G.taste={art:art.filter((_,j)=>j!==i),t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()}});
+  box.querySelector(".fartf").onsubmit=e=>{e.preventDefault();const v=e.target.querySelector("input").value.trim().slice(0,40);if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))G.taste={art:[...art,v],t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()};
+  box.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{s.time=s.time===b.dataset.ft?"":b.dataset.ft;commit();renderFiche()});
+  box.querySelectorAll("[data-fn]").forEach(b=>b.onclick=()=>{const k=b.dataset.fn,a=nf.slice(),i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);G.normOff=a;if(G.fq)G.fq.d="";save();renderFiche()});
   box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
   ficheMove()}
 // ---- capacité déduite + suivi en cartes
@@ -17631,7 +17614,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   {const rl=document.getElementById("ritLife"),dq=document.getElementById("dqBox"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
   const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer(),PER=P==="nuit"?null:P,act={};let id=0;const reg=(f)=>{const k="j"+(id++);act[k]=f;return k};
   // ---- le moment
-  const now=[],done=[];
+  const now=[],done=[],gone=[];  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
   if(P==="matin"&&!(G.sleep||{})[tk]||P==="matin"&&typeof sleepEdit!=="undefined"&&sleepEdit)now.push(`<li class="jdl jdnuit jx-nuit" style="--jc:#8f7ef0"><span class="jdi">${rkSvg("lune")}</span><span class="jdt"><b>Ta nuit</b><span class="jdph" data-ph="ritLife"></span></span></li>`);
   else if(P==="matin"&&(G.sleep||{})[tk])done.push(jdRow({x:"jx-nuit",c:"#8f7ef0",ic:rkSvg("lune"),n:"Ta nuit",s:fmtH(G.sleep[tk].h)+" de sommeil",ok:1,k:reg(()=>{try{sleepEdit=true;renderLife();renderJdb()}catch(e){}})}));
   {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en)now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
@@ -17646,8 +17629,8 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   RT.forEach(t=>{if(used.has(t.id))return;used.add(t.id);const c=S.daily.c[t.id]||0,ok=c>=t.n,K=kindOf(t),at=ok?jdLast(t.name,tk):0;
     const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else jdRit(t,ev)})});
     const chain=(JD_CHAIN[K]||[]).map(k=>RT.find(x=>!used.has(x.id)&&kindOf(x)===k)).filter(Boolean);
-    (ok?done:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
-    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?done:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
+    (ok?gone:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
+    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée
@@ -17658,9 +17641,9 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
     if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
-  const tot=now.length+done.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
+  const tot=now.length+done.length+gone.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
   const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?done.length+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:""}`;
+  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : ceux du jour, les cigarettes, le contrat

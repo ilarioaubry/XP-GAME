@@ -530,8 +530,6 @@ html body #ficheBox .fr2>small{color:var(--muted);font-size:13px}
 html body #ficheBox .fopts button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--muted);min-height:36px}
 html body #ficheBox .fopts button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 html body #ficheBox .fnote{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
-html body #ficheBox .frow2{grid-template-columns:1fr 1fr}
-html body #ficheBox .frow2 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;font-size:13px}
 
 html body #chapBox .bstory{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;margin-top:10px}
 html body #chapBox .bstory small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
@@ -800,3 +798,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3) body .fedit .fjobs{grid-template-columns:repeat(3,minmax(0,1fr))}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs.fpris{grid-template-columns:repeat(4,minmax(0,1fr))}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs>button{min-width:0}
+/* A.4 (31/10) : Ma situation fusionnée dans Ma fiche — artistes en puces avec une croix */
+html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartx{display:inline-flex;align-items:center;gap:6px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #ficheBox .fartx svg{width:10px!important;height:10px!important;opacity:.7}
+html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartf{margin-top:8px}

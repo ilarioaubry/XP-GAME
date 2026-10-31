@@ -23,7 +23,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   {const rl=document.getElementById("ritLife"),dq=document.getElementById("dqBox"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
   const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer(),PER=P==="nuit"?null:P,act={};let id=0;const reg=(f)=>{const k="j"+(id++);act[k]=f;return k};
   // ---- le moment
-  const now=[],done=[];
+  const now=[],done=[],gone=[];  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
   if(P==="matin"&&!(G.sleep||{})[tk]||P==="matin"&&typeof sleepEdit!=="undefined"&&sleepEdit)now.push(`<li class="jdl jdnuit jx-nuit" style="--jc:#8f7ef0"><span class="jdi">${rkSvg("lune")}</span><span class="jdt"><b>Ta nuit</b><span class="jdph" data-ph="ritLife"></span></span></li>`);
   else if(P==="matin"&&(G.sleep||{})[tk])done.push(jdRow({x:"jx-nuit",c:"#8f7ef0",ic:rkSvg("lune"),n:"Ta nuit",s:fmtH(G.sleep[tk].h)+" de sommeil",ok:1,k:reg(()=>{try{sleepEdit=true;renderLife();renderJdb()}catch(e){}})}));
   {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en)now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
@@ -38,8 +38,8 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   RT.forEach(t=>{if(used.has(t.id))return;used.add(t.id);const c=S.daily.c[t.id]||0,ok=c>=t.n,K=kindOf(t),at=ok?jdLast(t.name,tk):0;
     const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else jdRit(t,ev)})});
     const chain=(JD_CHAIN[K]||[]).map(k=>RT.find(x=>!used.has(x.id)&&kindOf(x)===k)).filter(Boolean);
-    (ok?done:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
-    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?done:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
+    (ok?gone:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
+    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée
@@ -50,9 +50,9 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
     if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
-  const tot=now.length+done.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
+  const tot=now.length+done.length+gone.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
   const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?done.length+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:""}`;
+  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : ceux du jour, les cigarettes, le contrat

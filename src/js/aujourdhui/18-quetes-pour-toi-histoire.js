@@ -5,31 +5,8 @@ const SIT_Q={job:[["etud","Étudiant·e"],["poste","En poste"],["cherche","En re
  pass:[["rap","Rap"],["creer","Créer du son"],["cine","Ciné, séries"],["lecture","Lecture"],["jeux","Jeux vidéo"],["cuisine","Cuisine"],["sport","Sport"],["dessin","Dessin"],["mode","Mode"],["nature","Nature"],["photo","Photo"],["voyage","Voyage"]],
  time:[["peu","Très peu"],["30","30 min"],["60","1 h"],["plus","Plus"]]};
 function sitOf(){const G=S.g;if(!G.sit||typeof G.sit!=="object")return null;return G.sit}
-function sitSheet(done){if(document.querySelector(".sitsh"))return;const G=S.g,p=document.createElement("div");p.className="bpop rapop sitsh";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-label","Ma situation");document.body.appendChild(p);
-  const lz=((G.lz||[])+"").toLowerCase(),pre=[];if(/mus|son/.test(lz))pre.push("creer");if(/lect/.test(lz))pre.push("lecture");if(/cin/.test(lz))pre.push("cine");if(/cuis/.test(lz))pre.push("cuisine");if(/jeu/.test(lz))pre.push("jeux");
-  const st=JSON.parse(JSON.stringify(sitOf()||{job:"",home:"",goals:[],pass:pre,time:"30",note:""}));if(!G.taste||typeof G.taste!=="object")G.taste={art:[]};const art=G.taste.art.slice();let artMsg="",busy=false;const nf=[...(G.normOff||[])];
-  const close=()=>{p.remove();done&&done()};p.onclick=e=>{if(e.target===p)close()};
-  const chips=(k,multi,max)=>`<div class="qcdom">${SIT_Q[k].map(([v,l])=>`<button type="button" class="qchip sm" data-k="${k}" data-v="${v}" aria-pressed="${multi?st[k].includes(v):st[k]===v}">${l}</button>`).join("")}</div>${multi&&max?`<p class="hint sith">${st[k].length}/${max} au maximum</p>`:""}`;
-  const draw=()=>{const o=p.querySelector(".bpc"),y0=o?o.scrollTop:0,y1=p.scrollTop;p.innerHTML=`<div class="bpc rap qc"><div class="raph"><h3>Ma situation</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
-    <p class="qcsub">1 minute pour des quêtes tirées de ta vie.</p>
-    <h4>En ce moment, tu es</h4>${chips("job")}<h4>Tu vis</h4>${chips("home")}
-    <h4>Ce que tu veux faire avancer</h4>${chips("goals",true,4)}<h4>Tes passions</h4>${chips("pass",true)}
-    <h4>Ton temps libre en semaine</h4>${chips("time")}
-    <h4>Ce qui ne te concerne pas <small>ces quêtes ne te seront plus proposées</small></h4><div class="qcdom">${NORMS.map(([k,l])=>`<button type="button" class="qchip sm" data-norm="${k}" aria-pressed="${nf.includes(k)}">${l}</button>`).join("")}</div>
-    <h4>Tes artistes <small>pour des quêtes musique</small></h4><div class="sitart">${art.map((a,i)=>`<span class="sita"><b></b><button type="button" data-ra="${i}" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}</div>
-    <form class="qcadd sitaf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter">${ICO("check",16)}</button></form>
-    ${artMsg?`<p class="sperr">${esc(artMsg)}</p>`:""}
-    <h4>Ce qui compte pour toi en ce moment <small>facultatif</small></h4><input class="qcname sitnote" maxlength="80" placeholder="Ex. je prépare mon premier concert">
-    <button type="button" class="btn primary qcgo">Enregistrer</button></div>`;
-    {const o2=p.querySelector(".bpc");if(o2)o2.scrollTop=y0;p.scrollTop=y1}  // une puce touchée ou un artiste retiré : on reste au même endroit
-    p.querySelector(".raclose").onclick=close;p.querySelectorAll(".sita b").forEach((b,i)=>b.textContent=art[i]);
-    const nt=p.querySelector(".sitnote");nt.value=st.note||"";nt.oninput=()=>{st.note=nt.value};
-    p.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k,v=b.dataset.v;if(Array.isArray(st[k])){if(st[k].includes(v))st[k]=st[k].filter(x=>x!==v);else{if(k==="goals"&&st[k].length>=4){toast("4 au maximum : choisis ce qui compte le plus");return}st[k].push(v)}}else st[k]=st[k]===v?"":v;draw()});
-    p.querySelectorAll("[data-ra]").forEach(b=>b.onclick=()=>{art.splice(+b.dataset.ra,1);draw()});
-    p.querySelectorAll("[data-norm]").forEach(b=>b.onclick=()=>{const k=b.dataset.norm,i=nf.indexOf(k);if(i>=0)nf.splice(i,1);else nf.push(k);draw()});
-    p.querySelector(".sitaf").onsubmit=e=>{e.preventDefault();const i=e.target.querySelector("input"),v=i.value.trim();if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))art.push(v.slice(0,40));draw()};
-    p.querySelector(".qcgo").onclick=()=>{G.normOff=nf.slice();G.sit={...st,note:(st.note||"").trim().slice(0,80),t:Date.now()};G.taste={art:art.slice(0,12),t:Date.now()};if(G.fq)G.fq.d="";save();close();render();toast("Situation enregistrée : tes quêtes vont suivre")}};
-  draw()}
+// « Ma situation » = Ma fiche (31/10, A.4) : un seul formulaire, celui de Moi > Ma vie, ouvert en modification
+function sitSheet(){showView("c");const t=document.querySelector('[data-sub="vie"][role="tab"]');if(t)t.click();fEdit=true;renderFiche();setTimeout(()=>{const b=document.getElementById("ficheBox");if(b)b.scrollIntoView({block:"start"})},60)}
 
 const cap=t=>(t=String(t||"").trim())?t[0].toUpperCase()+t.slice(1):t;
 // --- modèles de quêtes : [id, texte, cat, xp, [hDébut,hFin], condition(ctx), pourquoi, {out,in,short,we,wd}]
