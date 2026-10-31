@@ -47,7 +47,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 |---|---|---|
 | Personnage | Ton avatar, son titre, son cadre | active |
 | Assiette (01/11) | Aliments en rangées qui glissent (pain → classiques → atypiques ; viande et œuf → végétal → de la mer), dessert, où (maison, resto, fast-food, sur le pouce), type d'assiette (équilibrée or, végétarienne vert, fast-food orange) et ses badges, « Cuisiné pour qui ? » (+5 XP Ami/Famille), habitudes alimentaires qui masquent des aliments | active |
-| Cafés | Compteur du jour dans le journal, sans XP, repris dans « Ta journée » | active |
+| Cafés | Compteur − / + dans Mes engagements (comme les cigarettes), sans XP, repris dans « Ta journée » | active |
 | Grignotage, Recevoir chez moi | Panneau + : grignotage sans XP (règle « Sans grignotage ») ; recevoir chez moi (apéro, repas, soirée jeux), 15 XP Ami | active |
 | Ma fiche | Ton profil, seul formulaire de ta situation (métier, chez moi, J'ai…, priorités, ce que tu aimes, temps libre, ce qui ne te concerne pas, artistes). « Ma situation » ouvre ce formulaire (l'ancienne fenêtre est retirée) | active |
 | Ce que tu deviens | Identités qui montent avec tes actions | active |

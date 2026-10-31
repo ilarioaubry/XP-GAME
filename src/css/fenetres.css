@@ -450,3 +450,7 @@ html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf small{max-width:100%;overfl
 .plo .plside,.plo .plrow{min-width:0}
 .plwho .ui-fenetre{overflow:hidden}
 .plwho .plwl{max-height:52vh;overflow-y:auto;overscroll-behavior:contain}
+/* 01/11 : les rangées ne glissent que de côté (plus de défilement vertical à l'intérieur) ; avatars dans « Cuisiné pour qui ? » */
+html:not(#_a):not(#_b) body .plo .plfoods.plcar{overflow-y:hidden;touch-action:pan-x pan-y;padding-top:2px;padding-bottom:4px}
+html:not(#_a):not(#_b) body .plwho .pav.fmini{display:block!important;flex:none;width:34px!important;height:34px!important;border-radius:50%;overflow:hidden}
+html:not(#_a):not(#_b) body .plwho .pav.fmini img{display:block;width:420%;height:auto;max-width:none;margin:-2px 0 0 -160%;image-rendering:pixelated}

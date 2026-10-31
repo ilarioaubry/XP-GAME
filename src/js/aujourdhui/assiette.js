@@ -87,9 +87,9 @@ function plForWho(el){const L=relNames();if(!L.length)return;const v=document.cr
     v.querySelector(".plwno").onclick=()=>v.remove();
     v.querySelector(".plwok").onclick=ev=>{const P=[...pick];v.remove();P.forEach(n=>{S.bonds[n]=(S.bonds[n]||0)+10;S.bondsLast[n]=Date.now()});complete({id:"cuisine-pour",cat:P.every(n=>isFam(n))?"famille":"social",name:"Cuisiné pour "+P.join(", "),xp:5},el,ev);try{render()}catch(e){}}};
   draw();v.onclick=e=>{if(e.target===v)v.remove()};document.body.appendChild(v)}
-// cafés du jour (N.6) : un compteur, sans XP ; « Annuler » enlève le dernier
+// cafés du jour (N.6) : un compteur comme les cigarettes (− / +), sans XP
 function cafeN(tk){return((S.g.cafe||{})[tk||dayKey(Date.now())])||0}
-function cafeAdd(){const G=S.g,tk=dayKey(Date.now());undoAfter("Café noté",()=>{if(!G.cafe||typeof G.cafe!=="object")G.cafe={};G.cafe[tk]=(G.cafe[tk]||0)+1;const ks=Object.keys(G.cafe).sort();while(ks.length>120)delete G.cafe[ks.shift()];save();try{sfx("blip")}catch(e){}try{renderJdb()}catch(e){}},()=>{G.cafe[tk]=Math.max(0,(G.cafe[tk]||1)-1);save();try{renderJdb()}catch(e){}})}
+function cafeSet(n){const G=S.g,tk=dayKey(Date.now());if(!G.cafe||typeof G.cafe!=="object")G.cafe={};G.cafe[tk]=Math.max(0,n);const ks=Object.keys(G.cafe).sort();while(ks.length>120)delete G.cafe[ks.shift()];save();render()}
 const PL_ICONS=[...new Set([...PL_SIDES.flatMap(z=>z[4].map(f=>f[0])),"pomme","burger","assiette","casserole","poele","cookie","cake","fromage","yaourt","soda"])].filter(k=>RKI[k]);
 // ---- recettes (S.g.plr) : une assiette toute prête, en un toucher
 const PL_REC0=[{id:"r1",n:"Pâtes courgettes à la crème",f:["pates"],p:[],l:["courgette"]},{id:"r2",n:"Gnocchi pesto rouge",f:["gnocchi"],p:[],l:["tomate"]},

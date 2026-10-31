@@ -7,7 +7,8 @@ Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du 
 - Après l'assiette : dessert (glace, yaourt, fruit, chocolat), où (maison, restaurant, fast-food, sur le pouce). Cuisiné maison → « Cuisiné pour qui ? » : +5 XP Ami ou Famille et du lien.
 - Types d'assiette : bord or (équilibrée), vert (végétarienne), orange (fast-food), avec l'étiquette sous l'assiette. Badges Végétarien, Chef cuisinier (cuisiné maison), Sur le pouce.
 - J'ai… > Alimentation : végétarien, vegan, halal, sans gluten, sans lactose ; l'assiette masque ce qui ne va pas.
-- Cafés : compteur du jour dans le journal (sans XP), repris dans « Ta journée ».
+- Cafés : compteur − / + dans Mes engagements, comme les cigarettes (sans XP), repris dans « Ta journée ».
+- Assiette : les rangées ne défilent plus de haut en bas ; avatars visibles dans « Cuisiné pour qui ? ».
 - Panneau + : Grignotage (sans XP, règle « Sans grignotage ») et Recevoir chez moi (apéro, repas, soirée jeux).
 
 ## 31/10/2026
