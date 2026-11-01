@@ -7,7 +7,7 @@ function obStart(){if(!S.g||S.g.onb||document.querySelector(".obd"))return;
   const STEPS=["Bienvenue","Toi","Passions","Identité","Rituels","Famille","Amis","Départ"];
   const avUrl=()=>{const c=avCanvas(st.cfg,6);return c.toDataURL?c.toDataURL():c};
   const people=(list,kind)=>`<ul class="obpl">${list.map((p,i)=>`<li>${pAv(p.n,"xmav")}<b data-i="${i}"></b>${kind==="fr"?`<button type="button" class="obbest${st.best===p.n?" on":""}" data-i="${i}" aria-label="Meilleur ami">${STAR_SVG}</button>`:""}<input class="obbd" data-i="${i}" placeholder="jj/mm" inputmode="numeric" maxlength="5" aria-label="Anniversaire"><button type="button" class="obrm" data-i="${i}" aria-label="Retirer">${ICO("close",14)}</button></li>`).join("")}</ul>
-    <form class="obadd"><input maxlength="20" placeholder="${kind==="fam"?"Prénom ou surnom (Maman, Léa…)":"Prénom d'un ami"}" aria-label="Ajouter"><button type="submit" class="btn primary" aria-label="Ajouter">${ICO("check",18)}</button></form>
+    <form class="obadd"><input maxlength="20" enterkeyhint="done" autocomplete="off" placeholder="${kind==="fam"?"Prénom ou surnom (Maman, Léa…)":"Prénom d'un ami"}" aria-label="Ajouter"><button type="submit" class="btn primary" aria-label="Ajouter">${ICO("check",18)}</button></form>
     ${kind==="fam"?`<div class="obsug">${OB_FAM.filter(n=>!list.some(p=>p.n===n)).map(n=>`<button type="button" class="xmch" data-n="${n}"><b>${n}</b></button>`).join("")}</div>`:""}`;
   const ok=()=>{const s=st.step;if(s===1)return st.name.trim().length>0;if(s===3)return st.ids.length>0;if(s===4)return st.rit.matin.size+st.rit.soir.size>=2;if(s===5)return st.fam.length>=2;if(s===6)return st.fr.length>=2;return true};
   const need=()=>{const s=st.step;return s===1?"Écris ton prénom":s===3?"Choisis au moins une identité":s===4?"Choisis au moins 2 rituels":s===5?`Encore ${2-st.fam.length} personne${2-st.fam.length>1?"s":""}`:s===6?`Encore ${2-st.fr.length} ami${2-st.fr.length>1?"s":""}`:""};
@@ -39,6 +39,7 @@ function obStart(){if(!S.g||S.g.onb||document.querySelector(".obd"))return;
     if(s===2)o.querySelectorAll(".oblzb").forEach(x=>x.onclick=()=>{const z=x.dataset.z;if(z==="mus")st.mus=!st.mus;else if(st.lz.includes(z))st.lz=st.lz.filter(q=>q!==z);else{if(st.lz.length>=LZ_MAX){toast(LZ_MAX+" passions maximum");return}st.lz.push(z)}sfx("blip");draw()});
     if(s===3)o.querySelectorAll(".idopt").forEach(x=>x.onclick=()=>{const id=x.dataset.id;if(st.ids.includes(id))st.ids=st.ids.filter(q=>q!==id);else{if(st.ids.length>=3){toast("3 identités maximum");return}st.ids.push(id)}sfx("blip");draw()});
     if(s===4){o.querySelectorAll(".obrb").forEach(x=>x.onclick=()=>{const p=x.dataset.p,n=x.dataset.n,S0=st.rit[p];S0.has(n)?S0.delete(n):S0.add(n);sfx("blip");const y=o.querySelector(".obbody").scrollTop;draw();o.querySelector(".obbody").scrollTop=y});
+      o.querySelectorAll(".obadd button").forEach(b=>b.addEventListener("pointerdown",e=>e.preventDefault()));
       o.querySelectorAll(".obadd").forEach(f=>f.onsubmit=e=>{e.preventDefault();const v=f.querySelector("input").value.trim();if(!v)return;st.rit[f.dataset.p].add(v);const y=o.querySelector(".obbody").scrollTop;draw();o.querySelector(".obbody").scrollTop=y})}
     if(s===5||s===6){const L=s===5?st.fam:st.fr,kind=s===5?"fam":"fr";
       o.querySelectorAll(".obpl b").forEach(x=>x.textContent=L[+x.dataset.i].n);
@@ -46,7 +47,10 @@ function obStart(){if(!S.g||S.g.onb||document.querySelector(".obd"))return;
       o.querySelectorAll(".obrm").forEach(x=>x.onclick=()=>{const p=L.splice(+x.dataset.i,1)[0];if(st.best===p.n)st.best="";draw()});
       o.querySelectorAll(".obbest").forEach(x=>x.onclick=()=>{const n=L[+x.dataset.i].n;st.best=st.best===n?"":n;sfx("coin");draw()});
       const add=n=>{n=n.trim().slice(0,20);if(!n)return;if([...st.fam,...st.fr].some(p=>p.n.toLowerCase()===n.toLowerCase())){toast("Cette personne est déjà dans ta liste");return}L.push({n,bd:""});sfx("coin");draw();const i=o.querySelector(".obadd input");if(i)i.focus()};
-      o.querySelector(".obadd").onsubmit=e=>{e.preventDefault();add(e.target.querySelector("input").value)};
+      const f=o.querySelector(".obadd"),fi=f.querySelector("input");f.onsubmit=e=>{e.preventDefault();add(fi.value)};
+      // iPhone : le ✓ ne vole pas le focus (sinon le clavier se ferme et le toucher se perd) ; un prénom tapé mais pas validé est ajouté quand on quitte le champ
+      f.querySelector("button").addEventListener("pointerdown",e=>e.preventDefault());
+      fi.addEventListener("blur",()=>{if(fi.value.trim())setTimeout(()=>{if(fi.isConnected&&fi.value.trim())add(fi.value)},0)});
       o.querySelectorAll(".obsug [data-n]").forEach(x=>x.onclick=()=>add(x.dataset.n))}};
   draw()}
 function obFinish(st){const G=S.g;S.name=st.name.trim().slice(0,14);G.avc={...st.cfg};
