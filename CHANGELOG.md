@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- Aujourd'hui : toucher le nom d'un rituel dans la liste ouvre directement ses réglages (nom, icône, moment, rythme, pause, suppression) ; la case à droite sert toujours à cocher.
 - Panneau + : une catégorie montre directement toutes ses options, rangées sous le nom de leur famille (un toucher de moins) ; options sur 2 colonnes, noms en entier, sans l'icône répétée de la famille.
 - Panneau + : durée et « Avec qui ? » sur le même écran, bouton « Fait · +N XP » ; l'XP s'affiche sous chaque durée et quantité.
 - Panneau + : « Sport » et « Loisirs » (au lieu de Force et Divertissement), icône dossier pour Travail, bordure or sur la catégorie choisie, plus de bande orange en bas.

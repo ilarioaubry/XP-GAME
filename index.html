@@ -4501,7 +4501,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9ebc110</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version f5af559</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -17723,7 +17723,7 @@ function jdRit(t,ev){const el=jdEl(ev),li=el.closest&&el.closest("li.jdl"),still
 function jdFmt(t){const d=new Date(t);return d.getHours()+" h "+String(d.getMinutes()).padStart(2,"0")}
 function jdLast(name,tk){const e=[...(S.log||[])].reverse().find(x=>dayKey(x.t)===tk&&x.name===name);return e?e.t:0}
 function jdDays(s,e,wd){let n=0;for(let d=new Date(s+"T12:00");dayKey(d.getTime())<=e;d.setDate(d.getDate()+1)){const w=d.getDay();if(!wd||(w>0&&w<6))n++}return n}
-function jdRow(o){return`<li class="jdl${o.ok?" ok":""}${o.sub?" sub":""}${o.w?" w":""}${o.x?" "+o.x:""}"${o.k?` data-j="${o.k}"`:""} style="--jc:${o.c||"#6d7680"}"><span class="jdi">${o.ic}</span><span class="jdt"><b>${esc(o.n)}</b>${o.s?`<small>${o.s}</small>`:""}</span>${o.r!==undefined?o.r:`<button type="button" class="btn jdck" aria-label="${o.ok?"Défaire : ":"Cocher : "}${esc(o.n)}" title="${o.ok?"Fait":"Cocher"}" aria-pressed="${!!o.ok}">${o.ok?ICO("check",24):""}</button>`}</li>`}
+function jdRow(o){return`<li class="jdl${o.ok?" ok":""}${o.sub?" sub":""}${o.w?" w":""}${o.x?" "+o.x:""}"${o.k?` data-j="${o.k}"`:""} style="--jc:${o.c||"#6d7680"}"><span class="jdi">${o.ic}</span><span class="jdt"${o.e?` data-k="${o.e}" title="Régler le rituel"`:""}><b>${esc(o.n)}</b>${o.s?`<small>${o.s}</small>`:""}</span>${o.r!==undefined?o.r:`<button type="button" class="btn jdck" aria-label="${o.ok?"Défaire : ":"Cocher : "}${esc(o.n)}" title="${o.ok?"Fait":"Cocher"}" aria-pressed="${!!o.ok}">${o.ok?ICO("check",24):""}</button>`}</li>`}
 function jdHead(t,c){return`<div class="head"><h2>${t}${c?`<span class="count">${c}</span>`:""}</h2></div>`}
 function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElementById("jdEng"),C=document.getElementById("jdLater");if(!A||!B||!C||!S||!S.g)return;
   // la nuit et le choix des engagements sont déplacés ici : on les remet à leur place avant de réécrire, pour ne pas les perdre
@@ -17743,10 +17743,10 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const RT=ritOn?ritOrder(ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===PER&&ritDue(t))):[];
   const kindOf=t=>{try{return ritKind(t).k}catch(e){return""}},used=new Set();
   RT.forEach(t=>{if(used.has(t.id))return;used.add(t.id);const c=S.daily.c[t.id]||0,ok=c>=t.n,K=kindOf(t),at=ok?jdLast(t.name,tk):0;
-    const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else jdRit(t,ev)})});
+    const row=info=>jdRow({c:(()=>{try{return ritKind(t).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return rkSvg("check")}})(),n:t.name,s:ok?(at?"Fait à "+jdFmt(at):"Fait"):t.n>1?c+" / "+t.n:info||"",ok,e:reg(()=>ritFiche(t,render)),k:reg(ev=>{if(ok){try{ritUntap(t)}catch(e){}}else jdRit(t,ev)})});
     const chain=(JD_CHAIN[K]||[]).map(k=>RT.find(x=>!used.has(x.id)&&kindOf(x)===k)).filter(Boolean);
     (ok?gone:now).push(row(chain.length&&!ok?"puis "+chain.map(x=>x.name.toLowerCase()).join(", "):""));
-    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
+    chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,e:reg(()=>ritFiche(x,render)),k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée
