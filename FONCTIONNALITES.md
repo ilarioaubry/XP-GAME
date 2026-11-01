@@ -94,4 +94,4 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 
 ## Retiré (phase 1 et 2)
 
-Synchronisation avec le compte Claude, Spotify, fonctions qui appelaient Claude, boss (semaine, catégories, Noël, assiette), compétences musique et onglet « Domaines », dans Bilan : Mon chemin / Sommeil / Humeur de l'année / Mes rituels / Ma semaine / Records / Journal, Rappels (Proches), ancien Projets, frise de la journée. Les données correspondantes restent dans la sauvegarde (voir DONNEES.md).
+Synchronisation avec le compte Claude, Spotify, fonctions qui appelaient Claude, boss (semaine, catégories, Noël, assiette), compétences musique et onglet « Domaines », dans Bilan : Mon chemin / Sommeil / Humeur de l'année / Mes rituels / Ma semaine / Records / Journal, Rappels (Proches), ancien Projets, frise de la journée, objectif du jour et badge « Objectif tenu » (01/11). Les données correspondantes restent dans la sauvegarde (voir DONNEES.md).

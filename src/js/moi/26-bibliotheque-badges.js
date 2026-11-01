@@ -78,7 +78,6 @@ function badgeDefsBase(){
   B.push({id:"book1",name:"Lecteur",desc:"Finir un livre",ic:"book",t:1,ok:()=>(S.g.books||[]).length>=1});
   B.push({id:"book5",name:"Rat de bibliothèque",desc:"Finir 5 livres",ic:"book",t:3,ok:()=>(S.g.books||[]).length>=5});
   B.push({id:"clean7",name:"Hygiène de vie",desc:"7 jours avec tous tes repas pris",ic:"face",t:2,ok:()=>bgMealDays()>=7});
-  B.push({id:"goal7",name:"Objectif tenu",desc:"Atteindre l'objectif du jour 7 fois",ic:"star",t:2,ok:()=>(S.g.goalN||0)>=7});
   // secrets
   B.push({id:"clutch",name:"Sur le fil",desc:"Sauver ta journée avec une action après 21 h",ic:"trophy",t:2,sec:1,ok:()=>bgClutch()});
   B.push({id:"lucky3",name:"Chanceux",desc:"Vivre 3 événements rares",ic:"star",t:2,sec:1,ok:()=>(S.g.rareN||0)>=3});
@@ -121,7 +120,7 @@ function checkBadges(){
 const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 // famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
 function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
-function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];
@@ -133,7 +132,7 @@ function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   else if(id==="circle")r=[relRecent(30),10];else if(id==="loyal")r=[relLoyal(),4];else if(id==="grp1")r=[S.g.fgQ||0,5];
   else if(id==="pu100"||id==="pu500")r=[Math.max(0,...Object.values((S.g.pu&&S.g.pu.m)||{})),id==="pu100"?100:500];else if(id==="pu30")r=[(S.g.pu||{}).rec||0,30];
   else if(id==="gn120")r=[(S.g.gn||{}).rec||0,120];else if(id==="run42")r=[Math.round(Math.max(0,...Object.values((S.g.run&&S.g.run.m)||{}))),42];else if(id==="zen60")r=[Math.max(0,...Object.values((S.g.md&&S.g.md.m)||{})),60];
-  else if(id==="book1"||id==="book5")r=[(S.g.books||[]).length,id==="book1"?1:5];else if(id==="goal7")r=[S.g.goalN||0,7];
+  else if(id==="book1"||id==="book5")r=[(S.g.books||[]).length,id==="book1"?1:5];
   else if(id==="buy1")r=[wrSetsDone().length,1];else if(id==="buy5")r=[wrOwned(),25];else if(id==="buy15")r=[wrOwned(),50];
   else if(id==="boss4")r=[bgPrjWon(),4];
   else if(/^out(\d+)/.test(id))r=[Object.keys(S.g.rel).length,+id.slice(3)];

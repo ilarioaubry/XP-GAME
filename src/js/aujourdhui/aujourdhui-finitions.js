@@ -1,4 +1,4 @@
-// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, frise, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
+// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
 
 const EV=["sleepGo","enBox","nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
@@ -355,15 +355,6 @@ function evToday(){const b=document.getElementById("evToday");if(!b||!S||!S.g)re
   const k=L.map(e=>e.id+e.n+(e.sub||"")).join("|");if(k===evK)return;evK=k;
   b.innerHTML=L.map(e=>{let c="var(--gold)";try{c=e.k==="bd"?"var(--c-autres)":evtOf(e.t||evtGuess(e.n))[2]}catch(_){}if(e.k==="bd")return`<button type="button" class="evtd bdy${e.inD===0?" bd0":""}"><span class="bdav">${pAv(e.who,"bdp")}<span class="bdck">${BDCAKE}</span></span><span class="bdtx"><b></b><small>${e.sub}</small></span></button>`;return`<button type="button" class="evtd" style="--ec:${c}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${e.k==="bd"?'<path d="M4 21h16M5 21v-7h14v7M12 14v-3M12 8a1.5 1.5 0 0 0 1.5-1.5C13.5 5 12 3 12 3s-1.5 2-1.5 3.5A1.5 1.5 0 0 0 12 8z"/>':'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>'}</svg><b></b></button>`}).join("");
   b.querySelectorAll(".evtd b").forEach((x,i)=>x.textContent=L[i].n);b.querySelectorAll(".evtd").forEach((x,i)=>x.onclick=()=>{if(L[i].k==="bd"){try{bdConf(x)}catch(_){}setTimeout(()=>{try{openProfile(L[i].who)}catch(_){}},450);return}try{showView("c")}catch(_){}cGoSub("vie");setTimeout(()=>{const e=document.getElementById("evtBox");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},150)})}
-// ---- frise de la journée : soleil qui avance, plage de travail, XP du jour
-function friseViz(){const q=document.getElementById("qDay");if(!q||!S||!S.g)return;const now=new Date(),h=now.getHours()+now.getMinutes()/60;let w0=8;try{w0=wakeH()}catch(e){}const a=w0,b=Math.max(a+15,24);
-  let sr=7.5,ss=19;try{const t=sunSet(now);sr=t.rise.getHours()+t.rise.getMinutes()/60;ss=t.set.getHours()+t.set.getMinutes()/60}catch(e){}
-  const v=S.g.vie||{},tk=dayKey(Date.now()),dw=now.getDay(),per=(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e);let sj="";try{sj=(sitOf()||{}).job||""}catch(e){}
-  const work=(v.wd||[]).includes(dw)&&(v.job||per||sj==="poste")&&v.wf&&v.wt;const hh=x=>{const[m,n]=String(x).split(":");return+m+(+n||0)/60};
-  const pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100)),xp=((document.getElementById("qDayT")||{}).textContent||"").split("/")[0].trim();
-  const k=[Math.round(h*12),work,xp,a].join("|");let f=q.querySelector(".frise");if(f&&f.dataset.k===k)return;if(!f){f=document.createElement("span");f.className="frise";q.appendChild(f)}f.dataset.k=k;
-  const day=h>=sr&&h<ss,grad=`linear-gradient(90deg,#1d2350 ${pc(sr-1.2)}%,#f08a5a ${pc(sr)}%,#7fd4ff ${pc(sr+1.5)}%,#7fd4ff ${pc(ss-1.5)}%,#f08a5a ${pc(ss)}%,#2b2266 ${pc(ss+1.2)}%,#141836 100%)`;
-  f.innerHTML=`<span class="frt" style="background:${grad}">${work?`<span class="frw" style="left:${pc(hh(v.wf))}%;width:${pc(hh(v.wt))-pc(hh(v.wf))}%"><span class="frwi">${vI("dossier")}</span></span>`:""}<span class="frp" style="width:${pc(h)}%"></span><span class="frs ${day?"sun":"moon"}" style="left:${pc(h)}%">${vI(day?"soleil":"lune")}</span></span><span class="frl"><small>${Math.floor(a)}h</small><b>+${esc(xp||"0")} XP</b><small>${b>=24?"0h":b+"h"}</small></span>`}
 // ---- avec qui pour la sortie
 const IDW={mus:/musi|f[êe]t/i,mic:/f[êe]t|musi|humour/i,q:/intello|geek/i,cine:/cin[ée]/i,dice:/geek|f[êe]t/i,mask:/artiste|humour/i,key:/geek|intello/i,food:/gourm/i,bag:/artiste|mode/i,art:/artiste|dessin/i,run:/sport/i,map:/voyag|nature/i};
 function idWho(ix,skip){const x=IDQ[ix],re=IDW[x[5]]||/./,now=Date.now();const L=(S.friends||[]).map(n=>{const P=(S.profiles||{})[n]||{},ty=[...(P.types||[]),...(P.talents||[])].join(" "),d=((S.bondsLast||{})[n]?(now-S.bondsLast[n])/864e5:60);return{n,s:(re.test(ty)?5:0)+Math.min(4,d/7)+((S.bonds||{})[n]||0)/200+(P.best?1:0)}}).sort((a,b)=>b.s-a.s).map(o=>o.n);return L.filter(n=>!(skip||[]).includes(n))[0]||L[0]||""}
@@ -427,30 +418,28 @@ const famOfQ=x=>{try{const t=x.t||(x.q&&x.q.name)||"";const k=afMatch(t);return 
 const famCool=f=>{const R=(S.g&&S.g.fqFam)||{},L=(R[f]||[]).filter(t=>Date.now()-t<30*864e5);return L.length>=3&&Date.now()-L[L.length-1]<21*864e5};
 
 
-// ---- les quêtes du jour prennent place dans les creux de la journée (frise + « vers 18 h »)
-function fqSlots(){const box=document.getElementById("fqBox"),fr=document.querySelector("#qDay .frise .frt");if(!box||!S||!S.g)return;
-  const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24),pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100));
+// ---- les quêtes du jour prennent place dans les creux de la journée (« vers 18 h »)
+function fqSlots(){const box=document.getElementById("fqBox");if(!box||!S||!S.g)return;
+  const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24);
   const v=S.g.vie||{},tk=dayKey(Date.now()),dw=now.getDay(),per=(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e);let sj="";try{sj=(sitOf()||{}).job||""}catch(e){}
   const hh=x=>{const[m,n]=String(x).split(":");return+m+(+n||0)/60},work=(v.wd||[]).includes(dw)&&(v.job||per||sj==="poste")&&v.wf&&v.wt,w0=work?hh(v.wf):99,w1=work?hh(v.wt):-1;
   const free=[];for(let x=Math.max(Math.ceil(h+.25),Math.ceil(a+1));x<=22;x++){if(x>=w0&&x<w1)continue;free.push(x)}
   let HB={};try{HB=(window.__habits&&window.__habits().H)||{}}catch(e){}
-  const med=A=>{const s=A.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)]};const used=new Set(),L=(()=>{try{return fqList()}catch(e){return[]}})(),marks=[];
+  const med=A=>{const s=A.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)]};const used=new Set(),L=(()=>{try{return fqList()}catch(e){return[]}})();
   box.querySelectorAll(".fqr").forEach(card=>{const old=card.querySelector(".fqh");const x=L[+card.dataset.i];if(!x||x.done||card.classList.contains("done")||!free.length){if(old)old.remove();return}
     const t=x.t||"";if(/\b\d{1,2} ?h\b|ce soir|ce matin|demain/i.test(t)){if(old)old.remove();return}
     let pick=null;try{const k=afMatch(t);if(k){const f=k.split(":")[1],hr=[];Object.entries(HB).forEach(([kk,o])=>{if(kk===k||kk.split(":")[1]===f)(o.hr||[]).forEach(z=>hr.push(z))});if(hr.length>=2){const m=med(hr);const c=free.filter(z=>!used.has(z)).sort((p,q)=>Math.abs(p-m)-Math.abs(q-m))[0];if(c!=null&&Math.abs(c-m)<=2)pick=c}}}catch(e){}
     if(pick==null)pick=free.find(z=>!used.has(z));if(pick==null){if(old)old.remove();return}used.add(pick);
     const lab=`vers ${pick} h`;const w=card.querySelector(".fqw");if(w){if(old){if(old.textContent!==lab)old.textContent=lab}else{const e=document.createElement("em");e.className="fqh";e.textContent=lab;w.appendChild(e)}}
-    const ic=card.querySelector(".uiq svg");marks.push({x:pick,ic:ic?ic.outerHTML:rkSvg("etoile"),t})});
-  if(!fr)return;const sig=marks.map(m=>m.x+m.t+m.ic.length).join("|");if(fr.dataset.fq===sig&&fr.querySelector(".frq")||(!marks.length&&!fr.querySelector(".frq"))){fr.dataset.fq=sig;return}fr.dataset.fq=sig;fr.querySelectorAll(".frq").forEach(e=>e.remove());
-  marks.forEach(m=>{const s=document.createElement("span");s.className="frq";s.style.left=pc(m.x)+"%";s.title=m.t+" · vers "+m.x+" h";s.innerHTML=m.ic;fr.appendChild(s)})}
+  })}
 // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
 
 
 
 // ---- chaque bloc d'Aujourd'hui finit son propre rendu (plus de retouche globale après coup)
 function sqFinish(){idqCard();idqDress();idqWho();bdDress();natDress();dressQuests();sqMenus();sqEod();sqIcons()}
-function fqFinish(){dressQuests();bdDress();fqExtra();friseViz();fqSlots()}
-window.__sqFinish=sqFinish;window.__fqFinish=fqFinish;window.__friseViz=()=>{friseViz();fqSlots()};
+function fqFinish(){dressQuests();bdDress();fqExtra();fqSlots()}
+window.__sqFinish=sqFinish;window.__fqFinish=fqFinish;window.__fqSlots=fqSlots;
 function sqEod(){const L=(S.specials||[]).filter(q=>q.sm&&q.eod);if(!L.length)return;const tk=dayKey(Date.now());document.querySelectorAll("#sqBox .sq").forEach(c=>{const n=(c.querySelector(".sqn")||{}).textContent,q=L.find(x=>x.name===n);if(!q)return;const go=c.querySelector(".primary");if(!go||go.dataset.eod)return;go.dataset.eod=1;go.disabled=true;go.removeAttribute("data-tm");
     let st="ce soir";if(q.eod==="cig"){const n0=(S.g.cig||{})[tk]||0;st=n0+" / moins de "+q.eodv}if(q.eod==="bed")st="au coucher";go.textContent=st;go.classList.add("eodb")})}
  // ---- Proches et profil : chaque bloc finit son propre rendu

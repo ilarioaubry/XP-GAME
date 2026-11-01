@@ -75,7 +75,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `sleep`, `bed`, `nap` | 02, 09, 13, 18, 19, 24, 26, finitions | Sommeil, heure de coucher, siestes | active |
 | `jr` | 08, 09, 18, 19 | Journal du soir par jour | active |
 | `en` | 19 | Énergie du jour | active ? |
-| `goalHit`, `goalN` | 02, 26 | Objectif du jour atteint (date, total) | active |
+| `goalHit`, `goalN` | — | Objectif du jour atteint (date, total) | retirée le 01/11 (données gardées) |
 | `cig` | finitions | Compteur de cigarettes par jour | active |
 | `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
 | `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |

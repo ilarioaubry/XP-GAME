@@ -26,15 +26,10 @@ body.testing .qxp{top:calc(env(safe-area-inset-top,0px) + 36px)}
 
 html body .qxp{display:grid;gap:0}
 html body .qxp #qxpBtn{border-bottom:0;border-radius:8px 8px 0 0;box-shadow:none;padding:8px 12px 4px}
-html body .qxp .qday{margin-top:0;border-top:0;border-radius:0 0 8px 8px;padding:0 12px 8px;gap:8px;box-shadow:0 3px 0 var(--rpg-shadow),0 6px 22px 2px rgba(0,0,0,.28)}
-html body .qxp .qday .qdl{font-size:11px;letter-spacing:.06em}
-html body .qxp .qday .qdbar{height:7px;border-width:1.5px}
-html body .qxp .qday b{font-size:11px;color:var(--muted)}
 /* — depuis principal-07.css — */
 html.sky body :is(.qxp button){box-shadow:none;border-width:1.5px;border-style:solid;border-color:var(--line);border-radius:12px;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 
 
-html.sky body .qxp .qday{border-radius:0 0 12px 12px;border-top:0}
 html.sky body .qxp::before{display:none}
 
 html:not(.sky) #sceneBox{display:none}

@@ -30,7 +30,6 @@
     const vieCapBase2=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return vieCapBase()};
     window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
       if(v){v.cap=4;v.capW=2}let c=vieCapBase2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}};
-    window.vieGoalF=function(){try{const tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let f=T.goal||1;if(workDay(tk)&&f>.7)f=.7;return f}catch(e){return 1}};
     window.vieSoft=function(){try{const p=actPer(tkNow());return!!(p&&PT[p.t]&&PT[p.t].soft)}catch(e){return false}};
     window.viePri=function(cat){try{const i=V().pri.indexOf(cat);return i<0?9:i}catch(e){return 9}};
     window.vieMods=function(){try{if(!S||!S.g)return;const off=V().off;let st=document.getElementById("vieModCss");if(!st){st=document.createElement("style");st.id="vieModCss";document.head.appendChild(st)}

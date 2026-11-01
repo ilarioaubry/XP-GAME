@@ -50,8 +50,6 @@ function renderBase(prevLevel){
   $("bar").style.width=(cur/need*100)+"%";$("barWrap").setAttribute("aria-valuemax",need);$("barWrap").setAttribute("aria-valuenow",cur);
   $("qStreak").textContent=streak();$("qLvl").textContent=l;
   {const near=cur/need>=.9;document.querySelector(".qxp .qbar").classList.toggle("near",near);$("barWrap").classList.toggle("near",near);document.querySelector(".qxp .qs").classList.toggle("lit",S.log.some(e=>e.xp>0&&dayKey(e.t)===dayKey(Date.now())))}$("qCur").textContent=cur;$("qNeed").textContent=need;$("qBar").style.width=(cur/need*100)+"%";
-  {const tx=xpToday(),g=dayGoal();{const ql=document.querySelector("#qDay .qdl");if(ql){const e=enOf();ql.innerHTML=e?enSvg(e,22):"Jour";ql.title=e?"Batterie "+["","faible","moyenne","pleine"][e]:""}}$("qDayT").textContent=tx+" / "+g;$("qDayBar").style.width=Math.min(100,tx/g*100)+"%";$("qDay").classList.toggle("ok",tx>=g);try{window.__friseViz&&window.__friseViz()}catch(e){}
-   if(tx>=g&&S.g&&S.g.goalHit!==dayKey(Date.now())){S.g.goalHit=dayKey(Date.now());S.g.goalN=(S.g.goalN||0)+1;save();setTimeout(()=>{sfx("badge");toast(`Objectif du jour atteint : <span class="p">${g} XP</span> !`)},900)}}
   if(prevLevel&&l>prevLevel){const q=$("qLvlBox");q.classList.remove("bump");void q.offsetWidth;q.classList.add("bump")}
   const today=dayKey(Date.now()),todays=S.log.filter(e=>dayKey(e.t)===today);
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);

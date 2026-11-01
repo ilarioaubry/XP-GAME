@@ -1816,8 +1816,8 @@ html.sky:not(#_a):not(#_b) body{background:transparent!important;background-imag
 
 
 
-html.sky:not(#_a):not(#_b) body :is(.gcard,.dzc .gcard,.set-card,.sq,.item,.char,.rem,.evr,.aut,.tile,.ritdone,.gbox>div,.week details,.chestb,.nowc,.sk,.ep,.qday,.softc,.rtrc,.wksc,.xmc,.evmc,.dqend){box-shadow:none!important;border-width:1.5px!important;border-style:solid;border-color:var(--line)!important;border-radius:12px!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
-html.sky:not(#_a):not(#_b) body :is(.nowc,.rtrc,.qday){background:var(--surface)!important}
+html.sky:not(#_a):not(#_b) body :is(.gcard,.dzc .gcard,.set-card,.sq,.item,.char,.rem,.evr,.aut,.tile,.ritdone,.gbox>div,.week details,.chestb,.nowc,.sk,.ep,.softc,.rtrc,.wksc,.xmc,.evmc,.dqend){box-shadow:none!important;border-width:1.5px!important;border-style:solid;border-color:var(--line)!important;border-radius:12px!important;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+html.sky:not(#_a):not(#_b) body :is(.nowc,.rtrc){background:var(--surface)!important}
 html.sky:not(#_a):not(#_b) body .nowc{box-shadow:none!important}
 
 
@@ -2199,7 +2199,6 @@ html:not(#_a):not(#_b) body .fqrst{display:block;margin:10px auto 0;min-height:3
 
 
 
-html:not(#_a):not(#_b) body #qDay .qdl svg{display:block}
 
 
 
@@ -2800,9 +2799,6 @@ html:not(#_a):not(#_b) body .btn.primary,html:not(#_a):not(#_b) body .sq .btn.pr
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .rarec{animation:none}}
 
 
-html:not(#_a):not(#_b) body .qday .qdl{font-size:var(--fs-xs);font-weight:900;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-html:not(#_a):not(#_b) body .qday .qdbar{display:block;height:10px;border:2px solid #1a1210;background:var(--surface-2)}html:not(#_a):not(#_b) body .qday .qdbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--gold) 0 6px,color-mix(in srgb,var(--gold) 70%,#000) 6px 8px);transition:width .5s}
-html:not(#_a):not(#_b) body .qday b{font-size:var(--fs-s);font-variant-numeric:tabular-nums}html:not(#_a):not(#_b) body .qday.ok{border-color:#5fae4f}html:not(#_a):not(#_b) body .qday.ok .qdbar i{background:#5fae4f}html:not(#_a):not(#_b) body .xmul{font-size:11px;font-weight:900;color:#5fae4f}
 html:not(#_a):not(#_b) body .sq .btn.primary:has(>.vk){padding-right:16px!important}
 
 
@@ -3503,13 +3499,8 @@ html:not(#_a):not(#_b) body .hvt b{font-size:11px;color:var(--gold)}
 
 
 
-html:not(#_a):not(#_b) body #qDay>:not(.frise){display:none!important}
 
-html:not(#_a):not(#_b) body #qDay{display:block!important;padding:8px 12px 10px!important}
-html:not(#_a):not(#_b) body .frise{display:grid;gap:4px;width:100%}
-html:not(#_a):not(#_b) body .frt{position:relative;display:block;height:22px;border:2px solid #1a1210;overflow:visible}
 html:not(#_a):not(#_b) body .frp{position:absolute;left:0;top:0;bottom:0;background:rgba(0,0,0,.28)}
-html:not(#_a):not(#_b) body .frw{position:absolute;top:3px;bottom:3px;background:repeating-linear-gradient(45deg,rgba(255,255,255,.35) 0 4px,rgba(255,255,255,.15) 4px 8px);border:1px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center}
 
 html:not(#_a):not(#_b) body .frwi svg,html:not(#_a):not(#_b) body .frs svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .frs{position:absolute;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);filter:drop-shadow(0 0 6px rgba(255,220,120,.8));z-index:2}
@@ -3749,8 +3740,6 @@ html:not(#_a):not(#_b):not(#_c) body .whoa{display:grid;grid-template-columns:1f
 
 
 
-html:not(#_a):not(#_b):not(#_c) body .frq{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;z-index:2;pointer-events:none;filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
-html:not(#_a):not(#_b):not(#_c) body .frq svg{width:16px!important;height:16px!important;display:block}
 
 /* ---- epure-atelier-rituels.css ---- */
 /* Atelier des rituels : tuiles, fiche, création pas à pas */
@@ -4032,7 +4021,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.lvl)::after{animation:none!im
 .plwk .plz{width:70%;max-width:30px;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,255,255,.22);margin:15% 0}
 .plwk em{font-style:normal;font-size:11px;color:rgba(255,247,230,.6)}
 
-/* la frise reste visible dans Bilan, comme la sauvegarde */
 
 /* coup de pouce, XP */
 
@@ -4144,8 +4132,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .plq{border:0!important;b
 
 
 
-/* frise de la journée (8h → 0h, soleil/lune) retirée d'Aujourd'hui */
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#qDay .frise,#qDay){display:none!important}
 /* Échelle de texte à 4 niveaux : titre de section 20 px · titre de carte 15 px · texte 13 px · petite info 11 px
    (grands chiffres décoratifs ≥ 22 px exceptés). Les champs restent à 16 px pour qu'iOS ne zoome pas. */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(input,textarea,select){font-size:16px!important}
@@ -4212,7 +4198,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   
   <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
   <section data-v="q" class="nightb voff" id="nightBox" aria-label="Bonne nuit"></section>
-  <section data-v="q" class="qxp" aria-label="Ma progression"><button type="button" id="qxpBtn" aria-label="Voir mon profil"><span class="ql" id="qLvlBox">Niv <b id="qLvl">1</b></span><span class="qbar"><i id="qBar"></i></span><span class="qt"><b id="qCur">0</b> / <span id="qNeed">100</span> XP</span><span class="qs" title="Série de jours"><svg class="ic pxic" viewBox="0 0 12 12" width="14" height="14" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="1" height="1.02"/><rect x="4" y="1" width="2" height="1.02"/><rect x="4" y="2" width="3" height="1.02"/><rect x="3" y="3" width="4" height="1.02"/><rect x="8" y="3" width="1" height="1.02"/><rect x="3" y="4" width="8" height="1.02"/><rect x="2" y="5" width="9" height="1.02"/><rect x="1" y="6" width="4" height="1.02"/><rect x="6" y="6" width="5" height="1.02"/><rect x="1" y="7" width="3" height="1.02"/><rect x="7" y="7" width="4" height="1.02"/><rect x="1" y="8" width="3" height="1.02"/><rect x="7" y="8" width="4" height="1.02"/><rect x="1" y="9" width="4" height="1.02"/><rect x="6" y="9" width="5" height="1.02"/><rect x="2" y="10" width="8" height="1.02"/><rect x="3" y="11" width="6" height="1.02"/></svg><b id="qStreak">0</b></span><span class="qhp" id="qHpRow"></span></button><button type="button" class="qday" id="qDay" aria-label="Récap de l'XP du jour"><span class="qdl">Jour</span><span class="qdbar"><i id="qDayBar"></i></span><b id="qDayT">0 / 150</b></button></section>
+  <section data-v="q" class="qxp" aria-label="Ma progression"><button type="button" id="qxpBtn" aria-label="Voir mon profil"><span class="ql" id="qLvlBox">Niv <b id="qLvl">1</b></span><span class="qbar"><i id="qBar"></i></span><span class="qt"><b id="qCur">0</b> / <span id="qNeed">100</span> XP</span><span class="qs" title="Série de jours"><svg class="ic pxic" viewBox="0 0 12 12" width="14" height="14" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="1" height="1.02"/><rect x="4" y="1" width="2" height="1.02"/><rect x="4" y="2" width="3" height="1.02"/><rect x="3" y="3" width="4" height="1.02"/><rect x="8" y="3" width="1" height="1.02"/><rect x="3" y="4" width="8" height="1.02"/><rect x="2" y="5" width="9" height="1.02"/><rect x="1" y="6" width="4" height="1.02"/><rect x="6" y="6" width="5" height="1.02"/><rect x="1" y="7" width="3" height="1.02"/><rect x="7" y="7" width="4" height="1.02"/><rect x="1" y="8" width="3" height="1.02"/><rect x="7" y="8" width="4" height="1.02"/><rect x="1" y="9" width="4" height="1.02"/><rect x="6" y="9" width="5" height="1.02"/><rect x="2" y="10" width="8" height="1.02"/><rect x="3" y="11" width="6" height="1.02"/></svg><b id="qStreak">0</b></span><span class="qhp" id="qHpRow"></span></button></section>
   <section data-v="q" class="rit trkbox" id="trkBox" aria-label="Ton bandeau du jour"></section>
   <section data-v="q" class="evtoday" id="evToday" aria-label="Aujourd'hui"></section>
   <script>
@@ -4247,7 +4233,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     const vieCapBase2=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n}catch(e){}return vieCapBase()};
     window.vieCap=function(){try{const v=S.g&&S.g.vie,tk=dayKey(Date.now());if(v&&v.capDay&&v.capDay.d===tk)return v.capDay.n;
       if(v){v.cap=4;v.capW=2}let c=vieCapBase2();const e=enOf();if(e===1)c-=1;if(e===3)c+=1;const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)c-=1;return Math.max(1,Math.min(6,c))}catch(e){return 3}};
-    window.vieGoalF=function(){try{const tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let f=T.goal||1;if(workDay(tk)&&f>.7)f=.7;return f}catch(e){return 1}};
     window.vieSoft=function(){try{const p=actPer(tkNow());return!!(p&&PT[p.t]&&PT[p.t].soft)}catch(e){return false}};
     window.viePri=function(cat){try{const i=V().pri.indexOf(cat);return i<0?9:i}catch(e){return 9}};
     window.vieMods=function(){try{if(!S||!S.g)return;const off=V().off;let st=document.getElementById("vieModCss");if(!st){st=document.createElement("style");st.id="vieModCss";document.head.appendChild(st)}
@@ -4502,7 +4487,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version ac883b8</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version a76d73a</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5234,8 +5219,6 @@ function renderBase(prevLevel){
   $("bar").style.width=(cur/need*100)+"%";$("barWrap").setAttribute("aria-valuemax",need);$("barWrap").setAttribute("aria-valuenow",cur);
   $("qStreak").textContent=streak();$("qLvl").textContent=l;
   {const near=cur/need>=.9;document.querySelector(".qxp .qbar").classList.toggle("near",near);$("barWrap").classList.toggle("near",near);document.querySelector(".qxp .qs").classList.toggle("lit",S.log.some(e=>e.xp>0&&dayKey(e.t)===dayKey(Date.now())))}$("qCur").textContent=cur;$("qNeed").textContent=need;$("qBar").style.width=(cur/need*100)+"%";
-  {const tx=xpToday(),g=dayGoal();{const ql=document.querySelector("#qDay .qdl");if(ql){const e=enOf();ql.innerHTML=e?enSvg(e,22):"Jour";ql.title=e?"Batterie "+["","faible","moyenne","pleine"][e]:""}}$("qDayT").textContent=tx+" / "+g;$("qDayBar").style.width=Math.min(100,tx/g*100)+"%";$("qDay").classList.toggle("ok",tx>=g);try{window.__friseViz&&window.__friseViz()}catch(e){}
-   if(tx>=g&&S.g&&S.g.goalHit!==dayKey(Date.now())){S.g.goalHit=dayKey(Date.now());S.g.goalN=(S.g.goalN||0)+1;save();setTimeout(()=>{sfx("badge");toast(`Objectif du jour atteint : <span class="p">${g} XP</span> !`)},900)}}
   if(prevLevel&&l>prevLevel){const q=$("qLvlBox");q.classList.remove("bump");void q.offsetWidth;q.classList.add("bump")}
   const today=dayKey(Date.now()),todays=S.log.filter(e=>dayKey(e.t)===today);
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
@@ -10163,7 +10146,7 @@ document.addEventListener("load",e=>{const t=e.target;if(t&&t.classList&&t.class
 function bedTime(){const G=S.g;if(!G||!G.bed||Date.now()-G.bed>18*36e5)return"";const d=new Date(G.bed);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
 function renderSleepGo(){const box=$("sleepGo");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),J=(G.jr||{})[tk]||{},h=dayH();
   const show=h>=(evmOn()?23:RIT_SOIR_H)&&!J.at;box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
-  const left=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n).length,tx=xpToday(),g=dayGoal();
+  const left=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n).length;
   box.innerHTML=`<div class="slgc"><button type="button" class="btn primary slgb"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>Je vais dormir</button></div>`;
   box.querySelector(".slgb").onclick=()=>closeOpen(0,1)}
 // ===== Nouveau Bilan : ta semaine comme un chapitre
@@ -10195,7 +10178,7 @@ function bGoals(K,mult){const G=S.g,s=sitOf();if(!s||!(s.goals||[]).length)retur
     if(g==="sommeil"){const n=past.filter(k=>((G.sleep||{})[k]||{}).h>=7).length;return{g,lab,v:n,max:Math.round(5*mult),u:n>1?"nuits de 7 h ou plus":"nuit de 7 h ou plus"}}
     if(g==="moral"){const n=past.filter(k=>((G.mood||{})[k]|0)>=4).length,x=K.reduce((a,k)=>a+(bCat(k).soi||0),0);return{g,lab,v:n,max:Math.round(4*mult),u:n>1?`bonnes journées · ${x} XP pour toi`:`bonne journée · ${x} XP pour toi`}}
     const cs=GOAL_CAT[g]||[],x=K.reduce((a,k)=>a+cs.reduce((b,c)=>b+(bCat(k)[c]||0),0),0);return{g,lab,v:x,max:Math.round(10*mult)*10,u:"XP",cat:cs[0]}})}
-function bStrip(K,small){const G=S.g,tk=dayKey(Date.now()),mx=Math.max(dayGoal(),...K.map(bXp));let av=K.filter(k=>k<=tk).pop()||K[0];const ai=K.indexOf(av);
+function bStrip(K,small){const G=S.g,tk=dayKey(Date.now()),mx=Math.max(100,...K.map(bXp));let av=K.filter(k=>k<=tk).pop()||K[0];const ai=K.indexOf(av);
   return`<div class="bstrip${small?" sm":""}">${K.map((k,i)=>{const fut=k>tk,x=bXp(k),w=(G.wxh||{})[k],md=(G.mood||{})[k],d=new Date(k+"T12:00");
     return`<div class="bsd${fut?" fut":""}${k===tk?" now":""}"><span class="bsw">${w?wxIcon(wxKind(w.ic),true):fut?"":`<i class="bsq">·</i>`}</span><span class="bsm">${md?moodFace(md,small?18:24):`<i class="bse"></i>`}</span><span class="bsb"><i style="height:${fut?0:Math.max(x?6:0,Math.round(x/mx*82))}%"></i>${x&&!small?`<em>${x}</em>`:""}</span><span class="bsl">${"LMMJVSD"[i]}<small>${d.getDate()}</small></span></div>`}).join("")}
     <img class="bsav" src="${myAvatarURL()}" alt="" style="--i:${ai}"></div>`}
@@ -10247,7 +10230,7 @@ function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();co
      const sb=box.querySelector(".bsit");if(sb)sb.onclick=()=>sitSheet();
      box.querySelectorAll("[data-int]").forEach(b=>b.onclick=()=>{if(!G.intn||typeof G.intn!=="object")G.intn={};const nk=bWeek(-1)[0];G.intn[nk]=G.intn[nk]===b.dataset.int?"":b.dataset.int;save();renderChap();if(G.intn[nk])toast("Intention notée pour lundi")})}}
   else if(bilTab==="m"){const d=new Date(dayKey(Date.now())+"T12:00");d.setDate(1);d.setMonth(d.getMonth()-bilOff);const y=d.getFullYear(),m=d.getMonth(),n=new Date(y,m+1,0).getDate(),K=[];for(let i=1;i<=n;i++)K.push(`${y}-${String(m+1).padStart(2,"0")}-${String(i).padStart(2,"0")}`);
-    const xp=K.reduce((a,k)=>a+bXp(k),0),act=K.filter(k=>bXp(k)>0).length,mx=Math.max(1,...K.map(bXp)),past=K.filter(k=>k<=tk),sl=past.map(k=>(G.sleep||{})[k]).filter(x=>x&&x.h),md=past.map(k=>(G.mood||{})[k]).filter(Boolean),gl=bGoals(K,n/7);
+    const xp=K.reduce((a,k)=>a+bXp(k),0),act=K.filter(k=>bXp(k)>0).length,mx=Math.max(100,...K.map(bXp)),past=K.filter(k=>k<=tk),sl=past.map(k=>(G.sleep||{})[k]).filter(x=>x&&x.h),md=past.map(k=>(G.mood||{})[k]).filter(Boolean),gl=bGoals(K,n/7);
     const c={};K.forEach(k=>Object.entries(bCat(k)).forEach(([a,v])=>{if(a!=="eau")c[a]=(c[a]||0)+v}));const top=Object.entries(c).sort((a,b)=>b[1]-a[1])[0],ev=evArc().filter(e=>K.includes(e.d));
     const title=(G.chap["m"+y+"-"+m]||{}).t||(ev.length?"Le mois "+evTitle(ev[0].n):top&&xp>300?CHAP_CAT[top[0]].replace("La semaine","Le mois"):"Un mois au calme");
     h+=`<div class="bnav"><button type="button" class="bnv" data-d="1" aria-label="Mois précédent">${ICO("chev",18)}</button><span>${MOIS_C[m].charAt(0).toUpperCase()+MOIS_C[m].slice(1)} ${y}</span><button type="button" class="bnv nx" data-d="-1" aria-label="Mois suivant" ${bilOff<=0?"disabled":""}>${ICO("chev",18)}</button></div>`;
@@ -10280,8 +10263,6 @@ function renderWkSun(){const box=$("wkSun");if(!box||!S.g)return;const G=S.g,tk=
 // --- Fil « Aujourd'hui » : 3 quêtes fusionnées (événements, spéciales, moment, pour toi, Claude)
 const FEED_SP=["gift","secret","sur"];
 function enOf(){const G=S.g,tk=dayKey(Date.now());return G&&G.en&&G.en.d===tk?G.en.v|0:0}
-function dayGoal(){return Math.round(dayGoal0()*(window.vieGoalF?vieGoalF():1))}
-function dayGoal0(){const G=S.g;if(!G)return 150;const tk=dayKey(Date.now()),e=enOf(),md=(G.mood||{})[tk]|0;if(e===1||(md&&md<=2))return 80;if(e===2)return 120;return 150}
 function fqNo(){const G=S.g;if(!G.fqNo||typeof G.fqNo!=="object")G.fqNo={};return G.fqNo}
 function fqWt(k){const G=S.g;return k&&G.fqW&&typeof G.fqW[k]==="number"?G.fqW[k]:0}
 function fqWAdd(k,d){if(!k)return;const G=S.g;if(!G.fqW||typeof G.fqW!=="object")G.fqW={};G.fqW[k]=Math.max(-2,Math.min(1.5,(G.fqW[k]||0)+d))}
@@ -10376,7 +10357,7 @@ function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=day
 function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
 // enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
 function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
-function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
+function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]}`)}
 // --- tiroir « Plus »
 let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());
@@ -11498,7 +11479,6 @@ function badgeDefsBase(){
   B.push({id:"book1",name:"Lecteur",desc:"Finir un livre",ic:"book",t:1,ok:()=>(S.g.books||[]).length>=1});
   B.push({id:"book5",name:"Rat de bibliothèque",desc:"Finir 5 livres",ic:"book",t:3,ok:()=>(S.g.books||[]).length>=5});
   B.push({id:"clean7",name:"Hygiène de vie",desc:"7 jours avec tous tes repas pris",ic:"face",t:2,ok:()=>bgMealDays()>=7});
-  B.push({id:"goal7",name:"Objectif tenu",desc:"Atteindre l'objectif du jour 7 fois",ic:"star",t:2,ok:()=>(S.g.goalN||0)>=7});
   // secrets
   B.push({id:"clutch",name:"Sur le fil",desc:"Sauver ta journée avec une action après 21 h",ic:"trophy",t:2,sec:1,ok:()=>bgClutch()});
   B.push({id:"lucky3",name:"Chanceux",desc:"Vivre 3 événements rares",ic:"star",t:2,sec:1,ok:()=>(S.g.rareN||0)>=3});
@@ -11541,7 +11521,7 @@ function checkBadges(){
 const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 // famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
 function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
-function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|goal7|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];
@@ -11553,7 +11533,7 @@ function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   else if(id==="circle")r=[relRecent(30),10];else if(id==="loyal")r=[relLoyal(),4];else if(id==="grp1")r=[S.g.fgQ||0,5];
   else if(id==="pu100"||id==="pu500")r=[Math.max(0,...Object.values((S.g.pu&&S.g.pu.m)||{})),id==="pu100"?100:500];else if(id==="pu30")r=[(S.g.pu||{}).rec||0,30];
   else if(id==="gn120")r=[(S.g.gn||{}).rec||0,120];else if(id==="run42")r=[Math.round(Math.max(0,...Object.values((S.g.run&&S.g.run.m)||{}))),42];else if(id==="zen60")r=[Math.max(0,...Object.values((S.g.md&&S.g.md.m)||{})),60];
-  else if(id==="book1"||id==="book5")r=[(S.g.books||[]).length,id==="book1"?1:5];else if(id==="goal7")r=[S.g.goalN||0,7];
+  else if(id==="book1"||id==="book5")r=[(S.g.books||[]).length,id==="book1"?1:5];
   else if(id==="buy1")r=[wrSetsDone().length,1];else if(id==="buy5")r=[wrOwned(),25];else if(id==="buy15")r=[wrOwned(),50];
   else if(id==="boss4")r=[bgPrjWon(),4];
   else if(/^out(\d+)/.test(id))r=[Object.keys(S.g.rel).length,+id.slice(3)];
@@ -12071,10 +12051,6 @@ clean7:{L:[[[
 "..Eeeeee....",
 ".E.eee......",
 "E..........."],2,1],[["..h..",".hwh.","hwwwh",".hwh.","..h.."],0,0]]},
-goal7:{f:function(){var g=grid(14,14);var cs=['r','w','r','w','r'];
-  for(var i=0;i<5;i++)disc(g,5.5,8,6.4-i*1.35,cs[i]);
-  line(g,6,7,12,1,'b');put(g,10,0,["...","..."]);put(g,11,0,["r.r","rr.",".rr"].map(function(r){return r;}));g[0][13]='r';
-  put(g,4,8,["k"]);put(g,5,7,["k"]);return toRows(g);} },
 bossleg:{r:[ // horned skull with glowing eyes
 "t............t",
 "tt..........tt",
@@ -12441,7 +12417,7 @@ var FILL={
  first:'#36b679',
  stat5sport:'#e8382f',stat5perso:'#f08300',stat5social:'#00a3a3',stat5famille:'#4a55f5',stat5maison:'#8a4df0',stat5soi:'#1f7fe0',stat5travail:'#6f7f99',stat10:'#b06ad9',
  eau3:'#2c62c8',food3:'#9a5a26',veg7:'#2f8a3a',
- streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',goal7:'#4f6ed8',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
+ streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
  bond1:'#ef6aa4',bond3:'#d84a70',bond5:'#b8325a',bond20:'#8e2a5a',circle:'#2fa0a0',loyal:'#7f56d0',reunion:'#e07a3a',grp1:'#3a9a5a',grptour:'#3a72d0',bday:'#5ab0e0',
  pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',bossrev:'#a83a3a',
  plveg:'#3a9a4a',plchef:'#c8a030',plfast:'#e0702a',
@@ -13528,7 +13504,7 @@ function floatXp(xp,ev,el){
 }
 let toastT,tq=[],tBusy=false,tLast="";
 // Bilan de journée (28/10) : les messages « en passant » ne s'empilent plus, ils sont gardés pour le bilan du soir (S.g.dlog) ; les niveaux s'affichent aussi tout de suite
-const TOAST_DIFF=/Lien renforcé|Quête accomplie au passage|Défi d'hier réussi|Objectif du jour atteint|Journée parfaite|Socle tenu|Barre de vie pleine|Nouveau titre|Nouveau record|Objet exclusif|Couché avant minuit|dans les coffres|Case \d+ réussie/i,TOAST_NIV=/niveau <span|Niveau <span/i;
+const TOAST_DIFF=/Lien renforcé|Quête accomplie au passage|Défi d'hier réussi|Journée parfaite|Socle tenu|Barre de vie pleine|Nouveau titre|Nouveau record|Objet exclusif|Couché avant minuit|dans les coffres|Case \d+ réussie/i,TOAST_NIV=/niveau <span|Niveau <span/i;
 function toastKeep(html){try{const G=S.g;if(!G)return;const tk=dayKey(Date.now());if(!G.dlog||typeof G.dlog!=="object")G.dlog={};const L=G.dlog[tk]=G.dlog[tk]||[];if(!L.includes(html)&&L.length<40)L.push(html);const ks=Object.keys(G.dlog).sort();while(ks.length>7)delete G.dlog[ks.shift()]}catch(e){}}
 function toast(html){if(!html||/joker/i.test(html))return;if(TOAST_NIV.test(html))toastKeep(html);else if(TOAST_DIFF.test(html)){toastKeep(html);return}if(html===tLast&&tBusy||tq.includes(html))return;tq.push(html);if(tq.length>4)tq.splice(1,1);if(!tBusy)nextToast()}
 function nextToast(){const t=$("toast");clearTimeout(toastT);if(!tq.length){tBusy=false;tLast="";t.classList.remove("show");return}
@@ -13891,15 +13867,10 @@ body.testing .qxp{top:calc(env(safe-area-inset-top,0px) + 36px)}
 
 html body .qxp{display:grid;gap:0}
 html body .qxp #qxpBtn{border-bottom:0;border-radius:8px 8px 0 0;box-shadow:none;padding:8px 12px 4px}
-html body .qxp .qday{margin-top:0;border-top:0;border-radius:0 0 8px 8px;padding:0 12px 8px;gap:8px;box-shadow:0 3px 0 var(--rpg-shadow),0 6px 22px 2px rgba(0,0,0,.28)}
-html body .qxp .qday .qdl{font-size:11px;letter-spacing:.06em}
-html body .qxp .qday .qdbar{height:7px;border-width:1.5px}
-html body .qxp .qday b{font-size:11px;color:var(--muted)}
 /* — depuis principal-07.css — */
 html.sky body :is(.qxp button){box-shadow:none;border-width:1.5px;border-style:solid;border-color:var(--line);border-radius:12px;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 
 
-html.sky body .qxp .qday{border-radius:0 0 12px 12px;border-top:0}
 html.sky body .qxp::before{display:none}
 
 html:not(.sky) #sceneBox{display:none}
@@ -16690,7 +16661,7 @@ html:not(#_a):not(#_b) body #actFind .afdur .afxp{display:block;font-size:11px;f
 html:not(#_a):not(#_b) body #actFind .afnext{width:100%;margin-top:12px}
 html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 </style>
-<script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, frise, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
+<script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
 
 const EV=["sleepGo","enBox","nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
@@ -17047,15 +17018,6 @@ function evToday(){const b=document.getElementById("evToday");if(!b||!S||!S.g)re
   const k=L.map(e=>e.id+e.n+(e.sub||"")).join("|");if(k===evK)return;evK=k;
   b.innerHTML=L.map(e=>{let c="var(--gold)";try{c=e.k==="bd"?"var(--c-autres)":evtOf(e.t||evtGuess(e.n))[2]}catch(_){}if(e.k==="bd")return`<button type="button" class="evtd bdy${e.inD===0?" bd0":""}"><span class="bdav">${pAv(e.who,"bdp")}<span class="bdck">${BDCAKE}</span></span><span class="bdtx"><b></b><small>${e.sub}</small></span></button>`;return`<button type="button" class="evtd" style="--ec:${c}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${e.k==="bd"?'<path d="M4 21h16M5 21v-7h14v7M12 14v-3M12 8a1.5 1.5 0 0 0 1.5-1.5C13.5 5 12 3 12 3s-1.5 2-1.5 3.5A1.5 1.5 0 0 0 12 8z"/>':'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>'}</svg><b></b></button>`}).join("");
   b.querySelectorAll(".evtd b").forEach((x,i)=>x.textContent=L[i].n);b.querySelectorAll(".evtd").forEach((x,i)=>x.onclick=()=>{if(L[i].k==="bd"){try{bdConf(x)}catch(_){}setTimeout(()=>{try{openProfile(L[i].who)}catch(_){}},450);return}try{showView("c")}catch(_){}cGoSub("vie");setTimeout(()=>{const e=document.getElementById("evtBox");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})},150)})}
-// ---- frise de la journée : soleil qui avance, plage de travail, XP du jour
-function friseViz(){const q=document.getElementById("qDay");if(!q||!S||!S.g)return;const now=new Date(),h=now.getHours()+now.getMinutes()/60;let w0=8;try{w0=wakeH()}catch(e){}const a=w0,b=Math.max(a+15,24);
-  let sr=7.5,ss=19;try{const t=sunSet(now);sr=t.rise.getHours()+t.rise.getMinutes()/60;ss=t.set.getHours()+t.set.getMinutes()/60}catch(e){}
-  const v=S.g.vie||{},tk=dayKey(Date.now()),dw=now.getDay(),per=(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e);let sj="";try{sj=(sitOf()||{}).job||""}catch(e){}
-  const work=(v.wd||[]).includes(dw)&&(v.job||per||sj==="poste")&&v.wf&&v.wt;const hh=x=>{const[m,n]=String(x).split(":");return+m+(+n||0)/60};
-  const pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100)),xp=((document.getElementById("qDayT")||{}).textContent||"").split("/")[0].trim();
-  const k=[Math.round(h*12),work,xp,a].join("|");let f=q.querySelector(".frise");if(f&&f.dataset.k===k)return;if(!f){f=document.createElement("span");f.className="frise";q.appendChild(f)}f.dataset.k=k;
-  const day=h>=sr&&h<ss,grad=`linear-gradient(90deg,#1d2350 ${pc(sr-1.2)}%,#f08a5a ${pc(sr)}%,#7fd4ff ${pc(sr+1.5)}%,#7fd4ff ${pc(ss-1.5)}%,#f08a5a ${pc(ss)}%,#2b2266 ${pc(ss+1.2)}%,#141836 100%)`;
-  f.innerHTML=`<span class="frt" style="background:${grad}">${work?`<span class="frw" style="left:${pc(hh(v.wf))}%;width:${pc(hh(v.wt))-pc(hh(v.wf))}%"><span class="frwi">${vI("dossier")}</span></span>`:""}<span class="frp" style="width:${pc(h)}%"></span><span class="frs ${day?"sun":"moon"}" style="left:${pc(h)}%">${vI(day?"soleil":"lune")}</span></span><span class="frl"><small>${Math.floor(a)}h</small><b>+${esc(xp||"0")} XP</b><small>${b>=24?"0h":b+"h"}</small></span>`}
 // ---- avec qui pour la sortie
 const IDW={mus:/musi|f[êe]t/i,mic:/f[êe]t|musi|humour/i,q:/intello|geek/i,cine:/cin[ée]/i,dice:/geek|f[êe]t/i,mask:/artiste|humour/i,key:/geek|intello/i,food:/gourm/i,bag:/artiste|mode/i,art:/artiste|dessin/i,run:/sport/i,map:/voyag|nature/i};
 function idWho(ix,skip){const x=IDQ[ix],re=IDW[x[5]]||/./,now=Date.now();const L=(S.friends||[]).map(n=>{const P=(S.profiles||{})[n]||{},ty=[...(P.types||[]),...(P.talents||[])].join(" "),d=((S.bondsLast||{})[n]?(now-S.bondsLast[n])/864e5:60);return{n,s:(re.test(ty)?5:0)+Math.min(4,d/7)+((S.bonds||{})[n]||0)/200+(P.best?1:0)}}).sort((a,b)=>b.s-a.s).map(o=>o.n);return L.filter(n=>!(skip||[]).includes(n))[0]||L[0]||""}
@@ -17119,30 +17081,28 @@ const famOfQ=x=>{try{const t=x.t||(x.q&&x.q.name)||"";const k=afMatch(t);return 
 const famCool=f=>{const R=(S.g&&S.g.fqFam)||{},L=(R[f]||[]).filter(t=>Date.now()-t<30*864e5);return L.length>=3&&Date.now()-L[L.length-1]<21*864e5};
 
 
-// ---- les quêtes du jour prennent place dans les creux de la journée (frise + « vers 18 h »)
-function fqSlots(){const box=document.getElementById("fqBox"),fr=document.querySelector("#qDay .frise .frt");if(!box||!S||!S.g)return;
-  const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24),pc=x=>Math.max(0,Math.min(100,(x-a)/(b-a)*100));
+// ---- les quêtes du jour prennent place dans les creux de la journée (« vers 18 h »)
+function fqSlots(){const box=document.getElementById("fqBox");if(!box||!S||!S.g)return;
+  const now=new Date(),h=now.getHours()+now.getMinutes()/60;let a=8;try{a=wakeH()}catch(e){}const b=Math.max(a+15,24);
   const v=S.g.vie||{},tk=dayKey(Date.now()),dw=now.getDay(),per=(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e);let sj="";try{sj=(sitOf()||{}).job||""}catch(e){}
   const hh=x=>{const[m,n]=String(x).split(":");return+m+(+n||0)/60},work=(v.wd||[]).includes(dw)&&(v.job||per||sj==="poste")&&v.wf&&v.wt,w0=work?hh(v.wf):99,w1=work?hh(v.wt):-1;
   const free=[];for(let x=Math.max(Math.ceil(h+.25),Math.ceil(a+1));x<=22;x++){if(x>=w0&&x<w1)continue;free.push(x)}
   let HB={};try{HB=(window.__habits&&window.__habits().H)||{}}catch(e){}
-  const med=A=>{const s=A.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)]};const used=new Set(),L=(()=>{try{return fqList()}catch(e){return[]}})(),marks=[];
+  const med=A=>{const s=A.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)]};const used=new Set(),L=(()=>{try{return fqList()}catch(e){return[]}})();
   box.querySelectorAll(".fqr").forEach(card=>{const old=card.querySelector(".fqh");const x=L[+card.dataset.i];if(!x||x.done||card.classList.contains("done")||!free.length){if(old)old.remove();return}
     const t=x.t||"";if(/\b\d{1,2} ?h\b|ce soir|ce matin|demain/i.test(t)){if(old)old.remove();return}
     let pick=null;try{const k=afMatch(t);if(k){const f=k.split(":")[1],hr=[];Object.entries(HB).forEach(([kk,o])=>{if(kk===k||kk.split(":")[1]===f)(o.hr||[]).forEach(z=>hr.push(z))});if(hr.length>=2){const m=med(hr);const c=free.filter(z=>!used.has(z)).sort((p,q)=>Math.abs(p-m)-Math.abs(q-m))[0];if(c!=null&&Math.abs(c-m)<=2)pick=c}}}catch(e){}
     if(pick==null)pick=free.find(z=>!used.has(z));if(pick==null){if(old)old.remove();return}used.add(pick);
     const lab=`vers ${pick} h`;const w=card.querySelector(".fqw");if(w){if(old){if(old.textContent!==lab)old.textContent=lab}else{const e=document.createElement("em");e.className="fqh";e.textContent=lab;w.appendChild(e)}}
-    const ic=card.querySelector(".uiq svg");marks.push({x:pick,ic:ic?ic.outerHTML:rkSvg("etoile"),t})});
-  if(!fr)return;const sig=marks.map(m=>m.x+m.t+m.ic.length).join("|");if(fr.dataset.fq===sig&&fr.querySelector(".frq")||(!marks.length&&!fr.querySelector(".frq"))){fr.dataset.fq=sig;return}fr.dataset.fq=sig;fr.querySelectorAll(".frq").forEach(e=>e.remove());
-  marks.forEach(m=>{const s=document.createElement("span");s.className="frq";s.style.left=pc(m.x)+"%";s.title=m.t+" · vers "+m.x+" h";s.innerHTML=m.ic;fr.appendChild(s)})}
+  })}
 // les blocs du matin/soir (repas, nuit) et les données des quêtes se font au rendu du bloc lui-même
 
 
 
 // ---- chaque bloc d'Aujourd'hui finit son propre rendu (plus de retouche globale après coup)
 function sqFinish(){idqCard();idqDress();idqWho();bdDress();natDress();dressQuests();sqMenus();sqEod();sqIcons()}
-function fqFinish(){dressQuests();bdDress();fqExtra();friseViz();fqSlots()}
-window.__sqFinish=sqFinish;window.__fqFinish=fqFinish;window.__friseViz=()=>{friseViz();fqSlots()};
+function fqFinish(){dressQuests();bdDress();fqExtra();fqSlots()}
+window.__sqFinish=sqFinish;window.__fqFinish=fqFinish;window.__fqSlots=fqSlots;
 function sqEod(){const L=(S.specials||[]).filter(q=>q.sm&&q.eod);if(!L.length)return;const tk=dayKey(Date.now());document.querySelectorAll("#sqBox .sq").forEach(c=>{const n=(c.querySelector(".sqn")||{}).textContent,q=L.find(x=>x.name===n);if(!q)return;const go=c.querySelector(".primary");if(!go||go.dataset.eod)return;go.dataset.eod=1;go.disabled=true;go.removeAttribute("data-tm");
     let st="ce soir";if(q.eod==="cig"){const n0=(S.g.cig||{})[tk]||0;st=n0+" / moins de "+q.eodv}if(q.eod==="bed")st="au coucher";go.textContent=st;go.classList.add("eodb")})}
  // ---- Proches et profil : chaque bloc finit son propre rendu

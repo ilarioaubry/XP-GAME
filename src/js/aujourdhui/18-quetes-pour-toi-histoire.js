@@ -189,6 +189,6 @@ document.addEventListener("load",e=>{const t=e.target;if(t&&t.classList&&t.class
 function bedTime(){const G=S.g;if(!G||!G.bed||Date.now()-G.bed>18*36e5)return"";const d=new Date(G.bed);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
 function renderSleepGo(){const box=$("sleepGo");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),J=(G.jr||{})[tk]||{},h=dayH();
   const show=h>=(evmOn()?23:RIT_SOIR_H)&&!J.at;box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
-  const left=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n).length,tx=xpToday(),g=dayGoal();
+  const left=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n).length;
   box.innerHTML=`<div class="slgc"><button type="button" class="btn primary slgb"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>Je vais dormir</button></div>`;
   box.querySelector(".slgb").onclick=()=>closeOpen(0,1)}

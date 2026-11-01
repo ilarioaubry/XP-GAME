@@ -466,10 +466,6 @@ clean7:{L:[[[
 "..Eeeeee....",
 ".E.eee......",
 "E..........."],2,1],[["..h..",".hwh.","hwwwh",".hwh.","..h.."],0,0]]},
-goal7:{f:function(){var g=grid(14,14);var cs=['r','w','r','w','r'];
-  for(var i=0;i<5;i++)disc(g,5.5,8,6.4-i*1.35,cs[i]);
-  line(g,6,7,12,1,'b');put(g,10,0,["...","..."]);put(g,11,0,["r.r","rr.",".rr"].map(function(r){return r;}));g[0][13]='r';
-  put(g,4,8,["k"]);put(g,5,7,["k"]);return toRows(g);} },
 bossleg:{r:[ // horned skull with glowing eyes
 "t............t",
 "tt..........tt",
@@ -836,7 +832,7 @@ var FILL={
  first:'#36b679',
  stat5sport:'#e8382f',stat5perso:'#f08300',stat5social:'#00a3a3',stat5famille:'#4a55f5',stat5maison:'#8a4df0',stat5soi:'#1f7fe0',stat5travail:'#6f7f99',stat10:'#b06ad9',
  eau3:'#2c62c8',food3:'#9a5a26',veg7:'#2f8a3a',
- streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',goal7:'#4f6ed8',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
+ streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
  bond1:'#ef6aa4',bond3:'#d84a70',bond5:'#b8325a',bond20:'#8e2a5a',circle:'#2fa0a0',loyal:'#7f56d0',reunion:'#e07a3a',grp1:'#3a9a5a',grptour:'#3a72d0',bday:'#5ab0e0',
  pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',bossrev:'#a83a3a',
  plveg:'#3a9a4a',plchef:'#c8a030',plfast:'#e0702a',

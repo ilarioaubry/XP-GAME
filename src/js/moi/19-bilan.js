@@ -27,7 +27,7 @@ function bGoals(K,mult){const G=S.g,s=sitOf();if(!s||!(s.goals||[]).length)retur
     if(g==="sommeil"){const n=past.filter(k=>((G.sleep||{})[k]||{}).h>=7).length;return{g,lab,v:n,max:Math.round(5*mult),u:n>1?"nuits de 7 h ou plus":"nuit de 7 h ou plus"}}
     if(g==="moral"){const n=past.filter(k=>((G.mood||{})[k]|0)>=4).length,x=K.reduce((a,k)=>a+(bCat(k).soi||0),0);return{g,lab,v:n,max:Math.round(4*mult),u:n>1?`bonnes journées · ${x} XP pour toi`:`bonne journée · ${x} XP pour toi`}}
     const cs=GOAL_CAT[g]||[],x=K.reduce((a,k)=>a+cs.reduce((b,c)=>b+(bCat(k)[c]||0),0),0);return{g,lab,v:x,max:Math.round(10*mult)*10,u:"XP",cat:cs[0]}})}
-function bStrip(K,small){const G=S.g,tk=dayKey(Date.now()),mx=Math.max(dayGoal(),...K.map(bXp));let av=K.filter(k=>k<=tk).pop()||K[0];const ai=K.indexOf(av);
+function bStrip(K,small){const G=S.g,tk=dayKey(Date.now()),mx=Math.max(100,...K.map(bXp));let av=K.filter(k=>k<=tk).pop()||K[0];const ai=K.indexOf(av);
   return`<div class="bstrip${small?" sm":""}">${K.map((k,i)=>{const fut=k>tk,x=bXp(k),w=(G.wxh||{})[k],md=(G.mood||{})[k],d=new Date(k+"T12:00");
     return`<div class="bsd${fut?" fut":""}${k===tk?" now":""}"><span class="bsw">${w?wxIcon(wxKind(w.ic),true):fut?"":`<i class="bsq">·</i>`}</span><span class="bsm">${md?moodFace(md,small?18:24):`<i class="bse"></i>`}</span><span class="bsb"><i style="height:${fut?0:Math.max(x?6:0,Math.round(x/mx*82))}%"></i>${x&&!small?`<em>${x}</em>`:""}</span><span class="bsl">${"LMMJVSD"[i]}<small>${d.getDate()}</small></span></div>`}).join("")}
     <img class="bsav" src="${myAvatarURL()}" alt="" style="--i:${ai}"></div>`}
@@ -79,7 +79,7 @@ function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();co
      const sb=box.querySelector(".bsit");if(sb)sb.onclick=()=>sitSheet();
      box.querySelectorAll("[data-int]").forEach(b=>b.onclick=()=>{if(!G.intn||typeof G.intn!=="object")G.intn={};const nk=bWeek(-1)[0];G.intn[nk]=G.intn[nk]===b.dataset.int?"":b.dataset.int;save();renderChap();if(G.intn[nk])toast("Intention notée pour lundi")})}}
   else if(bilTab==="m"){const d=new Date(dayKey(Date.now())+"T12:00");d.setDate(1);d.setMonth(d.getMonth()-bilOff);const y=d.getFullYear(),m=d.getMonth(),n=new Date(y,m+1,0).getDate(),K=[];for(let i=1;i<=n;i++)K.push(`${y}-${String(m+1).padStart(2,"0")}-${String(i).padStart(2,"0")}`);
-    const xp=K.reduce((a,k)=>a+bXp(k),0),act=K.filter(k=>bXp(k)>0).length,mx=Math.max(1,...K.map(bXp)),past=K.filter(k=>k<=tk),sl=past.map(k=>(G.sleep||{})[k]).filter(x=>x&&x.h),md=past.map(k=>(G.mood||{})[k]).filter(Boolean),gl=bGoals(K,n/7);
+    const xp=K.reduce((a,k)=>a+bXp(k),0),act=K.filter(k=>bXp(k)>0).length,mx=Math.max(100,...K.map(bXp)),past=K.filter(k=>k<=tk),sl=past.map(k=>(G.sleep||{})[k]).filter(x=>x&&x.h),md=past.map(k=>(G.mood||{})[k]).filter(Boolean),gl=bGoals(K,n/7);
     const c={};K.forEach(k=>Object.entries(bCat(k)).forEach(([a,v])=>{if(a!=="eau")c[a]=(c[a]||0)+v}));const top=Object.entries(c).sort((a,b)=>b[1]-a[1])[0],ev=evArc().filter(e=>K.includes(e.d));
     const title=(G.chap["m"+y+"-"+m]||{}).t||(ev.length?"Le mois "+evTitle(ev[0].n):top&&xp>300?CHAP_CAT[top[0]].replace("La semaine","Le mois"):"Un mois au calme");
     h+=`<div class="bnav"><button type="button" class="bnv" data-d="1" aria-label="Mois précédent">${ICO("chev",18)}</button><span>${MOIS_C[m].charAt(0).toUpperCase()+MOIS_C[m].slice(1)} ${y}</span><button type="button" class="bnv nx" data-d="-1" aria-label="Mois suivant" ${bilOff<=0?"disabled":""}>${ICO("chev",18)}</button></div>`;
@@ -112,8 +112,6 @@ function renderWkSun(){const box=$("wkSun");if(!box||!S.g)return;const G=S.g,tk=
 // --- Fil « Aujourd'hui » : 3 quêtes fusionnées (événements, spéciales, moment, pour toi, Claude)
 const FEED_SP=["gift","secret","sur"];
 function enOf(){const G=S.g,tk=dayKey(Date.now());return G&&G.en&&G.en.d===tk?G.en.v|0:0}
-function dayGoal(){return Math.round(dayGoal0()*(window.vieGoalF?vieGoalF():1))}
-function dayGoal0(){const G=S.g;if(!G)return 150;const tk=dayKey(Date.now()),e=enOf(),md=(G.mood||{})[tk]|0;if(e===1||(md&&md<=2))return 80;if(e===2)return 120;return 150}
 function fqNo(){const G=S.g;if(!G.fqNo||typeof G.fqNo!=="object")G.fqNo={};return G.fqNo}
 function fqWt(k){const G=S.g;return k&&G.fqW&&typeof G.fqW[k]==="number"?G.fqW[k]:0}
 function fqWAdd(k,d){if(!k)return;const G=S.g;if(!G.fqW||typeof G.fqW!=="object")G.fqW={};G.fqW[k]=Math.max(-2,Math.min(1.5,(G.fqW[k]||0)+d))}
@@ -208,7 +206,7 @@ function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=day
 function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
 // enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
 function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
-function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]} · objectif du jour : ${dayGoal()} XP`)}
+function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]}`)}
 // --- tiroir « Plus »
 let plusOpen=false;
 function renderPlus(){const box=$("plusBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());
