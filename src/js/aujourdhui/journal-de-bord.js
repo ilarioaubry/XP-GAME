@@ -17,7 +17,7 @@ function jdFmt(t){const d=new Date(t);return d.getHours()+" h "+String(d.getMinu
 function jdLast(name,tk){const e=[...(S.log||[])].reverse().find(x=>dayKey(x.t)===tk&&x.name===name);return e?e.t:0}
 function jdDays(s,e,wd){let n=0;for(let d=new Date(s+"T12:00");dayKey(d.getTime())<=e;d.setDate(d.getDate()+1)){const w=d.getDay();if(!wd||(w>0&&w<6))n++}return n}
 function jdRow(o){return`<li class="jdl${o.ok?" ok":""}${o.sub?" sub":""}${o.w?" w":""}${o.x?" "+o.x:""}"${o.k?` data-j="${o.k}"`:""} style="--jc:${o.c||"#6d7680"}"><span class="jdi">${o.ic}</span><span class="jdt"${o.e?` data-k="${o.e}" title="Régler le rituel"`:""}><b>${esc(o.n)}</b>${o.s?`<small>${o.s}</small>`:""}</span>${o.r!==undefined?o.r:`<button type="button" class="btn jdck" aria-label="${o.ok?"Défaire : ":"Cocher : "}${esc(o.n)}" title="${o.ok?"Fait":"Cocher"}" aria-pressed="${!!o.ok}">${o.ok?ICO("check",24):""}</button>`}</li>`}
-function jdHead(t,c){return`<div class="head"><h2>${t}${c?`<span class="count">${c}</span>`:""}</h2></div>`}
+function jdHead(t,c,r){return`<div class="head"><h2>${t}${c?`<span class="count">${c}</span>`:""}</h2>${r||""}</div>`}
 function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElementById("jdEng"),C=document.getElementById("jdLater");if(!A||!B||!C||!S||!S.g)return;
   // la nuit et le choix des engagements sont déplacés ici : on les remet à leur place avant de réécrire, pour ne pas les perdre
   {const rl=document.getElementById("ritLife"),dq=document.getElementById("dqBox"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
@@ -52,7 +52,7 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
   const tot=now.length+done.length+gone.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
   const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
+  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"",PER?`<button type="button" class="btn jdplus" aria-label="Ajouter un rituel" title="Ajouter un rituel" data-k="${reg(()=>ritNew({per:PER,done:()=>render()}))}">${ICO("plus",24)}</button>`:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : ceux du jour, les cigarettes, le contrat
