@@ -70,7 +70,7 @@ with sync_playwright() as p:
     # 3b. Revenir sur un repas : sauté → pris → effacé
     r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const li=()=>[...document.querySelectorAll('#jdNow .jdl')].find(l=>/Petit-déj/.test(l.textContent));
       const btn=t=>{const l=li();const b=l&&[...l.querySelectorAll('.jdmini .btn')].find(b=>b.textContent.trim()===t);if(b)b.click();return!!b},row=()=>{const l=li();const b=l&&l.querySelector('.jdck');if(b)b.click()};
-      jdOpenDone=true;mealClear(dayKey(Date.now()),'matin','pdej');save();render();await W(200);const o=[];btn('Sauté');await W(400);const x0=S.xp;o.push(mealState('pdej','matin'));row();await W(400);btn('Pris');await W(400);o.push(mealState('pdej','matin'),S.xp>x0);row();await W(400);o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
+      jdOpenDone=true;jdOpenMeals=true;mealClear(dayKey(Date.now()),'matin','pdej');save();render();await W(200);const o=[];btn('Sauté');await W(400);const x0=S.xp;o.push(mealState('pdej','matin'));row();await W(400);btn('Pris');await W(400);o.push(mealState('pdej','matin'),S.xp>x0);row();await W(400);o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
     check("revenir sur un repas (sauté → pris → effacé)", r == "ko,ok,true,vide,true", r)
 
     # 4. Quête du jour puis Annuler

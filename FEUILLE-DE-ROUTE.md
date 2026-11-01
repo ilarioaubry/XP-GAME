@@ -8,8 +8,8 @@ Issue du rapport complet du 25/10/2026 (doc : https://claude.ai/artifact/TxKnkAV
 Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sections R et S ci-dessous, écran par écran ; chaque lot nettoie aussi le CSS de son écran (3.7, 3.8, 3.10, 3.11). Le reste de la liste est mis de côté, sans être retiré.
 
 **Lot 1 · Aujourd'hui**
-- [ ] 1.1 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements (R.2) — fait le 01/11, à vérifier par Ilario
-- [ ] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3)
+- [x] 1.1 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements (R.2) (01/11)
+- [ ] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3) — fait le 01/11, à vérifier par Ilario
 - [ ] 1.3 Objectif du jour rendu visible ou retiré avec son badge (R.12)
 - [ ] 1.4 Noms des sections clarifiés (Aujourd'hui, Plus tard aujourd'hui, Journal) ; les « + » qui se ressemblent distingués
 - [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1)

@@ -4502,7 +4502,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 4049390</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version ac883b8</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -17716,7 +17716,7 @@ function renderEng(){const box=document.getElementById("engBox");if(!box||!S||!S
 // Tout passe par les fonctions existantes (ritTap, plateOpen, mealQuick, enSet, todoGo, closeOpen…) : aucune donnée nouvelle.
 // Les anciens blocs (rituels, énergie, à faire, fin de journée) sont remplacés ; la nuit (#ritLife) et le choix des engagements (#engBox) y sont déplacés.
 const JD_CHAIN={douche:["barbe"]};   // enchaînements : la barbe suit la douche
-let jdOpenDone=false,jdOpenMorn=false;
+let jdOpenDone=false,jdOpenMorn=false,jdOpenMeals=false;
 const jdEl=ev=>(ev&&ev.currentTarget)||document.body;
 // rituel coché : la ligne glisse et se replie, puis rejoint « N faits » ; la barre d'XP brille, le compteur rebondit
 let jdPop=false;
@@ -17757,17 +17757,20 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
     chain.forEach(x=>{used.add(x.id);const c2=S.daily.c[x.id]||0,ok2=c2>=x.n,at2=ok2?jdLast(x.name,tk):0;(ok2?gone:now).push(jdRow({c:(()=>{try{return ritKind(x).c}catch(e){return""}})(),ic:(()=>{try{const k=ritKind(x);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:x.name,s:ok2?(at2?"Fait à "+jdFmt(at2):"Fait"):"enchaîné après "+t.name.toLowerCase(),ok:ok2,sub:!ok&&!ok2,e:reg(()=>ritFiche(x,render)),k:reg(ev=>{if(ok2){try{ritUntap(x)}catch(e){}}else jdRit(x,ev)})}))})});
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
-  // repas dont l'heure est passée
+  // repas dont l'heure est passée ; quand le repas suivant a commencé, un repas pas noté se replie dans « Repas à noter » (1.2)
+  const MEAL_END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99},lateM=[];
   MEALS.forEach(([k,per,l,ic])=>{if(h<MEAL_H[k])return;const s=mealState(k,per),pl=typeof plateOpen==="function"&&MB_PLM.includes(k);
     if(s)done.push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:s==="ok"?"Pris":"Sauté",ok:1,k:reg(()=>{if(pl&&s==="ok")plateOpen(per,k,document.body);else{try{mealClear(dayKey(Date.now()),per,k);save();render()}catch(e){}}})}));
-    else now.push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:pl?"Remplir l'assiette":"Pris ou sauté",r:`<span class="jdmini">${pl?"":`<button type="button" class="btn" data-k="${reg(ev=>mealQuick(per,k,jdEl(ev),0,ev))}">Sauté</button>`}<button type="button" class="btn ${pl?"primary":""}" data-k="${reg(ev=>pl?plateOpen(per,k,jdEl(ev)):mealQuick(per,k,jdEl(ev),1,ev))}">${pl?"Assiette":"Pris"}</button></span>`}))});
+    else (h>=MEAL_END[k]?lateM:now).push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:pl?"Remplir l'assiette":"Pris ou sauté",r:`<span class="jdmini">${pl?"":`<button type="button" class="btn" data-k="${reg(ev=>mealQuick(per,k,jdEl(ev),0,ev))}">Sauté</button>`}<button type="button" class="btn ${pl?"primary":""}" data-k="${reg(ev=>pl?plateOpen(per,k,jdEl(ev)):mealQuick(per,k,jdEl(ev),1,ev))}">${pl?"Assiette":"Pris"}</button></span>`}))});
   // le soir avant 20 h : ce qui reste du matin, replié
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
     if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}
   const rtm=PER&&ritOn&&rtmSteps(PER).length>1?`<button type="button" class="btn primary jdrtm" data-k="${reg(()=>rtmOpen())}">${ICO("play",24)}Tout faire en routine</button>`:"";
   const tot=now.length+done.length+gone.length,shownDone=done.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenDone}" data-k="${reg(()=>{jdOpenDone=!jdOpenDone;renderJdb()})}"><span>${done.length} fait${done.length>1?"s":""}</span><span class="jdchev${jdOpenDone?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenDone?done.join(""):""):"";
-  const ttl=h<12?"Ce matin":h<18?"Cet après-midi":"Ce soir";
-  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"",PER?`<button type="button" class="btn jdplus" aria-label="Ajouter un rituel" title="Ajouter un rituel" data-k="${reg(()=>ritNew({per:PER,done:()=>render()}))}">${ICO("plus",24)}</button>`:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
+  // titre d'après le moment affiché (le contenu suit dayPer, pas l'heure brute)
+  const ttl=PER==="matin"?(h<12?"Ce matin":"Ce midi"):PER==="soir"?(h<18?"Cet après-midi":"Ce soir"):"Cette nuit";
+  const mealsFold=lateM.length?`<li class="jdl jdmore"><button type="button" class="jdfold" aria-expanded="${jdOpenMeals}" data-k="${reg(()=>{jdOpenMeals=!jdOpenMeals;renderJdb()})}"><span>Repas à noter</span><span class="count">${lateM.length}</span><span class="jdchev${jdOpenMeals?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMeals?lateM.join(""):""):"";
+  A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"",PER?`<button type="button" class="btn jdplus" aria-label="Ajouter un rituel" title="Ajouter un rituel" data-k="${reg(()=>ritNew({per:PER,done:()=>render()}))}">${ICO("plus",24)}</button>`:"")}<ul class="jdlist">${now.join("")}${shownDone}${mealsFold}${morn}</ul>${rtm}${!tot&&!morn&&!lateM.length?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
   // ---- mes engagements : seulement ceux du jour ; les compteurs et le contrat en cours vont dans « Mes suivis » (1.1)
