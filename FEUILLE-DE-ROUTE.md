@@ -3,6 +3,10 @@
 Issue du rapport complet du 25/10/2026 (doc : https://claude.ai/artifact/TxKnkAVsLLj1E75MbprWGP).
 **Rien ne se retire de cette liste sans l'accord d'Ilario.**
 
+## Priorité du moment (01/11/2026)
+
+Seul chantier actif : **le nettoyage du CSS** (3.7, 3.8, 3.10, 3.11). Tout le reste est mis de côté par Ilario, sans être retiré de la liste.
+
 ## Méthode (à chaque demande)
 
 1. Claude présente l'étape suivante : ce qui change, ce que ça touche, ce qu'Ilario aura à vérifier.
@@ -300,6 +304,23 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] L.6 (01/11) Options : pas d'icône répétée quand c'est la même que la famille ; noms en entier sur 2 colonnes
 - [x] L.7 (01/11) Libellés : « Force » → « Sport » ; icône Travail sans croix rouge ; « Divertissement » → « Loisirs »
 - [ ] L.8 « Aujourd'hui » dans le panneau : la liste des actions notées du jour, repliée, avec Annuler
+
+## Compte rendu du 01/11/2026 (à choisir)
+
+Doc : https://claude.ai/artifact/2U9EfKXto3kqDLveD1wMwi
+
+- [ ] R.1 Jauge de stockage : limite réelle du téléphone (aujourd'hui « / 256 Ko », rouge vers 205 Ko)
+- [ ] R.2 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements
+- [ ] R.3 Repas passés repliés le soir ; titre du moment (Cet après-midi…) fidèle à son contenu
+- [ ] R.4 Bilan : retirer « 0 jour de suite » et « coffres ouverts » du haut, montrer ce qui a été fait
+- [ ] R.5 Badges : renommer « Machine de guerre », « Pilleur », « skills » ; revoir « Sur le pouce » et « Âme sœur » ; badges famille, travail, maison, projets
+- [ ] R.6 Mêmes noms partout (Sport, Créer…) et jauge Nourriture sur le profil
+- [ ] R.7 Fiche d'ami en lecture + bouton Modifier ; « vus il y a N jours » en clair ; « Appeler » ouvre Téléphone
+- [ ] R.8 Ma date d'anniversaire, mon statut de couple, anniversaire de couple
+- [ ] R.9 Types d'événements mariage, naissance, déménagement, rendez-vous médical, avec leurs quêtes
+- [ ] R.10 **(décision)** Réduire les systèmes de progression (hasard, coffres, Ami du mois)
+- [ ] R.11 XP des proches et des bonus ramenés au barème (30 maximum)
+- [ ] R.12 Rendre ou supprimer ce qui est caché (Mon rythme, Ma capacité, La dernière fois que…, objectif du jour) ; retirer boss et euros du code (avec le CSS)
 
 ## Fait à la demande (hors phases)
 
