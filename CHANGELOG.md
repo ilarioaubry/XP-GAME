@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- Nettoyage : 5 anciens blocs d'Aujourd'hui, invisibles depuis le journal, supprimés (HTML, rendu, CSS) : Fin de journée, Énergie du matin (ancienne carte), À faire (ancienne liste), Défi à deux (bloc vide) et Cette semaine. Le module « Énergie du matin » et le module « Rattrapage » de Mes modules s'appliquent maintenant aux lignes du journal. Rien ne change à l'écran.
 - Aujourd'hui : noms clarifiés. Les quêtes s'appellent « Quêtes du jour », le journal du bas « Fait aujourd'hui » ; les boutons d'ajout disent ce qu'ils ajoutent (« + Rituel », « + Engagement »), le « + » flottant reste celui des actions.
 - Objectif du jour retiré (il était déjà invisible) : son calcul, son message, le badge « Objectif tenu » et l'ancienne frise de la journée sont supprimés du code. Les données restent dans la sauvegarde.
 - Aujourd'hui : un repas pas noté se replie dans « Repas à noter » dès que le repas suivant commence (plus de petit-déj à cocher à 21 h) ; le titre suit le moment affiché : Ce matin, Ce midi, Cet après-midi, Ce soir, Cette nuit.

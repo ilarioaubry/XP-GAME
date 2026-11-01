@@ -1164,7 +1164,6 @@ html:not(#_a):not(#_b) body :is(.btn,.ppc,.me-set,.edbtn,.back):active{transform
 html:not(#_a):not(#_b) body img,html:not(#_a):not(#_b) body canvas{image-rendering:pixelated}
 
 
-.wkr{display:grid;gap:10px}
 
 
 
@@ -2038,12 +2037,7 @@ html:not(#_a):not(#_b) body .pradd{display:grid;grid-template-columns:1fr auto;g
 html:not(#_a):not(#_b) body .wkcta{width:100%;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:12px;text-align:left;font:inherit;color:var(--text);background:color-mix(in srgb,var(--surface) 70%,transparent);border:2px dashed var(--line);cursor:pointer}
 html:not(#_a):not(#_b) body .wkcta b{display:block;font-size:15px}html:not(#_a):not(#_b) body .wkcta small{display:block;font-size:13px;color:var(--muted)}html:not(#_a):not(#_b) body .wkcta>.ic{color:var(--gold)}
 
-html:not(#_a):not(#_b) body .wkl{display:grid;gap:8px}
-html:not(#_a):not(#_b) body .wkr{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;text-align:left;font:inherit;color:var(--text);background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--zc);box-shadow:3px 3px 0 var(--rpg-shadow);cursor:pointer;-webkit-touch-callout:none;user-select:none}
-html:not(#_a):not(#_b) body .wkr.due{background:color-mix(in srgb,var(--zc) 12%,var(--surface))}
-html:not(#_a):not(#_b) body .wkr.tdd,html:not(#_a):not(#_b) body .wkr.full{opacity:.72}
 html:not(#_a):not(#_b) body .wki{display:grid;place-items:center;width:34px;height:34px;color:var(--zc)}html:not(#_a):not(#_b) body .wki svg{width:30px;height:30px;display:block}
-html:not(#_a):not(#_b) body .wkt b{display:block;font-size:15px;line-height:1.2}html:not(#_a):not(#_b) body .wkt small{display:block;font-size:13px;color:var(--muted);margin-top:1px}html:not(#_a):not(#_b) body .wkr.due .wkt small{color:color-mix(in srgb,var(--zc) 65%,#fff);font-weight:800}
 html:not(#_a):not(#_b) body .wkm{display:flex;gap:3px;margin-top:5px}
 html:not(#_a):not(#_b) body .wkm i{display:grid;place-items:center;width:18px;height:18px;font-size:11px;font-style:normal;font-weight:800;color:color-mix(in srgb,var(--muted) 60%,transparent);border:2px solid transparent}
 html:not(#_a):not(#_b) body .wkm i.on{color:var(--text);border-color:var(--line)}html:not(#_a):not(#_b) body .wkm i.ok{color:#2a1c0c;background:var(--zc);border-color:color-mix(in srgb,var(--zc) 60%,#000)}

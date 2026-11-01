@@ -55,7 +55,7 @@ function renderBase(prevLevel){
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
   $("streak").textContent=streak();
   if(prevLevel&&l>prevLevel){setTimeout(()=>sfx("level"),180);$("lvlBox").classList.remove("bump");void $("lvlBox").offsetWidth;$("lvlBox").classList.add("bump");toast(`Niveau <span class="p">${l}</span> atteint !${rankOf(l)!==rankOf(prevLevel)?" Nouveau rang : <span class=\"p\">"+rankOf(l)+"</span>":""}`)}
-  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();if(typeof renderFiche==="function")renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
+  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderWkSun();renderFq();if(typeof renderFiche==="function")renderFiche();renderPrj();badgeDots();applyTheme();
   $("favs").hidden=true;$("filters").hidden=true;$("seeAll").hidden=true;$("allActs").hidden=false;
   for(const k in viewDirty)viewDirty[k]=true;
   runView(view);
@@ -82,7 +82,7 @@ function renderJournal(){
 // rendu par vue : seule la page visible est redessinée, les autres le sont quand on y va
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
-  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderTodo==="function")renderTodo()}catch(e){}try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
+  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
   c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},

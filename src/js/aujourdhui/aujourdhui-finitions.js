@@ -1,7 +1,7 @@
 // Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
 
-const EV=["sleepGo","enBox","nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
+const EV=["nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
 const XPRE=/^\+\s?\d+(\s?XP)?$/;
 function oneEv(){let found=false;
   EV.forEach(id=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("evhide");

@@ -1182,7 +1182,6 @@ html:not(#_a):not(#_b) body :is(.btn,.ppc,.me-set,.edbtn,.back):active{transform
 html:not(#_a):not(#_b) body img,html:not(#_a):not(#_b) body canvas{image-rendering:pixelated}
 
 
-.wkr{display:grid;gap:10px}
 
 
 
@@ -2056,12 +2055,7 @@ html:not(#_a):not(#_b) body .pradd{display:grid;grid-template-columns:1fr auto;g
 html:not(#_a):not(#_b) body .wkcta{width:100%;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:12px;text-align:left;font:inherit;color:var(--text);background:color-mix(in srgb,var(--surface) 70%,transparent);border:2px dashed var(--line);cursor:pointer}
 html:not(#_a):not(#_b) body .wkcta b{display:block;font-size:15px}html:not(#_a):not(#_b) body .wkcta small{display:block;font-size:13px;color:var(--muted)}html:not(#_a):not(#_b) body .wkcta>.ic{color:var(--gold)}
 
-html:not(#_a):not(#_b) body .wkl{display:grid;gap:8px}
-html:not(#_a):not(#_b) body .wkr{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;text-align:left;font:inherit;color:var(--text);background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--zc);box-shadow:3px 3px 0 var(--rpg-shadow);cursor:pointer;-webkit-touch-callout:none;user-select:none}
-html:not(#_a):not(#_b) body .wkr.due{background:color-mix(in srgb,var(--zc) 12%,var(--surface))}
-html:not(#_a):not(#_b) body .wkr.tdd,html:not(#_a):not(#_b) body .wkr.full{opacity:.72}
 html:not(#_a):not(#_b) body .wki{display:grid;place-items:center;width:34px;height:34px;color:var(--zc)}html:not(#_a):not(#_b) body .wki svg{width:30px;height:30px;display:block}
-html:not(#_a):not(#_b) body .wkt b{display:block;font-size:15px;line-height:1.2}html:not(#_a):not(#_b) body .wkt small{display:block;font-size:13px;color:var(--muted);margin-top:1px}html:not(#_a):not(#_b) body .wkr.due .wkt small{color:color-mix(in srgb,var(--zc) 65%,#fff);font-weight:800}
 html:not(#_a):not(#_b) body .wkm{display:flex;gap:3px;margin-top:5px}
 html:not(#_a):not(#_b) body .wkm i{display:grid;place-items:center;width:18px;height:18px;font-size:11px;font-style:normal;font-weight:800;color:color-mix(in srgb,var(--muted) 60%,transparent);border:2px solid transparent}
 html:not(#_a):not(#_b) body .wkm i.on{color:var(--text);border-color:var(--line)}html:not(#_a):not(#_b) body .wkm i.ok{color:#2a1c0c;background:var(--zc);border-color:color-mix(in srgb,var(--zc) 60%,#000)}
@@ -4214,7 +4208,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     const ic=(k,s)=>`<svg viewBox="0 0 24 24" width="${s||20}" height="${s||20}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${typeof rkIn==="function"&&ICS_PX[k]?rkIn(ICS_PX[k]):ICS[k]||ICS.autre}</svg>`;
     // Types de période et leur effet sur les quêtes
     const PT={contrat:{l:"Contrat / travail",fx:"Les jours de travail suivent ta capacité « jour de travail »"},vacances:{l:"Vacances",cap:2,goal:1,fx:"+2 quêtes par jour"},malade:{l:"Malade / repos",cap:-9,goal:.4,soft:1,fx:"1 quête par jour, seulement les rituels de ton socle"},examens:{l:"Examens",max:2,goal:.7,fx:"2 quêtes max par jour"},demenagement:{l:"Déménagement",max:2,goal:.7,fx:"2 quêtes max par jour"},autre:{l:"Autre",fx:"Juste un compte à rebours"}};
-    const MODS=[["sceneBox","Scène animée","Le décor en haut de l'écran"],["enBox","Énergie du matin","La question sur ta batterie"],["nowBox","Maintenant","La carte de la chose à faire tout de suite"],["plusBox","Plus de quêtes","Le raccourci vers les autres quêtes"],["wkBox","Cette semaine","Tes actions avec un rythme"],["sqBox","Quêtes spéciales","Amis, famille, musique…"],["gameBox","Coffres","Les coffres et récompenses"],["evtBox","Événements","Tes événements à venir"],["duoBox","Défi à deux","Les défis partagés"],["rtrBox","Rattrapage","Les rituels manqués à rattraper"],["xmBox","Saison des fêtes","Les quêtes de saison"]];
+    const MODS=[["sceneBox","Scène animée","Le décor en haut de l'écran"],["enBox","Énergie du matin","La question sur ta batterie"],["nowBox","Maintenant","La carte de la chose à faire tout de suite"],["plusBox","Plus de quêtes","Le raccourci vers les autres quêtes"],["sqBox","Quêtes spéciales","Amis, famille, musique…"],["gameBox","Coffres","Les coffres et récompenses"],["evtBox","Événements","Tes événements à venir"],["rtrBox","Rattrapage","Les rituels manqués à rattraper"],["xmBox","Saison des fêtes","Les quêtes de saison"]];
     const UN={j:[1,"jour","jours"],s:[7,"semaine","semaines"],m:[30,"mois","mois"]};
     const SUG=[["Coiffeur",6,"s"],["Dentiste",6,"m"],["Changer les draps",2,"s"],["Laver les serviettes",1,"s"],["Nettoyer le frigo",1,"m"],["Couper mes ongles",2,"s"],["Faire le ménage à fond",1,"m"],["Vider la poubelle de la salle de bain",2,"s"],["Bilan chez le médecin",12,"m"]];
         let editId=null,editFrom=null,lEdit=null,lAll=false,lPre=null,force=false;
@@ -4378,19 +4372,14 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     <div class="bars ritbars dqbars" id="bars"></div>
   </section>
   <section data-v="q" class="evmbox voff" id="evmBox" aria-label="Mode événement"></section>
-  <section data-v="q" class="sleepgo voff" id="sleepGo" aria-label="Fin de journée"></section>
   <section data-v="q" class="wksun voff" id="wkSun" aria-label="Ta semaine"></section>
-  <section data-v="q" class="enbox voff" id="enBox" aria-label="Énergie du matin"></section>
   <section data-v="q" class="rit fqbox" id="fqBox" aria-label="Aujourd'hui"></section>
-  <section data-v="q" class="rit todobox voff" id="todoBox" aria-label="À faire"></section>
   <section data-v="q" class="plusbox" id="plusBox" aria-label="Plus de quêtes"></section>
   <section data-v="q" class="nowbox" id="nowBox" aria-label="Maintenant"></section>
   <section data-v="q" class="rtrbox voff" id="rtrBox" aria-label="Rattrapage"></section>
   <section data-v="q" class="gbox" id="gameBox" aria-label="Coffres"></section>
   <section data-v="q" class="xmbox voff" id="xmBox" aria-label="Saison des fêtes"></section>
   
-  <section data-v="q" class="duobox" id="duoBox" aria-label="Défi à deux"></section>
-  <section data-v="q" class="rit wkbox" id="wkBox" aria-label="Cette semaine"></section>
   <section data-v="q" class="specials sqsec" id="sqBox" aria-label="Quêtes spéciales">
     <div class="head" id="sqHead"><h2>Quêtes spéciales<span class="count" id="sqCnt">0</span></h2></div>
     <div class="track" id="sqTrack"></div>
@@ -4487,7 +4476,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version d3ea116</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7dfd001</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5224,7 +5213,7 @@ function renderBase(prevLevel){
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
   $("streak").textContent=streak();
   if(prevLevel&&l>prevLevel){setTimeout(()=>sfx("level"),180);$("lvlBox").classList.remove("bump");void $("lvlBox").offsetWidth;$("lvlBox").classList.add("bump");toast(`Niveau <span class="p">${l}</span> atteint !${rankOf(l)!==rankOf(prevLevel)?" Nouveau rang : <span class=\"p\">"+rankOf(l)+"</span>":""}`)}
-  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderSleepGo();renderWkSun();renderEn();renderFq();if(typeof renderFiche==="function")renderFiche();renderWk();renderPrj();badgeDots();applyTheme();
+  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderWkSun();renderFq();if(typeof renderFiche==="function")renderFiche();renderPrj();badgeDots();applyTheme();
   $("favs").hidden=true;$("filters").hidden=true;$("seeAll").hidden=true;$("allActs").hidden=false;
   for(const k in viewDirty)viewDirty[k]=true;
   runView(view);
@@ -5251,7 +5240,7 @@ function renderJournal(){
 // rendu par vue : seule la page visible est redessinée, les autres le sont quand on y va
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
-  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderTodo==="function")renderTodo()}catch(e){}try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
+  q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
   c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
@@ -9821,29 +9810,6 @@ function qcSave(st,E,g,close){const name=st.name.trim();if(!name)return;const ts
   else{if(!Array.isArray(S.g.prj))S.g.prj=[];S.g.prj.push({id:"p"+ts.toString(36),n:name.slice(0,50),cat:g.cat,d:g.diff,st:st.steps.map(t=>({t})),...(st.due?{due:st.due}:{}),ct:ts});toast("Projet lancé : à toi de le battre")}
   sfx("badge");save();close();render()}
 
-// ---- Cette semaine : bonnes actions avec un rythme
-function wkInfo(a){const tk=dayKey(Date.now()),W=wkKeys(tk),cnt={};S.log.forEach(e=>{if(e.a===a.id&&!e.bonus){const k=dayKey(e.t);if(W.includes(k))cnt[k]=(cnt[k]||0)+1}});
-  const doneDays=W.filter(k=>cnt[k]),n=Object.values(cnt).reduce((s,v)=>s+v,0),todayDone=!!cnt[tk],wi=wdOf(tk);
-  let goal,due;if(a.wd&&a.wd.length){goal=a.wd.length;due=a.wd.includes(wi)&&!todayDone}else if(a.xw>0){goal=a.xw;due=n<a.xw&&!todayDone}else{goal=7;due=!todayDone}
-  const left=a.wd&&a.wd.length?a.wd.filter(i=>i>=wi&&!cnt[W[i]]).length:goal-Math.min(goal,a.xw?n:doneDays.length);
-  return{W,cnt,n:a.xw?n:doneDays.length,goal,due,todayDone,wi,left}}
-const MO_L={matin:"le matin",aprem:"l'après-midi",soir:"le soir"};
-function renderWk(){const box=$("wkBox");if(!box||!S.g)return;const L=S.actions.filter(a=>rhOn(a));
-  if(!L.length){box.innerHTML=`<div class="head"><h2>Cette semaine</h2></div><button type="button" class="wkcta">${ICO("plus",18)}<span><b>Donne un rythme à tes actions</b><small>Ex. 3 fois par semaine.</small></span></button>`;box.querySelector(".wkcta").onclick=()=>qcOpen("act");return}
-  const R=L.map(a=>({a,i:wkInfo(a)})).sort((x,y)=>(y.i.due-x.i.due)||(x.i.todayDone-y.i.todayDone));const dn=R.filter(r=>r.i.n>=r.i.goal).length;
-  box.innerHTML=`<div class="head"><h2>Cette semaine<span class="count">${dn}/${R.length}</span></h2><button type="button" class="btn edbtn wkadd" aria-label="Créer une action avec un rythme" title="Créer"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg></button></div>
-  <div class="wkl">${R.map(({a,i},k)=>{const C=CATS[a.cat]||{},full=i.n>=i.goal;
-    const marks=a.wd&&a.wd.length?WDL.map((l,j)=>`<i class="${a.wd.includes(j)?"on":""}${i.cnt[i.W[j]]?" ok":""}${j===i.wi?" td":""}">${l}</i>`).join(""):a.xw?Array.from({length:a.xw},(_,j)=>`<i class="dot${j<i.n?" ok":""}"></i>`).join(""):WDL.map((l,j)=>`<i class="on${i.cnt[i.W[j]]?" ok":""}${j===i.wi?" td":""}">${l}</i>`).join("");
-    return`<button type="button" class="wkr${i.due?" due":""}${full?" full":""}${i.todayDone?" tdd":""}" data-k="${k}" style="--zc:${C.c||"var(--gold)"}"><span class="wki">${a.ic&&RKI[a.ic]?rkSvg(a.ic):`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_IC[a.cat]||CAT_IC.soi||""}</svg>`}</span>
-      <span class="wkt"><b></b><small>${full?"Objectif de la semaine atteint":i.todayDone?"Fait aujourd'hui":i.due?"À faire aujourd'hui"+(a.mo?" · "+MO_L[a.mo]:""):a.xw?`Encore ${i.goal-i.n} cette semaine`:"Pas prévu aujourd'hui"}</small><span class="wkm${a.xw&&!(a.wd&&a.wd.length)?" dots":""}">${marks}</span></span>
-      <span class="wkx">${a.xw?`${i.n}/${i.goal}`:""}<em>+${a.xp}</em></span></button>`}).join("")}</div>`;
-  box.querySelectorAll(".wkr").forEach(b=>{const r=R[+b.dataset.k];b.querySelector(".wkt b").textContent=r.a.name;b.setAttribute("aria-label",r.a.name+", "+rhLab(r.a));
-    b.onclick=ev=>{const tk=dayKey(Date.now()),n=S.log.filter(e=>e.a===r.a.id&&dayKey(e.t)===tk).length;actDo(r.a,b,ev,n)};
-    let lp=0;b.oncontextmenu=e=>{e.preventDefault();rhPick(r.a,r.a.name,true,()=>{save();render()})};
-    b.onpointerdown=()=>{lp=setTimeout(()=>{lp=-1;rhPick(r.a,r.a.name,true,()=>{save();render()})},600)};b.onpointerup=b.onpointerleave=()=>{if(lp>0)clearTimeout(lp)};
-    b.addEventListener("click",e=>{if(lp===-1){e.stopImmediatePropagation();lp=0}},true)});
-  box.querySelector(".wkadd").onclick=()=>qcOpen("act")}
-
 // ---- Projets en étapes
 function prjKind(p){const L=BOSS_CAT[p.cat];let h=0;for(const ch of String(p.id))h=(h*31+ch.charCodeAt(0))>>>0;if(L&&L.length){const b=L[h%L.length];return[b[2],b[3]]}const K=["slime","ghost","shroom","bat"];return[K[h%K.length],["#5fae4f","#3a9ad8","#c86a3a","#8a5ad0"][h%4]]}
 function prjDue(p){if(!p.due)return"";const d=Math.round((new Date(p.due+"T12:00")-new Date(dayKey(Date.now())+"T12:00"))/864e5);return d<0?"en retard":d===0?"aujourd'hui":d===1?"demain":"J-"+d}
@@ -10144,11 +10110,6 @@ function spCov(t,px){return`<span class="spcov" style="width:${px}px;height:${px
 document.addEventListener("error",e=>{const t=e.target;if(t&&t.classList&&t.classList.contains("spci"))t.remove()},true);
 document.addEventListener("load",e=>{const t=e.target;if(t&&t.classList&&t.classList.contains("spci")&&!t.naturalWidth)t.remove()},true);
 function bedTime(){const G=S.g;if(!G||!G.bed||Date.now()-G.bed>18*36e5)return"";const d=new Date(G.bed);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
-function renderSleepGo(){const box=$("sleepGo");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),J=(G.jr||{})[tk]||{},h=dayH();
-  const show=h>=(evmOn()?23:RIT_SOIR_H)&&!J.at;box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
-  const left=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="soir"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n).length;
-  box.innerHTML=`<div class="slgc"><button type="button" class="btn primary slgb"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>Je vais dormir</button></div>`;
-  box.querySelector(".slgb").onclick=()=>closeOpen(0,1)}
 // ===== Nouveau Bilan : ta semaine comme un chapitre
 let bilTab="w",bilOff=0,bilDet=false,bilEdit=false;
 const GOAL_CAT={job:["travail"],forme:["sport"],potes:["social"],famille:["famille"],son:["perso"],apprendre:["perso"],chez:["maison"],manger:["nourriture"],argent:["maison","travail"],ecrans:["soi"],moral:["soi"],sommeil:[]};
@@ -10349,12 +10310,6 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
   try{window.__fqFinish&&window.__fqFinish()}catch(e){}
   renderPlus()}
 // --- énergie du matin
-function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer();
-  const show=!enOf()&&P==="matin"&&h<14&&!isOff()&&!pzActive()&&!lateNight();box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
-  const sl=G.sleep&&G.sleep[tk],hh=sl&&+sl.h;const slt=hh?`Tu as dormi ${Math.floor(hh)} h${hh%1?" "+String(Math.round(hh%1*60)).padStart(2,"0"):""}. `:"";
-  box.innerHTML=`<div class="enc"><div class="enr">${[1,2,3].map(v=>`<button type="button" class="btn enb" data-en="${v}">${enSvg(v)}<span>${["","Faible","Moyenne","Pleine"][v]}</span><small>${[0,80,120,150][v]} XP</small></button>`).join("")}</div></div>`;
-  box.querySelectorAll(".enb").forEach(b=>b.onclick=()=>enSet(+b.dataset.en))}
-function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
 // enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
 function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
 function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]}`)}
@@ -13822,8 +13777,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .sq.idq .i
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #sqBox .sq .sqk{justify-content:flex-start!important;text-align:left!important;align-self:stretch!important}
 /* ===== Centrage (standard du 27/10) : dans un élément court (bouton, tuile, puce, onglet), l'icône seule est centrée,
    icône + texte forment un groupe centré, horizontalement et verticalement. Vérifié par outils/centrage.py */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.mlp,.plf,.plr) :is(svg,img){display:block}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.mlp,.plf,.plr) :is(svg,img){display:block}
 /* l'icône ne déborde jamais de sa case (sinon le groupe paraît décentré) */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .fjobs>button .fti{width:auto!important;height:auto!important;display:grid!important;place-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .mlp .mli{width:48px!important;height:48px!important;display:grid!important;place-items:center!important}
@@ -14473,20 +14428,11 @@ html:not(#_a):not(#_b) body .fqrr{width:36px;height:42px;display:grid;place-item
 html:not(#_a) .wrap>#dqBox{order:-20}
 html:not(#_a) .wrap>#fqBox{order:-19}
 html:not(#_a) .wrap>#plusBox{order:-12}
-html:not(#_a) .wrap>#wkBox{order:-9}
-html:not(.plusopen) .wrap>#duoBox,html:not(.plusopen) .wrap>#sqBox,html:not(.plusopen) .wrap>#wkBox{display:none!important}
+html:not(.plusopen) .wrap>#sqBox{display:none!important}
 html:not(#_a):not(#_b) body .fqr{grid-template-columns:minmax(0,1fr) auto}
 html:not(#_a):not(#_b) body .fqr .fqrr{width:40px;height:42px}
 html:not(#_a):not(#_b) body .fqr.menu{border-color:var(--gold)}
 html:not(#_a):not(#_b) body .fqbox .fqcta{margin-top:10px}
-html:not(#_a):not(#_b) body .enc{display:grid;gap:4px;padding:14px 16px;background:linear-gradient(140deg,color-mix(in srgb,#5fd068 20%,var(--surface)),var(--surface) 70%);border:4px solid #1a1210;box-shadow:inset 0 0 0 3px color-mix(in srgb,#5fd068 70%,transparent),5px 5px 0 var(--rpg-shadow)}
-html:not(#_a):not(#_b) body .enc>b{font-size:20px;line-height:1.2}
-html:not(#_a):not(#_b) body .enc>small{font-size:13px;color:var(--muted)}
-html:not(#_a):not(#_b) body .enr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
-html:not(#_a):not(#_b) body .enb{min-height:76px;display:grid;justify-items:center;align-content:center;gap:3px;padding:8px 4px;font-size:15px}
-html:not(#_a):not(#_b) body .enb small{font-size:11px;color:var(--muted);font-weight:700}
-html:not(#_a):not(#_b) body .enb.sm{min-height:58px;font-size:13px}
-html:not(#_a):not(#_b) body .enb[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}
 html:not(#_a):not(#_b) body .plusb{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;text-align:left;font:inherit;color:var(--text);background:color-mix(in srgb,var(--surface) 82%,transparent);border:2px solid var(--line);box-shadow:3px 3px 0 var(--rpg-shadow);cursor:pointer}
 html:not(#_a):not(#_b) body .plusb b{display:block;font-size:15px}
 html:not(#_a):not(#_b) body .plusb small{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -14500,11 +14446,6 @@ html:not(#_a):not(#_b) body .wkst{font-family:var(--f-pixel);font-size:22px;line
 html:not(#_a):not(#_b) body .wksc .bstrip{margin:2px -4px 0;background:rgba(0,0,0,.2);border:0}
 html:not(#_a):not(#_b) body .wksb{display:flex;align-items:center;gap:16px;margin-top:4px}
 html:not(#_a):not(#_b) body .wksb .btn{flex:1;min-height:46px}
-html:not(#_a):not(#_b) body .slgc{display:grid;gap:4px;padding:14px 16px;background:linear-gradient(140deg,color-mix(in srgb,#7a6ad8 40%,rgba(12,14,32,.8)),rgba(12,14,32,.85));border:4px solid #1a1210;box-shadow:inset 0 0 0 3px #7a6ad8,5px 5px 0 var(--rpg-shadow)}
-html:not(#_a):not(#_b) body .slgc>b{font-family:var(--f-pixel);font-size:24px;line-height:1.1;color:#fff8e6}
-html:not(#_a):not(#_b) body .slgc>small{font-size:13px;color:#cfc8ef}
-html:not(#_a):not(#_b) body .slgb{margin-top:8px;min-height:50px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px}
-html:not(#_a) .wrap>#duoBox{order:-9}
 html:not(#_a):not(#_b) body .fqr.done .fqmem{opacity:1}
 html:not(#_a):not(#_b) body .fqr.done{opacity:.85}
 html:not(#_a):not(#_b) body .fqgo svg{vertical-align:-2px}
@@ -14619,7 +14560,7 @@ html:not(#_a):not(#_b) body .xmqt b{font-size:15px}
 html:not(#_a):not(#_b) body .xmqgo{min-width:64px;min-height:40px;padding:0 10px!important}
 html:not(#_a):not(#_b) body .xmdoor.open{background:#efe6d2!important;color:#2a1608}
 /* — depuis epure-01.css — */
-html:not(#_a):not(#_b) .wrap>:is(#sleepGo,#enBox,#nowBox,#evmBox,#wkSun,#rtrBox,#gameBox,#xmBox){order:-26}
+html:not(#_a):not(#_b) .wrap>:is(#nowBox,#evmBox,#wkSun,#rtrBox,#gameBox,#xmBox){order:-26}
 html body .wrap>section.evhide{display:none!important}
 html body #fqBox .fqctx,html body #plusBox small{display:none!important}
 html:not(#_a):not(#_b) body :is(#dzBox,#musBox) .fdt{color:var(--ink)!important;text-transform:none!important;letter-spacing:0!important;font-size:15px!important}
@@ -14628,11 +14569,6 @@ html body :is(.dqi.sur){animation:none!important}
 html body .sq.sur .sqk::before{animation:none!important}
 html body :is(.ambstars i){animation-duration:6s!important}
 html body .ambff i{animation-duration:9s!important}
-html body #enBox .enc{gap:0}
-html body #enBox .enb :is(span,small){display:none}
-html body #enBox .enb{min-height:56px}
-html body #enBox .enb svg{width:44px;height:24px}
-html body #sleepGo .slgc{padding:10px}
 html body .ln.ln0{display:none}
 html body .dqmeal .dqa{display:flex;gap:6px;align-items:center}
 html body .dqskip{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);display:grid;place-items:center;padding:0}
@@ -14653,12 +14589,11 @@ html body #evToday:empty{display:none}
 html body #evToday .evtd{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--ec,var(--gold));border-radius:14px;padding:12px 14px}
 html body #evToday .evtd b{font-size:15px;flex:1;min-width:0}
 html body #evToday .evtd span{font-size:22px}
-html:not(#_a):not(#_b) body #sleepGo,html:not(#_a):not(#_b) body #sleepGo .slgc{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
 html body #dqBox .rtile{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 html body #fqBox .head .count{cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
 html body #sqBox .sq>.sqx{display:none!important}
 html body #sqBox .sq>.sqm{position:absolute;top:0;right:0;width:44px;height:44px;border:0;background:none;color:var(--muted);display:grid;place-items:center}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body #wkBox,html:not(#_a):not(#_b):not(#_c):not(#_d) body #duoBox,html:not(#_a):not(#_b):not(#_c):not(#_d) body .wrap>#plusBox{display:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .wrap>#plusBox{display:none!important}
 html:not(#_a):not(#_b):not(#_c) body #sqBox .sq .btn.primary.eodb{background:transparent!important;border:1px dashed var(--line)!important;color:var(--muted)!important;box-shadow:none!important;font-size:13px!important;opacity:1!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .unicard{position:relative;background:var(--uni)!important}
 html body .unicard .uiq{position:absolute;right:10px;bottom:10px;width:40px;height:40px;opacity:.95;pointer-events:none;filter:drop-shadow(0 2px 0 rgba(0,0,0,.35))}
@@ -14748,9 +14683,6 @@ html:not(#_a):not(#_b) body .sltr input[type=range]{opacity:0;position:relative;
 html:not(#_a):not(#_b) body .slk{position:absolute;top:50%;width:28px;height:28px;transform:translate(-50%,-50%);pointer-events:none;z-index:1;filter:drop-shadow(0 0 5px rgba(255,225,140,.9))}
 html:not(#_a):not(#_b) body .slk svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .slh{margin:0 14px}
-html:not(#_a):not(#_b) body #enBox .enb :is(span){display:block!important;font-weight:800;font-size:13px}
-html:not(#_a):not(#_b) body #enBox .enb{background:transparent!important;border:0!important;box-shadow:none!important;display:flex!important;flex-direction:column;align-items:center;gap:4px}
-html:not(#_a):not(#_b) body #enBox .enb:active{transform:scale(.96)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo{grid-column:auto!important;aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:96px!important;padding:4px!important;font-size:11px!important;font-weight:800;color:var(--ink)!important;border:2px dashed var(--gold)!important;box-shadow:none!important;border-radius:0!important;background:rgba(10,12,28,.5)!important}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo svg{width:26px!important;height:26px!important;color:var(--gold)}
 html:not(#_a):not(#_b) body .rtl.main .rtmgo small{display:none}
@@ -14777,7 +14709,6 @@ html:not(#_a):not(#_b):not(#_c) body .fqh{font-style:normal;margin-left:6px;padd
 /* — depuis epure-atelier-rituels.css — */
 html:not(#_a):not(#_b) body .rwt.add{--kc:var(--muted);border-style:dashed;background:transparent;box-shadow:none;color:var(--muted);align-content:center}
 /* — depuis sans-cadres.css — */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .enc{border:0!important;box-shadow:none!important;background:none!important;padding:4px 0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ritLife,#log){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ritLife){padding-left:2px!important;padding-right:2px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fqr.unicard,.sq.unicard){border:0!important;box-shadow:none!important;outline:0!important}
@@ -14890,14 +14821,6 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #fqBox .fqr .fqgo{width:auto!important;min-width:84px!important;padding:0 16px!important;white-space:nowrap!important;flex:none!important}
 
 /* À faire (28/10) */
-html:not(#_u1):not(#_u2) body #todoBox .todol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-html:not(#_u1):not(#_u2) body #todoBox .todor{display:grid;grid-template-columns:44px 48px minmax(0,1fr) 44px;align-items:center;gap:10px;min-height:56px;padding:6px 8px;background:var(--surface);border:1px solid rgba(255,255,255,.17)}
-html:not(#_u1):not(#_u2) body #todoBox .todock{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;color:var(--gold)}
-html:not(#_u1):not(#_u2) body #todoBox .todoic,html:not(#_u1):not(#_u2) body #todoBox .todoic svg{width:48px;height:48px;display:block}
-html:not(#_u1):not(#_u2) body #todoBox .todot{display:grid;gap:2px;min-width:0}
-html:not(#_u1):not(#_u2) body #todoBox .todot b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-html:not(#_u1):not(#_u2) body #todoBox .todor.ok .todot b{opacity:.6;text-decoration:line-through}
-html:not(#_u1):not(#_u2) body #todoBox .todox{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
 
 /* Engagements (28/10) */
 html:not(#_u1):not(#_u2) body #engBox .engx{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center}
@@ -14920,14 +14843,13 @@ html:not(#_u1):not(#_u2) body #engBox .engt{display:grid;gap:2px;min-width:0}
 html:not(#_u1):not(#_u2) body #engBox .engt b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* place : les engagements juste avant les rituels, la liste à faire juste après les quêtes du jour */
 html:not(#_a) .wrap>#engBox{order:-21}
-html:not(#_a) .wrap>#todoBox{order:-18}
 
 /* Journal de bord (28/10, piste D) : la journée en liste */
 html:not(#_a) .wrap>#jdNow{order:-24}
 html:not(#_a) .wrap>#jdEng{order:-23}
 html:not(#_a) .wrap>#jdSuiv{order:-23}
 html:not(#_a) .wrap>#jdLater{order:-22}
-html:not(#_a) body .wrap>:is(#dqBox,#engBox,#enBox,#todoBox,#sleepGo,#rtrBox){display:none!important}
+html:not(#_a) body .wrap>:is(#dqBox,#engBox,#rtrBox){display:none!important}
 html:not(#_u1):not(#_u2) body .jdbox .jdlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 html:not(#_u1):not(#_u2) body .jdbox .jdl{display:flex;align-items:center;gap:14px;min-height:68px;padding:8px 12px;background:rgba(14,16,36,.82);border:1px solid rgba(255,255,255,.17);color:#fff7e6}
 html:not(#_u1):not(#_u2) body .jdbox .jdl.sub{margin-left:40px;min-height:56px}
@@ -16664,7 +16586,7 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
 
-const EV=["sleepGo","enBox","nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
+const EV=["nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
 const XPRE=/^\+\s?\d+(\s?XP)?$/;
 function oneEv(){let found=false;
   EV.forEach(id=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("evhide");
@@ -17627,14 +17549,6 @@ function todoGo(x,el,ev){const it=todoItem(x);
   if(afFirst(it)==="fin"&&!afCook(it,el)){afDo(it,el,ev,0,[]);return}
   if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}
   setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,el,ev)},60)}
-function renderTodo(){const box=document.getElementById("todoBox");if(!box||!S||!S.g)return;const tk=todoDay(0),L=todoL().filter(x=>x.d===tk);
-  if(!L.length){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
-  const D=L.map(todoDone),n=D.filter(Boolean).length;
-  box.innerHTML=`<div class="head"><h2>À faire<span class="count">${n}/${L.length}</span></h2></div><ul class="todol">${L.map((x,i)=>{const it=todoItem(x),k=it&&it.k==="fam"?uIc(it.f.id,it.opt):"etoile",xp=it?(it.k==="fam"?it.f.xp:it.a.xp):TODO_XP;
-    return`<li class="todor${D[i]?" ok":""}"><button type="button" class="btn todock" aria-label="${D[i]?"Fait":"Cocher"}" title="${D[i]?"Fait":"Cocher"}" aria-pressed="${D[i]}"${D[i]?" disabled":""}>${D[i]?ICO("check",24):""}</button><span class="todoic">${RKI[k]?rkSvg(k):rkSvg("etoile")}</span><span class="todot"><b></b><small class="ui-info">${D[i]?"Fait":"+"+Math.min(30,xp)+" XP"}</small></span><button type="button" class="btn delic todox" aria-label="Retirer de la liste" title="Retirer">${ICO("trash",24)}</button></li>`}).join("")}</ul>`;
-  box.querySelectorAll(".todor").forEach((r,i)=>{const x=L[i];r.querySelector(".todot b").textContent=x.n;
-    r.querySelector(".todock").onclick=ev=>todoGo(x,r.querySelector(".todock"),ev);
-    r.querySelector(".todox").onclick=()=>undoAfter("Retiré de la liste",()=>{S.g.todo=todoL().filter(y=>y.id!==x.id);save();renderTodo()})})}
 // Engagements (28/10, point Q.8) : le matin tu choisis 1 à 3 engagements, le soir Bonne nuit les valide (+15 XP chacun tenu).
 // « Sans cigarette » et « Moins de N cigarettes » se vérifient tout seuls avec le compteur ; les autres : « Tenu » ou « Pas cette fois ».
 // Données : S.g.eng = {lib:[{id,n}] (tes engagements écrits), d:{jour:[{id,k:"sans"|"max",n,lim?,res?}]}, skip: jour où la carte a été fermée}
@@ -17701,10 +17615,11 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const now=[],done=[],gone=[];  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
   if(P==="matin"&&!(G.sleep||{})[tk]||P==="matin"&&typeof sleepEdit!=="undefined"&&sleepEdit)now.push(`<li class="jdl jdnuit jx-nuit" style="--jc:#8f7ef0"><span class="jdi">${rkSvg("lune")}</span><span class="jdt"><b>Ta nuit</b><span class="jdph" data-ph="ritLife"></span></span></li>`);
   else if(P==="matin"&&(G.sleep||{})[tk])done.push(jdRow({x:"jx-nuit",c:"#8f7ef0",ic:rkSvg("lune"),n:"Ta nuit",s:fmtH(G.sleep[tk].h)+" de sommeil",ok:1,k:reg(()=>{try{sleepEdit=true;renderLife();renderJdb()}catch(e){}})}));
-  {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en)now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
+  const modOff=k=>(((G.vie||{}).off)||[]).includes(k);  // « Mes modules » : Énergie du matin, Rattrapage
+  {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en&&!modOff("enBox"))now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
     else if(en&&P==="matin")done.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("bat"+en),n:"Ton énergie",s:["","Faible","Moyenne","Pleine"][en],ok:1,r:""}))}
   // rituels des jours d'avant à rattraper (le bloc d'origine reste la source : on appuie sur ses boutons)
-  {let P=[];try{P=rtrPending()}catch(e){}const n=P.reduce((a,p)=>a+p.L.length,0);if(n){const lab=P.length===1?rtrLab(P[0].i):"Ces derniers jours";const tap=sel=>()=>{try{renderRtr();const b=document.querySelector("#rtrBox "+sel);if(b)b.click()}catch(e){}};
+  if(!modOff("rtrBox")){let P=[];try{P=rtrPending()}catch(e){}const n=P.reduce((a,p)=>a+p.L.length,0);if(n){const lab=P.length===1?rtrLab(P[0].i):"Ces derniers jours";const tap=sel=>()=>{try{renderRtr();const b=document.querySelector("#rtrBox "+sel);if(b)b.click()}catch(e){}};
     now.push(jdRow({c:"#f0a020",w:1,ic:rkSvg("sablier"),n:n+" rituel"+(n>1?"s":"")+" à rattraper",s:lab+" : tu les as faits ?",r:`<span class="jdmini"><button type="button" class="btn" data-k="${reg(tap(".rtrno"))}">Non</button><button type="button" class="btn primary" data-k="${reg(tap(".rtrgo1"))}">Fait</button></span>`}))}}
   // rituels du moment (le soir : à partir de 20 h)
   const ritOn=PER&&!(PER==="soir"&&h<RIT_SOIR_H);

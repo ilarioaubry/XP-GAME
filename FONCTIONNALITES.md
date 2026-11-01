@@ -21,7 +21,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Repas et assiette | Petit-déj, déjeuner, goûter, dîner ; assiette (féculents, protéines, légumes, sauces, yaourt, fromage, eau), recettes | 2 par groupe, +4 si complète | active |
 | Événements du jour | Événement aujourd'hui, anniversaire d'un proche dans 3 jours | — | moment |
 | Mode événement | Le jour d'un événement important | — | moment |
-| Fin de journée | Invitation à aller dormir le soir | — | moment |
+| Fin de journée | Retirée le 01/11 : remplacée par la ligne Bonne nuit du journal | — | retirée |
 | Bonne nuit | Écran calme la nuit, après le journal | — | moment |
 | Ta semaine est finie | Carte du dimanche vers le Bilan | — | moment |
 | Rattrapage | Rituels manqués après une absence | ? | module, moment |
@@ -30,7 +30,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Saison des fêtes | Hotte de cadeaux, calendrier de l'Avent, vœux, ton année, résolutions | 5–15 | module, saison |
 | Quêtes pour toi | 3 quêtes du jour choisies selon ta situation, la météo, tes proches. Les quêtes nourriture sur le contenu du repas ou la cuisine se valident en remplissant l'assiette (« Remplir l'assiette », objectif affiché, plus proposées quand les repas sont notés) | 10–30 | active |
 | Quêtes spéciales | Carrousel : amis, famille, groupes, surprise du jour, anniversaires (« Avec qui ? » au moment de Fait) | 15–30, anniversaire 30 | module |
-| Panneau « + » | Plus de quêtes, Cette semaine, Défi à deux, Bonnes actions | — | module (chaque bloc) |
+| Panneau « + » | Plus de quêtes, Bonnes actions (Cette semaine et le bloc Défi à deux retirés le 01/11 ; le défi à deux reste proposé dans les quêtes) | — | module (chaque bloc) |
 | J'ai… (fiche) | Faits de vie cochés dans ma fiche : actions, rituels, rappels à rythme et quêtes qui vont avec | celle de chaque action | active |
 | Journal de bord | Haut d'Aujourd'hui en liste : le moment, mes engagements, plus tard aujourd'hui ; branché sur les rituels, repas, énergie, nuit, engagements, contrat, à faire, calendrier, Bonne nuit | celle de chaque élément | active |
 | Engagements | Le matin, 1 à 3 engagements du jour ; validés dans Bonne nuit (cigarettes : compteur) | 15 par engagement tenu | active |

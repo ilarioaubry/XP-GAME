@@ -161,7 +161,7 @@ with sync_playwright() as p:
     pg.evaluate("document.querySelectorAll('.jrc').forEach(e=>e.remove());document.body.classList.remove('rtmon')")
 
     # 7e. À faire : tâche libre ajoutée, cochée = +5 XP ; une action mise « pour demain » n'apparaît pas aujourd'hui
-    pg.evaluate("()=>{showView('q');todoAdd({n:'Tâche test'},todoDay(0));todoAdd({key:'af:ranger:Chambre',n:'Ranger · Chambre'},todoDay(1));renderTodo()}")
+    pg.evaluate("()=>{showView('q');todoAdd({n:'Tâche test'},todoDay(0));todoAdd({key:'af:ranger:Chambre',n:'Ranger · Chambre'},todoDay(1))}")
     pg.evaluate("renderJdb()"); x0 = xp(pg); n0 = pg.evaluate("[...document.querySelectorAll('#jdLater .jdl')].filter(r=>/Tâche test|Ranger · Chambre/.test(r.textContent)).length")
     pg.evaluate("[...document.querySelectorAll('#jdLater .jdl')].find(r=>/Tâche test/.test(r.textContent)).querySelector('.jdck').click()"); pg.wait_for_timeout(400)
     check("à faire : tâche libre cochée +5 XP, demain pas affiché aujourd'hui", n0 == 1 and xp(pg) - x0 in (5, 10) and pg.evaluate("[...document.querySelectorAll('#jdLater .jdl.ok')].some(r=>/Tâche test/.test(r.textContent))"), f"{n0} {xp(pg)-x0}")

@@ -112,29 +112,6 @@ function qcSave(st,E,g,close){const name=st.name.trim();if(!name)return;const ts
   else{if(!Array.isArray(S.g.prj))S.g.prj=[];S.g.prj.push({id:"p"+ts.toString(36),n:name.slice(0,50),cat:g.cat,d:g.diff,st:st.steps.map(t=>({t})),...(st.due?{due:st.due}:{}),ct:ts});toast("Projet lancé : à toi de le battre")}
   sfx("badge");save();close();render()}
 
-// ---- Cette semaine : bonnes actions avec un rythme
-function wkInfo(a){const tk=dayKey(Date.now()),W=wkKeys(tk),cnt={};S.log.forEach(e=>{if(e.a===a.id&&!e.bonus){const k=dayKey(e.t);if(W.includes(k))cnt[k]=(cnt[k]||0)+1}});
-  const doneDays=W.filter(k=>cnt[k]),n=Object.values(cnt).reduce((s,v)=>s+v,0),todayDone=!!cnt[tk],wi=wdOf(tk);
-  let goal,due;if(a.wd&&a.wd.length){goal=a.wd.length;due=a.wd.includes(wi)&&!todayDone}else if(a.xw>0){goal=a.xw;due=n<a.xw&&!todayDone}else{goal=7;due=!todayDone}
-  const left=a.wd&&a.wd.length?a.wd.filter(i=>i>=wi&&!cnt[W[i]]).length:goal-Math.min(goal,a.xw?n:doneDays.length);
-  return{W,cnt,n:a.xw?n:doneDays.length,goal,due,todayDone,wi,left}}
-const MO_L={matin:"le matin",aprem:"l'après-midi",soir:"le soir"};
-function renderWk(){const box=$("wkBox");if(!box||!S.g)return;const L=S.actions.filter(a=>rhOn(a));
-  if(!L.length){box.innerHTML=`<div class="head"><h2>Cette semaine</h2></div><button type="button" class="wkcta">${ICO("plus",18)}<span><b>Donne un rythme à tes actions</b><small>Ex. 3 fois par semaine.</small></span></button>`;box.querySelector(".wkcta").onclick=()=>qcOpen("act");return}
-  const R=L.map(a=>({a,i:wkInfo(a)})).sort((x,y)=>(y.i.due-x.i.due)||(x.i.todayDone-y.i.todayDone));const dn=R.filter(r=>r.i.n>=r.i.goal).length;
-  box.innerHTML=`<div class="head"><h2>Cette semaine<span class="count">${dn}/${R.length}</span></h2><button type="button" class="btn edbtn wkadd" aria-label="Créer une action avec un rythme" title="Créer"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg></button></div>
-  <div class="wkl">${R.map(({a,i},k)=>{const C=CATS[a.cat]||{},full=i.n>=i.goal;
-    const marks=a.wd&&a.wd.length?WDL.map((l,j)=>`<i class="${a.wd.includes(j)?"on":""}${i.cnt[i.W[j]]?" ok":""}${j===i.wi?" td":""}">${l}</i>`).join(""):a.xw?Array.from({length:a.xw},(_,j)=>`<i class="dot${j<i.n?" ok":""}"></i>`).join(""):WDL.map((l,j)=>`<i class="on${i.cnt[i.W[j]]?" ok":""}${j===i.wi?" td":""}">${l}</i>`).join("");
-    return`<button type="button" class="wkr${i.due?" due":""}${full?" full":""}${i.todayDone?" tdd":""}" data-k="${k}" style="--zc:${C.c||"var(--gold)"}"><span class="wki">${a.ic&&RKI[a.ic]?rkSvg(a.ic):`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CAT_IC[a.cat]||CAT_IC.soi||""}</svg>`}</span>
-      <span class="wkt"><b></b><small>${full?"Objectif de la semaine atteint":i.todayDone?"Fait aujourd'hui":i.due?"À faire aujourd'hui"+(a.mo?" · "+MO_L[a.mo]:""):a.xw?`Encore ${i.goal-i.n} cette semaine`:"Pas prévu aujourd'hui"}</small><span class="wkm${a.xw&&!(a.wd&&a.wd.length)?" dots":""}">${marks}</span></span>
-      <span class="wkx">${a.xw?`${i.n}/${i.goal}`:""}<em>+${a.xp}</em></span></button>`}).join("")}</div>`;
-  box.querySelectorAll(".wkr").forEach(b=>{const r=R[+b.dataset.k];b.querySelector(".wkt b").textContent=r.a.name;b.setAttribute("aria-label",r.a.name+", "+rhLab(r.a));
-    b.onclick=ev=>{const tk=dayKey(Date.now()),n=S.log.filter(e=>e.a===r.a.id&&dayKey(e.t)===tk).length;actDo(r.a,b,ev,n)};
-    let lp=0;b.oncontextmenu=e=>{e.preventDefault();rhPick(r.a,r.a.name,true,()=>{save();render()})};
-    b.onpointerdown=()=>{lp=setTimeout(()=>{lp=-1;rhPick(r.a,r.a.name,true,()=>{save();render()})},600)};b.onpointerup=b.onpointerleave=()=>{if(lp>0)clearTimeout(lp)};
-    b.addEventListener("click",e=>{if(lp===-1){e.stopImmediatePropagation();lp=0}},true)});
-  box.querySelector(".wkadd").onclick=()=>qcOpen("act")}
-
 // ---- Projets en étapes
 function prjKind(p){const L=BOSS_CAT[p.cat];let h=0;for(const ch of String(p.id))h=(h*31+ch.charCodeAt(0))>>>0;if(L&&L.length){const b=L[h%L.length];return[b[2],b[3]]}const K=["slime","ghost","shroom","bat"];return[K[h%K.length],["#5fae4f","#3a9ad8","#c86a3a","#8a5ad0"][h%4]]}
 function prjDue(p){if(!p.due)return"";const d=Math.round((new Date(p.due+"T12:00")-new Date(dayKey(Date.now())+"T12:00"))/864e5);return d<0?"en retard":d===0?"aujourd'hui":d===1?"demain":"J-"+d}

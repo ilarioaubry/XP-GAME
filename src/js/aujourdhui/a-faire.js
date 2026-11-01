@@ -14,11 +14,3 @@ function todoGo(x,el,ev){const it=todoItem(x);
   if(afFirst(it)==="fin"&&!afCook(it,el)){afDo(it,el,ev,0,[]);return}
   if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}
   setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,el,ev)},60)}
-function renderTodo(){const box=document.getElementById("todoBox");if(!box||!S||!S.g)return;const tk=todoDay(0),L=todoL().filter(x=>x.d===tk);
-  if(!L.length){box.innerHTML="";box.classList.add("voff");return}box.classList.remove("voff");
-  const D=L.map(todoDone),n=D.filter(Boolean).length;
-  box.innerHTML=`<div class="head"><h2>À faire<span class="count">${n}/${L.length}</span></h2></div><ul class="todol">${L.map((x,i)=>{const it=todoItem(x),k=it&&it.k==="fam"?uIc(it.f.id,it.opt):"etoile",xp=it?(it.k==="fam"?it.f.xp:it.a.xp):TODO_XP;
-    return`<li class="todor${D[i]?" ok":""}"><button type="button" class="btn todock" aria-label="${D[i]?"Fait":"Cocher"}" title="${D[i]?"Fait":"Cocher"}" aria-pressed="${D[i]}"${D[i]?" disabled":""}>${D[i]?ICO("check",24):""}</button><span class="todoic">${RKI[k]?rkSvg(k):rkSvg("etoile")}</span><span class="todot"><b></b><small class="ui-info">${D[i]?"Fait":"+"+Math.min(30,xp)+" XP"}</small></span><button type="button" class="btn delic todox" aria-label="Retirer de la liste" title="Retirer">${ICO("trash",24)}</button></li>`}).join("")}</ul>`;
-  box.querySelectorAll(".todor").forEach((r,i)=>{const x=L[i];r.querySelector(".todot b").textContent=x.n;
-    r.querySelector(".todock").onclick=ev=>todoGo(x,r.querySelector(".todock"),ev);
-    r.querySelector(".todox").onclick=()=>undoAfter("Retiré de la liste",()=>{S.g.todo=todoL().filter(y=>y.id!==x.id);save();renderTodo()})})}

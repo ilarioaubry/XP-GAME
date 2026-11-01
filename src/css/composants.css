@@ -168,8 +168,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .sq.idq .i
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #sqBox .sq .sqk{justify-content:flex-start!important;text-align:left!important;align-self:stretch!important}
 /* ===== Centrage (standard du 27/10) : dans un élément court (bouton, tuile, puce, onglet), l'icône seule est centrée,
    icône + texte forment un groupe centré, horizontalement et verticalement. Vérifié par outils/centrage.py */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.btn.enb,.mlp,.plf,.plr) :is(svg,img){display:block}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.evch.evadd,.mlp,.plf,.plr,.ui-btn,.btn.back,.btn.delic){place-content:center!important;align-items:center!important;justify-items:center!important;text-align:center!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.fjobs>button,.rmt>button,.mlp,.plf,.plr) :is(svg,img){display:block}
 /* l'icône ne déborde jamais de sa case (sinon le groupe paraît décentré) */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .fjobs>button .fti{width:auto!important;height:auto!important;display:grid!important;place-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .mlp .mli{width:48px!important;height:48px!important;display:grid!important;place-items:center!important}

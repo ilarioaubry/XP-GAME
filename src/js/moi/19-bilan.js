@@ -198,12 +198,6 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
   try{window.__fqFinish&&window.__fqFinish()}catch(e){}
   renderPlus()}
 // --- énergie du matin
-function renderEn(){const box=$("enBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer();
-  const show=!enOf()&&P==="matin"&&h<14&&!isOff()&&!pzActive()&&!lateNight();box.classList.toggle("voff",!show);if(!show){box.innerHTML="";return}
-  const sl=G.sleep&&G.sleep[tk],hh=sl&&+sl.h;const slt=hh?`Tu as dormi ${Math.floor(hh)} h${hh%1?" "+String(Math.round(hh%1*60)).padStart(2,"0"):""}. `:"";
-  box.innerHTML=`<div class="enc"><div class="enr">${[1,2,3].map(v=>`<button type="button" class="btn enb" data-en="${v}">${enSvg(v)}<span>${["","Faible","Moyenne","Pleine"][v]}</span><small>${[0,80,120,150][v]} XP</small></button>`).join("")}</div></div>`;
-  box.querySelectorAll(".enb").forEach(b=>b.onclick=()=>enSet(+b.dataset.en))}
-function enSvg(v,s){s=s||30;const c=["","#ff6a5a","#ffc94a","#5fd068"][v];return`<svg viewBox="0 0 30 16" width="${s}" height="${Math.round(s*16/30)}" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="1" width="24" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="25" y="5" width="4" height="6" fill="currentColor"/>${[0,1,2].map(i=>i<v?`<rect x="${4+i*7}" y="4" width="5" height="8" fill="${c}"/>`:"").join("")}</svg>`}
 // enSet : version complète (ex-réécriture de correctifs.js), enSetBase = le cœur d'origine
 function enSet(v){try{const g=S.g,vv=g.vie||(g.vie={}),tk=dayKey(Date.now());const base=(()=>{const c=vv.capDay;delete vv.capDay;const r=vieCap();if(c)vv.capDay=c;return r})();vv.capDay={d:tk,n:v===1?1:v===2?base:Math.min(8,base+2)}}catch(e){}return enSetBase(v)}
 function enSetBase(v){const G=S.g,tk=dayKey(Date.now());G.en={d:tk,v};if(G.fq){G.fq.d="";}save();render();toast(`Batterie ${["","faible","moyenne","pleine"][v]}`)}
