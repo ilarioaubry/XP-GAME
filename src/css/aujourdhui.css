@@ -815,7 +815,7 @@ html:not(#_u1):not(#_u2) body #engBox .engo{min-height:56px;display:flex;align-i
 html:not(#_u1):not(#_u2) body #engBox .engo>span:last-child{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.2}
 html:not(#_u1):not(#_u2) body #engBox .engo[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
 html:not(#_u1):not(#_u2) body #engBox .engi,html:not(#_u1):not(#_u2) body #engBox .engi svg{flex:none;width:32px;height:32px;display:block}
-html:not(#_u1):not(#_u2) body #engBox .engplus{min-height:56px;border-style:dashed;display:grid;place-items:center}
+html:not(#_u1):not(#_u2) body #engBox .engplus{min-height:56px;border-style:dashed;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px}
 html:not(#_u1):not(#_u2) body #engBox .engin{grid-column:1/-1;display:flex;gap:8px}
 html:not(#_u1):not(#_u2) body #engBox .engin input{flex:1;min-width:0;font-size:16px;min-height:44px}
 html:not(#_u1):not(#_u2) body #engBox .englim{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px}
@@ -903,4 +903,4 @@ html:not(#_u1):not(#_u2):not(#_u3) body .jdbox .jdl.jx-r-diner::before{backgroun
 
 /* + ajouter un rituel (01/11) : bouton icône carré 44 à droite du titre */
 .jdbox .head:has(.jdplus){display:flex;align-items:center;justify-content:space-between;gap:8px}
-html:not(#_u1):not(#_u2) body .jdbox .jdplus{width:44px;height:44px;min-height:44px;padding:0;flex:none;display:grid;place-items:center;color:var(--gold);border-style:dashed}
+html:not(#_u1):not(#_u2) body .jdbox .jdplus{width:auto;height:44px;min-height:44px;padding:0 14px;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--gold);border-style:dashed;font-size:13px}

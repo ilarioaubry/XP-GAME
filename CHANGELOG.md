@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- Aujourd'hui : noms clarifiés. Les quêtes s'appellent « Quêtes du jour », le journal du bas « Fait aujourd'hui » ; les boutons d'ajout disent ce qu'ils ajoutent (« + Rituel », « + Engagement »), le « + » flottant reste celui des actions.
 - Objectif du jour retiré (il était déjà invisible) : son calcul, son message, le badge « Objectif tenu » et l'ancienne frise de la journée sont supprimés du code. Les données restent dans la sauvegarde.
 - Aujourd'hui : un repas pas noté se replie dans « Repas à noter » dès que le repas suivant commence (plus de petit-déj à cocher à 21 h) ; le titre suit le moment affiché : Ce matin, Ce midi, Cet après-midi, Ce soir, Cette nuit.
 - Aujourd'hui : une seule carte quand un contrat se termine (en haut d'Aujourd'hui, plus dans Moi) ; répondre à « Ta situation a changé ? » clôt le contrat et donne les +50 XP Travail. Nouvelle section « Mes suivis » sous Mes engagements : cigarettes (hors engagement), cafés et contrat en cours ; Mes engagements ne garde que les engagements du jour.

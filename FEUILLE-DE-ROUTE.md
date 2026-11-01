@@ -10,8 +10,8 @@ Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sectio
 **Lot 1 · Aujourd'hui**
 - [x] 1.1 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements (R.2) (01/11)
 - [x] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3) (01/11)
-- [ ] 1.3 Objectif du jour retiré avec son badge (R.12) — fait le 01/11, à vérifier par Ilario
-- [ ] 1.4 Noms des sections clarifiés (Aujourd'hui, Plus tard aujourd'hui, Journal) ; les « + » qui se ressemblent distingués
+- [x] 1.3 Objectif du jour retiré avec son badge (R.12) (01/11)
+- [ ] 1.4 Noms des sections clarifiés (Quêtes du jour, Fait aujourd'hui) ; « + Rituel », « + Engagement » — fait le 01/11, à vérifier par Ilario
 - [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1)
 - [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks
 
