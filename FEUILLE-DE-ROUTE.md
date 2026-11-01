@@ -322,6 +322,34 @@ Doc : https://claude.ai/artifact/2U9EfKXto3kqDLveD1wMwi
 - [ ] R.11 XP des proches et des bonus ramenés au barème (30 maximum)
 - [ ] R.12 Rendre ou supprimer ce qui est caché (Mon rythme, Ma capacité, La dernière fois que…, objectif du jour) ; retirer boss et euros du code (avec le CSS)
 
+## Comparatif et surprises (01/11/2026, à choisir)
+
+Doc : https://claude.ai/artifact/KmopVs83F8TQv3MZDzxSPt — chaque surprise demande un vrai geste.
+
+- [ ] S.1 Heure dorée de la semaine : annoncée le lundi, 1 h, un domaine qui change, XP ×2 sur ce domaine
+- [ ] S.2 Mois à thème (ex. « mois des proches ») : quêtes du thème, objet du mois après 10 actions
+- [ ] S.3 Le grand jour : un samedi par mois, défi d'une journée, objet rare
+- [ ] S.4 Fêtes du vrai calendrier (gentillesse, Chandeleur, fête des mères et des pères, solstices) : quête à thème + décor
+- [ ] S.5 Mon anniversaire (XP ×2 la journée, cadeau) et anniversaire du carnet (bilan de l'année)
+- [ ] S.6 Défi éclair à une heure différente chaque jour (2 à 5 min, 5 XP), vu à l'ouverture
+- [ ] S.7 Le visiteur : un proche à revoir passe sur la scène, bouton pour lui écrire, XP de lien ×2 ce jour-là
+- [ ] S.8 Ciel et météo réels : première neige, premier beau jour, pleine lune, pluies d'étoiles (5 XP + décor)
+- [ ] S.9 Trouvaille en route : une graine qui éclot après 5 actions d'un même domaine
+- [ ] S.10 Lettre du passé : ma phrase de Bonne nuit d'il y a un mois ou un an, relue au réveil
+- [ ] S.11 Boost en réserve (gagné par 5 jours de rituels) : 30 min à XP ×2, activé quand je veux
+- [ ] S.12 Lève-tôt : rituels du matin finis tôt → 30 min à XP ×2
+- [ ] S.13 Journée relance après 2 jours calmes : première action ×3, sans reproche
+- [ ] S.14 Défi avec un proche réel chaque semaine, message prêt à envoyer
+- [ ] S.15 Allié : un proche choisi pour un objectif, proposition de lui donner des nouvelles
+- [ ] S.16 Carte postale pixel après une sortie, à envoyer par Messages
+- [ ] S.17 **(décision)** Mes plaisirs : récompenses réelles inventées, achetées avec ce que je gagne (monnaie à choisir)
+- [ ] S.18 Avatar : création « Aide-moi » par questions, phrase fétiche, humeur visible sur la scène
+- [ ] S.19 « Les nouvelles du jour » en une ligne à l'ouverture (anniversaire qui arrive, record, proche à revoir)
+- [ ] S.20 Goûts d'un proche remplis au fil des sorties
+- [ ] S.21 Assiette : photo souvenir facultative, « et après, tu te sens ? », arc-en-ciel de la semaine, « nouveau plat »
+
+Plan d'attaque proposé (écran par écran, CSS + corrections du compte rendu ensemble) : 1 Aujourd'hui · 2 Moi · 3 Proches · 4 Le jeu (décision R.10 avant) · 5 Événements · 6 Assiette, avatar, plaisirs.
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
