@@ -34,9 +34,10 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | J'ai… (fiche) | Faits de vie cochés dans ma fiche : actions, rituels, rappels à rythme et quêtes qui vont avec | celle de chaque action | active |
 | Journal de bord | Haut d'Aujourd'hui en liste : le moment, mes engagements, plus tard aujourd'hui ; branché sur les rituels, repas, énergie, nuit, engagements, contrat, à faire, calendrier, Bonne nuit | celle de chaque élément | active |
 | Engagements | Le matin, 1 à 3 engagements du jour ; validés dans Bonne nuit (cigarettes : compteur) | 15 par engagement tenu | active |
+| Mes suivis (01/11) | Sous Mes engagements : compteurs cigarettes (hors engagement) et cafés, contrat en cours | — | active |
 | À faire | Liste du jour remplie depuis Actions (Aujourd'hui / Demain) ou en tâche libre ; cocher ouvre le parcours de l'action ; reste proposé dans Bonne nuit | XP de l'action, tâche libre 5 | active |
 | Ta journée | Bilan en fin de Bonne nuit : XP, actions par catégorie, badges, messages gardés de la journée, proches, repas | — (bilan +10) | active |
-| Contrat fini | Au dernier jour d'un contrat, une coche dans le bandeau d'Aujourd'hui : +50 XP Travail, une fois | 50 | active |
+| Contrat fini | Au dernier jour d'un contrat, une coche dans « Mes suivis » ; les jours suivants, la carte « est terminé » en haut d'Aujourd'hui (répondre clôt le contrat) : +50 XP Travail, une fois | 50 | active |
 | Bonnes actions | Dans le panneau Actions, trouvables par la recherche et dans les Récents ; création de tes propres actions (celles qui faisaient doublon avec l'assiette sont retirées, 27/10) | 2 à 30 au choix | active |
 | Actions (panneau +) | Accueil « Récents » (ou « Pour commencer »), catégorie → action → durée ; « Avec qui ? » ensuite pour les proches et les sorties ; Cuisiner un repas ouvre l'assiette ; « Journée sans… » se coche dans Bonne nuit | 8 à 30 selon la durée | active |
 | Annuler | Barre « Annuler » quelques secondes après une validation ou une suppression | — | active |

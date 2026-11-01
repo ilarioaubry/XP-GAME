@@ -13,6 +13,9 @@ function jdRit(t,ev){const el=jdEl(ev),li=el.closest&&el.closest("li.jdl"),still
     const b=document.querySelector(".qxp .qbar");if(b&&!still){b.classList.remove("glow");void b.offsetWidth;b.classList.add("glow");setTimeout(()=>b.classList.remove("glow"),900)}};
   if(!li||still||(S.daily.c[t.id]||0)+1<t.n)return go();
   li.style.height=li.offsetHeight+"px";li.classList.add("jdgo");li.style.pointerEvents="none";setTimeout(go,380)}
+// contrat : clos une fois (+50 XP Travail), depuis la ligne du dernier jour ou depuis la carte « est terminé »
+function contratClosed(p){const ok=S.g.perOk&&typeof S.g.perOk==="object"?S.g.perOk:{};return!!ok[p.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+p.name)}
+function contratClose(p,el,ev){if(!p||p.t!=="contrat"||contratClosed(p))return;if(!S.g.perOk||typeof S.g.perOk!=="object")S.g.perOk={};S.g.perOk[p.id]=Date.now();complete({id:"contrat",cat:"travail",name:"Contrat terminé : "+p.name,xp:50},el||document.body,ev)}
 function jdFmt(t){const d=new Date(t);return d.getHours()+" h "+String(d.getMinutes()).padStart(2,"0")}
 function jdLast(name,tk){const e=[...(S.log||[])].reverse().find(x=>dayKey(x.t)===tk&&x.name===name);return e?e.t:0}
 function jdDays(s,e,wd){let n=0;for(let d=new Date(s+"T12:00");dayKey(d.getTime())<=e;d.setDate(d.getDate()+1)){const w=d.getDay();if(!wd||(w>0&&w<6))n++}return n}
@@ -55,23 +58,25 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   A.innerHTML=`${jdHead(ttl,tot?(done.length+gone.length)+"/"+tot:"",PER?`<button type="button" class="btn jdplus" aria-label="Ajouter un rituel" title="Ajouter un rituel" data-k="${reg(()=>ritNew({per:PER,done:()=>render()}))}">${ICO("plus",24)}</button>`:"")}<ul class="jdlist">${now.join("")}${shownDone}${morn}</ul>${rtm}${!tot&&!morn?`<p class="vide">Rien à cocher pour l'instant.</p>`:!now.length&&!done.length&&!morn?`<p class="vide">Tout est fait pour l'instant.</p>`:""}`;
   if(jdPop){jdPop=false;const k=A.querySelector(".head .count");if(k)k.classList.add("pop")}
   {const ph=A.querySelector('[data-ph="ritLife"]'),rl=document.getElementById("ritLife");if(ph&&rl){rl.hidden=false;ph.replaceWith(rl)}}
-  // ---- mes engagements : ceux du jour, les cigarettes, le contrat
-  const eng=[];const T=typeof engToday==="function"?engToday():[],cigOn=!!(((G.vie||{}).track||{}).cig),cig=(G.cig||{})[tk]||0,cy=(G.cig||{})[dayKey(Date.now()-864e5)]||0;
+  // ---- mes engagements : seulement ceux du jour ; les compteurs et le contrat en cours vont dans « Mes suivis » (1.1)
+  const eng=[],suiv=[];const T=typeof engToday==="function"?engToday():[],cigOn=!!(((G.vie||{}).track||{}).cig),cig=(G.cig||{})[tk]||0,cy=(G.cig||{})[dayKey(Date.now()-864e5)]||0;
   const pm=`<span class="jdpm"><button type="button" class="btn" aria-label="Retirer une cigarette" data-k="${reg(()=>{G.cig[tk]=Math.max(0,cig-1);save();render()})}"${cig?"":" disabled"}>−</button><b class="ui-compteur">${cig}</b><button type="button" class="btn" aria-label="Ajouter une cigarette" data-k="${reg(()=>{if(!G.cig||typeof G.cig!=="object")G.cig={};G.cig[tk]=cig+1;save();render()})}">+</button></span>`;
   let cigShown=false;
   T.forEach(e=>{const isC=e.id==="cig"||e.id==="cigmax";if(isC)cigShown=true;const st=e.res===1?"Tenu":e.res===0?"Pas cette fois":e.id==="cigmax"?cig+" / "+e.lim+" · hier "+cy:e.id==="cig"?"hier "+cy:"Ce soir dans Bonne nuit";
     eng.push(jdRow({c:"#4fb84a",ic:engIc(e.id),n:e.n,s:st,ok:e.res===1,r:isC&&e.res===undefined?pm:""}))});
-  if(cigOn&&!cigShown)eng.push(jdRow({c:"#e8473a",ic:rkSvg("cigarette"),n:"Cigarettes",s:"hier "+cy,r:pm}));
+  if(cigOn&&!cigShown)suiv.push(jdRow({c:"#e8473a",ic:rkSvg("cigarette"),n:"Cigarettes",s:"hier "+cy,r:pm}));
   // les cafés : un compteur comme les cigarettes, sans XP (N.6)
-  if(typeof cafeN==="function"){const cf=cafeN(),cfy=cafeN(dayKey(Date.now()-864e5));eng.push(jdRow({c:"#8a5a3a",ic:rkSvg("tasse"),n:"Cafés",s:"hier "+cfy,r:`<span class="jdpm"><button type="button" class="btn" aria-label="Retirer un café" data-k="${reg(()=>cafeSet(cf-1))}"${cf?"":" disabled"}>−</button><b class="ui-compteur">${cf}</b><button type="button" class="btn" aria-label="Ajouter un café" data-k="${reg(()=>cafeSet(cf+1))}">+</button></span>`}))}
+  if(typeof cafeN==="function"){const cf=cafeN(),cfy=cafeN(dayKey(Date.now()-864e5));suiv.push(jdRow({c:"#8a5a3a",ic:rkSvg("tasse"),n:"Cafés",s:"hier "+cfy,r:`<span class="jdpm"><button type="button" class="btn" aria-label="Retirer un café" data-k="${reg(()=>cafeSet(cf-1))}"${cf?"":" disabled"}>−</button><b class="ui-compteur">${cf}</b><button type="button" class="btn" aria-label="Ajouter un café" data-k="${reg(()=>cafeSet(cf+1))}">+</button></span>`}))}
   const pOk=G.perOk&&typeof G.perOk==="object"?G.perOk:{};
-  (G.per||[]).filter(p=>p.t==="contrat").forEach(p=>{const fin=tk>=p.e,closed=pOk[p.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+p.name);if(closed||tk<p.s)return;if(fin&&(Date.parse(tk)-Date.parse(p.e))/864e5>21)return;
+  (G.per||[]).filter(p=>p.t==="contrat").forEach(p=>{const fin=tk>=p.e;if(contratClosed(p)||tk<p.s)return;if(fin&&(Date.parse(tk)-Date.parse(p.e))/864e5>21)return;
+    if(fin&&typeof perAskCard==="function"&&perAskCard().includes('data-pid="'+p.id+'"'))return;  // la carte « est terminé » en haut s'en charge : une seule carte
     const tot=jdDays(p.s,p.e,p.wd),dn=Math.min(tot,jdDays(p.s,tk>p.e?p.e:tk,p.wd)),pc=tot?Math.round(dn/tot*100):0;
-    eng.push(jdRow({x:"jx-ct",c:"#6f8fe0",ic:rkSvg("chantier"),n:p.name,s:fin?"Terminé, bravo : touche la coche":`Jour ${Math.max(dn,1)} sur ${tot}<span class="jdjours">${Array.from({length:tot},(_,i)=>`<i class="${i<dn-1?"d":i===dn-1?"t":""}"></i>`).join("")}</span>`,r:fin?`<button type="button" class="btn primary jdck" aria-label="Clore : ${esc(p.name)}" title="Clore" data-k="${reg(ev=>{if(!G.perOk||typeof G.perOk!=="object")G.perOk={};G.perOk[p.id]=Date.now();complete({id:"contrat",cat:"travail",name:"Contrat terminé : "+p.name,xp:50},jdEl(ev),ev)})}">${ICO("check",24)}</button>`:""}))});
+    suiv.push(jdRow({x:"jx-ct",c:"#6f8fe0",ic:rkSvg("chantier"),n:p.name,s:fin?"Terminé, bravo : touche la coche":`Jour ${Math.max(dn,1)} sur ${tot}<span class="jdjours">${Array.from({length:tot},(_,i)=>`<i class="${i<dn-1?"d":i===dn-1?"t":""}"></i>`).join("")}</span>`,r:fin?`<button type="button" class="btn primary jdck" aria-label="Clore : ${esc(p.name)}" title="Clore" data-k="${reg(ev=>contratClose(p,jdEl(ev),ev))}">${ICO("check",24)}</button>`:""}))});
   const choose=typeof engS==="function"&&!T.length&&engS().skip!==tk&&h<12;
   B.innerHTML=`${jdHead("Mes engagements",T.length?T.filter(e=>e.res===1).length+"/"+T.length:"")}${choose?`<span class="jdph" data-ph="engBox"></span>`:""}<ul class="jdlist">${eng.join("")}</ul>`;
   {const ph=B.querySelector('[data-ph="engBox"]'),eb=document.getElementById("engBox");if(ph&&eb)ph.replaceWith(eb)}
   B.classList.toggle("voff",!choose&&!eng.length);
+  {const D=document.getElementById("jdSuiv");if(D){D.innerHTML=`${jdHead("Mes suivis")}<ul class="jdlist">${suiv.join("")}</ul>`;D.classList.toggle("voff",!suiv.length)}}
   // ---- plus tard aujourd'hui : repas à venir, calendrier, à faire, Bonne nuit
   const later=[];
   MEALS.forEach(([k,per,l,ic])=>{if(h>=MEAL_H[k]||mealState(k,per))return;later.push(jdRow({c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:"à partir de "+MEAL_H[k]+" h"+(MB_PLM.includes(k)?" · dans l'assiette":""),r:""}))});
@@ -82,5 +87,5 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   {const J=(G.jr||{})[tk]||{};later.push(jdRow({x:"jx-bn",c:"#8f7ef0",ic:rkSvg("lune"),n:"Bonne nuit",s:J.at?"Journée close · touche pour revoir":"Ton bilan de la journée",ok:!!J.at,r:J.at?"":`<button type="button" class="btn jdgo" data-k="${reg(()=>closeOpen(1))}">Bonne nuit</button>`,k:J.at?reg(()=>{try{dayRecap(false)}catch(e){}}):""}))}
   C.innerHTML=`${jdHead("Plus tard aujourd'hui")}<ul class="jdlist">${later.join("")}</ul>`;
   // ---- actions
-  [A,B,C].forEach(box=>{box.querySelectorAll("[data-k]").forEach(b=>{const f=act[b.dataset.k];if(f)b.onclick=ev=>{ev.stopPropagation();f(ev)}});
+  [A,B,C,document.getElementById("jdSuiv")].filter(Boolean).forEach(box=>{box.querySelectorAll("[data-k]").forEach(b=>{const f=act[b.dataset.k];if(f)b.onclick=ev=>{ev.stopPropagation();f(ev)}});
     box.querySelectorAll("li[data-j]").forEach(li=>{const f=act[li.dataset.j];if(!f)return;const ck=li.querySelector(".jdck:not([data-k])");if(ck)ck.onclick=ev=>{ev.stopPropagation();f(ev)};else if(!li.querySelector("[data-k]"))li.onclick=ev=>f(ev)})})}

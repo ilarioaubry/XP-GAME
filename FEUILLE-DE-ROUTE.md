@@ -3,9 +3,27 @@
 Issue du rapport complet du 25/10/2026 (doc : https://claude.ai/artifact/TxKnkAVsLLj1E75MbprWGP).
 **Rien ne se retire de cette liste sans l'accord d'Ilario.**
 
-## Priorité du moment (01/11/2026)
+## Priorité du moment (01/11/2026) : la refonte en 6 lots
 
-Seul chantier actif : **le nettoyage du CSS** (3.7, 3.8, 3.10, 3.11). Tout le reste est mis de côté par Ilario, sans être retiré de la liste.
+Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sections R et S ci-dessous, écran par écran ; chaque lot nettoie aussi le CSS de son écran (3.7, 3.8, 3.10, 3.11). Le reste de la liste est mis de côté, sans être retiré.
+
+**Lot 1 · Aujourd'hui**
+- [ ] 1.1 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements (R.2) — fait le 01/11, à vérifier par Ilario
+- [ ] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3)
+- [ ] 1.3 Objectif du jour rendu visible ou retiré avec son badge (R.12)
+- [ ] 1.4 Noms des sections clarifiés (Aujourd'hui, Plus tard aujourd'hui, Journal) ; les « + » qui se ressemblent distingués
+- [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1)
+- [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks
+
+**Lot 2 · Moi** — 2.1 jauge de stockage (R.1) · 2.2 fiche profil seulement dans Ma vie · 2.3 haut du Bilan (R.4) · 2.4 mêmes noms + jauge Nourriture (R.6) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » · 2.6 réglages cachés (R.12) · 2.7 mon anniversaire, statut de couple (R.8) · 2.8 CSS de Moi
+
+**Lot 3 · Proches** — 3.1 fiche en lecture (R.7) · 3.2 Appeler / Nouvelles ouvrent Téléphone et Messages · 3.3 liste (Ami du mois, légende, bordures, recherche) · 3.4 groupe · 3.5 le visiteur (S.7) · 3.6 carte postale, goûts, idées cadeau (S.16, S.20) · 3.7 CSS de Proches
+
+**Lot 4 · Le jeu** — 4.1 **(décision)** systèmes gardés (R.10) · 4.2 niveaux qui débloquent des bonus (S.22) · 4.3 boosts (S.11–S.13) · 4.4 badges (R.5) · 4.5 barème (R.11) · 4.6 Bonne nuit
+
+**Lot 5 · Événements et vie réelle** — 5.1 nouveaux types (R.9) · 5.2 heure dorée (S.1) · 5.3 mois à thème, grand jour (S.2, S.3) · 5.4 fêtes, anniversaires (S.4, S.5) · 5.5 défi éclair, ciel réel (S.6, S.8) · 5.6 trouvailles, lettre du passé (S.9, S.10) · 5.7 défi avec un proche, allié (S.14, S.15) · 5.8 nouvelles du jour (S.19) · 5.9 argent, papiers, santé, autres fêtes, moments durs
+
+**Lot 6 · Assiette, avatar, plaisirs** — 6.1 assiette (S.21) · 6.2 avatar (S.18) · 6.3 **(décision)** mes plaisirs (S.17) · 6.4 fin du CSS, boss et euros retirés
 
 ## Méthode (à chaque demande)
 
@@ -347,6 +365,7 @@ Doc : https://claude.ai/artifact/KmopVs83F8TQv3MZDzxSPt — chaque surprise dema
 - [ ] S.19 « Les nouvelles du jour » en une ligne à l'ouverture (anniversaire qui arrive, record, proche à revoir)
 - [ ] S.20 Goûts d'un proche remplis au fil des sorties
 - [ ] S.21 Assiette : photo souvenir facultative, « et après, tu te sens ? », arc-en-ciel de la semaine, « nouveau plat »
+- [ ] S.22 Les niveaux débloquent des bonus : passer un niveau (global ou d'une jauge) donne un pouvoir lié à cette jauge (ex. 1 h d'XP ×2 sur Sport), à utiliser quand je veux
 
 Plan d'attaque proposé (écran par écran, CSS + corrections du compte rendu ensemble) : 1 Aujourd'hui · 2 Moi · 3 Proches · 4 Le jeu (décision R.10 avant) · 5 Événements · 6 Assiette, avatar, plaisirs.
 

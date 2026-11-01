@@ -833,6 +833,7 @@ html:not(#_a) .wrap>#todoBox{order:-18}
 /* Journal de bord (28/10, piste D) : la journée en liste */
 html:not(#_a) .wrap>#jdNow{order:-24}
 html:not(#_a) .wrap>#jdEng{order:-23}
+html:not(#_a) .wrap>#jdSuiv{order:-23}
 html:not(#_a) .wrap>#jdLater{order:-22}
 html:not(#_a) body .wrap>:is(#dqBox,#engBox,#enBox,#todoBox,#sleepGo,#rtrBox){display:none!important}
 html:not(#_u1):not(#_u2) body .jdbox .jdlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}

@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- Aujourd'hui : une seule carte quand un contrat se termine (en haut d'Aujourd'hui, plus dans Moi) ; répondre à « Ta situation a changé ? » clôt le contrat et donne les +50 XP Travail. Nouvelle section « Mes suivis » sous Mes engagements : cigarettes (hors engagement), cafés et contrat en cours ; Mes engagements ne garde que les engagements du jour.
 - Aujourd'hui : un bouton « + » à droite du titre de la liste (Ce matin / Ce soir) ouvre la création d'un rituel pour ce moment.
 - Aujourd'hui : toucher le nom d'un rituel dans la liste ouvre directement ses réglages (nom, icône, moment, rythme, pause, suppression) ; la case à droite sert toujours à cocher.
 - Panneau + : une catégorie montre directement toutes ses options, rangées sous le nom de leur famille (un toucher de moins) ; options sur 2 colonnes, noms en entier, sans l'icône répétée de la famille.
