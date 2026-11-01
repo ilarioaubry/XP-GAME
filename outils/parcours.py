@@ -139,7 +139,7 @@ with sync_playwright() as p:
     check("Actions : Cuisiner un repas ouvre l'assiette", pg.evaluate("!!document.querySelector('.plo')||!plTarget()"))
     pg.evaluate("document.querySelectorAll('.plo').forEach(e=>e.remove());document.documentElement.classList.remove('plopen')"); plus(False)
     plus(True); tap("Nourriture")
-    check("Actions : « Journée sans » n'est plus dans Nourriture (elle est dans Bonne nuit)", pg.evaluate("[...document.querySelectorAll('#actFind .aft')].length>0&&![...document.querySelectorAll('#actFind .aft')].some(b=>/Journée sans/.test(b.textContent))")); plus(False)
+    check("Actions : « Journée sans » n'est plus dans Nourriture (elle est dans Bonne nuit)", pg.evaluate("[...document.querySelectorAll('#actFind .afsec')].length>0&&![...document.querySelectorAll('#actFind .afsec')].some(b=>/Journée sans/.test(b.textContent))")); plus(False)
 
     # 7b. Chez moi : chaque pièce de la maison s'ouvre, chaque objet se touche
     n0 = len(errs)

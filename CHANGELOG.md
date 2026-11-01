@@ -3,6 +3,9 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- Panneau + : une catégorie montre directement toutes ses options, rangées sous le nom de leur famille (un toucher de moins) ; options sur 2 colonnes, noms en entier, sans l'icône répétée de la famille.
+- Panneau + : durée et « Avec qui ? » sur le même écran, bouton « Fait · +N XP » ; l'XP s'affiche sous chaque durée et quantité.
+- Panneau + : « Sport » et « Loisirs » (au lieu de Force et Divertissement), icône dossier pour Travail, bordure or sur la catégorie choisie, plus de bande orange en bas.
 - « Période terminée, ta situation a changé ? » : les 4 choix tiennent dans la largeur (le 4e sortait de l'écran), carte standard sans cadre doré, icônes alignées.
 - Journal : chaque repas a un fond flouté qui montre son moment (aube pour le petit-déj, ciel bleu pour le déjeuner, fin d'après-midi pour le goûter, soir étoilé et lune pour le dîner).
 - Assiette : aliments en rangées qui glissent, une par ligne (pain → classiques → atypiques ; viande et œuf → végétal → de la mer). Nouveaux : frites, sandwich, saumon, falafel, ail ; sauces césar et curry coco ; « Crème fraîche ».

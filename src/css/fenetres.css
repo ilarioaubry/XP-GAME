@@ -211,7 +211,6 @@ html body #plusSheet .head .count{display:none!important}
 #actFind .afo.pop{animation:afPop .45s ease}
 #actFind .afc{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 #actFind .afo{border-left:5px solid var(--line)}
-#actFind .afo.fr-g{border-left-color:#3fbf6a}
 #actFind .afd{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px 14px}
 #actFind .afdh{display:flex;align-items:center;gap:10px}
 #actFind .afdh b{font-family:var(--f-pixel);font-size:20px;line-height:1.15}
@@ -232,13 +231,6 @@ html.plusopen #afFab{display:none}
 #actFind .afs{position:sticky;top:56px;z-index:2;background:var(--surface)}
 #actFind .afc button{position:relative}
 #actFind .afo{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-#actFind .afgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#actFind .aft{position:relative;text-align:left;min-height:64px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--fc);background:var(--surface);color:var(--ink);padding:12px 12px;font:inherit;display:flex;align-items:center}
-#actFind .aft b{font-size:15px;line-height:1.2;padding-right:22px}
-#actFind .aft.r{border-left-color:#e5483a}
-#actFind .aft.o{border-left-color:#f0a020}
-#actFind .aft em{position:absolute;top:6px;right:10px;font-style:normal;color:var(--accent);font-weight:800}
-#actFind .aft.pop{animation:afPop .45s ease}
 #actFind .affh{display:flex;align-items:center;gap:10px}
 #actFind .affh .afft{font-family:var(--f-pixel);font-size:20px}
 #actFind .afopts .afo{font-size:15px;min-height:48px;padding:10px 16px}
@@ -246,7 +238,6 @@ html.plusopen #afFab{display:none}
 #actFind .afppl .afsolo{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #actFind .afdur.big{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 #actFind .afdur.big button{min-height:60px;font-size:15px;border-radius:14px}
-#actFind .afdur.big button[data-d="0"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #actFind .afd .pop,#actFind .afdur button.pop{animation:afPop .45s ease}
 #actFind .afppl button[aria-pressed=true]{background:var(--c-social)!important;border-color:var(--c-social)!important;color:#fff!important}
 #actFind .afnext{position:sticky;bottom:10px;min-height:52px;font-size:15px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
@@ -268,11 +259,8 @@ html.plusopen #afFab{display:none}
 #actFind .uic.big{width:40px;height:40px}
 #actFind .afc button .uic{width:30px;height:30px}
 #actFind .afc button{background:rgba(20,16,34,.55)}
-#actFind .aft{gap:10px;background:rgba(20,16,34,.62);backdrop-filter:blur(2px)}
-#actFind .aft .uic{width:34px;height:34px}
 #actFind .afo{gap:8px;background:rgba(24,20,40,.7)}
 #actFind .afo .uic{width:24px;height:24px;border-radius:7px;padding:1px;box-shadow:0 0 0 2px transparent}
-#actFind .afo.fr-g .uic{box-shadow:0 0 0 2px #3fbf6a}
 #actFind .afd{background:rgba(20,16,34,.72)}
 /* — depuis epure-03.css — */
 html:not(#_a):not(#_b) body #actFind .afppl button[data-p]:not([data-p=""]){display:inline-flex;align-items:center;gap:6px;padding-left:4px!important}
@@ -283,13 +271,7 @@ html:not(#_a):not(#_b) body #actFind .afgi{width:20px;height:20px;display:block;
 html:not(#_a):not(#_b) body #actFind .afgi svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body #actFind .afo .uic{box-shadow:none!important;padding:0!important;border-radius:0!important;width:24px!important;height:24px!important}
 html:not(#_a):not(#_b) body #actFind :is(.afc button,[data-afc]) .uic{width:32px!important;height:32px!important}
-html:not(#_a):not(#_b) body #actFind .aft .uic{width:48px!important;height:48px!important;flex:none}  /* icône de contenu : 48 px (standards) */
-html:not(#_a):not(#_b) body #actFind .aft{min-height:72px;padding:10px 12px}
-html:not(#_a):not(#_b) body #actFind .aft .uic svg{width:48px!important;height:48px!important}
 /* familles : 2 colonnes qui ne débordent jamais de l'écran (Travail, Force…) */
-html:not(#_a):not(#_b) body #actFind .afgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-html:not(#_a):not(#_b) body #actFind .aft{flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;padding:10px 12px 12px;min-width:0;min-height:0}  /* icône 48 au-dessus, nom dessous : les mots longs (Renforcement, Administratif) tiennent sans être coupés */
-html:not(#_a):not(#_b) body #actFind .aft b{min-width:0;max-width:100%;padding-right:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}  /* nom sur 1 ligne : toutes les tuiles ont la même hauteur */
 /* le panneau prend tout l'écran, fond compris, à chaque étape ; « Créer une action » reste en bas */
 html:not(#_a):not(#_b) body #plusSheet .ps-in{display:flex;flex-direction:column;padding-bottom:0!important}
 html:not(#_a):not(#_b) body #plusSheet #actFind{flex:1 0 auto;display:flex;flex-direction:column;gap:12px;border-radius:0;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
@@ -454,3 +436,17 @@ html:not(#_a):not(#_b) body .plo .plfoods.plcar>.plf small{max-width:100%;overfl
 html:not(#_a):not(#_b) body .plo .plfoods.plcar{overflow-y:hidden;touch-action:pan-x pan-y;padding-top:2px;padding-bottom:4px}
 html:not(#_a):not(#_b) body .plwho .pav.fmini{display:block!important;flex:none;width:34px!important;height:34px!important;border-radius:50%;overflow:hidden}
 html:not(#_a):not(#_b) body .plwho .pav.fmini img{display:block;width:420%;height:auto;max-width:none;margin:-2px 0 0 -160%;image-rendering:pixelated}
+/* Panneau + (01/11) — K.4 : une catégorie montre toutes ses options, les familles en intertitres ; L.6 : options sur 2 colonnes, noms en entier ; L.4 : catégorie choisie = tuile pleine + bordure or */
+html:not(#_a):not(#_b) body #actFind .afsec{margin-bottom:10px}
+html:not(#_a):not(#_b) body #actFind .afsec .affh{gap:8px}
+html:not(#_a):not(#_b) body #actFind .afsec .affi{width:32px;height:32px;display:grid;place-items:center;flex:none}
+html:not(#_a):not(#_b) body #actFind .afsec .affi svg{width:32px;height:32px;display:block}
+html:not(#_a):not(#_b) body #actFind .afsec .afft{font-family:var(--f-pixel);font-size:15px}
+html:not(#_a):not(#_b):not(#_c) body #actFind .afsec .afopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+html:not(#_a):not(#_b):not(#_c) body #actFind .afsec .afo{width:100%;min-width:0;min-height:48px;justify-content:center;text-align:center;white-space:normal;line-height:1.2;padding:8px 10px}
+html:not(#_a):not(#_b):not(#_c) body #actFind .afsec .afo>span:not(.uic){min-width:0;overflow-wrap:anywhere}
+html:not(#_a):not(#_b):not(#_c) body #actFind .afsec .afaddin{grid-column:1/-1}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #actFind .afc [data-afc][aria-pressed="true"]{outline:2px solid var(--gold)!important;outline-offset:-2px}
+html:not(#_a):not(#_b) body #actFind .afdur .afxp{display:block;font-size:11px;font-weight:700;color:var(--gold);margin-top:2px}
+html:not(#_a):not(#_b) body #actFind .afnext{width:100%;margin-top:12px}
+html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
