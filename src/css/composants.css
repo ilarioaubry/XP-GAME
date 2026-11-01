@@ -176,3 +176,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .mlp .mli{
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body :is(.evch.evadd,.plf.pladd){justify-content:center!important;align-content:center!important;align-items:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .evch.evadd{padding:8px!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .plf.pladd>span{display:grid!important;place-items:center!important;line-height:1!important}
+/* « Période terminée, ta situation a changé ? » (Aujourd'hui et Ma fiche) : carte standard, 4 choix qui tiennent dans la largeur (01/11) */
+html:not(#_u1):not(#_u2):not(#_u3) body .fask{background:rgba(14,16,36,.82);border:1px solid rgba(255,255,255,.17);border-radius:0;min-width:0}
+html:not(#_u1):not(#_u2):not(#_u3) body .fask b{font-size:15px}
+html:not(#_u1):not(#_u2):not(#_u3) body .fask small{font-size:13px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fask .fjobs.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fask .fjobs.mini>button{min-width:0;aspect-ratio:auto;min-height:76px;padding:6px 2px;font-size:11px;line-height:1.15}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fask .fjobs.mini .fti,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fask .fjobs.mini .fti svg{width:32px!important;height:32px!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .fask .fjobs.mini>button{justify-content:flex-start!important;align-content:start!important;padding-top:10px}

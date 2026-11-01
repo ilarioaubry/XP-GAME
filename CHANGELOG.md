@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 01/11/2026
+- « Période terminée, ta situation a changé ? » : les 4 choix tiennent dans la largeur (le 4e sortait de l'écran), carte standard sans cadre doré, icônes alignées.
 - Journal : chaque repas a un fond flouté qui montre son moment (aube pour le petit-déj, ciel bleu pour le déjeuner, fin d'après-midi pour le goûter, soir étoilé et lune pour le dîner).
 - Assiette : aliments en rangées qui glissent, une par ligne (pain → classiques → atypiques ; viande et œuf → végétal → de la mer). Nouveaux : frites, sandwich, saumon, falafel, ail ; sauces césar et curry coco ; « Crème fraîche ».
 - Après l'assiette : dessert (glace, yaourt, fruit, chocolat), où (maison, restaurant, fast-food, sur le pouce). Cuisiné maison → « Cuisiné pour qui ? » : +5 XP Ami ou Famille et du lien.
