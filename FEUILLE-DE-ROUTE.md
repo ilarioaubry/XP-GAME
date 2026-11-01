@@ -283,6 +283,24 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] N.10 (01/11) Habitude alimentaire (dans J'ai… / Ma vie)
 - [x] N.11 (01/11) Inviter des amis chez soi (action)
 
+## Panneau + (analyse du 01/11/2026, à choisir)
+
+### Autres façons de faire (K)
+- [ ] K.1 Accueil « Mes actions » : 8 tuiles fréquentes + suggestions selon l'heure en haut, catégories repliées sous « Tout parcourir »
+- [ ] K.2 Noter en un toucher : l'option se note tout de suite avec les réglages de la dernière fois (durée, personnes) ; « Préciser » dans la barre Annuler pour corriger
+- [ ] K.3 Phrase libre dans la recherche : « 30 min vélo avec Tom » → action, durée et personne reconnues, un bouton « Noter »
+- [ ] K.4 Catégorie → options directement (les familles deviennent des intertitres dans une liste), un niveau de moins
+
+### Améliorations de l'existant (L)
+- [ ] L.1 Durée et « Avec qui ? » sur un seul écran, bouton « Fait · +12 XP » en bas
+- [ ] L.2 Se souvenir de la dernière durée / quantité / personnes par action (présélectionnées)
+- [ ] L.3 Hier / Demain : retirer les onglets du haut ; « C'était hier » et « Plus tard » en bas de l'écran de précision
+- [ ] L.4 Sélection = bordure or (plus de tuile pleine colorée) ; plus de bordure gauche colorée sur les familles et options ; retirer le motif de fond et la bande orange
+- [ ] L.5 Récents en carrousel de tuiles (icône + nom), sans « il y a N j »
+- [ ] L.6 Options : pas d'icône répétée quand c'est la même que la famille ; noms en entier sur 2 colonnes
+- [ ] L.7 Libellés : « Force » → « Sport » ; icône Travail sans croix rouge ; « Divertissement » → « Loisirs »
+- [ ] L.8 « Aujourd'hui » dans le panneau : la liste des actions notées du jour, repliée, avec Annuler
+
 ## Fait à la demande (hors phases)
 
 - [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
