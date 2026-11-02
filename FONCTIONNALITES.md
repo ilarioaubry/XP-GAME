@@ -78,6 +78,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Fonctionnalité | Ce qu'elle fait | Statut |
 |---|---|---|
 | Relations | Liste des proches, niveaux de lien (barre 18 px), groupes | active |
+| Page d'un groupe | En lecture (vus il y a N jours, membres, actions, historique en clair, prochaine sortie) ; Modifier pour le nom, les membres, la couleur, la suppression | active |
 | Recherche dans Proches | Champ « Chercher un proche » (à partir de 8 proches), filtre Famille et Amis | active |
 | Fiche d'un proche | En lecture : cadre, relation (une fois), niveau de lien, anniversaire, « vus il y a N jours », actions (nouvelles, appeler, se voir), à savoir (univers, talents, groupes, idée cadeau), historique en clair ; bouton Modifier pour tout changer (relation, centres d'intérêt, anniversaire, rappel, fond, suppression) ; « Vit avec moi » se règle dans Ma vie | active |
 | Groupes | Photo de classe, actions de groupe | active |

@@ -313,7 +313,7 @@ function renderRemind(){
 const FG_COL=["#ff7aa8","#e0447a","#f08a2a","#f2c94c","#5fae4f","#4fb3b3","#2a8fd6","#9b5de5"];
 const FG_ACT=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:40}];
 const fgCol=g=>g.c||FG_COL[0];
-function openGroup(id,edit){profName="@g:"+id;showView("p");if(edit)setTimeout(()=>{const i=$("gName");if(i){i.focus();i.select()}},150)}
+function openGroup(id,edit){profName="@g:"+id;gEdit=!!edit;showView("p");if(edit)setTimeout(()=>{const i=$("gName");if(i){i.focus();i.select()}},150)}
 function fgAct(g,A,el){const M=fgMembers(g.id);if(!M.length){toast("Ajoute d'abord des membres au groupe");return}
   const o=document.createElement("div");o.className="bpop fgpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.style.setProperty("--gc",fgCol(g));document.body.appendChild(o);const here=new Set(M);
   const close=()=>o.remove();o.onclick=e=>{if(e.target===o)close()};
@@ -322,6 +322,7 @@ function fgAct(g,A,el){const M=fgMembers(g.id);if(!M.length){toast("Ajoute d'abo
     o.querySelector("#fgNo").onclick=close;
     o.querySelector("#fgGo").onclick=ev=>{const G=S.g,per=Math.max(2,Math.round(A.xp/2)),now=Date.now();here.forEach(n=>{S.bonds[n]=(S.bonds[n]||0)+per;S.bondsLast[n]=now});if(!G.fgLast)G.fgLast={};G.fgLast[g.id]=now;
       const q=S.specials.find(x=>x.fg===g.id);if(q&&A.k!=="news"){}close();
+      if(A.k==="meet"&&G.fgNext&&G.fgNext[g.id]&&G.fgNext[g.id].d<=dayKey(now))delete G.fgNext[g.id]; // la sortie prévue a eu lieu
       complete({id:"fg-"+A.k+"-"+g.id,name:A.verb(g.n)+(here.size<M.length?" ("+[...here].join(", ")+")":""),cat:"social",xp:A.xp},el,ev,false,{fgid:g.id,fgw:[...here]});
       toast(`${esc(A.verb(g.n))} <span class="p">+${A.xp} XP</span> · +${per} de lien pour ${here.size} ami${here.size>1?"s":""}`);render();renderProfile(true)}};
   draw()}
@@ -331,26 +332,52 @@ function grpHead(avc){const k=JSON.stringify(avc);if(!__ghC[k]){const H=chHead({
 function grpHeadHTML(n){const P=S.profiles[n]||{};return P.avc?`<img class="cphead" alt="" src="${grpHead(P.avc)}">`:pAv(n)}
 function grpRows(items){const R=[];for(let i=0;i<items.length;i+=4)R.push(items.slice(i,i+4));return R.map(r=>`<div class="cprow">${r.join("")}</div>`).join("")}
 const GRP_ICO={news:"bulle",call:"tel",meet:"duo"};
+let gEdit=false; // page d'un groupe : lecture, ou modification après « Modifier »
+const fgNext=id=>{const o=((S.g&&S.g.fgNext)||{})[id];return o&&o.d&&o.d>=dayKey(Date.now())?o:null};
+const dayTxt=k=>new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+// prochaine sortie du groupe : quand + quoi (plein écran, car champ texte)
+function fgPlan(g,after){if(document.querySelector(".fgplw"))return;const old=fgNext(g.id),w=document.createElement("form");w.className="ui-plein fgplw";w.setAttribute("role","dialog");w.setAttribute("aria-label","Prochaine sortie");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Prochaine sortie</h2></div>
+    <div class="ui-plein__corps"><label class="fgpl"><span>Quand</span><input class="ui-champ" type="date" id="fgplD" min="${dayKey(Date.now())}" value="${old?old.d:""}" required></label>
+    <label class="fgpl"><span>Quoi</span><input class="ui-champ" id="fgplT" maxlength="60" placeholder="Ex. bowling, resto, ciné" autocomplete="off"></label>
+    ${old?`<button type="button" class="ui-btn ui-btn--icone fgplx" aria-label="Retirer la sortie" title="Retirer">${ICO("trash",24)}</button>`:""}</div>
+    <div class="ui-plein__bas"><button type="button" class="ui-btn fgplno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">Enregistrer</button></div>`;
+  document.body.appendChild(w);$("fgplT").value=old?old.t||"":"";
+  const close=()=>{w.remove();if(after)after()};w.querySelector(".fgplno").onclick=()=>w.remove();
+  const x=w.querySelector(".fgplx");if(x)x.onclick=()=>{w.remove();undoAfter("Sortie retirée",()=>{delete S.g.fgNext[g.id];save();if(after)after()})};
+  w.onsubmit=e=>{e.preventDefault();const d=$("fgplD").value;if(!d)return;if(!S.g.fgNext)S.g.fgNext={};S.g.fgNext[g.id]={d,t:$("fgplT").value.trim().slice(0,60)};save();close()}}
 function renderGroupPage(id){const root=$("prof"),g=fgList().find(x=>x.id===id);if(!g){profName=null;showView("r");return}
-  const M=fgMembers(id),G=S.g,last=(G.fgLast||{})[id],d=last?Math.floor((Date.now()-last)/864e5):null,hist=S.log.filter(e=>e.fgid===id).slice(-8).reverse(),col=fgCol(g);
-  root.style.setProperty("--h",col);
-  const HI=[[/vu|voir|les voir/i,"duo"],[/appel/i,"tel"],[/nouvelles|message/i,"bulle"]];
-  const grp=[];hist.forEach(e=>{const t=new Date(e.t).toLocaleDateString("fr-FR",{day:"numeric",month:"short"}).replace(/\.$/,""),k=t+"|"+e.name,l=grp[grp.length-1];if(l&&l.k===k){l.n++;l.x+=e.xp||0}else grp.push({k,t,nm:e.name,n:1,x:e.xp||0})});
+  const M=fgMembers(id),G=S.g,col=fgCol(g),edit=gEdit;
+  root.style.setProperty("--h",col);root.classList.toggle("pedit",edit);
+  let seen=0;(S.log||[]).forEach(e=>{if(e&&e.fgid===id&&/^fg-meet-/.test(e.a||"")&&(e.xp||0)>=0)seen=Math.max(seen,e.t||0)});
+  const last=(G.fgLast||{})[id],sd=seen?daysAgo(seen):null,ld=last?daysAgo(last):null;
+  const seenH=`<p class="pfseen grpseen"><b>${seen?"Vus "+agoTxt(sd):"Pas encore vus ensemble"}</b><small>${M.length} membre${M.length>1?"s":""}${last&&ld!==sd?" · dernières nouvelles "+agoTxt(ld):""}</small></p>`;
+  const H=[];S.log.filter(e=>e&&e.fgid===id&&(e.xp||0)>=0).forEach(e=>{const a=e.a||"",k=/-meet-/.test(a)?"meet":/-call-/.test(a)?"call":"news",w=e.fgw||[],t=({meet:"Vus",call:"Appel",news:"Nouvelles"})[k]+(w.length&&w.length<M.length?" · avec "+w.join(", "):""),d=new Date(e.t),day=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short",...(d.getFullYear()!==new Date().getFullYear()?{year:"numeric"}:{})}).replace(/\.$/,""),l=H[H.length-1];
+    if(l&&l.day===day&&l.t===t){l.n++;l.x+=e.xp||0}else H.push({t,k,day,n:1,x:e.xp||0})});H.reverse();const HL=H.slice(0,10);
+  const nx=fgNext(id);
   root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
-  <div class="grpcard" style="--gc:${col}"><div class="grph"><div><span class="grpk">Groupe</span><input class="grpn grpin2" id="gName" maxlength="24" aria-label="Nom du groupe"><small>${M.length} membre${M.length>1?"s":""} · ${d==null?"jamais vus ensemble":d<1?"contactés aujourd'hui":"contactés il y a "+d+" j"}</small></div></div>
-    <div class="cphoto">${grpRows(M.map(n=>`<div class="grpmw"><button type="button" class="grpmb" data-n="${esc(n)}">${grpHeadHTML(n)}<span>${esc(n)}</span></button><button type="button" class="grpx" data-x="${esc(n)}" aria-label="Retirer ${esc(n)}">${ICO("close",12)}</button></div>`).concat([`<button type="button" class="grpadd" id="gAdd" aria-label="Ajouter des membres"><span class="pav">+</span><span>Ajouter</span></button>`]))}</div>
-    <div class="grpcols" id="gCols">${FG_COL.map(c=>`<button type="button" class="grpc${c===col?" on":""}" data-c="${c}" style="--c:${c}" aria-label="Couleur"></button>`).join("")}</div></div>
+  <div class="grpcard" style="--gc:${col}"><div class="grph"><div class="grpht"><span class="grpk">Groupe</span>${edit?`<input class="grpn grpin2" id="gName" maxlength="24" aria-label="Nom du groupe">`:`<b class="grpn grpnv" id="gNameV"></b>`}</div>
+      ${edit?`<button type="button" class="btn primary pfok" id="gDone">Terminé</button>`:`<button type="button" class="me-set" id="gEditB" aria-label="Modifier le groupe" title="Modifier">${ICO("edit",24)}</button>`}</div>
+    ${edit?"":seenH}
+    <div class="cphoto">${grpRows(M.map(n=>edit?`<div class="grpmw"><button type="button" class="grpmb" data-n="${esc(n)}">${grpHeadHTML(n)}<span>${esc(n)}</span></button><button type="button" class="grpx" data-x="${esc(n)}" aria-label="Retirer ${esc(n)}">${ICO("close",12)}</button></div>`:`<div class="grpmw"><button type="button" class="grpmb" data-n="${esc(n)}">${grpHeadHTML(n)}<span>${esc(n)}</span></button></div>`).concat(edit?[`<button type="button" class="grpadd" id="gAdd" aria-label="Ajouter des membres"><span class="pav">+</span><span>Ajouter</span></button>`]:[]))}</div>
+    ${edit?`<div class="grpcols" id="gCols">${FG_COL.map(c=>`<button type="button" class="grpc${c===col?" on":""}" data-c="${c}" style="--c:${c}" aria-label="Couleur"></button>`).join("")}</div>`:""}</div>
+  ${edit?`<div class="pf2del pfend"><button type="button" class="btn delf delic" id="gDel" aria-label="Supprimer le groupe" title="Supprimer le groupe">${ICO("trash",24)}</button><button type="button" class="btn primary pfok" id="gDone2">Terminé</button></div>`:`
+  ${nx?`<button type="button" class="fgnext" id="gPlan"><span class="pfci">${rkSvg("calendrier")}</span><span class="pfht"><small>Prochaine sortie</small><b></b></span></button>`:`<button type="button" class="ui-btn ui-btn--ajout fgnew" id="gPlan">Prévoir la prochaine sortie</button>`}
   <div class="ract ractz" id="gActs"></div>
-  ${grp.length?`<div class="set-card"><h3>Historique</h3><div class="histviz">${grp.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${rkSvg((HI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.t)}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")}</div></div>`:""}
-  <div class="pf2del"><button type="button" class="btn delf delic" id="gDel" aria-label="Supprimer le groupe" title="Supprimer le groupe">${ICO("trash",24)}</button></div>`;
-  $("pBack").onclick=()=>{profName=null;showView("r")};
-  const nm=$("gName");nm.value=g.n;nm.onchange=()=>{const v=nm.value.trim();if(v){g.n=v;save();renderRelations()}else nm.value=g.n};
+  <section class="set-card pf2 pfv"><h3>Historique</h3>${HL.length?`<ul class="pfh">${HL.map(o=>`<li><span class="pfhi">${rkSvg(GRP_ICO[o.k])}</span><span class="pfht"><b></b><small>${esc(o.day)}${o.n>1?" · "+o.n+" fois":""}</small></span>${o.x?`<em>+${o.x} XP</em>`:""}</li>`).join("")}</ul>`:`<p class="vide">Aucun moment noté pour l'instant.</p>`}</section>`}`;
+  $("pBack").onclick=()=>{profName=null;gEdit=false;showView("r")};
   root.querySelectorAll(".grpmb").forEach(b=>b.onclick=()=>openProfile(b.dataset.n));
+  if(!edit){$("gNameV").textContent=g.n;root.querySelectorAll(".pfh .pfht b").forEach((b,i)=>b.textContent=HL[i].t);
+    if(nx)root.querySelector("#gPlan b").textContent=dayTxt(nx.d).replace(/^./,c=>c.toUpperCase())+(nx.t?" · "+nx.t:"");
+    $("gPlan").onclick=()=>fgPlan(g,()=>renderGroupPage(id));
+    $("gEditB").onclick=()=>{gEdit=true;renderGroupPage(id);SCR.scrollTo({top:0})};
+    FG_ACT.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span class="rai">${rkSvg(GRP_ICO[A.k])}</span><span>${A.label}</span><b>+${A.xp} XP</b>`;b.style.setProperty("--gc",col);b.onclick=ev=>fgAct(g,A,b,ev);$("gActs").appendChild(b)});return}
+  const nm=$("gName");nm.value=g.n;nm.onchange=()=>{const v=nm.value.trim();if(v){g.n=v;save();renderRelations()}else nm.value=g.n};
+  const done=()=>{nm.dispatchEvent(new Event("change"));gEdit=false;renderGroupPage(id);SCR.scrollTo({top:0})};$("gDone").onclick=done;$("gDone2").onclick=done;
   root.querySelectorAll(".grpx").forEach(b=>b.onclick=()=>{const P=S.profiles[b.dataset.x];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id);save();renderGroupPage(id);renderRelations()});
   root.querySelectorAll(".grpc").forEach(b=>b.onclick=()=>{g.c=b.dataset.c;save();renderGroupPage(id);renderRelations()});
   $("gAdd").onclick=()=>{nm.dispatchEvent(new Event("change"));fgOpen(id,()=>renderGroupPage(id))};
-  FG_ACT.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span class="rai">${rkSvg(GRP_ICO[A.k])}</span><span>${A.label}</span><b>+${A.xp} XP</b>`;b.style.setProperty("--gc",col);b.onclick=ev=>fgAct(g,A,b,ev);$("gActs").appendChild(b)});
-  $("gDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;showView("r");renderRelations()})}
+  $("gDel").onclick=()=>undoAfter("Groupe « "+g.n+" » supprimé",()=>{S.g.fgr=fgList().filter(x=>x.id!==id);relNames().forEach(n=>{const P=S.profiles[n];if(P&&P.grp)P.grp=P.grp.filter(x=>x!==id)});save();profName=null;gEdit=false;showView("r");renderRelations()})}
 function fgList(){const G=S.g;if(!G)return[];if(!Array.isArray(G.fgr))G.fgr=[];return G.fgr}
 function fgAdd(n){const g={id:"g"+Date.now().toString(36),n:n.slice(0,24)};fgList().push(g);return g}
 function fgMembers(id){return relNames().filter(n=>((S.profiles[n]||{}).grp||[]).includes(id))}

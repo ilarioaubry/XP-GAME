@@ -98,6 +98,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `surDone`, `surLast` | 02, 23, 29 | Quête surprise du jour | active |
 | `orgDone`, `secDone` | 23, 29, 26 | Quête d'organisation du jour ; quêtes secrètes faites | active |
 | `fgDone`, `fgLast`, `fgQ`, `fgr` | 06, 23, 26, 28, 29 | Quêtes de groupe d'amis, groupes | active |
+| `fgNext` | 28 | Prochaine sortie d'un groupe : `{idGroupe:{d:"AAAA-MM-JJ",t:"quoi"}}` ; retirée quand on valide « Les voir » ce jour-là ou après, cachée une fois la date passée (ajout du 02/11) | active |
 | `grpNo`, `gfNo` | 29, 09 | Personnes / cadeaux écartés des quêtes | active |
 | `gfs` | 27 | Idées et cadeaux offerts par proche | active |
 | `prj` | 02, 16, 18, 19, 26 | Projets (étapes) | active |

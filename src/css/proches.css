@@ -431,3 +431,13 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 #relQ.relq[hidden]{display:none}
 html body #relList>li[hidden]{display:none!important}
 #relList>li.relnone{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:12px 0;list-style:none}
+/* 3.4 page d'un groupe : lecture, prochaine sortie */
+#prof .grpnv{display:block;margin:0;font-family:var(--f-pixel);font-size:30px;line-height:1.1;text-transform:uppercase;letter-spacing:.03em;color:var(--ink);overflow-wrap:anywhere}
+#prof .grpcard .grpk{color:var(--gc)}
+#prof .grpseen{text-align:left;margin:0}
+#prof .fgnext{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:10px;width:100%;min-height:56px;margin:0 0 12px;padding:8px 12px;text-align:left;background:var(--surface);border:2px solid rgba(255,255,255,.17);color:var(--ink);font:inherit}
+#prof .fgnext b{font-size:13px}
+#prof .fgnew{width:100%;margin:0 0 12px}
+.fgplw .fgpl{display:grid;gap:6px;margin:0 0 14px;font-size:13px;font-weight:700;color:var(--muted)}
+.fgplw .fgplx{margin:6px auto 0;display:grid}
+html body #prof .grpcard .grph .me-set{position:static!important;width:44px;height:44px}
