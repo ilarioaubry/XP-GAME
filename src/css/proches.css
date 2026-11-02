@@ -403,3 +403,26 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .grpcard .grpin2:focus{border-bottom-color:var(--gc)!important;outline:0}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx{width:16px!important;height:16px!important;min-width:0!important;min-height:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx svg{width:8px!important;height:8px!important}
+/* 3.1 fiche d'un proche en lecture */
+#prof .pfseen{margin:10px 0 0;display:grid;gap:2px;text-align:center}
+#prof .pfseen b{font-size:15px;color:var(--ink)}
+#prof .pfseen small{font-size:11px;color:var(--muted)}
+#prof .pfv h3{margin:0 0 10px}
+#prof .pfchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+#prof .pfchip{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 10px 4px 6px;background:var(--surface-2);border:1px solid rgba(255,255,255,.17);font-size:13px;font-weight:700;color:var(--ink)}
+#prof .pfci svg{width:24px;height:24px;display:block}
+#prof .pfgift{display:flex;align-items:center;gap:10px;margin:0}
+#prof .pfgift small{display:block;font-size:11px;color:var(--muted)}
+#prof .pfgift b{font-size:13px;color:var(--ink)}
+#prof .pfh{list-style:none;margin:0;padding:0;display:grid}
+#prof .pfh li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 0}
+#prof .pfh li+li{border-top:2px dotted rgba(255,255,255,.12)}
+#prof .pfhi svg{width:24px;height:24px;display:block}
+#prof .pfht{display:grid;min-width:0}
+#prof .pfht b{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#prof .pfht small{font-size:11px;color:var(--muted)}
+#prof .pfh em{font-style:normal;font-family:var(--f-pixel);font-size:15px;color:var(--gold)}
+#prof .pfv .vide{text-align:center;color:var(--muted);font-size:13px;margin:0}
+#prof .pfend{display:flex;gap:10px;justify-content:center;align-items:center}
+#prof .pfend .pfok{flex:1;max-width:240px;min-height:44px}
+#prof .fp-btns .pfok{min-height:44px;padding:0 14px}

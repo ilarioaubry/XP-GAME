@@ -4213,7 +4213,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 41cdbd8</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9f9f703</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -12569,7 +12569,22 @@ document.addEventListener("click",e=>{const t=e.target;if(!t.closest)return;cons
 
 function cbWho(t){return[...S.friends,...S.family].filter(n=>n&&t.includes(n)).sort((a,b)=>b.length-a.length)[0]||null}
 function pAv(n,cls){const pc=picOf(n);return`<span class="pav ${cls||""}" style="--h:hsl(${hueOf(n)} 55% 50%)">${pc?`<img src="${pc}" alt="">`:esc((n[0]||"?").toUpperCase())}</span>`}
-function openProfile(n){profName=n;showView("p")}
+let pEdit=false; // fiche d'un proche : lecture, ou modification après « Modifier »
+function openProfile(n){profName=n;pEdit=false;showView("p")}
+const agoTxt=d=>d<1?"aujourd'hui":d===1?"hier":"il y a "+d+" jours";
+const daysAgo=t=>{const a=new Date(t),b=new Date();a.setHours(12,0,0,0);b.setHours(12,0,0,0);return Math.round((b-a)/864e5)}; // en jours de calendrier
+// dernière fois vus en vrai : seul, en groupe, ou à côté d'une action (« Avec qui ? »)
+function seenOf(n){let t=0;(S.log||[]).forEach(e=>{if(!e||(e.xp||0)<0)return;const a=e.a||"";if((e.who===n&&(/^rel-meet-/.test(a)||/^Voir /.test(e.name||"")))||((e.fgw||[]).includes(n)&&/^fg-meet-/.test(a))||(e.withp||[]).includes(n))t=Math.max(t,e.t||0)});return t}
+// historique : ce qui a été fait ensemble, en clair
+function profHist(n){const L=[];
+  (S.log||[]).forEach(e=>{if(!e||(e.xp||0)<0)return;const fg=(e.fgw||[]).includes(n),wp=(e.withp||[]).includes(n);if(!(e.who===n&&(e.rel||e.fr))&&!fg&&!wp)return;
+    const a=e.a||"",nm=e.name||"",k=/-meet-/.test(a)||/^Voir /.test(nm)?"meet":/-call-/.test(a)||/^Appel/i.test(nm)?"call":/-news-/.test(a)||/nouvelles/i.test(nm)?"news":"do";
+    let t;if(fg){const g=fgList().find(x=>x.id===e.fgid);t=({meet:"Vus avec ",call:"Appel avec ",news:"Nouvelles avec "}[k]||"Avec ")+(g?g.n:"le groupe")}
+    else if(wp){const o=e.withp.filter(x=>x!==n);t=nm.replace(/\s+avec\s+.*$/,"")+(o.length?" · avec "+o.join(", "):"")}
+    else t=({meet:"Vus en vrai",call:"Appel",news:"Nouvelles"}[k])||nm;
+    const d=new Date(e.t),day=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short",...(d.getFullYear()!==new Date().getFullYear()?{year:"numeric"}:{})}),l=L[L.length-1];
+    if(l&&l.day===day&&l.t===t){l.n++;l.x+=e.xp||0}else L.push({t,k:wp?"meet":k,day,n:1,x:e.xp||0})});
+  return L.reverse().slice(0,10)}
 const MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 const picOf=n=>{const P=S.profiles[n]||{};if(P.avc)return avPicURL(P.avc);return P.pic||PICS[n.toLowerCase()]||null};
 function nextBirthday(bd){
@@ -12659,18 +12674,22 @@ function renderProfileBase(force){
   const when=last==null?"Pas encore de nouvelles":days<1?"Nouvelles aujourd'hui":days===1?"Dernières nouvelles hier":`Dernières nouvelles il y a ${days} j`;
   const fam=isFam(n),RL=fam?REL_FAM:REL_FR,rk=relOf(n),ri=relInfo(n),st=statusOf(n);
   root.style.setProperty("--h",`hsl(${hueOf(n)} 55% 50%)`);
+  const seen=seenOf(n),sd=seen?daysAgo(seen):null,ld=last?daysAgo(last):null,pf=((S.g&&S.g.vie&&S.g.vie.pf)||{})[n]||0,sub=[];
+  if(last&&ld!==sd)sub.push("Dernières nouvelles "+agoTxt(ld));
+  if(pf){const lc=last?Math.max(0,pf-ld):0;sub.push(lc?"rappel dans "+lc+" jour"+(lc>1?"s":""):"rappel : c'est le moment")}
+  const seenH=`<p class="pfseen"><b>${seen?"Vus "+agoTxt(sd):"Pas encore vus ensemble"}</b>${sub.length?`<small>${esc(sub.join(" · ").replace(/^./,c=>c.toUpperCase()))}</small>`:""}</p>`;
+  root.classList.toggle("pedit",pEdit);
+  if(!pEdit){renderProfileView(n,P,bi,ri,st,seenH);return}
   root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF"><i class="fp-veil" aria-hidden="true"></i>
     <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
-      <div class="fp-btns"><button type="button" class="me-set" id="pBgBtn" aria-label="Changer le fond" aria-expanded="false" title="Fond"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.3-1.7-.4-1 .2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button></div></div>
+      <div class="fp-btns"><button type="button" class="btn primary pfok" id="pDone">Terminé</button><button type="button" class="me-set" id="pBgBtn" aria-label="Changer le fond" aria-expanded="false" title="Fond"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.3-1.7-.4-1 .2-2.3 1.4-2.3H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg></button></div></div>
     <div class="fp-bgpick" id="pBgPick" hidden></div>
     <div class="pf-body fp-body"><div class="pf-side"><div class="p-pic" id="pPic"></div>${P.pic?`<button type="button" class="lnk" id="pPicDel">Retirer la photo</button>`:""}</div></div>
-    <span class="ctitle fp-st">${bondTitle(bi.l)}</span><div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar" title="${when}"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
+    <div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar" title="${when}"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
     <div class="fp-bd" id="pBdBox"></div>
     <div class="pf2bded" id="pBdEd" hidden></div>
-    <small class="fp-when">${when}</small>
   </div>
-  <div class="ract" id="pActs"></div>
   <section class="set-card pf2" id="pLien"><h3>Lien</h3>
     <div class="fjobs fpris" id="pRel">${RL.map(([k,l,ic])=>`<button type="button" data-rel="${k}" aria-pressed="${rk===k}"><span class="fti">${rkSvg(ic)}</span><span>${esc(l)}</span></button>`).join("")}</div></section>
   <section class="set-card pf2" id="pTags"><h3>Ses univers</h3><div class="pf2sug" id="pSug" hidden></div><div class="tagrow" id="tgTypes"></div>
@@ -12679,13 +12698,11 @@ function renderProfileBase(force){
   <section class="set-card pf2" id="pGroups"><h3>Groupes</h3><div class="tagrow" id="pGrp"></div>
     <form class="tagadd" id="pGrpForm"><input id="pGrpNew" maxlength="24" placeholder="Nouveau groupe…" aria-label="Nouveau groupe"><button class="btn" type="submit">Créer</button></form></section>
   <label class="pf2gift"><span class="fti">${rkSvg("cadeau")}</span><span class="pf2t"><b>Idée cadeau</b><input id="pGift" maxlength="120" placeholder="ex. un livre de photo" aria-label="Idée cadeau"></span></label>
-  <div class="set-card" id="pHistCard" hidden><h3>Historique</h3><ul class="hist" id="pHist"></ul></div>
-  <div class="pf2del" id="delCard"><button type="button" class="btn delf delic" id="delBtn" aria-label="${fam?"Retirer de mes proches":"Supprimer l'ami"}" title="${fam?"Retirer de mes proches":"Supprimer l'ami"}">${ICO("trash",24)}</button></div>`;
+  <div class="pf2del pfend" id="delCard"><button type="button" class="btn delf delic" id="delBtn" aria-label="${fam?"Retirer de mes proches":"Supprimer l'ami"}" title="${fam?"Retirer de mes proches":"Supprimer l'ami"}">${ICO("trash",24)}</button><button type="button" class="btn primary pfok" id="pDone2">Terminé</button></div>`;
+  const done=()=>{pEdit=false;renderProfile(true);SCR.scrollTo({top:0})};$("pDone").onclick=done;$("pDone2").onclick=done;
   $("pName").textContent=n;
   try{fpExtras(n,P)}catch(e){xpErr(e)} // tôt : le bouton Fond marche même si une partie plus bas plante
   $("pGift").value=P.gifts||"";$("pGift").onchange=()=>{const v=$("pGift").value.trim();if(v)P.gifts=v;else delete P.gifts;save()};
-  {const items=S.log.filter(e=>e.who===n&&(e.rel||e.fr)).slice(-8).reverse(),ul=$("pHist");$("pHistCard").hidden=!items.length;
-   items.forEach(e=>{const d=new Date(e.t),li=document.createElement("li"),t=document.createElement("time"),nm=document.createElement("span"),x=document.createElement("span");t.textContent=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});nm.textContent=e.name;x.className="x";x.textContent="+"+e.xp;li.append(t,nm,x);ul.appendChild(li)})}
   // suppression immédiate, avec « Annuler » (standard) ; marche aussi pour la famille
   $("delBtn").onclick=()=>undoAfter(n+" retiré de tes proches",()=>removeFriend(n,true));
   const pic=picOf(n),pp=$("pPic");
@@ -12693,7 +12710,6 @@ function renderProfileBase(force){
   $("pBack").onclick=()=>showView("r");
   pp.classList.add("editable");pp.classList.toggle("px",!!P.avc);pp.tabIndex=0;pp.setAttribute("role","button");pp.setAttribute("aria-label","Créer l'avatar de "+n);pp.onclick=()=>openAvc(n);pp.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openAvc(n)}};
   const pd=$("pPicDel");if(pd)pd.onclick=()=>{delete P.pic;delete P.avc;save();renderProfile(true);renderRelations()};
-  REL_ACTIONS.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span>${A.label}</span><b>+${A.xp} XP</b>`;b.onclick=ev=>bondAction(n,A,b,ev);$("pActs").appendChild(b)});
   // lien (le foyer se règle dans Ma vie)
   $("pRel").querySelectorAll("[data-rel]").forEach(b=>b.onclick=()=>{const k=b.dataset.rel;setRel(n,fam||relOf(n)!==k?k:null);renderProfile(true);renderRelations()});
   // univers & talents
@@ -12717,6 +12733,31 @@ function renderProfileBase(force){
    draw();$("pGrpForm").onsubmit=e=>{e.preventDefault();const v=$("pGrpNew").value.trim();if(!v)return;const g=fgAdd(v);g.c=FG_COL[(fgList().length-1)%FG_COL.length];(P.grp||(P.grp=[])).push(g.id);$("pGrpNew").value="";save();draw();renderRelations()}}
   try{fpExtras(n,P)}catch(e){xpErr(e)}
 }
+// fiche en lecture : ce qu'on sait, ce qu'on a fait ; tout se change via « Modifier »
+function renderProfileView(n,P,bi,ri,st,seenH){const root=$("prof"),nb=nextBirthday(P.bd),G=fgList().filter(g=>(P.grp||[]).includes(g.id)),T=[...(P.types||[]),...(P.talents||[])],H=profHist(n),pic=picOf(n);
+  const HI={meet:"duo",call:"tel",news:"bulle",do:"duo"};
+  root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
+  <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF"><i class="fp-veil" aria-hidden="true"></i>
+    <div class="pf-head"><div class="pf-name"><h2 id="pName" class="fp-name"></h2><span class="fp-badges"><span class="rk" title="Lien"><i>${rkSvg(ri.ic)}</i>${esc(ri.l)}</span>${st?`<span class="rk st" title="Statut"><i>${rkSvg(st.ic)}</i>${st.l}</span>`:""}</span></div>
+      <div class="fp-btns"><button type="button" class="me-set" id="pEditB" aria-label="Modifier la fiche de ${esc(n)}" title="Modifier">${ICO("edit",24)}</button></div></div>
+    <div class="pf-body fp-body"><div class="pf-side"><div class="p-pic${P.avc?" px":""}" id="pPic">${pic?`<img src="${pic}" alt="">`:esc(n[0].toUpperCase())}</div></div></div>
+    <div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
+    ${nb?`<div class="fp-bd${nb.days===0?" now":""}" id="pBdBox"><span class="fpbi">${BD_ICON}</span><span class="fpbt"><b>${P.bd.d} ${MONTHS[P.bd.m-1]}${P.bd.y?" "+P.bd.y:""}</b><small>${nb.days===0?"C'est aujourd'hui !":nb.days===1?"Demain":"Dans "+nb.days+" jours"}${nb.age?" · "+nb.age+" ans":""}</small></span></div>`:""}
+    ${seenH}
+  </div>
+  <div class="ract" id="pActs"></div>
+  ${T.length||G.length||P.gifts?`<section class="set-card pf2 pfv"><h3>À savoir</h3>
+    ${T.length?`<div class="pfchips">${T.map(x=>`<span class="pfchip"><span class="pfci">${rkSvg(tgIc(x))}</span><span></span></span>`).join("")}</div>`:""}
+    ${G.length?`<div class="pfchips">${G.map(g=>`<span class="pfchip"><span class="pfci">${rkSvg("duo")}</span><span></span></span>`).join("")}</div>`:""}
+    ${P.gifts?`<p class="pfgift"><span class="pfci">${rkSvg("cadeau")}</span><span><small>Idée cadeau</small><b></b></span></p>`:""}</section>`:""}
+  <section class="set-card pf2 pfv" id="pHistCard"><h3>Historique</h3>${H.length?`<ul class="pfh">${H.map(o=>`<li><span class="pfhi">${rkSvg(HI[o.k])}</span><span class="pfht"><b></b><small>${esc(o.day.replace(/\.$/,""))}${o.n>1?" · "+o.n+" fois":""}</small></span>${o.x?`<em>+${o.x} XP</em>`:""}</li>`).join("")}</ul>`:`<p class="vide">Aucun moment noté pour l'instant.</p>`}</section>`;
+  $("pName").textContent=n;
+  {const ch=root.querySelectorAll(".pfchip span:last-child"),lab=[...T,...G.map(g=>g.n)];ch.forEach((s,i)=>s.textContent=lab[i]||"")}
+  {const g=root.querySelector(".pfgift b");if(g)g.textContent=P.gifts}
+  root.querySelectorAll(".pfh .pfht b").forEach((b,i)=>b.textContent=H[i].t);
+  $("pBack").onclick=()=>showView("r");
+  $("pEditB").onclick=()=>{pEdit=true;renderProfile(true);SCR.scrollTo({top:0})};
+  REL_ACTIONS.forEach(A=>{const b=document.createElement("button");b.type="button";b.className="btn primary";b.innerHTML=`<span>${A.label}</span><b>+${A.xp} XP</b>`;b.onclick=ev=>bondAction(n,A,b,ev);$("pActs").appendChild(b)})}
 const TALENTS_UI=["Dessin","Écriture","Code","Cuisine","Photo","Chant","Humour","Bricolage","Danse"];
 const FP_BG=["flames","stars","notes","neon","goldaura","lotus","hello"];
 const BD_ICON=`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 21h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" fill="currentColor"/><path d="M4 16c1.5 1 2.5 1 4 0s2.5-1 4 0 2.5 1 4 0 2.5-1 4 0" fill="none" stroke="var(--surface)" stroke-width="1.6"/><path d="M12 12V8" stroke="currentColor" stroke-width="2"/><path d="M12 3c1.2 1.4 1.2 2.6 0 3.6-1.2-1-1.2-2.2 0-3.6z" fill="currentColor"/></svg>`;
@@ -14691,6 +14732,29 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .grpcard .grpin2:focus{border-bottom-color:var(--gc)!important;outline:0}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx{width:16px!important;height:16px!important;min-width:0!important;min-height:0!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .cphoto .grpx svg{width:8px!important;height:8px!important}
+/* 3.1 fiche d'un proche en lecture */
+#prof .pfseen{margin:10px 0 0;display:grid;gap:2px;text-align:center}
+#prof .pfseen b{font-size:15px;color:var(--ink)}
+#prof .pfseen small{font-size:11px;color:var(--muted)}
+#prof .pfv h3{margin:0 0 10px}
+#prof .pfchips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+#prof .pfchip{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 10px 4px 6px;background:var(--surface-2);border:1px solid rgba(255,255,255,.17);font-size:13px;font-weight:700;color:var(--ink)}
+#prof .pfci svg{width:24px;height:24px;display:block}
+#prof .pfgift{display:flex;align-items:center;gap:10px;margin:0}
+#prof .pfgift small{display:block;font-size:11px;color:var(--muted)}
+#prof .pfgift b{font-size:13px;color:var(--ink)}
+#prof .pfh{list-style:none;margin:0;padding:0;display:grid}
+#prof .pfh li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 0}
+#prof .pfh li+li{border-top:2px dotted rgba(255,255,255,.12)}
+#prof .pfhi svg{width:24px;height:24px;display:block}
+#prof .pfht{display:grid;min-width:0}
+#prof .pfht b{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#prof .pfht small{font-size:11px;color:var(--muted)}
+#prof .pfh em{font-style:normal;font-family:var(--f-pixel);font-size:15px;color:var(--gold)}
+#prof .pfv .vide{text-align:center;color:var(--muted);font-size:13px;margin:0}
+#prof .pfend{display:flex;gap:10px;justify-content:center;align-items:center}
+#prof .pfend .pfok{flex:1;max-width:240px;min-height:44px}
+#prof .fp-btns .pfok{min-height:44px;padding:0 14px}
 </style>
 <style id="z-moi">/* — venues de base.css et composants.css (2.8, 02/11) : règles qui ne servent qu'à Moi — */
 .hmscene{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#000}
@@ -16864,7 +16928,7 @@ try{DQ_K.bd=["Anniversaire","#e0447a",'<path d="M4 21h16M5 21v-7h14v7" fill="non
 // Profil d'un proche : « Me rappeler de prendre des nouvelles »
 const RF=[[0,"Non"],[7,"Semaine"],[14,"2 sem."],[30,"Mois"],[90,"3 mois"]];
 function profRemind(){const root=document.getElementById("prof");if(!root||typeof profName==="undefined"||!profName||String(profName).startsWith("@g:")||!S||!S.g)return;
-  const card=document.getElementById("pCardF");if(!card)return;const v=(S.g.vie&&S.g.vie.pf)||{},cur=v[profName]||0;
+  const card=document.getElementById("pCardF");if(!card)return;if(!pEdit){root.querySelectorAll(".premind").forEach(x=>x.remove());return}const v=(S.g.vie&&S.g.vie.pf)||{},cur=v[profName]||0;
   let el=root.querySelector(".premind");if(el&&el.dataset.n===profName&&+el.dataset.v===cur)return;if(el)el.remove();
   el=document.createElement("div");el.className="premind";el.dataset.n=profName;el.dataset.v=cur;
   el.innerHTML=remindViz(el,profName,cur);
@@ -16876,12 +16940,8 @@ try{RKI.avion=["................",".......oo.......","......owWo......","......o
 const vI=k=>{try{return rkSvg(k)}catch(e){return""}};
 const TAGI=[[/geek|jeu|gamer/i,"manette"],[/cin[ée]/i,"clap"],[/musi|chant|rap/i,"micro"],[/sport|foot|basket/i,"halteres"],[/art|dessin|peint/i,"pinceau"],[/voyag/i,"avion"],[/gourm|cuisi/i,"repas"],[/f[êe]tard|f[êe]te/i,"cocktail"],[/intello|lect|livre/i,"lire"],[/nature|jardin/i,"plante"],[/danse/i,"danse"],[/humour|blague/i,"bulle"],[/photo/i,"photo"],[/brico/i,"ciseaux"],[/[ée]coute|conseil/i,"coeur"]];
 const tagIc=t=>(TAGI.find(([r])=>r.test(t))||[0,"etoile"])[1];
-const HISTI=[[/vu|voir|en vrai/i,"duo"],[/appel/i,"tel"],[/nouvelles|message|[ée]crire/i,"bulle"],[/anniv/i,"cake"],[/cadeau/i,"cake"]];
 function profViz(){const root=document.getElementById("prof");if(!root||root.hidden||!root.offsetHeight)return;
-  const acts=root.querySelector("#pActs");if(acts&&!acts.dataset.vz){acts.dataset.vz=1;acts.classList.add("ractz");acts.querySelectorAll("button").forEach(b=>{const t=b.textContent;if(/appel|vrai/i.test(t))b.addEventListener("click",()=>{const n=profName;setTimeout(()=>{try{kwAsk([n])}catch(e){}},2800)});b.insertAdjacentHTML("afterbegin",`<span class="rai">${vI(/appel/i.test(t)?"tel":/vrai/i.test(t)?"duo":"bulle")}</span>`)})}
-  const ul=root.querySelector("#pHist");if(ul){const sig=ul.innerText;let hv=root.querySelector(".histviz");if(!hv||hv.dataset.s!==sig){if(!hv){hv=document.createElement("div");hv.className="histviz";ul.after(hv)}hv.dataset.s=sig;
-    const L=[];ul.querySelectorAll("li").forEach(li=>{const tm=(li.querySelector("time")||{}).textContent||"",nm=(li.querySelectorAll("span")[0]||{}).textContent||"",x=(li.querySelector(".x")||{}).textContent||"";const k=tm+"|"+nm,last=L[L.length-1];if(last&&last.k===k){last.n++;last.x+=parseInt(x)||0}else L.push({k,tm,nm,n:1,x:parseInt(x)||0})});
-    hv.innerHTML=L.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${vI((HISTI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.tm.replace(/\.$/,""))}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")||`<p class="hint vide">Aucun élément pour l'instant</p>`}}}
+  const acts=root.querySelector("#pActs");if(acts&&!acts.dataset.vz){acts.dataset.vz=1;acts.classList.add("ractz");acts.querySelectorAll("button").forEach(b=>{const t=b.textContent;if(/appel|vrai/i.test(t))b.addEventListener("click",()=>{const n=profName;setTimeout(()=>{try{kwAsk([n])}catch(e){}},2800)});b.insertAdjacentHTML("afterbegin",`<span class="rai">${vI(/appel/i.test(t)?"tel":/vrai/i.test(t)?"duo":"bulle")}</span>`)})}}
 function remindViz(el,name,cur){const l=(S.bondsLast||{})[name]||0,d=l?Math.floor((Date.now()-l)/864e5):null;let bar="";
   if(cur){const left=d==null?0:Math.max(0,cur-d),pc=d==null?0:Math.max(0,Math.min(100,left/cur*100)),col=pc>50?"#6ccf5a":pc>20?"#ffd94a":"#e8473a";bar=`<div class="rmg"><i style="width:${pc}%;background:${col}"></i></div><small>${d==null?"Pas encore de nouvelles":left?"Rappel dans "+left+" j":"C'est le moment"}</small>`}
   return`<div class="rmh"><span class="rmi">${vI("cloche")}</span><div class="rmb"><b>Rappel</b>${bar||"<small>Coupé</small>"}</div></div><div class="rmt">${RF.map(([v,lb])=>`<button type="button" data-rf="${v}" aria-pressed="${cur===v}"><i></i><span>${v?({7:"7 j",14:"14 j",30:"1 mois",90:"3 mois"})[v]:"Off"}</span></button>`).join("")}</div>`}

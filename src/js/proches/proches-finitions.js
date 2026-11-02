@@ -65,7 +65,7 @@ try{DQ_K.bd=["Anniversaire","#e0447a",'<path d="M4 21h16M5 21v-7h14v7" fill="non
 // Profil d'un proche : « Me rappeler de prendre des nouvelles »
 const RF=[[0,"Non"],[7,"Semaine"],[14,"2 sem."],[30,"Mois"],[90,"3 mois"]];
 function profRemind(){const root=document.getElementById("prof");if(!root||typeof profName==="undefined"||!profName||String(profName).startsWith("@g:")||!S||!S.g)return;
-  const card=document.getElementById("pCardF");if(!card)return;const v=(S.g.vie&&S.g.vie.pf)||{},cur=v[profName]||0;
+  const card=document.getElementById("pCardF");if(!card)return;if(!pEdit){root.querySelectorAll(".premind").forEach(x=>x.remove());return}const v=(S.g.vie&&S.g.vie.pf)||{},cur=v[profName]||0;
   let el=root.querySelector(".premind");if(el&&el.dataset.n===profName&&+el.dataset.v===cur)return;if(el)el.remove();
   el=document.createElement("div");el.className="premind";el.dataset.n=profName;el.dataset.v=cur;
   el.innerHTML=remindViz(el,profName,cur);
@@ -77,12 +77,8 @@ try{RKI.avion=["................",".......oo.......","......owWo......","......o
 const vI=k=>{try{return rkSvg(k)}catch(e){return""}};
 const TAGI=[[/geek|jeu|gamer/i,"manette"],[/cin[ée]/i,"clap"],[/musi|chant|rap/i,"micro"],[/sport|foot|basket/i,"halteres"],[/art|dessin|peint/i,"pinceau"],[/voyag/i,"avion"],[/gourm|cuisi/i,"repas"],[/f[êe]tard|f[êe]te/i,"cocktail"],[/intello|lect|livre/i,"lire"],[/nature|jardin/i,"plante"],[/danse/i,"danse"],[/humour|blague/i,"bulle"],[/photo/i,"photo"],[/brico/i,"ciseaux"],[/[ée]coute|conseil/i,"coeur"]];
 const tagIc=t=>(TAGI.find(([r])=>r.test(t))||[0,"etoile"])[1];
-const HISTI=[[/vu|voir|en vrai/i,"duo"],[/appel/i,"tel"],[/nouvelles|message|[ée]crire/i,"bulle"],[/anniv/i,"cake"],[/cadeau/i,"cake"]];
 function profViz(){const root=document.getElementById("prof");if(!root||root.hidden||!root.offsetHeight)return;
-  const acts=root.querySelector("#pActs");if(acts&&!acts.dataset.vz){acts.dataset.vz=1;acts.classList.add("ractz");acts.querySelectorAll("button").forEach(b=>{const t=b.textContent;if(/appel|vrai/i.test(t))b.addEventListener("click",()=>{const n=profName;setTimeout(()=>{try{kwAsk([n])}catch(e){}},2800)});b.insertAdjacentHTML("afterbegin",`<span class="rai">${vI(/appel/i.test(t)?"tel":/vrai/i.test(t)?"duo":"bulle")}</span>`)})}
-  const ul=root.querySelector("#pHist");if(ul){const sig=ul.innerText;let hv=root.querySelector(".histviz");if(!hv||hv.dataset.s!==sig){if(!hv){hv=document.createElement("div");hv.className="histviz";ul.after(hv)}hv.dataset.s=sig;
-    const L=[];ul.querySelectorAll("li").forEach(li=>{const tm=(li.querySelector("time")||{}).textContent||"",nm=(li.querySelectorAll("span")[0]||{}).textContent||"",x=(li.querySelector(".x")||{}).textContent||"";const k=tm+"|"+nm,last=L[L.length-1];if(last&&last.k===k){last.n++;last.x+=parseInt(x)||0}else L.push({k,tm,nm,n:1,x:parseInt(x)||0})});
-    hv.innerHTML=L.slice(0,16).map(o=>`<div class="hvt" title="${esc(o.nm)}"><span class="hvi">${vI((HISTI.find(([r])=>r.test(o.nm))||[0,"etoile"])[1])}</span>${o.n>1?`<em>×${o.n}</em>`:""}<small>${esc(o.tm.replace(/\.$/,""))}</small>${o.x?`<b>+${o.x}</b>`:""}</div>`).join("")||`<p class="hint vide">Aucun élément pour l'instant</p>`}}}
+  const acts=root.querySelector("#pActs");if(acts&&!acts.dataset.vz){acts.dataset.vz=1;acts.classList.add("ractz");acts.querySelectorAll("button").forEach(b=>{const t=b.textContent;if(/appel|vrai/i.test(t))b.addEventListener("click",()=>{const n=profName;setTimeout(()=>{try{kwAsk([n])}catch(e){}},2800)});b.insertAdjacentHTML("afterbegin",`<span class="rai">${vI(/appel/i.test(t)?"tel":/vrai/i.test(t)?"duo":"bulle")}</span>`)})}}
 function remindViz(el,name,cur){const l=(S.bondsLast||{})[name]||0,d=l?Math.floor((Date.now()-l)/864e5):null;let bar="";
   if(cur){const left=d==null?0:Math.max(0,cur-d),pc=d==null?0:Math.max(0,Math.min(100,left/cur*100)),col=pc>50?"#6ccf5a":pc>20?"#ffd94a":"#e8473a";bar=`<div class="rmg"><i style="width:${pc}%;background:${col}"></i></div><small>${d==null?"Pas encore de nouvelles":left?"Rappel dans "+left+" j":"C'est le moment"}</small>`}
   return`<div class="rmh"><span class="rmi">${vI("cloche")}</span><div class="rmb"><b>Rappel</b>${bar||"<small>Coupé</small>"}</div></div><div class="rmt">${RF.map(([v,lb])=>`<button type="button" data-rf="${v}" aria-pressed="${cur===v}"><i></i><span>${v?({7:"7 j",14:"14 j",30:"1 mois",90:"3 mois"})[v]:"Off"}</span></button>`).join("")}</div>`}

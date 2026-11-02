@@ -94,14 +94,16 @@ with sync_playwright() as p:
     pg.click(".rgh .fgplus >> nth=0"); pg.fill("#addFName", "Gaby"); pg.click(".addfw [type=submit]"); pg.wait_for_timeout(300)
     check("ajouter un ami / un membre de la famille", pg.evaluate("S.friends.includes('Adeline')&&S.family.includes('Gaby')"))
 
-    # 6. Fiche d'un proche : bouton Fond
+    # 6. Fiche d'un proche : en lecture, « Modifier » ouvre la modification (bouton Fond)
     for n in ("Gaby", "Adeline"):
         pg.evaluate(f"openProfile('{n}')"); pg.wait_for_timeout(400)
+        check(f"fiche de {n} en lecture (Modifier, vus, historique)", pg.evaluate("!!document.getElementById('pEditB')&&!document.getElementById('pRel')&&!!document.querySelector('.pfseen')&&!!document.getElementById('pHistCard')"))
+        pg.evaluate("document.getElementById('pEditB').click()"); pg.wait_for_timeout(300)
         pg.evaluate("document.getElementById('pBgBtn').click()"); pg.wait_for_timeout(200)
         trait(pg, "fiche " + n); check(f"fiche de {n} : le bouton Fond ouvre le choix", pg.evaluate("!document.getElementById('pBgPick').hidden"))
 
     # 6b. Supprimer un proche (poubelle) puis Annuler
-    r = pg.evaluate("(()=>{openProfile('Gaby');document.getElementById('delBtn').click();const gone=!S.family.includes('Gaby');document.querySelector('#undoBar button').click();return gone&&S.family.includes('Gaby')})()")
+    r = pg.evaluate("(()=>{openProfile('Gaby');document.getElementById('pEditB').click();document.getElementById('delBtn').click();const gone=!S.family.includes('Gaby');document.querySelector('#undoBar button').click();return gone&&S.family.includes('Gaby')})()")
     check("supprimer un proche puis Annuler", r is True)
 
     # 7. Tous les écrans s'ouvrent
