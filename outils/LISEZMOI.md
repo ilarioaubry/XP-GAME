@@ -15,6 +15,8 @@
 | `who.py "<js>" "<sélecteur>" prop1,prop2 [heure]` | Quelles règles CSS posent ces propriétés sur l'élément, dans l'ordre de cascade. |
 | `probe.py "<js prépa>" "<js qui renvoie>" [heure]` | Exécute du code dans l'appli après l'accueil et affiche le résultat. |
 | `tall.py <sortie.png> "<js>"` | Capture haute (393 × 2600) d'un écran entier. |
+| `styles.py <index.html> <sortie.json>` | Relevé des styles calculés de tous les éléments (Aujourd'hui à 9 heures de la journée, panneau +, Moi, Proches, assiette, météo, situation, projet) avec une vraie sauvegarde (`CARNET_SAVE=fichier`). `ANA=1` : relève à la place la règle qui gagne pour chaque propriété (`cascade.js`). `STATES=…` choisit les heures ou dates. Sert au nettoyage du CSS : retirer `!important` et les `:not(#_…)` sans rien changer à l'écran. |
+| `styles_diff.py <avant.json> <après.json>` | Écarts entre deux relevés de `styles.py` (« diffs 0 » attendu ; seuls des éléments renommés exprès peuvent apparaître). |
 | `extract.py`, `deadcss.py`, `setrule.py` | Outils de rangement du CSS utilisés en phase 3 (déplacer des règles par zone, supprimer le CSS mort, modifier une règle). |
 
 Méthode type pour une modification :

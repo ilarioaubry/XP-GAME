@@ -222,7 +222,7 @@ html body #plusSheet .head .count{display:none!important}
 #actFind .afppl button[aria-pressed=true]{background:var(--c-social);border-color:var(--c-social);color:#fff}
 #actFind .afdur button[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#1a1210}
 #actFind .afmore{color:var(--muted)!important}
-#afFab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;width:62px;height:62px;border-radius:20px;border:3px solid #1a1210;background:var(--gold);color:#1a1210;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .15s}
+#afFab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;border-radius:20px;border:3px solid #1a1210;background:var(--gold);color:#1a1210;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .15s}
 #afFab:active{transform:scale(.92)}
 html.plusopen #afFab{display:none}
 #plusSheet .ps-in{max-height:92vh}

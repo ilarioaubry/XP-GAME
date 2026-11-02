@@ -24,13 +24,13 @@ body.testing .qxp{top:calc(env(safe-area-inset-top,0px) + 36px)}
 
 /* — depuis principal-06.css — */
 
-html body .qxp{display:grid;gap:0}
-html body .qxp #qxpBtn{border-bottom:0;border-radius:8px 8px 0 0;box-shadow:none;padding:8px 12px 4px}
+.qxp{display:grid;gap:0}
+.qxp #qxpBtn{border-bottom:0;border-radius:8px 8px 0 0;box-shadow:none;padding-left:12px;padding-right:12px}
 /* — depuis principal-07.css — */
-html.sky body :is(.qxp button){box-shadow:none;border-width:1.5px;border-style:solid;border-color:var(--line);border-radius:12px;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+html.sky :is(.qxp button){box-shadow:none;border-width:1.5px;border-style:solid;border-color:var(--line);border-radius:12px;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 
 
-html.sky body .qxp::before{display:none}
+html.sky .qxp::before{display:none}
 
 html:not(.sky) #sceneBox{display:none}
 .scn{position:relative;height:150px;margin:-6px 0 -4px;overflow:hidden}
@@ -55,26 +55,26 @@ html:not(.sky) #sceneBox{display:none}
 .scav.cheer2{animation:scJump .45s ease 3}
 .wrap>#sceneBox{order:-29}
 .wrap>.qxp{order:-28}
-html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp):not(#trkBox){display:none}
+html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp):not(#trkBox):not(#sqBox):not([data-fk="act"]){display:none}
 
 
 
 
 
 
-html body .pose-stretch .scav{animation:none;left:38%}
+.pose-stretch .scav{animation:none;left:38%}
 
 
 
-html body .pose-sit .scfire{left:calc(24% + 66px);bottom:14px}
+.pose-sit .scfire{left:calc(24% + 66px);bottom:14px}
 .scn.night .scav{filter:brightness(.82) drop-shadow(6px 0 10px rgba(255,140,50,.45))}
 .scav.cheer .f0,.scav.cheer .f1,.scav.cheer2 .f0,.scav.cheer2 .f1{opacity:0;animation:none}
 .scav.cheer .fu,.scav.cheer2 .fu{opacity:1}
 .sclog{position:absolute;left:calc(24% - 2px);bottom:12px;width:46px;height:20px;z-index:0}
 .sclog svg{width:100%;height:100%;display:block}
-html body .scn{height:196px}
-html body .scav{width:64px;height:104px;bottom:10px}
-html body .scav img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:0;animation:none}
+.scn{height:196px}
+.scav{width:64px;height:104px;bottom:10px}
+.scav img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:0;animation:none}
 
 
 
@@ -84,16 +84,16 @@ html body .scav img{position:absolute;inset:0;width:100%;height:100%;image-rende
 
 
 
-html body .scav.cheer img,html body .scav.cheer2 img{opacity:0;animation:none}
-html body .scav.cheer .fu,html body .scav.cheer2 .fu{opacity:1}
-html body .scav.wave img{opacity:0;animation:none}
-html body .scav.wave .fw0{opacity:1;animation:scN2 .5s steps(1) infinite}
-html body .scav.wave .fw1{animation:scN2 .5s steps(1) infinite;animation-delay:-.25s}
-html body .pose-sit .scav{left:24%;bottom:10px;width:64px;height:104px}
-html body .pose-sit .scfire{left:calc(24% + 70px)}
+.scav.cheer img,.scav.cheer2 img{opacity:0;animation:none}
+.scav.cheer .fu,.scav.cheer2 .fu{opacity:1}
+.scav.wave img{opacity:0;animation:none}
+.scav.wave .fw0{opacity:1;animation:scN2 .5s steps(1) infinite}
+.scav.wave .fw1{animation:scN2 .5s steps(1) infinite;animation-delay:-.25s}
+.pose-sit .scav{left:24%;bottom:10px;width:64px;height:104px}
+.pose-sit .scfire{left:calc(24% + 70px)}
 .scav{cursor:pointer}
-@media (prefers-reduced-motion:reduce){html body .scav img{animation:none}
-html body .scav .f0{opacity:1}}
+@media (prefers-reduced-motion:reduce){.scav img{animation:none}
+.scav .f0{opacity:1}}
 .scvis{position:absolute;bottom:10px;width:64px;height:104px;z-index:1;cursor:pointer;-webkit-tap-highlight-color:transparent}
 
 .scvis.v1{left:79%}
@@ -127,18 +127,17 @@ html body .scav .f0{opacity:1}}
 
 
 @media (prefers-reduced-motion:reduce){.scvis.arr{animation:none}}
-html body .pose-idle .scav{left:30%}
-html body .scav.yawn img,html body .scav.act img:not(.fa){opacity:0;animation:none}
-html body .scav.yawn img.fy{opacity:1}
-html body .scav.act img.fa{animation:scN2 .5s steps(1) infinite}
-html body .scav.act img.fa1{animation-delay:-.25s}
-html body .scav.yawn,html body .scav.act{animation-play-state:paused}
-html body .scn.slow.pose-walk .scav{animation-duration:42s}
+.pose-idle .scav{left:30%}
+.scav.yawn img,.scav.act img:not(.fa){opacity:0;animation:none}
+.scav.yawn img.fy{opacity:1}
+.scav.act img.fa{animation:scN2 .5s steps(1) infinite}
+.scav.yawn,.scav.act{animation-play-state:paused}
+.scn.slow.pose-walk .scav{animation-duration:42s}
 
 
 
 
-html body .scn.glad.pose-walk .scav{animation-duration:20s}
+.scn.glad.pose-walk .scav{animation-duration:20s}
 .scbk{position:absolute;left:50%;top:-34px;width:34px;height:34px;margin-left:-17px;background:#fffaf0;border:2px solid #24182c;box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:3px;box-sizing:border-box;z-index:4;animation:scBk 2.2s ease both}
 .scbk::after{content:"";position:absolute;left:12px;top:100%;width:6px;height:5px;background:#fffaf0;border:2px solid #24182c;border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
 .scbk svg{width:100%;height:100%;display:block}
@@ -177,19 +176,19 @@ html body .scn.glad.pose-walk .scav{animation-duration:20s}
 
 
 
-html body .scav.groove img.f{translate:0 0}
-html body .pose-walk .scav.groove,html body .pose-idle .scav.groove{filter:drop-shadow(0 0 0 transparent)}
+.scav.groove img.f{translate:0 0}
+.pose-walk .scav.groove,.pose-idle .scav.groove{filter:drop-shadow(0 0 0 transparent)}
 
-html body .scnt{padding-right:100px;box-sizing:border-box}
+.scnt{padding-right:100px;box-sizing:border-box}
 .scwx{position:absolute;right:48px;top:4px;z-index:2;height:40px;min-width:40px;padding:0 8px 0 6px;display:flex;align-items:center;gap:5px;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff8e6;font:800 15px/1 var(--font,system-ui);cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .scwx svg{width:22px;height:20px;display:block}
 .scumb{position:absolute;left:13px;top:-14px;width:42px;height:84px;z-index:3;pointer-events:none}
 .scumb svg{width:100%;height:100%;display:block}
 .pose-sit .scumb{left:13px;top:-10px;height:70px}
 /* — depuis principal-09.css — */
-html.evmode body #sceneBox{box-shadow:inset 0 -6px 0 var(--evc)}
-html.evmode body #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;right:6%;top:6px;height:14px;pointer-events:none;background:repeating-linear-gradient(90deg,var(--evc) 0 10px,transparent 10px 14px,#ffc94a 14px 24px,transparent 24px 28px);clip-path:polygon(0 0,100% 0,100% 50%,0 50%)}
-html body .qhp{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;margin-top:-4px}
+html.evmode #sceneBox{box-shadow:inset 0 -6px 0 var(--evc)}
+html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;right:6%;top:6px;height:14px;pointer-events:none;background:repeating-linear-gradient(90deg,var(--evc) 0 10px,transparent 10px 14px,#ffc94a 14px 24px,transparent 24px 28px);clip-path:polygon(0 0,100% 0,100% 50%,0 50%)}
+.qhp{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;margin-top:-4px}
 /* — depuis suivi-du-jour.css — */
 .trkbox{display:grid;gap:8px}
 .trk-c{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
@@ -209,42 +208,42 @@ html body .qhp{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0
 .bnd-mode b{color:var(--ink)}
 .bnd-mode button{margin-left:auto}
 /* — depuis epure-01.css — */
-html .wrap>#trkBox{order:-28}
-html body :is(.qxp .qbar)::after{animation:none;opacity:0}
-html body :is(.qbar.near){animation:none}
-html body .qxp .qs.lit .ic{animation-duration:3.6s}
-html body .scn.se-automne .scnt small{color:#ff9a3d}
-html body .scn.se-hiver .scnt small{color:#9fd3ff}
-html body .scn.se-printemps .scnt small{color:#7fe07a}
-html body .scn.se-ete .scnt small{color:#ffd23d}
-html body #trkBox .bnd-mode{border:0;background:none;padding:2px;width:100%;text-align:left;font:inherit;color:var(--muted);cursor:pointer}
+.wrap>#trkBox{order:-28}
+:is(.qxp .qbar)::after{animation:none;opacity:0}
+:is(.qbar.near){animation:none}
+.qxp .qs.lit .ic{animation-duration:3.6s}
+.scn.se-automne .scnt small{color:#ff9a3d}
+.scn.se-hiver .scnt small{color:#9fd3ff}
+.scn.se-printemps .scnt small{color:#7fe07a}
+.scn.se-ete .scnt small{color:#ffd23d}
+#trkBox .bnd-mode{border:0;background:none;padding:2px;width:100%;text-align:left;font:inherit;color:var(--muted);cursor:pointer}
 
-html body #sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff8e6;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
-html body #sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff8e6;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
-html body #sceneBox .scbub svg{width:100%;height:100%}
+#sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff8e6;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
+#sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff8e6;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
+#sceneBox .scbub svg{width:100%;height:100%}
 /* — depuis epure-02.css — */
-html body #trkBox .bnd-mode{display:none}
+#trkBox .bnd-mode{display:none}
 /* — depuis epure-03.css — */
-html body .qxp .qs{display:none}
+.qxp .qs{display:none}
 
-html body #trkBox .trk-ic{background:none;border:0;width:48px;height:48px}
+#trkBox .trk-ic{background:none;border:0;width:48px;height:48px}
 
 
 /* — depuis sans-cadres.css — */
-html body :is(.trk-c){border:0;box-shadow:none;outline:0;border-radius:0;background:none}
-html body :is(.trk-c){padding-left:2px;padding-right:2px}
-html body :is(#qxpBtn){border:0;box-shadow:none;outline:0}
+:is(.trk-c){border:0;box-shadow:none;outline:0;border-radius:0;background:none}
+:is(.trk-c){padding-left:2px;padding-right:2px}
+:is(#qxpBtn){border:0;box-shadow:none;outline:0}
 /* — depuis standards.css — */
-html body :is(.scfx .fg){border-radius:50%}
-html body :is(.qbar){box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden}
-html body :is(.qbar){height:18px}
-html body :is(.qbar)>i{height:100%;margin:0;top:0;box-shadow:none}
-html body :is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff7e6;box-shadow:none;min-height:44px;box-sizing:border-box}
-html body :is(.scsnd,.trk-b){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
+:is(.scfx .fg){border-radius:50%}
+:is(.qbar){box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden}
+:is(.qbar){height:18px}
+:is(.qbar)>i{height:100%;margin:0;top:0;box-shadow:none}
+:is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff7e6;box-shadow:none;min-height:44px;box-sizing:border-box}
+:is(.scsnd,.trk-b){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
 /* barre d'XP d'Aujourd'hui : contenu centré dans son cadre (marges symétriques, pas de colonne vide en bout) */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #qxpBtn{grid-template-columns:auto minmax(0,1fr) auto!important;padding:6px 12px!important;align-items:center!important;align-content:center!important}
+#qxpBtn{grid-template-columns:auto minmax(0,1fr) auto;padding:6px 12px;align-items:center;align-content:center}
 
 /* contrat fini : coche à toucher (bouton principal carré 44) */
-html:not(#_u1):not(#_u2) body .bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}
+.bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}
 /* A.3 (31/10) : mon personnage reste visible sur la scène (debout, sans bouger tout seul) ; les actions, le salut et le bâillement le remplacent un instant */
-html body .scav .f0{opacity:1}
+.scav .f0{opacity:1}

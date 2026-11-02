@@ -13,9 +13,9 @@ Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sectio
 - [x] 1.3 Objectif du jour retiré avec son badge (R.12) (01/11)
 - [x] 1.4 Noms des sections clarifiés (Quêtes du jour, Fait aujourd'hui) ; « + Rituel », « + Engagement » (01/11)
 - [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1) — 1.5a fait le 01/11 (Fin de journée, Énergie, À faire, Défi à deux, Cette semaine) ; 1.5b fait le 02/11 (ancien bloc des rituels, Rattrapage, bouton caché du panneau +, ancienne liste des rituels ; la carte des engagements reste, elle s'affiche dans le journal)
-- [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks
+- [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks — fait le 02/11, à vérifier sur iPhone : `aujourdhui.css` et `aujourdhui-haut.css` à 0 `!important` et 0 `:not(#_…)` ; 30 règles propres à Aujourd'hui sorties de base.css et composants.css ; 3 règles communes à toute l'appli rangées dans composants.css (priorité gardée jusqu'à 3.7) ; « + Rituel » en bouton d'ajout (pointillés), « Bonne nuit » en bouton principal
 
-**Lot 2 · Moi** — 2.1 jauge de stockage (R.1) · 2.2 fiche profil seulement dans Ma vie · 2.3 haut du Bilan (R.4) · 2.4 mêmes noms + jauge Nourriture (R.6) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » · 2.6 réglages cachés (R.12) · 2.7 mon anniversaire, statut de couple (R.8) · 2.8 CSS de Moi
+**Lot 2 · Moi** — 2.0 réglage « Style de l'appli » (Équilibre) : « Classique » revient tout seul à « Ciel » (balViz le remet) ; à retirer ou à réparer (trouvé le 02/11) · 2.1 jauge de stockage (R.1) · 2.2 fiche profil seulement dans Ma vie · 2.3 haut du Bilan (R.4) · 2.4 mêmes noms + jauge Nourriture (R.6) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » · 2.6 réglages cachés (R.12) · 2.7 mon anniversaire, statut de couple (R.8) · 2.8 CSS de Moi
 
 **Lot 3 · Proches** — 3.1 fiche en lecture (R.7) · 3.2 Appeler / Nouvelles ouvrent Téléphone et Messages · 3.3 liste (Ami du mois, légende, bordures, recherche) · 3.4 groupe · 3.5 le visiteur (S.7) · 3.6 carte postale, goûts, idées cadeau (S.16, S.20) · 3.7 CSS de Proches
 
