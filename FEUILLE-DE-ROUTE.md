@@ -92,9 +92,9 @@ Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8
 - [x] 3.4 (26/10/2026) Proches → `proches.css`
 - [x] 3.5 (26/10/2026) Moi → `moi.css`
 - [x] 3.6 (26/10/2026) Fenêtres → `fenetres.css` ; les 27 anciennes couches (principal, épure, maison…) fusionnées dans `base.css` dans leur ordre ; en-tête de page remis dans <head>
-- [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important`
+- [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important` — point du 02/11 : 1 032 (Aujourd'hui à 0, Moi et Proches en partie ; reste surtout base, composants, fenêtres → lot 6.4)
 - [x] 3.9 (26/10/2026) Supprimer le CSS des fonctionnalités retirées (328 règles et 355 sélecteurs dont les classes n'existent plus dans le code)
-- [ ] 3.10 Les écrans n'utilisent pas encore les composants `ui-` (créés en 3.2) : à faire écran par écran, avec 3.7 et 3.8
+- [ ] 3.10 Les écrans n'utilisent pas encore les composants `ui-` (créés en 3.2) : à faire écran par écran, avec 3.7 et 3.8 — point du 02/11 : commencé (ui-plein, ui-btn, ui-champ dans les fenêtres et boutons récents)
 - [ ] 3.11 Donner un rôle à chaque texte (titre de section, titre de carte, texte, petite info, chiffre décoratif, champ) par une classe `ui-`, la taille venant du rôle et non plus d'une règle par élément. Audit du 26/10 : 813 textes, 0 classé ; les titres sont tantôt `h2`, `h3`, `h4`, `b` ou `small`, de 10,8 à 30 px ; « Groupes » existe à 15 et à 20 px. Un test automatique vérifiera ensuite que chaque texte a un rôle et la bonne taille.
 - [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds → à faire avec 3.7 (la règle universelle reste en attendant, elle marche)
 
@@ -157,15 +157,15 @@ Lisibilité :
 - [ ] 6.2 **(décision)** Rôle du jeu : récompense discrète ou moteur ? (XP, niveaux, armoire, badges, stats)
 - [ ] 6.3 **(décision)** Définir la version 1 stable (ce qui est « terminé »)
 - [ ] 6.4 Aujourd'hui en ordre fixe : prochaine action → la journée (repas + assiette, rituels, quêtes du jour) → quêtes spéciales ; le décoratif part dans Moi > Profil
-- [ ] 6.5 Mettre en avant la prochaine action (« qu'est-ce que je fais maintenant ? »)
+- [ ] 6.5 Mettre en avant la prochaine action (« qu'est-ce que je fais maintenant ? ») — point du 02/11 : en partie (carte « Maintenant », module)
 - [ ] 6.6 Le jeu apparaît à la validation (+XP, petite animation) et dans Profil, pas en bloc dans Aujourd'hui
 - [ ] 6.7 Réorganiser Moi en gardant Bilan et Chez moi (Ilario y tient, 25/10) : où mettre Profil et Réglages ? (réglages : rituels, sauvegarde, sons, aide)
 - [ ] 6.8 Un seul chemin principal par action (repas : tuile / assiette / quête ; quête : bouton / « … » / appui long)
 - [ ] 6.9 Page « Aide » courte pour les gestes
-- [ ] 6.10 Proches triés par temps depuis le dernier contact **(décision)**
+- [x] 6.10 Proches triés par temps depuis le dernier contact **(décision)** → constaté le 02/11 : déjà le cas (liste triée du contact le plus ancien au plus récent)
 - [ ] 6.12 Décor animé (ciel, scène) : il bouge tout seul alors que le standard dit « rien qui bouge tout seul », et c'est ce qui coûte le plus en batterie **(décision)** : garder, calmer, ou désactiver par défaut
-- [ ] 6.13 Seul le rythme des actions de « Cette semaine » reste accessible uniquement par appui long (reste de 5.8) → l'ajouter au menu « … »
-- [ ] 6.11 Stats de personnage → résumé concret (« ce mois-ci : 12 repas équilibrés, 4 sorties ») **(décision)**
+- [x] 6.13 Seul le rythme des actions de « Cette semaine » reste accessible uniquement par appui long (reste de 5.8) → l'ajouter au menu « … » → constaté le 02/11 : sans objet, le bloc « Cette semaine » a été retiré en 1.5a
+- [ ] 6.11 Stats de personnage → résumé concret (« ce mois-ci : 12 repas équilibrés, 4 sorties ») **(décision)** — point du 02/11 : en partie (Bilan « Cette semaine, en vrai », 2.3)
 
 ## Phase 7 — Organisation du projet
 
@@ -197,7 +197,7 @@ Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
 - [x] Q.10 Quêtes travail : gardées (rien à faire)
 - [x] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
 - [x] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit (27/10 : les bonnes actions sont dans leur catégorie et dans la recherche)
-- [ ] Q.16 Page Actions (analyse du 27/10) : ~~« Avec qui ? » après la durée, seulement pour les proches et les sorties~~ (fait 27/10) · ~~Cuisiner un repas ouvre l'assiette~~ (fait) · ~~icônes 48 px, « Journée sans » non coupé~~ (fait) · ~~accueil « Récents » / « Pour commencer »~~ (fait) · ~~XP de l'action plafonnée à 30~~ (fait, le boost ×2 existant reste) · à confirmer : couleurs (tuile pleine, bordures gauches, décor) et messages empilés
+- [x] Q.16 Page Actions (analyse du 27/10) : ~~« Avec qui ? » après la durée, seulement pour les proches et les sorties~~ (fait 27/10) · ~~Cuisiner un repas ouvre l'assiette~~ (fait) · ~~icônes 48 px, « Journée sans » non coupé~~ (fait) · ~~accueil « Récents » / « Pour commencer »~~ (fait) · ~~XP de l'action plafonnée à 30~~ (fait, le boost ×2 existant reste) · à confirmer : couleurs (tuile pleine, bordures gauches, décor) et messages empilés → constaté le 02/11 : réglé par L.4 (couleurs) et F.2 (messages remplacés par « Ta journée »)
 - [x] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
 - [x] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8) — fait 28/10 : création et fin de projet avec l'icône d'objet ; figurines de l'armoire : « Finir le projet « … » » au lieu de « Vaincre »
 - [x] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout) — 28/10 : 4.1.1 à 4.1.5 corrigés, catégories et plafond partout ; 28/10 : une version par action (préparer demain, écrans avant de dormir, marche, étirements, lecture, album, photo à la famille, voir quelqu'un)
@@ -223,7 +223,7 @@ Fonctionnalités (à proposer avant de construire) :
 - [x] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A à G proposées ; **D, la liste du carnet**, choisie et faite le 28/10 (Ce matin / Mes engagements / Plus tard aujourd'hui). Reste : retirer le code des anciens blocs (rituels en tuiles, rangée des repas, énergie, à faire, fin de journée, rattrapage), aujourd'hui masqués et encore utilisés en coulisse
 - [x] J.3 Rituels plus visuels dans le journal (30/10) : pistes A, B, C refusées ; fait : même structure, icônes sur tuiles pixel à la couleur du rituel, ligne teintée, case à cocher pixel
 - [x] J.4 Cases majeures du journal (30/10) : même taille que les autres lignes, aspect pixel art (ciel étoilé pour Ta nuit et Bonne nuit, trois batteries pixel rouge → vert pour l'énergie, une case par jour pour le contrat)
-- [ ] J.5a Rituels (30/10, à vérifier par Ilario) : un rituel coché glisse à droite et se replie, puis se range dans « N faits » sous la liste (dépliable, Annuler en bas) ; la barre d'XP brille un instant ; le compteur du titre rebondit. Pas de « +3 » volant.
+- [x] J.5a Rituels (30/10, à vérifier par Ilario) : un rituel coché glisse à droite et se replie, puis se range dans « N faits » sous la liste (dépliable, Annuler en bas) ; la barre d'XP brille un instant ; le compteur du titre rebondit. Pas de « +3 » volant. → constaté le 02/11 : remplacé par T.2 (le rituel coché disparaît, « Annuler » le fait revenir)
 - [ ] J.5b Routine : étape en cours en grand, pile des faits, barre en étapes, fin fêtée (propositions à valider)
 - [ ] J.2 Enchaînements de rituels (douche → barbe) ~~fait 28/10~~, dents proposées à la fin d'un repas (à faire), compteur de cigarettes dans l'engagement lié ~~fait 28/10~~
 
@@ -235,10 +235,10 @@ Fonctionnalités (à proposer avant de construire) :
 - [ ] U.4 Heure de coucher conseillée selon le réveil de demain (calendrier, travail) dans Ce soir
 - [ ] U.5 Suivi des candidatures et contrats : envoyée, relance à J+7, entretien, réponse ; prochain contrat à trouver
 - [ ] U.6 Carnet de sons : idée rapide (phrase, vocal), étapes maquette → mix → sortie, tracklist
-- [ ] U.7 Capture rapide : noter une idée en 2 s, triée plus tard (à faire, courses, son, note)
-- [ ] U.8 Proches : idées cadeaux notées au fil de l'eau, rappel à J-7 de l'anniversaire avec ces idées
-- [ ] U.9 Maison : ce qui revient (draps, frigo, plantes) proposé tout seul quand c'est le moment, d'après « La dernière fois que… »
-- [ ] U.10 Dimanche soir : bilan de la semaine et 3 choses à prévoir pour la suivante
+- [ ] U.7 Capture rapide : noter une idée en 2 s, triée plus tard (à faire, courses, son, note) — point du 02/11 : en partie (tâche libre dans le panneau +, F.3)
+- [x] U.8 Proches : idées cadeaux notées au fil de l'eau, rappel à J-7 de l'anniversaire avec ces idées → constaté le 02/11 : fait avec 3.6 (plusieurs idées) ; la carte d'anniversaire les montre dès 30 jours avant
+- [x] U.9 Maison : ce qui revient (draps, frigo, plantes) proposé tout seul quand c'est le moment, d'après « La dernière fois que… » → constaté le 02/11 : fait : les quêtes pour toi proposent « La dernière fois que… » et les pièces oubliées quand c'est le moment
+- [ ] U.10 Dimanche soir : bilan de la semaine et 3 choses à prévoir pour la suivante — point du 02/11 : en partie (carte « Ta semaine est finie » vers le Bilan ; manquent les 3 choses à prévoir)
 - [ ] U.11 Rendez-vous et rappels vers le calendrier de l'iPhone (fichier .ics), puisque l'appli web ne peut pas sonner seule
 - [ ] U.12 Visites d'appart : notes par critère (prix, quartier, lumière, bruit) et comparaison
 
@@ -246,20 +246,20 @@ Fonctionnalités (à proposer avant de construire) :
 
 - [ ] I.1 Journal trié par l'heure où tu fais vraiment chaque chose (heures apprises), et une ligne « Maintenant » en tête
 - [ ] I.2 Engagements proposés d'après ce que tu tiens (ex. « moins de N » = ta moyenne − 1)
-- [ ] I.3 Journée allégée toute seule : nuit courte, humeur basse la veille, jour chargé au calendrier → moins de quêtes, plus douces
+- [ ] I.3 Journée allégée toute seule : nuit courte, humeur basse la veille, jour chargé au calendrier → moins de quêtes, plus douces — point du 02/11 : en partie (batterie, nuit courte, jours de travail)
 - [ ] I.4 À faire reporté 3 fois → proposer de le découper, de le mettre en projet ou de le retirer
 - [ ] I.5 Repas : l'équilibre de la semaine (assiette) oriente les idées de repas et les quêtes nourriture
-- [ ] I.6 Proches : rythme naturel de chaque personne appris → rappel quand il est dépassé
+- [ ] I.6 Proches : rythme naturel de chaque personne appris → rappel quand il est dépassé — point du 02/11 : en partie (jours habituels repérés, rappel réglé à la main)
 - [ ] I.7 « Ce que j'ai appris de ta semaine » dans Bilan (sommeil ↔ rituels, cigarettes ↔ travail ou humeur…), en phrases simples
 - [ ] I.8 Ce qui n'est jamais utilisé depuis 30 jours : proposé au retrait (rituel, bonne action, famille de quêtes)
-- [ ] I.9 Chaque proposition dit pourquoi en petite info (« tu le fais souvent le jeudi »)
+- [x] I.9 Chaque proposition dit pourquoi en petite info (« tu le fais souvent le jeudi ») → constaté le 02/11 : fait : chaque quête pour toi dit pourquoi (« Ça fait 26 j », « Souvent le mercredi »)
 
 ## Ma vie → actions adaptées (idée du 28/10/2026, à choisir)
 
 - [x] V.1 Nouvelle question dans « Ma situation » : « Chez moi, j'ai… » (chien, chat, petit animal, plantes, jardin, voiture, vélo, lave-vaisselle, bébé ou enfant à garder…) en tuiles pixel
 - [x] V.2 Chaque réponse ajoute ses actions (panneau +), ses rituels proposés, ses quêtes et ses rappels à rythme — fait 30/10 : animaux (chien, chat, petit animal), maison (plantes, jardin, lave-vaisselle), transport (voiture, vélo, transports en commun), santé (lentilles, traitement, végé, sans gluten), famille (enfant à garder), activité (club, instrument) ; reste : jours de garde partagée, régime appliqué à l'assiette
 - [ ] V.3 L'appli le déduit aussi : si tu notes souvent « sortir le chien », elle propose de l'ajouter à ta fiche
-- [ ] V.4 Autres faits utiles : lunettes ou lentilles, traitement à prendre, régime (végé, sans gluten), sport pratiqué en club, instrument, études (examens), jours de garde partagée
+- [ ] V.4 Autres faits utiles : lunettes ou lentilles, traitement à prendre, régime (végé, sans gluten), sport pratiqué en club, instrument, études (examens), jours de garde partagée — point du 02/11 : en partie (V.2 : lentilles, traitement, régimes, club, instrument ; manquent études et garde partagée)
 
 ## Retours du 31/10/2026
 
@@ -315,7 +315,7 @@ Fonctionnalités (à proposer avant de construire) :
 
 ### Améliorations de l'existant (L)
 - [x] L.1 (01/11) Durée et « Avec qui ? » sur un seul écran, bouton « Fait · +12 XP » en bas
-- [ ] L.2 Se souvenir de la dernière durée / quantité / personnes par action (présélectionnées)
+- [ ] L.2 Se souvenir de la dernière durée / quantité / personnes par action (présélectionnées) — point du 02/11 : en partie (personnes de la dernière fois en premier, durée pas encore présélectionnée)
 - [ ] L.3 Hier / Demain : retirer les onglets du haut ; « C'était hier » et « Plus tard » en bas de l'écran de précision
 - [x] L.4 (01/11) Catégorie choisie : tuile pleine + bordure or ; bordures gauches colorées et motif de fond gardés ; bande orange du bas retirée
 - [ ] L.5 Récents en carrousel de tuiles (icône + nom), sans « il y a N j »
