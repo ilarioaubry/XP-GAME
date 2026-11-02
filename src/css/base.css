@@ -31,13 +31,17 @@ html body .pu .pudone{grid-column:1/-1;justify-self:center;min-height:44px;color
 
 /* ---- maison-1.css ---- */
 .hm{display:grid;gap:0;filter:drop-shadow(0 4px 0 rgba(0,0,0,.35))}
-.hmroof{line-height:0;margin:0 -2px -1px}.hmroof svg{width:100%;height:auto;display:block}
+.hmroof{line-height:0;margin:0 -2px -1px}.hmroof svg,.hmout svg{width:100%;height:auto;display:block}
 .hmgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px;padding:3px;background:#1a1210;border:3px solid #1a1210}
+.hmr,.hmout{position:relative;display:block;padding:0;border:0;background:#000;cursor:pointer;line-height:0;min-width:0;overflow:hidden;font:inherit;color:#fff}
+.hmr svg{width:100%;height:auto;display:block;image-rendering:pixelated}
+.hmr:active,.hmout:active{transform:translateY(1px)}
 
 
 
 
 @keyframes hmBob{50%{transform:translateY(-2px)}}
+.hmout{border:3px solid #1a1210;border-top:0}
 .hmh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px}
 .hmh>b{font-family:var(--f-pixel);font-size:clamp(15px,4.8vw,20px);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hmh .btn{min-height:40px;padding:6px 10px;display:inline-flex;align-items:center;gap:4px}.hmh .hmback svg{transform:rotate(90deg)}
@@ -249,7 +253,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 
 
 .lnk{background:none;border:0;padding:0;font:inherit;font-size:13px;color:var(--muted);text-decoration:underline;cursor:pointer}
-.pf{display:grid;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.bdrow{display:grid;grid-template-columns:80px 1fr 1fr;gap:10px}
+.bdrow label,.pf{display:grid;gap:4px;font-size:13px;color:var(--muted);min-width:0}
 .pf textarea{resize:vertical}
 
 
@@ -1517,6 +1522,7 @@ body.rtmon{overflow:hidden}
 .rtmb .btn{min-height:58px;font-size:15px}
 .rtmend{align-self:center;grid-row:1/-1;display:grid;justify-items:center;gap:10px;text-align:center;padding:24px 18px;border:4px solid #1a1210;border-radius:12px;background:var(--surface);box-shadow:0 6px 0 #1a1210;width:min(340px,100%);margin:0 auto}
 .rtmt{font-family:var(--f-pixel);font-size:54px;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.rtmrec{font-weight:800;color:var(--muted)}
 
 .rtmend .btn{width:100%;min-height:52px;margin-top:6px}
 .raord{display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:13px;font-weight:600;color:var(--muted)}
@@ -1918,6 +1924,10 @@ html:not(#_a):not(#_b) body .wkcta{width:100%;display:grid;grid-template-columns
 html:not(#_a):not(#_b) body .wkcta b{display:block;font-size:15px}html:not(#_a):not(#_b) body .wkcta small{display:block;font-size:13px;color:var(--muted)}html:not(#_a):not(#_b) body .wkcta>.ic{color:var(--gold)}
 
 html:not(#_a):not(#_b) body .wki{display:grid;place-items:center;width:34px;height:34px;color:var(--zc)}html:not(#_a):not(#_b) body .wki svg{width:30px;height:30px;display:block}
+html:not(#_a):not(#_b) body .wkm{display:flex;gap:3px;margin-top:5px}
+html:not(#_a):not(#_b) body .wkm i{display:grid;place-items:center;width:18px;height:18px;font-size:11px;font-style:normal;font-weight:800;color:color-mix(in srgb,var(--muted) 60%,transparent);border:2px solid transparent}
+html:not(#_a):not(#_b) body .wkm i.on{color:var(--text);border-color:var(--line)}html:not(#_a):not(#_b) body .wkm i.ok{color:#2a1c0c;background:var(--zc);border-color:color-mix(in srgb,var(--zc) 60%,#000)}
+html:not(#_a):not(#_b) body .wkm.dots i{width:12px;height:12px;border:2px solid var(--line)}
 html:not(#_a):not(#_b) body .wkx{display:grid;justify-items:end;gap:2px;font-weight:800;font-size:15px}html:not(#_a):not(#_b) body .wkx em{font-style:normal;font-size:13px;color:var(--gold)}
 html:not(#_a):not(#_b) body .prm.hit{animation:prHit .45s steps(6)}
 @keyframes prHit{0%,100%{transform:none;filter:none}20%{transform:translateX(-5px);filter:brightness(2.2)}40%{transform:translateX(5px)}60%{transform:translateX(-3px);filter:brightness(1.6)}80%{transform:translateX(2px)}}

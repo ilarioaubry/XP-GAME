@@ -27,7 +27,7 @@ html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}
 .rcp{display:grid;gap:8px;margin:0;padding-top:12px;border-top:2px dashed rgba(255,255,255,.14)}
 .rcph2{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:center}
 .rcph2 h3{margin:0;font-family:var(--f-pixel);font-size:15px}
-.pf input,.pf textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;min-width:0;width:100%}
+.bdrow input,.bdrow select,.pf input,.pf textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;min-width:0;width:100%}
 .pf[hidden]{display:none}
 .set-card .hint{margin:0}
 .gcard{background:var(--surface);border:2px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 4px 0 var(--rpg-shadow);color:var(--ink);min-width:0}
@@ -35,7 +35,7 @@ html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}
 .bh2{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .bh2 h3{margin:0}
 .au-hello{--au:#2a8fd6}
-.au-hello{--aubg:radial-gradient(circle at 1px 1px,color-mix(in srgb,#2a8fd6 35%,transparent) 1.2px,transparent 1.5px),linear-gradient(135deg,color-mix(in srgb,#2a8fd6 26%,var(--surface)),color-mix(in srgb,#c2516b 18%,var(--surface)) 55%,color-mix(in srgb,#3c9a4f 20%,var(--surface)));background-size:14px 14px,auto!important}
+.au-hello{--aubg:radial-gradient(circle at 1px 1px,color-mix(in srgb,#2a8fd6 35%,transparent) 1.2px,transparent 1.5px),linear-gradient(135deg,color-mix(in srgb,#2a8fd6 26%,var(--surface)),color-mix(in srgb,#c2516b 18%,var(--surface)) 55%,color-mix(in srgb,#3c9a4f 20%,var(--surface)));background-size:14px 14px,auto}
 .evr{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--surface);border:2px solid color-mix(in srgb,var(--ec) 45%,var(--line));box-shadow:0 3px 0 var(--rpg-shadow);--ec:var(--c-perso,#b06ad9)}
 .evr.bd{--ec:#e05a9a}
 .evd{display:grid;justify-items:center;line-height:1;min-width:38px;padding:5px 4px;border-radius:8px;background:var(--ec);color:#fff}
@@ -224,6 +224,7 @@ html:not([data-room="chambre"]) body section[data-sub="wr"]:not(#homeBox){displa
 .hml{position:absolute;left:4px;bottom:4px;display:grid;gap:1px;padding:3px 6px;background:rgba(10,10,24,.78);border:2px solid #1a1210;line-height:1.1;text-align:left;max-width:calc(100% - 8px)}
 .hml b{font-size:13px;font-weight:900;color:#fff8e6}
 .hml small{font-size:11px;font-weight:800;color:#ffd75a;letter-spacing:.03em}
+.hmr.off .hml small,.hmout.off .hml small{color:#a59fb5}
 .hmme{position:absolute;right:4px;top:4px;width:26px;height:28px;image-rendering:pixelated;border:2px solid #1a1210;background:#000;animation:hmBob 2.4s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.hmme{animation:none}}
 .hmsvg .hmo.lock.sel{opacity:.5}
@@ -343,7 +344,7 @@ html body .settings h2::before{content:""!important;display:inline-block!importa
 .ttools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:6px}
 .ttools .btn{min-height:42px;font-weight:700;font-size:13px}
 #testCard{border-color:#c0392b}
-.subtabs{border:2px solid color-mix(in srgb,var(--gold) 55%,var(--line))!important;position:sticky!important;top:calc(env(safe-area-inset-top,0px) + 8px)!important;z-index:20!important}
+.subtabs{border:2px solid color-mix(in srgb,var(--gold) 55%,var(--line))!important;border-radius:8px!important;position:sticky!important;top:calc(env(safe-area-inset-top,0px) + 8px)!important;z-index:20!important}
 .subtabs::before{content:"";position:absolute;left:50%;width:100vw;transform:translateX(-50%);top:calc(-10px - env(safe-area-inset-top,0px));height:calc(100% + 46px + env(safe-area-inset-top,0px));z-index:-1;pointer-events:none;opacity:0;transition:opacity .25s;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 92%,#000) 0,var(--bg) 24px,var(--bg) calc(100% - 30px),color-mix(in srgb,var(--bg) 60%,transparent) calc(100% - 14px),transparent 100%)}
 .subtabs.stuck::before{opacity:1}
 body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
@@ -530,7 +531,8 @@ html:not(#_a):not(#_b) body .evr.now{box-shadow:4px 4px 0 var(--rpg-shadow),0 0 
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .evr.now .evj{animation:none}}
 /* — depuis principal-06.css — */
 .pf-hp[hidden]{display:none}
-
+.rtmrec.new{color:#5fae4f;font-size:15px;animation:rkPop .5s ease 2}
+@media (prefers-reduced-motion:reduce){.rtmrec.new{animation:none}}
 #evtList .evr[hidden]{display:none}
 .evfz{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 8px;margin:0 -2px;scroll-snap-type:x proximity}
 .evfz::-webkit-scrollbar{display:none}
@@ -569,6 +571,7 @@ html.sky .evch{border-color:color-mix(in srgb,var(--ec) 55%,transparent)}
 html.sky .subtabs button[aria-selected="true"]{color:#1a1206}
 html[data-mo="soir"] .wrap>#evtBox{}
 /* — depuis principal-08.css — */
+html:not(#_a):not(#_b) body .wkm i.td{outline:2px solid var(--gold);outline-offset:1px}
 #skyBg .skwx i.sn{width:5px;height:5px;background:#fff;opacity:.9;transform:none;animation:wxSnow 9s linear infinite}
 #skyBg .skwx .wcl{position:absolute;width:46vw;max-width:260px;opacity:.85;filter:brightness(.82);animation:wxCl 70s linear infinite}
 #skyBg .skwx .wcl svg{width:100%;height:auto;display:block}
@@ -724,9 +727,9 @@ html:not(.bilopen) body #chapBox .bsec,html:not(.bilopen) body #chapBox .bdet,ht
 #setBox #setBack{display:none}
 #setBox .set-card:has(#xpCap){display:none}
 html:not(.admin) body #testCard{display:none}
-html body :is(.wardrobe,.col,.wr-it){--rpg-shadow:rgba(0,0,0,.55)}
+:is(.wardrobe,.col,.wr-it){--rpg-shadow:rgba(0,0,0,.55)}
 html:not(#_a):not(#_b) body .wrap>#evtBox:not([hidden]){display:grid!important}
-html:not(#_a):not(#_b) body .wrap>#evtBox{order:0!important}
+.wrap>#evtBox{order:0}
 #setMods .tg{padding:8px 0}
 #ficheBox .fcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
 #ficheBox .fch{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -742,6 +745,9 @@ html body #ficheBox .fnone{color:var(--muted);font-size:13px}
 #ficheBox .fopts button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 #ficheBox .fnote{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:8px 10px;width:100%}
 
+html body #chapBox .bstory{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:12px 14px;margin-top:10px}
+html body #chapBox .bstory small{color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+html body #chapBox .bstory p{margin:0;font-size:15px;line-height:1.4}
 :is(.evch.bdch){background:var(--bdfl) top center/96px 22px repeat-x,var(--bdconf) center/120px 120px,var(--bdgrad);color:#fff;border-color:rgba(255,255,255,.35)}
 :is(.evch.bdch) :is(b,small,em,.evkind,.evj,.calty,.evcn){color:#fff;text-shadow:0 1px 3px rgba(60,0,80,.55)}
 .evch.bdch{padding-top:18px}
@@ -798,7 +804,7 @@ html:not(#_a):not(#_b) body #balCard h3::after{display:none!important}
 .balviz{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .balviz .svt{font-size:11px;line-height:1.15;text-align:center;padding:6px 4px}
 .balviz .svt em{font-size:11px}
-html:not(#_a):not(#_b) body .balviz .svt[data-b="pz"],html:not(#_a):not(#_b) body .balviz .svt[data-b="off"]{--x:1}
+.balviz .svt[data-b="pz"],.balviz .svt[data-b="off"]{--x:1}
 .balviz .svt[data-b="off"][aria-pressed="true"] .fti,.balviz .svt[data-b="pz"] .fti{filter:none;opacity:1}
 .balviz :is([data-b="off"],[data-b="pz"]) .fti{filter:none;opacity:1}
 #idBox :is(.idt em,.idsteps,#idChg){display:none}
@@ -813,6 +819,7 @@ html:not(#_a):not(#_b) body #idBox .idnx.max img{filter:none;opacity:1}
 section.char :is(#meSet,#wallet,.wallet){display:none}
 html:not(#_a):not(#_b) body section.char #charTitle svg{display:none!important}
 #prjBox2 .prgo{display:none}
+html:not(#_a):not(#_b) body #chapBox .bstory{display:none!important}
 html:not(#_a):not(#_b) body #vie-suivi>h3>svg,html:not(#_a):not(#_b) body #vie-suivi>h3>span:first-child:not(:only-child){display:none!important}
 html:not(#_a):not(#_b) body #idBox .idhead{border:0!important;background:none!important;padding:0!important;border-radius:0!important}
 #idBox .idcard{border-radius:0}
@@ -829,7 +836,7 @@ section.char .pbs b{white-space:normal;overflow:visible;text-overflow:clip;line-
 #wrCats .wci{display:block;width:48px;height:48px}
 html:not(#_a):not(#_b) body #wrCats .wci svg{width:48px;height:48px;display:block}
 #wrCats .wcl{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-#wrCats .wcg{display:block;width:70%;height:5px;background:rgba(0,0,0,.35);border-radius:0;overflow:hidden}
+html:not(#_a):not(#_b) body #wrCats .wcg{display:block;width:70%;height:5px;background:rgba(0,0,0,.35);border-radius:0;overflow:hidden}
 #wrCats .wcg i{display:block;height:100%;background:var(--gold)}
 html:not(#_a):not(#_b) body #wrCats .wcg0{visibility:hidden}
 html:not(#_a):not(#_b) body #wrCats>button em{display:none!important}
@@ -837,12 +844,12 @@ html:not(#_a):not(#_b):not(#_c) body :is(.svt .fti,.fsq .fti,.idi){width:48px!im
 :is(.svt .fti,.fsq .fti,.idi)>:is(svg,img){width:48px;height:48px;max-width:none;display:block}
 html:not(#_a):not(#_b):not(#_c) body .sout{animation:sout .12s ease-in both!important}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b):not(#_c) body :is(.sout){animation:none!important}}
-html:not(#_a):not(#_b):not(#_c) body #ficheBox{--fc:#6f8fe0}
-html:not(#_a):not(#_b):not(#_c) body #idBox{--fc:var(--c-perso)}
-html:not(#_a):not(#_b):not(#_c) body #vieBox{--fc:var(--c-soi)}
-html:not(#_a):not(#_b):not(#_c) body #prjBox2{--fc:var(--gold)}
-html:not(#_a):not(#_b):not(#_c) body #evtBox{--fc:var(--c-social)}
-html:not(#_a):not(#_b):not(#_c) body #setBox{--fc:var(--c-eau)}
+#ficheBox{--fc:#6f8fe0}
+#idBox{--fc:var(--c-perso)}
+#vieBox{--fc:var(--c-soi)}
+#prjBox2{--fc:var(--gold)}
+#evtBox{--fc:var(--c-social)}
+#setBox{--fc:var(--c-eau)}
 :is(#ficheBox,#idBox,#vieBox,#prjBox2,#evtBox,#setBox){border:2px solid var(--fc,var(--line))}
 :is(#idBox,#prjBox2,#evtBox,#setBox){padding:14px 12px;box-sizing:border-box}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #idBox .idcard{border:0!important;box-shadow:none!important;background:none!important;padding-left:0!important;padding-right:0!important;border-radius:0!important}
@@ -869,7 +876,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .b
 /* — depuis assiette.css — */
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid!important}
 /* — depuis standards.css — */
-:is(.pav.bdp,.bni,.pbs .pbi){border-radius:50%}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.pav.bdp,.bni,.pbs .pbi){border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after{border-radius:50%!important}
 :is(.evch){text-align:center;justify-content:center;justify-items:center}
 :is(.evch>span){justify-items:center;text-align:center}
