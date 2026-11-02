@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 02/11/2026
+- Moi (2.2) : la grande fiche profil n'apparaît plus qu'à Ma vie, sous les onglets ; Chez moi et Bilan commencent directement. Les onglets restent en haut de Moi. La barre d'XP d'Aujourd'hui ouvre Ma vie.
 - Moi (2.0) : le réglage « Style de l'appli » (Ciel / Classique) est retiré ; « Classique » revenait de toute façon tout seul à « Ciel ». L'appli garde toujours le ciel. La donnée reste dans la sauvegarde.
 - Moi > Bilan > Données (2.1) : la jauge de stockage montre la vraie place prise sur le téléphone (tout ce que l'appli enregistre, 2 octets par caractère) sur la vraie limite de Safari, 5 Mo, au lieu de « / 256 Ko ». Aujourd'hui : 249 Ko sur 5 Mo.
 - CSS d'Aujourd'hui (1.6) : les feuilles d'Aujourd'hui n'ont plus aucun `!important` ni sélecteur forcé `:not(#_…)` (avant : 330 `!important`, 750 forçages). 30 règles qui ne servaient qu'à Aujourd'hui quittent base.css et composants.css ; quelques règles anciennes de base.css sont resserrées pour ne plus viser les éléments d'Aujourd'hui. Vérifié élément par élément (styles calculés identiques, 14 heures et dates, avec et sans fenêtres) et sur les 55 captures. Deux retouches voulues : « + Rituel » prend le style des boutons d'ajout (pointillés) et « Bonne nuit » celui des boutons principaux (jaune plein, comme « Fait »). Nouveaux outils : `outils/styles.py` et `outils/styles_diff.py`.
