@@ -4264,9 +4264,9 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
         <div class="vie-l">Jour normal${seg("cap",[1,3,5,8],v.cap)}</div>
         <div class="vie-l">Jour de travail${seg("capW",[1,2,3,5],v.capW)}</div></div>
       <div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
-        <label class="tg"><span><b>Cigarettes</b><small>Dans ton bandeau</small></span><input type="checkbox" class="sw" data-trk="cig"${v.track.cig?" checked":""}></label>
+        <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
-        <label class="tg"><span><b>Périodes en cours</b><small>Contrat et progression</small></span><input type="checkbox" class="sw" data-trk="per"${v.track.per?" checked":""}></label></div>
+</div>
       <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un élément">+</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
 `;
       box.innerHTML=h;
@@ -4279,7 +4279,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
       box.querySelector("[data-wake]").onchange=e=>{g.wake=+e.target.value;e.target.blur();ch()};
       box.querySelector("[data-job]").onchange=e=>{v.job=e.target.checked;ch()};
       if(0)box.querySelectorAll("[data-pri]").forEach(b=>b.onclick=()=>{const k=b.dataset.pri;if(v.pri.includes(k))v.pri=v.pri.filter(x=>x!==k);else{if(v.pri.length>=3){try{toast("3 priorités maximum")}catch(e){}return}v.pri=[...v.pri,k]}ch()});
-      box.querySelectorAll("[data-trk]").forEach(b=>b.onchange=()=>{v.track[b.dataset.trk]=b.checked;ch()});
+      box.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{v.track[b.dataset.trk]=!v.track[b.dataset.trk];ch()});  // un seul réglage par suivi (2.5) : la tuile
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
       bindPer(box);bindLast(box,tk)};
     // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js
@@ -4395,7 +4395,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 48fece2</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 61eaceb</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5363,7 +5363,7 @@ function renderIdentity(){const r=renderIdentityBase.apply(this,arguments);try{i
 function renderIdentityBase(){const box=$("idBox");if(!box||!S.g)return;const T=idState();
   if(!T.ch.length){box.innerHTML=`<button type="button" class="idempty" id="idGo"><b>Qui veux-tu devenir ?</b><small>Choisis 1 à 3 identités : lecteur, sportif, artiste, ami présent…</small><span class="go">Choisir</span></button>`;$("idGo").onclick=idPick;return}
   box.innerHTML=`<div class="idhead"><b>Ce que tu deviens</b><button type="button" class="lnk" id="idChg">Changer</button></div>`+T.ch.map(id=>{const I=idOf(id);if(!I)return"";const k=idStage(I),nx=idNext(I),last=T.log.filter(l=>l.id===id).slice(-1)[0];
-    return`<div class="idcard" style="--ic:${I.c}"><span class="idi">${pxImg(I.ic,4)}</span><div class="idt">${k&&String(I.st[k-1][0]).toLowerCase()===String(I.n).toLowerCase()?"":`<small>${esc(I.n)}</small>`}<b>${k?esc(I.st[k-1][0]):"Le chemin commence"}</b>${nx?`<span class="idbar"><i style="width:${nx.pct}%"></i></span><em>Encore ${nx.left} ${IDU[nx.s[1]]} pour « ${esc(nx.s[0])} »</em>`:`<em>Chemin accompli</em>`}</div><div class="idsteps">${I.st.map((x,j)=>`<i class="${j<k?"on":""}" title="${esc(x[0])}"></i>`).join("")}</div></div>`}).join("");
+    return`<div class="idcard" style="--ic:${I.c}"><span class="idi">${pxImg(I.ic,4)}</span><div class="idt"><small>${k?(String(I.st[k-1][0]).toLowerCase()===String(I.n).toLowerCase()?"Étape "+k+"/"+I.st.length:esc(I.st[k-1][0])):"Le chemin commence"}</small><b>${esc(I.n)}</b>${nx?`<span class="idbar"><i style="width:${nx.pct}%"></i></span><em>Encore ${nx.left} ${IDU[nx.s[1]]} pour « ${esc(nx.s[0])} »</em>`:`<em>Chemin accompli</em>`}</div><div class="idsteps">${I.st.map((x,j)=>`<i class="${j<k?"on":""}" title="${esc(x[0])}"></i>`).join("")}</div></div>`}).join("");
   $("idChg").onclick=idPick}
 // ==== Saison des fêtes : hotte, Avent, vœux, ton année, résolutions
 const XM_ST=["Idée","Acheté","Emballé","Offert"],XM_XP=[5,10,5,15];
@@ -9647,7 +9647,7 @@ function prjKind(p){const L=BOSS_CAT[p.cat];let h=0;for(const ch of String(p.id)
 function prjDue(p){if(!p.due)return"";const d=Math.round((new Date(p.due+"T12:00")-new Date(dayKey(Date.now())+"T12:00"))/864e5);return d<0?"en retard":d===0?"aujourd'hui":d===1?"demain":"J-"+d}
 let prjOpenId="",prjArm="";
 function prjCard(p){const C=CATS[p.cat]||{},kd=prjKind(p),N=p.st.length,done=p.st.filter(s=>s.d).length,nx=p.st.findIndex(s=>!s.d),open=prjOpenId===p.id,du=prjDue(p),x=DIFF[p.d||0][1];
-  return`<div class="prc${open?" open":""}" data-id="${p.id}" style="--zc:${C.c||"var(--gold)"}"><button type="button" class="prh" aria-expanded="${open}"><span class="prm">${rkSvg((typeof SQ_IC!=="undefined"&&SQ_IC[p.cat])||"dossier")}</span><span class="prt"><small>${(C.label||"Projet")} · ${p.arc?"arc":"projet"}${du?` · <em class="${du==="en retard"?"late":""}">${du}</em>`:""}</small><b></b>
+  return`<div class="prc${open?" open":""}" data-id="${p.id}" style="--zc:${C.c||"var(--gold)"}"><button type="button" class="prh" aria-expanded="${open}"><span class="prm">${rkSvg((typeof SQ_IC!=="undefined"&&SQ_IC[p.cat])||"dossier")}</span><span class="prt"><small>${(C.label||"Projet")}${du?` · <em class="${du==="en retard"?"late":""}">${du}</em>`:""}</small><b></b>
     <span class="prbarw" aria-label="${done} étapes sur ${N}"><span class="prbar"><i style="width:${Math.round(done/N*100)}%"></i></span><small>${done}/${N}</small></span></span></button>
     ${nx>=0?`<div class="prn"><span><small>Étape ${nx+1}/${N}</small><b class="prnt"></b></span><button type="button" class="btn primary prgo" data-i="${nx}">Fait <small>+${x}</small></button></div>`:""}
     ${open?`<ol class="prl">${p.st.map((s,i)=>`<li class="${s.d?"ok":""}"><button type="button" data-i="${i}" ${s.d?"disabled":""} aria-label="${s.d?"Fait":"Marquer fait"}">${s.d?ICO("check",14):""}</button><span></span></li>`).join("")}</ol>
@@ -9887,7 +9887,7 @@ function arcFallback(note){return["Décrire ton objectif réussi en une phrase",
 async function arcAsk(){if(arcBusy)return;const G=S.g,s=sitOf();const note=(s&&s.note||"").trim();if(!note){sitSheet();return}
   arcBusy=true;arcErr="";render();let n=cap(note).slice(0,40),cat="perso",st=null,ai=0;
   if(!st)st=arcFallback(note);if(!Array.isArray(G.prj))G.prj=[];
-  G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Arc lancé : <span class="p">${esc(n)}</span> · ${st.length} chapitres`)}
+  G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Projet lancé : <span class="p">${esc(n)}</span> · ${st.length} étapes`)}
 // --- souvenirs
 function memOf(id){return(Array.isArray(S.g.mem)?S.g.mem:[]).find(m=>m.id===id)||null}
 function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.g,old=memOf(ctx.id)||{};let ph=old.ph||"";
@@ -10071,7 +10071,7 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
   const useAi=F.useAi&&ai.some(x=>!done.has(x.id)),e=enOf();
   const tkk=dayKey(Date.now()),ago=k=>Math.round((new Date(tkk+"T12:00")-new Date(k+"T12:00"))/864e5);
   const tik=tickets().filter(e=>{const a=ago(e.d);return a>=1&&a<=3&&!memOf("tik:"+e.id)}).slice(0,1).map(e=>({id:"tik:"+e.id,t:"Ton billet : "+e.n,why:"Garde un souvenir : une photo, un mot, une note",cat:"perso",xp:10,k:"tik",e,nonever:1}));
-  const arc=(()=>{const a=arcStep();if(!a)return[];const N=a.p.st.length,last=a.p.st.filter(x=>!x.d).length===1;return[{id:"arc:"+a.p.id+":"+a.i,t:a.p.st[a.i].t,why:`${a.p.n} · ${last?"boss final":(a.i+1)+"/"+N}`,cat:CATS[a.p.cat]?a.p.cat:"perso",xp:DIFF[a.p.d||0][1],k:"arc",p:a.p,i:a.i,nonever:1}]})();
+  const arc=(()=>{const a=arcStep();if(!a)return[];const N=a.p.st.length,last=a.p.st.filter(x=>!x.d).length===1;return[{id:"arc:"+a.p.id+":"+a.i,t:a.p.st[a.i].t,why:`${a.p.n} · ${last?"dernière étape":(a.i+1)+"/"+N}`,cat:CATS[a.p.cat]?a.p.cat:"perso",xp:DIFF[a.p.d||0][1],k:"arc",p:a.p,i:a.i,nonever:1}]})();
   const duo=(()=>{const D=duoCur();if(!D||D.me.includes(tkk)||D.me.length>=D.n)return[];return[{id:"duo:"+tkk,t:D.c,why:`Défi à deux avec ${D.who} · ${D.me.length}/${D.n}`,cat:"social",xp:10,k:"duo",nonever:1}]})();
   const cf=comfortQ().filter(x=>!NO["c:"+x.t]);
   let C=evmOn()?[...ev,...tik]:[...ev,...tik,...cf,...arc,...sp.slice(0,1),...(useAi?ai:[]),...duo,...mq.slice(0,1),...base,...sp.slice(1),...mq.slice(1)];
@@ -16698,10 +16698,7 @@ function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)re
   {let c=3;try{c=vieCap()}catch(e){}const e=enOf(),tk=dayKey(Date.now());let wd=false;try{wd=(S.g.vie.wd||[]).includes(new Date().getDay())&&c<=3}catch(_){}
     const why=[];try{const s=sitOf();if(s&&["poste","etud","indep"].includes(s.job)&&wd)why.push("jour de travail")}catch(_){}if(e===1)why.push("batterie basse");if(e===3)why.push("en forme");const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)why.push("nuit courte");
     const k=c+"|"+why.join(",");let cv=vb.querySelector(".capviz");if(!cv||cv.dataset.k!==k||cv!==vb.firstElementChild){if(!cv){cv=document.createElement("div");cv.className="capviz"}cv.dataset.k=k;
-      cv.innerHTML=`<span class="cvi">${rkSvg("batterie")}</span><div><b>${c} quête${c>1?"s":""} aujourd'hui</b><span class="cvp">${Array.from({length:6},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span>${why.length?`<small>${why.join(" · ")}</small>`:""}</div>`;vb.prepend(cv)}}
-  const su=vb.querySelector("#vie-suivi");if(su&&!su.querySelector(".svx")){const T=[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]];const g=document.createElement("div");g.className="svx";
-    g.innerHTML=T.map(([k,ic,l])=>{const cb=su.querySelector(`[data-trk="${k}"]`);return`<button type="button" class="svt" data-t="${k}" aria-pressed="${cb&&cb.checked?"true":"false"}"><span class="fti">${rkSvg(ic)}</span><span>${l}</span><em>${cb&&cb.checked?"Suivi":"Off"}</em></button>`}).join("");
-    const h3=su.querySelector("h3");(h3||su.firstChild).after(g);g.querySelectorAll(".svt").forEach(b=>b.onclick=()=>{const cb=su.querySelector(`[data-trk="${b.dataset.t}"]`);if(!cb)return;cb.checked=!cb.checked;cb.dispatchEvent(new Event("change"))})}}
+      cv.innerHTML=`<span class="cvi">${rkSvg("batterie")}</span><div><b>${c} quête${c>1?"s":""} aujourd'hui</b><span class="cvp">${Array.from({length:6},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span>${why.length?`<small>${why.join(" · ")}</small>`:""}</div>`;vb.prepend(cv)}}}
 // ---- Équilibre en carrés, réglages d'un proche en carrés, situation recalculée
 function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");
   const og=document.getElementById("offGo"),pz=document.getElementById("pzGo"),so=document.getElementById("softTg"),cf=document.getElementById("cfTg");

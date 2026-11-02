@@ -141,9 +141,9 @@
         <div class="vie-l">Jour normal${seg("cap",[1,3,5,8],v.cap)}</div>
         <div class="vie-l">Jour de travail${seg("capW",[1,2,3,5],v.capW)}</div></div>
       <div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
-        <label class="tg"><span><b>Cigarettes</b><small>Dans ton bandeau</small></span><input type="checkbox" class="sw" data-trk="cig"${v.track.cig?" checked":""}></label>
+        <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
-        <label class="tg"><span><b>Périodes en cours</b><small>Contrat et progression</small></span><input type="checkbox" class="sw" data-trk="per"${v.track.per?" checked":""}></label></div>
+</div>
       <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un élément">+</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
 `;
       box.innerHTML=h;
@@ -156,7 +156,7 @@
       box.querySelector("[data-wake]").onchange=e=>{g.wake=+e.target.value;e.target.blur();ch()};
       box.querySelector("[data-job]").onchange=e=>{v.job=e.target.checked;ch()};
       if(0)box.querySelectorAll("[data-pri]").forEach(b=>b.onclick=()=>{const k=b.dataset.pri;if(v.pri.includes(k))v.pri=v.pri.filter(x=>x!==k);else{if(v.pri.length>=3){try{toast("3 priorités maximum")}catch(e){}return}v.pri=[...v.pri,k]}ch()});
-      box.querySelectorAll("[data-trk]").forEach(b=>b.onchange=()=>{v.track[b.dataset.trk]=b.checked;ch()});
+      box.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{v.track[b.dataset.trk]=!v.track[b.dataset.trk];ch()});  // un seul réglage par suivi (2.5) : la tuile
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
       bindPer(box);bindLast(box,tk)};
     // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js

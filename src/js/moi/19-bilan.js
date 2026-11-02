@@ -127,7 +127,7 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
   const useAi=F.useAi&&ai.some(x=>!done.has(x.id)),e=enOf();
   const tkk=dayKey(Date.now()),ago=k=>Math.round((new Date(tkk+"T12:00")-new Date(k+"T12:00"))/864e5);
   const tik=tickets().filter(e=>{const a=ago(e.d);return a>=1&&a<=3&&!memOf("tik:"+e.id)}).slice(0,1).map(e=>({id:"tik:"+e.id,t:"Ton billet : "+e.n,why:"Garde un souvenir : une photo, un mot, une note",cat:"perso",xp:10,k:"tik",e,nonever:1}));
-  const arc=(()=>{const a=arcStep();if(!a)return[];const N=a.p.st.length,last=a.p.st.filter(x=>!x.d).length===1;return[{id:"arc:"+a.p.id+":"+a.i,t:a.p.st[a.i].t,why:`${a.p.n} · ${last?"boss final":(a.i+1)+"/"+N}`,cat:CATS[a.p.cat]?a.p.cat:"perso",xp:DIFF[a.p.d||0][1],k:"arc",p:a.p,i:a.i,nonever:1}]})();
+  const arc=(()=>{const a=arcStep();if(!a)return[];const N=a.p.st.length,last=a.p.st.filter(x=>!x.d).length===1;return[{id:"arc:"+a.p.id+":"+a.i,t:a.p.st[a.i].t,why:`${a.p.n} · ${last?"dernière étape":(a.i+1)+"/"+N}`,cat:CATS[a.p.cat]?a.p.cat:"perso",xp:DIFF[a.p.d||0][1],k:"arc",p:a.p,i:a.i,nonever:1}]})();
   const duo=(()=>{const D=duoCur();if(!D||D.me.includes(tkk)||D.me.length>=D.n)return[];return[{id:"duo:"+tkk,t:D.c,why:`Défi à deux avec ${D.who} · ${D.me.length}/${D.n}`,cat:"social",xp:10,k:"duo",nonever:1}]})();
   const cf=comfortQ().filter(x=>!NO["c:"+x.t]);
   let C=evmOn()?[...ev,...tik]:[...ev,...tik,...cf,...arc,...sp.slice(0,1),...(useAi?ai:[]),...duo,...mq.slice(0,1),...base,...sp.slice(1),...mq.slice(1)];

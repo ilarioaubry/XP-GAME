@@ -132,7 +132,7 @@ function arcFallback(note){return["Décrire ton objectif réussi en une phrase",
 async function arcAsk(){if(arcBusy)return;const G=S.g,s=sitOf();const note=(s&&s.note||"").trim();if(!note){sitSheet();return}
   arcBusy=true;arcErr="";render();let n=cap(note).slice(0,40),cat="perso",st=null,ai=0;
   if(!st)st=arcFallback(note);if(!Array.isArray(G.prj))G.prj=[];
-  G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Arc lancé : <span class="p">${esc(n)}</span> · ${st.length} chapitres`)}
+  G.prj.unshift({id:"arc"+Date.now().toString(36),n,cat,d:2,st:st.map(t=>({t})),ct:Date.now(),arc:1,src:note,ai});arcBusy=false;save();render();sfx("start");toast(`Projet lancé : <span class="p">${esc(n)}</span> · ${st.length} étapes`)}
 // --- souvenirs
 function memOf(id){return(Array.isArray(S.g.mem)?S.g.mem:[]).find(m=>m.id===id)||null}
 function memOpen(ctx,done){if(document.querySelector(".memsh"))return;const G=S.g,old=memOf(ctx.id)||{};let ph=old.ph||"";
