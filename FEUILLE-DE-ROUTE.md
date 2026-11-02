@@ -17,7 +17,7 @@ Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sectio
 
 **Lot 2 · Moi** — 2.0 réglage « Style de l'appli » retiré (« Classique » revenait tout seul à « Ciel ») — fait le 02/11, à vérifier · 2.1 jauge de stockage (R.1) : vraie place sur 5 Mo — fait le 02/11, à vérifier · 2.2 fiche profil seulement dans Ma vie, sous les onglets — fait le 02/11, à vérifier · 2.3 haut du Bilan (R.4) : « … en vrai » à la place de la série et des coffres, selon la période — fait le 02/11, à vérifier · 2.4 mêmes noms + jauge Nourriture (R.6) — fait le 02/11, à vérifier (reste : dire que Loisirs et Apprendre comptent dans Soi) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » — fait le 02/11, à vérifier · 2.6 [fait le 02/11, à vérifier : les trois rendus, Limite par jour et Bonus retirés] réglages cachés (R.12) · 2.7 [fait le 02/11, à vérifier : dans Ma fiche et le Calendrier] mon anniversaire, statut de couple (R.8) · 2.8 [fait le 02/11, à vérifier : moi.css 650 → 273 !important ; le reste avec base.css en 6.4 ; rappels en plein écran] CSS de Moi
 
-**Lot 3 · Proches** — 3.1 fiche en lecture (R.7) — fait le 02/11, à vérifier · 3.2 Appeler / Nouvelles ouvrent Téléphone et Messages · 3.3 liste (Ami du mois, légende, bordures, recherche) · 3.4 groupe · 3.5 le visiteur (S.7) · 3.6 carte postale, goûts, idées cadeau (S.16, S.20) · 3.7 CSS de Proches
+**Lot 3 · Proches** — 3.1 fiche en lecture (R.7) — fait le 02/11, à vérifier · 3.2 Appeler / Nouvelles ouvrent Téléphone et Messages — retirée le 02/11 à la demande d'Ilario (pas de numéro ni d'Instagram dans les fiches) · 3.3 liste (Ami du mois, légende, bordures, recherche) · 3.4 groupe · 3.5 le visiteur (S.7) · 3.6 carte postale, goûts, idées cadeau (S.16, S.20) · 3.7 CSS de Proches
 
 **Lot 4 · Le jeu** — 4.1 **(décision)** systèmes gardés (R.10) · 4.2 niveaux qui débloquent des bonus (S.22) · 4.3 boosts (S.11–S.13) · 4.4 badges (R.5) · 4.5 barème (R.11) · 4.6 Bonne nuit
 
@@ -333,7 +333,7 @@ Doc : https://claude.ai/artifact/2U9EfKXto3kqDLveD1wMwi
 - [ ] R.4 Bilan : retirer « 0 jour de suite » et « coffres ouverts » du haut, montrer ce qui a été fait
 - [ ] R.5 Badges : renommer « Machine de guerre », « Pilleur », « skills » ; revoir « Sur le pouce » et « Âme sœur » ; badges famille, travail, maison, projets
 - [ ] R.6 Mêmes noms partout (Sport, Créer…) et jauge Nourriture sur le profil
-- [ ] R.7 Fiche d'ami en lecture + bouton Modifier ; « vus il y a N jours » en clair ; « Appeler » ouvre Téléphone
+- [ ] R.7 Fiche d'ami en lecture + bouton Modifier ; « vus il y a N jours » en clair ; « Appeler » ouvre Téléphone (retiré le 02/11 : pas de numéro ni d'Instagram)
 - [ ] R.8 Ma date d'anniversaire, mon statut de couple, anniversaire de couple
 - [ ] R.9 Types d'événements mariage, naissance, déménagement, rendez-vous médical, avec leurs quêtes
 - [ ] R.10 **(décision)** Réduire les systèmes de progression (hasard, coffres, Ami du mois)
