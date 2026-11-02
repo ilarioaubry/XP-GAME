@@ -4261,13 +4261,13 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
         <div class="two"><label class="vie-l">Je commence à<input type="time" data-wf="1" value="${v.wf}"></label><label class="vie-l">Je finis à<input type="time" data-wt="1" value="${v.wt}"></label></div>
         <label class="ck"><input type="checkbox" data-job="1"${v.job?" checked":""}>Je travaille toute l'année (pas seulement pendant un contrat)</label></div>
       <div class="vie-c" id="vie-cap"><h3>${ic("autre",18)}Ma capacité<small>quêtes par jour</small></h3>
-        <div class="vie-l">Jour normal${seg("cap",[1,3,5,8],v.cap)}</div>
-        <div class="vie-l">Jour de travail${seg("capW",[1,2,3,5],v.capW)}</div></div>
+        <div class="vie-l">Jour normal${seg("cap",[1,2,3,4,5,8],v.cap)}</div>
+        <div class="vie-l">Jour de travail${seg("capW",[1,2,3,4,5,8],v.capW)}</div></div>
       <div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
         <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
 </div>
-      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un élément">+</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
+      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un rappel" title="Ajouter un rappel">${ICO("plus",24)}</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
 `;
       box.innerHTML=h;
       {const sm=document.getElementById("setMods");if(sm)sm.innerHTML=`<div id="vie-mods"><h3>${ic("autre",18)}Mes modules</h3><p>Ce qui est coupé disparaît.</p>
@@ -4352,11 +4352,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     <div class="set-card" id="balCard"><h3>Équilibre</h3><div class="balrows"></div></div>
     <div class="set-card" id="ritEdCard"><h3>Mes rituels</h3>
       <button type="button" class="btn" id="ritEdOpen" style="width:100%">Ouvrir l'atelier des rituels</button>
-      <div class="rules" style="margin-top:12px"><label>Bonus par moment terminé (XP) <input id="dbXp" type="number" min="0" step="5" inputmode="numeric"></label><label hidden>Bonus (€) <input id="dbEur" type="number" min="0" step="0.5" inputmode="decimal"></label></div>
-    </div>
-    <div class="set-card" hidden><h3>Limite par jour</h3>
-      <p class="hint" style="margin:0 0 8px">Nombre de fois qu'une même bonne action rapporte de l'XP chaque jour (l'eau et la nourriture ne sont pas limitées).</p>
-      <label>Limite<select id="dayLimit"><option value="1">1 fois</option><option value="2">2 fois</option><option value="3">3 fois</option><option value="5">5 fois</option><option value="0">Illimitée</option></select></label>
     </div>
     <div class="set-card" id="testCard"><h3>Mode test (admin)</h3>
       <p class="hint" style="margin:0">Pour essayer les fonctionnalités sans risque : rien n'est enregistré. En quittant le mode test (ou en rechargeant la page), tu retrouves exactement ta vraie progression.</p>
@@ -4395,7 +4390,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 61eaceb</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 414b143</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9328,9 +9323,7 @@ function renderData(){
   const sz=ch*2,max=5*1024*1024,p=Math.min(100,sz/max*100),mo=n=>n<1024*1024?Math.max(1,Math.round(n/1024))+" Ko":(n/1048576).toFixed(1).replace(".",",")+" Mo";
   $("storTxt").textContent=`Stockage : ${mo(sz)} sur 5 Mo`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";
-  if(document.activeElement!==$("dayLimit"))$("dayLimit").value=String(S.dayLimit);
 }
-$("dayLimit").onchange=()=>{S.dayLimit=+$("dayLimit").value;save();render()};
 $("expBtn").onclick=async()=>{
   const t=JSON.stringify(snapshot()),b=$("dataBox");b.value=t;b.hidden=false;b.select();
   let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{ok=document.execCommand("copy")}catch(e2){}}
@@ -10285,9 +10278,7 @@ function ritTap(t,el,ev){
   dailyBonusCheck()}
 const RIT_XP=3;
 function renderRituals(){ritRoll();
-  if(document.activeElement!==$("dbXp"))$("dbXp").value=S.dayBonus.xp;if(document.activeElement!==$("dbEur"))$("dbEur").value=S.dayBonus.eur;
 }
-$("dbXp").onchange=()=>{S.dayBonus.xp=Math.max(0,Math.round(+$("dbXp").value)||0);save()};$("dbEur").onchange=()=>{S.dayBonus.eur=Math.max(0,Math.round((+$("dbEur").value||0)*100)/100);save()};
 $("ritEdOpen").onclick=()=>ritAtelier();
 
 // ---- Ajouts de contenu (une seule fois par appareil/compte)
@@ -15433,7 +15424,7 @@ html:not(#_a):not(#_b) body #ficheBox .pav img{display:block!important;visibilit
 html:not(#_a):not(#_b) body #ficheBox .pav.fmini{display:block!important;box-sizing:border-box;padding:0!important;flex:none}
 html:not(#_a):not(#_b) body #ficheBox .fav .pav.fmini{width:22px!important;height:22px!important}
 html:not(#_a):not(#_b) body #setBox :is(#ritEdCard,#setMods,.set-card:has(#expBtn),.set-card:has(.thseg)){display:none!important}
-html:not(#_a):not(#_b) body #vieBox :is(#vie-cap,.vie-intro){display:none!important}
+html:not(#_a):not(#_b) body #vieBox .vie-intro{display:none!important}
 html:not(#_a):not(#_b) body .capviz{display:flex;align-items:center;gap:14px;padding:14px;border-radius:16px;background:var(--surface);border:2px solid var(--line);margin-bottom:12px}
 html:not(#_a):not(#_b) body .capviz .cvi{width:52px;height:52px;flex:none}
 html:not(#_a):not(#_b) body .capviz .cvi svg{width:100%;height:100%}
@@ -15462,8 +15453,7 @@ html:not(#_a):not(#_b) body .bct2 .fti{width:30px;height:30px;display:block}
 html:not(#_a):not(#_b) body .bct2 b{font-size:15px}
 html:not(#_a):not(#_b) body .bct2 small{opacity:.75;line-height:1.2;font-size:13px}
 html:not(#_a):not(#_b) body .bct2 .bcl2{text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:11px}
-html:not(#_a):not(#_b) body #vieBox :is(#vie-maison,.capviz){display:none!important}
-html:not(#_a):not(#_b) body #vie-rythme label.vie-l:has([data-wake]){display:none!important}
+html:not(#_a):not(#_b) body #vieBox .capviz{display:none!important}
 html:not(#_a):not(#_b) body #balCard .balrows{display:none!important}
 html:not(#_a):not(#_b) body #balCard h3{pointer-events:none}
 html:not(#_a):not(#_b) body #balCard h3::after{display:none!important}
@@ -15548,7 +15538,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch){text-align:cen
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch>span){justify-items:center!important;text-align:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>img{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it b{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden!important;line-height:1.2!important;min-height:2.4em!important;align-self:center!important}
@@ -15674,6 +15664,9 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs>button{min-width
 html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartx{display:inline-flex;align-items:center;gap:6px}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #ficheBox .fartx svg{width:10px!important;height:10px!important;opacity:.7}
 html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartf{margin-top:8px}
+
+/* Ma vie (2.6, 02/11) : choix sélectionné = or, comme partout */
+#vieBox .seg button[aria-pressed=true],#vieBox .chipz button[aria-pressed=true]{background:var(--surface);color:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
@@ -16640,7 +16633,7 @@ function fPick(s,commit){if(document.querySelector(".fpick"))return;const p=docu
     p.querySelectorAll(".fpp").forEach((b,i)=>{b.querySelector(".fpn").textContent=b.dataset.n;b.onclick=()=>{const n=b.dataset.n,a=(s.with||[]).slice(),j=a.indexOf(n);if(j>=0)a.splice(j,1);else a.push(n);s.with=a;s.home=homeOf(s);commit();draw()}});
     const cl=()=>{p.remove();renderFiche()};p.querySelector(".raclose").onclick=cl;p.querySelector(".fpok").onclick=cl;p.onclick=e=>{if(e.target===p)cl()}};draw()}
 function ficheMove(){const slot=document.querySelector("#ficheBox .fposte");const vb=document.getElementById("vieBox");if(!vb)return;
-  ["vie-per","vie-rythme"].forEach(id=>{const inV=vb.querySelector("#"+id);if(!slot){if(inV)inV.hidden=true;return}
+  ["vie-per"].forEach(id=>{const inV=vb.querySelector("#"+id);if(!slot){if(inV)inV.hidden=true;return}
     const old=slot.querySelector("#"+id);if(inV){if(old&&old.contains(document.activeElement)){inV.remove();return}if(old)old.remove();inV.hidden=false;slot.appendChild(inV)}})}
 function autoTime(){const s=sitOf();if(!s)return;let wd=false;try{wd=vieCap()<3}catch(e){}const t=["poste","etud","indep"].includes(s.job)&&wd?"30":"plus";if(s.time!==t){s.time=t;save()}}
 function perAskCard(){const P=perEnded();const s=sitOf();if(!P||!s||s.job!=="poste")return"";const xp=P.t==="contrat"&&typeof contratClosed==="function"&&!contratClosed(P);return`<div class="fask" data-pid="${P.id}"><b>« ${esc(P.name||"Ta période")} » est terminé</b><small>${xp?"Bravo, +50 XP Travail. ":""}Ta situation a changé ?</small><div class="fjobs mini">${[["poste","Toujours en poste"],["cherche","En recherche"],["pause","En pause"],["etud","Étudiant·e"]].map(([v,l])=>`<button type="button" data-ask="${v}"><span class="fti">${tileI(JOBI[v])}</span><span>${l}</span></button>`).join("")}</div></div>`}

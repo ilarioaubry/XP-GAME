@@ -554,7 +554,7 @@ html:not(#_a):not(#_b) body #ficheBox .pav img{display:block!important;visibilit
 html:not(#_a):not(#_b) body #ficheBox .pav.fmini{display:block!important;box-sizing:border-box;padding:0!important;flex:none}
 html:not(#_a):not(#_b) body #ficheBox .fav .pav.fmini{width:22px!important;height:22px!important}
 html:not(#_a):not(#_b) body #setBox :is(#ritEdCard,#setMods,.set-card:has(#expBtn),.set-card:has(.thseg)){display:none!important}
-html:not(#_a):not(#_b) body #vieBox :is(#vie-cap,.vie-intro){display:none!important}
+html:not(#_a):not(#_b) body #vieBox .vie-intro{display:none!important}
 html:not(#_a):not(#_b) body .capviz{display:flex;align-items:center;gap:14px;padding:14px;border-radius:16px;background:var(--surface);border:2px solid var(--line);margin-bottom:12px}
 html:not(#_a):not(#_b) body .capviz .cvi{width:52px;height:52px;flex:none}
 html:not(#_a):not(#_b) body .capviz .cvi svg{width:100%;height:100%}
@@ -583,8 +583,7 @@ html:not(#_a):not(#_b) body .bct2 .fti{width:30px;height:30px;display:block}
 html:not(#_a):not(#_b) body .bct2 b{font-size:15px}
 html:not(#_a):not(#_b) body .bct2 small{opacity:.75;line-height:1.2;font-size:13px}
 html:not(#_a):not(#_b) body .bct2 .bcl2{text-transform:uppercase;letter-spacing:.06em;font-weight:800;font-size:11px}
-html:not(#_a):not(#_b) body #vieBox :is(#vie-maison,.capviz){display:none!important}
-html:not(#_a):not(#_b) body #vie-rythme label.vie-l:has([data-wake]){display:none!important}
+html:not(#_a):not(#_b) body #vieBox .capviz{display:none!important}
 html:not(#_a):not(#_b) body #balCard .balrows{display:none!important}
 html:not(#_a):not(#_b) body #balCard h3{pointer-events:none}
 html:not(#_a):not(#_b) body #balCard h3::after{display:none!important}
@@ -669,7 +668,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch){text-align:cen
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch>span){justify-items:center!important;text-align:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3 img{display:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>img{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-grid{grid-auto-rows:1fr!important;align-items:stretch!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it{height:100%!important;min-height:132px!important;box-sizing:border-box!important;display:grid!important;grid-template-rows:auto 1fr auto!important;justify-items:center!important;align-items:center!important;text-align:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #wrBody .wr-it b{display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden!important;line-height:1.2!important;min-height:2.4em!important;align-self:center!important}
@@ -795,3 +794,6 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs>button{min-width
 html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartx{display:inline-flex;align-items:center;gap:6px}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body #ficheBox .fartx svg{width:10px!important;height:10px!important;opacity:.7}
 html:not(#_u1):not(#_u2):not(#_u3) body #ficheBox .fartf{margin-top:8px}
+
+/* Ma vie (2.6, 02/11) : choix sélectionné = or, comme partout */
+#vieBox .seg button[aria-pressed=true],#vieBox .chipz button[aria-pressed=true]{background:var(--surface);color:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 2px var(--gold)}

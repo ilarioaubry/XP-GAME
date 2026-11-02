@@ -138,13 +138,13 @@
         <div class="two"><label class="vie-l">Je commence à<input type="time" data-wf="1" value="${v.wf}"></label><label class="vie-l">Je finis à<input type="time" data-wt="1" value="${v.wt}"></label></div>
         <label class="ck"><input type="checkbox" data-job="1"${v.job?" checked":""}>Je travaille toute l'année (pas seulement pendant un contrat)</label></div>
       <div class="vie-c" id="vie-cap"><h3>${ic("autre",18)}Ma capacité<small>quêtes par jour</small></h3>
-        <div class="vie-l">Jour normal${seg("cap",[1,3,5,8],v.cap)}</div>
-        <div class="vie-l">Jour de travail${seg("capW",[1,2,3,5],v.capW)}</div></div>
+        <div class="vie-l">Jour normal${seg("cap",[1,2,3,4,5,8],v.cap)}</div>
+        <div class="vie-l">Jour de travail${seg("capW",[1,2,3,4,5,8],v.capW)}</div></div>
       <div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
         <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
 </div>
-      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un élément">+</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
+      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un rappel" title="Ajouter un rappel">${ICO("plus",24)}</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
 `;
       box.innerHTML=h;
       {const sm=document.getElementById("setMods");if(sm)sm.innerHTML=`<div id="vie-mods"><h3>${ic("autre",18)}Mes modules</h3><p>Ce qui est coupé disparaît.</p>

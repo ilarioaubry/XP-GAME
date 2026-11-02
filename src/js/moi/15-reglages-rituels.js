@@ -7,9 +7,7 @@ function renderData(){
   const sz=ch*2,max=5*1024*1024,p=Math.min(100,sz/max*100),mo=n=>n<1024*1024?Math.max(1,Math.round(n/1024))+" Ko":(n/1048576).toFixed(1).replace(".",",")+" Mo";
   $("storTxt").textContent=`Stockage : ${mo(sz)} sur 5 Mo`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";
-  if(document.activeElement!==$("dayLimit"))$("dayLimit").value=String(S.dayLimit);
 }
-$("dayLimit").onchange=()=>{S.dayLimit=+$("dayLimit").value;save();render()};
 $("expBtn").onclick=async()=>{
   const t=JSON.stringify(snapshot()),b=$("dataBox");b.value=t;b.hidden=false;b.select();
   let ok=false;try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{ok=document.execCommand("copy")}catch(e2){}}

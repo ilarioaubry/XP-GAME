@@ -131,8 +131,6 @@ function ritTap(t,el,ev){
   dailyBonusCheck()}
 const RIT_XP=3;
 function renderRituals(){ritRoll();
-  if(document.activeElement!==$("dbXp"))$("dbXp").value=S.dayBonus.xp;if(document.activeElement!==$("dbEur"))$("dbEur").value=S.dayBonus.eur;
 }
-$("dbXp").onchange=()=>{S.dayBonus.xp=Math.max(0,Math.round(+$("dbXp").value)||0);save()};$("dbEur").onchange=()=>{S.dayBonus.eur=Math.max(0,Math.round((+$("dbEur").value||0)*100)/100);save()};
 $("ritEdOpen").onclick=()=>ritAtelier();
 

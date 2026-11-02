@@ -52,7 +52,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Grignotage, Recevoir chez moi | Panneau + : grignotage sans XP (règle « Sans grignotage ») ; recevoir chez moi (apéro, repas, soirée jeux), 15 XP Ami | active |
 | Ma fiche | Ton profil, seul formulaire de ta situation (métier, chez moi, J'ai…, priorités, ce que tu aimes, temps libre, ce qui ne te concerne pas, artistes). « Ma situation » ouvre ce formulaire (l'ancienne fenêtre est retirée) | active |
 | Ce que tu deviens | Identités qui montent avec tes actions | active |
-| Ma vie | Rythme (réveil, travail), périodes (contrat…), compteurs suivis, « La dernière fois que… », Mes modules | active |
+| Ma vie | Rythme (réveil, jours et heures de travail), capacité (quêtes par jour), périodes (contrat…), Ce que je surveille, « La dernière fois que… » (rappels à rythme), Mes modules — tous visibles depuis le 02/11 | active |
 | Mes projets | Projets en étapes, abandon avec Annuler | active |
 | Calendrier | Événements à venir | module |
 | Réglages | Rituels, sons (le choix du style Ciel / Classique est retiré le 02/11) | active |
