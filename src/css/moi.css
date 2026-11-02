@@ -279,7 +279,7 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .sk .sb{grid-column:1/3;height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden}
 .sk .sb i{display:block;height:100%;background:var(--c-perso)}
 .rem.bdc .bdr{display:flex;justify-content:flex-start;text-align:left;align-items:center;gap:14px;padding:6px 0;width:100%}
-.bdg{font-size:13px;color:#6b4a00;overflow-wrap:anywhere}
+.bdg{font-size:13px;color:#6b4a00!important;overflow-wrap:anywhere}
 .stor{display:grid;gap:6px;font-size:15px;font-weight:600}
 .stbar{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden;display:block}
 .stbar i{display:block;height:100%;background:var(--accent)}
@@ -490,7 +490,7 @@ html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{animation:pxChest 4s steps(1) 
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .pf-kpi .kp .ki .pxi{animation:none!important}}
 .pf-kpi .kst .ki .pxi{filter:drop-shadow(0 0 3px rgba(255,140,40,.75)) drop-shadow(0 0 7px rgba(255,90,20,.4))}
 .brow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 4px;justify-items:center;padding:4px 10px 14px}
-.bdg{all:unset;position:relative;display:grid;place-items:center;width:68px;height:68px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s steps(2)}
+html:not(#_a):not(#_b) body .bdg{all:unset;position:relative;display:grid;place-items:center;width:68px;height:68px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s steps(2)}
 html:not(#_a):not(#_b) body .bdg:active{transform:translateY(2px)}
 html:not(#_a):not(#_b) body .bdg:focus-visible{outline:2px dashed var(--gold);outline-offset:2px}
 .bdg .bpx{filter:drop-shadow(3px 3px 0 var(--rpg-shadow))}
@@ -561,7 +561,7 @@ html:not(#_a):not(#_b) body .evr.now{box-shadow:4px 4px 0 var(--rpg-shadow),0 0 
 .evch.evadd .evci{background:var(--surface-2);border-style:dashed;color:var(--gold)}
 .evch.evadd small{font-size:11px;color:var(--muted)}
 .bdgnew{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);z-index:3;padding:1px 6px;border-radius:999px;background:#e3263a;color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--surface);white-space:nowrap;animation:bdgPulse 1.6s ease-in-out infinite}
-.bdg.new{box-shadow:0 0 0 3px #e3263a,0 0 14px 2px rgba(227,38,58,.45)}
+html:not(#_a):not(#_b) body .bdg.new{box-shadow:0 0 0 3px #e3263a,0 0 14px 2px rgba(227,38,58,.45)}
 .bfnew{display:inline-block;margin-left:6px;vertical-align:1px;letter-spacing:0;text-transform:none;padding:1px 8px;border-radius:999px;background:#e3263a;color:#fff;font-size:11px;font-weight:900;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.bdgnew{animation:none}}
 /* — depuis principal-07.css — */
