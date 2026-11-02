@@ -4395,7 +4395,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 4475622</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7f6203e</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5323,10 +5323,9 @@ function renderBalanceBase(){const box=document.querySelector("#balCard .balrows
   box.innerHTML=`<div class="balr"><span><b>Jour off</b><small>1 par semaine · série protégée</small></span><button type="button" class="btn" id="offGo" ${off||!left?"disabled":""}>${off?"Aujourd'hui":left?"Prendre":"Déjà pris"}</button></div>
     <div class="balr"><span><b>Pause malade / vacances</b><small>${pzActive()?`En pause (${pzActive().k}) jusqu'au ${new Date(pzActive().to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}. Série gelée.`:`Gèle ta série plusieurs jours. ${pzLeft()} jour${pzLeft()>1?"s":""} restant${pzLeft()>1?"s":""} cette année.`}</small></span><button type="button" class="btn" id="pzGo">${pzActive()?"Reprendre":"Pause"}</button></div>
     <label class="balr"><span><b>Mode doux</b><small>Si ton humeur du jour est basse, les malus sont désactivés.</small></span><input type="checkbox" id="softTg" ${G.softAuto!==false?"checked":""}></label>
-    <label class="balr"><span><b>Style de l'appli</b><small>« Ciel » suit le moment de la journée. « Classique » reprend l'ancien style brun et doré.</small></span><select id="daSel" aria-label="Style de l'appli"><option value="sky"${S.g.da!=="classic"?" selected":""}>Ciel</option><option value="classic"${S.g.da==="classic"?" selected":""}>Classique</option></select></label>
     <label class="balr"><span><b>Heure de réveil</b><small>Décale le matin, le soir, les repas et la fin de journée (${wakeH()-4} h).</small></span><select id="wakeSel" aria-label="Heure de réveil">${[5,6,7,8,9,10,11,12,13].map(h=>`<option value="${h}"${h===wakeH()?" selected":""}>${h} h</option>`).join("")}</select></label>
     <label class="balr"><span><b>Couvre-feu</b><small>Après 23 h 30, l'appli te conseille d'aller dormir.</small></span><input type="checkbox" id="cfTg" ${G.curfew!==false?"checked":""}></label>`;
-  $("offGo").onclick=takeOff;$("pzGo").onclick=()=>pzActive()?pzStop():pzOpen();$("softTg").onchange=e=>{G.softAuto=e.target.checked;save()};$("cfTg").onchange=e=>{G.curfew=e.target.checked;save();renderNow()};$("daSel").onchange=e=>{G.da=e.target.value;save();render()};$("wakeSel").onchange=e=>{G.wake=+e.target.value;save();render();toast("Réveil réglé à "+G.wake+" h")}}
+  $("offGo").onclick=takeOff;$("pzGo").onclick=()=>pzActive()?pzStop():pzOpen();$("softTg").onchange=e=>{G.softAuto=e.target.checked;save()};$("cfTg").onchange=e=>{G.curfew=e.target.checked;save();renderNow()};$("wakeSel").onchange=e=>{G.wake=+e.target.value;save();render();toast("Réveil réglé à "+G.wake+" h")}}
 
 const xpToday=()=>{const tk=dayKey(Date.now());return S.log.filter(e=>dayKey(e.t)===tk&&e.xp>0).reduce((a,e)=>a+e.xp,0)};
 
@@ -5649,8 +5648,7 @@ function skyHillsSvg(){let r="";for(let x=0;x<64;x++){const y1=Math.round(8+2.2*
   return`<svg viewBox="0 0 64 16" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function skyParts(p){if(!p)return"";const C={leaf:["#e0782a","#c8501e","#f0b040"],snow:["#ffffff","#e8f0ff","#ffffff"],petal:["#ffb0d0","#ffd0e4","#ff90b8"]}[p];
   return Array.from({length:p==="snow"?26:14},(_,i)=>`<i class="${p}" style="left:${(i*41+7)%100}%;--c:${C[i%3]};--sw:${(i%5)*6-12}px;animation-duration:${(p==="snow"?11:9)+(i%6)*2}s;animation-delay:${-(i*1.7)%14}s"></i>`).join("")}
-function skyApply(){const on=!(S.g&&S.g.da==="classic"),Rt=document.documentElement;Rt.classList.toggle("sky",on);let bg=document.getElementById("skyBg");
-  if(!on){if(bg)bg.remove();delete Rt.dataset.ph;Rt.style.removeProperty("--skyac");return}
+function skyApply(){const Rt=document.documentElement;Rt.classList.add("sky");let bg=document.getElementById("skyBg");  // style « Classique » retiré le 02/11 : toujours le ciel
   Rt.dataset.ph=ambPhase();if(!bg){bg=document.createElement("div");bg.id="skyBg";bg.setAttribute("aria-hidden","true");document.body.prepend(bg)}
   if(!bg.dataset.sv){bg.dataset.sv="2";bg.innerHTML=`<div class="skg"></div><div class="skst">${Array.from({length:34},(_,i)=>`<i style="left:${(i*37+11)%100}%;top:${(i*53+7)%62}%;animation-delay:${(i%7)*.45}s"></i>`).join("")}</div><div class="sksun">${ambSun("matin")}</div><div class="skmoon"></div><div class="skcl c1">${AMB_CLOUD}</div><div class="skcl c2">${AMB_CLOUD}</div><div class="skpt"></div><div class="skhill">${skyHillsSvg()}</div><div class="skshade"></div>`}
   skyTick()}
@@ -9324,8 +9322,10 @@ $("avcPhoto").onclick=()=>{if(avcWho==="__me")return;
 function renderData(){
   {let E=[];try{E=JSON.parse(localStorage.getItem("xp-erreurs")||"[]")}catch(e){}let el=$("errLog");if(!el){el=document.createElement("p");el.id="errLog";el.className="hint";const st=$("storHint");st&&st.after(el)}
    el.hidden=!E.length;if(E.length){const x=E[E.length-1],d=new Date(x.t);el.textContent=`Dernière erreur (${d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}) : ${x.m} ${x.s}`}}
-  const sz=JSON.stringify(snapshot()).length,max=256*1024,p=Math.min(100,sz/max*100);
-  $("storTxt").textContent=`Stockage : ${Math.round(sz/1024)} Ko / 256 Ko`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
+  // place prise dans le stockage du téléphone : Safari garde 5 Mo par appli, chaque caractère compte 2 octets (UTF-16)
+  let ch=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);ch+=k.length+(localStorage.getItem(k)||"").length}}catch(e){ch=JSON.stringify(snapshot()).length}
+  const sz=ch*2,max=5*1024*1024,p=Math.min(100,sz/max*100),mo=n=>n<1024*1024?Math.max(1,Math.round(n/1024))+" Ko":(n/1048576).toFixed(1).replace(".",",")+" Mo";
+  $("storTxt").textContent=`Stockage : ${mo(sz)} sur 5 Mo`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";
   if(document.activeElement!==$("dayLimit"))$("dayLimit").value=String(S.dayLimit);
 }
@@ -13629,7 +13629,6 @@ html.sky :is(.qxp button){box-shadow:none;border-width:1.5px;border-style:solid;
 
 html.sky .qxp::before{display:none}
 
-html:not(.sky) #sceneBox{display:none}
 .scn{position:relative;height:150px;margin:-6px 0 -4px;overflow:hidden}
 .scnt{position:absolute;left:2px;top:4px;display:grid;gap:1px;z-index:2;max-width:calc(100% - 56px)}
 .scnt b{font-family:var(--f-pixel);font-size:20px;color:#fff8e6;text-shadow:0 2px 0 rgba(0,0,0,.5);line-height:1.1}
@@ -16714,7 +16713,7 @@ function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)re
     g.innerHTML=T.map(([k,ic,l])=>{const cb=su.querySelector(`[data-trk="${k}"]`);return`<button type="button" class="svt" data-t="${k}" aria-pressed="${cb&&cb.checked?"true":"false"}"><span class="fti">${rkSvg(ic)}</span><span>${l}</span><em>${cb&&cb.checked?"Suivi":"Off"}</em></button>`}).join("");
     const h3=su.querySelector("h3");(h3||su.firstChild).after(g);g.querySelectorAll(".svt").forEach(b=>b.onclick=()=>{const cb=su.querySelector(`[data-trk="${b.dataset.t}"]`);if(!cb)return;cb.checked=!cb.checked;cb.dispatchEvent(new Event("change"))})}}
 // ---- Équilibre en carrés, réglages d'un proche en carrés, situation recalculée
-function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");try{if(S.g.da!=="sky"&&document.getElementById("daSel")){const d=document.getElementById("daSel");if(d.value!=="sky"){d.value="sky";d.dispatchEvent(new Event("change"))}}}catch(e){}
+function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");
   const og=document.getElementById("offGo"),pz=document.getElementById("pzGo"),so=document.getElementById("softTg"),cf=document.getElementById("cfTg");
   const pzs=(bc.querySelector("#pzGo")||{}).closest?bc.querySelector("#pzGo").closest(".balr").querySelector("small").textContent:"";const left=(pzs.match(/(\d+)\s*jours? restants?/)||[])[1];
   const T=[["off","sieste","Jour off",og?(og.disabled?"Déjà pris":"1 par semaine"):"",og&&og.disabled],["pz","sante","Pause",left?left+" j restants":"",false],["soft","plante","Mode doux",so&&so.checked?"Actif":"Off",so&&so.checked],["cf","lune","Couvre-feu",cf&&cf.checked?"23 h 30":"Off",cf&&cf.checked]];

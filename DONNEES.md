@@ -42,7 +42,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `onb` | 06, 29 | Date de fin de l'accueil (création du profil) | active |
 | `help` | 27 | Nombre d'affichages des aides, pour les masquer après 3 | active |
 | `mute`, `ambS` | 02, 15, 28, 08 | Sons coupés, ambiance sonore de la scène | active |
-| `da` | 03, 08, finitions | Style de l'appli (ciel / classique) | active |
+| `da` | — | Style de l'appli (ciel / classique) | retirée le 02/11 (toujours le ciel), donnée gardée |
 | `wake`, `curfew` | 01, 03 | Heure de réveil (début de journée), alerte de couche tardive | active |
 
 ### Repas et assiette

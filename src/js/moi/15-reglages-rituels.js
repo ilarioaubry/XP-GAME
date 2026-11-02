@@ -2,8 +2,10 @@
 function renderData(){
   {let E=[];try{E=JSON.parse(localStorage.getItem("xp-erreurs")||"[]")}catch(e){}let el=$("errLog");if(!el){el=document.createElement("p");el.id="errLog";el.className="hint";const st=$("storHint");st&&st.after(el)}
    el.hidden=!E.length;if(E.length){const x=E[E.length-1],d=new Date(x.t);el.textContent=`Dernière erreur (${d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"})} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}) : ${x.m} ${x.s}`}}
-  const sz=JSON.stringify(snapshot()).length,max=256*1024,p=Math.min(100,sz/max*100);
-  $("storTxt").textContent=`Stockage : ${Math.round(sz/1024)} Ko / 256 Ko`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
+  // place prise dans le stockage du téléphone : Safari garde 5 Mo par appli, chaque caractère compte 2 octets (UTF-16)
+  let ch=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);ch+=k.length+(localStorage.getItem(k)||"").length}}catch(e){ch=JSON.stringify(snapshot()).length}
+  const sz=ch*2,max=5*1024*1024,p=Math.min(100,sz/max*100),mo=n=>n<1024*1024?Math.max(1,Math.round(n/1024))+" Ko":(n/1048576).toFixed(1).replace(".",",")+" Mo";
+  $("storTxt").textContent=`Stockage : ${mo(sz)} sur 5 Mo`;$("storBar").style.width=p+"%";$("storBar").style.background=p>80?"var(--bad,#b3261e)":"";
   $("storHint").textContent=p>80?"Presque plein : retire des photos d'amis ou des notes longues pour éviter une perte d'enregistrement.":"Tout va bien. Les photos d'amis sont ce qui pèse le plus.";
   if(document.activeElement!==$("dayLimit"))$("dayLimit").value=String(S.dayLimit);
 }

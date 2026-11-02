@@ -150,7 +150,7 @@ function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)re
     g.innerHTML=T.map(([k,ic,l])=>{const cb=su.querySelector(`[data-trk="${k}"]`);return`<button type="button" class="svt" data-t="${k}" aria-pressed="${cb&&cb.checked?"true":"false"}"><span class="fti">${rkSvg(ic)}</span><span>${l}</span><em>${cb&&cb.checked?"Suivi":"Off"}</em></button>`}).join("");
     const h3=su.querySelector("h3");(h3||su.firstChild).after(g);g.querySelectorAll(".svt").forEach(b=>b.onclick=()=>{const cb=su.querySelector(`[data-trk="${b.dataset.t}"]`);if(!cb)return;cb.checked=!cb.checked;cb.dispatchEvent(new Event("change"))})}}
 // ---- Équilibre en carrés, réglages d'un proche en carrés, situation recalculée
-function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");try{if(S.g.da!=="sky"&&document.getElementById("daSel")){const d=document.getElementById("daSel");if(d.value!=="sky"){d.value="sky";d.dispatchEvent(new Event("change"))}}}catch(e){}
+function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");
   const og=document.getElementById("offGo"),pz=document.getElementById("pzGo"),so=document.getElementById("softTg"),cf=document.getElementById("cfTg");
   const pzs=(bc.querySelector("#pzGo")||{}).closest?bc.querySelector("#pzGo").closest(".balr").querySelector("small").textContent:"";const left=(pzs.match(/(\d+)\s*jours? restants?/)||[])[1];
   const T=[["off","sieste","Jour off",og?(og.disabled?"Déjà pris":"1 par semaine"):"",og&&og.disabled],["pz","sante","Pause",left?left+" j restants":"",false],["soft","plante","Mode doux",so&&so.checked?"Actif":"Off",so&&so.checked],["cf","lune","Couvre-feu",cf&&cf.checked?"23 h 30":"Off",cf&&cf.checked]];

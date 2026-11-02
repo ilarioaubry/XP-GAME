@@ -32,8 +32,7 @@ function skyHillsSvg(){let r="";for(let x=0;x<64;x++){const y1=Math.round(8+2.2*
   return`<svg viewBox="0 0 64 16" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function skyParts(p){if(!p)return"";const C={leaf:["#e0782a","#c8501e","#f0b040"],snow:["#ffffff","#e8f0ff","#ffffff"],petal:["#ffb0d0","#ffd0e4","#ff90b8"]}[p];
   return Array.from({length:p==="snow"?26:14},(_,i)=>`<i class="${p}" style="left:${(i*41+7)%100}%;--c:${C[i%3]};--sw:${(i%5)*6-12}px;animation-duration:${(p==="snow"?11:9)+(i%6)*2}s;animation-delay:${-(i*1.7)%14}s"></i>`).join("")}
-function skyApply(){const on=!(S.g&&S.g.da==="classic"),Rt=document.documentElement;Rt.classList.toggle("sky",on);let bg=document.getElementById("skyBg");
-  if(!on){if(bg)bg.remove();delete Rt.dataset.ph;Rt.style.removeProperty("--skyac");return}
+function skyApply(){const Rt=document.documentElement;Rt.classList.add("sky");let bg=document.getElementById("skyBg");  // style « Classique » retiré le 02/11 : toujours le ciel
   Rt.dataset.ph=ambPhase();if(!bg){bg=document.createElement("div");bg.id="skyBg";bg.setAttribute("aria-hidden","true");document.body.prepend(bg)}
   if(!bg.dataset.sv){bg.dataset.sv="2";bg.innerHTML=`<div class="skg"></div><div class="skst">${Array.from({length:34},(_,i)=>`<i style="left:${(i*37+11)%100}%;top:${(i*53+7)%62}%;animation-delay:${(i%7)*.45}s"></i>`).join("")}</div><div class="sksun">${ambSun("matin")}</div><div class="skmoon"></div><div class="skcl c1">${AMB_CLOUD}</div><div class="skcl c2">${AMB_CLOUD}</div><div class="skpt"></div><div class="skhill">${skyHillsSvg()}</div><div class="skshade"></div>`}
   skyTick()}

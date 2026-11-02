@@ -55,7 +55,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Ma vie | Rythme (réveil, travail), périodes (contrat…), compteurs suivis, « La dernière fois que… », Mes modules | active |
 | Mes projets | Projets en étapes, abandon avec Annuler | active |
 | Calendrier | Événements à venir | module |
-| Réglages | Rituels, sons, style | active |
+| Réglages | Rituels, sons (le choix du style Ciel / Classique est retiré le 02/11) | active |
 
 ## Moi > Chez moi
 
@@ -71,7 +71,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 |---|---|---|
 | Mon bilan | Semaine / Mois / Année : graphique, chapitre de la semaine (titre auto, à renommer), XP, rituels | active |
 | Mon assiette | Les assiettes des 7 derniers jours | active (si des assiettes existent) |
-| Données | Export / restauration en fichier, texte de secours, stockage, version de l'appli | active |
+| Données | Export / restauration en fichier, texte de secours, stockage (place réelle sur 5 Mo), version de l'appli | active |
 
 ## Proches
 
