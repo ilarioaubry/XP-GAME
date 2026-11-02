@@ -400,7 +400,16 @@ function renderRelationsBase(){
     li.onclick=()=>openProfile(n);li.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProfile(n)}};
     ul.appendChild(li);
   });
+  relFilter();
 }
+// recherche dans Famille et Amis (affichée à partir de 8 proches)
+const relNorm=t=>String(t||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+function relFilter(){const q=$("relQ"),ul=$("relList");if(!q||!ul)return;const all=ul.querySelectorAll("li.rl");q.hidden=all.length<8;
+  if(!q.oninput){q.oninput=relFilter;q.onkeydown=e=>{if(e.key==="Enter")q.blur()}}
+  const v=q.hidden?"":relNorm(q.value);let hit=0;
+  all.forEach(li=>{const ok=!v||relNorm(li.querySelector(".rn b").textContent).includes(v);li.hidden=!ok;if(ok)hit++});
+  ul.querySelectorAll("li.rgh").forEach(h=>{let n=h.nextElementSibling,c=0,tot=0;while(n&&!n.classList.contains("rgh")){if(n.classList.contains("rl")){tot++;if(!n.hidden)c++}n=n.nextElementSibling}h.hidden=!!v&&tot>0&&!c});
+  let none=ul.querySelector(".relnone");if(v&&!hit){if(!none){none=document.createElement("li");none.className="relnone vide";ul.appendChild(none)}none.textContent="Aucun proche ne s'appelle comme ça."}else if(none)none.remove()}
 function renderActList(){
   const ul=$("actList");ul.innerHTML="";
   if(!S.actions.length){ul.innerHTML=`<li class="empty" style="padding:0">Aucune bonne action. Ajoute-en une ci-dessous.</li>`;return}

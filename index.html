@@ -2649,7 +2649,7 @@ html:not(#_a):not(#_b) body .fgm{display:grid;grid-template-columns:auto minmax(
 html:not(#_a):not(#_b) body .fgm.on{opacity:1;border-color:#ff7aa8;background:color-mix(in srgb,#ff7aa8 16%,var(--surface))}html:not(#_a):not(#_b) body .fgm .pav{width:28px;height:28px;font-size:13px}
 html:not(#_a):not(#_b) body .fgc .btn.primary{width:100%}
 
-html:not(#_a):not(#_b) body .fgcard{border-color:var(--gc,#ff7aa8)!important;background:linear-gradient(140deg,color-mix(in srgb,var(--gc,#ff7aa8) 20%,var(--surface)),var(--surface) 70%)!important}
+html:not(#_a):not(#_b) body .fgcard{background:linear-gradient(140deg,color-mix(in srgb,var(--gc,#ff7aa8) 20%,var(--surface)),var(--surface) 70%)!important}
 html:not(#_a):not(#_b) body .grpcard{display:grid;gap:12px;padding:14px;background:linear-gradient(150deg,color-mix(in srgb,var(--gc) 28%,var(--surface)),var(--surface) 70%);border:4px solid #1a1210;box-shadow:inset 0 0 0 3px var(--gc),5px 5px 0 var(--rpg-shadow)}
 html:not(#_a):not(#_b) body .grph{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start}
 html:not(#_a):not(#_b) body .grpk{font-size:var(--fs-xs);font-weight:900;text-transform:uppercase;letter-spacing:.07em;color:var(--gc)}html:not(#_a):not(#_b) body .grpn{margin:2px 0;font-family:var(--f-display);font-weight:400;font-size:28px;line-height:1.05}html:not(#_a):not(#_b) body .grph small{color:var(--muted);font-weight:700;font-size:var(--fs-s)}
@@ -3465,7 +3465,7 @@ html:not(#_a):not(#_b):not(#_c) body .sin{animation:vin2 .2s cubic-bezier(.2,.8,
 
 
 html:not(#_a):not(#_b):not(#_c) body .fgcard{--fc:var(--c-social)}
-html:not(#_a):not(#_b):not(#_c) body :is(.fgcard){border:2px solid var(--fc,var(--line))!important}
+html:not(#_a):not(#_b):not(#_c) body :is(.fgcard){border:2px solid rgba(255,255,255,.17)!important}
 
 
 
@@ -4213,7 +4213,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9f9f703</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 8106221</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4233,6 +4233,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     <div class="rel-top"><h2>Relations</h2><span class="hint" id="relSub"></span></div>
     <div id="relRemind"></div>
     <div class="fgbox" id="relGroups"></div>
+    <input type="search" class="ui-champ relq" id="relQ" placeholder="Chercher un proche" aria-label="Chercher un proche" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" hidden>
     <ul class="rlist" id="relList"></ul>
   </section>
 
@@ -12935,7 +12936,16 @@ function renderRelationsBase(){
     li.onclick=()=>openProfile(n);li.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openProfile(n)}};
     ul.appendChild(li);
   });
+  relFilter();
 }
+// recherche dans Famille et Amis (affichée à partir de 8 proches)
+const relNorm=t=>String(t||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+function relFilter(){const q=$("relQ"),ul=$("relList");if(!q||!ul)return;const all=ul.querySelectorAll("li.rl");q.hidden=all.length<8;
+  if(!q.oninput){q.oninput=relFilter;q.onkeydown=e=>{if(e.key==="Enter")q.blur()}}
+  const v=q.hidden?"":relNorm(q.value);let hit=0;
+  all.forEach(li=>{const ok=!v||relNorm(li.querySelector(".rn b").textContent).includes(v);li.hidden=!ok;if(ok)hit++});
+  ul.querySelectorAll("li.rgh").forEach(h=>{let n=h.nextElementSibling,c=0,tot=0;while(n&&!n.classList.contains("rgh")){if(n.classList.contains("rl")){tot++;if(!n.hidden)c++}n=n.nextElementSibling}h.hidden=!!v&&tot>0&&!c});
+  let none=ul.querySelector(".relnone");if(v&&!hit){if(!none){none=document.createElement("li");none.className="relnone vide";ul.appendChild(none)}none.textContent="Aucun proche ne s'appelle comme ça."}else if(none)none.remove()}
 function renderActList(){
   const ul=$("actList");ul.innerHTML="";
   if(!S.actions.length){ul.innerHTML=`<li class="empty" style="padding:0">Aucune bonne action. Ajoute-en une ci-dessous.</li>`;return}
@@ -14542,7 +14552,7 @@ html:not(#_a):not(#_b) body .motc.empty .mots{color:var(--muted);font-weight:600
 html:not(#_a):not(#_b) body #relList>li.rl{position:relative;overflow:hidden;background:linear-gradient(160deg,color-mix(in srgb,var(--h) 30%,var(--surface)) 0%,color-mix(in srgb,var(--h) 8%,var(--surface)) 70%)!important;border:3px solid var(--h)!important;box-shadow:3px 3px 0 var(--rpg-shadow)!important;padding:10px!important;transition:transform .12s}
 html:not(#_a):not(#_b) body #relList>li.rl::before{content:"";position:absolute;right:-18px;top:-18px;width:64px;height:64px;background:color-mix(in srgb,var(--h) 22%,transparent);transform:rotate(45deg);pointer-events:none}
 html:not(#_a):not(#_b) body #relList>li.rl:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--rpg-shadow)!important}
-html:not(#_a):not(#_b) body #relList>li.rl .ini{border-radius:0!important;border:3px solid #1a1210!important;box-shadow:0 0 0 2px var(--h);background:var(--h)!important;color:#fff!important;font-family:var(--f-pixel)!important}
+html:not(#_a):not(#_b) body #relList>li.rl .ini{border-radius:0!important;border:3px solid #1a1210!important;box-shadow:0 0 0 2px rgba(255,255,255,.17);background:var(--h)!important;color:#fff!important;font-family:var(--f-pixel)!important}
 html:not(#_a):not(#_b) body #relList>li.rl .ini.pic{background:var(--surface-2)!important}
 html:not(#_a):not(#_b) body #relList>li.rl .rn b{font-family:var(--f-pixel);font-size:15px!important;color:var(--ink)}
 html:not(#_a):not(#_b) body #relList>li.rl .rw{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -14755,6 +14765,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 #prof .pfend{display:flex;gap:10px;justify-content:center;align-items:center}
 #prof .pfend .pfok{flex:1;max-width:240px;min-height:44px}
 #prof .fp-btns .pfok{min-height:44px;padding:0 14px}
+/* 3.3 recherche dans la liste des proches */
+#relQ.relq{display:block;margin:0 0 14px}
+#relQ.relq[hidden]{display:none}
+html body #relList>li[hidden]{display:none!important}
+#relList>li.relnone{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:12px 0;list-style:none}
 </style>
 <style id="z-moi">/* — venues de base.css et composants.css (2.8, 02/11) : règles qui ne servent qu'à Moi — */
 .hmscene{border:3px solid #1a1210;box-shadow:0 4px 0 rgba(0,0,0,.35);line-height:0;overflow:hidden;background:#000}
