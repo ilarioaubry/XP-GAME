@@ -23,7 +23,7 @@ function jdRow(o){return`<li class="jdl${o.ok?" ok":""}${o.sub?" sub":""}${o.w?"
 function jdHead(t,c,r){return`<div class="head"><h2>${t}${c?`<span class="count">${c}</span>`:""}</h2>${r||""}</div>`}
 function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElementById("jdEng"),C=document.getElementById("jdLater");if(!A||!B||!C||!S||!S.g)return;
   // la nuit et le choix des engagements sont déplacés ici : on les remet à leur place avant de réécrire, pour ne pas les perdre
-  {const rl=document.getElementById("ritLife"),dq=document.getElementById("dqBox"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
+  {const rl=document.getElementById("ritLife"),dq=document.getElementById("jdPark"),eb=document.getElementById("engBox");if(rl&&dq&&!dq.contains(rl))dq.appendChild(rl);if(eb&&B.contains(eb))B.after(eb)}
   const G=S.g,tk=dayKey(Date.now()),h=dayH(),P=dayPer(),PER=P==="nuit"?null:P,act={};let id=0;const reg=(f)=>{const k="j"+(id++);act[k]=f;return k};
   // ---- le moment
   const now=[],done=[],gone=[];  // gone : rituels faits, retirés de la liste (T.2) ; « Annuler » les fait revenir
@@ -32,9 +32,9 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   const modOff=k=>(((G.vie||{}).off)||[]).includes(k);  // « Mes modules » : Énergie du matin, Rattrapage
   {let en=0;try{en=enOf()}catch(e){}if(P==="matin"&&h<14&&!en&&!modOff("enBox"))now.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("batterie"),n:"Ton énergie",s:"",r:`<span class="jdmini jdbat">${[[1,"faible"],[2,"moyenne"],[3,"pleine"]].map(([v,l])=>`<button type="button" class="btn jdcell" aria-label="Énergie ${l}" title="Énergie ${l}" data-k="${reg(()=>enSet(v))}">${rkSvg("bat"+v)}</button>`).join("")}</span>`}));
     else if(en&&P==="matin")done.push(jdRow({x:"jx-en",c:"#4fb84a",ic:rkSvg("bat"+en),n:"Ton énergie",s:["","Faible","Moyenne","Pleine"][en],ok:1,r:""}))}
-  // rituels des jours d'avant à rattraper (le bloc d'origine reste la source : on appuie sur ses boutons)
-  if(!modOff("rtrBox")){let P=[];try{P=rtrPending()}catch(e){}const n=P.reduce((a,p)=>a+p.L.length,0);if(n){const lab=P.length===1?rtrLab(P[0].i):"Ces derniers jours";const tap=sel=>()=>{try{renderRtr();const b=document.querySelector("#rtrBox "+sel);if(b)b.click()}catch(e){}};
-    now.push(jdRow({c:"#f0a020",w:1,ic:rkSvg("sablier"),n:n+" rituel"+(n>1?"s":"")+" à rattraper",s:lab+" : tu les as faits ?",r:`<span class="jdmini"><button type="button" class="btn" data-k="${reg(tap(".rtrno"))}">Non</button><button type="button" class="btn primary" data-k="${reg(tap(".rtrgo1"))}">Fait</button></span>`}))}}
+  // rituels des jours d'avant à rattraper : Fait ouvre la fenêtre de rattrapage, Non les laisse passer
+  if(!modOff("rtrBox")){let P=[];try{P=rtrPending()}catch(e){}const n=P.reduce((a,p)=>a+p.L.length,0);if(n){const lab=P.length===1?rtrLab(P[0].i):"Ces derniers jours";
+    now.push(jdRow({c:"#f0a020",w:1,ic:rkSvg("sablier"),n:n+" rituel"+(n>1?"s":"")+" à rattraper",s:lab+" : tu les as faits ?",r:`<span class="jdmini"><button type="button" class="btn" data-k="${reg(rtrNo)}">Non</button><button type="button" class="btn primary" data-k="${reg(rtrOpen)}">Fait</button></span>`}))}}
   // rituels du moment (le soir : à partir de 20 h)
   const ritOn=PER&&!(PER==="soir"&&h<RIT_SOIR_H);
   const RT=ritOn?ritOrder(ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)===PER&&ritDue(t))):[];

@@ -93,7 +93,7 @@ document.addEventListener("click",e=>{if(window.__qPass||window.__tmPass||window
   if(holdable(b)&&e.detail>0){e.preventDefault();e.stopImmediatePropagation();if(!HOLD.hinted){HOLD.hinted=1;toast("Maintiens le bouton appuyé pour valider")}}},true);
 // appui long (hors rituels)
 const HOLD={t:0,b:null,hinted:0},HOLD_MS=600;
-function holdable(b){if(!b||b.dataset.nohold||b.closest(".dqi,.mbil,#dqBox"))return false;const n=qName(b);return!durOf(n)&&!qSpecial(n)}
+function holdable(b){if(!b||b.dataset.nohold||b.closest(".dqi,.mbil"))return false;const n=qName(b);return!durOf(n)&&!qSpecial(n)}
 function holdEnd(ok){const b=HOLD.b;clearTimeout(HOLD.t);HOLD.b=null;if(!b)return;b.classList.remove("holding");if(ok){b.classList.add("held");setTimeout(()=>b.classList.remove("held"),400);sfx("blip");window.__holdPass=true;try{b.click()}finally{window.__holdPass=false}}}
 document.addEventListener("pointerdown",e=>{const b=e.target.closest&&e.target.closest("[data-tm]");if(!b||b.disabled||!holdable(b))return;holdEnd(false);HOLD.b=b;b.style.setProperty("--hold",HOLD_MS+"ms");b.classList.add("holding");HOLD.t=setTimeout(()=>holdEnd(true),HOLD_MS)},true);
 ["pointerup","pointercancel","pointerleave"].forEach(ev=>document.addEventListener(ev,e=>{if(HOLD.b&&(ev!=="pointerleave"||e.target===HOLD.b))holdEnd(false)},true));

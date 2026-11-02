@@ -55,7 +55,7 @@ function renderBase(prevLevel){
   $("today").textContent=todays.reduce((a,e)=>a+e.xp,0);
   $("streak").textContent=streak();
   if(prevLevel&&l>prevLevel){setTimeout(()=>sfx("level"),180);$("lvlBox").classList.remove("bump");void $("lvlBox").offsetWidth;$("lvlBox").classList.add("bump");toast(`Niveau <span class="p">${l}</span> atteint !${rankOf(l)!==rankOf(prevLevel)?" Nouveau rang : <span class=\"p\">"+rankOf(l)+"</span>":""}`)}
-  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}renderRtr();if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderWkSun();renderFq();if(typeof renderFiche==="function")renderFiche();renderPrj();badgeDots();applyTheme();
+  skyApply();sceneTick();renderNight();backCheck();jokCheck();renderPurse(l);renderChar(l);renderHp();try{renderTrk();renderVie()}catch(e){}if(tmOn()&&!$("tmPanel"))tmShow();else if(!tmOn()&&$("tmPanel"))tmShow();if(ensureBirthdayQuests())save();checkBadges();renderGame();renderEvMode();renderWkSun();renderFq();if(typeof renderFiche==="function")renderFiche();renderPrj();badgeDots();applyTheme();
   $("favs").hidden=true;$("filters").hidden=true;$("seeAll").hidden=true;$("allActs").hidden=false;
   for(const k in viewDirty)viewDirty[k]=true;
   runView(view);
@@ -129,26 +129,6 @@ function renderChar(l){
     const d=document.createElement("div");d.className="stat"+(e.k===top?" top":"");d.style.setProperty("--cat",c.c);
     d.innerHTML=`<span class="sn">${c.label}</span><span class="sb" title="${si.cur} / ${si.need} XP"><i style="width:${si.cur/si.need*100}%"></i></span><span class="sl">Nv ${si.l}</span>`;
     box.appendChild(d);
-  });
-  // Barres du jour : remplies par les actions d'eau et de nourriture, remises à zéro chaque matin
-  const bx=$("bars");bx.innerHTML="";const tk=dayKey(Date.now());
-  Object.entries(BARS).forEach(([k,B])=>{
-    const c=CATS[k],tx=S.log.filter(x=>dayKey(x.t)===tk&&catOf(x)===k).reduce((a,x)=>a+x.xp,0);
-    const full=Math.min(B.segs,Math.floor(tx/B.goal*B.segs));
-    const shown=B.unit==="verres"?`${Math.min(B.segs,Math.floor(tx/2))} / ${B.segs} verres`:`${tx} / ${B.goal} XP`;
-    const el=document.createElement("div");el.className="bar-d";el.dataset.k=k;el.style.setProperty("--cat",c.c);
-    el.innerHTML=`<div class="bh"><b>${c.label}</b><small>${tx>=B.goal?B.done:shown} · Nv ${statInfo(S.stats[k]||0).l}</small></div><div class="seg" style="grid-template-columns:repeat(${B.segs},1fr)" role="img" aria-label="${c.label} : ${full} sur ${B.segs}">${Array.from({length:B.segs},(_,i)=>`<i class="${i<full?"on":""}"></i>`).join("")}</div>`;
-    {ritRoll();const rt=ritTasks().find(t=>t.bar===k);
-     if(rt){const c=Math.min(rt.n,S.daily.c[rt.id]||0),full=c>=rt.n,row=document.createElement("div");row.className="barbtns";
-       const bt=document.createElement("button");bt.type="button";bt.className="barbtn"+(full?" full":"");
-       bt.textContent=(k==="eau"?"+ Verre ":"+ Repas ")+c+"/"+rt.n;bt.disabled=full;bt.onclick=ev=>{if(k==="eau"){window.__wPrev=c;sfx("glug",c)}ritTap(rt,bt,ev)};row.appendChild(bt);
-       if(k==="eau"){el.classList.add("wbar");const prev=window.__wPrev,h=c/rt.n*100,ph=prev!=null?prev/rt.n*100:h;window.__wPrev=null;
-         const bo=document.createElement("div");bo.className="wbot"+(full?" full":"")+(prev!=null?" drink":"");bo.innerHTML=`<span class="wcap"></span><span class="wbody"><span class="wliq" style="height:${ph}%"><i class="wwave"></i></span><span class="wgl"></span>${Array.from({length:rt.n-1},(_,i)=>`<em style="bottom:${(i+1)/rt.n*100}%"></em>`).join("")}</span><span class="wdrop"></span>${full?`<span class="wspl"><i></i><i></i><i></i><i></i><i></i></span>`:""}`;
-         el.prepend(bo);if(prev!=null)requestAnimationFrame(()=>requestAnimationFrame(()=>{const l=bo.querySelector(".wliq");if(l)l.style.height=h+"%"}));
-         if(full&&prev!=null&&prev<rt.n){setTimeout(()=>{sfx("moment");toast("Hydraté ! La bouteille déborde")},450)}}
-       if(c){const rs=document.createElement("button");rs.type="button";rs.className="barrs";rs.innerHTML=ICO("reset",16);rs.setAttribute("aria-label","Remettre à zéro");rs.onclick=()=>{S.daily.c[rt.id]=0;save();render()};row.appendChild(rs)}
-       el.appendChild(row)}}
-    bx.appendChild(el);
   });
 }
 function toggleStats(){}

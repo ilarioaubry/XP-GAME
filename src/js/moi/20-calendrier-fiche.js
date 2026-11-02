@@ -95,13 +95,7 @@ function rtrPending(){const G=S.g;if(!G)return[];if(!Array.isArray(G.rtr))G.rtr=
 function rtrLab(i){return i===1?"Hier":i===2?"Avant-hier":"Il y a "+i+" jours"}
 function rtrXp(t){const a=t.link&&S.actions.find(x=>x.name===t.link);return a?a.xp:RIT_XP}
 function rtrCoreOk(k,i){const H=ritH()[k]||{},T=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritDays(t,i+1)[0]!==-1),C=T.filter(t=>t.core),X=C.length?C:T;return X.length>0&&X.every(t=>H[t.id])}
-function renderRtr(){const box=$("rtrBox");if(!box||!S.g)return;const P=rtrPending();
-  if(!P.length){if(!box.classList.contains("voff")){box.classList.add("voff");box.innerHTML="";box.__h=""}return}
-  const n=P.reduce((a,p)=>a+p.L.length,0),lab=P.length===1?rtrLab(P[0].i).toLowerCase():"ces derniers jours";
-  const seen=new Set(),IC=[];P.forEach(p=>p.L.forEach(t=>{if(seen.has(t.id)||IC.length>=5)return;seen.add(t.id);try{const K=ritKind(t);IC.push(rkSvg(K.k,K.c))}catch(e){}}));
-  const h=`<div class="rtrs"><span class="rtri">${IC.map(x=>`<i>${x}</i>`).join("")}</span><span class="rtrt"><b>${n}</b> à rattraper</span><button type="button" class="btn rtrgo1">Fait</button><button type="button" class="rtrno" aria-label="Non, je ne les ai pas faits" title="Non, je ne les ai pas faits">${ICO("close",14)}</button></div>`;
-  if(box.__h!==h){box.__h=h;box.innerHTML=h;box.querySelector(".rtrgo1").onclick=()=>rtrOpen();box.querySelector(".rtrno").onclick=()=>{P.forEach(p=>S.g.rtr.push(p.k));S.g.rtr=S.g.rtr.slice(-30);save();render()}}
-  box.classList.remove("voff")}
+function rtrNo(){const P=rtrPending();if(!P.length)return;P.forEach(p=>S.g.rtr.push(p.k));S.g.rtr=S.g.rtr.slice(-30);save();render()}
 function rtrOpen(){const P=rtrPending();if(!P.length)return;const sel=new Set();
   const o=document.createElement("div");o.className="bpop rapop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Rattrapage");document.body.appendChild(o);
   const close=()=>{o.remove();render()};o.onclick=e=>{if(e.target===o)close()};
@@ -136,29 +130,7 @@ function ritTap(t,el,ev){
   if(a&&!(S.dayLimit&&!BARS[a.cat]&&S.log.filter(e=>e.a===a.id&&dayKey(e.t)===tk).length>=S.dayLimit)){complete(a,el,ev)}else if(a&&!t.bar&&c+1>=t.n){noXp({...a},el,ev)}else if(!a&&!t.bar&&c+1>=t.n){complete({id:"rit-"+t.id,cat:/pompe|squat|gainage/i.test(t.name)?"sport":"maison",name:t.name,xp:RIT_XP},el,ev)}else{save();render()}
   dailyBonusCheck()}
 const RIT_XP=3;
-function renderRituals(){setTimeout(()=>{window.__ritWas=!!document.querySelector("#ritLife")&&!!document.querySelector(".ritdone")},0);
-  ritRoll();const tk=dayKey(Date.now());
-  const T=ritTasks(),box=$("ritList"),busy=box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT";if(!busy)box.innerHTML="";let done=0;
-  const mkRow=t=>{
-    const c=Math.min(t.n,S.daily.c[t.id]||0),full=c>=t.n;
-    const r=document.createElement("div");r.className="rt"+(full?" full":"");
-    r.innerHTML=`<button class="rtb" type="button"><span></span><span class="dots${t.n>5?" many":""}">${Array.from({length:t.n},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span></button>${c?'<button class="rtr" type="button" aria-label="Remettre à zéro">'+ICO("reset",16)+'</button>':""}`;
-    r.querySelector("span").textContent=t.name;
-    r.querySelector(".rtb").onclick=ev=>ritTap(t,ev.currentTarget,ev);
-    const rr=r.querySelector(".rtr");if(rr)rr.onclick=()=>{S.daily.c[t.id]=0;ritMark(t.id,0,1);save();render()};
-    return r};
-  T.forEach(t=>{if((S.daily.c[t.id]||0)>=t.n)done++});
-  if(!busy){
-    const allDone=T.length>0&&T.every(t=>(S.daily.c[t.id]||0)>=t.n)&&!ritLeaving;
-    
-    box.classList.toggle("alldone",allDone);let host=box;
-    if(allDone){const b=document.createElement("div");b.className="ritdone"+(window.__ritWas===false?" fresh":"");b.innerHTML='<div class="rdh">'+ICO("check",24)+"<div><b>Tu as accompli ta journée !</b><small>Tous tes rituels sont faits. À demain.</small></div></div>";box.appendChild(b);host=b}
-    else MOMENTS.forEach(([k,lab])=>{const g=T.filter(t=>!t.bar&&(t.when||"jour")===k);const left=g.filter(t=>(S.daily.c[t.id]||0)<t.n||t.id===ritLeaving);if(!left.length)return;
-      const nd=g.filter(t=>(S.daily.c[t.id]||0)>=t.n).length;
-      const h=document.createElement("div");h.className="rth";h.innerHTML=`<span></span><em>${nd}/${g.length}</em>`;h.firstChild.textContent=lab;box.appendChild(h);
-      left.forEach(t=>{const r=mkRow(t);if(t.id===ritLeaving)r.classList.add("leaving");box.appendChild(r)})});
-  }
-  $("ritCnt").textContent=done+"/"+T.length;
+function renderRituals(){ritRoll();
   if(document.activeElement!==$("dbXp"))$("dbXp").value=S.dayBonus.xp;if(document.activeElement!==$("dbEur"))$("dbEur").value=S.dayBonus.eur;
 }
 $("dbXp").onchange=()=>{S.dayBonus.xp=Math.max(0,Math.round(+$("dbXp").value)||0);save()};$("dbEur").onchange=()=>{S.dayBonus.eur=Math.max(0,Math.round((+$("dbEur").value||0)*100)/100);save()};

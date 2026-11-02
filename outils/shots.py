@@ -11,7 +11,7 @@ STATES=[("midi","2026-10-26T13:00:00+01:00",""),("matin","2026-10-26T07:30:00+01
  ("pluie","2026-10-28T15:00:00+01:00","S.g.wx={k:'1,1',n:'x'};S.g.wxc={cur:{ic:18,ph:'Pluie',tc:3,day:true,t:Date.now()},td:{d:'2026-10-28',ic:18,ph:'Pluie',max:9,min:3,p:80}};S.g.ambS=1")]
 SCREENS=[("q","showView('q')"),("vie","showView('c');document.querySelector('[data-sub=vie][role=tab]').click()"),("wr","showView('c');document.querySelector('[data-sub=wr][role=tab]').click()"),
  ("bilan","showView('c');document.querySelector('[data-sub=bilan][role=tab]').click()"),("r","showView('r')"),("p","openProfile('Maman')"),
- ("plus","showView('q');document.querySelector('.plusb')&&document.querySelector('.plusb').click()"),
+ ("plus","showView('q');typeof plusToggle==='function'?plusToggle(true):document.querySelector('.plusb').click()"),
  ("assiette","showView('q');plateOpen('soir','diner')"),("meteo","showView('q');wxSheet()"),("situation","showView('q');sitSheet()"),("projet","showView('q');qcOpen('proj')")]
 with sync_playwright() as p:
   for st,T,setup in STATES:

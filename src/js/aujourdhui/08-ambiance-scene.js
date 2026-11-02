@@ -140,7 +140,6 @@ function renderNight(){const box=$("nightBox");if(!box||!S.g)return;const G=S.g,
   {const q=box.querySelector(".ngq");if(q)q.textContent="« "+J.t+" »"}box.querySelectorAll(".ngd li").forEach((li,i)=>{if(i>0)li.textContent=tom[i-1].n})
   box.querySelector(".ngall").onclick=()=>{nightAll=tk;render()}}
 
-function ambApply(el){if(!el)return;const ph=ambPhase();let a=el.querySelector(":scope>.amb");if(a&&a.dataset.ph===ph)return;if(a)a.remove();el.prepend(ambEl(ph));el.dataset.amb=ph}
 // ---- Animation propre à chaque type de rituel
 const RKA={dents:["rise","#ffffff",6],lit:["puff","#e8e0ff",6],douche:["fall","#7fd4ff",9],visage:["splash","#7fd4ff",8],barbe:["",0,0],fenetre:["wind","#dff4ff",5],eau:["rise","#7fd4ff",6],sport:["splash","#ffd94a",8],lire:["rise","#fff5d0",4],medit:["ring","#ff9ec0",2],note:["rise","#ffd94a",4],repas:["steam","#ffffff",5],ecran:["",0,0],vit:["splash","#ff7aa8",8],soleil:["splash","#ffd94a",10],lune:["twinkle","#ffffff",6]};
 function rkAnim(el,k){if(!el||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const ic=el.querySelector(".rtic,.rtmic");el.classList.add("rka-"+k);setTimeout(()=>el.classList.remove("rka-"+k),950);

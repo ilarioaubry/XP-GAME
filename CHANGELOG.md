@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 02/11/2026
+- Nettoyage (1.5b) : les derniers anciens blocs cachés d'Aujourd'hui sont supprimés : l'ancien bloc des rituels (tuiles, rangée de repas, bilan repas, barres d'eau et de repas, fin de moment), le bloc Rattrapage, le bouton caché du panneau Actions et l'ancienne liste des rituels. Le journal appelle directement le rattrapage (Fait / Non) et le « + » ouvre le panneau sans passer par un bouton caché. Les quêtes spéciales, le bonus « Matinée / Journée terminée » et l'enregistrement automatique du bilan repas restent. Environ 340 règles CSS mortes en moins. Rien ne change à l'écran.
 - Création du profil (premier lancement) : sur iPhone, le ✓ pour ajouter un ami ou un proche ne fermait plus le clavier sans rien ajouter ; un prénom tapé mais pas validé est ajouté quand on quitte le champ ; champs à 16 px (pas de zoom).
 
 ## 01/11/2026

@@ -196,13 +196,6 @@ function plSave(tk,k,m){const P=S.g.plt=S.g.plt||{};(P[tk]=P[tk]||{})[k]=m;const
 function plTot(d){const D=plDay(d),t={f:0,p:0,l:0,x:{yaourt:0,fromage:0,eau:0},n:0};MB_PLM.forEach(k=>{const m=D[k];if(!m)return;t.n++;["f","p","l"].forEach(s=>t[s]+=plN(m,s));PL_X.forEach(([id])=>{if((m.x||{})[id])t.x[id]++})});return t}
 
 // Aujourd'hui : petite assiette du jour sous les repas (dès qu'un repas est rempli)
-function plateDay(row){if(!row||!row.parentElement)return;const t=plTot(dayKey(Date.now()));let e=row.parentElement.querySelector(".pldy");
-  if(!t.n){if(e)e.remove();return}const run=plVegRun(),st=JSON.stringify([t,run]);if(e&&e.dataset.k===st)return;
-  if(!e){e=document.createElement("div");e.className="pldy";row.after(e)}e.dataset.k=st;
-  const miss=PL_SIDES.filter(([s])=>!t[s]).map(([,l])=>l.toLowerCase());
-  e.innerHTML=`<div class="pldp">${plSvg(t)}</div><div class="pldt"><b>${miss.length?"Il manque : "+miss.join(", "):"Assiette complète aujourd'hui"}</b><div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${t[s]}</span>`).join("")}</div><div class="pldx">${PL_X.map(([id,l,ic])=>`<span class="${t.x[id]?"on":""}" title="${l}">${rkSvg(ic)}<em>${t.x[id]}</em></span>`).join("")}${run>1?`<span class="on plrun" title="Jours d'affilée avec des légumes">${rkSvg("legume")}<em>${run} j de suite</em></span>`:""}</div></div>`}
-
-// Bilan : les 7 derniers jours
 function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||!S.g)return;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,plTot(dayKey(d))])}
   const done=days.filter(x=>x[1].n);box.classList.toggle("gempty",!done.length);if(!done.length){box.innerHTML="";return}
   const cnt=s=>done.filter(x=>x[1][s]).length,xs=id=>done.reduce((a,x)=>a+x[1].x[id],0);

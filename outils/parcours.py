@@ -123,7 +123,7 @@ with sync_playwright() as p:
     TAP = 't=>{const b=[...document.querySelectorAll("#plusSheet button")].filter(b=>b.offsetParent).find(b=>b.textContent.trim().replace(/\\s+/g," ").includes(t));if(b)b.click();return !!b}'
     def tap(t): r = pg.evaluate("(" + TAP + ")(" + repr(t) + ")"); pg.wait_for_timeout(150); return r
     def plus(on):
-        if pg.evaluate("document.documentElement.classList.contains('plusopen')") != on: pg.evaluate("showView('q');document.querySelector('.plusb').click()"); pg.wait_for_timeout(300)
+        if pg.evaluate("document.documentElement.classList.contains('plusopen')") != on: pg.evaluate("showView('q');plusToggle()"); pg.wait_for_timeout(300)
     plus(True)
     check("Actions : accueil avec des actions prêtes", pg.evaluate("document.querySelectorAll('#actFind .afrec .afo').length>=4"))
     tap("Maison"); tap("Ranger"); tap("Chambre")

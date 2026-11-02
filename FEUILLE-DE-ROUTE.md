@@ -12,7 +12,7 @@ Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sectio
 - [x] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3) (01/11)
 - [x] 1.3 Objectif du jour retiré avec son badge (R.12) (01/11)
 - [x] 1.4 Noms des sections clarifiés (Quêtes du jour, Fait aujourd'hui) ; « + Rituel », « + Engagement » (01/11)
-- [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1) — 1.5a fait le 01/11 (Fin de journée, Énergie, À faire, Défi à deux, Cette semaine) ; 1.5b reste : dqBox, rtrBox, engBox, plusBox, sources du journal et des quêtes spéciales
+- [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1) — 1.5a fait le 01/11 (Fin de journée, Énergie, À faire, Défi à deux, Cette semaine) ; 1.5b fait le 02/11 (ancien bloc des rituels, Rattrapage, bouton caché du panneau +, ancienne liste des rituels ; la carte des engagements reste, elle s'affiche dans le journal)
 - [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks
 
 **Lot 2 · Moi** — 2.1 jauge de stockage (R.1) · 2.2 fiche profil seulement dans Ma vie · 2.3 haut du Bilan (R.4) · 2.4 mêmes noms + jauge Nourriture (R.6) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » · 2.6 réglages cachés (R.12) · 2.7 mon anniversaire, statut de couple (R.8) · 2.8 CSS de Moi

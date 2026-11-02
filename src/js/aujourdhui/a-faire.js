@@ -12,5 +12,5 @@ function todoOpen(){const tk=todoDay(0);return todoL().filter(x=>x.d===tk&&!todo
 function todoGo(x,el,ev){const it=todoItem(x);
   if(!it){complete({id:"todo:"+x.id,cat:"soi",name:x.n,xp:TODO_XP},el,ev);return}
   if(afFirst(it)==="fin"&&!afCook(it,el)){afDo(it,el,ev,0,[]);return}
-  if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}
+  plusToggle(true);
   setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,el,ev)},60)}

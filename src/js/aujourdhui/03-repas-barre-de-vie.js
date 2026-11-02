@@ -17,32 +17,6 @@ function mealQuick(per,k,btn,v,ev,bx,extra){const tk=dayKey(Date.now()),key=tk+"
   dr.m[k]=v;delete dr.w[k];dr.cr[k]=1;if(btn){btn.disabled=true;const it=btn.closest(".dqi");if(it)it.classList.add("leave")}
   if(v===1&&p>0)complete({id:"mb",cat:"nourriture",name:l,xp:p+(bx||0)},btn,ev,false,extra);else{save();render();toast(l+(v?" noté":" sauté"))}}
 
-function mbCard(pp){const[per,day0]=pp.split(":"),day=day0||dayKey(Date.now()),key=day+":"+per,MBD=(S.g.mbd&&typeof S.g.mbd==="object")?S.g.mbd:(S.g.mbd={}),dr=MBD[key]=MBD[key]||{m:{},ex:{},w:{}};Object.keys(MBD).filter(k=>k.slice(0,10)<dayKey(Date.now()-2*864e5)).forEach(k=>delete MBD[k]);
-  const MBX=MB_EX.filter(e=>!e[4]||e[4]===per),soft=isSoft(day);const c=document.createElement("div");c.className="mbil";const late=(per==="matin"&&dayPer()!=="matin")||!!day0;
-  dr.v=dr.v||{};const isSoir=per==="soir";
-  dr.pl=dr.pl||{};const plN=k=>MB_PL.filter(([q])=>(dr.pl[k]||{})[q]).length;
-  const neg=()=>{let x=0;MB[per].forEach(([k,,,m])=>{if(dr.m[k]===0&&!soft)x+=m});if(isSoir)MB_V.forEach(([k,,,p])=>{if(dr.v[k]===1&&!soft)x+=p});return x};
-  dr.cr=dr.cr||{};const tot=()=>{let x=0;MB[per].forEach(([k,,p,m])=>{if(dr.cr[k])return;if(dr.m[k]===1){x+=p;if(dr.w[k])x+=MB_W;if(MB_PLM.includes(k)){const n=plN(k);x+=n*MB_PLX+(n===3?MB_PLB:0)}}else if(dr.m[k]===0)x+=0});MBX.forEach(([k,,,p])=>{if(dr.ex[k]&&!(dr.exc&&dr.exc[k]))x+=p});
-    if(isSoir){let bad=0;MB_V.forEach(([k,,,p])=>{if(dr.v[k]===1){bad++}});if(MB_V.every(([k])=>dr.v[k]===0))x+=MB_CLEAN}return x};
-  let mbFirst=1;const draw=()=>{if(!mbFirst)save();mbFirst=0;const ready=MB[per].every(([k])=>dr.m[k]===0||dr.m[k]===1),x=tot();
-    c.innerHTML=`<div class="mbh"><b>Bilan ${per==="matin"?"du matin":"du soir"}</b><small>${soft?(isOff(day)?"Jour off · aucun malus":"Journée difficile · aucun malus"):""}</small></div>
-    <div class="mbmeals">${MB[per].map(([k,l,p,m,ic])=>`<div class="mbm${dr.m[k]===1?" ok":dr.m[k]===0?" ko":""}${dr.cr[k]?" cr":""}"><span class="mbic">${pxImg(ic,3)}</span><b>${l}</b><div class="mbseg"><button type="button" data-m="${k}" data-mv="1" aria-pressed="${dr.m[k]===1}">Pris${p?`<em>+${p}</em>`:""}</button><button type="button" data-m="${k}" data-mv="0" aria-pressed="${dr.m[k]===0}" class="neg">Sauté</button><button type="button" class="mbw" data-w="${k}" aria-pressed="${!!dr.w[k]}" aria-label="Un verre d'eau avec le ${l.toLowerCase()}"${dr.m[k]===1?"":" disabled"}>${pxImg("glass",3)}<em>+${MB_W}</em></button></div>${dr.m[k]===1&&MB_PLM.includes(k)?`<div class="mbpl${plN(k)===3?" full":""}"><small>${plN(k)===3?"Assiette équilibrée ! +"+(3*MB_PLX+MB_PLB):"Dans ton assiette"}</small>${MB_PL.map(([q,ql,qi])=>`<button type="button" data-pl="${k}:${q}" aria-pressed="${!!(dr.pl[k]||{})[q]}">${pxImg(qi,2)}<span>${ql}</span></button>`).join("")}</div>`:""}</div>`).join("")}</div>
-    <div class="mbex"><div>${MBX.map(([k,l,ic,p])=>`<button type="button" data-x="${k}" aria-pressed="${!!dr.ex[k]}"${dr.exc&&dr.exc[k]?" disabled":""}><span class="mbic">${pxImg(ic,3)}</span><b>${l}</b><em>+${p}</em></button>`).join("")}</div></div>
-    ${isSoir?`<div class="mbv"><small>Ta journée</small>${MB_V.map(([k,l,ic,p])=>`<div class="mbvr"><span class="mbic">${pxImg(ic,3)}</span><b>${l} ?</b><div class="mbseg"><button type="button" data-v2="${k}" data-val="0" aria-pressed="${dr.v[k]===0}">Non</button><button type="button" class="neg" data-v2="${k}" data-val="1" aria-pressed="${dr.v[k]===1}">Oui<em>${p}</em></button></div></div>`).join("")}<p class="mbclean">Rien de tout ça</p></div>`:""}
-    <button type="button" class="btn primary mbok"${ready?"":" disabled"}>Fait</button>`;
-    c.querySelectorAll("[data-v2]").forEach(b=>b.onclick=()=>{dr.v[b.dataset.v2]=+b.dataset.val;draw()});
-    c.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{dr.m[b.dataset.m]=+b.dataset.mv;if(+b.dataset.mv===0)delete dr.w[b.dataset.m];draw()});
-    c.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>{const k=b.dataset.w;dr.w[k]=!dr.w[k];if(dr.w[k]){sfx("glug",2);window.__wFill=k}draw();if(window.__wFill){const nb=c.querySelector(`[data-w="${window.__wFill}"]`);window.__wFill=null;if(nb){nb.classList.add("fill");setTimeout(()=>nb.classList.remove("fill"),900)}}});
-    c.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{dr.ex[b.dataset.x]=!dr.ex[b.dataset.x];draw()});
-    c.querySelectorAll("[data-pl]").forEach(b=>b.onclick=()=>{const[k,q]=b.dataset.pl.split(":");const P=dr.pl[k]=dr.pl[k]||{};P[q]=!P[q];const full=plN(k)===3;sfx(full&&P[q]?"badge":"blip");draw()});
-    c.querySelector(".mbok").onclick=ev=>{if(!MB[per].every(([k])=>dr.m[k]===0||dr.m[k]===1))return;const G=S.g,x=tot(),eaten=MB[per].filter(([k])=>dr.m[k]===1).map(([,l])=>l),skip=MB[per].filter(([k])=>dr.m[k]===0).map(([,l])=>l),ex=MBX.filter(([k])=>dr.ex[k]).map(([,l])=>l);
-      const nw=MB[per].filter(([k])=>dr.m[k]===1&&dr.w[k]).length;G.mb[key]={m:{...dr.m},ex:{...dr.ex},w:{...dr.w},v:{...dr.v},neg:neg(),pl:JSON.parse(JSON.stringify(dr.pl||{})),xp:x,t:Date.now()};{const bal=MB_PLM.filter(k=>dr.m[k]===1&&plN(k)===3).length;if(bal)ex.push(bal>1?bal+" assiettes équilibrées":"assiette équilibrée")}if(isSoir){const vb=MB_V.filter(([k])=>dr.v[k]===1).map(([,l])=>l.toLowerCase());if(vb.length)skip.push(vb.join(" et "))}delete mbDraft[key];if(nw)ex.push(nw+" verre"+(nw>1?"s":"")+" d'eau");
-      const name=`Bilan repas ${per==="matin"?"du matin":"du soir"}${ex.length?" · "+ex.join(" + "):""}${skip.length?" · sauté : "+skip.join(", "):""}`;
-      if(x>0)complete({id:"mb",cat:"nourriture",name,xp:x},ev.currentTarget,ev,false,{mb:key});
-      else{save();render()}
-      setTimeout(()=>toast(x>0?`Bien mangé ! <span class="p">+${x} XP</span>`:"Bilan enregistré"),300)}};
-  draw();return c}
-
 // ---- Barre de vie : se remplit avec les repas, l'eau et les extras du jour
 const HP_MEAL={pdej:20,dej:25,gouter:10,diner:25},HP_W=5,HP_EX=5,HP_SKIP=-15;
 function hpOf(day){const G=S.g;if(!G||!G.mb)return{v:0,n:0,skip:0};let v=0,n=0,skip=0;
@@ -92,7 +66,6 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
   else{const T=[];
-    const ritLeft=!!document.querySelector("#spTrack > .rtl.main .rtile:not(.done)");
     
 
     const t=T[0];

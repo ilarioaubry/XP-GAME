@@ -105,18 +105,6 @@ function ritUntap(t){const tk=dayKey(Date.now()),a0=t.link&&S.actions.find(x=>x.
   S.daily.c[t.id]=0;ritMark(t.id,0,1);if(S.g.rcore&&!ritCore().every(x=>(ritH()[tk]||{})[x.id]))S.g.rcore=S.g.rcore.filter(k=>k!==tk);
   if(e){render();const li=[...document.querySelectorAll("#log li")].find(x=>x.__e===e);if(li){li.querySelector(".undo").click();toast("Rituel décoché");return}}
   save();render();toast("Rituel décoché")}
-function ritTiles(list,per,cls){const w=document.createElement("div");w.className="rtl "+(cls||"");const tk=dayKey(Date.now());
-  list.forEach(t=>{const c=S.daily.c[t.id]||0,full=c>=t.n,K=ritKind(t),a0=t.link&&S.actions.find(x=>x.name===t.link),xp=a0?actXp(a0,S.log.filter(e=>e.a===a0.id&&dayKey(e.t)===tk).length):RIT_XP;
-    const b=document.createElement("button");b.type="button";b.className="rtile"+(full?" done":"")+(t.core?" core":"");b.style.setProperty("--kc",K.c);
-    if(!full){b.dataset.tm="rit-"+t.id;b.dataset.tmn=t.name;b.dataset.nohold="1"}
-    b.innerHTML=`<span class="rtic">${rkSvg(K.k,K.c)}</span><span class="rtn"></span>${t.trg&&!full?`<span class="rttr"></span>`:""}${t.n>1?`<span class="rtd">${Array.from({length:t.n},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span>`:""}<em>${full?ICO("check",12):(xp?"+"+xp:ICO("check",12))}</em>${t.core?`<span class="rtcore">${STAR_SVG}</span>`:""}`;
-    if(isWeekend()&&!t.core&&!full&&list.some(x=>x.core))b.insertAdjacentHTML("beforeend",`<span class="rtbonus">Bonus</span>`);b.querySelector(".rtn").textContent=shortName(t.name);{const tr=b.querySelector(".rttr");if(tr)tr.textContent=t.trg}b.setAttribute("aria-label",t.name+(full?", fait. Toucher pour décocher":xp?", +"+xp+" XP":""));
-    b.onclick=ev=>{if(full){undoAfter("Rituel décoché",()=>ritUntap(t));return}
-      if(b.classList.contains("busy"))return;b.classList.add("busy");rkFx(b,K);const last=c+1>=t.n,fin=last&&w.classList.contains("main")&&[...w.querySelectorAll(".rtile:not(.done)")].length===1;
-      setTimeout(()=>{window.__ritSnd=1;try{ritTap(t,b,ev)}finally{window.__ritSnd=0}if(fin)momentDone(per)},last?700:90)};
-    w.appendChild(b)});
-  return w}
-// glisser pour valider
 function swipeable(el,onR,onL){let x0=null,y0=0,dx=0,id=null,drag=false;el.style.touchAction="pan-y";
   el.addEventListener("pointerdown",e=>{if(e.button>0)return;x0=e.clientX;y0=e.clientY;dx=0;id=e.pointerId;drag=false});
   el.addEventListener("pointermove",e=>{if(x0==null||e.pointerId!==id)return;dx=e.clientX-x0;const dy=e.clientY-y0;
@@ -178,12 +166,12 @@ function rtmOpen(){const per=dayPer();if(per==="nuit"||document.querySelector(".
   draw()}
 function rtmFmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 
-const RIT_SOIR_H=20;let dqMorn=false,sqMore=false;
-// renderSpecials : version complète (ex-réécriture de correctifs.js), renderSpecialsBase = le cœur d'origine
-function renderSpecials(){try{noBoss();smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealRow();sleepViz()}catch(e){console.warn("dq",e)}return r}
+const RIT_SOIR_H=20;let sqMore=false;
+// renderSpecials : quêtes spéciales + suivi du moment (bonus « Matinée / Journée terminée ») ; l'ancien bloc des rituels est remplacé par le journal de bord (1.5b)
+function renderSpecials(){try{noBoss();smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealAuto();sleepViz()}catch(e){console.warn("dq",e)}return r}
 function renderSpecialsBase(){schedNow();renderBalance();
   renderGroups();ritRoll();
-  const tr=$("spTrack");tr.innerHTML="";const tk=dayKey(Date.now()),G=S.g,P=dayPer(),box=$("dqBox");ambApply(box);
+  const tk=dayKey(Date.now()),G=S.g,P=dayPer();
   const PER=P==="nuit"?null:P;
   const FI=typeof feedIds==="function"?feedIds():{sp:new Set(),mq:new Set()};const QS=S.specials.filter(q=>!q.bs&&!FI.sp.has(q.id)&&(q.gift||q.grp||normOk(q.name))).sort((a,b)=>DQ_ORD[dqKind(a)]-DQ_ORD[dqKind(b)]);
   const DONE=(G.dq&&G.dq.d===tk?G.dq.done:[]).filter(x=>!String(x.id||"").startsWith("bs"));
@@ -195,14 +183,6 @@ function renderSpecialsBase(){schedNow();renderBalance();
   const tot0=PER?RTc.length+2:0,left0=PER?RLc.length+(lifeOk?0:1)+(mbOk?0:1):0;
   const _ml=PER?MB[PER].filter(([k])=>dayH()>=MEAL_H[k]):[],_mll=_ml.filter(([k])=>{const dr=(S.g.mbd||{})[tk+":"+PER];return!(G.mb&&G.mb[tk+":"+PER])&&!(dr&&dr.m&&(dr.m[k]===0||dr.m[k]===1))});
   const tot=tot0+_ml.length,left=left0+_mll.length,nd=tot-left;
-  $("dqTitle").firstChild.textContent=PER==="soir"?"Rituels du soir":"Rituels du matin";box.setAttribute("aria-label",PER==="soir"?"Rituels du soir":"Rituels du matin");
-  $("spCount").textContent=nd+"/"+tot;{const sk=ritStreak(),e=$("ritSk");e.hidden=!sk;e.innerHTML=STAR_SVG+"<span>"+sk+" j</span>";e.title="Série des essentiels";$("ritEdBtn").onclick=()=>ritAtelier()}
-  const red=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const leave=(d,go,run,ev)=>{if(d.classList.contains("leave"))return;d.classList.add("leave");go.disabled=true;if(red()){run();return}const last=tr.querySelectorAll(".dqi:not(.leave)").length===0;
-    setTimeout(()=>{if(last)return;d.style.height=d.offsetHeight+"px";void d.offsetHeight;d.classList.add("shrink")},300);setTimeout(run,last?320:560)};
-  const mk=(lab,col,ic,name,btn,aria,par)=>{const d=document.createElement("div");d.className="dqi";d.style.setProperty("--tc",col);
-    d.innerHTML=`<span class="dqic"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">${ic}</svg></span><span class="dqt"><b></b><small></small></span><span class="dqa"></span>`;
-    d.querySelector("b").textContent=name;d.querySelector("small").textContent=lab;(par||tr).appendChild(d);return d};
   {const st=$("sqTrack"),keep=st.scrollLeft;st.innerHTML="";const qt=QS.length+DONE.length;$("sqCnt").textContent=DONE.length+"/"+qt;$("sqBox").classList.toggle("voff",!qt&&!mqActive().length);
    const SQ_MAX=99,hidN=0;
    QS.forEach((q,qi)=>{if(!sqMore&&qi>=SQ_MAX)return;const k=dqKind(q),[lab,col,ic]=DQ_K[k]||DQ_K[""],L=q.bs&&q.bn?"Boss · "+q.bn.replace(/^(Le|La|L') ?/,""):q.dz&&lzOf(q.dz)?"Défi · "+lzOf(q.dz).n:q.dfi?"Défi · Musique":q.why||lab;
@@ -218,33 +198,9 @@ function renderSpecialsBase(){schedNow();renderBalance();
    if(qt&&!QS.length&&!st.querySelector(".mq")){st.innerHTML=`<p class="dqend sqend"><b>Toutes les quêtes spéciales sont faites ${pxImg("check",2,"inl")}</b><small>De nouvelles quêtes arrivent demain.</small></p>`}
    try{window.__sqFinish&&window.__sqFinish()}catch(e){}
    st.scrollLeft=keep}
-  const RI=PER==="soir"?'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/>':'<circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>';
-  const RIm='<circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>';
-  const rit=(t,RP,par)=>{const c=S.daily.c[t.id]||0,a0=t.link&&S.actions.find(x=>x.name===t.link),xp=a0?actXp(a0,S.log.filter(e=>e.a===a0.id&&dayKey(e.t)===tk).length):(!t.bar&&c+1>=t.n?RIT_XP:0);
-    const d=mk((t.core?"Socle · ":"")+(RP==="soir"?"Rituel du soir":"Rituel du matin"),RP==="soir"?"#7a6ad8":"#e0a020",RP==="soir"?RI:RIm,t.name+(t.n>1?` (${c}/${t.n})`:""),0,0,par);if(t.core)d.classList.add("core");if(t.ev>1)d.querySelector("small").textContent+=" · "+evLab(t);
-    const a=d.querySelector(".dqa");a.innerHTML=`<button type="button" class="btn primary dqgo">${xp?"+"+xp:ICO("check",18)}</button>`;const go=a.querySelector(".dqgo");go.setAttribute("aria-label",t.name+(xp?", +"+xp+" XP":", fait"));go.dataset.tm="rit-"+t.id;go.dataset.tmn=t.name;
-    go.onclick=ev=>{if(c+1<t.n){ritTap(t,go,ev);return}leave(d,go,()=>ritTap(t,go,ev),ev)}};
-  if(RT.length&&RL.length){const W=ritTiles(ritOrder(RT),PER,"main");if(RL.length>=2&&!soirWait){const g=document.createElement("button");g.type="button";g.className="rtmgo";const bt=(S.g.rtb||{})[PER];g.innerHTML=`${ICO("play",18)}Routine${bt?`<small>record ${rtmFmt(bt)}</small>`:""}`;g.onclick=rtmOpen;W.appendChild(g)}tr.appendChild(W)}
-  const ML=PER?MB[PER].filter(([k])=>dayH()>=MEAL_H[k]):[],MLL=ML.filter(([k])=>{const dr=(S.g.mbd||{})[tk+":"+PER];return!G.mb[tk+":"+PER]&&!(dr&&dr.m&&(dr.m[k]===0||dr.m[k]===1))});
-  MLL.forEach(([k,l,p,m,ic])=>{const d=mk("","#5fae4f","",l);d.classList.add("dqmeal");d.querySelector(".dqic").innerHTML=pxImg(ic,2);
-    const a=d.querySelector(".dqa");a.innerHTML=`<button type="button" class="dqskip" aria-label="${l} sauté">${ICO("close",14)}</button><button type="button" class="btn primary dqgo">Fait</button>`;const go=a.querySelector(".dqgo");go.setAttribute("aria-label",l+" pris");go.onclick=ev=>mealQuick(PER,k,go,1,ev);a.querySelector(".dqskip").onclick=ev=>mealQuick(PER,k,go,0,ev)});
-  {const ak=tk+":matin",adr=(G.mbd||{})[ak];if(!G.mb[ak]&&adr&&adr.cr&&MB.matin.every(([k])=>adr.cr[k])&&!isSoft(tk)||(!G.mb[ak]&&adr&&adr.cr&&MB.matin.every(([k])=>adr.cr[k]))){let ng=0;if(!isSoft(tk))MB.matin.forEach(([k,,,m])=>{if(adr.m[k]===0)ng+=m});G.mb[ak]={m:{...adr.m},ex:{...adr.ex},w:{...adr.w},v:{},neg:ng,pl:JSON.parse(JSON.stringify(adr.pl||{})),xp:0,t:Date.now(),auto:1};save()}}
-  {const h=dayH(),pend=[];
-   if(PER==="soir"&&!G.mb[tk+":matin"])pend.push("matin");
-   if(PER&&!G.mb[tk+":"+PER]&&MLL.length===0&&ML.length===MB[PER].length&&(RL.length===0||(PER==="matin"?h>=13:h>=20)))pend.push(PER);
-   if(!PER&&h<8){const y=dayKey(Date.now()-864e5);if(!G.mb[y+":soir"])pend.push("soir:"+y)}
-   pend.forEach(pp=>tr.appendChild(mbCard(pp)))}
-  if(soirWait){const e=document.createElement("p");e.className=left===0?"dqend dqwait":"dqwait";e.innerHTML=`<span class="dqwi">${rkSvg("lune")}</span><b>${RIT_SOIR_H}h</b>`;tr.appendChild(e)}
-  if(RM.length){const w=document.createElement("div");w.className="dqmorn"+(dqMorn?" open":"");w.innerHTML=`<button type="button" class="dqmh" aria-expanded="${dqMorn}"><span>Encore possible du matin</span><em>${RM.length}</em><i class="dqchev">${ICO("chev",14)}</i></button><div class="dqmb"></div>`;
-    w.classList.add("open","dqmbar");w.querySelector(".dqmh").onclick=()=>{};{const bd=w.querySelector(".dqmb");bd.appendChild(ritTiles(ritOrder(RM),"matin","mini"))}{const mn=tr.querySelector(".rtl.main");if(mn)mn.after(w);else tr.prepend(w)}}
-  {const hide=sMood;$("sqBox").classList.toggle("vsoft",hide);
-   if(sMood&&PER){const e=document.createElement("div");e.className="softc";e.innerHTML=`<b>Journée difficile</b><small>Juste l'essentiel${RT0.some(t=>t.core)?" : ton socle":""}.</small><button type="button" class="lnk">Voir tout quand même</button>`;e.querySelector("button").onclick=()=>{S.g.softAll=tk;save();render()};tr.prepend(e)}}
-  const all=!!PER&&tot>0&&left===0&&!soirWait;box.classList.toggle("voff",all&&G.endHide===tk+":"+PER);
-  $("dqHead").hidden=!PER||all;box.classList.toggle("alldone",all||!PER);$("bars").hidden=!PER;
-  if(!PER){const keep=[...tr.querySelectorAll(".mbil")];tr.innerHTML=`<p class="dqend night"><b>Bonne nuit</b><small>Tes quêtes du matin arrivent à 8h.</small></p>`;keep.forEach(k=>tr.prepend(k))}
-  else if(all){const e=document.createElement("p");e.className="dqend";e.innerHTML=PER==="matin"?`<b>Matinée terminée ${pxImg("check",2,"inl")}</b><small>Coffre gagné · rendez-vous à 15h pour la suite.</small>`:`<b>Journée terminée ${pxImg("check",2,"inl")}</b><small>Coffre gagné · de nouvelles quêtes demain à 8h.</small>`;e.classList.add("dqendx");e.setAttribute("role","button");e.tabIndex=0;e.title="Toucher pour masquer";e.insertAdjacentHTML("beforeend",`<span class="dqendh">Toucher pour masquer</span>`);{const cb=e.querySelector(".dqclo");if(cb)cb.onclick=ev=>{ev.stopPropagation();closeOpen(0)}}const hideEnd=()=>{G.endHide=tk+":"+PER;save();e.classList.add("out");setTimeout(()=>renderSpecials(),260)};e.onclick=hideEnd;e.onkeydown=ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();hideEnd()}};tr.appendChild(e);
+  // moment terminé (rituels, nuit / humeur, repas) : bonus et coffre, une fois par moment
+  const all=!!PER&&tot>0&&left===0&&!soirWait;
+  $("sqBox").classList.toggle("vsoft",sMood);
+  if(all){
     if(!G.pb||G.pb.d!==tk)G.pb={d:tk};if(!G.pb[PER]){G.pb[PER]=1;setTimeout(()=>sfx("moment"),300);const bx=Math.round((S.dayBonus.xp||30)/2);G.chests=(G.chests||0)+1;save();setTimeout(()=>{const prev=levelInfo(S.xp).l;if(bx)addBonus(PER==="matin"?"Matinée terminée":"Journée terminée",bx,0,"pb");save();render(prev);toast(`${PER==="matin"?"Matinée":"Journée"} terminée ! <span class="p">+${bx} XP</span> et un coffre`)},500)}}
 }
-
-
-

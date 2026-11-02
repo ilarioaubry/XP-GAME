@@ -1,7 +1,7 @@
 // Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
 
-const EV=["nowBox","evmBox","wkSun","rtrBox","gameBox","xmBox"];
+const EV=["nowBox","evmBox","wkSun","gameBox","xmBox"];
 const XPRE=/^\+\s?\d+(\s?XP)?$/;
 function oneEv(){let found=false;
   EV.forEach(id=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("evhide");
@@ -32,7 +32,7 @@ const durXp=m=>m<=0?0:m<=15?8:m<=30?12:m<=60?18:m<=120?24:30; // barème : 30 XP
 const AF_MAX=30;
 const QTY={reps:{u:"rép.",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/4))},km:{u:"km",o:[1,2,3,5,10,21],x:q=>Math.min(AF_MAX,q*5)},pages:{u:"pages",o:[10,20,30,50,100],x:q=>Math.min(AF_MAX,Math.round(q/3))}};
 let afMode="jour",afCat="",afQ="",afSel=null,afWho=[],afDur=0,afAllP=false,afStep="who",afQty=0,afAdd=false;
-function afClose(){setTimeout(()=>{const b=document.querySelector("#plusBox .plusb");if(b&&document.documentElement.classList.contains("plusopen"))b.click()},380)}
+function afClose(){setTimeout(()=>plusToggle(false),380)}
 function afFinish(it,el,ev){try{uniBurst(el,it.dom||domOfCat(it.cat))}catch(e){}afDo(it,el,ev,afDur,afWho,afQty);el.classList.add("pop");afSel=null;afWho=[];afDur=0;afQty=0;afAllP=false;afStep="who";afClose()}
 const qKind=it=>it&&it.k==="fam"&&it.f.q?it.f.q[it.opt]||"":"";
 const nextStep=it=>qKind(it)?"qty":"dur";
@@ -269,7 +269,7 @@ function idqCard(){const tr=document.getElementById("sqTrack");if(!tr)return;con
   c.querySelector(".idqr").onclick=()=>{g.idqH=[...(g.idqH||[]),Q.p].slice(-24);Q.o=cIdPick(1);Q.p=Q.o[0];save();idqCard();idqDress()};
   // « Fait » : la sortie se note dans Actions (durée, puis « Avec qui ? » : seul → Soi, avec quelqu'un → Ami)
   c.querySelector(".idqf").onclick=e=>{const f=FAM.find(z=>z.id==="sorties");if(!f)return;g.idqH=[...(g.idqH||[]),Q.p].slice(-24);const it=afItems().find(z=>z.k==="fam"&&z.f===f&&z.opt===x[4])||{k:"fam",f,opt:x[4],log:null,cat:f.cat,dom:f.dom,lz:f.lz||"",name:f.l+" · "+x[4]};
-    if(!document.documentElement.classList.contains("plusopen")){const b=document.querySelector("#plusBox .plusb");if(b)b.click()}setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,e.currentTarget,e)},60)}}
+    plusToggle(true);setTimeout(()=>{afMode="jour";window.__dayShift=0;afPick(it,e.currentTarget,e)},60)}}
 
 // ---- anniversaires : fond de fête
 try{RKI.cake=["................", "....y...y...y...", "...yY..yY..yY...", "...mm..bb..gg...", "...wm..wb..wg...", "...mm..bb..gg...", ".oooooooooooooo.", ".owwwwbwwwwwgwo.", ".owrwvwwwywrwwo.", ".owwmwwmwwmwwmo.", ".ommmmmmmmmmmmo.", ".oyyyyyyyyyyyyo.", ".ommmmmmmmmmmmo.", ".oMMMMMMMMMMMMo.", "kkkkkkkkkkkkkkkk", ".KKKKKKKKKKKKKK."]}catch(e){}
@@ -317,12 +317,7 @@ function hold(sel,fn,ms){let t=0,el=null,fired=false;document.addEventListener("
   document.addEventListener("contextmenu",e=>{if(e.target.closest&&e.target.closest(sel))e.preventDefault()},true)}
 hold("#actFind .afo",(b)=>{const box=document.getElementById("actFind"),i=[...box.querySelectorAll(".afo")].indexOf(b),r=box.__reg&&box.__reg[i];if(!r)return;try{uniBurst(b,r[0].dom)}catch(e){}afDo(r[0],b,{currentTarget:b,clientX:0,clientY:0},0,[]);b.classList.add("pop","did");afClose()},450);
 // bouton flottant
-{const f=document.createElement("button");f.type="button";f.id="afFab";f.dataset.v="q";f.setAttribute("aria-label","Noter une action");f.innerHTML='<svg class="ic pxic" viewBox="0 0 12 12" width="28" height="28" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg>';f.onclick=()=>{const b=document.querySelector("#plusBox .plusb");if(b&&!document.documentElement.classList.contains("plusopen"))b.click()};document.body.appendChild(f);try{f.hidden=view!=="q"}catch(e){}}
-// 1. Rituels : appui long sur une tuile
-hold("#dqBox .rtile",(b)=>{const n=(b.querySelector(".rtn")||{}).textContent;const t=ritTasks().find(x=>x.name===n);if(!t)return;
-  pop(b,[{l:ICO("star",14)+(t.core?" Retirer des essentiels":" Mettre dans mes essentiels"),f:()=>{t.core=!t.core;try{ritCoreCheck()}catch(e){}save();render()}},
-    {l:"Mettre en pause",f:()=>{t.pz=dayKey(Date.now());save();render();toast("Rituel en pause")}},
-    {l:ICO("edit",14)+" Modifier (moment, rythme…)",f:()=>{try{qcOpen("rit",{edit:t,done:()=>render()})}catch(e){}}}],t.name)});
+{const f=document.createElement("button");f.type="button";f.id="afFab";f.dataset.v="q";f.setAttribute("aria-label","Noter une action");f.innerHTML='<svg class="ic pxic" viewBox="0 0 12 12" width="28" height="28" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg>';f.onclick=()=>plusToggle(true);document.body.appendChild(f);try{f.hidden=view!=="q"}catch(e){}}
 // 8. Cigarettes : appui long pour masquer
 hold("#trkBox .trk-n",(b)=>{pop(b,[{l:"Masquer le compteur",f:()=>{const v=S.g.vie||(S.g.vie={});v.track=v.track||{};v.track.cig=false;save();try{renderTrk()}catch(e){}toast("Compteur masqué · à réactiver dans Ma vie")}}])});
 // 3. Capacité : toucher le compteur d'Aujourd'hui
@@ -338,15 +333,12 @@ function fqExtra(){const L=(()=>{try{return fqList()}catch(e){return[]}})();docu
 function sqMenus(){document.querySelectorAll("#sqBox .sq").forEach(c=>{const x=c.querySelector(":scope>.sqx");if(!x||c.querySelector(".sqm"))return;const b=document.createElement("button");b.type="button";b.className="sqm";b.setAttribute("aria-label","Options");b.innerHTML='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg>';
     b.onclick=e=>{e.stopPropagation();const lab=x.getAttribute("aria-label")||"Retirer";pop(b,[{l:/autre/i.test(lab)?ICO("refresh",14)+" Proposer autre chose":ICO("close",14)+" Retirer cette quête",f:()=>x.click()}])};c.appendChild(b)})}
 // Plus de quêtes : un panneau qui monte du bas
-const PLUS_IDS=[];
 function plusSheet(){const open=document.documentElement.classList.contains("plusopen");let sh=document.getElementById("plusSheet");
   if(!sh){sh=document.createElement("div");sh.id="plusSheet";sh.innerHTML='<div class="ps-bg"></div><div class="ps-in" role="dialog" aria-modal="true" aria-label="Plus de quêtes"><div class="ps-h"><b>Actions</b><button type="button" class="ps-x" aria-label="Fermer"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="1.02"/><rect x="10" y="0" width="2" height="1.02"/><rect x="0" y="1" width="3" height="1.02"/><rect x="9" y="1" width="3" height="1.02"/><rect x="1" y="2" width="3" height="1.02"/><rect x="8" y="2" width="3" height="1.02"/><rect x="2" y="3" width="3" height="1.02"/><rect x="7" y="3" width="3" height="1.02"/><rect x="3" y="4" width="6" height="1.02"/><rect x="4" y="5" width="4" height="1.02"/><rect x="4" y="6" width="4" height="1.02"/><rect x="3" y="7" width="6" height="1.02"/><rect x="2" y="8" width="3" height="1.02"/><rect x="7" y="8" width="3" height="1.02"/><rect x="1" y="9" width="3" height="1.02"/><rect x="8" y="9" width="3" height="1.02"/><rect x="0" y="10" width="3" height="1.02"/><rect x="9" y="10" width="3" height="1.02"/><rect x="0" y="11" width="2" height="1.02"/><rect x="10" y="11" width="2" height="1.02"/></svg></button></div><div id="actFind" class="actfind"></div><div class="wrap ps-wrap"></div></div>';document.body.appendChild(sh);
-    const cl=()=>{const b=document.querySelector("#plusBox .plusb");if(b&&document.documentElement.classList.contains("plusopen"))b.click()};sh.querySelector(".ps-x").onclick=cl;sh.querySelector(".ps-bg").onclick=cl;
+    const cl=()=>plusToggle(false);sh.querySelector(".ps-x").onclick=cl;sh.querySelector(".ps-bg").onclick=cl;
     let y0=null;const pi=sh.querySelector(".ps-in");pi.addEventListener("touchstart",e=>{y0=pi.scrollTop<=0?e.touches[0].clientY:null},{passive:true});pi.addEventListener("touchend",e=>{if(y0!=null&&e.changedTouches[0].clientY-y0>90)cl();y0=null})}
-  const pw=sh.querySelector(".ps-wrap"),wrap=document.querySelector("body>.wrap")||document.querySelector(".wrap:not(.ps-wrap)"),plus=document.getElementById("plusBox");
-  const secs=PLUS_IDS.map(id=>document.getElementById(id)).filter(Boolean);
-  if(open){secs.forEach(x=>{if(x.parentNode!==pw)pw.appendChild(x)});if(!sh.__af){afMode="jour";window.__dayShift=0;afQ="";afCat="";afSel=null;afStep="who";renderAF()}sh.__af=1}
-  else if(wrap&&plus){sh.__af=0;secs.forEach(x=>{if(x.parentNode===pw)wrap.insertBefore(x,plus.nextSibling)})}}
+  if(open){if(!sh.__af){afMode="jour";window.__dayShift=0;afQ="";afCat="";afSel=null;afStep="who";renderAF()}sh.__af=1}
+  else sh.__af=0}
 // plusSheet est appelé quand le panneau + s'ouvre ou se ferme (19-bilan.js)
 // Événement du jour, en haut d'Aujourd'hui
 let evK="";const deN=n=>/^[aeiouyhéèêàâîôûAEIOUYHÉÈ]/.test(n)?"d'"+n:"de "+n;
@@ -365,16 +357,6 @@ function idqWho(){const old=document.querySelector("#sqBox .idq .idqw");if(old)o
 const MEALS=[["pdej","matin","Petit-déj","cup"],["dej","matin","Déjeuner","plate"],["gouter","soir","Goûter","cookie"],["diner","soir","Dîner","plate"]];
 function mealState(k,per){const tk=dayKey(Date.now()),key=tk+":"+per,b=(S.g.mb||{})[key],dr=(S.g.mbd||{})[key];const m=(b&&b.m)||(dr&&dr.m)||{};return m[k]===1?"ok":m[k]===0?"ko":""}
 function mealAuto(){const tk=dayKey(Date.now()),G=S.g;if(!G.mb)G.mb={};["matin","soir"].forEach(per=>{const key=tk+":"+per,dr=(G.mbd||{})[key];if(G.mb[key]||!dr||!dr.cr)return;if(!MB[per].every(([k])=>dr.cr[k]))return;let ng=0;try{if(!isSoft(tk))MB[per].forEach(([k,,,m])=>{if(dr.m[k]===0)ng+=m})}catch(e){}G.mb[key]={m:{...dr.m},ex:{...(dr.ex||{})},w:{...(dr.w||{})},v:{},neg:ng,pl:{},xp:0,t:Date.now(),auto:1};save()})}
-function mealRow(){const tr=document.getElementById("spTrack");if(!tr||!S||!S.g)return;try{mealAuto()}catch(e){}const h=dayH();
-  const st=MEALS.map(([k,per])=>mealState(k,per)+(h>=MEAL_H[k]?"":"|later")).join(",");let r=tr.querySelector(".mlrow");if(r&&r.dataset.k===st&&r.parentElement===tr){try{plateDay(r)}catch(e){}return}
-  if(!r){r=document.createElement("div");r.className="mlrow"}r.dataset.k=st;tr.querySelectorAll(".mlpop").forEach(x=>x.remove());
-  r.innerHTML=MEALS.map(([k,per,l,ic])=>{const s=mealState(k,per),later=h<MEAL_H[k];return`<button type="button" class="mlp st-${s||"none"}${later?" later":""}" data-k="${k}" data-per="${per}" ${later?"disabled":""} aria-label="${l}${s==="ok"?", pris":s==="ko"?", sauté":""}"><span class="mli">${pxImg(ic,3)}${s==="ko"?'<i class="mlx"></i>':""}${s==="ok"?`<span class="mlb">${vI("check")}</span>`:""}</span><small>${l}</small></button>`}).join("");
-  const anchor=tr.querySelector(".dqmorn")||tr.querySelector(".rtl.main");if(anchor)anchor.after(r);else tr.appendChild(r);
-  r.querySelectorAll(".mlp:not([disabled])").forEach(b=>b.onclick=()=>{const s0=mealState(b.dataset.k,b.dataset.per);if(typeof plateOpen==="function"&&MB_PLM.includes(b.dataset.k)&&s0!=="ko"){tr.querySelectorAll(".mlpop").forEach(x=>x.remove());plateOpen(b.dataset.per,b.dataset.k,b);return}const ps=[...tr.querySelectorAll(".mlpop")],same=ps.some(x=>x.dataset.k===b.dataset.k);ps.forEach(x=>x.remove());if(same)return;const p=document.createElement("div");p.className="mlpop";p.dataset.k=b.dataset.k;const l=b.querySelector("small").textContent;
-    const ic=pxImg(MEALS.find(m=>m[0]===b.dataset.k)[3],3),pl=MB_PLM.includes(b.dataset.k);
-    p.innerHTML=`<button type="button" data-v="1"${s0==="ok"?' class="on"':""}><span>${ic}</span>${pl?"Remplir l'assiette":"Pris"}</button><button type="button" data-v="0"${s0==="ko"?' class="on"':""}><span class="mlskip">${ic}<i class="mlx"></i></span>Sauté</button>${s0?`<button type="button" data-v="x" class="mlclr">Effacer</button>`:""}`;r.after(p);
-    p.querySelectorAll("[data-v]").forEach(x=>x.onclick=ev=>{p.remove();const v=x.dataset.v==="x"?null:+x.dataset.v;
-      try{if(v===1&&pl){mealClear(dayKey(Date.now()),b.dataset.per,b.dataset.k);save();plateOpen(b.dataset.per,b.dataset.k,b)}else if(s0)mealSet(b.dataset.per,b.dataset.k,v,b,ev);else mealQuick(b.dataset.per,b.dataset.k,b,v,ev)}catch(e){}r.dataset.k="";setTimeout(mealRow,60)})});try{plateDay(r)}catch(e){}}
 // ---- la nuit en frise : lune et soleil à glisser (remplace les deux champs d'heure)
 function sleepVars(){const r=document.documentElement;if(r.style.getPropertyValue('--slmoon'))return;const u=k=>'url("data:image/svg+xml,'+encodeURIComponent(vI(k).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '))+'")';r.style.setProperty('--slmoon',u('lune'));r.style.setProperty('--slsun',u('soleil'))}
 function sleepViz(){sleepVars();const f=document.getElementById("slForm");if(!f||f.querySelector(".slviz"))return;const C=document.getElementById("slC"),R=document.getElementById("slR");if(!C||!R)return;

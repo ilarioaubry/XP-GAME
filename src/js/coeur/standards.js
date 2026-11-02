@@ -9,6 +9,5 @@ function sqIcons(){document.querySelectorAll("#sqBox .sq").forEach(c=>{if(c.quer
 try{sqIcons()}catch(e){} // ensuite appelé à chaque rendu des quêtes spéciales (sqFinish)
 // Choix rapides (menu « … », Pris / Sauté) : petite fenêtre centrée ; toucher à côté la ferme
 document.addEventListener("click",e=>{const t=e.target,stop=()=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()};
-  const p=document.querySelector(".mlpop");if(p&&!t.closest(".mlpop")){p.remove();if(!t.closest(".mlp"))stop();return}
   const m=document.querySelector(".epop");if(m&&!t.closest(".epop")){m.remove();stop();return}
   const q=document.querySelector(".fqr.menu");if(q&&!t.closest(".fqno")&&!t.closest(".fqrr")){try{fqMenu="";renderFq()}catch(err){}stop()}},true);

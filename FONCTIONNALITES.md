@@ -24,7 +24,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Fin de journée | Retirée le 01/11 : remplacée par la ligne Bonne nuit du journal | — | retirée |
 | Bonne nuit | Écran calme la nuit, après le journal | — | moment |
 | Ta semaine est finie | Carte du dimanche vers le Bilan | — | moment |
-| Rattrapage | Rituels manqués après une absence | ? | module, moment |
+| Rattrapage | Ligne du journal : rituels des jours d'avant, « Fait » ouvre la fenêtre de rattrapage, « Non » les laisse passer | 3 par rituel | module, moment |
 | Maintenant | La chose à faire tout de suite, journée rare (« Heure d'or » XP ×2) | ×2 pendant 1 h | module, moment |
 | Coffres | Coffre à ouvrir (un objet pour l'armoire) | — | module, moment |
 | Saison des fêtes | Hotte de cadeaux, calendrier de l'Avent, vœux, ton année, résolutions | 5–15 | module, saison |
