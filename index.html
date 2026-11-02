@@ -4395,7 +4395,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 115fa3a</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 63f5283</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -11130,7 +11130,7 @@ const HM_NAME={chambre:"Chambre",biblio:"Bibliothèque",studio:"Studio",video:"V
 function renderHome(force){const box=document.getElementById("homeBox");if(!box||!S.g)return;if(!force&&box.contains(document.activeElement)&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
   const H=hmData();document.documentElement.dataset.room=hmRoom||"home";
   if(!hmRoom){const hh=`<div class="hmcard hmover">${hmHTML(H)}</div>`;if(box.__h===hh&&box.querySelector(".hmhouse"))return;box.innerHTML=hh;box.__h=hh;
-    box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);box.scrollIntoView({block:"start",behavior:"smooth"})});return}
+    box.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{hmRoom=b.dataset.r;sfx("blip");renderHome(1);SCR.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})});return}  // haut de Chez moi : l'en-tête de la pièce reste visible sous les onglets collés
   box.__h="";const i=HM_ROOMS.findIndex(r=>r[0]===hmRoom),col=HM_COL[hmRoom];
   const nav=`<div class="hmh2"><h2>${HM_NAME[hmRoom]}</h2><button type="button" class="hmib hmback" aria-label="Retour à la maison"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></svg></button><button type="button" class="hmib hmprev" data-d="-1" aria-label="Pièce précédente">${ICO("chev",20)}</button><button type="button" class="hmib hmnext" data-d="1" aria-label="Pièce suivante">${ICO("chev",20)}</button></div>`;
   if(hmRoom==="biblio"){box.innerHTML=`<div class="hmcard" style="--hc:${col}">${nav}<div class="hmscene hmlib">${libHTML()}</div></div>`;libBind(box)}

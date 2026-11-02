@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 02/11/2026
+- Chez moi : en ouvrant une pièce (Chambre…), son en-tête (nom, maison, flèches) passait sous les onglets collés en haut, on ne voyait plus comment revenir. L'écran remonte maintenant en haut de Chez moi.
 - Moi (2.2) : la grande fiche profil n'apparaît plus qu'à Ma vie, sous les onglets ; Chez moi et Bilan commencent directement. Les onglets restent en haut de Moi. La barre d'XP d'Aujourd'hui ouvre Ma vie.
 - Moi (2.0) : le réglage « Style de l'appli » (Ciel / Classique) est retiré ; « Classique » revenait de toute façon tout seul à « Ciel ». L'appli garde toujours le ciel. La donnée reste dans la sauvegarde.
 - Moi > Bilan > Données (2.1) : la jauge de stockage montre la vraie place prise sur le téléphone (tout ce que l'appli enregistre, 2 octets par caractère) sur la vraie limite de Safari, 5 Mo, au lieu de « / 256 Ko ». Aujourd'hui : 249 Ko sur 5 Mo.
