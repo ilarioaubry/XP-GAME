@@ -50,10 +50,6 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
     const set=el.querySelector(".skset");if(set){const inp=el.querySelector("input");const ok=()=>{const t=inp.value.trim().slice(0,40);if(!t)return;if(!G.cur||typeof G.cur!=="object")G.cur={};G.cur[B.c.k]={t,n:0,s:Date.now()};save();el.remove();afSkill()};set.onclick=ok;inp.onkeydown=e=>{if(e.key==="Enter")ok()}}
     const ch=el.querySelector(".skch");if(ch)ch.onclick=()=>{delete G.cur[B.c.k];save();el.remove();afSkill()}}
   const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),50);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+50 XP</span>`);el.remove();afSkill()}}
-// le bilan reprend la série et les coffres
-function bilKpi(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;let st=0;try{st=streak()}catch(e){}const o=S.g.opened||0,k=st+"|"+o;let r=b.querySelector(".bilkpi");if(r&&r.dataset.k===k&&r===b.firstElementChild)return;
-  if(!r){r=document.createElement("div");r.className="bilkpi"}r.dataset.k=k;let fl="",ch="";try{fl=pxImg("flame",2,"ic");ch=pxImg("chest",2,"ic")}catch(e){}
-  r.innerHTML=`<div><span>${fl}</span><b>${st}</b><small>jour${st>1?"s":""} de suite</small></div><div><span>${ch}</span><b>${o}</b><small>coffre${o>1?"s":""} ouvert${o>1?"s":""}</small></div>`;b.prepend(r)}
 // Moi : plus de Domaines, « Ce que tu deviens » dans Ma vie
 function moiTabs(){const id=document.getElementById("idBox");if(id&&id.dataset.sub!=="vie"){id.dataset.sub="vie";try{applySub()}catch(e){}}
   ["musBox","dzBox"].forEach(x=>{const e=document.getElementById(x);if(e&&e.dataset.sub!=="off")e.dataset.sub="off"});document.querySelectorAll(".wrap>section.lzs").forEach(e=>{if(e.dataset.sub!=="off")e.dataset.sub="off"});
@@ -163,16 +159,22 @@ function idViz(){document.querySelectorAll("#idBox .idcard").forEach(c=>{const b
     const k=(nx?nx.title:"max")+"|"+(bar.querySelector("i")||{}).style?.width;if(c.dataset.vz===k)return;c.dataset.vz=k;let w=c.querySelector(".idrow");if(!w){w=document.createElement("span");w.className="idrow";bar.before(w);w.appendChild(bar)}
     let n=w.querySelector(".idnx");if(!n){n=document.createElement("span");n.className="idnx";w.appendChild(n)}n.title=nx?"Prochain : "+nx.title:"Palier max";n.classList.toggle("max",!nx);n.innerHTML=img?`<img src="${img.src}" alt="">`:"";})}
 // ---- ce mois-ci, en vrai
-function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const ym=ymOf(Date.now()),L=(S.log||[]).filter(e=>ymOf(e.t)===ym&&e.xp>=0),T=[];
+// haut du Bilan (2.3, 02/11) : ce qui a été fait dans la période choisie (semaine, mois, année)
+function bilPer(){const now=new Date(dayKey(Date.now())+"T12:00");
+  if(bilTab==="m"){const d=new Date(now);d.setDate(1);d.setMonth(d.getMonth()-bilOff);const ym=ymOf(d.getTime());return{in:t=>ymOf(t)===ym,t:bilOff?"En "+MOIS_C[d.getMonth()]+", en vrai":"Ce mois-ci, en vrai"}}
+  if(bilTab==="y"){const y=now.getFullYear()-bilOff;return{in:t=>+dayKey(t).slice(0,4)===y,t:bilOff?"En "+y+", en vrai":"Cette année, en vrai"}}
+  const K=new Set(bWeek(bilOff));return{in:t=>K.has(dayKey(t)),t:bilOff?"Cette semaine-là, en vrai":"Cette semaine, en vrai"}}
+function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0),T=[];
   const ppl={};L.forEach(e=>{const W=new Set(e.withp||[]);(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))W.add(n)});W.forEach(n=>ppl[n]=(ppl[n]||0)+1)});
   Object.entries(ppl).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(([n,c])=>T.push([pAv(n,"fmini rrav"),n,c>1?"×"+c:"1 fois"]));
-  const fin=((S.g.fini||{}).book||[]).filter(x=>ymOf(x.e)===ym);if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
+  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e));if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
   const cnt=re=>L.filter(e=>re.test(e.a||"")).length,film=cnt(/^af:regarder:Film/);if(film)T.push([vI("clap"),film+" film"+(film>1?"s":""),"vus"]);
   const sums={};L.forEach(e=>{const r=String(e.name||"").match(QRX);if(!r)return;const u=r[2];sums[u]=(sums[u]||0)+parseFloat(r[1].replace(",","."))});
   if(sums["rép."])T.push([vI("halteres"),Math.round(sums["rép."])+" rép.","de renfo"]);if(sums.km)T.push([vI("pas"),Math.round(sums.km*10)/10+" km","parcourus"]);if(sums.pages)T.push([vI("lire"),Math.round(sums.pages)+" pages","lues"]);
   const so=L.filter(e=>e.idq).length;if(so)T.push([vI("ticket"),so+" sortie"+(so>1?"s":""),"découvertes"]);const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;if(rm)T.push([vI("balai"),rm+" pièce"+(rm>1?"s":""),"rangées"]);
-  const k=T.map(t=>t[1]+t[2]).join("|");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k)return;if(!T.length){if(c)c.remove();return}if(!c){c=document.createElement("div");c.className="realrc";const anc=b.querySelector(".bchap");(anc||b.firstElementChild).after(c)}c.dataset.k=k;
-  c.innerHTML=`<h3 class="bh3">Ce mois-ci, en vrai</h3><div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`}
+  const k=PR.t+"|"+T.map(t=>t[1]+t[2]).join("|"),anc=b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
+  if(!c){c=document.createElement("div");c.className="realrc"}if(anc)anc.after(c);else b.prepend(c);c.dataset.k=k;
+  c.innerHTML=`<h3 class="bh3">${PR.t}</h3>${T.length?`<div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
 
 // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
 function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;

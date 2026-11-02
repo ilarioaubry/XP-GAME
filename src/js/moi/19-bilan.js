@@ -52,7 +52,7 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
 // renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
-function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilKpi();bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
 function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;

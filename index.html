@@ -4395,7 +4395,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 63f5283</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 1efc9f0</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9995,7 +9995,7 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
 // renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
-function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilKpi();bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
 function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;
@@ -15420,12 +15420,6 @@ html:not(#_a):not(#_b) body .pav.bdp{width:48px!important;height:48px!important;
 html:not(#_a):not(#_b) body .calev.bdev .pav.bdp{width:40px!important;height:40px!important;font-size:15px!important}
 html:not(#_a):not(#_b) body .pav.bdp img{width:100%;height:100%;object-fit:cover}
 html:not(#_a):not(#_b) body #pfKpi{display:none!important}
-html:not(#_a):not(#_b) body .bilkpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-html:not(#_a):not(#_b) body .bilkpi>div{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
-html:not(#_a):not(#_b) body .bilkpi span{display:grid;place-items:center;width:28px;height:28px}
-html:not(#_a):not(#_b) body .bilkpi span img,html:not(#_a):not(#_b) body .bilkpi span svg{width:26px;height:26px;image-rendering:pixelated}
-html:not(#_a):not(#_b) body .bilkpi b{font-size:20px}
-html:not(#_a):not(#_b) body .bilkpi small{font-size:13px;opacity:.75;line-height:1.15}
 html:not(#_a):not(#_b) body .fviz .fti{display:grid;place-items:center;width:40px;height:40px}
 html:not(#_a):not(#_b) body .fviz .fti svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .fviz .fti.sm{width:28px;height:28px}
@@ -15540,8 +15534,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not([data-wrc="badges"]) body .col:has(
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(#ficheBox,#idBox,#vieBox,#prjBox2,#evtBox,#setBox){border:0!important;box-shadow:none!important;border-radius:0!important;padding:18px 2px 6px!important;background:repeating-linear-gradient(90deg,var(--fc) 0 8px,transparent 8px 12px) top left/100% 4px no-repeat!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c{border:0!important;box-shadow:none!important;border-radius:0!important;background:none!important;padding:14px 0 4px!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body #vieBox .vie-c+.vie-c{border-top:1px dashed rgba(255,255,255,.18)!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fcard,.hmcard,.bilkpi>div,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bilkpi>div){padding-left:2px!important;padding-right:2px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fcard,.hmcard,.bhero,.bchap,#bakBox .set-card){border:0!important;box-shadow:none!important;outline:0!important;border-radius:0!important;background:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .bct2{border:0!important;box-shadow:none!important;background:none!important;border-radius:0!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.evr.now .evd){animation:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .bpx,.pbs.on .pbi)::after{animation:none!important;opacity:0!important}
@@ -16613,10 +16606,6 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
     const set=el.querySelector(".skset");if(set){const inp=el.querySelector("input");const ok=()=>{const t=inp.value.trim().slice(0,40);if(!t)return;if(!G.cur||typeof G.cur!=="object")G.cur={};G.cur[B.c.k]={t,n:0,s:Date.now()};save();el.remove();afSkill()};set.onclick=ok;inp.onkeydown=e=>{if(e.key==="Enter")ok()}}
     const ch=el.querySelector(".skch");if(ch)ch.onclick=()=>{delete G.cur[B.c.k];save();el.remove();afSkill()}}
   const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),50);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+50 XP</span>`);el.remove();afSkill()}}
-// le bilan reprend la série et les coffres
-function bilKpi(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;let st=0;try{st=streak()}catch(e){}const o=S.g.opened||0,k=st+"|"+o;let r=b.querySelector(".bilkpi");if(r&&r.dataset.k===k&&r===b.firstElementChild)return;
-  if(!r){r=document.createElement("div");r.className="bilkpi"}r.dataset.k=k;let fl="",ch="";try{fl=pxImg("flame",2,"ic");ch=pxImg("chest",2,"ic")}catch(e){}
-  r.innerHTML=`<div><span>${fl}</span><b>${st}</b><small>jour${st>1?"s":""} de suite</small></div><div><span>${ch}</span><b>${o}</b><small>coffre${o>1?"s":""} ouvert${o>1?"s":""}</small></div>`;b.prepend(r)}
 // Moi : plus de Domaines, « Ce que tu deviens » dans Ma vie
 function moiTabs(){const id=document.getElementById("idBox");if(id&&id.dataset.sub!=="vie"){id.dataset.sub="vie";try{applySub()}catch(e){}}
   ["musBox","dzBox"].forEach(x=>{const e=document.getElementById(x);if(e&&e.dataset.sub!=="off")e.dataset.sub="off"});document.querySelectorAll(".wrap>section.lzs").forEach(e=>{if(e.dataset.sub!=="off")e.dataset.sub="off"});
@@ -16726,16 +16715,22 @@ function idViz(){document.querySelectorAll("#idBox .idcard").forEach(c=>{const b
     const k=(nx?nx.title:"max")+"|"+(bar.querySelector("i")||{}).style?.width;if(c.dataset.vz===k)return;c.dataset.vz=k;let w=c.querySelector(".idrow");if(!w){w=document.createElement("span");w.className="idrow";bar.before(w);w.appendChild(bar)}
     let n=w.querySelector(".idnx");if(!n){n=document.createElement("span");n.className="idnx";w.appendChild(n)}n.title=nx?"Prochain : "+nx.title:"Palier max";n.classList.toggle("max",!nx);n.innerHTML=img?`<img src="${img.src}" alt="">`:"";})}
 // ---- ce mois-ci, en vrai
-function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const ym=ymOf(Date.now()),L=(S.log||[]).filter(e=>ymOf(e.t)===ym&&e.xp>=0),T=[];
+// haut du Bilan (2.3, 02/11) : ce qui a été fait dans la période choisie (semaine, mois, année)
+function bilPer(){const now=new Date(dayKey(Date.now())+"T12:00");
+  if(bilTab==="m"){const d=new Date(now);d.setDate(1);d.setMonth(d.getMonth()-bilOff);const ym=ymOf(d.getTime());return{in:t=>ymOf(t)===ym,t:bilOff?"En "+MOIS_C[d.getMonth()]+", en vrai":"Ce mois-ci, en vrai"}}
+  if(bilTab==="y"){const y=now.getFullYear()-bilOff;return{in:t=>+dayKey(t).slice(0,4)===y,t:bilOff?"En "+y+", en vrai":"Cette année, en vrai"}}
+  const K=new Set(bWeek(bilOff));return{in:t=>K.has(dayKey(t)),t:bilOff?"Cette semaine-là, en vrai":"Cette semaine, en vrai"}}
+function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0),T=[];
   const ppl={};L.forEach(e=>{const W=new Set(e.withp||[]);(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))W.add(n)});W.forEach(n=>ppl[n]=(ppl[n]||0)+1)});
   Object.entries(ppl).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(([n,c])=>T.push([pAv(n,"fmini rrav"),n,c>1?"×"+c:"1 fois"]));
-  const fin=((S.g.fini||{}).book||[]).filter(x=>ymOf(x.e)===ym);if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
+  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e));if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
   const cnt=re=>L.filter(e=>re.test(e.a||"")).length,film=cnt(/^af:regarder:Film/);if(film)T.push([vI("clap"),film+" film"+(film>1?"s":""),"vus"]);
   const sums={};L.forEach(e=>{const r=String(e.name||"").match(QRX);if(!r)return;const u=r[2];sums[u]=(sums[u]||0)+parseFloat(r[1].replace(",","."))});
   if(sums["rép."])T.push([vI("halteres"),Math.round(sums["rép."])+" rép.","de renfo"]);if(sums.km)T.push([vI("pas"),Math.round(sums.km*10)/10+" km","parcourus"]);if(sums.pages)T.push([vI("lire"),Math.round(sums.pages)+" pages","lues"]);
   const so=L.filter(e=>e.idq).length;if(so)T.push([vI("ticket"),so+" sortie"+(so>1?"s":""),"découvertes"]);const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;if(rm)T.push([vI("balai"),rm+" pièce"+(rm>1?"s":""),"rangées"]);
-  const k=T.map(t=>t[1]+t[2]).join("|");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k)return;if(!T.length){if(c)c.remove();return}if(!c){c=document.createElement("div");c.className="realrc";const anc=b.querySelector(".bchap");(anc||b.firstElementChild).after(c)}c.dataset.k=k;
-  c.innerHTML=`<h3 class="bh3">Ce mois-ci, en vrai</h3><div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`}
+  const k=PR.t+"|"+T.map(t=>t[1]+t[2]).join("|"),anc=b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
+  if(!c){c=document.createElement("div");c.className="realrc"}if(anc)anc.after(c);else b.prepend(c);c.dataset.k=k;
+  c.innerHTML=`<h3 class="bh3">${PR.t}</h3>${T.length?`<div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
 
 // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
 function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;
