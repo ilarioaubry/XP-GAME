@@ -177,7 +177,7 @@ html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::after{background-image:v
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body :is(.fpf.aura-on)::before,html:not(#_a):not(#_b) body :is(.fpf.aura-on)::after{animation:none!important}}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::before{background-size:240px 240px!important;animation:auUpH3 16s steps(80) infinite;opacity:.5}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on).au-hello::after{background-size:240px 240px!important;animation:auUpH4 12s steps(80) infinite;opacity:.4}
-html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) :is(.pf-name,.statlist,.pf-xp,.fp-bd:not(:empty),.fp-when){background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:2px solid color-mix(in srgb,var(--au) 35%,transparent);padding:4px 8px}
+html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) :is(.pf-name,.statlist,.pf-xp,.fp-bd:not(:empty),.fp-when){background:color-mix(in srgb,var(--surface) 58%,transparent);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border:2px solid color-mix(in srgb,var(--au) 35%,transparent);padding-top:4px;padding-bottom:4px}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .pf-name{margin:-4px 0 0 -8px}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .statlist{margin:0 -8px 0 0}
 html:not(#_a):not(#_b) body :is(.fpf.aura-on) .pf-xp{padding:6px 8px;margin:0 -2px}
@@ -185,7 +185,7 @@ html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) .fp-when{display:
 html:not(#_a):not(#_b) body :is(.fpf.aura-on){box-shadow:4px 4px 0 var(--rpg-shadow),0 0 0 3px var(--au),0 0 0 6px color-mix(in srgb,var(--au) 40%,transparent),0 0 18px 8px color-mix(in srgb,var(--au) 55%,transparent),0 0 40px 14px color-mix(in srgb,var(--au) 25%,transparent)!important;animation:auGlow 3s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body :is(.fpf.aura-on){animation:none!important}}
 html:not(#_a):not(#_b) body .char.pf:not(.fpf) .pf-body{align-items:stretch}
-html:not(#_a):not(#_b) body .char.pf:not(.fpf) .pf-side{grid-template-rows:auto 1fr;align-self:stretch}
+html:not(#_a):not(#_b) body .char.pf:not(.fpf) .pf-side{grid-template-rows:auto 1fr}
 /* — depuis principal-05.css — */
 html:not(#_a):not(#_b) body .char.pf:not(.fpf) .pf-side .wallet{height:auto;min-height:35px;align-self:stretch}
 html:not(#_a):not(#_b) body #ritEdCard .frform{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px}
@@ -249,7 +249,7 @@ html body #prof .premind .seg{display:grid;grid-auto-flow:column;grid-auto-colum
 html body #prof .premind .seg button{border:0;background:transparent;border-radius:9px;min-height:38px;font-weight:700;color:var(--muted);font-size:13px;padding:0 2px}
 html body #prof .premind .seg button[aria-pressed=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 0 var(--line)}
 /* — depuis epure-02.css — */
-html:not(#_a):not(#_b) body .fjobs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+html:not(#_a):not(#_b) body .fjobs{display:grid;gap:8px}
 html:not(#_a):not(#_b) body .fjobs.fpris{grid-template-columns:repeat(4,1fr)}
 html:not(#_a):not(#_b) body .fjobs button{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--surface);border:2px solid var(--line);border-radius:14px;color:var(--ink,#fff);font:inherit;font-size:13px;font-weight:800;line-height:1.15;padding:6px;cursor:pointer}
 html:not(#_a):not(#_b) body .fjobs.fpris button{font-size:11px}
