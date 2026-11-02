@@ -13,12 +13,17 @@ function evList(){
   G.ev.forEach(e=>{const dt=new Date(e.d+"T00:00");out.push({k:"ev",id:e.id,n:e.n,xp:e.xp,dt,inD:Math.round((dt-t)/864e5),done:S.log.some(l=>l.evd===e.id)})});
   return out.sort((a,b)=>a.inD-b.inD);
 }
+// mes dates dans le calendrier (2.7) : mon anniversaire, notre anniversaire de couple ; affichées seulement, sans XP
+function myDates(){let s=null;try{s=sitOf()}catch(e){}if(!s)return[];const t=new Date();t.setHours(0,0,0,0);const y=t.getFullYear(),out=[];
+  const add=(o,id,n,ic)=>{if(!o||!o.d||!o.m)return;let dt=new Date(y,o.m-1,o.d);if(dt.getMonth()!==o.m-1)return;if(dt<t)dt=new Date(y+1,o.m-1,o.d);const inD=Math.round((dt-t)/864e5);if(inD>EV_DAYS)return;
+    const ans=o.y?dt.getFullYear()-o.y:0;out.push({k:"me",id,n:ans>0?n+" · "+ans+" ans":n,dt,inD,ic})};
+  add(s.bd,"me:bd","Ton anniversaire","cake");if(s.cpl&&s.cpl!=="celib")add(s.cpld,"me:cpl",s.cpl==="marie"?"Anniversaire de mariage":"Anniversaire de couple","coeur");return out}
 function evWhen(d){return d<0?(d===-1?"Hier":"Il y a "+(-d)+" jours"):d===0?"Aujourd'hui":d===1?"Demain":"Dans "+d+" jours"}
 const EV_IC={bd:'<path d="M4 21h16v-7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z" fill="currentColor" opacity=".9"/><path d="M4 16c1.5 1 2.5 1 4 0s2.5-1 4 0 2.5 1 4 0 2.5-1 4 0" fill="none" stroke="var(--surface)" stroke-width="1.6"/><path d="M12 12V8" stroke="currentColor" stroke-width="2"/><path d="M12 3c1.2 1.4 1.2 2.6 0 3.6-1.2-1-1.2-2.2 0-3.6z" fill="currentColor"/>',
   ev:'<path d="M12 2l2.6 6.4L21 9l-5 4.4L17.6 20 12 16.6 6.4 20 8 13.4 3 9l6.4-.6z" fill="currentColor"/>'};
 let evOpen=null;
 function renderEvents(){
-  const box=$("evtList");if(!box)return;const L=evList();
+  const box=$("evtList");if(!box)return;const L=evList().concat(myDates()).sort((a,b)=>a.inD-b.inD);
   $("evtCnt").textContent=L.length;$("evtCnt").hidden=!L.length;
   box.innerHTML="";
   const evAddRect=()=>{const a=document.createElement("button");a.type="button";a.className="evch evadd";a.innerHTML=`<span class="evci"><svg class="ic pxic" viewBox="0 0 12 12" width="22" height="22" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg></span><span class="evctx"><b>Ajouter</b><small>un événement</small></span>`;a.onclick=()=>$("evtAdd").click();return a};
@@ -29,16 +34,16 @@ function renderEvents(){
      c.className="evch"+(e.k==="bd"?" bdch":"")+(e.inD<=0?" now":e.inD<=7?" soon":"")+(e.done?" done":"");c.setAttribute("aria-pressed",evOpen===e.id);c.style.setProperty("--ec",e.k==="bd"?(e.fam?"var(--c-famille)":"var(--c-social)"):"var(--gold)");
      const cd=e.inD<0?"Passé":e.inD===0?"Auj.":e.inD===1?"Demain":"J-"+e.inD;
      c.innerHTML=`<span class="evci"></span><span class="evctx"><small>${e.dt.getDate()} ${MO[e.dt.getMonth()]}</small><b class="evcn"></b><em>${cd}</em></span>${gpend?`<i class="evcg" title="Cadeau à prévoir"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true">${GIFT_IC}</svg></i>`:""}`;
-     c.querySelector(".evcn").textContent=e.k==="bd"?e.who:e.n;
-     {const ic=c.querySelector(".evci");if(e.k==="bd"){ic.classList.add("av");ic.style.setProperty("--h",`hsl(${hueOf(e.who)} 55% 50%)`);const pc=picOf(e.who);if(pc){const im=document.createElement("img");im.src=pc;im.alt="";ic.appendChild(im)}else ic.textContent=e.who[0].toUpperCase()}else ic.innerHTML=`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${EV_IC.ev}</svg>`}c.setAttribute("aria-label",e.n+", "+cd);
+     c.querySelector(".evcn").textContent=e.k==="bd"?e.who:e.k==="me"?(e.id==="me:bd"?"Toi":"Vous deux"):e.n;
+     {const ic=c.querySelector(".evci");if(e.k==="bd"){ic.classList.add("av");ic.style.setProperty("--h",`hsl(${hueOf(e.who)} 55% 50%)`);const pc=picOf(e.who);if(pc){const im=document.createElement("img");im.src=pc;im.alt="";ic.appendChild(im)}else ic.textContent=e.who[0].toUpperCase()}else if(e.k==="me")ic.innerHTML=rkSvg(e.ic);else ic.innerHTML=`<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${EV_IC.ev}</svg>`}c.setAttribute("aria-label",e.n+", "+cd);
      c.onclick=()=>{evOpen=evOpen===e.id?null:e.id;renderEvents()};fz.appendChild(c)});
    fz.appendChild(evAddRect());box.appendChild(fz)}
   L.forEach(e=>{const r=document.createElement("div");const today=e.inD<=0;r.hidden=evOpen!==e.id;
     r.className="evr "+e.k+(today?" now":"")+(e.done?" done":"")+(e.fam?" fam":"");
-    const act=e.k==="bd"?(e.q?`<button type="button" class="btn primary evgo">+${e.q.xp} XP</button>`:""):(e.done?`<span class="evok">${ICO("check",16)} Fait</span>`:today?`<button type="button" class="btn primary evgo">+${e.xp} XP</button>`:`<span class="evxp">+${e.xp} XP</span>`);
+    const act=e.k==="me"?"":e.k==="bd"?(e.q?`<button type="button" class="btn primary evgo">+${e.q.xp} XP</button>`:""):(e.done?`<span class="evok">${ICO("check",16)} Fait</span>`:today?`<button type="button" class="btn primary evgo">+${e.xp} XP</button>`:`<span class="evxp">+${e.xp} XP</span>`);
     r.style.setProperty("--ec",e.k==="bd"?(e.fam?"var(--c-famille)":"var(--c-social)"):"var(--gold)");
     const cd=e.inD<0?"Passé":e.inD===0?"Aujourd'hui !":e.inD===1?"Demain":"J-"+e.inD;
-    r.innerHTML=`<span class="evd"><small>${MO[e.dt.getMonth()]}</small><b>${e.dt.getDate()}</b></span><span class="evt-t"><span class="evkind">${e.k==="bd"?(e.fam?"Anniversaire · famille":"Anniversaire · ami"):"Événement"}</span><b></b><span class="evj">${cd}</span></span><span class="evside">${e.k==="ev"?`<span class="evstar"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">${EV_IC.ev}</svg></span>`:""}</span>${act?`<span class="evact">${act}</span>`:""}${e.k==="ev"?`<button type="button" class="evx" aria-label="Supprimer l'événement">${ICO("close",14)}</button>`:""}`;
+    r.innerHTML=`<span class="evd"><small>${MO[e.dt.getMonth()]}</small><b>${e.dt.getDate()}</b></span><span class="evt-t"><span class="evkind">${e.k==="bd"?(e.fam?"Anniversaire · famille":"Anniversaire · ami"):e.k==="me"?(e.id==="me:bd"?"Toi":"Ton couple"):"Événement"}</span><b></b><span class="evj">${cd}</span></span><span class="evside">${e.k==="ev"?`<span class="evstar"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">${EV_IC.ev}</svg></span>`:""}</span>${act?`<span class="evact">${act}</span>`:""}${e.k==="ev"?`<button type="button" class="evx" aria-label="Supprimer l'événement">${ICO("close",14)}</button>`:""}`;
     r.querySelector(".evt-t b").textContent=e.n;
     if(e.k==="bd"){const av=document.createElement("button");av.type="button";av.className="evav";av.setAttribute("aria-label","Ouvrir le profil de "+e.who);av.style.setProperty("--h",`hsl(${hueOf(e.who)} 55% 50%)`);
       const pc=picOf(e.who);if(pc){const im=document.createElement("img");im.src=pc;im.alt="";av.appendChild(im)}else av.textContent=e.who[0].toUpperCase();

@@ -80,6 +80,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `vie` | finitions | Réglages de vie : jours de travail, compteurs suivis | active |
 | `per`, `perAsk` | finitions, ma-vie | Périodes (contrat…) ; bilan de fin de période demandé | active |
 | `sit.have` | vie-faits, moi-finitions | Faits « J'ai… » cochés (chien, plantes…, habitudes alimentaires vege, vegan, halal, gluten, lactose qui masquent des aliments) ; les rituels et rappels qu'ils créent portent `have` | active |
+| `sit.bd`, `sit.cpl`, `sit.cpld` | moi-finitions, 10-evenements | Mon anniversaire `{d,m,y}`, mon cœur (`celib`, `couple`, `fiance`, `pacse`, `marie`), notre anniversaire de couple ou de mariage `{d,m,y}` ; le ou la partenaire reste le proche marqué « couple » (`profiles[n].love`). Ajouté le 02/11 | active |
 | `eng` | engagements, cloture-soir | {lib: engagements écrits, d: jour → [{id,k,n,lim?,res?}], skip: jour où la carte a été fermée} | active |
 | `todo` | a-faire, cloture-soir | Liste à faire : [{id, d jour, c créée le, n nom, key action du panneau}] ; « fait » se lit dans le journal | active |
 | `dlog` | coeur/29, cloture-soir | Messages gardés pour le bilan du soir (jour → liste), 7 derniers jours | active |
