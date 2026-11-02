@@ -3,7 +3,7 @@ function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")|
   L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
 addEventListener("error",e=>xpErr(e));addEventListener("unhandledrejection",e=>xpErr(e));
 
-const SCR=document.body;
+const SCR=document.scrollingElement||document.documentElement;  // la page entière défile (02/11)
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
 const CATS={sport:{label:"Sport",c:"var(--c-sport)"},perso:{label:"Créer",c:"var(--c-perso)"},social:{label:"Amis",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
 const BARS={eau:{goal:16,segs:8,unit:"verres",done:"Hydraté !"},nourriture:{goal:40,segs:10,unit:"XP",done:"Rassasié !"}};

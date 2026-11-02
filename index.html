@@ -120,7 +120,7 @@ html:not(#_a):not(#_b):not(#_c) body .rcpl>li:last-child{border-bottom:0}
 html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-height:100%;background:var(--bg)}
 html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
 html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
-html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
+html.fullh:not(#_a):not(#_b):not(#_c) body{min-height:100vh!important;min-height:100lvh!important}
 html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 28px))}
 
 /* ---- principal-01.css ---- */
@@ -1091,9 +1091,10 @@ body.avc-open{overflow:hidden}
 
 
 
-html{height:100%;overflow:hidden;overscroll-behavior:none}
-body{height:100%;margin:0;padding:0 8px;box-sizing:border-box;overflow-x:hidden;overflow-y:auto;overscroll-behavior:none;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-y pinch-zoom}
-body::-webkit-scrollbar{display:none;width:0;height:0}
+/* défilement : c'est la page entière qui défile (02/11) ; avant, le corps de page défilait dans une page bloquée, ce qui faisait sur iPhone des zones blanches et des touchers perdus */
+html{overflow-x:hidden;overscroll-behavior:none;scrollbar-width:none}
+body{margin:0;padding:0 8px;box-sizing:border-box;touch-action:pan-y pinch-zoom}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 .wrap{overflow-x:visible;max-width:100%}
 .ppl{touch-action:auto}
 
@@ -2892,7 +2893,7 @@ html body .float{animation-duration:1.3s!important}
 
 
 
-html.plusopen body{overflow:hidden}
+html.plusopen{overflow:hidden}
 
 
 
@@ -4212,7 +4213,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2cd0881</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 41cdbd8</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4823,7 +4824,7 @@ function xpErr(e,src){try{const L=JSON.parse(localStorage.getItem("xp-erreurs")|
   L.push({t:Date.now(),m,s:String(src||(e&&e.filename?e.filename.split("/").pop()+":"+e.lineno:"")||(e&&e.stack?String(e.stack).split("\n")[1]||"":"")).slice(0,80)});localStorage.setItem("xp-erreurs",JSON.stringify(L.slice(-5)))}catch(x){}}
 addEventListener("error",e=>xpErr(e));addEventListener("unhandledrejection",e=>xpErr(e));
 
-const SCR=document.body;
+const SCR=document.scrollingElement||document.documentElement;  // la page entière défile (02/11)
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
 const CATS={sport:{label:"Sport",c:"var(--c-sport)"},perso:{label:"Créer",c:"var(--c-perso)"},social:{label:"Amis",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
 const BARS={eau:{goal:16,segs:8,unit:"verres",done:"Hydraté !"},nourriture:{goal:40,segs:10,unit:"XP",done:"Rassasié !"}};
@@ -12209,8 +12210,8 @@ function goSub(v,sb){const old=subs[v];subs[v]=sb;try{localStorage.setItem("cq-s
   const fin=()=>{if(tok!==window.__subTok)return;document.querySelectorAll(".sout").forEach(el=>{el.classList.remove("sout");el.style.removeProperty("--dx")});applySub();if(SCR.scrollTop>keepY)SCR.scrollTo(0,keepY);if(!red)requestAnimationFrame(()=>slideIn(v,dir,sb))};
   if(red||!outs.length){fin();return}
   outs.forEach(el=>{el.classList.remove("vin","sin");el.style.setProperty("--dx",(-dir*70)+"px");void el.offsetWidth;el.classList.add("sout")});
-  setTimeout(fin,150)}
-function slideIn(v,dir,sub){[...document.querySelectorAll('[data-v="'+v+'"][data-sub="'+sub+'"]')].filter(el=>!el.hidden).forEach(el=>{el.style.setProperty("--dx",(dir*70)+"px");el.classList.remove("sin","vin");void el.offsetWidth;el.classList.add("sin");el.addEventListener("animationend",function f(e){if(e.target!==el)return;el.classList.remove("sin");el.removeEventListener("animationend",f)})})}
+  setTimeout(fin,150);setTimeout(()=>document.querySelectorAll(".sout").forEach(el=>{el.classList.remove("sout");el.style.removeProperty("--dx")}),900)}
+function slideIn(v,dir,sub){[...document.querySelectorAll('[data-v="'+v+'"][data-sub="'+sub+'"]')].filter(el=>!el.hidden).forEach(el=>{el.style.setProperty("--dx",(dir*70)+"px");el.classList.remove("sin","vin");void el.offsetWidth;el.classList.add("sin");el.addEventListener("animationend",function f(e){if(e.target!==el)return;el.classList.remove("sin");el.removeEventListener("animationend",f)});setTimeout(()=>el.classList.remove("sin"),700)})}  // filet : la classe d'animation ne reste jamais collée
 function moveInd(nv){if(!nv)return;let ind=nv.querySelector(".stind");if(!ind){ind=document.createElement("span");ind.className="stind";ind.setAttribute("aria-hidden","true");nv.prepend(ind)}const b=nv.querySelector('button[aria-selected="true"]');if(!b||!b.offsetWidth)return;ind.style.width=b.offsetWidth+"px";ind.style.height=b.offsetHeight+"px";ind.style.transform=`translate(${b.offsetLeft}px,${b.offsetTop}px)`;if(!ind.dataset.on)requestAnimationFrame(()=>{ind.dataset.on="1"})}
 function placeInds(){document.querySelectorAll(".subtabs").forEach(nv=>{if(!nv.hidden&&nv.offsetWidth)moveInd(nv)})}
 window.addEventListener("resize",placeInds);
@@ -12229,7 +12230,7 @@ function animIn(v,dir,sub){
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const els=[...document.querySelectorAll('[data-v="'+v+'"]'+(sub?'[data-sub="'+sub+'"]':''))].filter(el=>!el.hidden&&el.offsetHeight);
   els.forEach((el,i)=>{el.style.setProperty("--dx",(dir*44)+"px");el.style.animationDelay="0ms";el.classList.remove("vin");void el.offsetWidth;el.classList.add("vin");
-    el.addEventListener("animationend",function f(e){if(e.target!==el)return;el.classList.remove("vin");el.style.animationDelay="";el.removeEventListener("animationend",f)})});
+    el.addEventListener("animationend",function f(e){if(e.target!==el)return;el.classList.remove("vin");el.style.animationDelay="";el.removeEventListener("animationend",f)});setTimeout(()=>{el.classList.remove("vin");el.style.animationDelay=""},700)});
 }
 function showView(v,fromHash){
   if(viewDirty[v])runView(v);
@@ -12241,7 +12242,7 @@ function showView(v,fromHash){
   if(v==="p")renderProfile(true);
   if(!fromHash){try{history.replaceState(null,"",v==="b"?"#boutique":v==="s"?"#reglages":v==="t"?"#defis":v==="c"?"#profil":(v==="r"||v==="p")?"#relations":"#quetes")}catch(e){}SCR.scrollTo(0,0)}
 }
-{const qs=[...document.querySelectorAll(".qxp,.subtabs")];let t=0;const chk=()=>{t=0;qs.forEach(q=>{if(q.hidden||!q.offsetHeight){q.classList.remove("stuck");return}const r=q.getBoundingClientRect(),top=parseFloat(getComputedStyle(q).top)||0;q.classList.toggle("stuck",r.top<=top+.5&&SCR.scrollTop>20)})};SCR.addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(chk)},{passive:true});}
+{const qs=[...document.querySelectorAll(".qxp,.subtabs")];let t=0;const chk=()=>{t=0;qs.forEach(q=>{if(q.hidden||!q.offsetHeight){q.classList.remove("stuck");return}const r=q.getBoundingClientRect(),top=parseFloat(getComputedStyle(q).top)||0;q.classList.toggle("stuck",r.top<=top+.5&&SCR.scrollTop>20)})};window.addEventListener("scroll",()=>{if(!t)t=requestAnimationFrame(chk)},{passive:true});}
 ["grid"].forEach(id=>{const el=$(id);el.addEventListener("scroll",()=>{el.classList.toggle("sl",el.scrollLeft>4);el.classList.toggle("end",el.scrollLeft+el.clientWidth>=el.scrollWidth-4&&el.scrollLeft>4)},{passive:true})});
 $("wallet").onclick=()=>{goSub("c","wr");setTimeout(()=>{const n=document.querySelector(".subtabs[data-v=c]");if(n)n.scrollIntoView({behavior:"smooth",block:"start"})},200)};$("qxpBtn").onclick=()=>goSub("c","vie");$("meSet").onclick=()=>showView("s");
 {const tp=$("pfTPick"),tb=$("charTitle"),setT=o=>{tp.hidden=!o;tb.setAttribute("aria-expanded",o)};tb.onclick=()=>setT(tp.hidden);$("pfTClose").onclick=()=>setT(false);window.__closeTPick=()=>setT(false)}$("setBack").onclick=()=>showView("c");$("tabQ").onclick=()=>showView("q");$("tabR").onclick=()=>showView("r");$("tabC").onclick=()=>showView("c");

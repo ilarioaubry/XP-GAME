@@ -102,7 +102,7 @@ html:not(#_a):not(#_b):not(#_c) body .rcpl>li:last-child{border-bottom:0}
 html:not(#_a):not(#_b){padding-top:0!important;padding-bottom:0!important;min-height:100%;background:var(--bg)}
 html:not(#_a):not(#_b) body{min-height:100vh;min-height:100dvh}
 html:not(#_a):not(#_b) body .wrap{padding-top:calc(20px + env(safe-area-inset-top,0px))}
-html.fullh:not(#_a):not(#_b):not(#_c),html.fullh:not(#_a):not(#_b):not(#_c) body{height:100vh!important;height:100lvh!important}
+html.fullh:not(#_a):not(#_b):not(#_c) body{min-height:100vh!important;min-height:100lvh!important}
 html.fullh .dock{padding-bottom:max(2px,calc(env(safe-area-inset-bottom,0px) - 28px))}
 
 /* ---- principal-01.css ---- */
@@ -1073,9 +1073,10 @@ body.avc-open{overflow:hidden}
 
 
 
-html{height:100%;overflow:hidden;overscroll-behavior:none}
-body{height:100%;margin:0;padding:0 8px;box-sizing:border-box;overflow-x:hidden;overflow-y:auto;overscroll-behavior:none;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-y pinch-zoom}
-body::-webkit-scrollbar{display:none;width:0;height:0}
+/* défilement : c'est la page entière qui défile (02/11) ; avant, le corps de page défilait dans une page bloquée, ce qui faisait sur iPhone des zones blanches et des touchers perdus */
+html{overflow-x:hidden;overscroll-behavior:none;scrollbar-width:none}
+body{margin:0;padding:0 8px;box-sizing:border-box;touch-action:pan-y pinch-zoom}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
 .wrap{overflow-x:visible;max-width:100%}
 .ppl{touch-action:auto}
 
@@ -2874,7 +2875,7 @@ html body .float{animation-duration:1.3s!important}
 
 
 
-html.plusopen body{overflow:hidden}
+html.plusopen{overflow:hidden}
 
 
 
