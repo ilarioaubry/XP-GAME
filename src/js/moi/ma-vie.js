@@ -14,7 +14,7 @@
     const MODS=[["sceneBox","Scène animée","Le décor en haut de l'écran"],["enBox","Énergie du matin","La question sur ta batterie"],["nowBox","Maintenant","La carte de la chose à faire tout de suite"],["plusBox","Plus de quêtes","Le raccourci vers les autres quêtes"],["sqBox","Quêtes spéciales","Amis, famille, musique…"],["gameBox","Coffres","Les coffres et récompenses"],["evtBox","Événements","Tes événements à venir"],["rtrBox","Rattrapage","Les rituels manqués à rattraper"],["xmBox","Saison des fêtes","Les quêtes de saison"]];
     const UN={j:[1,"jour","jours"],s:[7,"semaine","semaines"],m:[30,"mois","mois"]};
     const SUG=[["Coiffeur",6,"s"],["Dentiste",6,"m"],["Changer les draps",2,"s"],["Laver les serviettes",1,"s"],["Nettoyer le frigo",1,"m"],["Couper mes ongles",2,"s"],["Faire le ménage à fond",1,"m"],["Vider la poubelle de la salle de bain",2,"s"],["Bilan chez le médecin",12,"m"]];
-        let editId=null,editFrom=null,lEdit=null,lAll=false,lPre=null,force=false;
+        let editId=null,editFrom=null,lAll=false,force=false;
     const tkNow=()=>dayKey(Date.now());
     const hh=t=>{const[a,b]=(t||"0:0").split(":");return(+a)+"h"+(b&&b!=="00"?b:"")};
     const V=()=>{const g=S.g;if(!g.vie||typeof g.vie!=="object")g.vie={};const v=g.vie;
@@ -42,31 +42,36 @@
     const ratio=(x,tk)=>{if(!x.d)return 1.01;const n=nDays(x.d,tk,false)-1;return n/Math.max(1,x.n*(UN[x.u]||UN.j)[0])};
     const lRow=(x,r,tk,mini)=>{const td=x.d===tk,st=td?"ok":r>=1?"late":r>=.8?"soon":"ok";return`<div class="lst-r ${st}"><button type="button" class="lst-n" data-le="${x.id}"><b>${esc(x.name)}</b><small>${ago(x.d,tk)}${mini?"":" · "+evL(x)}</small></button><button type="button" class="lst-do${td?" dn":""}" data-ld="${x.id}" aria-label="${td?"Annuler":"Fait aujourd'hui"} : ${esc(x.name)}">${td?ICO("check",14)+" Fait":"Fait"}</button></div>`};
     function lastHTML(tk){const L=S.g.last;let h="";
-      if(lEdit==="new")h+=lForm(null,tk);
-      if(!L.length&&lEdit!=="new")return h+`<div class="lst-sug">${SUG.map((s,i)=>`<button type="button" data-sg="${i}">${esc(s[0])}</button>`).join("")}</div>`;
+      if(!L.length)return h+`<div class="lst-sug">${SUG.map((s,i)=>`<button type="button" data-sg="${i}">${esc(s[0])}</button>`).join("")}</div>`;
       const R=L.map(x=>({x,r:ratio(x,tk)})).sort((a,b)=>b.r-a.r),show=lAll?R:R.slice(0,6);
-      h+=`<div class="trk-c lst">${show.map(({x,r})=>lEdit===x.id?`</div>${lForm(x,tk)}<div class="trk-c lst">`:lRow(x,r,tk)).join("")}</div>`.replace(/<div class="trk-c lst"><\/div>/g,"");
+      h+=`<div class="trk-c lst">${show.map(({x,r})=>lRow(x,r,tk)).join("")}</div>`.replace(/<div class="trk-c lst"><\/div>/g,"");
       if(R.length>6)h+=`<button type="button" class="lnk lst-more">${lAll?"Réduire":`Tout voir (${R.length})`}</button>`;
       return h}
-    function lForm(x,tk){const p=x||lPre||{name:"",n:2,u:"s",d:tk};
-      return`<form class="trk-c trk-f lst-f"><label>Quoi<input type="text" name="n" maxlength="50" value="${esc(p.name||"")}" placeholder="Ex. Coiffeur" autocomplete="off"></label>
-      ${x?"":`<div class="lst-sug">${SUG.map((s,i)=>`<button type="button" data-sg="${i}">${esc(s[0])}</button>`).join("")}</div>`}
-      <div class="two"><label>À refaire tous les<span class="lst-ev"><input type="number" name="ev" min="1" max="99" inputmode="numeric" value="${p.n}"><select name="u">${Object.keys(UN).map(k=>`<option value="${k}"${p.u===k?" selected":""}>${UN[k][2]}</option>`).join("")}</select></span></label>
-      <label>Dernière fois<input type="date" name="d" value="${p.d||""}" max="${tk}"></label></div>
-      <div class="acts">${x?`<button type="button" class="del">Supprimer</button>`:""}<button type="button" class="cancel">Annuler</button><button type="submit" class="ok">${x?"Enregistrer":"Ajouter"}</button></div></form>`}
+    // rappel « La dernière fois que… » : fenêtre plein écran (règle : champ texte = plein écran), 2.8
+    function lOpen(x,pre){if(document.querySelector(".lstw"))return;const tk=tkNow(),L=S.g.last,p=x||pre||{name:"",n:2,u:"s",d:tk};
+      const w=document.createElement("form");w.className="ui-plein lstw";w.setAttribute("role","dialog");w.setAttribute("aria-label",x?"Modifier le rappel":"Nouveau rappel");
+      w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${x?"Modifier le rappel":"Nouveau rappel"}</h2>${x?`<button type="button" class="ui-btn ui-btn--icone lstdel" aria-label="Supprimer le rappel" title="Supprimer">${ICO("trash",24)}</button>`:""}</div>
+        <div class="ui-plein__corps lstwc"><label>Quoi<input class="ui-champ" type="text" name="n" maxlength="50" placeholder="Ex. Coiffeur" autocomplete="off"></label>
+        ${x?"":`<div class="lst-sug">${SUG.map((s2,i)=>`<button type="button" data-sg="${i}">${esc(s2[0])}</button>`).join("")}</div>`}
+        <label>À refaire tous les<span class="lst-ev"><input class="ui-champ" type="number" name="ev" min="1" max="99" inputmode="numeric" value="${p.n}"><select class="ui-champ" name="u">${Object.keys(UN).map(k=>`<option value="${k}"${p.u===k?" selected":""}>${UN[k][2]}</option>`).join("")}</select></span></label>
+        <label>Dernière fois<input class="ui-champ" type="date" name="d" value="${p.d||""}" max="${tk}"></label></div>
+        <div class="ui-plein__bas"><button type="button" class="ui-btn lstno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">${x?"Enregistrer":"Ajouter"}</button></div>`;
+      w.querySelector("[name=n]").value=p.name||"";
+      const close=()=>w.remove();w.querySelector(".lstno").onclick=close;
+      w.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{const s2=SUG[+b.dataset.sg];w.querySelector("[name=n]").value=s2[0];w.querySelector("[name=ev]").value=s2[1];w.querySelector("[name=u]").value=s2[2]});
+      const dl=w.querySelector(".lstdel");if(dl)dl.onclick=()=>{close();undoAfter("Rappel supprimé",()=>{S.g.last=S.g.last.filter(y=>y.id!==x.id);save();rt()})};
+      w.onsubmit=e=>{e.preventDefault();const name=w.querySelector("[name=n]").value.trim();if(!name){w.querySelector("[name=n]").focus();return}
+        const o={name,n:Math.max(1,Math.min(99,parseInt(w.querySelector("[name=ev]").value)||1)),u:w.querySelector("[name=u]").value,d:w.querySelector("[name=d]").value||null};if(o.d&&o.d>tk)o.d=tk;
+        if(!x)L.push({id:"l"+Date.now().toString(36),...o});else{Object.assign(x,o);delete x.pv}close();save();rt()};
+      document.body.appendChild(w);if(!x)w.querySelector("[name=n]").focus()}
     function bindLast(box,tk){const L=S.g.last;
-      box.querySelectorAll(".lst-add").forEach(a=>a.onclick=()=>{lEdit=lEdit==="new"?null:"new";lPre=null;rt();const i=document.querySelector("#vieBox .lst-f input");if(i)i.focus()});
-      box.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{const s=SUG[+b.dataset.sg];lEdit="new";lPre={name:s[0],n:s[1],u:s[2],d:tk};rt()});
-      box.querySelectorAll("[data-le]").forEach(b=>b.onclick=()=>{lEdit=b.dataset.le;rt()});
+      box.querySelectorAll(".lst-add").forEach(a=>a.onclick=()=>lOpen(null));
+      box.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{const s2=SUG[+b.dataset.sg];lOpen(null,{name:s2[0],n:s2[1],u:s2[2],d:tk})});
+      box.querySelectorAll("[data-le]").forEach(b=>b.onclick=()=>{const x=L.find(y=>y.id===b.dataset.le);if(x)lOpen(x)});
       box.querySelectorAll("[data-ld]").forEach(b=>b.onclick=()=>{const x=L.find(y=>y.id===b.dataset.ld);if(!x)return;
         if(x.d===tk){x.d=x.pv||null;delete x.pv}else{x.pv=x.d;x.d=tk;try{const k=window.afMatch&&afMatch(x.name);if(k){S.g.afLast=S.g.afLast||{};S.g.afLast[k]=Date.now()}}catch(e){}try{toast(`Noté : <span class="p">${esc(x.name)}</span>`)}catch(e){}}save();rt()});
       const m=box.querySelector(".lst-more");if(m)m.onclick=()=>{lAll=!lAll;rt()};
-      const f=box.querySelector(".lst-f");if(!f)return;
-      f.querySelector(".cancel").onclick=()=>{lEdit=null;lPre=null;rt()};
-      const dl=f.querySelector(".del");if(dl)dl.onclick=()=>undoAfter("Élément supprimé",()=>{S.g.last=L.filter(y=>y.id!==lEdit);lEdit=null;save();rt()});
-      f.onsubmit=e=>{e.preventDefault();const name=f.querySelector("[name=n]").value.trim();if(!name){f.querySelector("[name=n]").focus();return}
-        const o={name,n:Math.max(1,Math.min(99,parseInt(f.querySelector("[name=ev]").value)||1)),u:f.querySelector("[name=u]").value,d:f.querySelector("[name=d]").value||null};if(o.d&&o.d>tk)o.d=tk;
-        if(lEdit==="new")L.push({id:"l"+Date.now().toString(36),...o});else{const x=L.find(y=>y.id===lEdit);if(x){Object.assign(x,o);delete x.pv}}lEdit=null;lPre=null;save();rt()}}
+    }
     // ---- Périodes
     function perStat(p,tk){const tot=nDays(p.s,p.e,p.wd),done=tk<p.s?0:nDays(p.s,tk>p.e?p.e:tk,p.wd),left=Math.max(0,tot-done),pct=tot?Math.round(done/tot*100):0,us=p.wd?"jours de travail":"jours",u=p.wd?"jour de travail":"jour";
       let st;if(tk<p.s){const k=nDays(tk,addD(p.s,-1),false);st=`Commence ${k===1?"demain":"dans "+k+" jours"} · ${fmt(p.s)}`}else if(tk>p.e)st=`Terminé le ${fmt(p.e)}, bravo`;else if(left===0)st=tk===p.e?"Dernier jour, tu y es !":"C'est bouclé, bravo !";else st=`Plus que ${left} ${left>1?us:u} · fin ${fmt(p.e)}`;
@@ -107,7 +112,7 @@
       const pOk=g.perOk&&typeof g.perOk==="object"?g.perOk:{},cDone=x=>pOk[x.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+x.name),cFin=x=>x.t==="contrat"&&!cDone(x)&&perStat(x,tk).left===0&&tk>=x.s&&nDays(x.e,tk,false)<=21;
       const forms=[];if(v.track.per)g.per.filter(x=>!(x.t==="contrat"&&document.getElementById("jdEng"))).filter(x=>cFin(x)||(x.t!=="contrat"||!cDone(x))&&(x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2))).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(cFin(x)?perFin(x):perMini(x,tk))});
       const late=g.last.map(x=>({x,r:ratio(x,tk)})).filter(o=>o.r>=1&&o.x.d!==tk||o.x.d===tk&&o.x.pv!==undefined).filter(o=>!(S.specials||[]).some(q=>(q.name||"").toLowerCase().includes(String(o.x.name||"").toLowerCase()))).sort((a,b)=>b.r-a.r).slice(0,3);
-      if(!document.getElementById("jdLater"))late.forEach(o=>{if(lEdit===o.x.id)forms.push(lForm(o.x,tk));else rows.push(lRow(o.x,o.r,tk,1))});
+      if(!document.getElementById("jdLater"))late.forEach(o=>rows.push(lRow(o.x,o.r,tk,1)));
       let mode="";const cap=vieCap();
       if(T&&p.t!=="contrat"&&p.t!=="autre")mode=`${ic(p.t,16)}<span>${esc(PT[p.t].l.split(" /")[0])}</span>`;
       else if(workDay(tk))mode=`${ic("contrat",16)}<span>${hh(v.wf)}–${hh(v.wt)}</span>`;
