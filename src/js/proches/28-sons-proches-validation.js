@@ -36,13 +36,16 @@ function cbWho(t){return[...S.friends,...S.family].filter(n=>n&&t.includes(n)).s
 function pAv(n,cls){const pc=picOf(n);return`<span class="pav ${cls||""}" style="--h:hsl(${hueOf(n)} 55% 50%)">${pc?`<img src="${pc}" alt="">`:esc((n[0]||"?").toUpperCase())}</span>`}
 let pEdit=false; // fiche d'un proche : lecture, ou modification après « Modifier »
 function openProfile(n){profName=n;pEdit=false;showView("p")}
+// idées cadeau : liste (giftl) ; gifts = la première, lue par le suivi Idée → Acheté → Offert
+function giftsOf(P){P=P||{};return Array.isArray(P.giftl)?P.giftl.slice():P.gifts?[P.gifts]:[]}
+function giftsSet(P,L){L=L.map(x=>String(x).trim().slice(0,60)).filter(Boolean);if(L.length){P.giftl=L;P.gifts=L[0]}else{delete P.giftl;delete P.gifts}}
 const agoTxt=d=>d<1?"aujourd'hui":d===1?"hier":"il y a "+d+" jours";
 const daysAgo=t=>{const a=new Date(t),b=new Date();a.setHours(12,0,0,0);b.setHours(12,0,0,0);return Math.round((b-a)/864e5)}; // en jours de calendrier
 // dernière fois vus en vrai : seul, en groupe, ou à côté d'une action (« Avec qui ? »)
 function seenOf(n){let t=0;(S.log||[]).forEach(e=>{if(!e||(e.xp||0)<0)return;const a=e.a||"";if((e.who===n&&(/^rel-meet-/.test(a)||/^Voir /.test(e.name||"")))||((e.fgw||[]).includes(n)&&/^fg-meet-/.test(a))||(e.withp||[]).includes(n))t=Math.max(t,e.t||0)});return t}
 // historique : ce qui a été fait ensemble, en clair
 function profHist(n){const L=[];
-  (S.log||[]).forEach(e=>{if(!e||(e.xp||0)<0)return;const fg=(e.fgw||[]).includes(n),wp=(e.withp||[]).includes(n);if(!(e.who===n&&(e.rel||e.fr))&&!fg&&!wp)return;
+  (S.log||[]).slice().sort((a,b)=>(a.t||0)-(b.t||0)).forEach(e=>{if(!e||(e.xp||0)<0)return;const fg=(e.fgw||[]).includes(n),wp=(e.withp||[]).includes(n);if(!(e.who===n&&(e.rel||e.fr))&&!fg&&!wp)return;
     const a=e.a||"",nm=e.name||"",k=/-meet-/.test(a)||/^Voir /.test(nm)?"meet":/-call-/.test(a)||/^Appel/i.test(nm)?"call":/-news-/.test(a)||/nouvelles/i.test(nm)?"news":"do";
     let t;if(fg){const g=fgList().find(x=>x.id===e.fgid);t=({meet:"Vus avec ",call:"Appel avec ",news:"Nouvelles avec "}[k]||"Avec ")+(g?g.n:"le groupe")}
     else if(wp){const o=e.withp.filter(x=>x!==n);t=nm.replace(/\s+avec\s+.*$/,"")+(o.length?" · avec "+o.join(", "):"")}
@@ -155,6 +158,8 @@ function renderProfileBase(force){
     <div class="fp-bd" id="pBdBox"></div>
     <div class="pf2bded" id="pBdEd" hidden></div>
   </div>
+  <section class="set-card pf2" id="pGifts"><h3>Idées cadeau</h3><div class="tagrow" id="pGiftL"></div>
+    <form class="tagadd" id="pGiftF"><input id="pGiftN" maxlength="60" placeholder="Ex. un livre de photo" aria-label="Nouvelle idée cadeau"><button class="btn" type="submit">Ajouter</button></form></section>
   <section class="set-card pf2" id="pLien"><h3>Lien</h3>
     <div class="fjobs fpris" id="pRel">${RL.map(([k,l,ic])=>`<button type="button" data-rel="${k}" aria-pressed="${rk===k}"><span class="fti">${rkSvg(ic)}</span><span>${esc(l)}</span></button>`).join("")}</div></section>
   <section class="set-card pf2" id="pTags"><h3>Ses univers</h3><div class="pf2sug" id="pSug" hidden></div><div class="tagrow" id="tgTypes"></div>
@@ -162,12 +167,14 @@ function renderProfileBase(force){
     <form class="tagadd" id="tgForm"><input id="tgNew" maxlength="20" placeholder="Autre talent…" aria-label="Autre talent"><button class="btn" type="submit">Ajouter</button></form></section>
   <section class="set-card pf2" id="pGroups"><h3>Groupes</h3><div class="tagrow" id="pGrp"></div>
     <form class="tagadd" id="pGrpForm"><input id="pGrpNew" maxlength="24" placeholder="Nouveau groupe…" aria-label="Nouveau groupe"><button class="btn" type="submit">Créer</button></form></section>
-  <label class="pf2gift"><span class="fti">${rkSvg("cadeau")}</span><span class="pf2t"><b>Idée cadeau</b><input id="pGift" maxlength="120" placeholder="ex. un livre de photo" aria-label="Idée cadeau"></span></label>
   <div class="pf2del pfend" id="delCard"><button type="button" class="btn delf delic" id="delBtn" aria-label="${fam?"Retirer de mes proches":"Supprimer l'ami"}" title="${fam?"Retirer de mes proches":"Supprimer l'ami"}">${ICO("trash",24)}</button><button type="button" class="btn primary pfok" id="pDone2">Terminé</button></div>`;
   const done=()=>{pEdit=false;renderProfile(true);SCR.scrollTo({top:0})};$("pDone").onclick=done;$("pDone2").onclick=done;
   $("pName").textContent=n;
   try{fpExtras(n,P)}catch(e){xpErr(e)} // tôt : le bouton Fond marche même si une partie plus bas plante
-  $("pGift").value=P.gifts||"";$("pGift").onchange=()=>{const v=$("pGift").value.trim();if(v)P.gifts=v;else delete P.gifts;save()};
+  {const box=$("pGiftL");const draw=()=>{const L=giftsOf(P);box.innerHTML=L.length?"":`<p class="hint vide">Aucune idée pour l'instant.</p>`;
+     L.forEach((x,i)=>{const b=document.createElement("button");b.type="button";b.className="tg gfti";b.setAttribute("aria-label","Retirer l'idée "+x);b.innerHTML=`<span class="tgi">${rkSvg("cadeau")}</span>`;b.append(x);b.insertAdjacentHTML("beforeend",`<span class="gftx">${ICO("close",12).replace(/class="[^"]*"/,"")}</span>`);
+       b.onclick=()=>{const M=giftsOf(P);M.splice(i,1);giftsSet(P,M);save();draw()};box.appendChild(b)})};
+   draw();$("pGiftF").onsubmit=e=>{e.preventDefault();const v=$("pGiftN").value.trim();if(!v)return;const L=giftsOf(P);if(!L.includes(v))L.push(v);giftsSet(P,L);$("pGiftN").value="";save();draw()}}
   // suppression immédiate, avec « Annuler » (standard) ; marche aussi pour la famille
   $("delBtn").onclick=()=>undoAfter(n+" retiré de tes proches",()=>removeFriend(n,true));
   const pic=picOf(n),pp=$("pPic");
@@ -199,7 +206,7 @@ function renderProfileBase(force){
   try{fpExtras(n,P)}catch(e){xpErr(e)}
 }
 // fiche en lecture : ce qu'on sait, ce qu'on a fait ; tout se change via « Modifier »
-function renderProfileView(n,P,bi,ri,st,seenH){const root=$("prof"),nb=nextBirthday(P.bd),G=fgList().filter(g=>(P.grp||[]).includes(g.id)),T=[...(P.types||[]),...(P.talents||[])],H=profHist(n),pic=picOf(n);
+function renderProfileView(n,P,bi,ri,st,seenH){const root=$("prof"),nb=nextBirthday(P.bd),GL=giftsOf(P),sg=tagSug(n),G=fgList().filter(g=>(P.grp||[]).includes(g.id)),T=[...(P.types||[]),...(P.talents||[])],H=profHist(n),pic=picOf(n);
   const HI={meet:"duo",call:"tel",news:"bulle",do:"duo"};
   root.innerHTML=`<button type="button" class="btn back" id="pBack">${ICO("back",14)} Proches</button>
   <div class="char pf fpf${P.bg&&FP_BG.includes(P.bg)?" aura-on au-"+P.bg:""}" id="pCardF"><i class="fp-veil" aria-hidden="true"></i>
@@ -207,18 +214,22 @@ function renderProfileView(n,P,bi,ri,st,seenH){const root=$("prof"),nb=nextBirth
       <div class="fp-btns"><button type="button" class="me-set" id="pEditB" aria-label="Modifier la fiche de ${esc(n)}" title="Modifier">${ICO("edit",24)}</button></div></div>
     <div class="pf-body fp-body"><div class="pf-side"><div class="p-pic${P.avc?" px":""}" id="pPic">${pic?`<img src="${pic}" alt="">`:esc(n[0].toUpperCase())}</div></div></div>
     <div class="pf-xp fp-xp"><div class="lvl" style="${lvlStyle(bi.l,"LIEN")}"><small>Lien</small><b>${bi.l}</b></div><div class="bar"><i style="width:${bi.cur/bi.need*100}%"></i><span class="bt"><em>${bi.cur} / ${bi.need} XP</em></span></div></div>
-    ${nb?`<div class="fp-bd${nb.days===0?" now":""}" id="pBdBox"><span class="fpbi">${BD_ICON}</span><span class="fpbt"><b>${P.bd.d} ${MONTHS[P.bd.m-1]}${P.bd.y?" "+P.bd.y:""}</b><small>${nb.days===0?"C'est aujourd'hui !":nb.days===1?"Demain":"Dans "+nb.days+" jours"}${nb.age?" · "+nb.age+" ans":""}</small></span></div>`:""}
+    ${nb?`<div class="fp-bd${nb.days===0?" now":""}" id="pBdBox"><span class="fpbi">${BD_ICON}</span><span class="fpbt"><b>${P.bd.d} ${MONTHS[P.bd.m-1]}${P.bd.y?" "+P.bd.y:""}</b><small>${nb.days===0?"C'est aujourd'hui !":nb.days===1?"Demain":"Dans "+nb.days+" jours"}${nb.age?" · "+nb.age+" ans":""}</small>${GL.length?`<small class="pfbdg"></small>`:""}</span></div>`:""}
     ${seenH}
   </div>
   <div class="ract" id="pActs"></div>
-  ${T.length||G.length||P.gifts?`<section class="set-card pf2 pfv"><h3>À savoir</h3>
+  ${T.length||G.length||(GL.length&&!nb)||sg?`<section class="set-card pf2 pfv"><h3>À savoir</h3>
+    ${sg?`<div class="pf2sug" id="pSug"><span class="fti">${rkSvg(tgIc(sg.t))}</span><span class="pf2t"><b></b><small>${sg.c} fois ensemble ces derniers mois</small></span><button type="button" class="pf2y" aria-label="Ajouter à ses goûts" title="Ajouter">${rkSvg("check")}</button><button type="button" class="pf2n" aria-label="Ignorer" title="Ignorer">${ICO("close",14)}</button></div>`:""}
     ${T.length?`<div class="pfchips">${T.map(x=>`<span class="pfchip"><span class="pfci">${rkSvg(tgIc(x))}</span><span></span></span>`).join("")}</div>`:""}
     ${G.length?`<div class="pfchips">${G.map(g=>`<span class="pfchip"><span class="pfci">${rkSvg("duo")}</span><span></span></span>`).join("")}</div>`:""}
-    ${P.gifts?`<p class="pfgift"><span class="pfci">${rkSvg("cadeau")}</span><span><small>Idée cadeau</small><b></b></span></p>`:""}</section>`:""}
+    ${GL.length&&!nb?`<p class="pfgift"><span class="pfci">${rkSvg("cadeau")}</span><span><small>Idée${GL.length>1?"s":""} cadeau</small><b></b></span></p>`:""}</section>`:""}
   <section class="set-card pf2 pfv" id="pHistCard"><h3>Historique</h3>${H.length?`<ul class="pfh">${H.map(o=>`<li><span class="pfhi">${rkSvg(HI[o.k])}</span><span class="pfht"><b></b><small>${esc(o.day.replace(/\.$/,""))}${o.n>1?" · "+o.n+" fois":""}</small></span>${o.x?`<em>+${o.x} XP</em>`:""}</li>`).join("")}</ul>`:`<p class="vide">Aucun moment noté pour l'instant.</p>`}</section>`;
   $("pName").textContent=n;
   {const ch=root.querySelectorAll(".pfchip span:last-child"),lab=[...T,...G.map(g=>g.n)];ch.forEach((s,i)=>s.textContent=lab[i]||"")}
-  {const g=root.querySelector(".pfgift b");if(g)g.textContent=P.gifts}
+  {const g=root.querySelector(".pfgift b");if(g)g.textContent=GL.join(" · ");const bg=root.querySelector(".pfbdg");if(bg)bg.textContent="Idée"+(GL.length>1?"s":"")+" cadeau : "+GL.join(" · ")}
+  if(sg){root.querySelector("#pSug b").textContent=sg.t+" ?";
+    root.querySelector("#pSug .pf2y").onclick=()=>{(P.types||(P.types=[])).push(sg.t);save();renderProfile(true);renderRelations()};
+    root.querySelector("#pSug .pf2n").onclick=()=>{(P.nope||(P.nope=[])).push(sg.t);save();renderProfile(true)}}
   root.querySelectorAll(".pfh .pfht b").forEach((b,i)=>b.textContent=H[i].t);
   $("pBack").onclick=()=>showView("r");
   $("pEditB").onclick=()=>{pEdit=true;renderProfile(true);SCR.scrollTo({top:0})};

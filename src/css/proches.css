@@ -441,3 +441,9 @@ html body #relList>li[hidden]{display:none!important}
 .fgplw .fgpl{display:grid;gap:6px;margin:0 0 14px;font-size:13px;font-weight:700;color:var(--muted)}
 .fgplw .fgplx{margin:6px auto 0;display:grid}
 html body #prof .grpcard .grph .me-set{position:static!important;width:44px;height:44px}
+/* 3.6 idées cadeau, suggestion de goût en lecture */
+#prof .fp-bd .pfbdg{display:block;margin-top:2px}
+#prof .pfv .pf2sug{margin:0 0 10px}
+#prof .gfti{gap:6px}
+#prof .gfti .gftx{display:grid;place-items:center;width:16px;height:16px;flex:none;opacity:.7}
+#prof .gfti .gftx svg{width:12px;height:12px;display:block}

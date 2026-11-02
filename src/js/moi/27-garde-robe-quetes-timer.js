@@ -221,9 +221,9 @@ function gfOpen(btn,who,onBuy){const o=document.createElement("div");o.className
        stp===2?`<p class="gfi">Idée : <b></b></p><p class="hint">Il ne reste plus qu'à l'offrir le jour J.</p><button type="button" class="btn primary" id="gfGo">Je l'ai offert · +10 XP</button>`:`<p class="gfi">Offert. Bien joué !</p>`}
       <button type="button" class="btn" id="gfX">Fermer</button></div>`;
     o.querySelector(".gfw").textContent=who;const ib=o.querySelector(".gfi b");if(ib)ib.textContent=g.idea;o.querySelector("#gfX").onclick=close;
-    const re=o.querySelector("#gfRe");if(re)re.onclick=()=>{S.profiles[who].gifts="";save();draw()};
+    const re=o.querySelector("#gfRe");if(re)re.onclick=()=>{const P=S.profiles[who];giftsSet(P,giftsOf(P).slice(1));save();draw()};
     const go=o.querySelector("#gfGo");if(!go)return;
-    go.onclick=ev=>{if(stp===0){const v=o.querySelector("#gfI").value.trim();if(!v){sfx("error");return}S.profiles[who]=S.profiles[who]||{};S.profiles[who].gifts=v;const prev=levelInfo(S.xp).l;addBonus("Idée cadeau pour "+who,5,0,"gfi");save();render(prev);sfx("coin");draw()}
+    go.onclick=ev=>{if(stp===0){const v=o.querySelector("#gfI").value.trim();if(!v){sfx("error");return}S.profiles[who]=S.profiles[who]||{};{const P=S.profiles[who],L=giftsOf(P).filter(x=>x!==v);giftsSet(P,[v,...L])}const prev=levelInfo(S.xp).l;addBonus("Idée cadeau pour "+who,5,0,"gfi");save();render(prev);sfx("coin");draw()}
       else if(stp===1){close();if(btn)qPass(btn);else if(onBuy)onBuy(ev);sfx("open",1)}
       else if(stp===2){S.g.gfs[g.gk]={given:Date.now()};const prev=levelInfo(S.xp).l;addBonus("Cadeau offert à "+who,10,0,"gfo");save();render(prev);sfx("level");close();toast(`Cadeau offert à <span class="p">${esc(who)}</span> · +10 XP`)}}};
   draw()}

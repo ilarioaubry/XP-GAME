@@ -52,7 +52,7 @@ function renderEvents(){
       const g=document.createElement("div");g.className="evq"+(gd?" done":"");
       const gs=gfState(e.who),gstp=gs.given?3:gs.bought?2:gs.idea?1:0;
       g.innerHTML=`<span class="evqi"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">${GIFT_IC}</svg></span><span class="evqn">Cadeau pour <b></b><span class="gfmini">${["Idée","Acheté","Offert"].map((l,k)=>`<i class="${k<gstp?"ok":""}">${l}</i>`).join("")}</span>${gs.idea?`<small class="evqg"></small>`:""}</span>${gstp===3?`<span class="evok">${ICO("check",16)} Offert</span>`:`<button type="button" class="btn evqgo">${gstp===0?"Idée":gstp===1?"Acheté":"Offert"}</button>`}`;
-      g.querySelector("b").textContent=e.who;{const gi=g.querySelector(".evqg");if(gi)gi.textContent="Idée : "+S.profiles[e.who].gifts}
+      g.querySelector("b").textContent=e.who;{const gi=g.querySelector(".evqg");if(gi){const L=giftsOf(S.profiles[e.who]);gi.textContent=(L.length>1?"Idées : ":"Idée : ")+L.join(" · ")}}
       const gb=g.querySelector(".evqgo");if(gb)gb.onclick=()=>gfOpen(null,e.who,ev=>{S.xp+=GIFT_XP;S.log.push({a:"bonus",cat:null,name:"Cadeau pour "+e.who,xp:GIFT_XP,t:Date.now(),bonus:1,gift:gk});floatXp(GIFT_XP,ev,gb);save();render();toast(`Cadeau acheté pour <span class="p">${esc(e.who)}</span> +${GIFT_XP} XP`)});
       r.appendChild(g)}
     const go=r.querySelector(".evgo");

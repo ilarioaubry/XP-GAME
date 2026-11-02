@@ -21,7 +21,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `daily` | État du jour (rituels cochés, compteurs) |
 | `specials`, `epics`, `weekly` | Quêtes spéciales, grandes quêtes, défis de la semaine |
 | `name`, `title`, `frame`, `theme`, `myPic` | Profil : prénom, titre affiché, cadre, thème, photo |
-| `friends`, `family`, `friendDone`, `familyDone`, `profiles`, `bonds`, `bondsLast`, `bdDone` | Proches : listes, fiches, niveau de lien, anniversaires faits |
+| `friends`, `family`, `friendDone`, `familyDone`, `profiles`, `bonds`, `bondsLast`, `bdDone` | Proches : listes, fiches, niveau de lien, anniversaires faits. Fiche : `profiles[n].giftl` = liste des idées cadeau (ajout du 02/11) ; `profiles[n].gifts` reste la première idée, lue par le suivi Idée → Acheté → Offert |
 | `stats`, `badges`, `badgesInit` | Compteurs par catégorie, badges obtenus |
 | `skills`, `snd`, `musicDone` | Compétences (musique) — **héritée ?** (sous-onglet jamais affiché) |
 | `wishes`, `spent`, `qPrice`, `extraMoney` | Envies et dépenses d'XP — **?** |
