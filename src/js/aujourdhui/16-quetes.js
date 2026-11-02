@@ -24,7 +24,7 @@ function rhPick(o,title,free,cb){const st=rhState(o,free),p=document.createEleme
 
 // ---- création rapide
 const DIFF=[["Geste",3,1],["Petit",10,2],["Moyen",20,3],["Gros",35,4]];
-const QC_DOM=[["sport","Sport"],["maison","Maison"],["soi","Soi"],["social","Amis"],["famille","Famille"],["travail","Travail"],["perso","Talent"],["nourriture","Cuisine"]];
+const QC_DOM=[["sport","Sport"],["maison","Maison"],["soi","Soi"],["social","Amis"],["famille","Famille"],["travail","Travail"],["perso","Créer"],["nourriture","Cuisine"]];
 const RIC_KEYS=["soleil","lune","dents","lit","douche","visage","barbe","fenetre","eau","sport","lire","medit","note","repas","ecran","vit"];
 function icFromName(n){for(const[k,re]of RK)if(re.test(n))return k;return null}
 // ---- création pas à pas (questionnaire)

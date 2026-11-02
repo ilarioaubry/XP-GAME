@@ -124,7 +124,8 @@ function renderChar(l){
   $("charTitle").textContent=titleOf(l);
   $("csSum").textContent=entries.slice().sort((a,b)=>b.xp-a.xp).slice(0,3).map(e=>CATS[e.k].label+" "+statInfo(e.xp).l).join(" · ");
   const box=$("stats");box.innerHTML="";
-  entries.forEach(e=>{
+  // la Nourriture a aussi sa jauge sur le profil (2.4) ; elle ne compte pas dans la catégorie phare du portrait
+  [...entries,{k:"nourriture",xp:S.stats.nourriture||0}].forEach(e=>{
     const si=statInfo(e.xp),c=CATS[e.k];
     const d=document.createElement("div");d.className="stat"+(e.k===top?" top":"");d.style.setProperty("--cat",c.c);
     d.innerHTML=`<span class="sn">${c.label}</span><span class="sb" title="${si.cur} / ${si.need} XP"><i style="width:${si.cur/si.need*100}%"></i></span><span class="sl">Nv ${si.l}</span>`;

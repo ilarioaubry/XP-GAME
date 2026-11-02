@@ -4,7 +4,7 @@ const IDM={pages:()=>Object.values((S.g&&S.g.rdp)||{}).reduce((a,b)=>a+b,0),book
   son:()=>{const k=S.skills.find(x=>x.name==="Sons");return k?k.xp:0},rel:()=>Object.keys((S.g&&S.g.rel)||{}).length,
   lien:()=>(S.stats.social||0)+(S.stats.famille||0),days:()=>S.days.length,zen:()=>Object.values((S.g&&S.g.md&&S.g.md.m)||{}).reduce((a,b)=>a+b,0),
   maison:()=>S.stats.maison||0,travail:()=>S.stats.travail||0,repas:()=>Object.values((S.g&&S.g.mb)||{}).filter(b=>b&&b.xp>0).length};
-const IDU={pages:"pages",books:"livres finis",sport:"XP de Force",km:"km courus",son:"XP de musique",rel:"sons sortis",lien:"XP de relations",days:"jours actifs",zen:"min de méditation",maison:"XP de Maison",travail:"XP de Travail",repas:"bilans repas"};
+const IDU={pages:"pages",books:"livres finis",sport:"XP de Sport",km:"km courus",son:"XP de musique",rel:"sons sortis",lien:"XP de relations",days:"jours actifs",zen:"min de méditation",maison:"XP de Maison",travail:"XP de Travail",repas:"bilans repas"};
 const idOf=id=>IDS.find(x=>x.id===id);
 function idStage(I){let k=0;I.st.forEach((s,i)=>{if(IDM[s[1]]()>=s[2])k=i+1});return k}
 function idState(){const G=S.g;if(!G.idt)G.idt={ch:[],seen:{},log:[]};const T=G.idt;if(!Array.isArray(T.ch))T.ch=[];if(!T.seen)T.seen={};if(!Array.isArray(T.log))T.log=[];return T}

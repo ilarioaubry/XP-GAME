@@ -5,7 +5,7 @@ addEventListener("error",e=>xpErr(e));addEventListener("unhandledrejection",e=>x
 
 const SCR=document.body;
 // Les six caractéristiques du personnage, puis les deux barres du jour (eau, nourriture)
-const CATS={sport:{label:"Force",c:"var(--c-sport)"},perso:{label:"Talent",c:"var(--c-perso)"},social:{label:"Ami",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
+const CATS={sport:{label:"Sport",c:"var(--c-sport)"},perso:{label:"Créer",c:"var(--c-perso)"},social:{label:"Amis",c:"var(--c-social)"},famille:{label:"Famille",c:"var(--c-famille)"},maison:{label:"Maison",c:"var(--c-maison)"},soi:{label:"Soi",c:"var(--c-soi)"},eau:{label:"Eau",c:"var(--c-eau)"},nourriture:{label:"Nourriture",c:"var(--c-food)"},travail:{label:"Travail",c:"#6f8fe0"}};
 const BARS={eau:{goal:16,segs:8,unit:"verres",done:"Hydraté !"},nourriture:{goal:40,segs:10,unit:"XP",done:"Rassasié !"}};
 const STAT_KEYS=["sport","perso","social","famille","maison","soi","travail"];
 const REMAP={planete:"maison",autres:"social"}; // anciennes catégories

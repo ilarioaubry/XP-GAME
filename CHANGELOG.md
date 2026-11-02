@@ -3,6 +3,7 @@
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
 ## 02/11/2026
+- Moi (2.4) : les jauges portent les mêmes noms que le panneau Actions : Force → Sport, Talent → Créer, Ami → Amis (aussi dans les badges « … 5 », les messages de niveau, l'armoire et la création de quête). La Nourriture a maintenant sa jauge sur la fiche profil (8 jauges) ; elle ne change pas la catégorie phare du portrait. Données inchangées.
 - Bilan (2.3) : en haut, « jours de suite » et « coffres ouverts » laissent la place à ce qui a été fait, pour la période choisie : « Cette semaine, en vrai », « Ce mois-ci, en vrai », « Cette année, en vrai » (ou la semaine, le mois, l'année affichés quand on remonte le temps). Proches vus, livres, films, sport, sorties, pièces rangées ; « Rien de noté pour l'instant. » sinon.
 - Chez moi : en ouvrant une pièce (Chambre…), son en-tête (nom, maison, flèches) passait sous les onglets collés en haut, on ne voyait plus comment revenir. L'écran remonte maintenant en haut de Chez moi.
 - Moi (2.2) : la grande fiche profil n'apparaît plus qu'à Ma vie, sous les onglets ; Chez moi et Bilan commencent directement. Les onglets restent en haut de Moi. La barre d'XP d'Aujourd'hui ouvre Ma vie.
