@@ -1,29 +1,8 @@
 # Feuille de route — Carnet de Quêtes
 
-Issue du rapport complet du 25/10/2026 (doc : https://claude.ai/artifact/TxKnkAVsLLj1E75MbprWGP).
+Triée le 03/11/2026 : ce qui est fait ou sans objet est retiré (l'historique est dans `CHANGELOG.md`), ce qui reste a été revérifié dans l'appli, et les manques des analyses sont ajoutés (M.1 à M.12).
+Sources : rapport complet du 25/10 (https://claude.ai/artifact/TxKnkAVsLLj1E75MbprWGP), compte rendu du 01/11 (https://claude.ai/artifact/2U9EfKXto3kqDLveD1wMwi), comparatif et surprises du 01/11 (https://claude.ai/artifact/KmopVs83F8TQv3MZDzxSPt), doc des 6 lots (https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd).
 **Rien ne se retire de cette liste sans l'accord d'Ilario.**
-
-## Priorité du moment (01/11/2026) : la refonte en 6 lots
-
-Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sections R et S ci-dessous, écran par écran ; chaque lot nettoie aussi le CSS de son écran (3.7, 3.8, 3.10, 3.11). Le reste de la liste est mis de côté, sans être retiré.
-
-**Lot 1 · Aujourd'hui**
-- [x] 1.1 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements (R.2) (01/11)
-- [x] 1.2 Repas passés repliés le soir ; titre du moment fidèle à son contenu (R.3) (01/11)
-- [x] 1.3 Objectif du jour retiré avec son badge (R.12) (01/11)
-- [x] 1.4 Noms des sections clarifiés (Quêtes du jour, Fait aujourd'hui) ; « + Rituel », « + Engagement » (01/11)
-- [ ] 1.5 Supprimer les anciens blocs cachés d'Aujourd'hui, code et CSS (R.12, J.1) — 1.5a fait le 01/11 (Fin de journée, Énergie, À faire, Défi à deux, Cette semaine) ; 1.5b fait le 02/11 (ancien bloc des rituels, Rattrapage, bouton caché du panneau +, ancienne liste des rituels ; la carte des engagements reste, elle s'affiche dans le journal)
-- [ ] 1.6 CSS d'Aujourd'hui sans `!important` ni hacks — fait le 02/11, à vérifier sur iPhone : `aujourdhui.css` et `aujourdhui-haut.css` à 0 `!important` et 0 `:not(#_…)` ; 30 règles propres à Aujourd'hui sorties de base.css et composants.css ; 3 règles communes à toute l'appli rangées dans composants.css (priorité gardée jusqu'à 3.7) ; « + Rituel » en bouton d'ajout (pointillés), « Bonne nuit » en bouton principal
-
-**Lot 2 · Moi** — 2.0 réglage « Style de l'appli » retiré (« Classique » revenait tout seul à « Ciel ») — fait le 02/11, à vérifier · 2.1 jauge de stockage (R.1) : vraie place sur 5 Mo — fait le 02/11, à vérifier · 2.2 fiche profil seulement dans Ma vie, sous les onglets — fait le 02/11, à vérifier · 2.3 haut du Bilan (R.4) : « … en vrai » à la place de la série et des coffres, selon la période — fait le 02/11, à vérifier · 2.4 mêmes noms + jauge Nourriture (R.6) — fait le 02/11, à vérifier (reste : dire que Loisirs et Apprendre comptent dans Soi) · 2.5 Ce que je surveille, Ce que tu deviens, « ARC » — fait le 02/11, à vérifier · 2.6 [fait le 02/11, à vérifier : les trois rendus, Limite par jour et Bonus retirés] réglages cachés (R.12) · 2.7 [fait le 02/11, à vérifier : dans Ma fiche et le Calendrier] mon anniversaire, statut de couple (R.8) · 2.8 [fait le 02/11, à vérifier : moi.css 650 → 273 !important ; le reste avec base.css en 6.4 ; rappels en plein écran] CSS de Moi
-
-**Lot 3 · Proches** — 3.1 fiche en lecture (R.7) — fait le 02/11, à vérifier · 3.2 Appeler / Nouvelles ouvrent Téléphone et Messages — retirée le 02/11 à la demande d'Ilario (pas de numéro ni d'Instagram dans les fiches) · 3.3 liste (Ami du mois, légende, bordures, recherche) — fait le 02/11, à vérifier : bordures neutres et recherche ; Ami/Membre du mois gardés tels quels et pas de légende, à la demande d'Ilario · 3.4 groupe — fait le 02/11, à vérifier : page en lecture + Modifier, couleur sans cadre, « Vus il y a N jours », historique en clair, prochaine sortie (date + quoi) · 3.5 le visiteur (S.7) — retiré le 02/11 à la demande d'Ilario · 3.6 carte postale, goûts, idées cadeau (S.16, S.20) — fait le 02/11, à vérifier : goûts proposés dans la fiche en lecture, plusieurs idées cadeau montrées avec l'anniversaire ; carte postale retirée à la demande d'Ilario · 3.7 CSS de Proches — fait le 02/11, à vérifier : proches.css 357 → 157 `!important`, 515 → 213 forçages ; 38 règles sorties de base.css ; 0 écart de style sur 88 écrans (le reste : règles d'états non visités, avec la refonte 6.x)
-
-**Lot 4 · Le jeu** — 4.1 **(décision)** systèmes gardés (R.10) — décidé le 03/11 : B + C, fait le 03/11, à vérifier : plus d'Heure d'or tirée au hasard (le jour rare ne donne plus qu'une quête secrète, à faire pour de vrai) ; les coffres ne viennent déjà que d'une action (niveau, tous les rituels d'un moment, projet fini) ; le jour légendaire et le coffre doré n'étaient plus tirés, leurs restes sont retirés ; les surprises du lot 5 prendront la suite · 4.2 niveaux qui débloquent des bonus (S.22) — fait le 03/11, à vérifier, revu avec Ilario : paliers des jauges (quêtes en 3 crans simple / costaud / dur, débloqués aux niveaux 3, 5, 10 de chaque catégorie ; carte « Défi » ; 15 quêtes simples ajoutées ; Mes paliers dans Ma vie ; fenêtre « Palier débloqué » reliée aux titres, auras et objets qui existaient) · 4.3 boosts (S.11–S.13) — en partie le 03/11 : boosts en réserve (1 h d'XP ×2 sur la catégorie au palier 3, partout tous les deux niveaux, 3 au plus) ; fait le 03/11, à vérifier : lève-tôt (rituels du matin finis moins d'1 h 30 après ton réveil → 30 min d'XP ×2) et journée relance (après 2 jours sans rien noter, la première action compte triple) · 4.4 badges (R.5) — en partie le 03/11 : 3 badges de paliers (Costaud, Endurant, Touche-à-tout) ; fait le 03/11, à vérifier : « Machine de guerre » → Infatigable, « Pilleur » → Premier trésor, « skills » → centres d'intérêt ; Âme sœur au lien 15 (au lieu de 20) ; Végétarien = 5 assiettes ; Sur le pouce = un repas sur le pouce ou au fast-food avec des légumes ; 5 badges « Vie quotidienne » : Esprit de famille, Maison au carré, Mission accomplie (contrat), Projet bouclé, Bonne habitude (rituel ancré) ; badge de palier renommé Polyvalent · 4.5 barème (R.11) — en partie : le cran suit l'XP affichée (3–10 simple, 20 costaud, 30–35 dur) ; fait le 03/11, à vérifier : « Vu en vrai » et « Les voir » à 30 XP (le lien garde +40) ; « Faire du son (1 h) » à 30 · 4.6 Bonne nuit — passée le 03/11 à la demande d'Ilario (gardée dans la liste)
-
-**Lot 5 · Événements et vie réelle** — 5.1 nouveaux types (R.9) — fait le 03/11, à vérifier : Mariage, Naissance, Déménager, Médical, avec 19 quêtes de préparation ; types en tuiles (icône au-dessus, nom sur une ligne) · 5.2 heure dorée (S.1) — fait le 03/11, à vérifier : chaque semaine, 1 h annoncée dans Quêtes du jour (un jour, une heure, une de tes 3 jauges les plus basses), XP ×2 sur ce domaine · 5.3 mois à thème, grand jour (S.2, S.3) · 5.4 fêtes, anniversaires (S.4, S.5) — fait le 03/11, à vérifier : 10 fêtes du calendrier en « Fête du jour » (Chandeleur, Saint-Valentin, printemps, 1er mai, fêtes des mères et des pères, musique, automne, gentillesse, solstice d'hiver) ; mon anniversaire = XP ×2 la journée + coffre doré ; anniversaire du carnet = bilan de l'année + coffre ; reste : le décor de la scène ces jours-là · 5.5 défi éclair, ciel réel (S.6, S.8) — fait le 03/11, à vérifier : défi éclair (2 à 5 min, 5 XP, une heure différente chaque jour, visible pendant cette heure) ; « Ciel du jour » (pleine lune, 5 pluies d'étoiles, première neige, premier beau jour, 5 XP) ; reste : le décor de la scène · 5.6 trouvailles, lettre du passé (S.9, S.10) · 5.7 défi avec un proche, allié (S.14, S.15) · 5.8 nouvelles du jour (S.19) — fait le 03/11, à vérifier : une ligne sous la scène (anniversaires, événement, fête, heure dorée, record, proche à revoir), « N nouvelles » ouvre la liste · 5.9 argent, papiers, santé, autres fêtes, moments durs — fait le 03/11, à vérifier : argent = actions de gestion seulement (famille « Budget » dans le panneau +, 5 quêtes) ; papiers (impôts, assurances, carte d'identité, 5 quêtes) ; santé (dentiste, vaccins) ; 6 fêtes en plus (Épiphanie, grands-mères, Pâques, voisins, 14 juillet, Halloween) ; événement « Moment dur » avec des quêtes douces
-
-**Lot 6 · Assiette, avatar, plaisirs** — 6.1 assiette (S.21) · 6.2 avatar (S.18) · 6.3 **(décision)** mes plaisirs (S.17) · 6.4 fin du CSS, boss et euros retirés — CSS en partie le 03/11, à vérifier : 1 032 → 737 `!important` et 3 005 → 2 637 forçages dans base, composants, fenêtres, Moi et Proches, 0 écart de style sur 102 écrans et rendu identique au pixel sur 15 ; le reste se bat vraiment entre feuilles (à reprendre écran par écran) ; boss et euros retirés du code le 03/11, à vérifier (les données restent dans la sauvegarde)
 
 ## Méthode (à chaque demande)
 
@@ -31,356 +10,110 @@ Doc : https://claude.ai/artifact/UYH6qUrzHUj1gt14N4c1yd — rassemble les sectio
 2. Ilario dit « go ».
 3. Claude fait l'étape, teste à 393 px, montre une capture, dit ce qui n'a pas pu être vérifié sur iPhone.
 4. Ilario vérifie sur son iPhone.
-5. Claude coche l'étape ici (`[x]` + date), commit, puis présente la suivante.
+5. Claude note l'étape « fait le JJ/MM, à vérifier », commit, puis présente la suivante. Une fois vérifiée, elle quitte la liste (elle reste dans `CHANGELOG.md`).
 
 Les éléments marqués **(décision)** demandent un choix d'Ilario avant de construire.
 
 ---
 
-## Suite réorganisée (26/10/2026)
+## 1. À vérifier sur ton iPhone (fait, pas encore vérifié)
 
-Bilan : phases 0, 1, 2, 5 faites ; phase 3 faite sauf le nettoyage fin (3.7, 3.8, 3.10). Ordre retenu pour la suite :
+- [ ] **Aujourd'hui** (lot 1, 01–02/11) : une seule carte « contrat terminé » ; repas passés repliés le soir ; titre du moment ; noms des sections ; anciens blocs cachés retirés ; « + Rituel » en pointillés, « Bonne nuit » en jaune
+- [ ] **Moi** (lot 2, 02/11) : jauge de stockage sur 5 Mo ; fiche profil seulement dans Ma vie ; haut du Bilan « … en vrai » ; mêmes noms partout + jauge Nourriture ; Ce que je surveille, Ce que tu deviens, projets sans « ARC » ; Mon rythme, Ma capacité, « La dernière fois que… » rendus ; mon anniversaire et statut de couple ; rappels en plein écran
+- [ ] **Proches** (lot 3, 02/11) : fiche en lecture + Modifier ; recherche, bordures neutres ; page de groupe (prochaine sortie, historique en clair) ; goûts proposés, plusieurs idées cadeau
+- [ ] **Le jeu** (lot 4, 03/11) : plus d'Heure d'or au hasard ; quêtes en 3 crans et Mes paliers ; fenêtre « Palier débloqué » ; boosts en réserve ; lève-tôt ; journée relance ; badges revus et « Vie quotidienne » ; proches à 30 XP
+- [ ] **Événements** (lot 5, 03/11) : mariage, naissance, déménager, médical ; heure dorée de la semaine ; fêtes, mon anniversaire, anniversaire du carnet ; défi éclair, ciel du jour ; nouvelles du jour ; budget, papiers, santé, moment dur
+- [ ] **Nettoyage** (6.4, 03/11) : rien ne doit avoir bougé à l'écran ; le coffre spécial s'ouvre
+- [ ] **Jamais vérifiable ici** : fluidité de l'assiette, zoom bloqué en mode appli, clavier dans les fenêtres plein écran, encoche et barre du bas, sons
 
-1. **Finitions rapides** : 2.8 (vue « t »), 7.5 (outils dans le projet), 7.1 README, 7.2 CHANGELOG, et les décisions courtes 2.9 / 2.10.
-2. **Vérifications sur l'iPhone** (liste en bas) : avant de toucher à l'organisation des écrans.
-3. **Décisions de la phase 6** (6.1 phrase du cœur, 6.2 rôle du jeu, 6.3 version 1, 6.12 décor animé) : une conversation, pas de code.
-4. **Refonte écran par écran** selon ces décisions (6.4 à 6.13), en passant chaque écran sur les composants `ui-` : ça règle au passage 3.7, 3.8 et 3.10. Ordre : Aujourd'hui → Moi → Proches → fenêtres.
-5. **Sécurité du projet** : 7.3 tests automatiques, 7.4 vérification à chaque mise en ligne.
-6. **Phase 4** (scripts), protégée par les tests.
-7. **Phase 8** (nouveautés), seulement si tu le décides.
+## 2. À faire (choisi, pas encore fait)
 
-## Phase 0 — Fait
+### Suite des lots
+- [ ] 4.6 Bonne nuit — passée le 03/11 à ta demande, gardée. Toujours d'actualité (revu le 03/11) : « Passer » est le bouton jaune dès l'humeur ; les visages d'humeur n'ont pas de mot ; « Ta journée » peut dire « 0 action » à côté d'un badge gagné ; rien pour préparer demain (lever, premier rendez-vous) ; « Dans ta journée, il y a eu… » double le panneau +
+- [ ] 5.3 Mois à thème (quêtes du thème, objet du mois après 10 actions) et grand jour (un samedi par mois, défi d'une journée) (S.2, S.3)
+- [ ] 5.6 Trouvaille en route (une graine qui éclot après 5 actions d'un même domaine) et lettre du passé (ta phrase de Bonne nuit d'il y a un mois ou un an) (S.9, S.10)
+- [ ] 5.7 Défi de la semaine avec un proche (message prêt à envoyer) et allié sur un objectif (S.14, S.15)
+- [ ] 5.10 Décor de la scène les jours de fête et de « Ciel du jour » (reste de 5.4 et 5.5)
+- [ ] 6.1 Assiette (S.21) : photo souvenir facultative, « et après, tu te sens ? », arc-en-ciel de la semaine, « nouveau plat »
+- [ ] 6.2 Avatar (S.18) : création « Aide-moi » par questions, phrase fétiche, humeur visible sur la scène
+- [ ] 6.3 **(décision)** Mes plaisirs (S.17) : récompenses réelles que tu inventes. À revoir : l'argent en euros est retiré ; il faudrait les « acheter » avec autre chose (XP, étoiles…), ou abandonner
+- [ ] 2.4 (reste) Dire que Loisirs et Apprendre comptent dans Soi
 
-- [x] Retirer les captures de test du dépôt, ajouter `.gitignore` (25/10/2026)
+### Manques trouvés dans les analyses (ajoutés le 03/11, revus dans l'appli)
+- [ ] M.1 Le matin, le choix des engagements prend un demi-écran (6 tuiles, « + », « Je m'engage ») au milieu du journal → le replier en une ligne qui ouvre le choix
+- [ ] M.2 La salutation passe sur deux lignes (« Bon après-midi, / Ilar »)
+- [ ] M.3 Chez moi : la Bibliothèque s'affiche noire, sans compteur ; les compteurs (« 3 bocaux », « 20 drapeaux ») ne disent pas à quoi ils servent
+- [ ] M.4 Bilan : « Mon assiette · 7 jours » est un titre dans une boîte, pas au modèle des titres de section
+- [ ] M.5 Profil : titre, 3 badges, niveau, barre d'XP et 8 jauges ont la même importance, rien ne ressort
+- [ ] M.6 Badge « Hydraté » (Eau niveau 3) alors que l'eau n'a pas de jauge visible
+- [ ] M.7 Fiche d'un proche : rien sur ce qui se passe dans sa vie en ce moment, ses dates importantes hors anniversaire, son ou sa partenaire, ses enfants ; l'historique dit peu (« Appel · +20 XP ») ; le titre « Historique » n'est pas au modèle des titres
+- [ ] M.8 Proches presque tous au lien niveau 1 : le niveau ne dit pas grand-chose de la relation (à discuter)
+- [ ] M.9 Vie pas encore prise en compte : diplôme, permis, formation ; tes enfants ; autres fêtes selon toi (Ramadan, Aïd, Hanoucca…) ; crémaillère et enterrement comme événements ; badge « sommeil régulier »
+- [ ] M.10 Au démarrage, 5 fonctions sont appelées avant d'être chargées (vieViz, balViz, mealAuto, sleepViz, sceneBubble) : l'erreur est rattrapée, mais l'ordre des fichiers « finitions » est fragile
+- [ ] M.11 Encore caché par le CSS au lieu d'être retiré : 27 règles `display:none!important` et 40 blocs `hidden` (ex. le bouton Réglages de la fiche profil) → rendre ou supprimer
+- [ ] M.12 Un compagnon qui réagit quand tu agis et part « en aventure » (idée du comparatif, Finch) — à choisir
 
-## Phase 1 — Sécurité des données et hors ligne
-
-- [x] 1.1 (25/10/2026) Export de la sauvegarde en fichier (partage iOS → iCloud Drive / Fichiers) + import depuis un fichier, à la place du copier-coller
-- [-] 1.2 (passé le 25/10/2026, à la demande d'Ilario) Rappel d'export régulier (discret, ton encourageant)
-- [x] 1.3 (25/10/2026) Numéro de version dans la sauvegarde + liste de migrations numérotées qui remplace les drapeaux ponctuels (`dst26`, `voc1`) sans casser les données
-- [x] 1.4 (25/10/2026) `manifest.json` : nom « XP » (aussi dans l'appli : bannière, accueil), icône pixel, écran de démarrage, mode appli
-- [x] 1.5 (25/10/2026) Service worker : l'appli s'ouvre sans réseau
-- [x] 1.6 (25/10/2026) Documenter les clés de `S.g` (`DONNEES.md` : 148 clés trouvées, pas 88 ; 13 héritées à trancher en phase 2)
-- [x] 1.7 (25/10/2026, choix B) Supprimer le code de synchronisation avec le compte Claude (inutile sur GitHub Pages) et l'enveloppe HTML en double (deux documents imbriqués). Fait aussi : Spotify et les fonctions qui appelaient Claude (Écrire avec Claude, Renouveler, étapes de projet par Claude, arc par Claude → découpage automatique sans Claude) retirés, car ils ne marchent pas hors de Claude
-- [x] 1.8 (25/10/2026) Météo : remplacer le connecteur AccuWeather de Claude (ne marche pas sur GitHub Pages) par Open-Meteo, gratuit et sans compte, position gardée sur le téléphone ; d'ici là le bouton « Météo » ne fonctionne pas
-
-## Phase 2 — Tri et code mort (avec Ilario)
-
-- [x] 2.1 (25/10/2026) Passer en revue les 32 sections jamais affichées, une par une : garder / déplacer / supprimer
-  nightBox, evToday, evmBox, sleepGo, wkSun, plusBox, nowBox, rtrBox, gameBox, xmBox, duoBox, wkBox, prjBox, prof, weekBox, sonSeance, Armoire, Badges, lzProf, Skills, musBox, dzBox, pathBox, ritStat, wkRecap, recBox, sleepBox, plWeek, jrBox, moodBox, pcBox, fd
-  **Décisions d'Ilario (25/10) :**
-  - Garder (s'affichent à un moment précis) : nightBox, evToday, evmBox, sleepGo, wkSun, rtrBox, nowBox, plusBox + wkBox + duoBox (panneau « + »), prof, Armoire, Badges, plWeek, gameBox (retirer ses restes de boss)
-  - Noël (xmBox) : garder la saison des fêtes, **supprimer son boss** (« Bougonnoël »)
-  - Supprimer : compétences musique (Skills, lzProf, musBox, dzBox, sonSeance), Mon chemin (pathBox), Sommeil (sleepBox), Humeur de l'année (moodBox), Mes rituels (ritStat), Ma semaine / Records / Journal (wkRecap, recBox, jrBox), Rappels (pcBox), ancien Projets (prjBox), weekBox
-  - Les données correspondantes restent dans la sauvegarde
-- [x] 2.2 (25/10/2026) Supprimer les 24 déclarations jamais utilisées (+ 3 devenues inutiles ensuite : SELL, chCardCanvas, __myCard ; plus aucune déclaration inutilisée) : FAMILLE, vkind, VK_IC, avcTab, chHeadDx, myCardURL, __picC, SK_XP, MAP_T, ritOpen, PROJ, PJ_XP, PJ_BONUS, pjOpen, pjArm, sellPrice, LOOTVB, bgPrjRev, bgPrjFast, bgSoiDays, LOOTPX, LOOTWAIT, PX1, TALENTS
-- [x] 2.3 (25/10/2026) Supprimer ce qui est seulement caché (fait selon les décisions de 2.1 : 14 sections + onglet « Domaines » + leur code ; boss de Noël et restes de boss des coffres retirés ; Noël gardé) (selon 2.1) : Noël (xmBox, masqué en CSS seulement), vue « t » et barre `qnav`, sous-onglets sons / compétences, weekBox, sections masquées en CSS (ritStat, sleepBox, moodBox)
-- [x] 2.4 (25/10/2026) Renommer les fichiers « boss » (→ 13-figurines-expressions, 23-coffres-quetes-du-jour, 28-sons-proches-validation ; code de boss restant supprimé ; identifiants internes gardés car enregistrés dans les données : badges boss1/boss4, coffre « boss », clés boss/bh) (13-pixel-clair-boss, 23-boss-par-categorie, 28-sons-boss) et n'en garder que ce qui sert (figurines `BOSS_CAT`, projets `CB_LIST`, sons)
-- [x] 2.7 (25/10/2026) Renommer `17-spotify-meteo.js` (→ `17-meteo.js`) en fichier météo (Spotify retiré)
-- [x] 2.5 (25/10/2026) Liste des fonctionnalités avec leur statut : active / cachée / à supprimer (`FONCTIONNALITES.md`)
-- [x] 2.6 (25/10/2026) Règle : toute fonctionnalité retirée est supprimée du code, jamais seulement cachée (à ajouter dans CLAUDE.md)
-- [x] 2.8 (26/10/2026) Oubli de 2.3 : la vue « t » (onglet Quêtes / Projets) et sa barre d'onglets sont toujours construites mais jamais affichées → supprimer → supprimés, avec les onglets fantômes « T » et « B » de la barre du bas
-- [x] 2.9 (26/10/2026) Clés de données héritées (13, voir DONNEES.md : boss, bh, cb, cbE, bqDone, bsDone, bsDoneP, pj, pjd, pjf, aiN, sdj, spOn) : **(décision)** les garder, ou les retirer de la sauvegarde par une migration → décision : on les garde
-- [x] 2.10 (26/10/2026) « Mode test » : préciser comment on y accède, le garder ou le retirer **(décision)** → décision : on le garde (appui long sur le titre des Réglages)
-
-## Phase 3 — Composants et fusion des CSS (écran par écran, Aujourd'hui d'abord)
-
-- [x] 3.1 (25/10/2026) Variables uniques : couleurs (`--gold`…), tailles de texte (`--t-card`…), espacements (`--sp-2`…)
-- [x] 3.2 (25/10/2026) Composants définis une fois (`css/composants.css`, préfixe `ui-`, pas encore utilisés) : bouton (3 variantes), carte d'action, tuile, titre de section, barre, étiquette, compteur, fenêtre courte, fenêtre plein écran, état vide
-- [x] 3.3 (26/10/2026) Une feuille par zone : `aujourdhui-haut`, `aujourdhui`, `proches`, `moi`, `fenetres` (rangement automatique d'après les classes réellement présentes dans chaque zone ; rendu identique au pixel sur 55 écrans)
-  - [x] 3.3a (25/10/2026) haut d'Aujourd'hui → `css/aujourdhui-haut.css` : 235 règles sorties des couches, 35 sans effet supprimées, 0 `!important`, 0 hack ; rendu identique au pixel (midi, nuit, matin, pluie, décembre)
-- [x] 3.4 (26/10/2026) Proches → `proches.css`
-- [x] 3.5 (26/10/2026) Moi → `moi.css`
-- [x] 3.6 (26/10/2026) Fenêtres → `fenetres.css` ; les 27 anciennes couches (principal, épure, maison…) fusionnées dans `base.css` dans leur ordre ; en-tête de page remis dans <head>
-- [ ] 3.7 Supprimer les `!important` et les hacks `html:not(#_a)…` : fait pour `aujourdhui-haut.css` (0) ; ailleurs le retrait en bloc change le rendu (les feuilles se battent entre elles) → à faire écran par écran pendant la phase 5, quand on retouche le visuel. Reste ≈ 1 800 `!important` — point du 02/11 : 1 032 (Aujourd'hui à 0, Moi et Proches en partie ; reste surtout base, composants, fenêtres → lot 6.4)
-- [x] 3.9 (26/10/2026) Supprimer le CSS des fonctionnalités retirées (328 règles et 355 sélecteurs dont les classes n'existent plus dans le code)
-- [ ] 3.10 Les écrans n'utilisent pas encore les composants `ui-` (créés en 3.2) : à faire écran par écran, avec 3.7 et 3.8 — point du 02/11 : commencé (ui-plein, ui-btn, ui-champ dans les fenêtres et boutons récents)
-- [ ] 3.11 Donner un rôle à chaque texte (titre de section, titre de carte, texte, petite info, chiffre décoratif, champ) par une classe `ui-`, la taille venant du rôle et non plus d'une règle par élément. Audit du 26/10 : 813 textes, 0 classé ; les titres sont tantôt `h2`, `h3`, `h4`, `b` ou `small`, de 10,8 à 30 px ; « Groupes » existe à 15 et à 20 px. Un test automatique vérifiera ensuite que chaque texte a un rôle et la bonne taille.
-- [ ] 3.8 Coins carrés définis dans les composants, plus par une règle universelle avec liste blanche de ronds → à faire avec 3.7 (la règle universelle reste en attendant, elle marche)
-
-## Phase 4 — Scripts
-
-- [x] 4.1 (26/10/2026) `correctifs.js` supprimé : sorti de sa grosse IIFE, puis rangé par zone (`aujourdhui-finitions.js`, `moi-finitions.js`, `proches-finitions.js`, `demarrage.js`). Il reste dans ces fichiers des passes visuelles d'après rendu (`…Viz`, `dress…`) → à fondre dans leurs rendus pendant la refonte écran par écran (3.10, 6.4+)
-- [x] 4.2 (26/10/2026) Plus aucune réécriture de fonction globale : les 16 réécritures + les 11 retouches « avant / après » + les 5 minuteurs sont devenues des versions complètes posées à côté de leur origine (`fBase` = le cœur). Doublons de Chez moi et de `renderFiche` supprimés
-- [x] 4.3 (26/10/2026) Icônes pixel écrites à la source ; observateurs DOM `pxSwap`, `sqIcons`, recherche d'action et panneau + remplacés par des appels directs. Reste un observateur pour les blocs repliables (`applyFolds`), à revoir avec la refonte
-- [x] 4.4 (26/10/2026) Scripts rangés : `js/coeur/` (données, sauvegarde, rendu, icônes, personnage, migrations, démarrage), `js/aujourdhui/` (avec ciel et scène), `js/moi/`, `js/proches/`, `js/donnees/`. Pas de dossiers `decor/` et `ui/` séparés : ce code est encore mêlé aux zones, à séparer pendant la refonte si utile
-- [x] 4.5 (26/10/2026) `js/donnees/` : grilles d'icônes (RKI, PXUI, PXSP, PXI, BPX_M), équipement (GEAR, AV_OPT, AV_MAIN), quêtes (FAM, IDQ, IDI, FIC, QC_TPL, BOSS_CAT, DQ_K), contenu (IDS, FILMS, RIT_G, BOSS2). Restent dans le code, car mêlés à des fonctions : icônes des badges (IC), liste des badges (conditions), quêtes pour toi (FQ), aliments de l'assiette
-- [x] 4.6 (26/10/2026) Moteur Pixel Clair découpé en 6 fichiers, badges en 3, Chez moi en 3 ; 16 déclarations mortes retirées. Plus gros fichier restant : `aujourdhui-finitions.js` (78 Ko), qui fondra avec la refonte
-- [ ] 4.7 **(décision)** Un seul point d'état : déjà le cas (`load()` / `save()`, seule clé `carnet-quetes`) ✔. Modules JavaScript : déconseillé pour l'instant — l'appli est un seul fichier HTML, tout repose sur la portée globale (des centaines de noms à exporter / importer) ; gros risque pour un gain invisible. Proposition : abandonner ou reporter après la refonte
-- [x] 4.8 (27/10/2026, réponse : icône d'objet, voir Q.14) Les projets prennent l'apparence de créatures (`BOSS_CAT` : golem, slime…, et `BOSS2`) : héritage des anciens boss. Garder, ou remplacer par une icône d'objet ?
-
-## Phase 5 — Standards précisés, uniformité, lisibilité
-
-Standards trop globaux → version précisée :
-- [x] 5.1 (26/10/2026) Centrage : centré pour bouton, tuile, compteur ; aligné à gauche pour les cartes avec description → cartes de quêtes (pour toi, spéciales) alignées à gauche
-- [x] 5.2 (25/10/2026, choix C) État « à faire maintenant » : aucun signal pour l'instant ; « bordure colorée = actif / sélectionné » reste la seule règle
-- [x] 5.3 (26/10/2026) Textes longs : titres de carte 2 lignes max ; noms dans les listes 1 ligne avec « … » → quêtes pour toi : titre sur 2 lignes
-- [x] 5.4 (26/10/2026) 11 px seulement sur fond sombre, sinon 13 px → Énergie du matin et « meilleur jour » passés à 13 px ; règle écrite dans CLAUDE.md
-- [x] 5.5 (26/10/2026) Un seul séparateur (pointillés) pour tous les groupes, Proches et Bilan compris (sauf fiches de proches) → Proches : bandeaux pleins Famille / Amis remplacés par titre + pointillés à leur couleur
-- [x] 5.6 (26/10/2026) Icônes en 3 tailles : 16, 32, 48 px (multiples de la grille, pixels nets) **(décision)** : aujourd'hui 15, 16, 18, 22, 24, 26, 27 px. Les icônes d'interface sont dessinées sur une grille de 12 : nettes à 12, 24 ou 36 px, floues à 16 ou 32 → proposition : interface 24 px, contenu 16 / 32 / 48 px → décision : interface 24 px, contenu 48 px (exceptions : étoiles de rareté, petites icônes dans les recettes et le récap d'assiette)
-- [x] 5.7 (26/10/2026) Rareté : étoiles + mot de la rareté dans la fiche détaillée → déjà le cas : le mot de rareté s'affiche à l'ouverture du coffre
-- [x] 5.8 (26/10/2026) Toute action par appui long existe aussi dans le menu « … » → vérifié : rituels (Atelier), compteur (Ma vie) ont un autre chemin ; seul le rythme des actions de « Cette semaine » reste en appui long
-
-Points d'uniformité restants :
-- [x] 5.9 (26/10/2026) Fond des cartes : un seul fond partout → cartes du moment au même fond que les autres ; les quêtes gardent la teinte de leur catégorie (couleur = catégorie)
-- [x] 5.10 (26/10/2026) Avatars des proches : un seul format (carré pixel, initiale si pas de photo) → déjà le cas : carrés pixel avec initiale
-- [x] 5.11 (26/10/2026) Titres de Bilan (« CHAPITRE EN COURS ») au modèle des titres de section → « Chapitre en cours » et « Données » au modèle des titres de section
-- [x] 5.12 (26/10/2026) Restes : pastilles « 0/10+5 », libellé « Goûter » grisé, tuile « Routine » de taille différente → « Goûter » plus grisé, tuile « Routine » au même fond, « 0/10 +5 » séparé en compteur + bouton « +5 »
-- [x] 5.13 (26/10/2026) Menus contextuels encore en survol / positionnés au doigt → petite fenêtre centrée → menus déjà centrés ; effets de survol limités aux appareils qui en ont (collaient sur iPhone)
-- [x] 5.14 (26/10/2026) Revérifier les fenêtres rarement ouvertes après le passage à l'échelle de texte → vérifiées : météo, situation, projet, cadeau, retour après absence, coffre, assiette ; atelier des rituels non capturé
-- [x] 5.19 (26/10/2026) Carte « Ta semaine est finie » : cadre jaune et cadre autour du graphique (contraire à « pas d'encadrés »), repérée le 25/10 → plus de cadre jaune ni de cadre autour du graphique
-- [x] 5.20 Salut « Bonsoir, Ilar » : pas un bug, c'est le prénom choisi (25/10/2026)
-- [x] 5.21 (26/10/2026) Fenêtre Météo : en bas d'écran alors qu'on y tape une ville (standard : plein écran) ; lignes Aujourd'hui / Demain encadrées → plein écran quand on tape une ville ; lignes Aujourd'hui / Demain sans cadre
-- [x] 5.22 (26/10/2026) Carte « Saison des fêtes » (décembre) : cadre et bordures rouges à gauche (contraire à « pas d'encadrés » et « bordure colorée = actif ») → plus de cadre rouge ni de bordures à gauche
-- [x] 5.23 (26/10/2026) Bonnes actions : le choix d'XP va jusqu'à 50 et 100 (contraire à « pas de bonus géants » ; barème 2–30) → choix : 2, 5, 10, 15, 20, 30 (les actions existantes gardent leur XP)
-- [x] 5.24 (26/10/2026) Aura « Notes de musique » (armoire) dessinée avec des caractères ♪ ♫ au lieu de pixels → redessinées en pixels
-- [x] 5.25 (26/10/2026) Boutons sous 44 px (audit du 26/10) : onglets 40, boutons fermer 36–40, puces de choix 34–36, « Annuler » 22, « Hier » 32, titre du personnage 28, barre d'XP 42 → tous à 44 px (audit : plus aucun bouton sous 44)
-- [x] 5.26 (26/10/2026) Icônes de la barre du bas à 27 px (standard : 24) → 24 px (l'agrandissement de l'onglet actif est retiré)
-- [x] 5.27 (26/10/2026) Confirmations en deux temps au lieu de « suppression immédiate + Annuler » : supprimer un événement, arrêter le minuteur, décocher un rituel terminé, restaurer par texte → suppression immédiate + Annuler partout
-- [x] 5.28 (26/10/2026) XP au-dessus du barème : « Son sorti » 150, collection complète 50, rituel ancré 50, livre fini 40, deux quêtes à 40 et une à 45 **(décision)** → décision : on garde ces grosses récompenses
-- [x] 5.29 (26/10/2026) Barre d'XP du personnage (Moi) : contour blanc pâle au lieu du modèle (crème 2 px) → 18 px, contour crème 2 px
-- [x] 5.30 (26/10/2026) Fiche d'un proche : le cadre (exception voulue) est bleu ; le passer en neutre ? **(décision)** → décision : gris clair ; ma fiche profil retrouve aussi son cadre (neutre), et les auras leur fond (perdu lors d'un ancien épurage)
-- [x] 5.31 (26/10/2026) Un texte à 10,8 px dans « Ma situation » (hors échelle) → 11 px
-- [x] 5.32 (26/10/2026) Appliquer l'en-tête standard (DESIGN.md § 3) : le « + » de Relations est 10 px plus à gauche que les autres actions ; « Modifier » de Ma fiche est un bouton texte ; « Créer » (groupes, fiche proche) et « Ajouter » aussi → « + » de Relations aligné, « Modifier » de Ma fiche en icône crayon ; « Créer » / « Ajouter » restent : ce sont des boutons de formulaire, pas des actions d'en-tête
-- [x] 5.33 (26/10/2026) Écart entre sections : 22 px aujourd'hui, 24 px dans le guide → 24 px
-- [x] 5.15 (26/10/2026) Carrousel des quêtes spéciales avec une seule carte : même taille de carte → déjà le cas : la carte seule a la même largeur
-
-Lisibilité :
-- [x] 5.16 (26/10/2026) Voile sombre sous le contenu, ou ciel limité à un bandeau en haut **(décision)** → choix A : voile sombre plus marqué sous le contenu, le haut (scène) reste clair
-- [x] 5.17 (26/10/2026) Libellés de stats (Force, Talent…) lisibles (fond sombre) → libellés en crème avec un petit carré de la couleur de la stat
-
-- [x] 5.18 (26/10/2026) Intégrer les standards précisés dans CLAUDE.md
-
-## Phase 6 — Interface et utilisation
-
-- [ ] 6.1 **(décision)** Phrase du cœur de l'appli (ex. « Prendre soin de moi et de mes proches, un jour à la fois »)
-- [ ] 6.2 **(décision)** Rôle du jeu : récompense discrète ou moteur ? (XP, niveaux, armoire, badges, stats)
-- [ ] 6.3 **(décision)** Définir la version 1 stable (ce qui est « terminé »)
-- [ ] 6.4 Aujourd'hui en ordre fixe : prochaine action → la journée (repas + assiette, rituels, quêtes du jour) → quêtes spéciales ; le décoratif part dans Moi > Profil
-- [ ] 6.5 Mettre en avant la prochaine action (« qu'est-ce que je fais maintenant ? ») — point du 02/11 : en partie (carte « Maintenant », module)
-- [ ] 6.6 Le jeu apparaît à la validation (+XP, petite animation) et dans Profil, pas en bloc dans Aujourd'hui
-- [ ] 6.7 Réorganiser Moi en gardant Bilan et Chez moi (Ilario y tient, 25/10) : où mettre Profil et Réglages ? (réglages : rituels, sauvegarde, sons, aide)
-- [ ] 6.8 Un seul chemin principal par action (repas : tuile / assiette / quête ; quête : bouton / « … » / appui long)
-- [ ] 6.9 Page « Aide » courte pour les gestes
-- [x] 6.10 Proches triés par temps depuis le dernier contact **(décision)** → constaté le 02/11 : déjà le cas (liste triée du contact le plus ancien au plus récent)
-- [ ] 6.12 Décor animé (ciel, scène) : il bouge tout seul alors que le standard dit « rien qui bouge tout seul », et c'est ce qui coûte le plus en batterie **(décision)** : garder, calmer, ou désactiver par défaut
-- [x] 6.13 Seul le rythme des actions de « Cette semaine » reste accessible uniquement par appui long (reste de 5.8) → l'ajouter au menu « … » → constaté le 02/11 : sans objet, le bloc « Cette semaine » a été retiré en 1.5a
-- [ ] 6.11 Stats de personnage → résumé concret (« ce mois-ci : 12 repas équilibrés, 4 sorties ») **(décision)** — point du 02/11 : en partie (Bilan « Cette semaine, en vrai », 2.3)
-
-## Phase 7 — Organisation du projet
-
-- [x] 7.1 (26/10/2026) README : à quoi sert l'appli, installation sur iPhone
-- [x] 7.2 (26/10/2026) CHANGELOG (ce qui a changé, quand)
-- [x] 7.5 (26/10/2026) Ranger dans le projet les outils de vérification construits pendant la phase 3 (captures de 55 écrans + comparaison au pixel, styles calculés, tri du CSS) → `outils/` + `outils/LISEZMOI.md`
-- [x] 7.3 (26/10/2026) Tests de parcours versionnés : `outils/parcours.py` (profil, rituel, assiette, quête, Annuler, minuteur, ajouter un proche, bouton Fond, tous les écrans, maison, recherche d'action, sauvegarde après rechargement, export / restauration, aucune icône au trait, aucune erreur)
+### Code et CSS (au fil des écrans retouchés)
+- [ ] 3.7 · 3.8 · 3.10 · 3.11 CSS : 737 `!important` qui se battent entre feuilles ; écrans pas encore passés sur les composants `ui-` ; pas encore de rôle de texte par classe ; coins carrés encore réglés par une règle universelle. On les règle écran par écran, à chaque retouche
+- [ ] Passes visuelles d'après rendu (`*-finitions.js`, fonctions `…Viz`, `dress…`) à fondre dans leurs rendus ; observateur `applyFolds` à revoir
 - [ ] 7.4 GitHub Actions : build `--check` + tests à chaque envoi
 
-## Phase 8 — Nouvelles fonctionnalités (seulement après, à valider)
+### Interface (ancienne phase 6, toujours pertinent)
+- [ ] P6.1 **(décision)** Phrase du cœur de l'appli (ex. « Prendre soin de moi et de mes proches, un jour à la fois »)
+- [ ] P6.3 **(décision)** Définir la version 1 stable (ce qui est « terminé »)
+- [ ] P6.4 Aujourd'hui en ordre fixe : prochaine action → la journée (repas, rituels, quêtes du jour) → quêtes spéciales (l'idée de déplacer le décor dans Moi est abandonnée : ton personnage reste sur la scène, A.3)
+- [ ] P6.5 Mettre en avant la prochaine action — en partie (carte « Maintenant »)
+- [ ] P6.8 Un seul chemin principal par action (repas : tuile / assiette / quête ; quête : bouton / « … » ; Bonne nuit « il y a eu… »)
+- [ ] P6.9 Page « Aide » courte pour les gestes
+- [ ] P6.11 Stats du personnage → résumé concret (« ce mois-ci : 12 repas équilibrés, 4 sorties ») — en partie (Bilan « Cette semaine, en vrai »)
+- [ ] P6.12 **(décision)** Décor animé (ciel, scène) : il bouge tout seul et coûte en batterie : garder, calmer, ou couper par défaut
+- [ ] 4.7 **(décision)** Modules JavaScript : proposition, abandonner (gros risque pour un gain invisible)
 
-- [ ] 8.1 **(décision)** Vue mensuelle et annuelle dans Bilan (correction du 25/10 : des onglets Semaine / Mois / Année existent déjà, à revoir plutôt qu'à créer)
-- [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
-- [ ] 8.2 **(décision)** Rappels (notifications iOS pour appli web installée, ou Rappels / Raccourcis Apple)
+## 3. Idées à choisir (rien n'est décidé)
 
-## Refonte des quêtes et bonnes actions (décisions du QCM, 27/10/2026)
+**Panneau +**
+- [ ] K.1 Accueil « Mes actions » : 8 tuiles fréquentes + suggestions selon l'heure, catégories repliées sous « Tout parcourir »
+- [ ] K.2 Noter en un toucher avec les réglages de la dernière fois ; « Préciser » dans la barre Annuler
+- [ ] K.3 Phrase libre dans la recherche : « 30 min vélo avec Tom » → action, durée et personne reconnues
+- [ ] L.2 Se souvenir de la dernière durée / quantité (les personnes, c'est déjà fait)
+- [ ] L.3 Hier / Demain : plus d'onglets en haut ; « C'était hier » et « Plus tard » en bas de l'écran de précision
+- [ ] L.5 Récents en carrousel de tuiles, sans « il y a N j »
+- [ ] L.8 « Aujourd'hui » dans le panneau : les actions notées du jour, repliées, avec Annuler
 
-Analyse et inventaire : `QUETES.md`. Décisions d'Ilario :
+**Journal**
+- [ ] J.2 Dents proposées à la fin d'un repas
+- [ ] J.5b Routine : étape en cours en grand, pile des faits, barre en étapes, fin fêtée
 
-- [x] Q.1 Quêtes pour toi : **3 à 5 par jour, à la même place**, tirées de **mes priorités** (fiche : famille, chez moi, manger). Elles ne lui parlaient pas : les rendre **concrètes et courtes** (tâche précise, 5–15 min) ou **plaisir / envies** (ciné, sorties, jeux, musique)
-- [x] Q.2 Idées sortie : **inspiration le week-end**, sans carte à valider — fait 28/10 : carte le samedi et le dimanche, « Je l'ai fait » ouvre Actions › Sortir (durée, « Avec qui ? » : Soi seul, Ami avec quelqu'un)
-- [x] Q.3 Quêtes spéciales : carrousel gardé tel quel (rien à faire)
-- [x] Q.4 Bonnes actions : Ilario garde 1, 4–10, 12, 14–26 ; **retirer** « Avancer sur le dossier (30 min) », « 1 verre d'eau », « Se coucher avant minuit », « Trajet à pied ou à vélo » (27/10) — fait 28/10 (migration 5) ; « 1 verre d'eau » reste caché derrière le rituel des verres d'eau
-- [x] Q.5 Tri : **1 par jour au plus**
-- [x] Q.6 XP : **30 max**, sauf grands exploits (livre fini, série finie, sortie loin) jusqu'à 50 — fait 28/10, règle à la validation (`xpRules`), bonus plafonnés à 50 (son sorti, objectif du mois)
-- [x] Q.7 Catégories : marche = **Soi** ; lecture = **Soi**, album = **Talent** ; sorties = **Soi**, **Ami si « Avec qui ? »** rempli
-- [x] Q.8 Quêtes qui durent (journée sans soda, 1 h sans réseaux, escaliers) : **engagement en début de journée, validation en fin de journée** — fait 28/10 avec les engagements (F.4)
-- [x] Q.9 Menu « … » simplifié : **Plus tard + Pas pour moi**
-- [x] Q.10 Quêtes travail : gardées (rien à faire)
-- [x] Q.11 Force et Talent : **pousser doucement** (1 quête sport et 1 musique par semaine)
-- [x] Q.12 Panneau + : **fusionner** « Noter une action » et « Bonnes actions » en un seul endroit (27/10 : les bonnes actions sont dans leur catégorie et dans la recherche)
-- [x] Q.16 Page Actions (analyse du 27/10) : ~~« Avec qui ? » après la durée, seulement pour les proches et les sorties~~ (fait 27/10) · ~~Cuisiner un repas ouvre l'assiette~~ (fait) · ~~icônes 48 px, « Journée sans » non coupé~~ (fait) · ~~accueil « Récents » / « Pour commencer »~~ (fait) · ~~XP de l'action plafonnée à 30~~ (fait, le boost ×2 existant reste) · à confirmer : couleurs (tuile pleine, bordures gauches, décor) et messages empilés → constaté le 02/11 : réglé par L.4 (couleurs) et F.2 (messages remplacés par « Ta journée »)
-- [x] Q.13 Titres (réponses du 27/10) : « Décortiquer un son de [artiste] » ; films « Regarder [film] » ; « 20 min pour [note] » ; « Rendre un petit service » → une tâche à la place d'une personne avec qui tu vis, nommée (pas proposée si tu vis seul) ; « Trier un réseau : 10 abonnements en moins » ; « Trier 50 photos » (détail en petite info) ; « Préparer : [nom de l'événement] ». **Supprimer** : l'idée sortie « restaurant d'une cuisine jamais goûtée », les étapes « Faire la plus petite / la plus redoutée ». **Inchangés** : setlist, « Lire » (le nombre de pages se note à la validation), « Finir une tâche importante », « Bowling ou billard, la revanche », les versions de « préparer demain »
-- [x] Q.14 Projets : créatures remplacées par une **icône d'objet** du thème (règle aussi la question 4.8) — fait 28/10 : création et fin de projet avec l'icône d'objet ; figurines de l'armoire : « Finir le projet « … » » au lieu de « Vaincre »
-- [x] Q.15 Corrections de QUETES.md 4.1 (courses, 15 min de sport, durées), doublons fusionnés (une version par action, mêmes titre, XP et catégorie partout) — 28/10 : 4.1.1 à 4.1.5 corrigés, catégories et plafond partout ; 28/10 : une version par action (préparer demain, écrans avant de dormir, marche, étirements, lecture, album, photo à la famille, voir quelqu'un)
-
-## Demandes du 28/10/2026
-
-À régler :
-- [x] R.1 Messages (toasts) en bas, juste au-dessus de la barre d'onglets, partout (28/10)
-- [x] R.2 « Bonne nuit » (clôture du soir) en fin de liste de la routine du soir
-- [x] R.3 Pastilles rouges de nouveauté : montrer le chemin (pastille sur Moi, puis sur Chez moi, puis sur la catégorie, puis sur l'objet)
-- [x] R.4 L'assiette dans « Bonne nuit » (le dîner se remplit dans l'assiette)
-- [x] R.5 « Journée sans… » : à la fin de « Bonne nuit », plus dans les actions
-- [x] R.6 Un titre à la section des rituels : « Rituels du matin » / « Rituels du soir » (28/10)
-
-Fonctionnalités (à proposer avant de construire) :
-- [x] F.1 Finir un contrat donne des points de Travail : au dernier jour (14/14), une coche à toucher, +50 XP Travail, puis la jauge disparaît (28/10)
-- [x] F.2 Bilan de journée à la place des messages qui s'empilent (l'expérience globale de la journée) : à la fin de Bonne nuit, écran « Ta journée » ; les messages « en passant » y sont gardés, les niveaux s'affichent aussi sur le moment (28/10)
-- [x] F.3 To-do dans le + : Hier (journaliser), Aujourd'hui (engagement ou fait), Demain (s'affiche sur l'accueil du lendemain) ; tâche libre 5 XP ; ce qui n'est pas fait est proposé dans Bonne nuit (Demain / Retirer) (28/10)
-- [x] F.4 Créer ses engagements (ex. journée sans cigarette, ou moins de N), lié à Q.8 : carte le matin (jusqu'à midi, 3 au plus, « Moins de N cigarettes » avec −/+, les tiens écrits), validés dans Bonne nuit, +15 XP chacun tenu (28/10)
-
-## Journal de bord (demande du 28/10/2026)
-
-- [x] J.1 Rassembler en une section « Ma journée » : cigarettes, engagements, à faire, rituels, repas, contrat (engagement sur sa durée), énergie, sommeil, Bonne nuit, routine, agenda du jour. Pistes A à G proposées ; **D, la liste du carnet**, choisie et faite le 28/10 (Ce matin / Mes engagements / Plus tard aujourd'hui). Reste : retirer le code des anciens blocs (rituels en tuiles, rangée des repas, énergie, à faire, fin de journée, rattrapage), aujourd'hui masqués et encore utilisés en coulisse
-- [x] J.3 Rituels plus visuels dans le journal (30/10) : pistes A, B, C refusées ; fait : même structure, icônes sur tuiles pixel à la couleur du rituel, ligne teintée, case à cocher pixel
-- [x] J.4 Cases majeures du journal (30/10) : même taille que les autres lignes, aspect pixel art (ciel étoilé pour Ta nuit et Bonne nuit, trois batteries pixel rouge → vert pour l'énergie, une case par jour pour le contrat)
-- [x] J.5a Rituels (30/10, à vérifier par Ilario) : un rituel coché glisse à droite et se replie, puis se range dans « N faits » sous la liste (dépliable, Annuler en bas) ; la barre d'XP brille un instant ; le compteur du titre rebondit. Pas de « +3 » volant. → constaté le 02/11 : remplacé par T.2 (le rituel coché disparaît, « Annuler » le fait revenir)
-- [ ] J.5b Routine : étape en cours en grand, pile des faits, barre en étapes, fin fêtée (propositions à valider)
-- [ ] J.2 Enchaînements de rituels (douche → barbe) ~~fait 28/10~~, dents proposées à la fin d'un repas (à faire), compteur de cigarettes dans l'engagement lié ~~fait 28/10~~
-
-## Idées utiles (proposées le 28/10/2026, à choisir)
-
-- [ ] U.1 Liste de courses tirée de l'assiette et des recettes (ce qui revient souvent, ce qui manque : légumes…), cochée en magasin
-- [ ] U.2 « Je mange quoi ? » : 3 idées de repas depuis tes recettes, ce que tu as mangé cette semaine et ce qui manque
+**Utile au quotidien**
+- [ ] U.1 Liste de courses tirée de l'assiette et des recettes, cochée en magasin
+- [ ] U.2 « Je mange quoi ? » : 3 idées de repas depuis tes recettes et ce qui manque cette semaine
 - [ ] U.3 Cigarettes : courbe de la semaine, argent économisé, bouton « envie » (3 min pour la laisser passer)
-- [ ] U.4 Heure de coucher conseillée selon le réveil de demain (calendrier, travail) dans Ce soir
-- [ ] U.5 Suivi des candidatures et contrats : envoyée, relance à J+7, entretien, réponse ; prochain contrat à trouver
-- [ ] U.6 Carnet de sons : idée rapide (phrase, vocal), étapes maquette → mix → sortie, tracklist
-- [ ] U.7 Capture rapide : noter une idée en 2 s, triée plus tard (à faire, courses, son, note) — point du 02/11 : en partie (tâche libre dans le panneau +, F.3)
-- [x] U.8 Proches : idées cadeaux notées au fil de l'eau, rappel à J-7 de l'anniversaire avec ces idées → constaté le 02/11 : fait avec 3.6 (plusieurs idées) ; la carte d'anniversaire les montre dès 30 jours avant
-- [x] U.9 Maison : ce qui revient (draps, frigo, plantes) proposé tout seul quand c'est le moment, d'après « La dernière fois que… » → constaté le 02/11 : fait : les quêtes pour toi proposent « La dernière fois que… » et les pièces oubliées quand c'est le moment
-- [ ] U.10 Dimanche soir : bilan de la semaine et 3 choses à prévoir pour la suivante — point du 02/11 : en partie (carte « Ta semaine est finie » vers le Bilan ; manquent les 3 choses à prévoir)
-- [ ] U.11 Rendez-vous et rappels vers le calendrier de l'iPhone (fichier .ics), puisque l'appli web ne peut pas sonner seule
-- [ ] U.12 Visites d'appart : notes par critère (prix, quartier, lumière, bruit) et comparaison
+- [ ] U.4 Heure de coucher conseillée selon le réveil de demain
+- [ ] U.5 Suivi des candidatures : envoyée, relance à J+7, entretien, réponse
+- [ ] U.6 Carnet de sons : idée rapide, étapes maquette → mix → sortie, tracklist
+- [ ] U.7 Capture rapide d'une idée, triée plus tard — en partie (tâche libre du panneau +)
+- [ ] U.10 Dimanche soir : 3 choses à prévoir pour la semaine suivante (le bilan existe déjà)
+- [ ] U.11 · 8.2 Rappels : rendez-vous vers le calendrier de l'iPhone (.ics) ou notifications
+- [ ] U.12 Visites d'appart : notes par critère et comparaison
+- [ ] 8.3 Rappel d'export régulier (passé en 1.2, à reprendre si besoin)
 
-## Appli plus intelligente (analyse du 28/10/2026, à choisir)
+**Appli plus intelligente**
+- [ ] I.1 Journal trié par l'heure où tu fais vraiment chaque chose
+- [ ] I.2 Engagements proposés d'après ce que tu tiens (« moins de N » = ta moyenne − 1)
+- [ ] I.3 Journée allégée toute seule (nuit courte, humeur basse, jour chargé) — en partie
+- [ ] I.4 À faire reporté 3 fois → le découper, en faire un projet ou le retirer
+- [ ] I.5 L'équilibre de la semaine (assiette) oriente les idées de repas et les quêtes nourriture
+- [ ] I.6 Rythme naturel de chaque proche appris → rappel quand il est dépassé — en partie
+- [ ] I.7 « Ce que j'ai appris de ta semaine » dans le Bilan, en phrases simples
+- [ ] I.8 Ce qui n'est jamais utilisé depuis 30 jours (rituel, bonne action — 17 jamais validées en octobre) proposé au retrait
 
-- [ ] I.1 Journal trié par l'heure où tu fais vraiment chaque chose (heures apprises), et une ligne « Maintenant » en tête
-- [ ] I.2 Engagements proposés d'après ce que tu tiens (ex. « moins de N » = ta moyenne − 1)
-- [ ] I.3 Journée allégée toute seule : nuit courte, humeur basse la veille, jour chargé au calendrier → moins de quêtes, plus douces — point du 02/11 : en partie (batterie, nuit courte, jours de travail)
-- [ ] I.4 À faire reporté 3 fois → proposer de le découper, de le mettre en projet ou de le retirer
-- [ ] I.5 Repas : l'équilibre de la semaine (assiette) oriente les idées de repas et les quêtes nourriture
-- [ ] I.6 Proches : rythme naturel de chaque personne appris → rappel quand il est dépassé — point du 02/11 : en partie (jours habituels repérés, rappel réglé à la main)
-- [ ] I.7 « Ce que j'ai appris de ta semaine » dans Bilan (sommeil ↔ rituels, cigarettes ↔ travail ou humeur…), en phrases simples
-- [ ] I.8 Ce qui n'est jamais utilisé depuis 30 jours : proposé au retrait (rituel, bonne action, famille de quêtes)
-- [x] I.9 Chaque proposition dit pourquoi en petite info (« tu le fais souvent le jeudi ») → constaté le 02/11 : fait : chaque quête pour toi dit pourquoi (« Ça fait 26 j », « Souvent le mercredi »)
+**Ma vie**
+- [ ] V.3 L'appli propose d'ajouter à ta fiche ce que tu notes souvent (ex. « sortir le chien »)
+- [ ] V.4 Études (examens) et jours de garde partagée (le reste est fait)
 
-## Ma vie → actions adaptées (idée du 28/10/2026, à choisir)
+## 4. Retiré lors du tri du 03/11 (pour que tu puisses t'y opposer)
 
-- [x] V.1 Nouvelle question dans « Ma situation » : « Chez moi, j'ai… » (chien, chat, petit animal, plantes, jardin, voiture, vélo, lave-vaisselle, bébé ou enfant à garder…) en tuiles pixel
-- [x] V.2 Chaque réponse ajoute ses actions (panneau +), ses rituels proposés, ses quêtes et ses rappels à rythme — fait 30/10 : animaux (chien, chat, petit animal), maison (plantes, jardin, lave-vaisselle), transport (voiture, vélo, transports en commun), santé (lentilles, traitement, végé, sans gluten), famille (enfant à garder), activité (club, instrument) ; reste : jours de garde partagée, régime appliqué à l'assiette
-- [ ] V.3 L'appli le déduit aussi : si tu notes souvent « sortir le chien », elle propose de l'ajouter à ta fiche
-- [ ] V.4 Autres faits utiles : lunettes ou lentilles, traitement à prendre, régime (végé, sans gluten), sport pratiqué en club, instrument, études (examens), jours de garde partagée — point du 02/11 : en partie (V.2 : lentilles, traitement, régimes, club, instrument ; manquent études et garde partagée)
-
-## Retours du 31/10/2026
-
-### Retouches (A)
-- [x] A.1 (31/10) Panneau + : le rouge voulait dire « pas fait depuis longtemps ». Retiré (pastilles rouges, halo, fond rouge) ; à la place, petite info neutre « il y a N j » sous l'option
-- [x] A.2 (31/10) Idée de sortie : « Fait » en jaune au lieu de « Je l'ai fait » ; « une autre » garde l'icône en bas à droite
-- [x] A.3 (31/10) Mon personnage visible en permanence sur la scène (pas seulement pendant les actions)
-- [x] A.4 (31/10) « Ma situation » (Aujourd'hui) et « Ma fiche » (Moi) au même format, celui de « Ma fiche »
-- [x] A.5 (31/10) J'ai… : « Petit animal » seul, poisson recentré
-- [x] A.6 (31/10) J'ai… : tout rentre dans le cadre (la fiche en édition débordait à droite), tuiles rectangulaires 2 par ligne, nom sur une ligne (libellés raccourcis)
-- [x] A.7 (31/10) Retirer un artiste ne doit pas renvoyer en haut de la page
-
-### Profil d'ami (P)
-- [x] P.1 (31/10) XP centrée dans sa barre
-- [x] P.2 (31/10) Statut (« Ami proche »…) au-dessus de la barre d'XP
-- [x] P.3 (31/10) Le flou derrière la barre d'XP sur toute la fiche ; plus de cadre autour du prénom et du badge
-- [x] P.4 (31/10) Rappel : la ligne entre les cases ne passe pas dans les cases non cochées
-- [x] P.5 (31/10) « Prendre des nouvelles » → « Nouvelles »
-- [x] P.6 (31/10) Retirer « Vit avec moi » (se règle dans Ma vie)
-- [x] P.7 (31/10) Univers : icônes seules, plus grandes ; voyage = avion au lieu de la valise
-- [x] P.8 (31/10) Talents : icônes seules, plus grandes ; nouvelle icône danse
-- [x] P.9 (31/10) Groupes : croix plus petite, plus de pointillés sous le titre du groupe, nom du groupe en grand
-
-### Aujourd'hui (T)
-- [x] T.1 (31/10) Journal : « Annuler » souligné → icône retour pixel art
-- [x] T.2 (31/10) Rituels faits : disparaissent complètement de la liste (plus de « N faits ») ; « Annuler » les fait revenir dans les rituels
-- [x] T.3 (31/10) Quête spéciale « Voir quelqu'un en vrai » : même modèle que les autres (icône en bas à droite, même fond, même taille)
-
-### Esthétique (E)
-- [x] E.1 (31/10) Badge humeur 30 j : yeux de l'emoji refaits, identiques
-- [x] E.2 (31/10) Armoire (auras et toutes les catégories) : surlignage jaune seul, plus de coche en haut à droite
-
-### Assiette et nourriture (N) — proposition validée le 01/11 (fast-food = orange, café sans XP, badge « Sur le pouce », tout le lot d'un coup)
-- [x] N.1 (31/10) Masquer la barre de défilement verticale
-- [x] N.2 (01/11) Carrousels par catégorie, une ligne chacun, ordre logique : pain → féculent classique → atypique ; viande → végétal → de la mer
-- [x] N.3 (01/11) Nouveaux aliments : frites, steak, saumon, falafel, champignons, ail, sandwich
-- [x] N.4 (01/11) Sauces : soja, ketchup, mayo, BBQ, huile d'olive, césar, crème fraîche, curry coco
-- [x] N.5 (01/11) Dessert : glace, yaourt, fruit, chocolat
-- [x] N.6 (01/11) Compteur café
-- [x] N.7 (01/11) Où : maison, restaurant, fast-food… ; grignotage
-- [x] N.8 (01/11) Types d'assiette (équilibrée = or, végétarienne = vert, fast-food = rouge ou mieux), chaque nouveau type débloque un badge (Végétarien, Chef cuisinier, fast-food)
-- [x] N.9 (01/11) XP en plus quand je cuisine pour quelqu'un
-- [x] N.10 (01/11) Habitude alimentaire (dans J'ai… / Ma vie)
-- [x] N.11 (01/11) Inviter des amis chez soi (action)
-
-## Panneau + (analyse du 01/11/2026, à choisir)
-
-### Autres façons de faire (K)
-- [ ] K.1 Accueil « Mes actions » : 8 tuiles fréquentes + suggestions selon l'heure en haut, catégories repliées sous « Tout parcourir »
-- [ ] K.2 Noter en un toucher : l'option se note tout de suite avec les réglages de la dernière fois (durée, personnes) ; « Préciser » dans la barre Annuler pour corriger
-- [ ] K.3 Phrase libre dans la recherche : « 30 min vélo avec Tom » → action, durée et personne reconnues, un bouton « Noter »
-- [x] K.4 (01/11) Catégorie → options directement (les familles deviennent des intertitres dans une liste), un niveau de moins
-
-### Améliorations de l'existant (L)
-- [x] L.1 (01/11) Durée et « Avec qui ? » sur un seul écran, bouton « Fait · +12 XP » en bas
-- [ ] L.2 Se souvenir de la dernière durée / quantité / personnes par action (présélectionnées) — point du 02/11 : en partie (personnes de la dernière fois en premier, durée pas encore présélectionnée)
-- [ ] L.3 Hier / Demain : retirer les onglets du haut ; « C'était hier » et « Plus tard » en bas de l'écran de précision
-- [x] L.4 (01/11) Catégorie choisie : tuile pleine + bordure or ; bordures gauches colorées et motif de fond gardés ; bande orange du bas retirée
-- [ ] L.5 Récents en carrousel de tuiles (icône + nom), sans « il y a N j »
-- [x] L.6 (01/11) Options : pas d'icône répétée quand c'est la même que la famille ; noms en entier sur 2 colonnes
-- [x] L.7 (01/11) Libellés : « Force » → « Sport » ; icône Travail sans croix rouge ; « Divertissement » → « Loisirs »
-- [ ] L.8 « Aujourd'hui » dans le panneau : la liste des actions notées du jour, repliée, avec Annuler
-
-## Compte rendu du 01/11/2026 (à choisir)
-
-Doc : https://claude.ai/artifact/2U9EfKXto3kqDLveD1wMwi
-
-- [ ] R.1 Jauge de stockage : limite réelle du téléphone (aujourd'hui « / 256 Ko », rouge vers 205 Ko)
-- [ ] R.2 Une seule carte « contrat terminé » ; contrat et compteurs sortis de Mes engagements
-- [ ] R.3 Repas passés repliés le soir ; titre du moment (Cet après-midi…) fidèle à son contenu
-- [ ] R.4 Bilan : retirer « 0 jour de suite » et « coffres ouverts » du haut, montrer ce qui a été fait
-- [ ] R.5 Badges : renommer « Machine de guerre », « Pilleur », « skills » ; revoir « Sur le pouce » et « Âme sœur » ; badges famille, travail, maison, projets
-- [ ] R.6 Mêmes noms partout (Sport, Créer…) et jauge Nourriture sur le profil
-- [ ] R.7 Fiche d'ami en lecture + bouton Modifier ; « vus il y a N jours » en clair ; « Appeler » ouvre Téléphone (retiré le 02/11 : pas de numéro ni d'Instagram)
-- [ ] R.8 Ma date d'anniversaire, mon statut de couple, anniversaire de couple
-- [ ] R.9 Types d'événements mariage, naissance, déménagement, rendez-vous médical, avec leurs quêtes
-- [ ] R.10 **(décision)** Réduire les systèmes de progression (hasard, coffres, Ami du mois)
-- [ ] R.11 XP des proches et des bonus ramenés au barème (30 maximum)
-- [ ] R.12 Rendre ou supprimer ce qui est caché (Mon rythme, Ma capacité, La dernière fois que…, objectif du jour) ; retirer boss et euros du code (avec le CSS)
-
-## Comparatif et surprises (01/11/2026, à choisir)
-
-Doc : https://claude.ai/artifact/KmopVs83F8TQv3MZDzxSPt — chaque surprise demande un vrai geste.
-
-- [ ] S.1 Heure dorée de la semaine : annoncée le lundi, 1 h, un domaine qui change, XP ×2 sur ce domaine
-- [ ] S.2 Mois à thème (ex. « mois des proches ») : quêtes du thème, objet du mois après 10 actions
-- [ ] S.3 Le grand jour : un samedi par mois, défi d'une journée, objet rare
-- [ ] S.4 Fêtes du vrai calendrier (gentillesse, Chandeleur, fête des mères et des pères, solstices) : quête à thème + décor
-- [ ] S.5 Mon anniversaire (XP ×2 la journée, cadeau) et anniversaire du carnet (bilan de l'année)
-- [ ] S.6 Défi éclair à une heure différente chaque jour (2 à 5 min, 5 XP), vu à l'ouverture
-- [ ] S.7 Le visiteur : un proche à revoir passe sur la scène, bouton pour lui écrire, XP de lien ×2 ce jour-là
-- [ ] S.8 Ciel et météo réels : première neige, premier beau jour, pleine lune, pluies d'étoiles (5 XP + décor)
-- [ ] S.9 Trouvaille en route : une graine qui éclot après 5 actions d'un même domaine
-- [ ] S.10 Lettre du passé : ma phrase de Bonne nuit d'il y a un mois ou un an, relue au réveil
-- [ ] S.11 Boost en réserve (gagné par 5 jours de rituels) : 30 min à XP ×2, activé quand je veux
-- [ ] S.12 Lève-tôt : rituels du matin finis tôt → 30 min à XP ×2
-- [ ] S.13 Journée relance après 2 jours calmes : première action ×3, sans reproche
-- [ ] S.14 Défi avec un proche réel chaque semaine, message prêt à envoyer
-- [ ] S.15 Allié : un proche choisi pour un objectif, proposition de lui donner des nouvelles
-- [ ] S.16 Carte postale pixel après une sortie, à envoyer par Messages — retirée le 02/11 à la demande d'Ilario
-- [ ] S.17 **(décision)** Mes plaisirs : récompenses réelles inventées, achetées avec ce que je gagne (monnaie à choisir)
-- [ ] S.18 Avatar : création « Aide-moi » par questions, phrase fétiche, humeur visible sur la scène
-- [ ] S.19 « Les nouvelles du jour » en une ligne à l'ouverture (anniversaire qui arrive, record, proche à revoir)
-- [ ] S.20 Goûts d'un proche remplis au fil des sorties
-- [ ] S.21 Assiette : photo souvenir facultative, « et après, tu te sens ? », arc-en-ciel de la semaine, « nouveau plat »
-- [ ] S.22 Les niveaux débloquent des bonus : passer un niveau (global ou d'une jauge) donne un pouvoir lié à cette jauge (ex. 1 h d'XP ×2 sur Sport), à utiliser quand je veux
-
-Plan d'attaque proposé (écran par écran, CSS + corrections du compte rendu ensemble) : 1 Aujourd'hui · 2 Moi · 3 Proches · 4 Le jeu (décision R.10 avant) · 5 Événements · 6 Assiette, avatar, plaisirs.
-
-## Fait à la demande (hors phases)
-
-- [x] (27/10/2026) Assiette = seule porte pour ce qu'on mange : quêtes nourriture reliées (objectif dans l'assiette, « Cuisiné maison », « Nouvelle recette »), bonnes actions en doublon retirées, plus de quête d'assiette quand les repas sont notés
-
-## Corrigé en passant
-
-- [x] (26/10/2026) La famille était remise à la liste d'origine à chaque chargement (`load()` ignorait `family`) : un proche ajouté à la famille disparaissait. Corrigé, trouvé par les tests de parcours
-
-## À vérifier sur l'iPhone d'Ilario (non vérifiable ici)
-
-- [ ] Fluidité de l'assiette (tremblement corrigé ?)
-- [ ] Zoom bien bloqué en mode appli
-- [ ] Clavier dans les fenêtres plein écran
-- [ ] Encoche et barre du bas
-- [ ] Sons
+- **Fait** : phases 0 à 5 et 7, quêtes (Q), demandes du 28/10 (R, F), journal (J.1, J.3, J.4, J.5a), retours du 31/10 (A, P, T, E, N), K.4, L.1, L.4, L.6, L.7, U.8, U.9, I.9, V.1, V.2, lots 1 à 5 et 6.4 → historique dans `CHANGELOG.md`, vérifications en section 1
+- **Doublons** : sections « Compte rendu du 01/11 » (R.1 à R.12) et « Comparatif et surprises » (S.1 à S.22), entièrement reprises dans les lots
+- **Sans objet** : 6.2 rôle du jeu (tranché au lot 4 : le jeu pousse, avec paliers et boosts) ; 6.6 « le jeu hors d'Aujourd'hui » (contredit tes choix : barre d'XP, Défi, paliers) ; 6.7 réorganiser Moi (fait au lot 2 : Ma vie, Chez moi, Bilan) ; 8.1 vue mensuelle et annuelle (existe déjà dans le Bilan) ; 6.10 et 6.13 (constatés le 02/11)
+- **Retiré par toi** : 3.2 numéro et Instagram, 3.5 le visiteur (S.7), S.16 carte postale, 1.2 rappel d'export (gardé en idée 8.3)
