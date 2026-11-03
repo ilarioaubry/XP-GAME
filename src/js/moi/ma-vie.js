@@ -68,12 +68,17 @@
         const o={name,n:Math.max(1,Math.min(99,parseInt(w.querySelector("[name=ev]").value)||1)),u:w.querySelector("[name=u]").value,d:w.querySelector("[name=d]").value||null};if(o.d&&o.d>tk)o.d=tk;
         if(!x)L.push({id:"l"+Date.now().toString(36),...o});else{Object.assign(x,o);delete x.pv}close();save();rt()};
       document.body.appendChild(w);if(!x)w.querySelector("[name=n]").focus()}
+    // prochaine échéance d'un rappel (utilisée par le calendrier) ; null si jamais noté
+    window.rappelNext=x=>x&&x.d?addD(x.d,x.n*(UN[x.u]||UN.j)[0]):null;
+    window.rappelsDus=function(){const tk=tkNow();return(S.g.last||[]).map(x=>({x,d:window.rappelNext(x)})).filter(o=>o.d).map(o=>({...o,d:o.d<tk?tk:o.d,late:o.d<tk}))};
+    function lastToggle(x,tk){if(x.d===tk){x.d=x.pv||null;delete x.pv}else{x.pv=x.d;x.d=tk;try{const k=window.afMatch&&afMatch(x.name);if(k){S.g.afLast=S.g.afLast||{};S.g.afLast[k]=Date.now()}}catch(e){}try{toast(`Noté : <span class="p">${esc(x.name)}</span>`)}catch(e){}}save()}
+    window.rappelFait=function(id){const x=(S.g.last||[]).find(y=>y.id===id);if(x){lastToggle(x,tkNow());rt();try{renderEvents()}catch(e){}}};
     function bindLast(box,tk){const L=S.g.last;
       box.querySelectorAll(".lst-add").forEach(a=>a.onclick=()=>lOpen(null));
       box.querySelectorAll("[data-sg]").forEach(b=>b.onclick=()=>{const s2=SUG[+b.dataset.sg];lOpen(null,{name:s2[0],n:s2[1],u:s2[2],d:tk})});
       box.querySelectorAll("[data-le]").forEach(b=>b.onclick=()=>{const x=L.find(y=>y.id===b.dataset.le);if(x)lOpen(x)});
       box.querySelectorAll("[data-ld]").forEach(b=>b.onclick=()=>{const x=L.find(y=>y.id===b.dataset.ld);if(!x)return;
-        if(x.d===tk){x.d=x.pv||null;delete x.pv}else{x.pv=x.d;x.d=tk;try{const k=window.afMatch&&afMatch(x.name);if(k){S.g.afLast=S.g.afLast||{};S.g.afLast[k]=Date.now()}}catch(e){}try{toast(`Noté : <span class="p">${esc(x.name)}</span>`)}catch(e){}}save();rt()});
+        lastToggle(x,tk);rt();try{renderEvents()}catch(e){}});
       const m=box.querySelector(".lst-more");if(m)m.onclick=()=>{lAll=!lAll;rt()};
     }
     // ---- Périodes
@@ -104,6 +109,14 @@
     // ---- Proches
     const lastSeen=n=>{const a=(S.bondsLast||{})[n]||0,b=V().pc[n]?toD(V().pc[n]).getTime():0,t=Math.max(a,b);return t?dayKey(t):null};
     const pcLate=tk=>{const v=V();return Object.keys(v.pf).filter(n=>v.pf[n]>0).map(n=>{const d=lastSeen(n),days=d?nDays(d,tk,false)-1:999;return{n,d,days,r:days/v.pf[n]}}).filter(x=>x.r>=1).sort((a,b)=>b.r-a.r)};
+    // ---- Choisir ce qu'on surveille, depuis l'écran Aujourd'hui comme depuis Ma vie
+    const TRK=[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"],["last","maisonp","Rappels"]];
+    const trkOn=(v,k)=>k==="last"?v.track.last!==false:!!v.track[k];
+    function trkWin(){if(document.querySelector(".trkw"))return;const v=V(),w=document.createElement("div");w.className="ui-voile trkw";w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label","Ce que je surveille");
+      w.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Ce que je surveille</h2><div class="svx">${TRK.map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${trkOn(v,k)}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${trkOn(v,k)?"Suivi":"Off"}</em></button>`).join("")}</div><button type="button" class="ui-btn ui-btn--principal trkok">OK</button></div>`;
+      w.onclick=e=>{if(e.target===w){e.stopPropagation();w.remove()}};w.querySelector(".trkok").onclick=()=>w.remove();
+      w.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{const k=b.dataset.trk;v.track[k]=!trkOn(v,k);b.setAttribute("aria-pressed",trkOn(v,k));b.querySelector("em").textContent=trkOn(v,k)?"Suivi":"Off";save();rt();try{render()}catch(e){}});
+      document.body.appendChild(w)}
     // ---- Bandeau du jour (onglet Quêtes)
     window.renderTrk=function(){
       const box=document.getElementById("trkBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();vieMods();
@@ -114,16 +127,17 @@
       const pOk=g.perOk&&typeof g.perOk==="object"?g.perOk:{},cDone=x=>pOk[x.id]&&(S.log||[]).some(e=>e.a==="contrat"&&e.name==="Contrat terminé : "+x.name),cFin=x=>x.t==="contrat"&&!cDone(x)&&perStat(x,tk).left===0&&tk>=x.s&&nDays(x.e,tk,false)<=21;
       const forms=[];if(v.track.per)g.per.filter(x=>!(x.t==="contrat"&&document.getElementById("jdEng"))).filter(x=>cFin(x)||(x.t!=="contrat"||!cDone(x))&&(x.s<=tk&&tk<=x.e||(x.e<tk&&nDays(x.e,tk,false)<=2))).forEach(x=>{if(editId===x.id)forms.push(perForm(x));else rows.push(cFin(x)?perFin(x):perMini(x,tk))});
       const late=g.last.map(x=>({x,r:ratio(x,tk)})).filter(o=>o.r>=1&&o.x.d!==tk||o.x.d===tk&&o.x.pv!==undefined).filter(o=>!(S.specials||[]).some(q=>(q.name||"").toLowerCase().includes(String(o.x.name||"").toLowerCase()))).sort((a,b)=>b.r-a.r).slice(0,3);
-      if(!document.getElementById("jdLater"))late.forEach(o=>rows.push(lRow(o.x,o.r,tk,1)));
+      if(!document.getElementById("jdLater")&&v.track.last!==false)late.forEach(o=>rows.push(lRow(o.x,o.r,tk,1)));
       let mode="";const cap=vieCap();
       if(T&&p.t!=="contrat"&&p.t!=="autre")mode=`${ic(p.t,16)}<span>${esc(PT[p.t].l.split(" /")[0])}</span>`;
       else if(workDay(tk))mode=`${ic("contrat",16)}<span>${hh(v.wf)}–${hh(v.wt)}</span>`;
       if(!rows.length&&!mode&&!forms.length){box.innerHTML="";box.classList.add("voff");return}
       box.classList.remove("voff");
-      box.innerHTML=(mode?`<button type="button" class="bnd-mode" data-govie="1" aria-label="Calendrier">${mode}</button>`:"")+(rows.length?`<div class="trk-c bnd">${rows.join("")}</div>`:"")+forms.join("");
+      box.innerHTML=`<div class="bnd-top">${mode?`<button type="button" class="bnd-mode" data-govie="1" aria-label="Calendrier">${mode}</button>`:"<span></span>"}<button type="button" class="ui-btn ui-btn--icone bnd-set" data-trkset="1" aria-label="Choisir ce que je surveille" title="Ce que je surveille">${ICO("edit",24)}</button></div>`+(rows.length?`<div class="trk-c bnd">${rows.join("")}</div>`:"")+forms.join("");
       box.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{g.cig[tk]=Math.max(0,(g.cig[tk]||0)+(+b.dataset.c));const ks=Object.keys(g.cig).sort();while(ks.length>400)delete g.cig[ks.shift()];save();rt()});
       box.querySelectorAll("[data-pc]").forEach(b=>b.onclick=ev=>{const n=b.dataset.pc;try{bondAction(n,REL_ACTIONS.find(x=>x.k==="news"),b,ev)}catch(e){V().pc[n]=tk;save()}setTimeout(rt,50)});
       box.querySelectorAll("[data-pcgo]").forEach(b=>b.onclick=()=>{try{openProfile(b.dataset.pcgo)}catch(e){}});
+      box.querySelectorAll("[data-trkset]").forEach(b=>b.onclick=()=>trkWin());
       box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>{try{calOpen()}catch(e){}});
       box.querySelectorAll("[data-pok]").forEach(b=>b.onclick=ev=>{const p=g.per.find(x=>x.id===b.dataset.pok);if(!p)return;if(!g.perOk||typeof g.perOk!=="object")g.perOk={};g.perOk[p.id]=Date.now();
         try{complete({id:"contrat",cat:"travail",name:"Contrat terminé : "+p.name,xp:50},b,ev)}catch(e){save()}setTimeout(rt,60)});
@@ -133,7 +147,7 @@
       const box=document.getElementById("vieBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();
       const wk=Array.from({length:7},(_,i)=>addD(tk,i-6)),vals=wk.map(k=>g.cig[k]||0),mx=Math.max(1,...vals),past=wk.slice(0,6).filter(k=>k in g.cig),avg=past.length?past.reduce((a,k)=>a+(g.cig[k]||0),0)/past.length:null;
       let h=`<div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
-        <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
+        <div class="svx">${TRK.map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${trkOn(v,k)}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${trkOn(v,k)?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
 </div>
       <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un rappel" title="Ajouter un rappel">${ICO("plus",24)}</button></h3>${lastHTML(tk)}</div>
@@ -142,7 +156,7 @@
       {const sm=document.getElementById("setMods");if(sm)sm.innerHTML=`<div id="vie-mods"><h3>${ic("autre",18)}Mes modules</h3><p>Ce qui est coupé disparaît.</p>
         ${MODS.map(m=>`<label class="tg"><span><b>${m[1]}</b><small>${m[2]}</small></span><input type="checkbox" class="sw" data-mod="${m[0]}"${v.off.includes(m[0])?"":" checked"}></label>`).join("")}</div>`}
       const ch=()=>{save();rt();try{render()}catch(e){}};
-      box.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{v.track[b.dataset.trk]=!v.track[b.dataset.trk];ch()});  // un seul réglage par suivi (2.5) : la tuile
+      box.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{v.track[b.dataset.trk]=!trkOn(v,b.dataset.trk);ch()});  // un seul réglage par suivi (2.5) : la tuile
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
       bindLast(box,tk)};
     // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js

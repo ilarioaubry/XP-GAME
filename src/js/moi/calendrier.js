@@ -20,6 +20,8 @@ function calItems(k){const G=S.g,tk=dayKey(Date.now()),dt=calD(k),out=[];
     md(s.bd,"me:bd","Ton anniversaire","cake");if(s.cpl&&s.cpl!=="celib")md(s.cpld,"me:cpl",s.cpl==="marie"?"Anniversaire de mariage":"Anniversaire de couple","coeur")}
   const E=(Array.isArray(G.ev)?G.ev:[]).concat(k<tk&&Array.isArray(G.evArc)?G.evArc.filter(a=>!(G.ev||[]).some(e=>e.id===a.id)):[]);
   E.filter(e=>e.d===k).forEach(e=>{const t=e.t||evtGuess(e.n);out.push({k:"ev",id:e.id,n:e.n+(e.a?" · "+e.a:""),ic:CAL_EVI[t]||"etoile",t,xp:e.xp,done:(S.log||[]).some(l=>l.evd===e.id),e})});
+  // « La dernière fois que… » : le jour où le rappel revient (en retard = aujourd'hui)
+  if(k>=tk&&typeof rappelsDus==="function")rappelsDus().filter(o=>o.d===k).forEach(o=>out.push({k:"last",id:o.x.id,n:o.x.name,ic:"maisonp",late:o.late}));
   return out}
 function calPers(k){return(S.g.per||[]).filter(p=>p.s<=k&&k<=p.e)}
 // une case de jour (grille de la page et grille du mois)
@@ -37,13 +39,15 @@ function renderEvents(){const box=$("calBox");if(!box||!S||!S.g)return;const G=S
   (G.per||[]).filter(p=>p.s<=tk&&tk<=p.e).forEach(p=>{const st=typeof viePerStat==="function"?viePerStat(p,tk):null;R.push({k:"per",p,d:p.e,inD:calDiff(tk,p.e),st})});
   (G.per||[]).filter(p=>p.s>tk&&calDiff(tk,p.s)<=30).forEach(p=>R.push({k:"perv",p,d:p.s,inD:calDiff(tk,p.s)}));
   L.concat(myDates()).filter(e=>e.inD>=0&&e.inD<=30||e.k==="ev"&&e.inD===-1&&!e.done).forEach(e=>R.push({...e,d:calK(e.dt)}));
+  if(typeof rappelsDus==="function")rappelsDus().filter(o=>calDiff(tk,o.d)<=7).forEach(o=>R.push({k:"last",id:o.x.id,n:o.x.name,d:o.d,inD:calDiff(tk,o.d),late:o.late}));
   R.sort((a,b)=>(a.k==="per"?-1:0)-(b.k==="per"?-1:0)||a.inD-b.inD);
   const cd=n=>n<0?"Hier":n===0?"Aujourd'hui":n===1?"Demain":"Dans "+n+" jours";
   const row=(x,i)=>{const dt=calD(x.d);let ic="",t="",sub="",act="",bar="";
     if(x.k==="per"||x.k==="perv"){const P=calPer(x.p.t);ic=`<span class="cal-ri" style="--b:${P[3]}">${rkSvg(P[2])}</span>`;t=x.p.name||P[1];
       if(x.k==="per"&&x.st){sub=`Jour ${Math.max(1,x.st.done)} sur ${x.st.tot}`;bar=`<span class="ui-barre cal-pb"><i style="width:${x.st.pct}%;background:${P[3]}"></i></span>`}else sub=cd(x.inD)}
-    else{ic=x.k==="bd"?`<span class="cal-ri">${pAv(x.who,"cal-av")}</span>`:`<span class="cal-ri">${rkSvg(x.k==="me"?x.ic:CAL_EVI[(G.ev.find(e=>e.id===x.id)||{}).t||evtGuess(x.n)]||"etoile")}</span>`;t=x.n;sub=cd(x.inD);
-      if(x.k==="ev"&&x.done)act=`<span class="cal-ok">${ICO("check",24)}</span>`;
+    else{ic=x.k==="bd"?`<span class="cal-ri">${pAv(x.who,"cal-av")}</span>`:`<span class="cal-ri">${rkSvg(x.k==="me"?x.ic:CAL_EVI[(G.ev.find(e=>e.id===x.id)||{}).t||evtGuess(x.n)]||"etoile")}</span>`;t=x.n;sub=x.k==="last"?(x.late?"À refaire":"À refaire · "+cd(x.inD).toLowerCase()):cd(x.inD);if(x.k==="last")ic=`<span class="cal-ri">${rkSvg("maisonp")}</span>`;
+      if(x.k==="last")act=`<button type="button" class="ui-btn ui-btn--icone" data-ld="${x.id}" aria-label="Fait : ${esc(x.n)}" title="Fait">${ICO("check",24)}</button>`;
+      else if(x.k==="ev"&&x.done)act=`<span class="cal-ok">${ICO("check",24)}</span>`;
       else if(x.k==="ev"&&x.inD<=0)act=`<button type="button" class="ui-btn ui-btn--principal" data-go="${i}">+${x.xp} XP</button>`;
       else if(x.k==="bd"){const gs=x.inD<=GIFT_DAYS?gfState(x.who):null;if(x.inD===0&&x.q)act=`<button type="button" class="ui-btn ui-btn--principal" data-go="${i}">+${x.q.xp} XP</button>`;else if(gs&&!gs.given)act=`<button type="button" class="ui-btn ui-btn--icone" data-gf="${i}" aria-label="Cadeau pour ${esc(x.who)}" title="Cadeau">${rkSvg("cadeau")}</button>`}}
     return`<div class="cal-r${x.inD===0||x.k==="per"?" now":""}"><button type="button" class="cal-rm" data-k="${x.k==="per"?tk:x.d}"><span class="cal-rd">${x.k==="per"?`<small>fin</small>`:""}<b>${dt.getDate()}</b><small>${CAL_MC[dt.getMonth()]}</small></span>${ic}<span class="cal-rt"><b></b><small>${sub}</small>${bar}</span></button>${act}</div>`};
@@ -54,6 +58,7 @@ function renderEvents(){const box=$("calBox");if(!box||!S||!S.g)return;const G=S
   box.querySelectorAll(".cal-rt b").forEach((b,i)=>{const x=show[i];b.textContent=x.k==="per"||x.k==="perv"?(x.p.name||calPer(x.p.t)[1]):x.n});
   $("calAdd").onclick=()=>calOpen();
   box.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>calOpen(b.dataset.k));
+  box.querySelectorAll("[data-ld]").forEach(b=>b.onclick=()=>rappelFait(b.dataset.ld));
   box.querySelectorAll("[data-go]").forEach(b=>b.onclick=ev=>{const x=show[+b.dataset.go];if(x.k==="bd"){completeSpecial(x.q,b,ev);return}
     S.xp+=x.xp;S.log.push({a:"bonus",cat:null,name:x.n,xp:x.xp,t:Date.now(),bonus:1,evd:x.id});floatXp(x.xp,ev,b);save();render();renderEvents();toast(`Événement : <span class="p">${esc(x.n)}</span> +${x.xp} XP`)});
   box.querySelectorAll("[data-gf]").forEach(b=>b.onclick=()=>{const x=show[+b.dataset.gf],gk=x.who+":"+x.dt.getFullYear();
@@ -83,7 +88,7 @@ function calOpen(day){if(document.querySelector(".calw"))return;const G=S.g;if(!
       ${tags.length?`<div class="cal-tags">${tags.join("")}</div>`:""}
       <div class="cal-l">${P.map((p,i)=>pEdit===p.id?`<div class="cal-pe"><input class="ui-champ" data-pn maxlength="40" aria-label="Nom de la période"><div class="cal-two"><label class="ui-info">Du<input class="ui-champ" type="date" data-ps value="${p.s}"></label><label class="ui-info">Au<input class="ui-champ" type="date" data-pe value="${p.e}"></label></div><div class="cal-two"><button type="button" class="ui-btn" data-pdel aria-label="Supprimer la période">${ICO("trash",24)}</button><button type="button" class="ui-btn ui-btn--principal" data-pok>Enregistrer</button></div></div>`
         :`<div class="cal-r"><button type="button" class="cal-rm" data-pr="${p.id}"><span class="cal-ri" style="--b:${calPer(p.t)[3]}">${rkSvg(calPer(p.t)[2])}</span><span class="cal-rt"><b data-pi="${i}"></b><small>${calD(p.s).getDate()} ${CAL_MC[calD(p.s).getMonth()]} → ${calD(p.e).getDate()} ${CAL_MC[calD(p.e).getMonth()]}</small></span></button><button type="button" class="ui-btn ui-btn--icone" data-pe2="${p.id}" aria-label="Modifier la période" title="Modifier">${ICO("edit",24)}</button></div>`).join("")}
-        ${it.map((x,i)=>`<div class="cal-r"><span class="cal-rm"><span class="cal-ri">${x.k==="bd"?pAv(x.who,"cal-av"):rkSvg(x.ic)}</span><span class="cal-rt"><b data-ii="${i}"></b><small>${x.k==="bd"?"Anniversaire":x.k==="me"?"Ta date":evtOf(x.t)[1]}</small></span></span>${x.k==="ev"&&!x.done&&G.ev.some(e=>e.id===x.id)?`<button type="button" class="ui-btn ui-btn--icone" data-rm="${x.id}" aria-label="Supprimer l'événement" title="Supprimer">${ICO("trash",24)}</button>`:x.done?`<span class="cal-ok">${ICO("check",24)}</span>`:""}</div>`).join("")}
+        ${it.map((x,i)=>`<div class="cal-r"><span class="cal-rm"><span class="cal-ri">${x.k==="bd"?pAv(x.who,"cal-av"):rkSvg(x.ic)}</span><span class="cal-rt"><b data-ii="${i}"></b><small>${x.k==="bd"?"Anniversaire":x.k==="me"?"Ta date":x.k==="last"?"À refaire":evtOf(x.t)[1]}</small></span></span>${x.k==="last"?`<button type="button" class="ui-btn ui-btn--icone" data-ld="${x.id}" aria-label="Fait : ${esc(x.n)}" title="Fait">${ICO("check",24)}</button>`:x.k==="ev"&&!x.done&&G.ev.some(e=>e.id===x.id)?`<button type="button" class="ui-btn ui-btn--icone" data-rm="${x.id}" aria-label="Supprimer l'événement" title="Supprimer">${ICO("trash",24)}</button>`:x.done?`<span class="cal-ok">${ICO("check",24)}</span>`:""}</div>`).join("")}
         ${!P.length&&!it.length?`<p class="ui-vide">Rien de prévu ce jour-là.</p>`:""}</div>
       ${calSel>=tk?`<div class="cal-add"><input class="ui-champ calname" maxlength="40" aria-label="Nom" autocomplete="off">
         <input class="ui-champ calart" maxlength="40" placeholder="Quel artiste ?" aria-label="Artiste" list="calArts" hidden><datalist id="calArts">${((G.taste&&G.taste.art)||[]).map(a=>`<option value="${esc(a)}">`).join("")}</datalist>
@@ -95,6 +100,7 @@ function calOpen(day){if(document.querySelector(".calw"))return;const G=S.g;if(!
     C.querySelectorAll(".cal-tag:not(.cal-tq)>span:last-child:empty").forEach((s,i)=>s.textContent=P[i]?P[i].name||calPer(P[i].t)[1]:"");
     C.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{let[y2,m2]=calM;m2+= +b.dataset.m;if(m2<0){m2=11;y2--}if(m2>11){m2=0;y2++}calM=[y2,m2];draw()});
     C.querySelectorAll(".cal-j").forEach(b=>b.onclick=()=>{calSel=b.dataset.k;pEdit=null;if(fEnd&&fEnd<calSel)fEnd="";const d1=calD(calSel);calM=[d1.getFullYear(),d1.getMonth()];draw()});
+    C.querySelectorAll("[data-ld]").forEach(b=>b.onclick=()=>{rappelFait(b.dataset.ld);draw()});
     C.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{const id=b.dataset.rm;undoAfter("Événement supprimé",()=>{G.ev=G.ev.filter(e=>e.id!==id);save();draw()})});
     C.querySelectorAll("[data-pr],[data-pe2]").forEach(b=>b.onclick=()=>{pEdit=b.dataset.pr||b.dataset.pe2;draw()});
     const pe=C.querySelector(".cal-pe");if(pe){const p=G.per.find(x=>x.id===pEdit),n=pe.querySelector("[data-pn]");n.value=p.name||"";

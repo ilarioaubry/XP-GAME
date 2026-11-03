@@ -255,3 +255,9 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 .newsi svg{width:24px;height:24px;display:block}
 .newst{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .newsn{flex:none}
+/* bandeau du jour : mode (travail / période) à gauche, réglage « Ce que je surveille » à droite */
+.bnd-top{display:flex;align-items:center;gap:8px}
+.bnd-top>.bnd-mode{flex:1;min-width:0}
+.bnd-set{margin-left:auto;flex:0 0 44px}
+.trkw .svx{margin:0}
+.trkw .svt{min-width:0;aspect-ratio:auto;min-height:104px;padding:8px 4px;font-size:13px;text-align:center}
