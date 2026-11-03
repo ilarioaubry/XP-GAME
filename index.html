@@ -4122,6 +4122,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     <div class="pf-pick" id="pfPick" hidden></div>
     <div hidden><button type="button" class="cstog" tabindex="-1" id="csTog" aria-expanded="false" aria-controls="statWrap"><span>Caractéristiques</span><span id="csSum"></span><span class="chev" aria-hidden="true"><svg class="ic pxic" viewBox="0 0 12 12" width="16" height="16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="3" width="2" height="1.02"/><rect x="10" y="3" width="2" height="1.02"/><rect x="0" y="4" width="3" height="1.02"/><rect x="9" y="4" width="3" height="1.02"/><rect x="1" y="5" width="3" height="1.02"/><rect x="8" y="5" width="3" height="1.02"/><rect x="2" y="6" width="3" height="1.02"/><rect x="7" y="6" width="3" height="1.02"/><rect x="3" y="7" width="6" height="1.02"/><rect x="4" y="8" width="4" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/></svg></span></button></div>
   </section>
+  <section data-v="c" data-sub="vie" class="palbox" id="palBox" aria-label="Mes paliers"></section>
   <section data-v="c" data-sub="vie" class="ficheb" id="ficheBox" aria-label="Ma fiche"></section>
   <section data-v="c" data-sub="vie" class="idbox" id="idBox" aria-label="Ce que tu deviens"></section>
   
@@ -4182,7 +4183,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 0420c0c</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 7aef97b</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4948,7 +4949,7 @@ function renderJournal(){
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
   q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
-  c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
+  c:()=>{try{renderPal()}catch(e){console.warn("pal",e)}renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
   
@@ -9600,7 +9601,23 @@ const FQ=[
  ["v_parc","Balade dans un parc ou en forêt","sport",20,[9,19],c=>c.p.nature&&c.wx&&!c.wx.wet,c=>"Tu aimes la nature",{out:1}],
  ["v_style","Préparer tes affaires pour demain","maison",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
  ["v_son","Faire du son pendant 30 min","perso",30,[10,24],c=>c.p.creer||c.g.son,c=>c.wx&&c.wx.wet?"Il pleut : studio":"Ta musique avance",{in:1}],
- ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
+ ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}],
+ // quêtes simples (lot 4, 03/11) : de quoi démarrer chaque jauge au premier palier
+ ["dsp_pompes","10 pompes, à ton rythme","sport",5,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dsp_squats","15 squats pendant une pause","sport",5,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dsp_esc","Prendre les escaliers au lieu de l'ascenseur","sport",5,[8,20],()=>true,()=>"Un petit pas pour le sport",{short:1}],
+ ["dsp_gain","1 min de gainage","sport",10,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dfa_msg","Envoyer un message à quelqu'un de ta famille","famille",5,[10,22],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dfa_rep","Répondre au dernier message de ta famille","famille",5,[9,23],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dfa_souv","Partager une photo souvenir avec ta famille","famille",10,[12,22],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dam_msg","Écrire à un ami que tu n'as pas vu depuis un moment","social",5,[10,23],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dam_son","Envoyer une chanson ou une vidéo drôle à un ami","social",5,[10,23],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dam_merci","Dire merci à quelqu'un aujourd'hui","social",5,[9,21],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dno_fruit","Manger un fruit","nourriture",5,[9,20],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
+ ["dno_assis","Manger assis, sans écran","nourriture",5,[11,21],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
+ ["dso_resp","5 min de respiration calme","soi",5,[8,23],()=>true,()=>"Une pause pour toi",{short:1}],
+ ["dso_air","Ouvrir la fenêtre et prendre l'air 5 min","soi",5,[7,21],()=>true,()=>"Une pause pour toi",{short:1}],
+ ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
 const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],
@@ -9626,20 +9643,21 @@ function fqCtx(){const G=S.g,s=sitOf()||{goals:[],pass:[]},w=typeof wxNow==="fun
     wx:w?{...w,good:(w.k==="clear"||w.k==="partly")&&w.tc>=8&&w.tc<=30,wet:["rain","storm","snow"].includes(w.k)}:null}}
 function fqText(q,c){return typeof q[1]==="function"?q[1](c):q[1]}
 function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=="object")G.fq={};const F=G.fq;
-  if(F.d===tk&&!force&&Array.isArray(F.L))return F;const c=fqCtx();const seed=Number(tk.replace(/-/g,""))+(F.rr||0)*7919;let r=seed;const rnd=()=>{r=(r*1103515245+12345)%2147483648;return r/2147483648};
+  if(F.d===tk&&!force&&Array.isArray(F.L)&&F.pal===1)return F;const c=fqCtx();const seed=Number(tk.replace(/-/g,""))+(F.rr||0)*7919;let r=seed;const rnd=()=>{r=(r*1103515245+12345)%2147483648;return r/2147483648};
   const art=c.art.slice();for(let i=art.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[art[i],art[j]]=[art[j],art[i]]}
   // refonte (Q.1, Q.5, Q.11) : un tri par jour au plus ; une quête sport et une de musique par semaine, poussées si la semaine n'en a pas ; tes priorités et les quêtes courtes ou plaisir d'abord
   const L7=(S.log||[]).filter(e=>Date.now()-e.t<7*864e5),triDone=(S.log||[]).some(e=>dayKey(e.t)===tk&&(CLAR.some(C=>e.name===C[2])||/^af:clarte:/.test(e.a||""))),
     noSport=!L7.some(e=>e.cat==="sport"),noSon=!L7.some(e=>e.cat==="perso"&&/son|musique|couplet|instru|maquette|beat|album/i.test(e.name||"")),pri=(()=>{try{return(S.g.vie||{}).pri||[]}catch(e){return[]}})();
-  const pool=[];FQ.forEach(q=>{const o=q[7]||{};if(c.h>=q[4][1]-.5)return;if(triDone&&q[0].startsWith("t_"))return;if((G.fqNo||{})["f:"+q[0]])return;const isA=q[0].startsWith("a_");const list=isA?art.slice(0,2):[null];list.forEach(A=>{const cc={...c,A};if(isA&&!A)return;let ok=false;try{ok=!!q[5](cc)}catch(e){}if(!ok)return;
+  const pool=[];FQ.forEach(q=>{const o=q[7]||{};if(c.h>=q[4][1]-.5)return;if(q[0]!=="n_note"&&!questOk(q[2],q[3]))return;if(triDone&&q[0].startsWith("t_"))return;if((G.fqNo||{})["f:"+q[0]])return;const isA=q[0].startsWith("a_");const list=isA?art.slice(0,2):[null];list.forEach(A=>{const cc={...c,A};if(isA&&!A)return;let ok=false;try{ok=!!q[5](cc)}catch(e){}if(!ok)return;
     if(o.we&&!c.we&&q[0]!=="s_nap")return;if(o.wd&&c.we)return;if(o.out&&c.wx&&(c.wx.wet||!c.wx.day&&c.h>19))return;
     let w=1+rnd();if(isA)w+=1.2;if(q[0]==="n_note")w+=1.5;if(q[0].startsWith("t_"))w+=clarWt(q[0]);if(c.wx&&c.wx.good&&o.out)w+=1;if(c.wx&&c.wx.wet&&o.in)w+=1;if(c.free==="peu"&&o.short)w+=.8;if(c.free==="peu"&&q[3]>=30)w-=.8;w+=fqWt("f:"+q[0]);if(c.en===1){if(q[3]>=30)w-=2;if(o.short)w+=.8}if(c.en===3&&q[3]>=25)w+=.7;
     if(pri.includes(q[2]))w+=1.2;if(o.short)w+=.6;if(/^(v_|a_|p_sortie)/.test(q[0]))w+=.4;if(noSport&&q[2]==="sport")w+=3;if(noSon&&(q[0].startsWith("a_")||q[0]==="v_son"))w+=3;
     {let tt="";try{tt=fqText(q,cc)}catch(e){}if(!normOk(tt))return}pool.push({id:q[0]+(A?":"+A:""),q,A,w})})});
   pool.sort((a,b)=>b.w-a.w);{const ni=pool.findIndex(x=>x.q[0]==="n_note");if(ni>0)pool.unshift(pool.splice(ni,1)[0])}const out=[],cats=new Set(),fam=new Set();for(const x of pool){if(x.q[0]==="n_note"){out.push(x);fam.add("n");continue}if(out.length>=6)break;const f=x.q[0].split("_")[0];if(fam.has(f)&&f!=="a")continue;if(cats.has(x.q[2])&&pool.length>6)continue;if(f==="a"&&out.filter(y=>y.q[0].startsWith("a_")).length>=1)continue;if((x.q[7]||{}).out&&out.some(y=>(y.q[7]||{}).out))continue;if(["e_sac","w_plan","v_style"].includes(x.q[0])&&out.some(y=>["e_sac","w_plan","v_style"].includes(y.q[0])))continue;out.push(x);cats.add(x.q[2]);fam.add(f)}
-  F.d=tk;F.L=out.map(x=>({id:x.id,A:x.A||null}));if(!Array.isArray(F.done)||F.dd!==tk){F.done=[];F.dd=tk}if(F.ad!==tk){F.ai=[];F.ad=tk}return F}
+  {const have=new Set(out.map(x=>x.id)),D=pool.filter(x=>!have.has(x.id)&&x.q[0]!=="n_note"&&PAL_CATS.includes(x.q[2])&&cranOf(x.q[3])>=2);D.sort((a,b)=>cranOf(b.q[3])-cranOf(a.q[3])||b.w-a.w);if(D[0])out.splice(out[0]&&out[0].q[0]==="n_note"?1:0,0,{...D[0],defi:1})}
+  F.d=tk;F.pal=1;F.L=out.map(x=>({id:x.id,A:x.A||null,...(x.defi?{defi:1}:{})}));if(!Array.isArray(F.done)||F.dd!==tk){F.done=[];F.dd=tk}if(F.ad!==tk){F.ai=[];F.ad=tk}return F}
 function fqItems(){const F=fqPick(false),c=fqCtx(),out=[];F.L.forEach(x=>{const q=FQ.find(y=>y[0]===x.id.split(":")[0]);if(!q)return;const cc={...c,A:x.A};let t,why;try{t=fqText(q,cc);why=q[6](cc)}catch(e){return}
-  if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,why:o.cour?why+" · courage +15":why,cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
+  if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,defi:!!x.defi,why:(x.defi?"Défi · ":"")+(o.cour?why+" · courage +15":why),cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
   (F.ai||[]).forEach((x,i)=>out.push({id:x.id||"ai"+i,t:x.t,why:x.why,cat:CATS[x.cat]?x.cat:"soi",xp:x.xp,ai:1}));return out}
 // ===== Compléments de l'audit : normes, gratuit, compteur, réconfort, quartier, réactions
 const NORMS=[["minuit","Se coucher avant minuit",/minuit|au lit avant|avant 23 ?h/i],["soda","Journée sans soda",/soda/i],["vege","Repas végétarien",/végétarien|végé\b/i],["ecran","Pas d'écran avant de dormir",/écrans? coupés|sans écran.*(dormir|lit)|pas d'écran au lit|écran.*avant de dormir/i],["sport","Le sport",/pompes|squats|gainage|séance de sport|sport à la maison/i]];
@@ -9876,6 +9894,7 @@ function feedPickBase(){const G=S.g,F=fqPick(false),tk=dayKey(Date.now()),now=Da
   {const ids=new Set();open=open.filter(x=>{if(ids.has(x.id))return false;ids.add(x.id);return normOk(x.t)})}
   {const W=/verre d'eau|boire/i;if([...F.dn,...out].some(x=>W.test(x.t||"")))open=open.filter(x=>!W.test(x.t||""));else{let one=false;open=open.filter(x=>{if(!W.test(x.t||""))return true;if(one)return false;one=true;return true})}}
   {const pos=[],fq=[];open.forEach((x,i)=>{if(x.k==="fq"||x.k==="ai"){pos.push(i);fq.push([x,fq.length])}});if(window.viePri){fq.sort((a,b)=>viePri(a[0].cat)-viePri(b[0].cat)||a[1]-b[1]);pos.forEach((p,i)=>open[p]=fq[i][0])}}
+  {const i=open.findIndex(x=>x.defi),j=open.findIndex(x=>x.k==="fq"||x.k==="ai");if(i>j&&j>=0)open.splice(j,0,open.splice(i,1)[0])}
   // au moins 2 places pour les « quêtes pour toi » (Q.1) quand il y en a
   const nFq=open.filter(x=>x.k==="fq"||x.k==="ai").length,keep=Math.min(2,nFq);
   const fill=[];for(const x of open){if(out.length+fill.length>=CAP)break;if(x.k!=="fq"&&x.k!=="ai"&&!x.gift&&out.filter(y=>y.k!=="fq"&&y.k!=="ai").length+fill.filter(y=>y.k!=="fq"&&y.k!=="ai").length>=CAP-keep)continue;if(x.k==="mq"&&fill.some(y=>y.k==="mq"))continue;if(x.k==="sp"&&fill.some(y=>y.k==="sp")&&!x.gift)continue;fill.push(x)}
@@ -9914,8 +9933,8 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
   const P=feedPick(),L=P.L.filter(x=>x.done||typeof plGone!=="function"||!plGone(x)),F=P.F,left=L.filter(x=>!x.done).length,c=fqCtx(),e=enOf();
   const ctxL=[e?["","batterie faible","batterie moyenne","batterie pleine"][e]:"",c.wx?`${WX_L[c.wx.k]||""} · ${c.wx.tc}°`:"",c.md?["","journée dure","journée bof","journée moyenne","bonne journée","super journée"][c.md]:"",c.tired?"nuit courte":"",typeof intNow==="function"&&intNow()?"intention : "+intNow():""].filter(Boolean).join(" · ");
   const nNo=Object.keys(fqNo()).length;
-  box.innerHTML=`<div class="head"><h2>Quêtes du jour<span class="count">${L.length-left}/${L.length}</span></h2><button type="button" class="btn edbtn fqsit" aria-label="Ma situation" title="Ma situation">${ICO("edit",16)}</button></div>${ctxL?`<p class="fqctx"></p>`:""}
-    ${L.length?`<div class="fql">${L.map((x,i)=>{const C=CATS[x.cat]||{},d=!!x.done,m=!d&&fqMenu===x.id;return`<div class="fqr k-${x.k}${d?" done":""}${x.later&&!d?" later":""}${m?" menu":""}" style="--zc:${C.c||"var(--gold)"}" data-i="${i}"><span class="fqt"><small class="fqw">${x.k==="ai"?`<em>Claude</em> · `:""}<span></span></small><b></b>${!d&&freeAlt(x.t)?`<small class="fqfree">Version gratuite : ${esc(freeAlt(x.t))}</small>`:""}${d&&x.k!=="tik"?`<button type="button" class="lnk fqmem">${memOf("q:"+dayKey(Date.now())+":"+x.id)?"Souvenir gardé · voir":"+ Un souvenir"}</button>`:""}</span>
+  box.innerHTML=`<div class="head"><h2>Quêtes du jour<span class="count">${L.length-left}/${L.length}</span></h2><button type="button" class="btn edbtn fqsit" aria-label="Ma situation" title="Ma situation">${ICO("edit",16)}</button></div>${(()=>{const b=boostLive();return b?`<p class="fqboost">${rkSvg("eclair")}<span>XP ×2 sur ${esc(boostLab(b.c))} · encore ${Math.max(1,Math.ceil((b.e-Date.now())/60000))} min</span></p>`:""})()}${ctxL?`<p class="fqctx"></p>`:""}
+    ${L.length?`<div class="fql">${L.map((x,i)=>{const C=CATS[x.cat]||{},d=!!x.done,m=!d&&fqMenu===x.id;return`<div class="fqr k-${x.k}${d?" done":""}${x.later&&!d?" later":""}${m?" menu":""}" style="--zc:${C.c||"var(--gold)"}" data-i="${i}"><span class="fqt"><small class="fqw">${x.xp>0?cransHTML(cranOf(x.xp)):""}${x.k==="ai"?`<em>Claude</em> · `:""}<span></span></small><b></b>${!d&&freeAlt(x.t)?`<small class="fqfree">Version gratuite : ${esc(freeAlt(x.t))}</small>`:""}${d&&x.k!=="tik"?`<button type="button" class="lnk fqmem">${memOf("q:"+dayKey(Date.now())+":"+x.id)?"Souvenir gardé · voir":"+ Un souvenir"}</button>`:""}</span>
       <span class="fqa">${d?`<span class="fqok">${x.part?"½":ICO("check",18)}</span>`:`${(()=>{const cn=!x.later&&cntOf(x.t),dm0=!x.later&&!cn&&durOf(x.t),dm=dm0>=10?dm0:0;if(cn){const k=((F.cnt||{})[x.id])|0;return`<span class="ui-compteur fqcn">${k}/${cn.n}</span><button type="button" class="btn primary fqgo fqcnt" data-cnt="1">+${Math.min(cn.st,cn.n-k)}</button>`}return`<button type="button" class="btn primary fqgo"${dm?` data-tm="fq-${esc(x.id)}" data-tmn="${esc(x.t)}"`:""}>${x.later?"À partir de "+mqUntil(x.from).replace(/^(\d+)h$/,"$1 h"):dm?`${dm>=60?(dm/60).toLocaleString("fr-FR")+" h":dm+" min"}`:typeof plLinked==="function"&&plLinked(x)?"Remplir l'assiette":"Fait"} <small>+${x.xp}</small></button>`})()}<button type="button" class="fqrr" aria-label="Pas maintenant" aria-expanded="${m}" title="Pas maintenant"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="5" cy="12" r="2.2" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><circle cx="19" cy="12" r="2.2" fill="currentColor"/></svg></button>`}</span>
       ${m?`<span class="fqno">${x.film?`<button type="button" class="btn" data-no="seen">Déjà vu<small>un autre film</small></button>`:""}<button type="button" class="btn" data-no="later">Plus tard<small>revient ce soir</small></button>${x.gift||x.nonever?"":`<button type="button" class="btn" data-no="never">Pas pour moi<small>ne revient plus</small></button>`}</span>`:""}</div>`}).join("")}</div>`:`<p class="fqempty">C'est tout pour l'instant.</p>`}
     ${s?"":`<button type="button" class="wkcta fqcta">${ICO("spark",18)}<span><b>Dis-m'en un peu plus sur toi</b><small>Pour des quêtes tirées de ta vie.</small></span></button>`}
@@ -9923,7 +9942,7 @@ function renderFq(){const box=$("fqBox");if(!box||!S.g)return;const G=S.g,s=sitO
     ${s&&s.note&&!arcCur()&&!evmOn()?`<button type="button" class="wkcta arccta"${arcBusy?" disabled":""}>${ICO("spark",18)}<span><b>${arcBusy?"Découpage…":"Faire de « "+esc(s.note.slice(0,40))+" » un arc"}</b><small>Ton objectif découpé en chapitres.</small></span></button>`:""}
     ${nNo?`<button type="button" class="lnk fqrst">${nNo} quête${nNo>1?"s":""} écartée${nNo>1?"s":""} · les réautoriser</button>`:""}`;
   {const cx=box.querySelector(".fqctx");if(cx)cx.textContent=ctxL}
-  box.querySelectorAll(".fqr").forEach(r=>{const x=L[+r.dataset.i];r.querySelector(".fqt b").textContent=x.t;r.querySelector(".fqw span").textContent=(x.why||"")+(!x.done&&typeof plLinked==="function"&&plLinked(x)&&plTarget()?(x.why?" · ":"")+"pour le "+(plTarget()==="dej"?"déjeuner":"dîner"):"");
+  box.querySelectorAll(".fqr").forEach(r=>{const x=L[+r.dataset.i];r.querySelector(".fqt>b").textContent=x.t;r.querySelector(".fqw>span").textContent=(x.why||"")+(!x.done&&typeof plLinked==="function"&&plLinked(x)&&plTarget()?(x.why?" · ":"")+"pour le "+(plTarget()==="dej"?"déjeuner":"dîner"):"");
     const go=r.querySelector(".fqgo");if(go)go.onclick=ev=>{fqMenu="";if(go.dataset.cnt){const cn=cntOf(x.t);if(!F.cnt||typeof F.cnt!=="object")F.cnt={};const k=Math.min(cn.n,((F.cnt[x.id])|0)+cn.st);F.cnt[x.id]=k;sfx("blip");if(k>=cn.n){delete F.cnt[x.id];feedDo(x,go,ev)}else{save();renderFq()}return}feedDo(x,go,ev)};
     {const mm=r.querySelector(".fqmem");if(mm)mm.onclick=()=>memOpen({id:"q:"+dayKey(Date.now())+":"+x.id,q:x.t})}
     const rr=r.querySelector(".fqrr");if(rr)rr.onclick=()=>{fqMenu=fqMenu===x.id?"":x.id;renderFq()};
@@ -10269,9 +10288,9 @@ const Q_AURA={sport:"flames",perso:"notes",social:"hello",famille:"goldaura",mai
 function catRewards(){
   const G=S.g;if(!G.cr||typeof G.cr!=="object")G.cr={};let ch=false;
   Object.entries(CAT_RW).forEach(([k,[t,gid]])=>{const l=statInfo(S.stats[k]||0).l;const lab=(CATS[k]||{}).label||k;
-    if(l>=3&&!G.cr[k+"5"]){G.cr[k+"5"]=1;if(!G.rt.includes(t))G.rt.push(t);gameMsgs.push(`${lab} niveau 3 : titre <span class="p">${esc(t)}</span>`);ch=true}
-    const au=Q_AURA[k];if(au&&l>=5&&!G.cr[k+"5a"]){G.cr[k+"5a"]=1;if(!G.gear.includes(au)){G.gear.push(au);const g=GEAR.find(x=>x.id===au);gameMsgs.push(`${lab} niveau 5 : aura <span class="p">${esc(g?g.n:au)}</span>`)}ch=true}
-    if(l>=10&&!G.cr[k+"10"]){G.cr[k+"10"]=1;if(gid&&gearOf(gid)&&!G.gear.includes(gid)){G.gear.push(gid);gameMsgs.push(`${lab} niveau 10 : objet exclusif <span class="p">${esc(gearOf(gid).n)}</span>`)}ch=true}});
+    if(l>=3&&!G.cr[k+"5"]){G.cr[k+"5"]=1;if(!G.rt.includes(t))G.rt.push(t);if(!PAL_CATS.includes(k))gameMsgs.push(`${lab} niveau 3 : titre <span class="p">${esc(t)}</span>`);ch=true}
+    const au=Q_AURA[k];if(au&&l>=5&&!G.cr[k+"5a"]){G.cr[k+"5a"]=1;if(!G.gear.includes(au))G.gear.push(au);ch=true}
+    if(l>=10&&!G.cr[k+"10"]){G.cr[k+"10"]=1;if(gid&&gearOf(gid)&&!G.gear.includes(gid)){G.gear.push(gid);if(!PAL_CATS.includes(k))gameMsgs.push(`${lab} niveau 10 : objet exclusif <span class="p">${esc(gearOf(gid).n)}</span>`)}ch=true}});
   return ch}
 
 // ----
@@ -10338,6 +10357,76 @@ const SPRITES={
  bat:["#........#","##.####.##","##########","#.#o##o#.#","..#x##x#..","...####...","....##....",".........."],
  skull:["..######..",".########.","##o####o##","##x####x##",".########.","..##..##..","..#.##.#..",".........."],
  shroom:["..######..",".##.##.##.","##########","...o##o...","...x##x...","..######..","..##..##..",".........."]};
+// Paliers des jauges (lot 4, 03/11) : chaque quête proposée a un cran (simple, costaud, dur) d'après son XP ;
+// le niveau de la catégorie débloque les crans : niv. 1 simple · niv. 3 costaud · niv. 5 dur · niv. 10 exploits (plus de 30 XP).
+// Les paliers reprennent les récompenses qui existaient déjà (titre au 3, aura au 5, objet exclusif au 10, voir catRewards)
+// et ajoutent 1 h d'XP ×2 sur la catégorie, gardée en réserve, au palier 3. Le panneau + n'est jamais verrouillé.
+const PAL_LV=[1,3,5,10];
+const PAL_CATS=["sport","perso","social","famille","maison","soi","travail","nourriture"];
+const PAL_IC={sport:"halteres",perso:"pinceau",social:"duo",famille:"famille",maison:"maisonp",soi:"soleil",travail:"laptop",nourriture:"repas",eau:"eau"};
+const CRAN_N=["","Simple","Costaud","Dur"];
+const cranOf=xp=>xp>25?3:xp>15?2:1; // XP affichée : 3–10 simple, 20 costaud, 30–35 dur
+const reqOf=xp=>xp>30?10:PAL_LV[cranOf(xp)-1];
+const catLv=c=>statInfo(((S&&S.stats)||{})[c]||0).l;
+const palOf=c=>{const l=catLv(c);return l>=10?3:l>=5?2:l>=3?1:0};
+const cranMax=c=>PAL_CATS.includes(c)?Math.min(3,palOf(c)+1):3;
+function questOk(cat,xp){return!PAL_CATS.includes(cat)||catLv(cat)>=reqOf(xp|0)}
+function cransHTML(n){return`<i class="crans c${n}" role="img" aria-label="Difficulté : ${CRAN_N[n]}" title="${CRAN_N[n]}"><span></span><span></span><span></span></i>`}
+// ce qu'un palier débloque (k = 1, 2 ou 3 : niveaux 3, 5 et 10)
+const PAL_TXT=["","Quêtes costaudes débloquées","Quêtes dures débloquées","Exploits débloqués"];
+function palNext(c){const l=catLv(c),p=palOf(c);if(p>=3)return null;const lv=PAL_LV[p+1];let need=0;{let x=(S.stats||{})[c]||0,L=1,acc=0;while(L<lv){acc+=statNeed(L);L++}need=Math.max(0,acc-x)}
+  const n=FQ.filter(q=>q[2]===c&&reqOf(q[3])===lv).length;return{lv,need,txt:PAL_TXT[p+1],n}}
+
+// ---- boosts en réserve : 1 h d'XP ×2 (sur une catégorie, ou partout), 3 au plus, lancés quand tu veux
+const BOOST_MAX=3;
+function boostsOf(){const G=S.g;if(!Array.isArray(G.boosts))G.boosts=[];return G.boosts}
+function boostAdd(c,why){const L=boostsOf();if(L.length>=BOOST_MAX)return false;L.push({c:c||"",t:Date.now(),w:why||""});return true}
+function boostCatOn(c){const B=S.g&&S.g.boostC;return!!(B&&B.e>Date.now()&&B.c===c)}
+function boostLive(){const G=S.g||{},now=Date.now();if(G.boost>now)return{c:"",e:G.boost};if(G.boostC&&G.boostC.e>now)return{c:G.boostC.c,e:G.boostC.e};return null}
+const boostLab=c=>c?(CATS[c]||{}).label||c:"tout";
+function boostUse(i,after){const L=boostsOf(),b=L[i];if(!b)return;if(boostLive()){toast("Un boost est déjà en cours");return}
+  L.splice(i,1);const e=Date.now()+36e5;if(b.c)S.g.boostC={c:b.c,e};else S.g.boost=e;save();try{sfx("level")}catch(_){}
+  toast(`XP ×2 sur ${esc(boostLab(b.c))} pendant <span class="p">1 h</span>`);render();if(after)after()}
+function boostAsk(i,after){const b=boostsOf()[i];if(!b)return;if(document.querySelector(".bstw"))return;
+  const v=document.createElement("div");v.className="ui-voile bstw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Lancer un boost");
+  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Lancer le boost ?</h2><p class="ui-carte__texte bstp">XP ×2 sur ${esc(boostLab(b.c))} pendant 1 h, à partir de maintenant.</p><div class="bstb"><button type="button" class="ui-btn bstno">Plus tard</button><button type="button" class="ui-btn ui-btn--principal bstgo">Lancer</button></div></div>`;
+  const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".bstno").onclick=close;v.querySelector(".bstgo").onclick=()=>{close();boostUse(i,after)};document.body.appendChild(v)}
+
+// ---- passage de palier : récompenses et petite fenêtre (appelé par gameTick)
+function palCheck(){const G=S.g;if(!G)return false;
+  if(!G.pal||typeof G.pal!=="object"){G.pal={};PAL_CATS.forEach(c=>G.pal[c]=palOf(c));return true}
+  const groups=[];let ch=false;
+  PAL_CATS.forEach(c=>{const p=palOf(c),o=G.pal[c]|0;if(p<=o)return;G.pal[c]=p;ch=true;const it=[];
+    for(let k=o+1;k<=p;k++){it.push({ic:"crans"+Math.min(3,k+1),t:PAL_TXT[k]});
+      const rw=CAT_RW[c];
+      if(k===1){it.push({ic:"eclair",t:boostAdd(c,"palier")?`1 h d'XP ×2 sur ${boostLab(c)}, en réserve`:"Réserve de boosts pleine (3 au plus)"});if(rw)it.push({ic:"medaille",t:`Titre « ${rw[0]} »`})}
+      if(k===2){const au=Q_AURA[c],g=au&&GEAR.find(x=>x.id===au);if(g)it.push({ic:"etoile",t:`Aura « ${g.n} »`})}
+      if(k===3&&rw){const g=gearOf(rw[1]);if(g)it.push({ic:"coffre",t:`Objet exclusif « ${g.n} »`})}}
+    groups.push({c,lv:PAL_LV[p],it})});
+  if(groups.length)setTimeout(()=>palPop(groups),650);
+  return ch}
+function palPop(groups){if(document.querySelector(".palpop"))return;
+  const icon=k=>k.startsWith("crans")?cransHTML(+k.slice(5)):rkSvg(k);
+  const v=document.createElement("div");v.className="ui-voile palpop";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Palier débloqué");
+  v.innerHTML=`<div class="ui-fenetre palw">${groups.map(g=>`<div class="palg"><span class="palic">${rkSvg(PAL_IC[g.c]||"etoile")}</span><h2 class="ui-fenetre__titre">Palier débloqué</h2><p class="palsub">${esc((CATS[g.c]||{}).label||g.c)} · niveau ${g.lv}</p>
+    <ul class="pall">${g.it.map(x=>`<li><span class="pali">${icon(x.ic)}</span><span>${esc(x.t)}</span></li>`).join("")}</ul></div>`).join("")}
+    <button type="button" class="ui-btn ui-btn--principal palok">Super</button></div>`;
+  const close=()=>{v.remove();try{render()}catch(_){}};v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;
+  document.body.appendChild(v);try{sfx("level")}catch(_){}}
+
+// ---- Moi > Ma vie : mes paliers et mes boosts
+function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf(),live=boostLive(),done=PAL_CATS.reduce((a,c)=>a+palOf(c),0);
+  const rows=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),nx=palNext(c),C=CATS[c]||{};
+    return`<li class="palr" style="--pc:${C.c||"var(--gold)"}"><span class="palri">${rkSvg(PAL_IC[c]||"etoile")}</span><span class="palrb"><span class="palrh"><b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></span>
+      <span class="palpath" role="img" aria-label="Paliers atteints : ${p+1} sur 4">${PAL_LV.map((lv,k)=>`<i class="${k<=p?"on":k===p+1?"next":""}"><em>${lv}</em></i>`).join("")}</span>
+      <small class="ui-info">${nx?`Niveau ${nx.lv} : ${nx.n?`+${nx.n} quête${nx.n>1?"s":""} ${["","costaude","dure","exploit"][palOf(c)+1]}${nx.n>1?"s":""}`:nx.txt.toLowerCase()} · encore ${nx.need} XP`:"Tout est débloqué"}</small></span></li>`}).join("");
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes paliers</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
+    <p class="ui-info palintro">Chaque jauge débloque des quêtes plus dures : niveau 3 costaudes, niveau 5 dures, niveau 10 exploits.</p>
+    <div class="palboost">${live?`<p class="palon">${rkSvg("eclair")}<span>XP ×2 sur ${esc(boostLab(live.c))} · encore ${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min</span></p>`:""}
+      ${L.length?`<div class="ui-tuiles palbt">${L.map((b,i)=>`<button type="button" class="ui-tuile" data-b="${i}" aria-label="Lancer 1 h d'XP ×2 sur ${esc(boostLab(b.c))}">${rkSvg("eclair")}<span class="ui-tuile__nom">×2 ${esc(b.c?boostLab(b.c):"Partout")}</span></button>`).join("")}</div>`:`<p class="ui-vide palvide">Aucun boost en réserve pour l'instant.</p>`}
+      <small class="ui-info">Un boost à chaque palier 3, et un tous les deux niveaux : 1 h d'XP ×2, 3 en réserve au plus.</small></div>
+    <ul class="pallist">${rows}</ul>`;
+  box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal))}
 // ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
 const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
@@ -10389,12 +10478,12 @@ function gameTick(){
   {S.specials=S.specials.filter(q=>{if(q.fg&&q.d!==tk){ch=true;return false}return true});const FL=fgList().filter(g=>fgMembers(g.id).length>=2);
    if(FL.length&&G.fgDone!==tk&&!S.specials.some(q=>q.fg)&&(Date.now()-Math.max(0,...Object.values(G.fgLast||{0:0})))>4*864e5&&new Date().getDate()%3===0){const lt=x=>(G.fgLast||{})[x.id]||0,g=FL.slice().sort((a,b)=>lt(a)-lt(b))[0],T=["Écrire un message dans le groupe {g}","Proposer une sortie au groupe {g}","Partager un souvenir avec le groupe {g}","Lancer un appel vidéo avec le groupe {g}","Organiser un repas avec le groupe {g}","Prendre des nouvelles du groupe {g}"],t=T[Math.floor(Math.random()*T.length)];
      S.specials.push({id:"fg"+tk,name:t.replace("{g}",g.n),cat:"social",xp:15,fg:g.id,d:tk,col:fgCol(g)});ch=true}}
-  if(G.surDone!==tk&&!S.specials.some(q=>q.sur)){const zp=lzState().on.map(lzOf).filter(Boolean).flatMap(L=>L.a.filter(a=>a[2]>=10).map(a=>[L.n+" : "+a[1],a[3],a[2],L.id]));const pool=[...SURPRISE.filter(surOk).map(x=>x[3]==="cour"?[x[0],x[1],x[2]+8]:x),...zp].filter(x=>x[0]!==G.surLast);const[n,c,x,zid]=pool[Math.floor(Math.random()*pool.length)];G.surLast=n;S.specials.unshift({id:"su"+tk,name:n,cat:c,xp:x*2,sur:tk,...(zid?{lzs:zid}:{})});ch=true}
-  if(catRewards())ch=true;if(idCheck())ch=true;if(ritAncCheck())ch=true;if(S.g&&ritLive().length)ritCoreCheck();if(wrSetCheck())ch=true;
+  if(G.surDone!==tk&&!S.specials.some(q=>q.sur)){const zp=lzState().on.map(lzOf).filter(Boolean).flatMap(L=>L.a.filter(a=>a[2]>=10).map(a=>[L.n+" : "+a[1],a[3],a[2],L.id]));const pool=[...(()=>{const A=SURPRISE.filter(surOk),B=A.filter(x=>questOk(x[1],x[2]));return B.length?B:A})().map(x=>x[3]==="cour"?[x[0],x[1],x[2]+8]:x),...zp].filter(x=>x[0]!==G.surLast);const[n,c,x,zid]=pool[Math.floor(Math.random()*pool.length)];G.surLast=n;S.specials.unshift({id:"su"+tk,name:n,cat:c,xp:x*2,sur:tk,...(zid?{lzs:zid}:{})});ch=true}
+  if(catRewards())ch=true;if(palCheck())ch=true;if(idCheck())ch=true;if(ritAncCheck())ch=true;if(S.g&&ritLive().length)ritCoreCheck();if(wrSetCheck())ch=true;
   const l=levelInfo(S.xp).l;
   if(G.chestLvl==null){G.chestLvl=l;ch=true}
   if(!G.lvcFix){G.lvcFix=1;if(l>=2)G.chests=(G.chests||0)+1;ch=true}
-  if(l>G.chestLvl){G.chests=(G.chests||0)+(l-G.chestLvl);gameMsgs.push(`Niveau ${l} : <span class="p">un coffre</span> t'attend`);G.chestLvl=l;ch=true}
+  if(l>G.chestLvl){G.chests=(G.chests||0)+(l-G.chestLvl);let nb=0;for(let x=G.chestLvl+1;x<=l;x++)if(x%2===0&&boostAdd("","niveau "+x))nb++;gameMsgs.push(`Niveau ${l} : <span class="p">un coffre</span>${nb?" et 1 h d'XP ×2 en réserve":" t'attend"}`);G.chestLvl=l;ch=true}
   if(gameMsgs.length){const m=gameMsgs.join(" · ");gameMsgs=[];setTimeout(()=>toast(m),1200)}
   return ch;
 }
@@ -10994,7 +11083,11 @@ function bgPerfect(){if((S.daily&&S.daily.bonusDay)||S.log.some(e=>e.dayb))retur
 function bgSortie(){return S.log.some(e=>e.dzq)||Object.keys((S.g&&S.g.afLast)||{}).some(k=>k.startsWith("af:sorties:"))}
 const TIERC={1:"#b0763c",2:"#aab4bd",3:"#e0b030"};
 // badgeDefs : version complète (ex-réécriture de assiette.js), badgeDefsBase = le cœur d'origine
-function badgeDefs(){const B=badgeDefsBase.apply(this,arguments);B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
+function badgeDefs(){const B=badgeDefsBase.apply(this,arguments);
+  // paliers des jauges (lot 4, 03/11)
+  B.push({id:"pal2",name:"Costaud",desc:"Débloquer les quêtes costaudes d'une jauge (niveau 3)",ic:"star",t:1,ok:()=>PAL_CATS.some(c=>palOf(c)>=1)});
+  B.push({id:"pal3",name:"Endurant",desc:"Débloquer les quêtes dures d'une jauge (niveau 5)",ic:"star",t:2,ok:()=>PAL_CATS.some(c=>palOf(c)>=2)});
+  B.push({id:"palall",name:"Touche-à-tout",desc:"Atteindre le niveau 3 dans toutes les jauges",ic:"star",t:3,ok:()=>PAL_CATS.every(c=>palOf(c)>=1)});B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
 function badgeDefsBase(){
   const L=()=>levelInfo(S.xp).l,B=[];
   RANKS.filter(r=>r[0]>1&&r[0]!==5).forEach(([min,n])=>B.push({id:"rank"+min,name:n,desc:"Atteindre le niveau "+min,ic:"shield",t:min<5?1:min<17?2:3,ok:()=>L()>=min}));
@@ -11066,7 +11159,7 @@ function checkBadges(){
 const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 // famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
 function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
-function famOfBase(id){return/^(rank|first|stat|eau3|food3)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+function famOfBase(id){return/^(rank|first|stat|eau3|food3|pal)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];
@@ -11360,6 +11453,35 @@ stat5travail:{r:[ // briefcase
 "lllllllllllll",
 "lllllllllllll",
 ".LLLLLLLLLLL."]},
+pal2:{r:[ // deux crans sur trois (palier 3)
+"........jjj",
+"........jjj",
+"........jjj",
+"....ggg.jjj",
+"....ggg.jjj",
+"....ggg.jjj",
+"ggg.ggg.jjj",
+"ggg.ggg.jjj",
+"ggg.ggg.jjj"],sh:1},
+pal3:{r:[ // trois crans pleins (palier 5)
+"........ggg",
+"........ggg",
+"........ggg",
+"....ggg.ggg",
+"....ggg.ggg",
+"....ggg.ggg",
+"ggg.ggg.ggg",
+"ggg.ggg.ggg",
+"ggg.ggg.ggg"],sh:1},
+palall:{r:[ // couronne de crans (toutes les jauges au palier 3)
+"g...h...g",
+"gg.hhh.gg",
+"ggggggggg",
+"ggggggggg",
+".........",
+"ggg.g.ggg",
+"ggg.g.ggg",
+"ggggggggg"],sh:1},
 stat10:{r:[ // mortarboard (master)
 "......kk......",
 "....kkjjkk....",
@@ -11958,6 +12080,7 @@ function mix(a,b,t){a=hx(a);b=hx(b);return toHex([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-
 function lum(c){var a=hx(c);return (0.299*a[0]+0.587*a[1]+0.114*a[2])/255;}
 var TIER={1:{m:'#b0763c',s:'#7a4b24',l:'#dca068'},2:{m:'#aab4bd',s:'#727c8a',l:'#eef3f5'},3:{m:'#e0b030',s:'#a2701a',l:'#fff0a0'}};
 var FILL={
+ pal2:'#d98a2a',pal3:'#c0502a',palall:'#3a9a8a',
  rank3:'#5b6ee1',rank8:'#5b6ee1',rank12:'#5b6ee1',rank17:'#4d63d6',rank23:'#5a4fd0',rank30:'#6f3fc0',
  first:'#36b679',
  stat5sport:'#e8382f',stat5perso:'#f08300',stat5social:'#00a3a3',stat5famille:'#4a55f5',stat5maison:'#8a4df0',stat5soi:'#1f7fe0',stat5travail:'#6f7f99',stat10:'#b06ad9',
@@ -12994,7 +13117,7 @@ function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
   if(!(extra&&extra.lz)&&S.g){const _lk=LZ_LINK[a.name]||(typeof lzGuess==="function"?lzGuess(a):"");if(_lk&&a.xp>0){lzGain(_lk,a.xp);extra={...(extra||{}),lz:_lk+":link",lzx:a.xp}}}
-  if(boostOn()&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}
+  if((boostOn()||boostCatOn(a.cat))&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}
   if(false&&S.xpCap>0&&a.xp>0){const tk=dayKey(Date.now()),done=S.log.filter(e=>dayKey(e.t)===tk&&!e.bonus).reduce((s2,e)=>s2+Math.max(0,e.xp),0),left=Math.max(0,S.xpCap-done);
     if(a.xp>left){a={...a,xp:left};extra={...(extra||{}),cap:1};setTimeout(()=>toast(left?`Plafond du jour atteint : <span class="p">+${left} XP</span> seulement`:"Plafond du jour atteint : l'XP reprend demain"),500)}}
   const prev=levelInfo(S.xp).l;
@@ -13009,7 +13132,7 @@ function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   floatXp(a.xp,ev,el);if(!window.__ritSnd)sfx("coin");
   save();render(prev);
   const ns=statInfo(S.stats[a.cat]||0).l;
-  if(ns>prevStat&&STAT_KEYS.includes(a.cat))toast(`${CATS[a.cat].label} niveau <span class="p">${ns}</span> !`);
+  if(ns>prevStat&&STAT_KEYS.includes(a.cat)&&!(PAL_CATS.includes(a.cat)&&PAL_LV.includes(ns)))toast(`${CATS[a.cat].label} niveau <span class="p">${ns}</span> !`);
   if(bt)setTimeout(()=>toast(bt),900);
 }
 let undoT=0;
@@ -13468,6 +13591,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html body .xph{display:none!important}
 html body .wrap section:not(#fqBox) .head .count{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
+/* crans de difficulté (lot 4) : 1 à 3 petites barres pixel, comme le réseau d'un téléphone */
+.crans{display:inline-flex;align-items:flex-end;gap:1px;width:11px;height:11px;margin-right:6px;vertical-align:-1px;flex:none}
+.crans span{display:block;width:3px;background:rgba(255,247,230,.25)}
+.crans span:nth-child(1){height:5px}.crans span:nth-child(2){height:8px}.crans span:nth-child(3){height:11px}
+.crans.c1 span:nth-child(1),.crans.c2 span:nth-child(-n+2),.crans.c3 span{background:var(--ui-creme)}
 </style>
 <style id="z-haut">/* — depuis principal-02.css — */
 .qxp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20}
@@ -14343,6 +14471,9 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 /* + ajouter un rituel (01/11) : bouton icône carré 44 à droite du titre */
 .jdbox .head:has(.jdplus){display:flex;align-items:center;justify-content:space-between;gap:8px}
 .jdbox .jdplus{flex:none;padding:0 14px;gap:6px;font-size:13px}
+/* lot 4 : boost en cours dans les quêtes du jour */
+#fqBox .fqboost{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:13px;font-weight:700;color:var(--gold)}
+#fqBox .fqboost svg{width:24px;height:24px;flex:none}
 </style>
 <style id="z-proches">/* — venues de base.css et composants.css (3.7, 02/11) : règles qui ne servent qu'à Proches — */
 .motl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
@@ -15855,6 +15986,29 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 .lstw .ui-champ{font-size:16px}
 .lstw .lst-sug{display:flex;flex-wrap:wrap;gap:6px}
 .lstw .lst-sug button{min-height:44px;padding:0 12px;border:2px solid rgba(255,255,255,.17);background:var(--ui-fond);color:var(--ui-creme);font:inherit;font-size:13px;font-weight:700}
+/* lot 4 : Mes paliers (Ma vie) */
+#palBox .palintro{margin:0 0 12px}
+#palBox .palboost{display:grid;gap:8px;margin:0 0 14px}
+#palBox .palon{display:flex;align-items:center;gap:8px;margin:0;font-size:13px;font-weight:700;color:var(--gold)}
+#palBox .palon svg{width:24px;height:24px}
+#palBox .palbt{grid-template-columns:repeat(3,minmax(0,1fr))}
+#palBox .palbt .ui-tuile{aspect-ratio:auto;min-height:72px}
+#palBox .palvide{margin:4px 0}
+#palBox .pallist{list-style:none;margin:0;padding:0;display:grid}
+#palBox .palr{display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;align-items:center;padding:10px 0;border-top:2px dotted rgba(255,255,255,.12)}
+#palBox .palri svg{width:48px;height:48px;display:block}
+#palBox .palrb{display:grid;gap:6px;min-width:0}
+#palBox .palrh{display:flex;align-items:baseline;gap:8px}
+#palBox .palrh b{font-size:15px}
+#palBox .palrh .ui-compteur{margin-left:auto}
+#palBox .palpath{display:grid;grid-template-columns:repeat(4,22px);justify-content:space-between;position:relative}
+#palBox .palpath::before{content:"";position:absolute;left:11px;right:11px;top:50%;border-top:2px dotted rgba(255,255,255,.25)}
+#palBox .palpath i{position:relative;width:22px;height:22px;display:grid;place-items:center;background:#0b0d22;border:2px solid rgba(255,255,255,.17);box-sizing:border-box}
+#palBox .palpath i em{font:400 11px/1 var(--f-pixel);font-style:normal;color:var(--muted)}
+#palBox .palpath i.on{background:var(--pc);border-color:var(--pc)}
+#palBox .palpath i.on em{color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.5)}
+#palBox .palpath i.next{border-color:var(--gold)}
+#palBox .palpath i.next em{color:var(--gold)}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
@@ -16308,6 +16462,21 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #actFind .afc [d
 html:not(#_a):not(#_b) body #actFind .afdur .afxp{display:block;font-size:11px;font-weight:700;color:var(--gold);margin-top:2px}
 html:not(#_a):not(#_b) body #actFind .afnext{width:100%;margin-top:12px}
 html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
+/* lot 4 : palier débloqué, lancer un boost */
+.palpop .palw{gap:14px;text-align:center}
+.palpop .palg{display:grid;justify-items:center;gap:6px}
+.palpop .palg+.palg{border-top:2px dotted rgba(255,255,255,.15);padding-top:12px}
+.palpop .palic svg{width:48px;height:48px;display:block}
+.palpop .palsub{margin:0;font-size:13px;color:var(--muted)}
+.palpop .pall{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px;text-align:left;width:100%}
+.palpop .pall li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:center;font-size:13px;font-weight:700}
+.palpop .pali{display:grid;place-items:center;width:24px;height:24px}
+.palpop .pali svg{width:24px;height:24px}
+.palpop .pali .crans{width:16px;height:16px;margin:0;transform:scale(1.4)}
+.palpop .palok{width:100%}
+@media (prefers-reduced-motion:no-preference){.palpop .palw{animation:palIn .25s ease-out}@keyframes palIn{from{transform:scale(.9);opacity:0}}}
+.bstw .bstp{text-align:center}
+.bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)

@@ -83,7 +83,7 @@ function renderJournal(){
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
   q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
-  c:()=>{renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
+  c:()=>{try{renderPal()}catch(e){console.warn("pal",e)}renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
   

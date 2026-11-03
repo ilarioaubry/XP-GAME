@@ -181,3 +181,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 html body .xph{display:none!important}
 html body .wrap section:not(#fqBox) .head .count{display:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff7e6!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
+/* crans de difficulté (lot 4) : 1 à 3 petites barres pixel, comme le réseau d'un téléphone */
+.crans{display:inline-flex;align-items:flex-end;gap:1px;width:11px;height:11px;margin-right:6px;vertical-align:-1px;flex:none}
+.crans span{display:block;width:3px;background:rgba(255,247,230,.25)}
+.crans span:nth-child(1){height:5px}.crans span:nth-child(2){height:8px}.crans span:nth-child(3){height:11px}
+.crans.c1 span:nth-child(1),.crans.c2 span:nth-child(-n+2),.crans.c3 span{background:var(--ui-creme)}

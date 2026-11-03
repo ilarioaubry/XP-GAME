@@ -122,6 +122,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 |---|---|---|---|
 | `avc` | 02, 06, 13, 14, 21, 24, 25, 27 | Configuration du personnage | active |
 | `gear`, `eq` | 02, 05, 11, 21–29 | Objets obtenus, objets portés (armoire) | active |
+| `pal`, `boosts`, `boostC` | paliers, 23, 28 | Paliers des jauges (ajout du 03/11) : `pal` = dernier palier annoncé par catégorie (0 à 3) ; `boosts` = boosts en réserve `[{c: catégorie ou "" pour partout, t, w}]`, 3 au plus ; `boostC` = boost de catégorie en cours `{c, e}` (le boost partout reste `boost`). `fq.pal` = liste du jour calculée avec les paliers | active |
 | `rt` | 02, 22, 23, 24, 27, 29, migrations | Titres obtenus | active |
 | `show` | 26 | 3 badges mis en avant | active |
 | `nb` | 25, 26, 29 | Badges vus (« nouveau ») | active |

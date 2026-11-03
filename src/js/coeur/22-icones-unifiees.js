@@ -76,9 +76,9 @@ const Q_AURA={sport:"flames",perso:"notes",social:"hello",famille:"goldaura",mai
 function catRewards(){
   const G=S.g;if(!G.cr||typeof G.cr!=="object")G.cr={};let ch=false;
   Object.entries(CAT_RW).forEach(([k,[t,gid]])=>{const l=statInfo(S.stats[k]||0).l;const lab=(CATS[k]||{}).label||k;
-    if(l>=3&&!G.cr[k+"5"]){G.cr[k+"5"]=1;if(!G.rt.includes(t))G.rt.push(t);gameMsgs.push(`${lab} niveau 3 : titre <span class="p">${esc(t)}</span>`);ch=true}
-    const au=Q_AURA[k];if(au&&l>=5&&!G.cr[k+"5a"]){G.cr[k+"5a"]=1;if(!G.gear.includes(au)){G.gear.push(au);const g=GEAR.find(x=>x.id===au);gameMsgs.push(`${lab} niveau 5 : aura <span class="p">${esc(g?g.n:au)}</span>`)}ch=true}
-    if(l>=10&&!G.cr[k+"10"]){G.cr[k+"10"]=1;if(gid&&gearOf(gid)&&!G.gear.includes(gid)){G.gear.push(gid);gameMsgs.push(`${lab} niveau 10 : objet exclusif <span class="p">${esc(gearOf(gid).n)}</span>`)}ch=true}});
+    if(l>=3&&!G.cr[k+"5"]){G.cr[k+"5"]=1;if(!G.rt.includes(t))G.rt.push(t);if(!PAL_CATS.includes(k))gameMsgs.push(`${lab} niveau 3 : titre <span class="p">${esc(t)}</span>`);ch=true}
+    const au=Q_AURA[k];if(au&&l>=5&&!G.cr[k+"5a"]){G.cr[k+"5a"]=1;if(!G.gear.includes(au))G.gear.push(au);ch=true}
+    if(l>=10&&!G.cr[k+"10"]){G.cr[k+"10"]=1;if(gid&&gearOf(gid)&&!G.gear.includes(gid)){G.gear.push(gid);if(!PAL_CATS.includes(k))gameMsgs.push(`${lab} niveau 10 : objet exclusif <span class="p">${esc(gearOf(gid).n)}</span>`)}ch=true}});
   return ch}
 
 // ----

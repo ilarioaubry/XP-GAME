@@ -28,7 +28,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Maintenant | La chose à faire tout de suite ; jour rare = une quête secrète (l'Heure d'or tirée au hasard est retirée le 03/11) | — | module, moment |
 | Coffres | Coffre à ouvrir (un objet pour l'armoire), gagné seulement par une action : passer un niveau, finir tous les rituels d'un moment, finir un projet | — | module, moment |
 | Saison des fêtes | Hotte de cadeaux, calendrier de l'Avent, vœux, ton année, résolutions | 5–15 | module, saison |
-| Quêtes pour toi | 3 quêtes du jour choisies selon ta situation, la météo, tes proches. Les quêtes nourriture sur le contenu du repas ou la cuisine se valident en remplissant l'assiette (« Remplir l'assiette », objectif affiché, plus proposées quand les repas sont notés) | 10–30 | active |
+| Quêtes pour toi | 3 quêtes du jour choisies selon ta situation, la météo, tes proches. Les quêtes nourriture sur le contenu du repas ou la cuisine se valident en remplissant l'assiette (« Remplir l'assiette », objectif affiché, plus proposées quand les repas sont notés) Depuis le 03/11 : chaque quête a un cran de difficulté (1 à 3 petites barres : simple, costaud, dur) et seuls les crans débloqués par la jauge sont proposés ; une carte « Défi » au cran le plus haut débloqué ; 15 quêtes simples ajoutées (sport, famille, amis, nourriture, soi). | 10–30 | active |
 | Quêtes spéciales | Carrousel : amis, famille, groupes, surprise du jour, anniversaires (« Avec qui ? » au moment de Fait) | 15–30, anniversaire 30 | module |
 | Panneau « + » | Plus de quêtes, Bonnes actions (Cette semaine et le bloc Défi à deux retirés le 01/11 ; le défi à deux reste proposé dans les quêtes) | — | module (chaque bloc) |
 | J'ai… (fiche) | Faits de vie cochés dans ma fiche : actions, rituels, rappels à rythme et quêtes qui vont avec | celle de chaque action | active |
@@ -47,6 +47,8 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Fonctionnalité | Ce qu'elle fait | Statut |
 |---|---|---|
 | Personnage | Ton avatar, son titre, son cadre ; en haut de Ma vie seulement (02/11) | active |
+| Mes paliers (03/11) | Chaque jauge (Sport, Créer, Amis, Famille, Maison, Soi, Travail, Nourriture) débloque des quêtes plus dures : niveau 3 costaudes, niveau 5 dures, niveau 10 exploits ; chemin de 4 paliers et ce qui manque pour le suivant ; fenêtre « Palier débloqué » (quêtes, boost, titre au 3, aura au 5, objet exclusif au 10) | active |
+| Boosts en réserve (03/11) | 1 h d'XP ×2 sur une catégorie (gagné au palier 3) ou partout (tous les deux niveaux), 3 en réserve au plus, lancés quand tu veux ; le boost en cours s'affiche dans Quêtes du jour | active |
 | Assiette (01/11) | Aliments en rangées qui glissent (pain → classiques → atypiques ; viande et œuf → végétal → de la mer), dessert, où (maison, resto, fast-food, sur le pouce), type d'assiette (équilibrée or, végétarienne vert, fast-food orange) et ses badges, « Cuisiné pour qui ? » (+5 XP Ami/Famille), habitudes alimentaires qui masquent des aliments | active |
 | Cafés | Compteur − / + dans Mes engagements (comme les cigarettes), sans XP, repris dans « Ta journée » | active |
 | Grignotage, Recevoir chez moi | Panneau + : grignotage sans XP (règle « Sans grignotage ») ; recevoir chez moi (apéro, repas, soirée jeux), 15 XP Ami | active |

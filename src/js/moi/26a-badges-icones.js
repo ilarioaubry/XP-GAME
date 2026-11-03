@@ -230,6 +230,35 @@ stat5travail:{r:[ // briefcase
 "lllllllllllll",
 "lllllllllllll",
 ".LLLLLLLLLLL."]},
+pal2:{r:[ // deux crans sur trois (palier 3)
+"........jjj",
+"........jjj",
+"........jjj",
+"....ggg.jjj",
+"....ggg.jjj",
+"....ggg.jjj",
+"ggg.ggg.jjj",
+"ggg.ggg.jjj",
+"ggg.ggg.jjj"],sh:1},
+pal3:{r:[ // trois crans pleins (palier 5)
+"........ggg",
+"........ggg",
+"........ggg",
+"....ggg.ggg",
+"....ggg.ggg",
+"....ggg.ggg",
+"ggg.ggg.ggg",
+"ggg.ggg.ggg",
+"ggg.ggg.ggg"],sh:1},
+palall:{r:[ // couronne de crans (toutes les jauges au palier 3)
+"g...h...g",
+"gg.hhh.gg",
+"ggggggggg",
+"ggggggggg",
+".........",
+"ggg.g.ggg",
+"ggg.g.ggg",
+"ggggggggg"],sh:1},
 stat10:{r:[ // mortarboard (master)
 "......kk......",
 "....kkjjkk....",
@@ -828,6 +857,7 @@ function mix(a,b,t){a=hx(a);b=hx(b);return toHex([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-
 function lum(c){var a=hx(c);return (0.299*a[0]+0.587*a[1]+0.114*a[2])/255;}
 var TIER={1:{m:'#b0763c',s:'#7a4b24',l:'#dca068'},2:{m:'#aab4bd',s:'#727c8a',l:'#eef3f5'},3:{m:'#e0b030',s:'#a2701a',l:'#fff0a0'}};
 var FILL={
+ pal2:'#d98a2a',pal3:'#c0502a',palall:'#3a9a8a',
  rank3:'#5b6ee1',rank8:'#5b6ee1',rank12:'#5b6ee1',rank17:'#4d63d6',rank23:'#5a4fd0',rank30:'#6f3fc0',
  first:'#36b679',
  stat5sport:'#e8382f',stat5perso:'#f08300',stat5social:'#00a3a3',stat5famille:'#4a55f5',stat5maison:'#8a4df0',stat5soi:'#1f7fe0',stat5travail:'#6f7f99',stat10:'#b06ad9',

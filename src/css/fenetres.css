@@ -450,3 +450,18 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #actFind .afc [d
 html:not(#_a):not(#_b) body #actFind .afdur .afxp{display:block;font-size:11px;font-weight:700;color:var(--gold);margin-top:2px}
 html:not(#_a):not(#_b) body #actFind .afnext{width:100%;margin-top:12px}
 html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
+/* lot 4 : palier débloqué, lancer un boost */
+.palpop .palw{gap:14px;text-align:center}
+.palpop .palg{display:grid;justify-items:center;gap:6px}
+.palpop .palg+.palg{border-top:2px dotted rgba(255,255,255,.15);padding-top:12px}
+.palpop .palic svg{width:48px;height:48px;display:block}
+.palpop .palsub{margin:0;font-size:13px;color:var(--muted)}
+.palpop .pall{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px;text-align:left;width:100%}
+.palpop .pall li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:center;font-size:13px;font-weight:700}
+.palpop .pali{display:grid;place-items:center;width:24px;height:24px}
+.palpop .pali svg{width:24px;height:24px}
+.palpop .pali .crans{width:16px;height:16px;margin:0;transform:scale(1.4)}
+.palpop .palok{width:100%}
+@media (prefers-reduced-motion:no-preference){.palpop .palw{animation:palIn .25s ease-out}@keyframes palIn{from{transform:scale(.9);opacity:0}}}
+.bstw .bstp{text-align:center}
+.bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}

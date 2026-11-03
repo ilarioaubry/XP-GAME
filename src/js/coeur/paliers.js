@@ -1,0 +1,70 @@
+// Paliers des jauges (lot 4, 03/11) : chaque quête proposée a un cran (simple, costaud, dur) d'après son XP ;
+// le niveau de la catégorie débloque les crans : niv. 1 simple · niv. 3 costaud · niv. 5 dur · niv. 10 exploits (plus de 30 XP).
+// Les paliers reprennent les récompenses qui existaient déjà (titre au 3, aura au 5, objet exclusif au 10, voir catRewards)
+// et ajoutent 1 h d'XP ×2 sur la catégorie, gardée en réserve, au palier 3. Le panneau + n'est jamais verrouillé.
+const PAL_LV=[1,3,5,10];
+const PAL_CATS=["sport","perso","social","famille","maison","soi","travail","nourriture"];
+const PAL_IC={sport:"halteres",perso:"pinceau",social:"duo",famille:"famille",maison:"maisonp",soi:"soleil",travail:"laptop",nourriture:"repas",eau:"eau"};
+const CRAN_N=["","Simple","Costaud","Dur"];
+const cranOf=xp=>xp>25?3:xp>15?2:1; // XP affichée : 3–10 simple, 20 costaud, 30–35 dur
+const reqOf=xp=>xp>30?10:PAL_LV[cranOf(xp)-1];
+const catLv=c=>statInfo(((S&&S.stats)||{})[c]||0).l;
+const palOf=c=>{const l=catLv(c);return l>=10?3:l>=5?2:l>=3?1:0};
+const cranMax=c=>PAL_CATS.includes(c)?Math.min(3,palOf(c)+1):3;
+function questOk(cat,xp){return!PAL_CATS.includes(cat)||catLv(cat)>=reqOf(xp|0)}
+function cransHTML(n){return`<i class="crans c${n}" role="img" aria-label="Difficulté : ${CRAN_N[n]}" title="${CRAN_N[n]}"><span></span><span></span><span></span></i>`}
+// ce qu'un palier débloque (k = 1, 2 ou 3 : niveaux 3, 5 et 10)
+const PAL_TXT=["","Quêtes costaudes débloquées","Quêtes dures débloquées","Exploits débloqués"];
+function palNext(c){const l=catLv(c),p=palOf(c);if(p>=3)return null;const lv=PAL_LV[p+1];let need=0;{let x=(S.stats||{})[c]||0,L=1,acc=0;while(L<lv){acc+=statNeed(L);L++}need=Math.max(0,acc-x)}
+  const n=FQ.filter(q=>q[2]===c&&reqOf(q[3])===lv).length;return{lv,need,txt:PAL_TXT[p+1],n}}
+
+// ---- boosts en réserve : 1 h d'XP ×2 (sur une catégorie, ou partout), 3 au plus, lancés quand tu veux
+const BOOST_MAX=3;
+function boostsOf(){const G=S.g;if(!Array.isArray(G.boosts))G.boosts=[];return G.boosts}
+function boostAdd(c,why){const L=boostsOf();if(L.length>=BOOST_MAX)return false;L.push({c:c||"",t:Date.now(),w:why||""});return true}
+function boostCatOn(c){const B=S.g&&S.g.boostC;return!!(B&&B.e>Date.now()&&B.c===c)}
+function boostLive(){const G=S.g||{},now=Date.now();if(G.boost>now)return{c:"",e:G.boost};if(G.boostC&&G.boostC.e>now)return{c:G.boostC.c,e:G.boostC.e};return null}
+const boostLab=c=>c?(CATS[c]||{}).label||c:"tout";
+function boostUse(i,after){const L=boostsOf(),b=L[i];if(!b)return;if(boostLive()){toast("Un boost est déjà en cours");return}
+  L.splice(i,1);const e=Date.now()+36e5;if(b.c)S.g.boostC={c:b.c,e};else S.g.boost=e;save();try{sfx("level")}catch(_){}
+  toast(`XP ×2 sur ${esc(boostLab(b.c))} pendant <span class="p">1 h</span>`);render();if(after)after()}
+function boostAsk(i,after){const b=boostsOf()[i];if(!b)return;if(document.querySelector(".bstw"))return;
+  const v=document.createElement("div");v.className="ui-voile bstw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Lancer un boost");
+  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Lancer le boost ?</h2><p class="ui-carte__texte bstp">XP ×2 sur ${esc(boostLab(b.c))} pendant 1 h, à partir de maintenant.</p><div class="bstb"><button type="button" class="ui-btn bstno">Plus tard</button><button type="button" class="ui-btn ui-btn--principal bstgo">Lancer</button></div></div>`;
+  const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".bstno").onclick=close;v.querySelector(".bstgo").onclick=()=>{close();boostUse(i,after)};document.body.appendChild(v)}
+
+// ---- passage de palier : récompenses et petite fenêtre (appelé par gameTick)
+function palCheck(){const G=S.g;if(!G)return false;
+  if(!G.pal||typeof G.pal!=="object"){G.pal={};PAL_CATS.forEach(c=>G.pal[c]=palOf(c));return true}
+  const groups=[];let ch=false;
+  PAL_CATS.forEach(c=>{const p=palOf(c),o=G.pal[c]|0;if(p<=o)return;G.pal[c]=p;ch=true;const it=[];
+    for(let k=o+1;k<=p;k++){it.push({ic:"crans"+Math.min(3,k+1),t:PAL_TXT[k]});
+      const rw=CAT_RW[c];
+      if(k===1){it.push({ic:"eclair",t:boostAdd(c,"palier")?`1 h d'XP ×2 sur ${boostLab(c)}, en réserve`:"Réserve de boosts pleine (3 au plus)"});if(rw)it.push({ic:"medaille",t:`Titre « ${rw[0]} »`})}
+      if(k===2){const au=Q_AURA[c],g=au&&GEAR.find(x=>x.id===au);if(g)it.push({ic:"etoile",t:`Aura « ${g.n} »`})}
+      if(k===3&&rw){const g=gearOf(rw[1]);if(g)it.push({ic:"coffre",t:`Objet exclusif « ${g.n} »`})}}
+    groups.push({c,lv:PAL_LV[p],it})});
+  if(groups.length)setTimeout(()=>palPop(groups),650);
+  return ch}
+function palPop(groups){if(document.querySelector(".palpop"))return;
+  const icon=k=>k.startsWith("crans")?cransHTML(+k.slice(5)):rkSvg(k);
+  const v=document.createElement("div");v.className="ui-voile palpop";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Palier débloqué");
+  v.innerHTML=`<div class="ui-fenetre palw">${groups.map(g=>`<div class="palg"><span class="palic">${rkSvg(PAL_IC[g.c]||"etoile")}</span><h2 class="ui-fenetre__titre">Palier débloqué</h2><p class="palsub">${esc((CATS[g.c]||{}).label||g.c)} · niveau ${g.lv}</p>
+    <ul class="pall">${g.it.map(x=>`<li><span class="pali">${icon(x.ic)}</span><span>${esc(x.t)}</span></li>`).join("")}</ul></div>`).join("")}
+    <button type="button" class="ui-btn ui-btn--principal palok">Super</button></div>`;
+  const close=()=>{v.remove();try{render()}catch(_){}};v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;
+  document.body.appendChild(v);try{sfx("level")}catch(_){}}
+
+// ---- Moi > Ma vie : mes paliers et mes boosts
+function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf(),live=boostLive(),done=PAL_CATS.reduce((a,c)=>a+palOf(c),0);
+  const rows=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),nx=palNext(c),C=CATS[c]||{};
+    return`<li class="palr" style="--pc:${C.c||"var(--gold)"}"><span class="palri">${rkSvg(PAL_IC[c]||"etoile")}</span><span class="palrb"><span class="palrh"><b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></span>
+      <span class="palpath" role="img" aria-label="Paliers atteints : ${p+1} sur 4">${PAL_LV.map((lv,k)=>`<i class="${k<=p?"on":k===p+1?"next":""}"><em>${lv}</em></i>`).join("")}</span>
+      <small class="ui-info">${nx?`Niveau ${nx.lv} : ${nx.n?`+${nx.n} quête${nx.n>1?"s":""} ${["","costaude","dure","exploit"][palOf(c)+1]}${nx.n>1?"s":""}`:nx.txt.toLowerCase()} · encore ${nx.need} XP`:"Tout est débloqué"}</small></span></li>`}).join("");
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes paliers</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
+    <p class="ui-info palintro">Chaque jauge débloque des quêtes plus dures : niveau 3 costaudes, niveau 5 dures, niveau 10 exploits.</p>
+    <div class="palboost">${live?`<p class="palon">${rkSvg("eclair")}<span>XP ×2 sur ${esc(boostLab(live.c))} · encore ${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min</span></p>`:""}
+      ${L.length?`<div class="ui-tuiles palbt">${L.map((b,i)=>`<button type="button" class="ui-tuile" data-b="${i}" aria-label="Lancer 1 h d'XP ×2 sur ${esc(boostLab(b.c))}">${rkSvg("eclair")}<span class="ui-tuile__nom">×2 ${esc(b.c?boostLab(b.c):"Partout")}</span></button>`).join("")}</div>`:`<p class="ui-vide palvide">Aucun boost en réserve pour l'instant.</p>`}
+      <small class="ui-info">Un boost à chaque palier 3, et un tous les deux niveaux : 1 h d'XP ×2, 3 en réserve au plus.</small></div>
+    <ul class="pallist">${rows}</ul>`;
+  box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal))}

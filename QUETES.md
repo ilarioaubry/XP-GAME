@@ -176,9 +176,9 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 
 <!-- INVENTAIRE (généré par outils/inventaire.py, ne pas éditer à la main) -->
 
-424 éléments au total. Colonnes : titre tel qu'affiché (les [crochets] sont remplis par l'appli), catégorie (barre de stat), XP, créneau, comment on la réalise, lignes du titre sur une carte de quête (265 px).
+455 éléments au total. Colonnes : titre tel qu'affiché (les [crochets] sont remplis par l'appli), catégorie (barre de stat), XP, créneau, comment on la réalise, lignes du titre sur une carte de quête (265 px).
 
-### Quêtes pour toi (59)
+### Quêtes pour toi (79)
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
@@ -217,7 +217,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | 10 min au soleil, sans rien faire — Il fait beau dehors | Soi | 10 | 9–18 h | Minuteur 10 min | 1 |
 | Cuisiner un vrai repas maison — Pour manger mieux | Nourriture | 20 | 11–21 h | Assiette | 1 |
 | Tester une recette que tu n'as jamais faite — Tu aimes cuisiner | Nourriture | 25 | 11–21 h | Assiette | 2 |
-| Regarder Akira (1988) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
+| Regarder Drive (2011) — Un film culte à voir | Talent | 20 | 18–24 h | Fait | 1 |
 | Lire 20 pages — Tu aimes lire | Soi | 15 | 9–24 h | Lecture (pages) | 1 |
 | Finir une mission en jeu, après tes rituels — Tu as bien bossé | Talent | 10 | 17–24 h | Fait | 2 |
 | Dessiner 15 min — Tu aimes dessiner | Talent | 15 | 9–24 h | Minuteur 15 min | 1 |
@@ -226,6 +226,21 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Préparer tes affaires pour demain — Tu aimes la mode | Maison | 10 | 19–24 h | Fait | 1 |
 | Faire du son pendant 30 min — Ta musique avance | Talent | 30 | 10–24 h | Minuteur 30 min | 1 |
 | 20 min pour [note] — Ce qui compte pour toi en ce moment | Talent | 25 | 9–23 h | Minuteur 20 min | 1 |
+| 10 pompes, à ton rythme — Un petit pas pour le sport | Force | 5 | 8–22 h | Compteur de pompes | 1 |
+| 15 squats pendant une pause — Un petit pas pour le sport | Force | 5 | 8–22 h | Compteur de pompes | 1 |
+| Prendre les escaliers au lieu de l'ascenseur — Un petit pas pour le sport | Force | 5 | 8–20 h | Fait | 2 |
+| 1 min de gainage — Un petit pas pour le sport | Force | 10 | 8–22 h | Minuteur gainage | 1 |
+| Envoyer un message à quelqu'un de ta famille — Pour ta famille | Famille | 5 | 10–22 h | Fait + Avec qui ? | 2 |
+| Répondre au dernier message de ta famille — Pour ta famille | Famille | 5 | 9–23 h | Fait + Avec qui ? | 2 |
+| Partager une photo souvenir avec ta famille — Pour ta famille | Famille | 10 | 12–22 h | Fait + Avec qui ? | 2 |
+| Écrire à un ami que tu n'as pas vu depuis un moment — Pour garder le lien | Ami | 5 | 10–23 h | Fait + Avec qui ? | 2 |
+| Envoyer une chanson ou une vidéo drôle à un ami — Pour garder le lien | Ami | 5 | 10–23 h | Fait + Avec qui ? | 2 |
+| Dire merci à quelqu'un aujourd'hui — Pour garder le lien | Ami | 5 | 9–21 h | Fait + Avec qui ? | 1 |
+| Manger un fruit — Un petit pas pour bien manger | Nourriture | 5 | 9–20 h | Fait | 1 |
+| Manger assis, sans écran — Un petit pas pour bien manger | Nourriture | 5 | 11–21 h | Fait | 1 |
+| 5 min de respiration calme — Une pause pour toi | Soi | 5 | 8–23 h | Fait | 1 |
+| Ouvrir la fenêtre et prendre l'air 5 min — Une pause pour toi | Soi | 5 | 7–21 h | Fait | 2 |
+| Noter 3 bonnes choses de ta journée — Une pause pour toi | Soi | 10 | 18–24 h | Fait | 1 |
 | Trier 50 photos — Tri : photos | Maison | 15 | 9–23 h | Compteur 50 | 1 |
 | Faire le tri dans tes notes : 10 à supprimer ou à ranger — Tri : notes | Maison | 10 | 9–23 h | Fait | 2 |
 | Archiver les vieilles conversations et nettoyer 10 contacts — Tri : messages et contacts | Maison | 10 | 9–23 h | Fait | 2 |
@@ -241,6 +256,11 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Ranger tes lieux enregistrés dans Plans ou Maps : listes et favoris — Tri : cartes | Maison | 10 | 9–23 h | Fait | 2 |
 | Ranger 10 fichiers de ton Drive dans des dossiers — Tri : docs et drive | Maison | 15 | 9–23 h | Fait | 2 |
 | Vider les téléchargements et ranger l'app Fichiers — Tri : fichiers | Maison | 10 | 9–23 h | Fait | 2 |
+| Une longue balade avec ton chien — Chien | Soi | 15 | 9–19 h | Fait | 1 |
+| Rempoter une plante qui étouffe — Plantes | Maison | 10 | 10–20 h | Fait | 1 |
+| Tester une recette végé que tu ne connais pas — Végétarien | Nourriture | 15 | 11–21 h | Assiette | 2 |
+| Préparer ton sac pour l'entraînement — Sport en club | Force | 5 | 17–23 h | Fait | 1 |
+| 15 min de pratique sur ton instrument — Instrument | Talent | 10 | 10–22 h | Minuteur 15 min | 2 |
 
 ### Quêtes du moment (7)
 
@@ -691,7 +711,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Préparer mes repas du dimanche — action | Nourriture | — |  | Fait | 1 |
 | Apprendre 5 recettes — projet | Nourriture | — |  | Fait | 1 |
 
-### Noter une action (panneau +) (39)
+### Noter une action (panneau +) (50)
 
 | Titre | Cat. | XP | Quand | Réalisation | Lignes |
 |---|---|---|---|---|---|
@@ -717,6 +737,7 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Cuisiner → Repas maison, Nouveau plat, Pâtisserie, Préparer demain — rappel après 3 / 7 j | Nourriture | 12 |  | Assiette | 2 |
 | Boire de l'eau → Un verre | Eau | 3 |  | Fait | 1 |
 | Journée sans → Soda, Sucre, Grignotage | Nourriture | 10 |  | Fait | 2 |
+| Grignotage → Fruit, Gâteau, Chips, Chocolat, Autre | Nourriture | — |  | Fait | 2 |
 | Travail concentré → Dossier, Candidature, Révisions, Projet perso | Travail | 15 |  | Fait | 2 |
 | Administratif → Mails, Papiers, Rendez-vous pris, Factures — rappel après 3 / 7 j | Travail | 10 |  | Fait | 2 |
 | Planifier → Ma journée, Ma semaine | Travail | 8 |  | Fait | 1 |
@@ -734,6 +755,16 @@ Pistes (à valider, rien n'est changé) : voir la réponse du 27/10 et la feuill
 | Prendre des nouvelles → Message, Appel, Vocal | Ami | 10 |  | Fait + Avec qui ? | 2 |
 | Voir quelqu'un → Café, Repas, Soirée, Activité, Visite | Ami | 20 |  | Fait + Avec qui ? | 2 |
 | Rendre service → Un coup de main | Ami | 15 |  | Fait + Avec qui ? | 1 |
+| Recevoir chez moi → Apéro, Repas, Soirée jeux | Ami | 15 |  | Fait + Avec qui ? | 2 |
+| Mon chien → Sortie, Longue balade, Nourrir, Jouer, Véto | Maison | 8 |  | Fait | 2 |
+| Mon chat → Litière, Nourrir, Jouer, Véto | Maison | 5 |  | Fait | 2 |
+| Mon petit animal → Nourrir, Nettoyer la cage, Nettoyer l'aquarium | Maison | 5 |  | Fait | 2 |
+| Mes plantes → Arroser, Rempoter, Tailler | Maison | 3 |  | Fait | 2 |
+| Jardin, balcon → Tondre, Désherber, Ranger le balcon | Maison | 10 |  | Fait | 2 |
+| Ma voiture → Plein, Pression des pneus, Nettoyer, Garage | Maison | 5 |  | Fait | 2 |
+| Avec mon enfant → École, Devoirs, Jeux, Bain, Histoire du soir | Famille | 10 |  | Fait + Avec qui ? | 2 |
+| Mon club → Entraînement, Match, Préparer mon sac | Force | 20 |  | Fait | 2 |
+| Mon instrument → Pratiquer, Apprendre un morceau, Jouer pour quelqu'un | Talent | 10 |  | Fait | 3 |
 
 ### Bonnes actions (liste) (21)
 

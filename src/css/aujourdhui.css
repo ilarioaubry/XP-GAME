@@ -623,3 +623,6 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 /* + ajouter un rituel (01/11) : bouton icône carré 44 à droite du titre */
 .jdbox .head:has(.jdplus){display:flex;align-items:center;justify-content:space-between;gap:8px}
 .jdbox .jdplus{flex:none;padding:0 14px;gap:6px;font-size:13px}
+/* lot 4 : boost en cours dans les quêtes du jour */
+#fqBox .fqboost{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:13px;font-weight:700;color:var(--gold)}
+#fqBox .fqboost svg{width:24px;height:24px;flex:none}

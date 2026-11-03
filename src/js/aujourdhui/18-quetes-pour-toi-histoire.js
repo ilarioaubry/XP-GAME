@@ -54,7 +54,23 @@ const FQ=[
  ["v_parc","Balade dans un parc ou en forêt","sport",20,[9,19],c=>c.p.nature&&c.wx&&!c.wx.wet,c=>"Tu aimes la nature",{out:1}],
  ["v_style","Préparer tes affaires pour demain","maison",10,[19,24],c=>c.p.mode,c=>"Tu aimes la mode",{short:1}],
  ["v_son","Faire du son pendant 30 min","perso",30,[10,24],c=>c.p.creer||c.g.son,c=>c.wx&&c.wx.wet?"Il pleut : studio":"Ta musique avance",{in:1}],
- ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}]];
+ ["n_note",c=>`20 min pour ${c.note}`,"perso",25,[9,23],c=>c.note&&!c.arc,c=>"Ce qui compte pour toi en ce moment",{}],
+ // quêtes simples (lot 4, 03/11) : de quoi démarrer chaque jauge au premier palier
+ ["dsp_pompes","10 pompes, à ton rythme","sport",5,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dsp_squats","15 squats pendant une pause","sport",5,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dsp_esc","Prendre les escaliers au lieu de l'ascenseur","sport",5,[8,20],()=>true,()=>"Un petit pas pour le sport",{short:1}],
+ ["dsp_gain","1 min de gainage","sport",10,[8,22],()=>true,()=>"Un petit pas pour le sport",{short:1,in:1}],
+ ["dfa_msg","Envoyer un message à quelqu'un de ta famille","famille",5,[10,22],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dfa_rep","Répondre au dernier message de ta famille","famille",5,[9,23],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dfa_souv","Partager une photo souvenir avec ta famille","famille",10,[12,22],()=>true,()=>"Pour ta famille",{short:1}],
+ ["dam_msg","Écrire à un ami que tu n'as pas vu depuis un moment","social",5,[10,23],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dam_son","Envoyer une chanson ou une vidéo drôle à un ami","social",5,[10,23],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dam_merci","Dire merci à quelqu'un aujourd'hui","social",5,[9,21],()=>true,()=>"Pour garder le lien",{short:1}],
+ ["dno_fruit","Manger un fruit","nourriture",5,[9,20],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
+ ["dno_assis","Manger assis, sans écran","nourriture",5,[11,21],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
+ ["dso_resp","5 min de respiration calme","soi",5,[8,23],()=>true,()=>"Une pause pour toi",{short:1}],
+ ["dso_air","Ouvrir la fenêtre et prendre l'air 5 min","soi",5,[7,21],()=>true,()=>"Une pause pour toi",{short:1}],
+ ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
 const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],
@@ -80,20 +96,21 @@ function fqCtx(){const G=S.g,s=sitOf()||{goals:[],pass:[]},w=typeof wxNow==="fun
     wx:w?{...w,good:(w.k==="clear"||w.k==="partly")&&w.tc>=8&&w.tc<=30,wet:["rain","storm","snow"].includes(w.k)}:null}}
 function fqText(q,c){return typeof q[1]==="function"?q[1](c):q[1]}
 function fqPick(force){const G=S.g,tk=dayKey(Date.now());if(!G.fq||typeof G.fq!=="object")G.fq={};const F=G.fq;
-  if(F.d===tk&&!force&&Array.isArray(F.L))return F;const c=fqCtx();const seed=Number(tk.replace(/-/g,""))+(F.rr||0)*7919;let r=seed;const rnd=()=>{r=(r*1103515245+12345)%2147483648;return r/2147483648};
+  if(F.d===tk&&!force&&Array.isArray(F.L)&&F.pal===1)return F;const c=fqCtx();const seed=Number(tk.replace(/-/g,""))+(F.rr||0)*7919;let r=seed;const rnd=()=>{r=(r*1103515245+12345)%2147483648;return r/2147483648};
   const art=c.art.slice();for(let i=art.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[art[i],art[j]]=[art[j],art[i]]}
   // refonte (Q.1, Q.5, Q.11) : un tri par jour au plus ; une quête sport et une de musique par semaine, poussées si la semaine n'en a pas ; tes priorités et les quêtes courtes ou plaisir d'abord
   const L7=(S.log||[]).filter(e=>Date.now()-e.t<7*864e5),triDone=(S.log||[]).some(e=>dayKey(e.t)===tk&&(CLAR.some(C=>e.name===C[2])||/^af:clarte:/.test(e.a||""))),
     noSport=!L7.some(e=>e.cat==="sport"),noSon=!L7.some(e=>e.cat==="perso"&&/son|musique|couplet|instru|maquette|beat|album/i.test(e.name||"")),pri=(()=>{try{return(S.g.vie||{}).pri||[]}catch(e){return[]}})();
-  const pool=[];FQ.forEach(q=>{const o=q[7]||{};if(c.h>=q[4][1]-.5)return;if(triDone&&q[0].startsWith("t_"))return;if((G.fqNo||{})["f:"+q[0]])return;const isA=q[0].startsWith("a_");const list=isA?art.slice(0,2):[null];list.forEach(A=>{const cc={...c,A};if(isA&&!A)return;let ok=false;try{ok=!!q[5](cc)}catch(e){}if(!ok)return;
+  const pool=[];FQ.forEach(q=>{const o=q[7]||{};if(c.h>=q[4][1]-.5)return;if(q[0]!=="n_note"&&!questOk(q[2],q[3]))return;if(triDone&&q[0].startsWith("t_"))return;if((G.fqNo||{})["f:"+q[0]])return;const isA=q[0].startsWith("a_");const list=isA?art.slice(0,2):[null];list.forEach(A=>{const cc={...c,A};if(isA&&!A)return;let ok=false;try{ok=!!q[5](cc)}catch(e){}if(!ok)return;
     if(o.we&&!c.we&&q[0]!=="s_nap")return;if(o.wd&&c.we)return;if(o.out&&c.wx&&(c.wx.wet||!c.wx.day&&c.h>19))return;
     let w=1+rnd();if(isA)w+=1.2;if(q[0]==="n_note")w+=1.5;if(q[0].startsWith("t_"))w+=clarWt(q[0]);if(c.wx&&c.wx.good&&o.out)w+=1;if(c.wx&&c.wx.wet&&o.in)w+=1;if(c.free==="peu"&&o.short)w+=.8;if(c.free==="peu"&&q[3]>=30)w-=.8;w+=fqWt("f:"+q[0]);if(c.en===1){if(q[3]>=30)w-=2;if(o.short)w+=.8}if(c.en===3&&q[3]>=25)w+=.7;
     if(pri.includes(q[2]))w+=1.2;if(o.short)w+=.6;if(/^(v_|a_|p_sortie)/.test(q[0]))w+=.4;if(noSport&&q[2]==="sport")w+=3;if(noSon&&(q[0].startsWith("a_")||q[0]==="v_son"))w+=3;
     {let tt="";try{tt=fqText(q,cc)}catch(e){}if(!normOk(tt))return}pool.push({id:q[0]+(A?":"+A:""),q,A,w})})});
   pool.sort((a,b)=>b.w-a.w);{const ni=pool.findIndex(x=>x.q[0]==="n_note");if(ni>0)pool.unshift(pool.splice(ni,1)[0])}const out=[],cats=new Set(),fam=new Set();for(const x of pool){if(x.q[0]==="n_note"){out.push(x);fam.add("n");continue}if(out.length>=6)break;const f=x.q[0].split("_")[0];if(fam.has(f)&&f!=="a")continue;if(cats.has(x.q[2])&&pool.length>6)continue;if(f==="a"&&out.filter(y=>y.q[0].startsWith("a_")).length>=1)continue;if((x.q[7]||{}).out&&out.some(y=>(y.q[7]||{}).out))continue;if(["e_sac","w_plan","v_style"].includes(x.q[0])&&out.some(y=>["e_sac","w_plan","v_style"].includes(y.q[0])))continue;out.push(x);cats.add(x.q[2]);fam.add(f)}
-  F.d=tk;F.L=out.map(x=>({id:x.id,A:x.A||null}));if(!Array.isArray(F.done)||F.dd!==tk){F.done=[];F.dd=tk}if(F.ad!==tk){F.ai=[];F.ad=tk}return F}
+  {const have=new Set(out.map(x=>x.id)),D=pool.filter(x=>!have.has(x.id)&&x.q[0]!=="n_note"&&PAL_CATS.includes(x.q[2])&&cranOf(x.q[3])>=2);D.sort((a,b)=>cranOf(b.q[3])-cranOf(a.q[3])||b.w-a.w);if(D[0])out.splice(out[0]&&out[0].q[0]==="n_note"?1:0,0,{...D[0],defi:1})}
+  F.d=tk;F.pal=1;F.L=out.map(x=>({id:x.id,A:x.A||null,...(x.defi?{defi:1}:{})}));if(!Array.isArray(F.done)||F.dd!==tk){F.done=[];F.dd=tk}if(F.ad!==tk){F.ai=[];F.ad=tk}return F}
 function fqItems(){const F=fqPick(false),c=fqCtx(),out=[];F.L.forEach(x=>{const q=FQ.find(y=>y[0]===x.id.split(":")[0]);if(!q)return;const cc={...c,A:x.A};let t,why;try{t=fqText(q,cc);why=q[6](cc)}catch(e){return}
-  if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,why:o.cour?why+" · courage +15":why,cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
+  if(c.h>=q[4][1]&&!(F.done||[]).includes(x.id))return;const inH=c.h>=q[4][0]-.5&&c.h<q[4][1];const o=q[7]||{};out.push({id:x.id,t,defi:!!x.defi,why:(x.defi?"Défi · ":"")+(o.cour?why+" · courage +15":why),cat:q[2],xp:XPE(q[3])+(o.cour?15:0),later:!inH,from:q[4][0],out:!!o.out,A:x.A||"",film:!!o.film})});
   (F.ai||[]).forEach((x,i)=>out.push({id:x.id||"ai"+i,t:x.t,why:x.why,cat:CATS[x.cat]?x.cat:"soi",xp:x.xp,ai:1}));return out}
 // ===== Compléments de l'audit : normes, gratuit, compteur, réconfort, quartier, réactions
 const NORMS=[["minuit","Se coucher avant minuit",/minuit|au lit avant|avant 23 ?h/i],["soda","Journée sans soda",/soda/i],["vege","Repas végétarien",/végétarien|végé\b/i],["ecran","Pas d'écran avant de dormir",/écrans? coupés|sans écran.*(dormir|lit)|pas d'écran au lit|écran.*avant de dormir/i],["sport","Le sport",/pompes|squats|gainage|séance de sport|sport à la maison/i]];
