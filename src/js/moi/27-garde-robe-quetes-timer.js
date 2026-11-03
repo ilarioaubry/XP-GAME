@@ -105,9 +105,8 @@ const isStretch=n=>/étirement/i.test(n);
 const isRun=n=>/(courir|\bcourse\b|footing|marche-courir)/i.test(n)&&!/\bcourses\b/i.test(n)&&!durOf(n);
 const isMed=n=>/médit/i.test(n)&&!/ ou /i.test(n);
 const isGift=n=>/^acheter un cadeau pour /i.test(n);
-const isContact=n=>!!cbWho(n)&&/écri|appel|vocal|nouvelles|message|contact|envoie|envoyer|demande|propose|recommand|raconte|parle|dis /i.test(n)&&!isGift(n);
-function qSpecial(n){return isRead(n)||isBookEnd(n)||isPush(n)||isPlank(n)||isStretch(n)||isRun(n)||isMed(n)||isGift(n)||isContact(n)}
-function qSpecialOpen(b,n){if(isGift(n)){gfOpen(b,n.replace(/^acheter un cadeau pour /i,"").trim());return 1}if(isPlank(n)){gnOpen(b,n);return 1}if(isStretch(n)){stOpen(b,n);return 1}if(isRun(n)){runOpen(b,n);return 1}if(isMed(n)){mdOpen(b,n);return 1}if(isContact(n)){ctOpen(b,n);return 1}return 0}
+function qSpecial(n){return isRead(n)||isBookEnd(n)||isPush(n)||isPlank(n)||isStretch(n)||isRun(n)||isMed(n)||isGift(n)}
+function qSpecialOpen(b,n){if(isGift(n)){gfOpen(b,n.replace(/^acheter un cadeau pour /i,"").trim());return 1}if(isPlank(n)){gnOpen(b,n);return 1}if(isStretch(n)){stOpen(b,n);return 1}if(isRun(n)){runOpen(b,n);return 1}if(isMed(n)){mdOpen(b,n);return 1}return 0}
 function fmtSec(t){t=Math.max(0,Math.round(t));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
 function puDecor(o,av){const pad=o.querySelector(".pupad");if(!pad)return;{const hp=pad.querySelector(".puhelp"),k=(o.className.match(/rep-\w+|\b(gn|st|rn|md)\b/)||["x"])[0],G=S.g;if(hp&&G){if(!G.help)G.help={};G.help[k]=(G.help[k]||0)+1;if(G.help[k]>2)hp.remove()}}
   if(av){let src="";try{src=myAvatarURL()}catch(e){}if(src){const im=document.createElement("img");im.className="puav";im.src=src;im.alt="";pad.insertBefore(im,pad.firstChild)}}
@@ -196,19 +195,6 @@ function mdOpenBase(btn,n){const G=S.g;if(!G.md)G.md={};const tot=Math.max(1,dur
     if(run){if(!paused){paused=1;pst=Date.now();OK.textContent="Reprendre";T.textContent="Pause"}else{pacc+=Date.now()-pst;paused=0;OK.textContent="Pause";lp=-1}}};
   o.querySelector("#puX").onclick=()=>{clearInterval(iv);document.removeEventListener("visibilitychange",vis);o.remove()}}
 // relations : écrire / appeler directement
-function ctOpen(btn,n){const who=cbWho(n),P=S.profiles[who]=S.profiles[who]||{};const o=document.createElement("div");o.className="bpop ctpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");document.body.appendChild(o);
-  const close=()=>o.remove();o.onclick=e=>{if(e.target===o)close()};
-  const draw=(edit)=>{const tel=(P.phone||P.tel||"").replace(/[^\d+]/g,""),ig=(P.ig||"").replace(/^@/,"").trim();
-    o.innerHTML=`<div class="bpc ctc" style="--h:hsl(${hueOf(who)} 55% 50%)">${pAv(who,"ctav")}<h3 class="ctn"></h3><p class="bpd ctq"></p>
-      ${edit||(!tel&&!ig)?`<div class="ctf"><label class="rdl">Numéro<input id="ctTel" type="tel" inputmode="tel" placeholder="06 12 34 56 78"></label><label class="rdl">Instagram<input id="ctIg" placeholder="@pseudo" autocapitalize="off"></label><button type="button" class="btn" id="ctSave">Enregistrer</button></div>`:
-      `<div class="ctl">${tel?`<a class="ctb msg" href="sms:${tel}" target="_blank" rel="noopener">${ICO("chat",20)}<span>Message</span></a><a class="ctb call" href="tel:${tel}" target="_blank" rel="noopener">${ICO("phone",20)}<span>Appeler</span></a>`:""}${ig?`<a class="ctb ig" href="https://ig.me/m/${encodeURIComponent(ig)}" target="_blank" rel="noopener">${ICO("camera",20)}<span>Instagram</span></a>`:""}</div><button type="button" class="lnk" id="ctEd">Modifier le numéro ou l'Insta</button>`}
-      <button type="button" class="btn primary" id="ctOk">C'est fait !</button><button type="button" class="btn" id="ctX">Plus tard</button></div>`;
-    o.querySelector(".ctn").textContent=who;o.querySelector(".ctq").textContent=n;
-    const ti=o.querySelector("#ctTel");if(ti){ti.value=P.phone||P.tel||"";o.querySelector("#ctIg").value=P.ig||"";o.querySelector("#ctSave").onclick=()=>{P.tel=P.phone=ti.value.trim();P.ig=o.querySelector("#ctIg").value.trim();save();sfx("coin");draw(false)}}
-    const ed=o.querySelector("#ctEd");if(ed)ed.onclick=()=>draw(true);
-    o.querySelectorAll(".ctb").forEach(a=>a.addEventListener("click",()=>{o.querySelector(".ctc").classList.add("sent")}));
-    o.querySelector("#ctX").onclick=close;o.querySelector("#ctOk").onclick=()=>{close();S.bondsLast[who]=Date.now();qPass(btn)}};
-  draw(false)}
 // cadeau : idée -> acheté -> offert
 function gfKey(who){const bd=(S.profiles[who]||{}).bd,t=new Date();t.setHours(0,0,0,0);let y=t.getFullYear();if(bd&&bd.m){const d=new Date(y,bd.m-1,bd.d);if((t-d)/864e5>2)y++}return who+":"+y}
 function gfState(who){const gk=gfKey(who),G=S.g;if(!G.gfs)G.gfs={};const st=G.gfs[gk]||{};return{gk,idea:(S.profiles[who]||{}).gifts||"",bought:S.log.some(l=>l.gift===gk),given:!!st.given}}
