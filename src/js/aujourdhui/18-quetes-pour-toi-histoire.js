@@ -70,7 +70,20 @@ const FQ=[
  ["dno_assis","Manger assis, sans écran","nourriture",5,[11,21],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
  ["dso_resp","5 min de respiration calme","soi",5,[8,23],()=>true,()=>"Une pause pour toi",{short:1}],
  ["dso_air","Ouvrir la fenêtre et prendre l'air 5 min","soi",5,[7,21],()=>true,()=>"Une pause pour toi",{short:1}],
- ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}]];
+ ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}],
+ // vie réelle (5.9, 03/11) : budget (gestion seulement), papiers et échéances, santé
+ ["b_depenses","Regarder tes 5 dernières dépenses","travail",5,[9,22],()=>true,()=>"Pour garder un œil sur ton budget",{short:1}],
+ ["b_cote","Mettre un petit montant de côté","travail",10,[9,22],c=>c.g.argent,()=>"Pour ton budget",{short:1}],
+ ["b_compar","Comparer les prix avant un achat prévu","travail",10,[9,22],c=>c.g.argent,()=>"Pour ton budget",{short:1}],
+ ["b_point","Faire le point sur ton budget du mois (15 min)","travail",20,[9,22],c=>c.g.argent||new Date().getDate()<=5,()=>new Date().getDate()<=5?"C'est le début du mois":"Pour ton budget",{}],
+ ["b_abo","Résilier un abonnement que tu n'utilises plus","travail",20,[9,21],c=>c.g.argent,()=>"Pour ton budget",{}],
+ ["pa_id","Vérifier la date de fin de ta carte d'identité et de ton passeport","travail",5,[9,21],()=>true,()=>"Papiers à jour",{short:1}],
+ ["pa_ranger","Ranger tes papiers importants dans un seul dossier","travail",15,[9,21],()=>true,()=>"Papiers à jour",{}],
+ ["pa_assur","Vérifier les échéances de tes assurances","travail",10,[9,21],()=>[0,8].includes(new Date().getMonth()),()=>"Période de renouvellement",{short:1}],
+ ["pa_impots","Préparer ta déclaration d'impôts","travail",25,[9,21],()=>{const m=new Date().getMonth();return m>=3&&m<=5},()=>"C'est la saison des impôts",{}],
+ ["pa_auto","Vérifier la date du contrôle technique et de l'assurance auto","maison",10,[9,21],()=>typeof haveOn==="function"&&haveOn("voiture"),()=>"Tu as une voiture",{short:1}],
+ ["sa_dent","Prendre rendez-vous chez le dentiste pour un contrôle","soi",15,[9,19],()=>Date.now()-(((S.g.afLast||{})["af:sante:Dentiste"])||0)>300*864e5,()=>"Un contrôle par an",{short:1,wd:1}],
+ ["sa_vacc","Vérifier tes vaccins dans ton carnet de santé","soi",5,[9,21],()=>true,()=>"Santé",{short:1}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
 const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],

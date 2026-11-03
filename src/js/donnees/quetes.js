@@ -24,7 +24,8 @@ const FAM=[
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
   {id:"grignotage",dom:"nourriture",cat:"nourriture",l:"Grignotage",xp:0,o:["Fruit","Gâteau","Chips","Chocolat","Autre"],quick:1},
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
-  {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
+  {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures","Impôts","Assurances","Carte d'identité ou passeport"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60],"Impôts":[330,400],"Assurances":[330,400],"Carte d'identité ou passeport":[700,1100]}},
+  {id:"budget",dom:"travail",cat:"travail",l:"Budget",xp:10,o:["Faire le point sur mes comptes","Noter mes dépenses","Préparer le budget du mois","Trier mes abonnements","Mettre de côté","Comparer avant d'acheter"],lz:"orga",fr:[7,14],fro:{"Préparer le budget du mois":[25,35],"Trier mes abonnements":[60,120],"Comparer avant d'acheter":[30,90]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
   {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante",xp:25,o:["Fini !"],quick:1},
   {id:"lire",dom:"divert",cat:"soi",l:"Lire",xp:10,o:["Livre","BD ou manga","Article","Livre fini"],lz:"lect",fr:[3,7],fro:{"Livre fini":[30,60]},q:{Livre:"pages","BD ou manga":"pages"}},
@@ -70,7 +71,7 @@ const FIC={grignotage:["cookie",{Fruit:"pomme","Gâteau":"cake",Chips:"patate",C
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
   calme:["medit",{"Pause sans écran":"tel"}],sieste:["sieste",{}],soin:["visage",{Coiffeur:"ciseaux",Bain:"bain",Ongles:"pinceau"}],sante:["sante",{}],ecrire:["note",{}],dehors:["soleil",{Nature:"plante"}],nuit:["lune",{}],
   manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],clarte:["tel",{}],eau:["eau",{}],sans:["check",{}],
-  focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier"}],planif:["note",{}],fini:["check",{}],
+  focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier","Impôts":"dossier","Assurances":"dossier","Carte d'identité ou passeport":"dossier"}],budget:["piece",{"Trier mes abonnements":"tel","Comparer avant d'acheter":"loupe","Mettre de côté":"coffre","Noter mes dépenses":"note"}],planif:["note",{}],fini:["check",{}],
   lire:["lire",{}],regarder:["clap",{}],jouer:["manette",{}],ecouter:["casque",{}],sorties:["ticket",{Restaurant:"repas",Bar:"tasse",Concert:"casque"}],
   musique:["micro",{"Écrire un texte":"note"}],image:["photo",{}],art:["pinceau",{}],langue:["bulle",{}],cours:["ampoule",{}],
   contact:["tel",{Message:"bulle"}],voir:["tasse",{"Soirée":"coeur"}],service:["coeur",{}]};

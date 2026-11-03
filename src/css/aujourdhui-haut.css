@@ -246,3 +246,12 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 .bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}
 /* A.3 (31/10) : mon personnage reste visible sur la scène (debout, sans bouger tout seul) ; les actions, le salut et le bâillement le remplacent un instant */
 .scav .f0{opacity:1}
+/* 5.8 les nouvelles du jour : une ligne sous la scène */
+.wrap>#newsBox{order:-28;margin:0 0 10px}
+#newsBox[hidden]{display:none}
+.newsl{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:6px 12px;box-sizing:border-box;background:rgba(14,17,44,.85);border:2px solid rgba(255,255,255,.17);color:var(--ink);font:700 13px var(--f-body);text-align:left;cursor:pointer}
+.newsl:disabled{cursor:default;opacity:1}
+.newsi{display:grid;place-items:center;width:24px;height:24px;flex:none}
+.newsi svg{width:24px;height:24px;display:block}
+.newst{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.newsn{flex:none}

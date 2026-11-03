@@ -3904,6 +3904,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
 
   
   <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
+  <section data-v="q" class="news" id="newsBox" aria-label="Les nouvelles du jour" hidden></section>
   <section data-v="q" class="nightb voff" id="nightBox" aria-label="Bonne nuit"></section>
   <section data-v="q" class="qxp" aria-label="Ma progression"><button type="button" id="qxpBtn" aria-label="Voir mon profil"><span class="ql" id="qLvlBox">Niv <b id="qLvl">1</b></span><span class="qbar"><i id="qBar"></i></span><span class="qt"><b id="qCur">0</b> / <span id="qNeed">100</span> XP</span><span class="qs" title="Série de jours"><svg class="ic pxic" viewBox="0 0 12 12" width="14" height="14" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="0" width="1" height="1.02"/><rect x="4" y="1" width="2" height="1.02"/><rect x="4" y="2" width="3" height="1.02"/><rect x="3" y="3" width="4" height="1.02"/><rect x="8" y="3" width="1" height="1.02"/><rect x="3" y="4" width="8" height="1.02"/><rect x="2" y="5" width="9" height="1.02"/><rect x="1" y="6" width="4" height="1.02"/><rect x="6" y="6" width="5" height="1.02"/><rect x="1" y="7" width="3" height="1.02"/><rect x="7" y="7" width="4" height="1.02"/><rect x="1" y="8" width="3" height="1.02"/><rect x="7" y="8" width="4" height="1.02"/><rect x="1" y="9" width="4" height="1.02"/><rect x="6" y="9" width="5" height="1.02"/><rect x="2" y="10" width="8" height="1.02"/><rect x="3" y="11" width="6" height="1.02"/></svg><b id="qStreak">0</b></span><span class="qhp" id="qHpRow"></span></button></section>
   <section data-v="q" class="rit trkbox" id="trkBox" aria-label="Ton bandeau du jour"></section>
@@ -4183,7 +4184,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version dce5a73</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version c24dc75</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4403,7 +4404,8 @@ const FAM=[
   {id:"sans",dom:"nourriture",cat:"nourriture",l:"Journée sans",xp:10,o:["Soda","Sucre","Grignotage"],quick:1},
   {id:"grignotage",dom:"nourriture",cat:"nourriture",l:"Grignotage",xp:0,o:["Fruit","Gâteau","Chips","Chocolat","Autre"],quick:1},
   {id:"focus",dom:"travail",cat:"travail",l:"Travail concentré",xp:15,o:["Dossier","Candidature","Révisions","Projet perso"]},
-  {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60]}},
+  {id:"admin",dom:"travail",cat:"travail",l:"Administratif",xp:10,o:["Mails","Papiers","Rendez-vous pris","Factures","Impôts","Assurances","Carte d'identité ou passeport"],lz:"orga",fr:[3,7],fro:{Papiers:[14,30],Factures:[25,35],"Rendez-vous pris":[30,60],"Impôts":[330,400],"Assurances":[330,400],"Carte d'identité ou passeport":[700,1100]}},
+  {id:"budget",dom:"travail",cat:"travail",l:"Budget",xp:10,o:["Faire le point sur mes comptes","Noter mes dépenses","Préparer le budget du mois","Trier mes abonnements","Mettre de côté","Comparer avant d'acheter"],lz:"orga",fr:[7,14],fro:{"Préparer le budget du mois":[25,35],"Trier mes abonnements":[60,120],"Comparer avant d'acheter":[30,90]}},
   {id:"planif",dom:"travail",cat:"travail",l:"Planifier",xp:8,o:["Ma journée","Ma semaine"],lz:"orga"},
   {id:"fini",dom:"travail",cat:"travail",l:"Tâche importante",xp:25,o:["Fini !"],quick:1},
   {id:"lire",dom:"divert",cat:"soi",l:"Lire",xp:10,o:["Livre","BD ou manga","Article","Livre fini"],lz:"lect",fr:[3,7],fro:{"Livre fini":[30,60]},q:{Livre:"pages","BD ou manga":"pages"}},
@@ -4449,7 +4451,7 @@ const FIC={grignotage:["cookie",{Fruit:"pomme","Gâteau":"cake",Chips:"patate",C
   renfo:["halteres",{}],cardio:["basket",{"Vélo":"velo",Marche:"pas",Natation:"eau"}],souple:["tapis",{}],sportco:["ballon",{}],bouger:["pas",{"Trajet à vélo":"velo"}],
   calme:["medit",{"Pause sans écran":"tel"}],sieste:["sieste",{}],soin:["visage",{Coiffeur:"ciseaux",Bain:"bain",Ongles:"pinceau"}],sante:["sante",{}],ecrire:["note",{}],dehors:["soleil",{Nature:"plante"}],nuit:["lune",{}],
   manger:["pomme",{"Repas équilibré":"repas","Petit-déj complet":"tasse"}],cuisiner:["poele",{}],clarte:["tel",{}],eau:["eau",{}],sans:["check",{}],
-  focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier"}],planif:["note",{}],fini:["check",{}],
+  focus:["ecran",{Dossier:"dossier"}],admin:["enveloppe",{Papiers:"dossier","Impôts":"dossier","Assurances":"dossier","Carte d'identité ou passeport":"dossier"}],budget:["piece",{"Trier mes abonnements":"tel","Comparer avant d'acheter":"loupe","Mettre de côté":"coffre","Noter mes dépenses":"note"}],planif:["note",{}],fini:["check",{}],
   lire:["lire",{}],regarder:["clap",{}],jouer:["manette",{}],ecouter:["casque",{}],sorties:["ticket",{Restaurant:"repas",Bar:"tasse",Concert:"casque"}],
   musique:["micro",{"Écrire un texte":"note"}],image:["photo",{}],art:["pinceau",{}],langue:["bulle",{}],cours:["ampoule",{}],
   contact:["tel",{Message:"bulle"}],voir:["tasse",{"Soirée":"coeur"}],service:["coeur",{}]};
@@ -4907,7 +4909,7 @@ function pxSprite(k){if(typeof pxU==="function")pxU(k);if(PXSPC[k])return PXSPC[
 function pxImg(k,sc,cls){if(typeof pxU==="function")pxU(k);const[r,,w0]=PXSP[k];if(w0)sc=Math.max(1,Math.round(w0*sc/16));return`<img class="pxi ${cls||""}" src="${pxSprite(k)}" width="${r[0].length*sc}" height="${r.length*sc}" alt="" aria-hidden="true">`}
 // render = renderBase (le cœur) → finitions d'Aujourd'hui (renderBase2) → assiettes de la semaine. Ex-réécritures de correctifs.js et assiette.js.
 function render(){const r=renderBase2.apply(this,arguments);try{renderPlateWeek()}catch(e){}try{sepFirst()}catch(e){}return r}
-function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
+function renderBase2(){const r=renderBase.apply(this,arguments);try{if(view==="q"){try{renderNews()}catch(e){console.warn("news",e)}sceneBubble();askToday();oneEv();evToday();tagXP()}}catch(e){console.warn("q",e)}return r}
 function renderBase(prevLevel){
   if(seedOnce())save();
   if(gameTick())save();
@@ -9617,7 +9619,20 @@ const FQ=[
  ["dno_assis","Manger assis, sans écran","nourriture",5,[11,21],()=>true,()=>"Un petit pas pour bien manger",{short:1}],
  ["dso_resp","5 min de respiration calme","soi",5,[8,23],()=>true,()=>"Une pause pour toi",{short:1}],
  ["dso_air","Ouvrir la fenêtre et prendre l'air 5 min","soi",5,[7,21],()=>true,()=>"Une pause pour toi",{short:1}],
- ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}]];
+ ["dso_trois","Noter 3 bonnes choses de ta journée","soi",10,[18,24],()=>true,()=>"Une pause pour toi",{short:1}],
+ // vie réelle (5.9, 03/11) : budget (gestion seulement), papiers et échéances, santé
+ ["b_depenses","Regarder tes 5 dernières dépenses","travail",5,[9,22],()=>true,()=>"Pour garder un œil sur ton budget",{short:1}],
+ ["b_cote","Mettre un petit montant de côté","travail",10,[9,22],c=>c.g.argent,()=>"Pour ton budget",{short:1}],
+ ["b_compar","Comparer les prix avant un achat prévu","travail",10,[9,22],c=>c.g.argent,()=>"Pour ton budget",{short:1}],
+ ["b_point","Faire le point sur ton budget du mois (15 min)","travail",20,[9,22],c=>c.g.argent||new Date().getDate()<=5,()=>new Date().getDate()<=5?"C'est le début du mois":"Pour ton budget",{}],
+ ["b_abo","Résilier un abonnement que tu n'utilises plus","travail",20,[9,21],c=>c.g.argent,()=>"Pour ton budget",{}],
+ ["pa_id","Vérifier la date de fin de ta carte d'identité et de ton passeport","travail",5,[9,21],()=>true,()=>"Papiers à jour",{short:1}],
+ ["pa_ranger","Ranger tes papiers importants dans un seul dossier","travail",15,[9,21],()=>true,()=>"Papiers à jour",{}],
+ ["pa_assur","Vérifier les échéances de tes assurances","travail",10,[9,21],()=>[0,8].includes(new Date().getMonth()),()=>"Période de renouvellement",{short:1}],
+ ["pa_impots","Préparer ta déclaration d'impôts","travail",25,[9,21],()=>{const m=new Date().getMonth();return m>=3&&m<=5},()=>"C'est la saison des impôts",{}],
+ ["pa_auto","Vérifier la date du contrôle technique et de l'assurance auto","maison",10,[9,21],()=>typeof haveOn==="function"&&haveOn("voiture"),()=>"Tu as une voiture",{short:1}],
+ ["sa_dent","Prendre rendez-vous chez le dentiste pour un contrôle","soi",15,[9,19],()=>Date.now()-(((S.g.afLast||{})["af:sante:Dentiste"])||0)>300*864e5,()=>"Un contrôle par an",{short:1,wd:1}],
+ ["sa_vacc","Vérifier tes vaccins dans ton carnet de santé","soi",5,[9,21],()=>true,()=>"Santé",{short:1}]];
 // ---- Clarté : tri du téléphone, une quête par jour au plus, le point le plus ancien d'abord
 const CLAR=[["photos","Photos","Trier 50 photos",15,[30,60]],
  ["notes","Notes","Faire le tri dans tes notes : 10 à supprimer ou à ranger",10,[30,60]],
@@ -9963,10 +9978,10 @@ function plusToggle(on){on=on===undefined?!plusOpen:!!on;if(on===plusOpen)return
 
 
 // ===== Calendrier, quêtes d'événements, fiche de personnage =====
-const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["mariage","Mariage","#ff8fb8"],["naissance","Naissance","#8fd4ff"],["demenage","Déménager","#c98a4a"],["medical","Médical","#6fd0b0"],["autre","Autre","#aab4bd"]];
+const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["mariage","Mariage","#ff8fb8"],["naissance","Naissance","#8fd4ff"],["demenage","Déménager","#c98a4a"],["medical","Médical","#6fd0b0"],["dur","Moment dur","#9aa3c8"],["autre","Autre","#aab4bd"]];
 const evtOf=t=>EVT.find(x=>x[0]===t)||EVT.find(x=>x[0]==="autre");
 function evtGuess(n){n=(n||"").toLowerCase();if(/concert|festival|live\b|showcase/.test(n))return"concert";if(/entretien|recrut/.test(n))return"entretien";if(/exam|partiel|bac\b|oral|concours/.test(n))return"examen";
-  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/mariage|noces|pacs\b/.test(n))return"mariage";if(/naissance|b[ée]b[ée]|accouchement/.test(n))return"naissance";if(/d[ée]m[ée]nag|emm[ée]nag/.test(n))return"demenage";if(/m[ée]decin|dentiste|docteur|kin[ée]|h[ôo]pital|prise de sang|ophtalmo|gyn[ée]co|radio\b|psy\b/.test(n))return"medical";if(/rdv|rendez/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
+  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/mariage|noces|pacs\b/.test(n))return"mariage";if(/naissance|b[ée]b[ée]|accouchement/.test(n))return"naissance";if(/d[ée]m[ée]nag|emm[ée]nag/.test(n))return"demenage";if(/m[ée]decin|dentiste|docteur|kin[ée]|h[ôo]pital|prise de sang|ophtalmo|gyn[ée]co|radio\b|psy\b/.test(n))return"medical";if(/enterrement|obs[èe]ques|op[ée]ration|audience|tribunal|rupture/.test(n))return"dur";if(/rdv|rendez/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
 // [type, id, de J-a, à J-b (négatif = après), texte(e), cat, xp, pourquoi(e)]
 const EVQ=[
  ["concert","setlist",7,2,e=>`Écouter la setlist probable de ${e.a||"l'artiste"} pour connaître les sons par cœur`,"perso",15],
@@ -10014,6 +10029,12 @@ const EVQ=[
  ["medical","papiers",1,0,e=>"Préparer ta carte Vitale, ton ordonnance et tes papiers","soi",10],
  ["medical","heure",1,1,e=>"Vérifier l'heure et le trajet du rendez-vous","soi",5],
  ["medical","suite",-1,-1,e=>"Noter ce qu'on t'a dit et prendre le prochain rendez-vous si besoin","soi",10],
+ // moments durs (5.9) : doux, sans pression
+ ["dur","confiance",3,1,e=>"Prévenir une personne de confiance de ce qui arrive","social",10],
+ ["dur","doux",1,0,e=>"Prévoir quelque chose de doux pour après : un repas que tu aimes, un film","soi",5],
+ ["dur","pause",0,0,e=>"Prendre 10 min juste pour toi aujourd'hui","soi",5],
+ ["dur","raconter",-1,-1,e=>"Raconter à quelqu'un comment ça s'est passé","social",10],
+ ["dur","repos",-1,-1,e=>"Te reposer, sans rien te reprocher","soi",5],
  ["autre","prep",2,1,e=>`Préparer : ${e.n}`,"soi",10]];
 function evInD(e){const t=new Date(dayKey(Date.now())+"T12:00");return Math.round((new Date(e.d+"T12:00")-t)/864e5)}
 function evWhenS(d){return d<0?"hier":d===0?"aujourd'hui":d===1?"demain":"dans "+d+" jours"}
@@ -10040,7 +10061,7 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
       <h4>${sd.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</h4>
       <div class="cale">${B.map(n=>`<div class="calev bdev">${pAv(n,"bdp")}<span class="bdtx"><span class="calty">Anniversaire</span><b></b></span><span class="bdck">${window.BDCAKE||""}</span></div>`).join("")}${E.map(e=>`<div class="calev" style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><span class="calty">${evtOf(e.t||evtGuess(e.n))[1]}</span><b></b><button type="button" class="calrm" data-id="${e.id}" aria-label="Supprimer">${ICO("close",14)}</button></div>`).join("")}${!B.length&&!E.length?`<p class="hint vide">Aucun événement ce jour-là.</p>`:""}</div>
       ${calSel>=tk?`<h4>Ajouter</h4><input class="qcname calname" maxlength="40" placeholder="Ex. Concert de disiz, entretien chez…" aria-label="Nom de l'événement">
-      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
+      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante",dur:"coeur"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
       ${ty==="concert"?`<input class="qcname calart" maxlength="40" placeholder="Quel artiste ?" aria-label="Artiste" list="calArts"><datalist id="calArts">${((G.taste&&G.taste.art)||[]).map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`:""}
       <button type="button" class="btn primary qcgo caladd"${fName.trim()?"":" disabled"}>Ajouter au calendrier</button>
       <p class="hint calhint">Les jours d'avant et d'après, des quêtes « Pour toi » t'aident à le préparer${ty==="concert"?" : setlist, sac, trajet, souvenirs":""}.</p>`:""}</div>`;
@@ -10265,7 +10286,14 @@ function easter(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=
 function nthSun(y,m,n){const d=new Date(y,m,1,12);d.setDate(1+((7-d.getDay())%7)+7*(n-1));return d}
 function lastSun(y,m){const d=new Date(y,m+1,0,12);d.setDate(d.getDate()-d.getDay());return d}
 function fetesOf(y){const md=(m,d)=>dKey(new Date(y,m-1,d,12)),pent=easter(y);pent.setDate(pent.getDate()+49);let meres=lastSun(y,4);if(dKey(meres)===dKey(pent))meres.setDate(meres.getDate()+7);
-  return[[md(2,2),"chandeleur","Chandeleur","Faire des crêpes, seul ou à plusieurs","nourriture",10],
+  const ea=easter(y),voisins=new Date(y,5,0,12);voisins.setDate(voisins.getDate()-((voisins.getDay()+2)%7));
+  return[[md(1,6),"galette","Épiphanie","Partager une galette des rois","social",10],
+    [dKey(nthSun(y,2,1)),"grandmeres","Fête des grands-mères","Appeler une grand-mère, ou une personne âgée qui compte pour toi","famille",10],
+    [dKey(ea),"paques","Pâques","Partager du chocolat ou organiser une petite chasse aux œufs","famille",10],
+    [dKey(voisins),"voisins","Fête des voisins","Dire bonjour à un voisin, ou partager un verre","social",10],
+    [md(7,14),"juillet","14 juillet","Aller voir un feu d'artifice ou un bal","social",15],
+    [md(10,31),"halloween","Halloween","Regarder un film qui fait (un peu) peur","soi",10],
+    [md(2,2),"chandeleur","Chandeleur","Faire des crêpes, seul ou à plusieurs","nourriture",10],
     [md(2,14),"valentin","Saint-Valentin","Dire à quelqu'un que tu tiens à lui","social",10],
     [md(3,20),"printemps","Premier jour du printemps","Ouvrir grand les fenêtres et commencer un petit ménage de printemps","maison",15],
     [md(5,1),"muguet","1er mai","Offrir un brin de muguet ou un petit mot à quelqu'un","social",10],
@@ -10316,6 +10344,27 @@ function mmPop(ic,title,lines){if(document.querySelector(".mmpop"))return;const 
   v.innerHTML=`<div class="ui-fenetre palw"><div class="palg"><span class="palic">${rkSvg(ic)}</span><h2 class="ui-fenetre__titre"></h2><ul class="pall">${lines.map(l=>`<li><span class="pali">${rkSvg("etoile")}</span><span></span></li>`).join("")}</ul></div><button type="button" class="ui-btn ui-btn--principal palok">Merci</button></div>`;
   v.querySelector("h2").textContent=title;v.querySelectorAll(".pall li span:last-child").forEach((s,i)=>s.textContent=lines[i]);
   const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;document.body.appendChild(v);try{sfx("level")}catch(_){}}
+
+// ---- 5.8 les nouvelles du jour : une seule ligne à l'ouverture, la plus utile d'abord ; la toucher mène à ce qu'elle annonce
+function newsList(){const out=[],G=S.g;if(!G)return out;const tk=dayKey(Date.now());
+  if(myBdToday())out.push({ic:"cake",t:"Joyeux anniversaire ! XP ×2 toute la journée"});
+  try{relNames().map(n=>({n,nb:nextBirthday((S.profiles[n]||{}).bd)})).filter(x=>x.nb&&x.nb.days<=7).sort((a,b)=>a.nb.days-b.nb.days).slice(0,1).forEach(x=>out.push({ic:"cake",t:`Anniversaire de ${x.n} ${x.nb.days===0?"aujourd'hui":x.nb.days===1?"demain":"dans "+x.nb.days+" jours"}`,go:()=>openProfile(x.n)}))}catch(e){}
+  try{(G.ev||[]).map(e=>({e,d:evInD(e)})).filter(x=>x.d===0||x.d===1).sort((a,b)=>a.d-b.d).slice(0,1).forEach(({e,d})=>out.push({ic:"calendrier",t:`${evtOf(e.t||evtGuess(e.n))[1]} ${d?"demain":"aujourd'hui"} : ${e.n}`,go:()=>calOpen(e.d)}))}catch(e){}
+  try{fetesOf(new Date().getFullYear()).filter(f=>f[0]===tk).slice(0,1).forEach(f=>out.push({ic:"cadeau",t:`Aujourd'hui : ${f[2]}`}))}catch(e){}
+  try{const g=goldWeek();if(g&&g.d===tk&&new Date().getHours()<=g.h)out.push({ic:"soleil",t:goldOn()?`Heure dorée en cours · ${(CATS[g.c]||{}).label} ×2`:`Heure dorée ${g.h} h–${g.h+1} h · ${(CATS[g.c]||{}).label} ×2`})}catch(e){}
+  try{const H=G.hist||{},y=dayKey(Date.now()-864e5),yx=(H[y]||{}).x||0;if(yx>0){const ks=Object.keys(H).filter(k=>k>=dayKey(Date.now()-30*864e5)&&k<tk);if(ks.length>=7&&ks.every(k=>((H[k]||{}).x||0)<=yx))out.push({ic:"medaille",t:`Hier, ta meilleure journée du mois : ${yx} XP`})}}catch(e){}
+  try{const home=new Set(((sitOf()||{}).with)||[]),pf=(G.vie&&G.vie.pf)||{};const L=relNames().filter(n=>!home.has(n)&&S.bondsLast[n]).map(n=>({n,d:Math.floor((Date.now()-S.bondsLast[n])/864e5),r:pf[n]||21})).filter(x=>x.d>=x.r).sort((a,b)=>b.d/b.r-a.d/a.r);
+    if(L[0])out.push({ic:"bulle",t:`Pas de nouvelles de ${L[0].n} depuis ${L[0].d} jours`,go:()=>openProfile(L[0].n)})}catch(e){}
+  return out}
+function renderNews(){const box=$("newsBox");if(!box||!S.g)return;const L=newsList(),n=L[0];box.hidden=!n;if(!n){box.innerHTML="";return}
+  box.innerHTML=`<button type="button" class="newsl"${n.go?"":" disabled"}><span class="newsi">${rkSvg(n.ic)}</span><span class="newst"></span>${L.length>1?`<span class="ui-etiquette newsn">${L.length} nouvelles</span>`:""}</button>`;
+  box.querySelector(".newst").textContent=n.t;const b=box.querySelector("button");
+  b.onclick=()=>{if(L.length>1&&!n.go){newsAll(L);return}if(n.go)n.go()};
+  const t=box.querySelector(".ui-etiquette");if(t){t.setAttribute("role","button");t.tabIndex=0;t.setAttribute("aria-label","Voir les autres nouvelles");t.onclick=e=>{e.stopPropagation();newsAll(L)}}}
+function newsAll(L){if(document.querySelector(".newsw"))return;const v=document.createElement("div");v.className="ui-voile newsw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Les nouvelles du jour");
+  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Les nouvelles du jour</h2><ul class="newsul">${L.map((x,i)=>`<li><button type="button" class="newsl" data-i="${i}"${x.go?"":" disabled"}><span class="newsi">${rkSvg(x.ic)}</span><span class="newst"></span></button></li>`).join("")}</ul><button type="button" class="ui-btn newsok">Fermer</button></div>`;
+  v.querySelectorAll(".newst").forEach((s,i)=>s.textContent=L[i].t);const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".newsok").onclick=close;
+  v.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(x.go){close();x.go()}});document.body.appendChild(v)}
 // ---- Icônes unifiées : tout le contenu passe en pixel art façon badges (16×16, contour sombre)
 void 0;
 function rkIn(k){const R=rkC(RKI[k]);if(!R)return"";let r="";R.forEach((row,y)=>[...row].forEach((ch,x)=>{const c=RKP[ch];if(c)r+=`<rect x="${x}" y="${y}" width="1.03" height="1.03" fill="${c}"/>`}));return`<svg x="0" y="0" width="24" height="24" viewBox="0 0 16 16" stroke="none" shape-rendering="crispEdges">${r}</svg>`}
@@ -14030,6 +14079,15 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 .bnd .trk-fin .trk-ok{width:44px;height:44px;min-height:44px;padding:0;display:grid;place-items:center;flex:none;margin-left:auto}
 /* A.3 (31/10) : mon personnage reste visible sur la scène (debout, sans bouger tout seul) ; les actions, le salut et le bâillement le remplacent un instant */
 .scav .f0{opacity:1}
+/* 5.8 les nouvelles du jour : une ligne sous la scène */
+.wrap>#newsBox{order:-28;margin:0 0 10px}
+#newsBox[hidden]{display:none}
+.newsl{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:6px 12px;box-sizing:border-box;background:rgba(14,17,44,.85);border:2px solid rgba(255,255,255,.17);color:var(--ink);font:700 13px var(--f-body);text-align:left;cursor:pointer}
+.newsl:disabled{cursor:default;opacity:1}
+.newsi{display:grid;place-items:center;width:24px;height:24px;flex:none}
+.newsi svg{width:24px;height:24px;display:block}
+.newst{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.newsn{flex:none}
 </style>
 <style id="z-aujourdhui">/* — venues de base.css et composants.css (1.6, 02/11) : règles qui ne servent qu'à Aujourd'hui — */
 .wrap section[data-v="q"] h2::before{content:"";display:inline-block;width:12px;height:12px;background:var(--gold);transform:rotate(45deg);margin:0 10px 0 2px;vertical-align:2px;flex:none}
@@ -16664,6 +16722,8 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 .bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 /* 5.1 : types d'événements en tuiles (icône au-dessus, nom sur une ligne) */
 .calty2 .evtl{display:block;font-size:11px;margin:0 -10px;max-width:calc(100% + 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.newsw .newsul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.newsw .newst{white-space:normal}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)

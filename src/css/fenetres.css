@@ -467,3 +467,5 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 .bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 /* 5.1 : types d'événements en tuiles (icône au-dessus, nom sur une ligne) */
 .calty2 .evtl{display:block;font-size:11px;margin:0 -10px;max-width:calc(100% + 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.newsw .newsul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.newsw .newst{white-space:normal}

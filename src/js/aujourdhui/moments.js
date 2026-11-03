@@ -33,7 +33,14 @@ function easter(y){const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=
 function nthSun(y,m,n){const d=new Date(y,m,1,12);d.setDate(1+((7-d.getDay())%7)+7*(n-1));return d}
 function lastSun(y,m){const d=new Date(y,m+1,0,12);d.setDate(d.getDate()-d.getDay());return d}
 function fetesOf(y){const md=(m,d)=>dKey(new Date(y,m-1,d,12)),pent=easter(y);pent.setDate(pent.getDate()+49);let meres=lastSun(y,4);if(dKey(meres)===dKey(pent))meres.setDate(meres.getDate()+7);
-  return[[md(2,2),"chandeleur","Chandeleur","Faire des crêpes, seul ou à plusieurs","nourriture",10],
+  const ea=easter(y),voisins=new Date(y,5,0,12);voisins.setDate(voisins.getDate()-((voisins.getDay()+2)%7));
+  return[[md(1,6),"galette","Épiphanie","Partager une galette des rois","social",10],
+    [dKey(nthSun(y,2,1)),"grandmeres","Fête des grands-mères","Appeler une grand-mère, ou une personne âgée qui compte pour toi","famille",10],
+    [dKey(ea),"paques","Pâques","Partager du chocolat ou organiser une petite chasse aux œufs","famille",10],
+    [dKey(voisins),"voisins","Fête des voisins","Dire bonjour à un voisin, ou partager un verre","social",10],
+    [md(7,14),"juillet","14 juillet","Aller voir un feu d'artifice ou un bal","social",15],
+    [md(10,31),"halloween","Halloween","Regarder un film qui fait (un peu) peur","soi",10],
+    [md(2,2),"chandeleur","Chandeleur","Faire des crêpes, seul ou à plusieurs","nourriture",10],
     [md(2,14),"valentin","Saint-Valentin","Dire à quelqu'un que tu tiens à lui","social",10],
     [md(3,20),"printemps","Premier jour du printemps","Ouvrir grand les fenêtres et commencer un petit ménage de printemps","maison",15],
     [md(5,1),"muguet","1er mai","Offrir un brin de muguet ou un petit mot à quelqu'un","social",10],
@@ -84,3 +91,24 @@ function mmPop(ic,title,lines){if(document.querySelector(".mmpop"))return;const 
   v.innerHTML=`<div class="ui-fenetre palw"><div class="palg"><span class="palic">${rkSvg(ic)}</span><h2 class="ui-fenetre__titre"></h2><ul class="pall">${lines.map(l=>`<li><span class="pali">${rkSvg("etoile")}</span><span></span></li>`).join("")}</ul></div><button type="button" class="ui-btn ui-btn--principal palok">Merci</button></div>`;
   v.querySelector("h2").textContent=title;v.querySelectorAll(".pall li span:last-child").forEach((s,i)=>s.textContent=lines[i]);
   const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;document.body.appendChild(v);try{sfx("level")}catch(_){}}
+
+// ---- 5.8 les nouvelles du jour : une seule ligne à l'ouverture, la plus utile d'abord ; la toucher mène à ce qu'elle annonce
+function newsList(){const out=[],G=S.g;if(!G)return out;const tk=dayKey(Date.now());
+  if(myBdToday())out.push({ic:"cake",t:"Joyeux anniversaire ! XP ×2 toute la journée"});
+  try{relNames().map(n=>({n,nb:nextBirthday((S.profiles[n]||{}).bd)})).filter(x=>x.nb&&x.nb.days<=7).sort((a,b)=>a.nb.days-b.nb.days).slice(0,1).forEach(x=>out.push({ic:"cake",t:`Anniversaire de ${x.n} ${x.nb.days===0?"aujourd'hui":x.nb.days===1?"demain":"dans "+x.nb.days+" jours"}`,go:()=>openProfile(x.n)}))}catch(e){}
+  try{(G.ev||[]).map(e=>({e,d:evInD(e)})).filter(x=>x.d===0||x.d===1).sort((a,b)=>a.d-b.d).slice(0,1).forEach(({e,d})=>out.push({ic:"calendrier",t:`${evtOf(e.t||evtGuess(e.n))[1]} ${d?"demain":"aujourd'hui"} : ${e.n}`,go:()=>calOpen(e.d)}))}catch(e){}
+  try{fetesOf(new Date().getFullYear()).filter(f=>f[0]===tk).slice(0,1).forEach(f=>out.push({ic:"cadeau",t:`Aujourd'hui : ${f[2]}`}))}catch(e){}
+  try{const g=goldWeek();if(g&&g.d===tk&&new Date().getHours()<=g.h)out.push({ic:"soleil",t:goldOn()?`Heure dorée en cours · ${(CATS[g.c]||{}).label} ×2`:`Heure dorée ${g.h} h–${g.h+1} h · ${(CATS[g.c]||{}).label} ×2`})}catch(e){}
+  try{const H=G.hist||{},y=dayKey(Date.now()-864e5),yx=(H[y]||{}).x||0;if(yx>0){const ks=Object.keys(H).filter(k=>k>=dayKey(Date.now()-30*864e5)&&k<tk);if(ks.length>=7&&ks.every(k=>((H[k]||{}).x||0)<=yx))out.push({ic:"medaille",t:`Hier, ta meilleure journée du mois : ${yx} XP`})}}catch(e){}
+  try{const home=new Set(((sitOf()||{}).with)||[]),pf=(G.vie&&G.vie.pf)||{};const L=relNames().filter(n=>!home.has(n)&&S.bondsLast[n]).map(n=>({n,d:Math.floor((Date.now()-S.bondsLast[n])/864e5),r:pf[n]||21})).filter(x=>x.d>=x.r).sort((a,b)=>b.d/b.r-a.d/a.r);
+    if(L[0])out.push({ic:"bulle",t:`Pas de nouvelles de ${L[0].n} depuis ${L[0].d} jours`,go:()=>openProfile(L[0].n)})}catch(e){}
+  return out}
+function renderNews(){const box=$("newsBox");if(!box||!S.g)return;const L=newsList(),n=L[0];box.hidden=!n;if(!n){box.innerHTML="";return}
+  box.innerHTML=`<button type="button" class="newsl"${n.go?"":" disabled"}><span class="newsi">${rkSvg(n.ic)}</span><span class="newst"></span>${L.length>1?`<span class="ui-etiquette newsn">${L.length} nouvelles</span>`:""}</button>`;
+  box.querySelector(".newst").textContent=n.t;const b=box.querySelector("button");
+  b.onclick=()=>{if(L.length>1&&!n.go){newsAll(L);return}if(n.go)n.go()};
+  const t=box.querySelector(".ui-etiquette");if(t){t.setAttribute("role","button");t.tabIndex=0;t.setAttribute("aria-label","Voir les autres nouvelles");t.onclick=e=>{e.stopPropagation();newsAll(L)}}}
+function newsAll(L){if(document.querySelector(".newsw"))return;const v=document.createElement("div");v.className="ui-voile newsw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Les nouvelles du jour");
+  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Les nouvelles du jour</h2><ul class="newsul">${L.map((x,i)=>`<li><button type="button" class="newsl" data-i="${i}"${x.go?"":" disabled"}><span class="newsi">${rkSvg(x.ic)}</span><span class="newst"></span></button></li>`).join("")}</ul><button type="button" class="ui-btn newsok">Fermer</button></div>`;
+  v.querySelectorAll(".newst").forEach((s,i)=>s.textContent=L[i].t);const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".newsok").onclick=close;
+  v.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(x.go){close();x.go()}});document.body.appendChild(v)}

@@ -1,8 +1,8 @@
 // ===== Calendrier, quêtes d'événements, fiche de personnage =====
-const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["mariage","Mariage","#ff8fb8"],["naissance","Naissance","#8fd4ff"],["demenage","Déménager","#c98a4a"],["medical","Médical","#6fd0b0"],["autre","Autre","#aab4bd"]];
+const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["mariage","Mariage","#ff8fb8"],["naissance","Naissance","#8fd4ff"],["demenage","Déménager","#c98a4a"],["medical","Médical","#6fd0b0"],["dur","Moment dur","#9aa3c8"],["autre","Autre","#aab4bd"]];
 const evtOf=t=>EVT.find(x=>x[0]===t)||EVT.find(x=>x[0]==="autre");
 function evtGuess(n){n=(n||"").toLowerCase();if(/concert|festival|live\b|showcase/.test(n))return"concert";if(/entretien|recrut/.test(n))return"entretien";if(/exam|partiel|bac\b|oral|concours/.test(n))return"examen";
-  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/mariage|noces|pacs\b/.test(n))return"mariage";if(/naissance|b[ée]b[ée]|accouchement/.test(n))return"naissance";if(/d[ée]m[ée]nag|emm[ée]nag/.test(n))return"demenage";if(/m[ée]decin|dentiste|docteur|kin[ée]|h[ôo]pital|prise de sang|ophtalmo|gyn[ée]co|radio\b|psy\b/.test(n))return"medical";if(/rdv|rendez/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
+  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/mariage|noces|pacs\b/.test(n))return"mariage";if(/naissance|b[ée]b[ée]|accouchement/.test(n))return"naissance";if(/d[ée]m[ée]nag|emm[ée]nag/.test(n))return"demenage";if(/m[ée]decin|dentiste|docteur|kin[ée]|h[ôo]pital|prise de sang|ophtalmo|gyn[ée]co|radio\b|psy\b/.test(n))return"medical";if(/enterrement|obs[èe]ques|op[ée]ration|audience|tribunal|rupture/.test(n))return"dur";if(/rdv|rendez/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
 // [type, id, de J-a, à J-b (négatif = après), texte(e), cat, xp, pourquoi(e)]
 const EVQ=[
  ["concert","setlist",7,2,e=>`Écouter la setlist probable de ${e.a||"l'artiste"} pour connaître les sons par cœur`,"perso",15],
@@ -50,6 +50,12 @@ const EVQ=[
  ["medical","papiers",1,0,e=>"Préparer ta carte Vitale, ton ordonnance et tes papiers","soi",10],
  ["medical","heure",1,1,e=>"Vérifier l'heure et le trajet du rendez-vous","soi",5],
  ["medical","suite",-1,-1,e=>"Noter ce qu'on t'a dit et prendre le prochain rendez-vous si besoin","soi",10],
+ // moments durs (5.9) : doux, sans pression
+ ["dur","confiance",3,1,e=>"Prévenir une personne de confiance de ce qui arrive","social",10],
+ ["dur","doux",1,0,e=>"Prévoir quelque chose de doux pour après : un repas que tu aimes, un film","soi",5],
+ ["dur","pause",0,0,e=>"Prendre 10 min juste pour toi aujourd'hui","soi",5],
+ ["dur","raconter",-1,-1,e=>"Raconter à quelqu'un comment ça s'est passé","social",10],
+ ["dur","repos",-1,-1,e=>"Te reposer, sans rien te reprocher","soi",5],
  ["autre","prep",2,1,e=>`Préparer : ${e.n}`,"soi",10]];
 function evInD(e){const t=new Date(dayKey(Date.now())+"T12:00");return Math.round((new Date(e.d+"T12:00")-t)/864e5)}
 function evWhenS(d){return d<0?"hier":d===0?"aujourd'hui":d===1?"demain":"dans "+d+" jours"}
@@ -76,7 +82,7 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
       <h4>${sd.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</h4>
       <div class="cale">${B.map(n=>`<div class="calev bdev">${pAv(n,"bdp")}<span class="bdtx"><span class="calty">Anniversaire</span><b></b></span><span class="bdck">${window.BDCAKE||""}</span></div>`).join("")}${E.map(e=>`<div class="calev" style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><span class="calty">${evtOf(e.t||evtGuess(e.n))[1]}</span><b></b><button type="button" class="calrm" data-id="${e.id}" aria-label="Supprimer">${ICO("close",14)}</button></div>`).join("")}${!B.length&&!E.length?`<p class="hint vide">Aucun événement ce jour-là.</p>`:""}</div>
       ${calSel>=tk?`<h4>Ajouter</h4><input class="qcname calname" maxlength="40" placeholder="Ex. Concert de disiz, entretien chez…" aria-label="Nom de l'événement">
-      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
+      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante",dur:"coeur"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
       ${ty==="concert"?`<input class="qcname calart" maxlength="40" placeholder="Quel artiste ?" aria-label="Artiste" list="calArts"><datalist id="calArts">${((G.taste&&G.taste.art)||[]).map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`:""}
       <button type="button" class="btn primary qcgo caladd"${fName.trim()?"":" disabled"}>Ajouter au calendrier</button>
       <p class="hint calhint">Les jours d'avant et d'après, des quêtes « Pour toi » t'aident à le préparer${ty==="concert"?" : setlist, sac, trajet, souvenirs":""}.</p>`:""}</div>`;
