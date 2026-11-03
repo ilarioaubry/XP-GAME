@@ -125,8 +125,8 @@ setInterval(()=>{if(!S.g||!S.g.ms)return;Object.entries(S.g.ms).forEach(([n,st])
 
 
 
-function newG(){return{nb:[],boss:{wk:"",max:0,name:"",i:-1,won:false},bh:[],chests:1,chestLvl:null,opened:0,ol:[],gear:[],eq:{},boost:0,rt:[],hist:{},mood:{},sleep:{},rel:{}}}
-function normG(g){const n=newG();if(!g||typeof g!=="object")return n;const o={...n,...JSON.parse(JSON.stringify(g))};["bh","ol","gear","rt"].forEach(k=>{if(!Array.isArray(o[k]))o[k]=[]});["eq","hist","mood","sleep","rel"].forEach(k=>{if(!o[k]||typeof o[k]!=="object")o[k]={}});if(!o.boss||typeof o.boss!=="object")o.boss=n.boss;return o}
+function newG(){return{nb:[],chests:1,chestLvl:null,opened:0,ol:[],gear:[],eq:{},boost:0,rt:[],hist:{},mood:{},sleep:{},rel:{}}}
+function normG(g){const n=newG();if(!g||typeof g!=="object")return n;const o={...n,...JSON.parse(JSON.stringify(g))};["ol","gear","rt"].forEach(k=>{if(!Array.isArray(o[k]))o[k]=[]});["eq","hist","mood","sleep","rel"].forEach(k=>{if(!o[k]||typeof o[k]!=="object")o[k]={}});return o}
 const RAR=[["Commun","#8a8f99"],["Rare","#2a8fd6"],["Épique","#b06ad9"],["Légendaire","#e0b030"]];
 
 const WR_SETS=[["star","Star du micro","Star du micro"],["knight","Chevalier","Paladin"],["mage","Mage","Archimage"],["king","Roi","Souverain"],["ninja","Ninja","Ombre silencieuse"]];

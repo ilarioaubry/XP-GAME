@@ -259,8 +259,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 /* — depuis principal-01.css — */
 .sync{margin-left:auto;font-size:13px;color:var(--muted);align-self:center}
 .avatar{width:128px;max-width:100%;aspect-ratio:120/140;background:var(--surface-2);display:block}
-.wallet{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:3px 12px 3px 6px}
-.wallet b{font-family:var(--f-pixel);font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
 .statlist{display:grid;gap:10px;min-width:0}
 .stat{display:grid;grid-template-columns:76px 1fr auto;gap:10px;align-items:center;font-size:15px}
 .stat .sn{font-weight:700;min-width:0}
@@ -296,7 +294,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .stat .sn{font-family:var(--f-pixel);text-transform:uppercase;letter-spacing:.04em;font-size:13px}
 .stat .sl{font-family:var(--f-pixel)}
 .avatar{border:3px solid var(--ink);border-radius:6px;box-shadow:0 0 0 3px var(--gold),0 5px 0 3px var(--rpg-shadow)}
-.wallet{border:2px solid var(--gold);border-radius:6px}
 .stat .sn{font-family:var(--f-body);font-weight:700;text-transform:none;letter-spacing:0;opacity:1}
 /* — depuis principal-02.css — */
 .settings h2{letter-spacing:.04em;line-height:1.2}
@@ -315,7 +312,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .subtabs.four{grid-template-columns:repeat(4,minmax(0,1fr))}
 .subtabs.four button{font-size:13px;padding:0 2px}
 @media (max-width:380px){.subtabs.four button{font-size:11px}}
-.me-av .avatar{width:104px}
 .avbtn{border:0;background:none;padding:0;cursor:pointer;display:block;border-radius:6px}
 .cstog{display:flex;align-items:center;gap:8px;width:100%;border:0;border-top:1px solid var(--line);background:none;padding:8px 0 0;color:var(--ink);font:inherit;font-weight:700;font-size:13px;min-height:36px;text-align:left}
 .cstog #csSum{flex:1;min-width:0;color:var(--muted);font-weight:400;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -385,11 +381,9 @@ body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 .pf .stat .sl{font-size:13px;text-align:right;white-space:nowrap}
 .pf .stat .sn{font-size:13px}
 .pf .avbtn .avatar{width:118px!important}
-.pf .wallet{width:100%;justify-content:center;padding-top:4px;padding-bottom:4px}
 @media (max-width:370px){.pf .avbtn .avatar{width:104px!important}
 .pf .cname-in{font-size:26px!important}
 .pf .stat{grid-template-columns:54px minmax(0,1fr) 32px!important}}
-.char.pf.aura-on .wallet{background:color-mix(in srgb,var(--au) 18%,var(--surface))}
 .subtabs button{position:relative;z-index:1;transition:color .25s}
 .subtabs button[aria-selected="true"]{background:transparent;box-shadow:none}
 .subtabs .stind{position:absolute;left:0;top:0;z-index:0;border-radius:5px;background:var(--gold);box-shadow:0 2px 0 var(--rpg-shadow);pointer-events:none;width:0}
@@ -479,7 +473,6 @@ html:not(#_a):not(#_b) body #pfBdg .pbs.pbt:nth-child(3) .em::after{animation-de
 @media (prefers-reduced-motion:reduce){.bpx::after{display:none}}
 :is(.char.pf.aura-on) .statlist{margin:0 -8px 0 0}
 /* — depuis principal-05.css — */
-.pf .wallet b{line-height:1}
 html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{transform-origin:50% 100%;animation:kChest 4s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{animation:none!important}}
 .pf-kpi .kp .ki .pxi{transform:none;filter:none;transform-origin:50% 100%}
@@ -504,9 +497,6 @@ html:not(#_a):not(#_b) body .bdg.new::before{display:none;content:"";position:ab
 
 #ritEdCard{display:block;overflow:hidden}
 #ritEdCard>*{max-width:100%;min-width:0}
-.wrbtn b{font-size:13px;white-space:nowrap}
-.wrbtn{gap:6px;padding:4px 6px}
-.wrbtn{color:var(--ink)}
 .wr-cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:12px 0 10px}
 .wr-cats button{min-height:40px;display:flex;align-items:center;justify-content:center;gap:5px;font-weight:800;font-size:13px;background:var(--surface);border:2px solid var(--line);color:var(--ink);padding:0 4px}
 html:not(#_a):not(#_b) body .wr-cats button em{font-style:normal;font-size:11px;color:var(--muted)}
@@ -814,7 +804,7 @@ html:not(#_a):not(#_b) body #idBox .idnx.max{border-style:solid}
 html:not(#_a):not(#_b) body #idBox .idnx.max img{filter:none;opacity:1}
 /* — depuis epure-03.css — */
 .realrc .bh3{margin:4px 0 10px}
-section.char :is(#meSet,#wallet,.wallet){display:none}
+section.char #meSet{display:none}
 html:not(#_a):not(#_b) body section.char #charTitle svg{display:none!important}
 #prjBox2 .prgo{display:none}
 html:not(#_a):not(#_b) body #chapBox .bstory{display:none!important}

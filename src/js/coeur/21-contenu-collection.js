@@ -3,9 +3,6 @@ function seed11(){if(!S.g||S.seeded.includes("s11"))return false;S.seeded.push("
   Object.values(S.profiles||{}).forEach(P=>{if(P&&P.pic&&!P.avc)delete P.pic});
   if(S.myPic&&!S.g.avc)S.myPic=null;return true}
 function seed12(){if(!S.g||S.seeded.includes("s12"))return false;S.seeded.push("s12");
-  // nouvelle économie : l'argent vient surtout des qualités. Le solde actuel ne baisse pas.
-  if(S.perLevel===2&&S.rankBonus===10){const l=levelInfo(S.xp).l,before=earnedAt(l)-qualityLevels()*(S.qPrice||0)+0;const oldE=(l-1)*2+RANKS.filter(([m])=>m>1&&l>=m).length*10;
-    S.perLevel=1;S.rankBonus=5;if(typeof S.qPrice!=="number")S.qPrice=1;const newE=earnedAt(l);if(oldE>newE)S.extraMoney=Math.round((S.extraMoney+oldE-newE)*100)/100}
   return true}
 function seed17(){if(S.seeded.includes("s17"))return false;S.seeded.push("s17");S.specials.forEach(q=>{if(q.name==="Te lever à la première alarme"){q.name="Cuisiner un vrai repas maison";q.cat="nourriture";q.xp=30}if(q.name==="10 min sans écran au réveil")q.name="20 min de marche dehors"});return true}
 const RD_REN=JSON.parse('{"Lire 10 pages au lit": "Lire au lit", "Lire 10 pages": "Lire", "Lire 15 pages": "Lire", "Lire 20 pages": "Lire", "Lire 30 pages": "Lire", "Lire les 20 premières pages": "Commencer le livre"}');
@@ -15,8 +12,8 @@ const XP_TABLE={"Avancer sur le dossier (30 min)":30,"1 h de travail concentré"
 function seed26(){if(S.seeded.includes("s26"))return false;S.seeded.push("s26");
   S.actions.forEach(a=>{const old=XP_TABLE[a.name]!=null?XP_TABLE[a.name]:durOf(a.name)?Math.max(5,durOf(a.name)):null;if(XP_NEW[a.name]!=null&&(old==null||a.xp===old||a.xp===({"Cuisiner un vrai repas":25,"Faire un masque pour le visage":15,"Préparer mon repas du lendemain":15,"Une journée sans soda":15,"Repas végétarien":10,"Se coucher avant minuit":10})[a.name]))a.xp=XP_NEW[a.name];else if(XP_NEW[a.name]==null&&![3,10,20,35].includes(a.xp))a.xp=XPE(a.xp|0);
     if(a.name==="Méditer 10 min")a.cat="soi";if(a.name==="Se brosser les dents")a.cat="soi"});
-  const G=S.g;if(G&&G.cb)Object.values(G.cb).forEach(st=>{if(st&&Array.isArray(st.s))st.s=st.s.map(t=>BOSS_FIX_TXT[t]||t)});return true}
-const BOSS_FIX_TXT={"Chercher une nouvelle coque":"Nettoyer l'écran et la coque","Laver les draps":"Ranger les vêtements de l'autre saison","Réserver le lieu de la sortie":"Choisir le lieu de la sortie","Lire":"Lire 10 pages","Écrire 3 choses positives":"Téléphone dans une autre pièce pendant 1 h"};
+  const G=S.g;if(G&&G.cb)Object.values(G.cb).forEach(st=>{if(st&&Array.isArray(st.s))st.s=st.s.map(t=>FIG_FIX_TXT[t]||t)});return true}
+const FIG_FIX_TXT={"Chercher une nouvelle coque":"Nettoyer l'écran et la coque","Laver les draps":"Ranger les vêtements de l'autre saison","Réserver le lieu de la sortie":"Choisir le lieu de la sortie","Lire":"Lire 10 pages","Écrire 3 choses positives":"Téléphone dans une autre pièce pendant 1 h"};
 function seed25(){if(S.seeded.includes("s25"))return false;S.seeded.push("s25");(S.specials||[]).forEach(q=>{if(q.grp==="family"||q.grp==="friends")q.xp=Math.max(q.xp||0,grpXp(q.grp,q.who))});return true}
 function seed24(){if(S.seeded.includes("s24"))return false;S.seeded.push("s24");const T=ritTasks();if(!T.some(t=>/raser/i.test(t.name)))T.push({id:"rbarbe",name:"Se raser la barbe",n:1,when:"matin",ev:3,ct:Date.now()});return true}
 function seed23(){if(S.seeded.includes("s23"))return false;S.seeded.push("s23");if(!S.actions.some(a=>a.name==="Faire un masque pour le visage"))S.actions.push({id:"fm"+Date.now().toString(36),name:"Faire un masque pour le visage",cat:"soi",xp:15});return true}

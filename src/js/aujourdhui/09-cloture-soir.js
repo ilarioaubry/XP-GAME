@@ -168,7 +168,7 @@ function rtmFmt(ms){const s=Math.floor(ms/1000);return Math.floor(s/60)+":"+Stri
 
 const RIT_SOIR_H=20;let sqMore=false;
 // renderSpecials : quêtes spéciales + suivi du moment (bonus « Matinée / Journée terminée ») ; l'ancien bloc des rituels est remplacé par le journal de bord (1.5b)
-function renderSpecials(){try{noBoss();smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealAuto();sleepViz()}catch(e){console.warn("dq",e)}return r}
+function renderSpecials(){try{smartQuests()}catch(e){}const r=renderSpecialsBase.apply(this,arguments);try{mealAuto();sleepViz()}catch(e){console.warn("dq",e)}return r}
 function renderSpecialsBase(){schedNow();renderBalance();
   renderGroups();ritRoll();
   const tk=dayKey(Date.now()),G=S.g,P=dayPer();
@@ -185,7 +185,7 @@ function renderSpecialsBase(){schedNow();renderBalance();
   const tot=tot0+_ml.length,left=left0+_mll.length,nd=tot-left;
   {const st=$("sqTrack"),keep=st.scrollLeft;st.innerHTML="";const qt=QS.length+DONE.length;$("sqCnt").textContent=DONE.length+"/"+qt;$("sqBox").classList.toggle("voff",!qt&&!mqActive().length);
    const SQ_MAX=99,hidN=0;
-   QS.forEach((q,qi)=>{if(!sqMore&&qi>=SQ_MAX)return;const k=dqKind(q),[lab,col,ic]=DQ_K[k]||DQ_K[""],L=q.bs&&q.bn?"Boss · "+q.bn.replace(/^(Le|La|L') ?/,""):q.dz&&lzOf(q.dz)?"Défi · "+lzOf(q.dz).n:q.dfi?"Défi · Musique":q.why||lab;
+   QS.forEach((q,qi)=>{if(!sqMore&&qi>=SQ_MAX)return;const k=dqKind(q),[lab,col,ic]=DQ_K[k]||DQ_K[""],L=q.dz&&lzOf(q.dz)?"Défi · "+lzOf(q.dz).n:q.dfi?"Défi · Musique":q.why||lab;
     const d=document.createElement("div");d.className="sq dqk"+(k==="sur"?" sur":"");d.style.setProperty("--tc",q.col||(q.dz&&lzOf(q.dz)?lzOf(q.dz).c:col));
     d.innerHTML=`<span class="sqk"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">${ic}</svg><span></span></span><span class="sqn"></span><span class="sqr"><span class="sqc">+${q.xp} XP</span><button class="btn primary" type="button">Fait</button></span>${q.grp?`<button class="sqx" type="button" aria-label="Proposer autre chose" title="Une autre">${ICO("swap",15)}</button>`:!q.sur&&!q.bq?`<button class="sqx" type="button" aria-label="Retirer la quête">${ICO("close",14)}</button>`:""}`;
     d.querySelector(".sqk span").textContent=L;d.querySelector(".sqn").textContent=q.name;{const id=(q.grp==="friends"||q.grp==="family")&&q.who?relIdea(q.who):"",fa=!id&&freeAlt(q.name);if(id||fa){const sm=document.createElement("small");sm.className="sqidea";sm.textContent=id?"Idée : "+id.charAt(0).toLowerCase()+id.slice(1):"Version gratuite : "+fa;d.querySelector(".sqn").after(sm)}}

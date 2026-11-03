@@ -27,7 +27,7 @@ function headURL(cfg,W,H,x0,dy0,sc){const c={...AV_DEF,...(cfg||{})},k=JSON.stri
   return __hdC[k]=cv.toDataURL("image/png")}
 function avPicURL(avc){return headURL(avc,20,22,6,-7,6)}
 // figurines (personnages pixel de la collection)
-function spriteSvg(kind,col,px){return px>=3?bossFrames(kind,col,px):bossSvg(kind,col,px,0)}
+function spriteSvg(kind,col,px){return px>=3?figFrames(kind,col,px):figSvg(kind,col,px,0)}
 // icônes de garde-robe
 function itemIconNew(it){if(it.s==="aura")return null;
   if(it.k==="main"&&window.chItemIcon){const I=chItemIcon(it.o)||(typeof FIGI!=="undefined"&&FIGI[it.o]);if(I){const cv=document.createElement("canvas");cv.width=cv.height=16;const g=cv.getContext("2d");I.rows.forEach((r,y)=>[...r].forEach((ch,x)=>{const c=I.pal[ch];if(c){g.fillStyle=c;g.fillRect(x,y,1,1)}}));return cv.toDataURL()}}

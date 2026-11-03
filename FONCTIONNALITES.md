@@ -104,4 +104,6 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 
 ## Retiré (phase 1 et 2)
 
+Restes de boss et d'euros (03/11, 6.4) : icônes et couleurs des badges de boss jamais attribués, ancienne barre de boss, porte-monnaie caché, calcul de l'argent gagné et du solde, ajout d'euros dans les bonus, bouton de test « +20 € ». Le coffre spécial s'appelle « coffre doré » dans le code et marche comme avant.
+
 Synchronisation avec le compte Claude, Spotify, fonctions qui appelaient Claude, boss (semaine, catégories, Noël, assiette), compétences musique et onglet « Domaines », dans Bilan : Mon chemin / Sommeil / Humeur de l'année / Mes rituels / Ma semaine / Records / Journal, Rappels (Proches), ancien Projets, frise de la journée, objectif du jour et badge « Objectif tenu » (01/11). Les données correspondantes restent dans la sauvegarde (voir DONNEES.md).

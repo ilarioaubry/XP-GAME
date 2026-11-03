@@ -75,7 +75,7 @@ function renderJournal(){
       if(e.fr&&(ug==="friends"||ug==="family")&&S.bonds[e.who]!=null)S.bonds[e.who]=Math.max(0,S.bonds[e.who]-e.xp);
       if(e.fr){S.specials=S.specials.filter(q=>q.grp!==ug);S[GROUPS[ug].done]=S[GROUPS[ug].done].filter(n=>n!==e.who)}
       S.specials.unshift({id:e.a,name:e.name,cat:e.cat,xp:e.xp,...(e.fr?{grp:ug,who:e.who}:{}),...(e.bd?{bd:e.who}:{}),...(e.sur?{sur:e.sur}:{}),...(e.gift&&e.sp?{gift:e.gift,d:dayKey(Date.now())}:{}),...(e.dzq?{dz:e.dzq,lzs:e.dzq}:{})});if(e.bq)S.g.bqDone="";if(e.sur)S.g.surDone="";if(e.bd)delete S.bdDone[e.who];
-    }if(e.eur)S.extraMoney=Math.round(Math.max(0,S.extraMoney-e.eur)*100)/100;if(e.dayb)S.daily.bonusDay="";if(e.sk){const k=S.skills.find(x=>x.id===e.sk);if(k)k.xp=Math.max(0,k.xp-e.xp)}if(e.ep){const ep=S.epics.find(x=>x.id===e.ep.e);if(ep&&ep.steps[e.ep.i]){ep.steps[e.ep.i].done=false;ep.finished=false}}const uc=catOf(e);if(uc)S.stats[uc]=Math.max(0,(S.stats[uc]||0)-e.xp);recomputeDays();save();render();toast(`−${e.xp} XP · « ${esc(e.name)} » annulé`)};
+    }if(e.dayb)S.daily.bonusDay="";if(e.sk){const k=S.skills.find(x=>x.id===e.sk);if(k)k.xp=Math.max(0,k.xp-e.xp)}if(e.ep){const ep=S.epics.find(x=>x.id===e.ep.e);if(ep&&ep.steps[e.ep.i]){ep.steps[e.ep.i].done=false;ep.finished=false}}const uc=catOf(e);if(uc)S.stats[uc]=Math.max(0,(S.stats[uc]||0)-e.xp);recomputeDays();save();render();toast(`−${e.xp} XP · « ${esc(e.name)} » annulé`)};
     ul.appendChild(li);
   });
 }
@@ -83,7 +83,7 @@ function renderJournal(){
 const viewDirty={q:true,c:true,r:true,p:true,b:true,s:true};
 const VIEW_R={
   q:()=>{renderRituals();renderXm();renderSpecials();renderLife();renderEvents();renderActCards();renderJournal();renderActList();try{if(typeof renderEng==="function")renderEng()}catch(e){}try{if(typeof renderJdb==="function")renderJdb()}catch(e){console.warn("jdb",e)}},
-  c:()=>{try{renderPal()}catch(e){console.warn("pal",e)}renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();renderMe();try{VIEW_R.s()}catch(e){}},
+  c:()=>{try{renderPal()}catch(e){console.warn("pal",e)}renderChap();renderWardrobe();renderCollection();renderShow();renderKpi();renderBilan();renderIdentity();renderEquip();try{VIEW_R.s()}catch(e){}},
   r:()=>{renderRelations()},
   p:()=>{renderRelations();renderProfile()},
   

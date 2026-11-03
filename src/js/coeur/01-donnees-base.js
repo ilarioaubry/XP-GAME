@@ -62,12 +62,6 @@ const bondTitle=l=>l>=8?"Ami de toujours":l>=5?"Ami proche":l>=3?"Pote":"Connais
 function statInfo(xp){let l=1,r=xp;while(r>=statNeed(l)){r-=statNeed(l);l++}return{l,cur:r,need:statNeed(l)}}
 const catOf=e=>e.cat||(S.actions.find(a=>a.id===e.a)||{}).cat||((e.a==="s0"||e.a==="s1")?"soi":null);
 function deriveStats(){const s={};S.log.forEach(e=>{const c=catOf(e);if(c)s[c]=(s[c]||0)+e.xp});return s}
-const eur=n=>(Math.round(n*100)/100).toLocaleString("fr-FR",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+" €";
-// Argent gagné : (niveau-1) × montant par niveau + un bonus pour chaque rang débloqué après Novice
-const qualityLevels=()=>STAT_KEYS.reduce((a,k)=>a+statInfo(S.stats[k]||0).l-1,0);
-const earnedAt=l=>(l-1)*S.perLevel+RANKS.filter(([min])=>min>1&&l>=min).length*S.rankBonus+qualityLevels()*(S.qPrice||0);
-const spentTotal=()=>S.spent.reduce((a,s)=>a+s.price,0);
-const balance=()=>earnedAt(levelInfo(S.xp).l)+S.extraMoney-spentTotal();
 let filter="all",dirty=false,saveTimer=null;
 const $=id=>document.getElementById(id);
 

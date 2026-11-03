@@ -226,7 +226,6 @@ html:not(#_a):not(#_b) body :is(.char.pf.aura-on,.fpf.aura-on) .fp-when{display:
 .char.pf:not(.fpf) .pf-body{align-items:stretch}
 .char.pf:not(.fpf) .pf-side{grid-template-rows:auto 1fr}
 /* — depuis principal-05.css — */
-.char.pf:not(.fpf) .pf-side .wallet{height:auto;min-height:35px;align-self:stretch}
 html:not(#_a):not(#_b) body #ritEdCard .frform{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px}
 html:not(#_a):not(#_b) body #ritEdCard .frform>*{min-width:0}
 html:not(#_a):not(#_b) body #ritEdCard .frform button{grid-column:1/-1}

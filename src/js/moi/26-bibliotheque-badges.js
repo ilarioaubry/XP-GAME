@@ -1,4 +1,4 @@
-// ---- conditions des badges dont la fonction d'origine a disparu (boss, humeur, bilan repas, skill Sons, défis)
+// ---- conditions des badges dont la fonction d'origine a disparu (humeur, bilan repas, skill Sons, défis)
 // ---- Bibliothèque : une étagère façon bloc de Minecraft, un livre de plus à chaque livre fini
 const LIB_PAL=[["#8b2f2f","#4e1717","#c25a5a"],["#2f5d8b","#16304a","#5a93c2"],["#2f8b4a","#154a26","#5ac27a"],["#8b6b2f","#4a3716","#c2a15a"],["#6a2f8b","#361647","#a35ac2"],["#8b4a2f","#4a2416","#c2795a"],["#2f8b8b","#164a4a","#5ac2c2"],["#c9a227","#6e5610","#f4d767"],["#4a4f58","#1f2227","#80868f"],["#8b2f5e","#4a1632","#c25a8d"]];
 const libHash=s=>{let h=5381;for(const c of String(s||""))h=(h*33^c.charCodeAt(0))>>>0;return h};
@@ -40,7 +40,6 @@ function libBind(box){const G=S.g,BK=G.books||[],cur=G.book,info=box.querySelect
     info.innerHTML=`<div class="libpop"><small>${c?"En cours":"Livre lu"}</small><h4></h4><ul>${rows}</ul></div>`;info.querySelector("h4").textContent=b.t;sfx&&sfx("coin")};
   box.querySelectorAll(".bk").forEach(g=>{g.onclick=()=>show(g);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();show(g)}}})}
 
-function bgPrjWon(){return((S.g&&S.g.prj)||[]).filter(p=>p.won).length}
 function bgClutch(){const F={};for(const e of S.log){if(!(e.xp>0)||e.bonus)continue;const k=dayKey(e.t);if(F[k])continue;F[k]=1;if(new Date(e.t).getHours()>=21)return true}return false}
 function bgMealDays(){const G=S.g||{},D=new Set();Object.keys(G.mb||{}).concat(Object.keys(G.mbd||{})).forEach(k=>D.add(k.split(":")[0]));let n=0;D.forEach(d=>{if(["matin","soir"].every(per=>MB[per].every(([k])=>{const b=(G.mb||{})[d+":"+per],dr=(G.mbd||{})[d+":"+per],m=(b&&b.m)||(dr&&dr.m)||{};return m[k]===1})))n++});return n}
 function bgMusic(){const R=/musique|\bsons?\b|beat|instru|guitare|piano|chant|couplet|morceau|studio|jam|freestyle|maquette/i;return S.log.filter(e=>e.xp>0&&(/^son\b/.test(e.lz||"")||R.test(e.name||""))).length}
@@ -132,7 +131,7 @@ function checkBadges(){
 const BFAM=[["prog","Progression"],["reg","Régularité"],["vie","Vie quotidienne"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 // famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
 function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
-function famOfBase(id){return/^(fam10|menage30|contrat1|prj1|anc1)$/.test(id)?"vie":/^(rank|first|stat|eau3|food3|pal)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+function famOfBase(id){return/^(fam10|menage30|contrat1|prj1|anc1)$/.test(id)?"vie":/^(rank|first|stat|eau3|food3|pal)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];
@@ -146,7 +145,6 @@ function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   else if(id==="gn120")r=[(S.g.gn||{}).rec||0,120];else if(id==="run42")r=[Math.round(Math.max(0,...Object.values((S.g.run&&S.g.run.m)||{}))),42];else if(id==="zen60")r=[Math.max(0,...Object.values((S.g.md&&S.g.md.m)||{})),60];
   else if(id==="book1"||id==="book5")r=[(S.g.books||[]).length,id==="book1"?1:5];
   else if(id==="buy1")r=[wrSetsDone().length,1];else if(id==="buy5")r=[wrOwned(),25];else if(id==="buy15")r=[wrOwned(),50];
-  else if(id==="boss4")r=[bgPrjWon(),4];
   else if(/^out(\d+)/.test(id))r=[Object.keys(S.g.rel).length,+id.slice(3)];
   else if(id==="sleep7")r=[Object.values(S.g.sleep).filter(x=>x.h>=7).length,7];
   else if(id==="mood30")r=[Object.keys(S.g.mood||{}).length,30];else if(id==="clean7")r=[bgMealDays(),7];
@@ -189,7 +187,7 @@ const QHEX={sport:"#e8382f",perso:"#f08300",social:"#00a3a3",famille:"#4a55f5",m
 function badgeColor(b){const id=b.id;if(bShape(b)==="heart")return"#e3263a";if(/^stat5/.test(id))return QHEX[id.slice(5)]||"#5b6ee1";
   return({first:"#36b679",stat10:"#b06ad9",eau3:QHEX.eau,food3:QHEX.nourriture,veg7:"#4fb84a",streak3:"#ff7a1a",streak7:"#ff5a1a",streak30:"#e8382f",perfect:"#f0b62e",sleep7:"#5b4fc8",mood30:"#e05a9a",
     bond1:"#f08cc0",bond3:"#e05a9a",bond5:"#d63b5b",circle:"#00a3a3",bday:"#e8406a",skill1:"#f08300",skill3:"#f08300",chall:"#2f9a5a",out1:"#c2185b",out3:"#c2185b",out12:"#c2185b",lz5:"#8a4fd0",lz3x3:"#36b679",
-    buy1:"#e0b030",buy5:"#e0b030",buy15:"#e0b030",boss1:"#8a2a2a",boss4:"#8a2a2a",chest1:"#a0662e",gear4:"#4cc9f0",legend:"#ff9f1a"})[id]||(/^rank/.test(id)?"#5b6ee1":"#5b6ee1")}
+    buy1:"#e0b030",buy5:"#e0b030",buy15:"#e0b030",chest1:"#a0662e",gear4:"#4cc9f0",legend:"#ff9f1a"})[id]||(/^rank/.test(id)?"#5b6ee1":"#5b6ee1")}
 /* Pixel Clair — badges (32x32) & badge icons (16x16).
    window.bdgPx(b, locked) -> {W:32,H:32,px}   b = {id, t, fam, ic}
    window.bdgIcon(id)      -> {W:16,H:16,px}

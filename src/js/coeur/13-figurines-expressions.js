@@ -10,31 +10,31 @@
 //
 // Animation d'attente (2 frames, à coller dans la feuille de style) :
 /*
-.bossani{position:relative;display:inline-block;line-height:0;vertical-align:middle}
-.bossani svg{display:block}
-.bossani .f1{position:absolute;left:0;top:0}
-.bossani svg{animation:bossBlink 1.1s steps(1,end) infinite}
-.bossani .f1{animation-delay:-.55s}
-@keyframes bossBlink{0%{visibility:visible}50%{visibility:hidden}}
-@media (prefers-reduced-motion:reduce){.bossani svg{animation:none}.bossani .f1{visibility:hidden}}
+.figani{position:relative;display:inline-block;line-height:0;vertical-align:middle}
+.figani svg{display:block}
+.figani .f1{position:absolute;left:0;top:0}
+.figani svg{animation:figBlink 1.1s steps(1,end) infinite}
+.figani .f1{animation-delay:-.55s}
+@keyframes figBlink{0%{visibility:visible}50%{visibility:hidden}}
+@media (prefers-reduced-motion:reduce){.figani svg{animation:none}.figani .f1{visibility:hidden}}
 */
-const BOSS_FIX={o:"#24182c",w:"#ffffff",k:"#120c16",m:"#8a2a3a",t:"#ffffff",g:"#f0c040",c:"#f4ead2",d:"#cbb994",p:"#ff8aa0"};
-function bossMix(a,b,t){
+const FIG_FIX={o:"#24182c",w:"#ffffff",k:"#120c16",m:"#8a2a3a",t:"#ffffff",g:"#f0c040",c:"#f4ead2",d:"#cbb994",p:"#ff8aa0"};
+function figMix(a,b,t){
   const h=x=>{x=String(x).replace("#","");if(x.length===3)x=x.split("").map(c=>c+c).join("");const n=parseInt(x,16)||0;return[n>>16&255,n>>8&255,n&255]};
   const A=h(a),B=h(b);return"#"+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,"0")).join("");
 }
-function bossSvg(kind,col,px,fr){
-  const frames=BOSS2[kind]||BOSS2.slime,G=frames[(fr|0)%frames.length];
+function figSvg(kind,col,px,fr){
+  const frames=FIG2[kind]||FIG2.slime,G=frames[(fr|0)%frames.length];
   col=col||"#5fae4f";px=px||4;
-  const pal=Object.assign({"#":bossMix(col,"#000",0),s:bossMix(col,"#000",.25),l:bossMix(col,"#fff",.3)},BOSS_FIX);
+  const pal=Object.assign({"#":figMix(col,"#000",0),s:figMix(col,"#000",.25),l:figMix(col,"#fff",.3)},FIG_FIX);
   let r="";
   for(let y=0;y<16;y++){const row=G[y];let x=0;
     while(x<20){const ch=row[x];if(ch==="."){x++;continue}let e=x+1;while(e<20&&row[e]===ch)e++;
       r+=`<rect x="${x}" y="${y}" width="${e-x}" height="1" fill="${pal[ch]||col}"/>`;x=e}}
   return`<svg viewBox="0 0 20 16" width="${px*10}" height="${px*8}" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
 }
-function bossFrames(kind,col,px){
-  return`<span class="bossani">${bossSvg(kind,col,px,0)}${bossSvg(kind,col,px,1).replace("<svg ",'<svg class="f1" ')}</span>`;
+function figFrames(kind,col,px){
+  return`<span class="figani">${figSvg(kind,col,px,0)}${figSvg(kind,col,px,1).replace("<svg ",'<svg class="f1" ')}</span>`;
 }
 
 // ---- expressions du corps (humeur, fatigue, bâillement)

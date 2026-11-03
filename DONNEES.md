@@ -24,7 +24,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 | `friends`, `family`, `friendDone`, `familyDone`, `profiles`, `bonds`, `bondsLast`, `bdDone` | Proches : listes, fiches, niveau de lien, anniversaires faits. Fiche : `profiles[n].giftl` = liste des idées cadeau (ajout du 02/11) ; `profiles[n].gifts` reste la première idée, lue par le suivi Idée → Acheté → Offert |
 | `stats`, `badges`, `badgesInit` | Compteurs par catégorie, badges obtenus |
 | `skills`, `snd`, `musicDone` | Compétences (musique) — **héritée ?** (sous-onglet jamais affiché) |
-| `wishes`, `spent`, `qPrice`, `extraMoney` | Envies et dépenses d'XP — **?** |
+| `wishes`, `spent`, `qPrice`, `extraMoney` | Envies et argent (euros) — **héritée** : plus aucun code ne les lit ni ne les modifie depuis le 03/11 (gardées dans la sauvegarde) |
 | `dayLimit`, `seeded` | Réglage de limite quotidienne, contenu initial posé |
 | `g` | Toutes les données ajoutées depuis : voir ci-dessous |
 
@@ -153,7 +153,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 ### Héritées (fonctionnalités retirées ou cachées) — à trancher en phase 2
 | Clé | Fichiers | Contenu |
 |---|---|---|
-| `boss`, `bh`, `cbE`, `cb` | 02, 21, 23, 24, 29 | Boss de la semaine (code désactivé par `if(false&&…)`), historique, boss par catégorie |
+| `boss`, `bh`, `cbE`, `cb` | 02, 21, 23, 24, 29 | Boss de la semaine, historique, boss par catégorie — code retiré le 03/11 ; plus créées dans les nouvelles sauvegardes |
 | `bqDone`, `bsDone`, `bsDoneP` | 02, 09, 29 | Quêtes de boss de la semaine / de séance |
 | `xm`, `xmh` | 04, 05 | Noël (calendrier, historique) |
 | `pj`, `pjd`, `pjf` | 22 | Ancien système de projets (`PJ_XP`, `PJ_BONUS` jamais utilisés) |

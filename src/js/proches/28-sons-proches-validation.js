@@ -542,7 +542,7 @@ function jokCheck(){const G=S.g;if(!G)return;if(typeof G.jok!=="number")G.jok=0;
 function streakLine(){const G=S.g,P=protDays(),F=new Set([...S.days,...P]),s=streak(),best=Math.max(bestRun(new Set(S.days)),s),l40=lastN(F,40);
   return`Série ${s} j · record ${best} j · actif ${l40} jours sur 40${G&&G.jok?` · ${G.jok} joker${G.jok>1?"s":""}`:""}`}
 const STREAK_MS=[[7,1],[30,2],[100,3]];
-function addBonus(name,xp,eurAmt,flag){if(xp>0)xp=Math.min(xp,50);S.xp+=xp;if(eurAmt)S.extraMoney=Math.round((S.extraMoney+eurAmt)*100)/100;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(eurAmt?{eur:eurAmt}:{}),...(flag?{[flag]:1}:{})})}
+function addBonus(name,xp,_,flag){if(xp>0)xp=Math.min(xp,50);S.xp+=xp;S.log.push({a:"bonus",cat:null,name,xp,t:Date.now(),bonus:1,...(flag?{[flag]:1}:{})})}
 function streakBonusCheck(){
   const n=streak();let msg="";
   STREAK_MS.forEach(([m,xp])=>{

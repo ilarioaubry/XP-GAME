@@ -10,7 +10,7 @@ const XM_ADV=[
 const XM_RES={lect:["Lire 10 pages","soir"],sport:["10 pompes","matin"],run:["10 min de marche rapide","matin"],art:["Écrire 4 lignes de texte","soir"],ami:["Envoyer un message à un proche","soir"],reg:["Faire mon lit","matin"],zen:["Méditer 5 min","matin"],org:["Préparer mes affaires pour demain","soir"],pro:["Noter ma priorité du jour","matin"],sante:["Boire un grand verre d'eau","matin"]};
 function xmY(){const d=new Date();return d.getMonth()===0?d.getFullYear()-1:d.getFullYear()}
 function xmPhase(){const d=new Date(),m=d.getMonth(),dd=d.getDate();if(m===11&&dd<=26)return"noel";if(m===11||(m===0&&dd<=7))return"an";return""}
-function xmS(){const G=S.g,y=xmY();if(!G.xm||G.xm.y!==y)G.xm={y,list:{},sel:0,ss:{},adv:{},cu:{},boss:{},wish:{},res:null,recap:0};const X=G.xm;["list","ss","adv","cu","boss","wish"].forEach(k=>{if(!X[k]||typeof X[k]!=="object")X[k]={}});return X}
+function xmS(){const G=S.g,y=xmY();if(!G.xm||G.xm.y!==y)G.xm={y,list:{},sel:0,ss:{},adv:{},cu:{},wish:{},res:null,recap:0};const X=G.xm;["list","ss","adv","cu","wish"].forEach(k=>{if(!X[k]||typeof X[k]!=="object")X[k]={}});return X}
 function xmDec(){const d=new Date();return d.getMonth()===11?d.getDate():0}
 function xmLeft(){const d=new Date();d.setHours(0,0,0,0);return Math.round((new Date(d.getFullYear(),11,24)-d)/864e5)}
 function xmCanGive(){const d=new Date();return(d.getMonth()===11&&d.getDate()>=24)||(d.getMonth()===0&&d.getDate()<=7)}

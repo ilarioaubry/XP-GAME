@@ -40,7 +40,6 @@ var HEART9=[".rrr.rrr.","rqrrrrrrr","rqrrrrrrr","rrrrrrrrr",".rrrrrrr.","..rrrrr
 
 var STAR7=["...y...","..yyy..","yyyyyyy",".yyyyy.","..yyy..",".yy.yy.",".y...y."];
 var SPARK=[".h.","hwh",".h."];
-var SLIME7=["...e...","..eee..",".eeeee.","ewoewoe","eeeeeee",".eeeee."];
 var BUST=[".bbb.","bbbbb","bsssb",".sos.","..s..",".uuu.","uuuuu","uuuuu"];
 var BUST2=[".bbb.","bbbbb","bosob",".sss.",".uuu.","uuuuu","uuuuu"];
 
@@ -529,22 +528,6 @@ book5:{L:[
  [["eeeeeeeeeew","eyeeeeeeeew"],2,6],
  [["rrrrrrrrrrrw","rrryrrrrrrrw"],0,9],
  [["vvvvvvvvvvw","vvvvyvvvvvw"],1,12]]},
-bossrev:{f:function(){var g=grid(14,14);
-  var S=[
-  "...........nm",
-  "..........nmM",
-  ".........nmM.",
-  "........nmM..",
-  ".......nmM...",
-  "......nmM....",
-  "..Y..nmM.....",
-  "..YYnmM......",
-  "...YYM.......",
-  "..bbYY.......",
-  ".bb..Y.......",
-  "gb...........",
-  "g............"];
-  put(g,0,0,S);put(g,1,0,mirror(S).map(function(r){return r.replace(/M/g,'m');}));return toRows(g);} ,sh:0},
 clean7:{L:[[[
 ".......eeeee",
 ".....eeeeeee",
@@ -558,20 +541,6 @@ clean7:{L:[[[
 "..Eeeeee....",
 ".E.eee......",
 "E..........."],2,1],[["..h..",".hwh.","hwwwh",".hwh.","..h.."],0,0]]},
-bossleg:{r:[ // horned skull with glowing eyes
-"t............t",
-"tt..........tt",
-".tt.wwwwww.tt.",
-"..twwwwwwwwt..",
-"..wwwwwwwwww..",
-".wwwwwwwwwwww.",
-".wwoooowooooww".slice(0,14),
-".wworowwworoww".slice(0,14),
-".wwoooowwoooww",
-"..wwwwwoowwww.",
-"...wwwwwwwww..",
-"...wowowowow..",
-"....wwwwwww..."]},
 clutch:{r:[ // hourglass
 "lllllllllll",
 ".iiiiiiiii.",
@@ -809,20 +778,6 @@ buy15:{r:[ // wardrobe
 "lttttllttttl",
 "llllllllllll",
 "ll........ll"]},
-boss1:{r:[ // slime
-"......e......",
-".....eee.....",
-"....eeeee....",
-"...eefeeee...",
-"..eefeeeeee..",
-".eeeeeeeeeee.",
-".eewoeeewoee.",
-"eeewoeeewoeee",
-"eeeeeeeeeeeee",
-"eeeeerrreeeee",
-"eeeeeeeeeeeee",
-".eeeeeeeeeee."]},
-boss4:{L:[[recol(SLIME7,{e:'v'}),0,1],[recol(SLIME7,{e:'u'}),7,1],[recol(["....e....","...eee...","..eeeee..",".eeeeeee.","eewoeewoe","eewoeewoe","eeeeeeeee","eeerrreee",".eeeeeee."],{e:'r',r:'k'}),2,5]]},
 chest1:{r:[ // treasure chest
 "..llllllllll..",
 ".lgllllllllgl.",
@@ -928,11 +883,11 @@ var FILL={
  eau3:'#2c62c8',food3:'#9a5a26',veg7:'#2f8a3a',
  streak3:'#c4502a',streak7:'#a83634',streak30:'#7a2a4a',clean7:'#2f8a9a',perfect:'#3f9ae0',sleep7:'#5b4fc8',mood30:'#e05a9a',
  bond1:'#ef6aa4',bond3:'#d84a70',bond5:'#b8325a',bond20:'#8e2a5a',circle:'#2fa0a0',loyal:'#7f56d0',reunion:'#e07a3a',grp1:'#3a9a5a',grptour:'#3a72d0',bday:'#5ab0e0',
- pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',bossrev:'#a83a3a',
+ pu100:'#b0453a',pu30:'#4f5fb8',pu500:'#6a3f8a',gn120:'#2f8f86',run42:'#e07a2a',zen60:'#7a5ad0',book1:'#3a7ac0',book5:'#8a5a3a',
  plveg:'#3a9a4a',plchef:'#c8a030',plfast:'#e0702a',
- bossleg:'#4a3a6a',clutch:'#5f6fb8',lucky3:'#2f6f8a',secret1:'#5a4a8a',rest1:'#2a3a7a',
+ clutch:'#5f6fb8',lucky3:'#2f6f8a',secret1:'#5a4a8a',rest1:'#2a3a7a',
  skill1:'#f08300',skill3:'#3a6ab0',chall:'#2f9a5a',out1:'#c2185b',out3:'#9a1a6a',out12:'#6a1a4a',lz5:'#8a4fd0',lz3x3:'#36b679',
- buy1:'#3aa0c0',buy5:'#7a5ac8',buy15:'#3f8a6a',boss1:'#8a2a2a',boss4:'#4a2a5a',chest1:'#3a7a9a',gear4:'#4cc9f0',legend:'#ff9f1a'
+ buy1:'#3aa0c0',buy5:'#7a5ac8',buy15:'#3f8a6a',chest1:'#3a7a9a',gear4:'#4cc9f0',legend:'#ff9f1a'
 };
 
 /* ---------- frame silhouettes ---------- */

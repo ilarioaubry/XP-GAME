@@ -1,5 +1,5 @@
 // ---- Figurines (anciens personnages par catégorie, gardés pour la collection), objets, coffres, quêtes du jour
-const CB_LIST=[];Object.entries(BOSS_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
+const CB_LIST=[];Object.entries(FIG_CAT).forEach(([cat,L])=>L.forEach((b,i)=>{const[id,n,sp,col,th,steps]=b;const o={id,n,sp,col,th,steps,cat,i};CB_LIST.push(o);
   AV_OPT.main.push("Figurine : "+n);const idx=AV_OPT.main.length-1;o.fi=idx;AV_MAIN[idx]=[SPRITES[sp],{"#":col,o:"#fff",x:"#1a1a1a"},20,26];
   GEAR.push({id:"fig_"+id,s:"main",k:"main",o:idx,n:"Figurine : "+n.replace(/^(Le|La|L') ?/,""),r:3,ex:"Finir le projet « "+th+" »"});
   AV_OPT.main.push("Figurine dorée : "+n);const gi=AV_OPT.main.length-1;o.gi=gi;AV_MAIN[gi]=[SPRITES[sp],{"#":"#f2c230",o:"#fff",x:"#1a1a1a"},20,26];
@@ -35,7 +35,7 @@ let gameMsgs=[];
 function gameTick(){
   if(!S.g)S.g=newG();const G=S.g,now=Date.now();let ch=false;
   syncHist();
-  // anciennes quêtes de boss encore présentes : retirées ; quêtes du jour périmées : retirées
+  // anciennes quêtes (données d'avant) encore présentes : retirées ; quêtes du jour périmées : retirées
   S.specials=S.specials.filter(q=>{if(q.bq){ch=true;return false}if(q.bs){ch=true;return false}if(q.sur&&q.sur!==dayKey(now)){ch=true;return false}return true});
 
   // quête surprise du jour (XP doublé, valable aujourd'hui seulement)
@@ -59,11 +59,11 @@ function gameTick(){
   return ch;
 }
 function rollLoot(kind){
-  const G=S.g,own=new Set(G.gear),boss=kind==="boss";
+  const G=S.g,own=new Set(G.gear),dore=kind==="dore";
   const pool=GEAR.filter(x=>!x.ex&&!own.has(x.id)).map(x=>({k:"gear",it:x,r:x.r})).concat(RARE_TITLES.filter(t=>!G.rt.includes(t)).map(t=>({k:"title",t,r:2})));
   if(!pool.length){addBonus("Coffre : collection complète",50,0);return{k:"xp",r:3,txt:"+50 XP",sub:"Ta collection est complète !",col:RAR[3][1]}}
-  const W=boss?[0,0,75,25]:[55,30,12,3];let p=Math.random()*W.reduce((a,b)=>a+b,0),rr=0;for(let i=0;i<4;i++){if((p-=W[i])<=0){rr=i;break}}
-  const order=boss?[rr,rr===3?2:3,1,0]:[rr,rr-1,rr-2,rr-3,rr+1,rr+2,rr+3].filter(x=>x>=0&&x<=3);
+  const W=dore?[0,0,75,25]:[55,30,12,3];let p=Math.random()*W.reduce((a,b)=>a+b,0),rr=0;for(let i=0;i<4;i++){if((p-=W[i])<=0){rr=i;break}}
+  const order=dore?[rr,rr===3?2:3,1,0]:[rr,rr-1,rr-2,rr-3,rr+1,rr+2,rr+3].filter(x=>x>=0&&x<=3);
   let cand=[];for(const r of order){cand=pool.filter(x=>x.r===r);if(cand.length)break}
   const c=cand[Math.floor(Math.random()*cand.length)];
   if(c.k==="title"){G.rt.push(c.t);return{k:"title",r:2,txt:"« "+c.t+" »",sub:RAR[2][0]+" · nouveau titre",col:RAR[2][1]}}
@@ -76,13 +76,13 @@ const CHEST2=b=>`<svg class="cx" viewBox="0 0 32 30" width="160" height="150" sh
 <g class="cx-lid"><rect x="2" y="5" width="28" height="9" fill="#a8703a"/><rect x="2" y="3" width="28" height="2" fill="${b?"#b06ad9":"#e0b030"}"/><rect x="0" y="5" width="2" height="9" fill="${b?"#b06ad9":"#e0b030"}"/><rect x="30" y="5" width="2" height="9" fill="${b?"#b06ad9":"#e0b030"}"/><rect x="13" y="9" width="6" height="5" fill="${b?"#b06ad9":"#e0b030"}"/><rect x="4" y="7" width="20" height="1" fill="#c48a4a"/></g></svg>`;
 function lxBurst(fx,n,col,big){const C=[col,"#f2c94c","#fff6c8",col,"#ffffff"];for(let i=0;i<n;i++){const p=document.createElement("i");const a=Math.random()*Math.PI*2,d=(big?140:90)+Math.random()*(big?160:90);p.style.setProperty("--dx",Math.cos(a)*d+"px");p.style.setProperty("--dy",Math.sin(a)*d-40+"px");p.style.setProperty("--c",C[i%C.length]);p.style.setProperty("--s",(4+Math.floor(Math.random()*3)*2)+"px");p.style.animationDelay=Math.random()*.08+"s";fx.appendChild(p)}setTimeout(()=>{fx.innerHTML=""},1600)}
 function openChest(kind){
-  const G=S.g;kind=kind==="boss"||(!G.chests&&G.bchests)?"boss":"day";if(kind==="boss"){if(!G.bchests)return;G.bchests--}else{if(!G.chests)return;G.chests--}G.opened++;
+  const G=S.g;kind=kind==="dore"||(!G.chests&&G.bchests)?"dore":"day";if(kind==="dore"){if(!G.bchests)return;G.bchests--}else{if(!G.chests)return;G.chests--}G.opened++;
   const res=rollLoot(kind),r=res.r|0;G.ol.push({t:Date.now(),k:res.k});if(G.ol.length>200)G.ol=G.ol.slice(-200);save();
   let ov=$("lootOv");if(!ov){ov=document.createElement("div");ov.id="lootOv";document.body.appendChild(ov)}ov.className="lootov lx-ov";
   const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  ov.innerHTML=`<div class="lx r${r}${kind==="boss"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="boss"?"Coffre spécial":"Coffre"}" style="--lc:${res.col}">
+  ov.innerHTML=`<div class="lx r${r}${kind==="dore"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="dore"?"Coffre spécial":"Coffre"}" style="--lc:${res.col}">
     <div class="lx-rays"></div><div class="lx-flash"></div>
-    <div class="lx-stage"><span class="lx-kind">${kind==="boss"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="boss")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
+    <div class="lx-stage"><span class="lx-kind">${kind==="dore"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="dore")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
     <div class="lx-loot" hidden><em class="lrar">${RAR[r][0]}</em><span class="lk">${res.k==="gear"?itemImg(res.it,96):pxImg("check",6)}</span><b></b><small></small><button class="btn primary" type="button">Super !</button></div>
     <div class="lx-fx"></div></div>`;
   ov.querySelector(".lx-loot b").textContent=res.txt;ov.querySelector(".lx-loot small").textContent=res.sub;ov.hidden=false;
@@ -98,7 +98,7 @@ function openChest(kind){
 }
 function renderGame(){
   const box=$("gameBox");if(!box)return;const G=S.g;
-  const nc=(G.chests||0)+(G.bchests||0);box.innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" bossc":""}" id="chestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";
+  const nc=(G.chests||0)+(G.bchests||0);box.innerHTML=nc?`<button type="button" class="gcard chestb${G.bchests?" dorec":""}" id="chestBtn"><span class="cic">${CHEST_SVG}</span><span><b>${G.bchests?"Coffre spécial":nc>1?nc+" coffres à ouvrir":"Un coffre à ouvrir"}</b><small>${G.bchests?"Objet épique garanti":"Un nouvel objet"}</small></span><span class="go">Ouvrir</span></button>`:"";
   box.classList.toggle("gempty",!box.innerHTML);
   const cb=$("chestBtn");if(cb)cb.onclick=openChest;
 }

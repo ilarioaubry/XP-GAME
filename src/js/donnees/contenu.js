@@ -1,4 +1,4 @@
-// Données : identités, films, groupes de rituels, figurines (IDS, FILMS, RIT_G, BOSS2). Pas de code ici.
+// Données : identités, films, groupes de rituels, figurines (IDS, FILMS, RIT_G, FIG2). Pas de code ici.
 const IDS=[
  {id:"lect",n:"Lecteur",c:"#b5512e",ic:"book",cats:[],k:["lire","livre"],d:"Lire chaque semaine, finir des livres.",st:[
   ["Tu ouvres des livres","pages",30,"Tes 30 premières pages. Tout lecteur a commencé exactement comme ça."],
@@ -61,7 +61,7 @@ const RIT_G={
  creer:[["Écrire 4 lignes","note","soir"],["Dessiner 5 min","pinceau","soir"],["Faire un peu de son","micro","soir"],["Prendre une photo","photo","matin"]],
  apprendre:[["Une leçon de langue","bulle","matin"],["Un nouveau mot","ampoule","matin"],["Réviser 10 min","ampoule","soir"]],
  proches:[["Envoyer un message à un proche","tel","soir"],["Appeler un proche","tel","soir"],["Dire un mot gentil","coeur","matin"]]};
-const BOSS2={
+const FIG2={
 slime:[[
   ".........oo.........",
   "........o##o........",

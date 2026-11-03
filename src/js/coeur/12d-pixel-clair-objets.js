@@ -317,9 +317,9 @@ ICON[62]=()=>{const q=grid();
   q.p(6,8,["ee....ee","eEe..eEE",".E....E."]);q.s(9,9,"b");q.s(10,9,"b");q.s(10,10,"B");
   return q.out({r:"#d8343c",R:"#a02232",l:"#f06a72",w:"#fbf6ee",W:"#d8d2c8",e:"#4caf50",E:"#2e7d32",b:"#ff5a64",B:"#a02232"})};
 
-// =================== figurines de boss (trophées) ===================
+// =================== figurines (trophées des projets finis) ===================
 // window.chFigure(kind,col,gold) -> {main, icon}. main : entrée compatible CH_MAIN ; icon : {rows,pal} 16x16.
-// Lettres : # couleur du boss, s ombre, l reflet, k yeux / creux, w blanc, m bouche, c crème, d crème ombrée,
+// Lettres : # couleur de la figurine, s ombre, l reflet, k yeux / creux, w blanc, m bouche, c crème, d crème ombrée,
 //           p/P/q socle (clair / moyen / sombre), * étincelle (version or).
 const FIG_KINDS=["slime","ghost","golem","dragon","bat","skull","shroom"];
 // mini statuettes 7 px de large (tenues en main)

@@ -15,7 +15,6 @@ function tagXP(){document.querySelectorAll('.wrap>section:not(.qxp):not(#trkBox)
 function bilMore(){const c=document.getElementById("chapBox");if(!c||c.querySelector(".bmore"))return;const hero=c.querySelector(".bhero");if(!hero)return;
   const b=document.createElement("button");b.type="button";b.className="btn bmore";const lab=()=>b.textContent=document.documentElement.classList.contains("bilopen")?"Masquer le détail":"Voir le détail";lab();
   b.onclick=()=>{document.documentElement.classList.toggle("bilopen");lab()};hero.after(b)}
-function noBoss(){if(!S||!Array.isArray(S.specials))return;const n=S.specials.length;S.specials=S.specials.filter(q=>!q.bq&&!q.bs);if(S.specials.length!==n)save()}
 
 function cGoSub(k,sb){if(sb!==undefined)return window.goSub(k,sb);try{subs.c=k;localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}try{applySub()}catch(e){}}
 {let t=0;document.addEventListener("pointerdown",e=>{if(e.target&&e.target.id==="setTitle"){t=setTimeout(()=>{document.documentElement.classList.toggle("admin");try{toast(document.documentElement.classList.contains("admin")?"Mode admin":"Mode admin masqué")}catch(_){}},800)}});["pointerup","pointercancel","pointerleave"].forEach(n=>document.addEventListener(n,()=>clearTimeout(t)))}
