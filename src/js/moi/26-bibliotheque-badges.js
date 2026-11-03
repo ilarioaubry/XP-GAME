@@ -47,12 +47,20 @@ function bgMusic(){const R=/musique|\bsons?\b|beat|instru|guitare|piano|chant|co
 function bgPerfect(){if((S.daily&&S.daily.bonusDay)||S.log.some(e=>e.dayb))return true;const T=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz);if(!T.length)return false;return Object.values(ritH()).some(H=>T.every(t=>H[t.id]))}
 function bgSortie(){return S.log.some(e=>e.dzq)||Object.keys((S.g&&S.g.afLast)||{}).some(k=>k.startsWith("af:sorties:"))}
 const TIERC={1:"#b0763c",2:"#aab4bd",3:"#e0b030"};
+// nombre d'assiettes qui remplissent une condition (badges de l'assiette)
+function plCount(fn){let n=0;Object.values((S.g&&S.g.plt)||{}).forEach(D=>Object.values(D||{}).forEach(m=>{try{if(m&&fn(m))n++}catch(e){}}));return n}
 // badgeDefs : version complète (ex-réécriture de assiette.js), badgeDefsBase = le cœur d'origine
 function badgeDefs(){const B=badgeDefsBase.apply(this,arguments);
   // paliers des jauges (lot 4, 03/11)
   B.push({id:"pal2",name:"Costaud",desc:"Débloquer les quêtes costaudes d'une jauge (niveau 3)",ic:"star",t:1,ok:()=>PAL_CATS.some(c=>palOf(c)>=1)});
   B.push({id:"pal3",name:"Endurant",desc:"Débloquer les quêtes dures d'une jauge (niveau 5)",ic:"star",t:2,ok:()=>PAL_CATS.some(c=>palOf(c)>=2)});
-  B.push({id:"palall",name:"Touche-à-tout",desc:"Atteindre le niveau 3 dans toutes les jauges",ic:"star",t:3,ok:()=>PAL_CATS.every(c=>palOf(c)>=1)});B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
+  // pans de vie (4.4, 03/11)
+  B.push({id:"fam10",name:"Esprit de famille",desc:"10 moments avec ta famille",ic:"heart",t:1,ok:()=>(S.log||[]).filter(e=>e.cat==="famille"&&e.xp>0).length>=10});
+  B.push({id:"menage30",name:"Maison au carré",desc:"30 actions Maison dans un même mois",ic:"star",t:2,ok:()=>{const m=new Date().toISOString().slice(0,7);return(S.log||[]).filter(e=>e.cat==="maison"&&e.xp>0&&new Date(e.t).toISOString().slice(0,7)===m).length>=30}});
+  B.push({id:"contrat1",name:"Mission accomplie",desc:"Aller au bout d'un contrat",ic:"star",t:2,ok:()=>Object.keys(S.g.perOk||{}).length>=1});
+  B.push({id:"prj1",name:"Projet bouclé",desc:"Finir un projet",ic:"star",t:2,ok:()=>(S.g.prj||[]).some(p=>p.won)});
+  B.push({id:"anc1",name:"Bonne habitude",desc:"Ancrer un rituel : 21 jours sur 30",ic:"star",t:2,ok:()=>(S.g.ancL||[]).length>=1});
+  B.push({id:"palall",name:"Polyvalent",desc:"Atteindre le niveau 3 dans toutes les jauges",ic:"star",t:3,ok:()=>PAL_CATS.every(c=>palOf(c)>=1)});B.push({id:"veg7",name:"Potager",desc:"Des légumes 7 jours d'affilée",ic:"heart",t:2,ok:()=>typeof plVegRun==="function"&&plVegRun()>=7});return B}
 function badgeDefsBase(){
   const L=()=>levelInfo(S.xp).l,B=[];
   RANKS.filter(r=>r[0]>1&&r[0]!==5).forEach(([min,n])=>B.push({id:"rank"+min,name:n,desc:"Atteindre le niveau "+min,ic:"shield",t:min<5?1:min<17?2:3,ok:()=>L()>=min}));
@@ -65,7 +73,7 @@ function badgeDefsBase(){
   B.push({id:"bond1",name:"Premier contact",desc:"Prendre des nouvelles d'un ami",ic:"heart",t:1,ok:()=>Object.values(S.bonds).some(x=>x>0)});
   B.push({id:"bond3",name:"Pote",desc:"Un lien au niveau 5",ic:"heart",t:1,ok:()=>Object.values(S.bonds).some(x=>bondInfo(x).l>=5)});
   B.push({id:"bond5",name:"Ami proche",desc:"Un lien au niveau 10",ic:"heart",t:2,ok:()=>Object.values(S.bonds).some(x=>bondInfo(x).l>=10)});
-  B.push({id:"bond20",name:"Âme sœur",desc:"Un lien au niveau 20",ic:"heart",t:3,ok:()=>Object.values(S.bonds).some(x=>bondInfo(x).l>=20)});
+  B.push({id:"bond20",name:"Âme sœur",desc:"Un lien au niveau 15",ic:"heart",t:3,ok:()=>Object.values(S.bonds).some(x=>bondInfo(x).l>=15)});
   B.push({id:"circle",name:"Cercle élargi",desc:"Contacter 10 personnes différentes en 30 jours",ic:"heart",t:2,ok:()=>relRecent(30)>=10});
   B.push({id:"loyal",name:"Fidèle",desc:"Prendre des nouvelles de la même personne 4 semaines d'affilée",ic:"heart",t:2,ok:()=>relLoyal()>=4});
   B.push({id:"reunion",name:"Retrouvailles",desc:"Reprendre contact avec quelqu'un après 2 mois de silence",ic:"heart",t:2,ok:()=>relReunion()});
@@ -75,7 +83,7 @@ function badgeDefsBase(){
   const ym=ymOf(Date.now()),mx=o=>Math.max(0,...Object.values((o&&o.m)||{}));
   B.push({id:"pu100",name:"Centurion",desc:"100 pompes dans un même mois",ic:"bolt",t:1,ok:()=>mx(S.g.pu)>=100});
   B.push({id:"pu30",name:"Bras d'acier",desc:"30 pompes d'affilée",ic:"bolt",t:2,ok:()=>((S.g.pu||{}).rec||0)>=30});
-  B.push({id:"pu500",name:"Machine de guerre",desc:"500 pompes dans un même mois",ic:"bolt",t:3,ok:()=>mx(S.g.pu)>=500});
+  B.push({id:"pu500",name:"Infatigable",desc:"500 pompes dans un même mois",ic:"bolt",t:3,ok:()=>mx(S.g.pu)>=500});
   B.push({id:"gn120",name:"Planche de bois",desc:"Tenir 2 min de gainage",ic:"bolt",t:2,ok:()=>((S.g.gn||{}).rec||0)>=120});
   B.push({id:"run42",name:"Marathon du mois",desc:"42 km de course dans un même mois",ic:"bolt",t:3,ok:()=>mx(S.g.run)>=42});
   B.push({id:"zen60",name:"Esprit zen",desc:"60 min de méditation dans un même mois",ic:"face",t:2,ok:()=>mx(S.g.md)>=60});
@@ -95,7 +103,7 @@ function badgeDefsBase(){
   B.push({id:"buy1",name:"Première panoplie",desc:"Compléter une panoplie",ic:"star",t:1,ok:()=>wrSetsDone().length>=1});
   B.push({id:"buy5",name:"Styliste",desc:"25 objets dans ta garde-robe",ic:"star",t:2,ok:()=>wrOwned()>=25});
   B.push({id:"buy15",name:"Grand styliste",desc:"50 objets dans ta garde-robe",ic:"star",t:3,ok:()=>wrOwned()>=50});
-  B.push({id:"chest1",name:"Pilleur",desc:"Ouvrir ton premier coffre",ic:"gift",t:1,ok:()=>S.g.opened>=1});
+  B.push({id:"chest1",name:"Premier trésor",desc:"Ouvrir ton premier coffre",ic:"gift",t:1,ok:()=>S.g.opened>=1});
   B.push({id:"gear4",name:"Collectionneur d'objets",desc:"Posséder 10 objets trouvés",ic:"star",t:2,ok:()=>S.g.gear.filter(id=>(gearOf(id)||{}).s!=="aura").length>=10});
   B.push({id:"legend",name:"Objet légendaire",desc:"Trouver un objet légendaire",ic:"star",t:3,ok:()=>S.g.gear.some(id=>(gearOf(id)||{}).r===3)});
   B.push({id:"out1",name:"Premier son sorti",desc:"Sortir un son",ic:"trophy",t:1,ok:()=>Object.keys(S.g.rel).length>=1});
@@ -103,12 +111,12 @@ function badgeDefsBase(){
   B.push({id:"out12",name:"Une année de sons",desc:"Sortir 12 sons",ic:"trophy",t:3,ok:()=>Object.keys(S.g.rel).length>=12});
   B.push({id:"sleep7",name:"Gros dormeur",desc:"7 nuits de 7 h ou plus",ic:"face",t:1,ok:()=>Object.values(S.g.sleep).filter(x=>x.h>=7).length>=7});
   // types d'assiette (N.8, 01/11)
-  B.push({id:"plveg",name:"Végétarien",desc:"Une assiette végétarienne",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("veg")});
+  B.push({id:"plveg",name:"Végétarien",desc:"5 assiettes végétariennes",ic:"face",t:2,ok:()=>plCount(m=>typeof plType==="function"&&plType(m)==="veg")>=5});
   B.push({id:"plchef",name:"Chef cuisinier",desc:"Une assiette cuisinée maison",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("chef")});
-  B.push({id:"plfast",name:"Sur le pouce",desc:"Une assiette fast-food",ic:"face",t:1,ok:()=>typeof plSeen==="function"&&plSeen("fast")});
+  B.push({id:"plfast",name:"Sur le pouce",desc:"Un repas sur le pouce ou au fast-food, avec des légumes",ic:"face",t:1,ok:()=>plCount(m=>(m.w==="fast"||m.w==="pouce")&&typeof plN==="function"&&plN(m,"l"))>=1});
   B.push({id:"mood30",name:"Introspection",desc:"Noter ton humeur 30 jours",ic:"face",t:2,ok:()=>Object.keys(S.g.mood||{}).length>=30});
   B.push({id:"lz5",name:"Passionné",desc:"Une compétence au niveau 5",ic:"book",t:2,ok:()=>Object.values(lzState().xp).some(x=>skInfo(x).l>=5)});
-  B.push({id:"lz3x3",name:"Touche-à-tout",desc:"3 skills au niveau 3",ic:"star",t:2,ok:()=>Object.values(lzState().xp).filter(x=>skInfo(x).l>=3).length>=3});
+  B.push({id:"lz3x3",name:"Touche-à-tout",desc:"3 centres d'intérêt au niveau 3",ic:"star",t:2,ok:()=>Object.values(lzState().xp).filter(x=>skInfo(x).l>=3).length>=3});
   return B.map(b=>b.sec&&!S.badges[b.id]?{...b,name:"???",desc:"Badge secret : continue à jouer pour le découvrir"}:b);
 }
 function relRecent(d){return Object.values(S.bondsLast).filter(t=>t&&Date.now()-t<d*864e5).length}
@@ -121,10 +129,10 @@ function checkBadges(){
   if(fresh.length){if(!first)setTimeout(()=>sfx("badge"),400);if(!first){S.g.nb=[...new Set([...(S.g.nb||[]),...fresh.map(b=>b.id)])]}save()}
 }
 
-const BFAM=[["prog","Progression"],["reg","Régularité"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
+const BFAM=[["prog","Progression"],["reg","Régularité"],["vie","Vie quotidienne"],["rel","Relations"],["exp","Exploits"],["skl","Compétences & défis"],["col","Aventure & collection"]];
 // famOf : version complète (ex-réécriture de assiette.js), famOfBase = le cœur d'origine
 function famOf(id){return id==="veg7"?"reg":famOfBase(id)}
-function famOfBase(id){return/^(rank|first|stat|eau3|food3|pal)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
+function famOfBase(id){return/^(fam10|menage30|contrat1|prj1|anc1)$/.test(id)?"vie":/^(rank|first|stat|eau3|food3|pal)/.test(id)?"prog":/^(streak|perfect|sleep7|mood30|clean7)/.test(id)?"reg":/^(bond|circle|bday|loyal|reunion|grp)/.test(id)?"rel":/^(pu\d|gn120|run42|zen60|book|bossrev|bossleg|clutch|lucky3|secret1|rest1)/.test(id)?"exp":/^(skill|lz|out|chall)/.test(id)?"skl":"col"}
 function badgePr(b){const id=b.id,m=x=>Math.max(0,...x);let r=null;
   const lv=k=>statInfo(S.stats[k]||0).l;
   if(/^rank(\d+)/.test(id))r=[levelInfo(S.xp).l,+id.slice(4)];

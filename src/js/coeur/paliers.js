@@ -68,3 +68,9 @@ function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf
       <small class="ui-info">Un boost à chaque palier 3, et un tous les deux niveaux : 1 h d'XP ×2, 3 en réserve au plus.</small></div>
     <ul class="pallist">${rows}</ul>`;
   box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal))}
+
+// ---- journée relance (4.3) : après deux jours sans rien noter, la première action du jour compte triple, sans reproche
+function relanceOn(){const G=S.g;if(!G)return false;const tk=dayKey(Date.now());if(G.relance===tk)return false;
+  const L=(S.log||[]).filter(e=>e&&e.xp>0&&!e.bonus);if(L.length<5)return false;
+  const days=new Set(L.map(e=>dayKey(e.t)));if(days.has(tk))return false;
+  const d1=dayKey(Date.now()-864e5),d2=dayKey(Date.now()-2*864e5);return!days.has(d1)&&!days.has(d2)}

@@ -202,5 +202,5 @@ function renderSpecialsBase(){schedNow();renderBalance();
   const all=!!PER&&tot>0&&left===0&&!soirWait;
   $("sqBox").classList.toggle("vsoft",sMood);
   if(all){
-    if(!G.pb||G.pb.d!==tk)G.pb={d:tk};if(!G.pb[PER]){G.pb[PER]=1;setTimeout(()=>sfx("moment"),300);const bx=Math.round((S.dayBonus.xp||30)/2);G.chests=(G.chests||0)+1;save();setTimeout(()=>{const prev=levelInfo(S.xp).l;if(bx)addBonus(PER==="matin"?"Matinée terminée":"Journée terminée",bx,0,"pb");save();render(prev);toast(`${PER==="matin"?"Matinée":"Journée"} terminée ! <span class="p">+${bx} XP</span> et un coffre`)},500)}}
+    if(!G.pb||G.pb.d!==tk)G.pb={d:tk};if(!G.pb[PER]){G.pb[PER]=1;setTimeout(()=>sfx("moment"),300);const bx=Math.round((S.dayBonus.xp||30)/2);G.chests=(G.chests||0)+1;save();setTimeout(()=>{const prev=levelInfo(S.xp).l;if(bx)addBonus(PER==="matin"?"Matinée terminée":"Journée terminée",bx,0,"pb");save();render(prev);const early=PER==="matin"&&dayH()<wakeH()+1.5&&!boostLive()&&G.leve!==tk;if(early){G.leve=tk;S.g.boost=Date.now()+18e5;save()}toast(`${PER==="matin"?"Matinée":"Journée"} terminée ! <span class="p">+${bx} XP</span> et un coffre${early?` · Lève-tôt : XP ×2 pendant <span class="p">30 min</span>`:""}`)},500)}}
 }

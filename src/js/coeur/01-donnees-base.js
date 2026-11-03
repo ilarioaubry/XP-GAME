@@ -10,7 +10,7 @@ const BARS={eau:{goal:16,segs:8,unit:"verres",done:"Hydraté !"},nourriture:{goa
 const STAT_KEYS=["sport","perso","social","famille","maison","soi","travail"];
 const REMAP={planete:"maison",autres:"social"}; // anciennes catégories
 // Objectifs personnels : la musique (chant) et le dossier en cours
-const PERSO=[["Faire du son (1 h)","perso",40],["Avancer sur le dossier (30 min)","perso",25]].map(([name,cat,xp],i)=>({id:"p"+i,name,cat,xp}));
+const PERSO=[["Faire du son (1 h)","perso",30],["Avancer sur le dossier (30 min)","perso",25]].map(([name,cat,xp],i)=>({id:"p"+i,name,cat,xp}));
 const RANKS=[[1,"Novice"],[3,"Apprenti"],[5,"Bienfaiteur"],[8,"Gardien"],[12,"Héros"],[17,"Champion"],[23,"Légende"],[30,"Mythe vivant"]];
 // Micro-actions qui remplacent « Boire 1,5 L d'eau » (s0) et « 30 min de sport » (s1)
 const MICRO=[
@@ -54,7 +54,7 @@ let S={xp:0,actions:STARTER,log:[],days:[],perLevel:1,rankBonus:5,wishes:STARTER
 const statNeed=l=>30+20*l;
 // Relations : chaque ami a son XP. Niveau l → l+1 coûte 15 × (l+1) XP (30, 45, 60…)
 const PICS={};
-const REL_ACTIONS=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles de "+n,xp:10},{k:"call",label:"Appeler",verb:n=>"Appeler "+n,xp:20},{k:"meet",label:"Vu en vrai",verb:n=>"Voir "+n,xp:40}];
+const REL_ACTIONS=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles de "+n,xp:10},{k:"call",label:"Appeler",verb:n=>"Appeler "+n,xp:20},{k:"meet",label:"Vu en vrai",verb:n=>"Voir "+n,xp:30,lien:40}]; // 4.5 : XP au barème (30 max), le lien garde 40
 let profName=null;
 const bondNeed=l=>15*(l+1);
 function bondInfo(xp){let l=1,r=xp;while(r>=bondNeed(l)){r-=bondNeed(l);l++}return{l,cur:r,need:bondNeed(l)}}

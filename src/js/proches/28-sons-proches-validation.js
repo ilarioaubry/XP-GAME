@@ -263,7 +263,7 @@ function bondAction(n,A,el,ev){
   const q=A.k==="news"?S.specials.find(x=>x.grp==="friends"&&x.who===n):null;
   if(q){completeSpecial(q,el,ev);render();renderProfile(true);return}
   const pl=bondInfo(S.bonds[n]||0).l;
-  S.bonds[n]=(S.bonds[n]||0)+A.xp;S.bondsLast[n]=Date.now();
+  S.bonds[n]=(S.bonds[n]||0)+(A.lien||A.xp);S.bondsLast[n]=Date.now();
   const nl=bondInfo(S.bonds[n]).l;
   complete({id:"rel-"+A.k+"-"+n,name:A.verb(n),cat:"social",xp:A.xp},el,ev,false,{rel:1,who:n});
   toast(`${esc(A.verb(n))} <span class="p">+${A.xp} XP</span>${nl>pl?` · ${esc(n)} niveau <span class="p">${nl}</span>`:""}`);
@@ -322,16 +322,16 @@ function renderRemind(){
   box.appendChild(spot);
 }
 const FG_COL=["#ff7aa8","#e0447a","#f08a2a","#f2c94c","#5fae4f","#4fb3b3","#2a8fd6","#9b5de5"];
-const FG_ACT=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:40}];
+const FG_ACT=[{k:"news",label:"Nouvelles",verb:n=>"Prendre des nouvelles du groupe "+n,xp:10},{k:"call",label:"Appel de groupe",verb:n=>"Appel avec le groupe "+n,xp:20},{k:"meet",label:"Les voir",verb:n=>"Voir le groupe "+n,xp:30,lien:40}];
 const fgCol=g=>g.c||FG_COL[0];
 function openGroup(id,edit){profName="@g:"+id;gEdit=!!edit;showView("p");if(edit)setTimeout(()=>{const i=$("gName");if(i){i.focus();i.select()}},150)}
 function fgAct(g,A,el){const M=fgMembers(g.id);if(!M.length){toast("Ajoute d'abord des membres au groupe");return}
   const o=document.createElement("div");o.className="bpop fgpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.style.setProperty("--gc",fgCol(g));document.body.appendChild(o);const here=new Set(M);
   const close=()=>o.remove();o.onclick=e=>{if(e.target===o)close()};
-  const draw=()=>{const per=Math.max(2,Math.round(A.xp/2));o.innerHTML=`<div class="bpc fgc"><h3>Qui était là ?</h3><div class="fgl">${M.map(n=>`<button type="button" class="fgm${here.has(n)?" on":""}" data-n="${esc(n)}">${pAv(n)}<span>${esc(n)}</span></button>`).join("")}</div><p class="fgx">+${A.xp} XP pour toi · +${per} de lien pour chacun des ${here.size} présent${here.size>1?"s":""}</p><button type="button" class="btn primary" id="fgGo" ${here.size?"":"disabled"}>Valider</button><button type="button" class="lnk" id="fgNo">Annuler</button></div>`;
+  const draw=()=>{const per=Math.max(2,Math.round((A.lien||A.xp)/2));o.innerHTML=`<div class="bpc fgc"><h3>Qui était là ?</h3><div class="fgl">${M.map(n=>`<button type="button" class="fgm${here.has(n)?" on":""}" data-n="${esc(n)}">${pAv(n)}<span>${esc(n)}</span></button>`).join("")}</div><p class="fgx">+${A.xp} XP pour toi · +${per} de lien pour chacun des ${here.size} présent${here.size>1?"s":""}</p><button type="button" class="btn primary" id="fgGo" ${here.size?"":"disabled"}>Valider</button><button type="button" class="lnk" id="fgNo">Annuler</button></div>`;
     o.querySelectorAll(".fgm").forEach(b=>b.onclick=()=>{const n=b.dataset.n;if(here.has(n))here.delete(n);else here.add(n);draw()});
     o.querySelector("#fgNo").onclick=close;
-    o.querySelector("#fgGo").onclick=ev=>{const G=S.g,per=Math.max(2,Math.round(A.xp/2)),now=Date.now();here.forEach(n=>{S.bonds[n]=(S.bonds[n]||0)+per;S.bondsLast[n]=now});if(!G.fgLast)G.fgLast={};G.fgLast[g.id]=now;
+    o.querySelector("#fgGo").onclick=ev=>{const G=S.g,per=Math.max(2,Math.round((A.lien||A.xp)/2)),now=Date.now();here.forEach(n=>{S.bonds[n]=(S.bonds[n]||0)+per;S.bondsLast[n]=now});if(!G.fgLast)G.fgLast={};G.fgLast[g.id]=now;
       const q=S.specials.find(x=>x.fg===g.id);if(q&&A.k!=="news"){}close();
       if(A.k==="meet"&&G.fgNext&&G.fgNext[g.id]&&G.fgNext[g.id].d<=dayKey(now))delete G.fgNext[g.id]; // la sortie prévue a eu lieu
       complete({id:"fg-"+A.k+"-"+g.id,name:A.verb(g.n)+(here.size<M.length?" ("+[...here].join(", ")+")":""),cat:"social",xp:A.xp},el,ev,false,{fgid:g.id,fgw:[...here]});
@@ -489,7 +489,8 @@ function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   if(S.g&&!(extra&&(extra.rit||extra.mb))&&!/^(rit|mb|sleep)/.test(String(a.id||""))){try{questReact(a.name,a.cat);mapReveal(a.name)}catch(e){}}
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
   if(!(extra&&extra.lz)&&S.g){const _lk=LZ_LINK[a.name]||(typeof lzGuess==="function"?lzGuess(a):"");if(_lk&&a.xp>0){lzGain(_lk,a.xp);extra={...(extra||{}),lz:_lk+":link",lzx:a.xp}}}
-  if((boostOn()||boostCatOn(a.cat))&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}
+  {const rl=a.xp>0&&!window.__dayShift&&relanceOn();if(rl){S.g.relance=dayKey(Date.now());a={...a,xp:a.xp*3};extra={...(extra||{}),x3:1};setTimeout(()=>toast(`Content de te revoir : ta première action compte <span class="p">triple</span>`),900)}
+   else if((boostOn()||boostCatOn(a.cat))&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}}
   if(false&&S.xpCap>0&&a.xp>0){const tk=dayKey(Date.now()),done=S.log.filter(e=>dayKey(e.t)===tk&&!e.bonus).reduce((s2,e)=>s2+Math.max(0,e.xp),0),left=Math.max(0,S.xpCap-done);
     if(a.xp>left){a={...a,xp:left};extra={...(extra||{}),cap:1};setTimeout(()=>toast(left?`Plafond du jour atteint : <span class="p">+${left} XP</span> seulement`:"Plafond du jour atteint : l'XP reprend demain"),500)}}
   const prev=levelInfo(S.xp).l;
