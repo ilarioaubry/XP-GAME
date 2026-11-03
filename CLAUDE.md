@@ -15,6 +15,13 @@ Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone
 
 `FEUILLE-DE-ROUTE.md` = le plan issu du rapport complet. On le suit étape par étape : présenter l'étape suivante, attendre « go », faire, tester (393 px + capture), Ilario vérifie, cocher avec la date, puis présenter la suivante. Ne rien retirer de la liste sans son accord ; toute nouvelle idée s'y ajoute.
 
+## Fonctionnement allégé (choisi par Ilario le 03/11)
+
+- Une session neuve par lot ; les demandes groupées se traitent ensemble.
+- Une seule capture à la fin du lot (pas une par étape), sauf si Ilario en demande plus.
+- Notes (`CHANGELOG.md`, `FONCTIONNALITES.md`, `FEUILLE-DE-ROUTE.md`) et page de suivi mises à jour en fin de lot seulement, ou sur demande.
+- Lire seulement les parties utiles des gros fichiers.
+
 ## Guide de construction
 
 `DESIGN.md` = les mesures et composants pour construire tout élément (rôles de texte, en-tête de section, boutons, espacements, cadres, couleurs, interactions, où placer, recette d'ajout). Le suivre pour tout ajout ou retouche.

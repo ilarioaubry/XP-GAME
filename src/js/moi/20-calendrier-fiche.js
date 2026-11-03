@@ -65,39 +65,6 @@ function evQuests(){const G=S.g;if(!Array.isArray(G.ev))return[];if(!G.evq||type
     out.push({id:"ev:"+e.id+":"+q[1],t:q[4](e),why:`${evtOf(t)[1]} ${evWhenS(d)} : ${e.n}`.slice(0,60),cat:q[5],xp:XPE(q[6])+(t==="entretien"&&(q[1]==="rep"||q[1]==="merci")?15:0),ev:e.id,tpl:q[1],A:e.a||""})});return out}
 let fqOutBusy=false;function fqHasOut(){if(fqOutBusy||!S.g||!sitOf())return false;fqOutBusy=true;try{const d=new Set((S.g.fq&&S.g.fq.done)||[]);return fqList().some(x=>x.out&&!d.has(x.id))}catch(e){return false}finally{fqOutBusy=false}}
 
-// --- calendrier
-let calM=null,calSel=null;
-function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(!Array.isArray(G.ev))G.ev=[];const tk=dayKey(Date.now());calSel=day||tk;const d0=new Date(calSel+"T12:00");calM=[d0.getFullYear(),d0.getMonth()];
-  const p=document.createElement("div");p.className="bpop rapop calsh";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-label","Calendrier");document.body.appendChild(p);
-  const close=()=>{p.remove();render()};p.onclick=e=>{if(e.target===p)close()};const MOIS_L=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
-  let fType="",fName="",fArt="";
-  const bdOn=k=>{const dt=new Date(k+"T12:00");return relNames().filter(n=>{const b=(S.profiles[n]||{}).bd;return b&&b.d===dt.getDate()&&b.m===dt.getMonth()+1})};
-  const draw=()=>{const[y,m]=calM,first=new Date(y,m,1),off=(first.getDay()+6)%7,dim=new Date(y,m+1,0).getDate();let cells="";for(let i=0;i<off;i++)cells+=`<i class="no"></i>`;
-    for(let dd=1;dd<=dim;dd++){const k=`${y}-${String(m+1).padStart(2,"0")}-${String(dd).padStart(2,"0")}`,E=G.ev.filter(e=>e.d===k),B=bdOn(k);
-      cells+=`<button type="button" class="cald${B.length?" hasbd":""}${k===tk?" td":""}${k===calSel?" sel":""}${k<tk?" past":""}" data-k="${k}" aria-label="${dd} ${MOIS_L[m]}${E.length?", "+E.length+" événement"+(E.length>1?"s":""):""}"><span>${dd}</span><span class="caldots">${E.slice(0,3).map(e=>`<i style="background:${evtOf(e.t||evtGuess(e.n))[2]}"></i>`).join("")}${B.length?`<i class="bdpx">${window.BDCAKE||""}</i>`:""}</span></button>`}
-    const sd=new Date(calSel+"T12:00"),E=G.ev.filter(e=>e.d===calSel),B=bdOn(calSel),ty=fType||(fName.trim()?evtGuess(fName):"");
-    p.innerHTML=`<div class="bpc rap qc calc"><div class="raph"><h3>Calendrier</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div>
-      <div class="calnav"><button type="button" class="rhpm" data-m="-1" aria-label="Mois précédent">‹</button><b>${MOIS_L[m]} ${y}</b><button type="button" class="rhpm" data-m="1" aria-label="Mois suivant">›</button></div>
-      <div class="calg">${"LMMJVSD".split("").map(x=>`<b>${x}</b>`).join("")}${cells}</div>
-      <h4>${sd.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</h4>
-      <div class="cale">${B.map(n=>`<div class="calev bdev">${pAv(n,"bdp")}<span class="bdtx"><span class="calty">Anniversaire</span><b></b></span><span class="bdck">${window.BDCAKE||""}</span></div>`).join("")}${E.map(e=>`<div class="calev" style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><span class="calty">${evtOf(e.t||evtGuess(e.n))[1]}</span><b></b><button type="button" class="calrm" data-id="${e.id}" aria-label="Supprimer">${ICO("close",14)}</button></div>`).join("")}${!B.length&&!E.length?`<p class="hint vide">Aucun événement ce jour-là.</p>`:""}</div>
-      ${calSel>=tk?`<h4>Ajouter</h4><input class="qcname calname" maxlength="40" placeholder="Ex. Concert de disiz, entretien chez…" aria-label="Nom de l'événement">
-      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante",dur:"coeur"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
-      ${ty==="concert"?`<input class="qcname calart" maxlength="40" placeholder="Quel artiste ?" aria-label="Artiste" list="calArts"><datalist id="calArts">${((G.taste&&G.taste.art)||[]).map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`:""}
-      <button type="button" class="btn primary qcgo caladd"${fName.trim()?"":" disabled"}>Ajouter au calendrier</button>
-      <p class="hint calhint">Les jours d'avant et d'après, des quêtes « Pour toi » t'aident à le préparer${ty==="concert"?" : setlist, sac, trajet, souvenirs":""}.</p>`:""}</div>`;
-    p.querySelectorAll(".cale .calev b").forEach((b,i)=>b.textContent=i<B.length?B[i]:E[i-B.length].n+(E[i-B.length].a?" · "+E[i-B.length].a:""));
-    p.querySelector(".raclose").onclick=close;p.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{let[y2,m2]=calM;m2+= +b.dataset.m;if(m2<0){m2=11;y2--}if(m2>11){m2=0;y2++}calM=[y2,m2];draw()});
-    p.querySelectorAll(".cald").forEach(b=>b.onclick=()=>{calSel=b.dataset.k;draw()});
-    p.querySelectorAll(".calrm").forEach(b=>b.onclick=()=>{G.ev=G.ev.filter(e=>e.id!==b.dataset.id);save();toast("Événement retiré");draw()});
-    const nm=p.querySelector(".calname");if(nm){nm.value=fName;nm.oninput=()=>{const was=evtGuess(fName);fName=nm.value;const go=p.querySelector(".caladd");go.disabled=!fName.trim();if(!fType&&evtGuess(fName)!==was){const pos=nm.selectionStart;draw();const n2=p.querySelector(".calname");n2.focus();n2.setSelectionRange(pos,pos)}}}
-    const ar=p.querySelector(".calart");if(ar){ar.value=fArt;ar.oninput=()=>{fArt=ar.value}}
-    p.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{fType=b.dataset.t;draw()});
-    const go=p.querySelector(".caladd");if(go)go.onclick=()=>{const n=fName.trim();if(!n)return;const t=fType||evtGuess(n);let a=t==="concert"?fArt.trim():"";
-      if(t==="concert"&&!a){const m=((G.taste&&G.taste.art)||[]).find(x=>n.toLowerCase().includes(x.toLowerCase()));if(m)a=m}
-      G.ev.push({id:"e"+Date.now().toString(36),n:n.slice(0,40),d:calSel,xp:t==="concert"||t==="voyage"?30:20,t,...(a?{a:a.slice(0,40)}:{})});G.ev.sort((x,y)=>x.d<y.d?-1:1);fName="";fArt="";fType="";save();sfx("badge");toast("Ajouté au calendrier");draw()}};
-  draw()}
-
 // --- fiche de personnage
 
 {const b=document.getElementById("actNew");if(b)b.onclick=()=>qcOpen("act")}

@@ -948,16 +948,9 @@ html body .aut[aria-pressed="true"]::after{top:3px;right:3px;width:15px;height:1
 
 
 
-.evr.bd.fam{--ec:var(--c-famille,#4a6cf0)}
 
-.evr.done{opacity:.7}
-.evt-t small{font-size:13px;color:var(--muted);font-weight:700}
 
-.evact .btn{min-height:38px;white-space:nowrap;font-size:13px;padding:0 10px}
-.evxp{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
 .evok{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--c-planete)}
-.evx{border:0;background:none;color:var(--muted);width:30px;height:30px;display:grid;place-items:center;margin-right:-6px;border-radius:50%}
-.evx.arm{background:var(--bad,#b3261e);color:#fff}
 
 
 
@@ -965,8 +958,6 @@ html body .aut[aria-pressed="true"]::after{top:3px;right:3px;width:15px;height:1
 
 @keyframes evPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ec) 60%,transparent)}50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--ec) 0%,transparent)}}
 
-.evq.done{border-style:solid;opacity:.75}
-.evqg{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-top:1px}
 
 
 body.avc-open{overflow:hidden}
@@ -1011,7 +1002,6 @@ body.avc-open{overflow:hidden}
 
 
 
-.evr.bd .evact{margin-right:14px}
 
 
 
@@ -1341,12 +1331,8 @@ html:not(#_a):not(#_b) body .sqend{flex:1 0 100%;margin:0}
 html:not(#_a):not(#_b) body .evr.bd::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background:
   radial-gradient(circle at 18% 12%,#f2c94c 0 2px,transparent 2.5px),radial-gradient(circle at 44% 82%,#e8402a 0 2px,transparent 2.5px),radial-gradient(circle at 63% 18%,#36b679 0 2px,transparent 2.5px),radial-gradient(circle at 80% 70%,#f08cc0 0 2px,transparent 2.5px),radial-gradient(circle at 30% 50%,#3a8ad6 0 1.5px,transparent 2px),radial-gradient(circle at 92% 30%,#f2c94c 0 1.5px,transparent 2px),radial-gradient(circle at 55% 45%,#c3a6ff 0 1.5px,transparent 2px)}
 
-html:not(#_a):not(#_b) body .evstar{width:46px;height:46px;display:grid;place-items:center;color:var(--ec);background:var(--surface);border:3px solid #1a1210;box-shadow:0 0 0 3px var(--ec)}
 html:not(#_a):not(#_b) body .evact{grid-area:x;margin:0!important}html:not(#_a):not(#_b) body .evact .btn{width:100%}
-html:not(#_a):not(#_b) body .evact .evxp{font-family:var(--f-pixel);font-size:13px;color:var(--ec)}
-html:not(#_a):not(#_b) body .evx{position:absolute!important;top:2px;right:2px;z-index:2}
 
-html:not(#_a):not(#_b) body .evr.done{opacity:.6}
 
 
 
@@ -1983,12 +1969,10 @@ html:not(#_a):not(#_b) body .fqok{display:grid;place-items:center;width:36px;hei
 
 .calnav{display:flex;align-items:center;justify-content:space-between;margin:2px 0 8px}.calnav b{font-size:15px}
 .calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calg>b{text-align:center;font-size:11px;color:var(--muted)}
-html:not(#_a):not(#_b) body .cald{position:relative;aspect-ratio:1;display:grid;align-content:start;justify-items:center;padding:4px 0 0;font:inherit;font-size:15px;font-weight:800;color:var(--text);background:var(--surface);border:2px solid var(--line);cursor:pointer}
 .cald.past{opacity:.5}html:not(#_a):not(#_b) body .cald.sel{background:var(--gold);color:#2a1c0c;border-color:color-mix(in srgb,var(--gold) 50%,#000)}
 .caldots{display:flex;gap:2px;margin-top:3px}.caldots i{width:6px;height:6px;display:block}html:not(#_a):not(#_b) body .caldots i.bd{background:var(--c-social)}
 .cale{display:grid;gap:6px}html:not(#_a):not(#_b) body .calev{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:6px 6px 6px 10px;background:var(--surface);border:2px solid var(--line);border-left:6px solid var(--ec)}
 html:not(#_a):not(#_b) body .calty{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--ec)}html:not(#_a):not(#_b) body .calev b{font-size:15px}
-html:not(#_a):not(#_b) body .calrm{width:32px;height:32px;display:grid;place-items:center;color:var(--muted);background:none;border:0;cursor:pointer}
 .calty2{margin-top:8px}html:not(#_a):not(#_b) body .calty2 .qchip[aria-pressed="true"]{background:var(--zc);border-color:color-mix(in srgb,var(--zc) 55%,#000)}html:not(#_a):not(#_b) body .calart{margin-top:8px}.calhint{margin:8px 0 0}
 
 html:not(#_a):not(#_b) body .fiche{padding:14px;background:var(--surface);border:3px solid var(--gold);box-shadow:5px 5px 0 var(--rpg-shadow)}
@@ -2610,7 +2594,6 @@ html:not(#_a):not(#_b) body .grpin{width:100%;min-height:42px;font:inherit;font-
 
 
 
-html:not(#_a):not(#_b) body .idempty{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;width:100%;padding:12px 14px;text-align:left;font:inherit;color:var(--text);background:linear-gradient(140deg,color-mix(in srgb,var(--gold) 20%,var(--surface)),var(--surface) 70%);border:3px dashed var(--gold);cursor:pointer}
 html:not(#_a):not(#_b) body .idempty b{font-family:var(--f-display);font-weight:400;font-size:20px}html:not(#_a):not(#_b) body .idempty small{grid-column:1;color:var(--muted);font-size:var(--fs-s)}html:not(#_a):not(#_b) body .idempty .go{grid-row:1/3;grid-column:2;font-weight:900;padding:6px 10px;background:var(--gold);color:#1a1210;border:2px solid #1a1210}
 
 
@@ -3058,13 +3041,6 @@ html:not(#_a):not(#_b) body .evtd.bdy small{font-size:13px;color:#ffe9f6;font-we
 @keyframes bdcf{to{transform:translate(var(--dx),calc(var(--dy) + 140px)) rotate(var(--rt));opacity:0}}
 
 /* ---- epure-02.css ---- */
-html:not(#_a):not(#_b) body .cald.hasbd{background:var(--bdconf) center/60px 60px,var(--bdgrad);color:#fff}
-.cald.hasbd span:first-child{font-weight:800;text-shadow:0 1px 2px rgba(60,0,80,.6)}
-html:not(#_a):not(#_b) body .caldots .bdpx{width:12px;height:12px;background:none;border-radius:0;display:inline-block}
-html:not(#_a):not(#_b) body .caldots .bdpx svg{width:100%;height:100%;display:block}
-html:not(#_a):not(#_b) body .calev.bdev{display:flex!important;align-items:center;gap:10px;padding:22px 12px 10px!important;border-radius:12px;position:relative}
-html:not(#_a):not(#_b) body .calev.bdev .bdtx{display:flex;flex-direction:column;flex:1}
-html:not(#_a):not(#_b) body .calev.bdev .bdck{width:30px;height:30px}
 html:not(#_a):not(#_b) body .bdck svg{width:100%;height:100%;display:block}
 html:not(#_a):not(#_b) body .bdav{position:relative;flex:none;display:inline-block;width:48px;height:48px}
 
@@ -3111,7 +3087,6 @@ html:not(#_a):not(#_b) body .afsk .skmo span.on{background:var(--fc,var(--gold))
 
 
 
-html:not(#_a):not(#_b) body .fav{position:absolute;top:6px;right:6px;display:flex}
 
 
 
@@ -3124,13 +3099,6 @@ html:not(#_a):not(#_b) body .fav{position:absolute;top:6px;right:6px;display:fle
 
 
 
-html:not(#_a):not(#_b) body .fwp{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 4px 4px 4px}
-html:not(#_a):not(#_b) body .fwp .pav.fmini{width:26px!important;height:26px!important;margin:0}
-html:not(#_a):not(#_b) body .fwp b{font-size:13px}
-html:not(#_a):not(#_b) body .fwp button{background:none;border:0;padding:2px;display:grid;place-items:center;cursor:pointer;color:inherit}
-html:not(#_a):not(#_b) body .fwp .flove{width:24px;height:24px}
-html:not(#_a):not(#_b) body .fwp .flove svg{width:18px;height:18px}
-html:not(#_a):not(#_b) body .fwp .flove[aria-pressed="false"]{filter:grayscale(1);opacity:.35}
 html:not(#_a):not(#_b) body .fask{display:grid;gap:6px;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--gold) 16%,var(--surface));border:2px solid var(--gold)}
 html:not(#_a):not(#_b) body .fask small{opacity:.8}
 html:not(#_a):not(#_b) body .fask .fti{display:grid;place-items:center;width:28px;height:28px}

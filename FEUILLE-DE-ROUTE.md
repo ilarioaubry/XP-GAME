@@ -23,6 +23,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [ ] **Proches** (lot 3, 02/11) : fiche en lecture + Modifier ; recherche, bordures neutres ; page de groupe (prochaine sortie, historique en clair) ; goûts proposés, plusieurs idées cadeau
 - [ ] **Le jeu** (lot 4, 03/11) : plus d'Heure d'or au hasard ; quêtes en 3 crans et Mes paliers ; fenêtre « Palier débloqué » ; boosts en réserve ; lève-tôt ; journée relance ; badges revus et « Vie quotidienne » ; proches à 30 XP
 - [ ] **Événements** (lot 5, 03/11) : mariage, naissance, déménager, médical ; heure dorée de la semaine ; fêtes, mon anniversaire, anniversaire du carnet ; défi éclair, ciel du jour ; nouvelles du jour ; budget, papiers, santé, moment dur
+- [ ] **Ma vie** (refonte, 03/11) : calendrier sous le profil (2 semaines, plein écran, ajout de périodes) ; paliers en tuiles ; fiche en tuiles touchables ; « Ce que tu deviens » et « Ma capacité » retirés ; rythme dans la fiche ; ordre de la page
 - [ ] **Nettoyage** (6.4, 03/11) : rien ne doit avoir bougé à l'écran ; le coffre spécial s'ouvre
 - [ ] **Jamais vérifiable ici** : fluidité de l'assiette, zoom bloqué en mode appli, clavier dans les fenêtres plein écran, encoche et barre du bas, sons
 

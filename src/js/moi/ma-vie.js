@@ -24,6 +24,10 @@
       g.cig=g.cig&&typeof g.cig==="object"?g.cig:{};g.per=Array.isArray(g.per)?g.per:[];g.per.forEach(p=>{if(!PT[p.t])p.t="contrat"});g.last=Array.isArray(g.last)?g.last:[];return v};
     const actPer=tk=>{const L=(S.g.per||[]).filter(p=>p.s<=tk&&tk<=p.e);return L.find(p=>p.t==="malade")||L.find(p=>p.t!=="contrat"&&p.t!=="autre")||L.find(p=>p.t==="contrat")||L[0]||null};
     const workDay=tk=>{const v=V(),wd=toD(tk).getDay();if(!v.wd.includes(wd))return false;if(v.job)return true;return(S.g.per||[]).some(p=>p.t==="contrat"&&p.s<=tk&&tk<=p.e&&(!p.wd||(wd>0&&wd<6)))};
+    // Calendrier (03/11) : ce que prévoit un jour donné (nombre de quêtes, travail, période)
+    window.vieV=V;window.VIE_PT=PT;window.viePerStat=perStat;window.vieActPer=actPer;window.vieWorkDay=workDay;
+    window.vieDay=function(tk){try{const v=V(),p=actPer(tk),T=p&&PT[p.t]||{},w=workDay(tk);if(tk===tkNow())return{cap:vieCap(),work:w,per:p};
+      let c=w?2:4;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return{cap:Math.max(1,Math.min(6,c)),work:w,per:p}}catch(e){return{cap:3,work:false,per:null}}};
     // ---- Réglages lus par le reste de l'appli
     const vieCapBase=function(){try{if(!S||!S.g)return 3;const v=V(),tk=tkNow(),p=actPer(tk),T=p&&PT[p.t]||{};let c=workDay(tk)?v.capW:v.cap;if(T.cap)c+=T.cap;if(T.max)c=Math.min(c,T.max);return Math.max(1,Math.min(8,c))}catch(e){return 3}};
     // vieCap = vieCapBase (le cœur) → capacité choisie pour aujourd'hui (vieCapBase2) → ajustée selon énergie et sommeil. Ex-réécritures de correctifs.js.
@@ -100,8 +104,6 @@
     // ---- Proches
     const lastSeen=n=>{const a=(S.bondsLast||{})[n]||0,b=V().pc[n]?toD(V().pc[n]).getTime():0,t=Math.max(a,b);return t?dayKey(t):null};
     const pcLate=tk=>{const v=V();return Object.keys(v.pf).filter(n=>v.pf[n]>0).map(n=>{const d=lastSeen(n),days=d?nDays(d,tk,false)-1:999;return{n,d,days,r:days/v.pf[n]}}).filter(x=>x.r>=1).sort((a,b)=>b.r-a.r)};
-    // ---- Aller vers Ma vie
-    function goVie(anchor){try{subs.c="vie";localStorage.setItem("cq-subs",JSON.stringify(subs))}catch(e){}try{showView("c")}catch(e){}rt();setTimeout(()=>{const a=document.getElementById(anchor);if(a)a.scrollIntoView({block:"start",behavior:"smooth"})},120)}
     // ---- Bandeau du jour (onglet Quêtes)
     window.renderTrk=function(){
       const box=document.getElementById("trkBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();vieMods();
@@ -118,53 +120,32 @@
       else if(workDay(tk))mode=`${ic("contrat",16)}<span>${hh(v.wf)}–${hh(v.wt)}</span>`;
       if(!rows.length&&!mode&&!forms.length){box.innerHTML="";box.classList.add("voff");return}
       box.classList.remove("voff");
-      box.innerHTML=(mode?`<button type="button" class="bnd-mode" data-govie="1" aria-label="Ma vie">${mode}</button>`:"")+(rows.length?`<div class="trk-c bnd">${rows.join("")}</div>`:"")+forms.join("");
+      box.innerHTML=(mode?`<button type="button" class="bnd-mode" data-govie="1" aria-label="Calendrier">${mode}</button>`:"")+(rows.length?`<div class="trk-c bnd">${rows.join("")}</div>`:"")+forms.join("");
       box.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{g.cig[tk]=Math.max(0,(g.cig[tk]||0)+(+b.dataset.c));const ks=Object.keys(g.cig).sort();while(ks.length>400)delete g.cig[ks.shift()];save();rt()});
       box.querySelectorAll("[data-pc]").forEach(b=>b.onclick=ev=>{const n=b.dataset.pc;try{bondAction(n,REL_ACTIONS.find(x=>x.k==="news"),b,ev)}catch(e){V().pc[n]=tk;save()}setTimeout(rt,50)});
       box.querySelectorAll("[data-pcgo]").forEach(b=>b.onclick=()=>{try{openProfile(b.dataset.pcgo)}catch(e){}});
-      box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>goVie("vie-per"));
+      box.querySelectorAll("[data-govie]").forEach(b=>b.onclick=()=>{try{calOpen()}catch(e){}});
       box.querySelectorAll("[data-pok]").forEach(b=>b.onclick=ev=>{const p=g.per.find(x=>x.id===b.dataset.pok);if(!p)return;if(!g.perOk||typeof g.perOk!=="object")g.perOk={};g.perOk[p.id]=Date.now();
         try{complete({id:"contrat",cat:"travail",name:"Contrat terminé : "+p.name,xp:50},b,ev)}catch(e){save()}setTimeout(rt,60)});
       bindPer(box);bindLast(box,tk)};
     // ---- Page « Ma vie » (Profil)
     const renderVieBase=function(){
       const box=document.getElementById("vieBox");if(!box||!S||!S.g)return;if(busy(box))return;const v=V(),g=S.g,tk=tkNow();
-      const seg=(k,opts,cur)=>`<div class="seg" role="group">${opts.map(o=>`<button type="button" data-seg="${k}" data-val="${o}" aria-pressed="${cur===o}">${o}</button>`).join("")}</div>`;
-      const p=actPer(tk),cap=vieCap();
-      const pers=g.per.slice().sort((a,b)=>(a.e<tk)-(b.e<tk)||a.s.localeCompare(b.s));
       const wk=Array.from({length:7},(_,i)=>addD(tk,i-6)),vals=wk.map(k=>g.cig[k]||0),mx=Math.max(1,...vals),past=wk.slice(0,6).filter(k=>k in g.cig),avg=past.length?past.reduce((a,k)=>a+(g.cig[k]||0),0)/past.length:null;
-      const people=[...(S.family||[]),...(S.friends||[])].filter((n,i,a)=>a.indexOf(n)===i);
-      let h=`<p class="vie-intro">Aujourd'hui : <b>${cap} quête${cap>1?"s":""}</b>${p?` · ${esc(p.name)}`:""}${workDay(tk)?" · jour de travail":""}.</p>
-      <div class="vie-c" id="vie-per"><h3>${ic("autre",18)}Ma période du moment</h3>
-        ${pers.map(x=>editId===x.id?perForm(x):perCard(x,tk)).join("")}${editId==="new"?perForm(null):`<button type="button" class="trk-add per-add">+ Ajouter une période</button>`}</div>
-      <div class="vie-c" id="vie-rythme"><h3>${ic("vacances",18)}Mon rythme</h3>
-        <label class="vie-l">Réveil<select data-wake="1">${[5,6,7,8,9,10,11,12,13].map(n=>`<option value="${n}"${wakeH()===n?" selected":""}>${n} h</option>`).join("")}</select></label>
-        <div class="vie-l">Mes jours de travail<div class="chipz day">${[1,2,3,4,5,6,0].map(d=>`<button type="button" data-wd="${d}" aria-pressed="${v.wd.includes(d)}">${WL[d]}</button>`).join("")}</div></div>
-        <div class="two"><label class="vie-l">Je commence à<input type="time" data-wf="1" value="${v.wf}"></label><label class="vie-l">Je finis à<input type="time" data-wt="1" value="${v.wt}"></label></div>
-        <label class="ck"><input type="checkbox" data-job="1"${v.job?" checked":""}>Je travaille toute l'année (pas seulement pendant un contrat)</label></div>
-      <div class="vie-c" id="vie-cap"><h3>${ic("autre",18)}Ma capacité<small>quêtes par jour</small></h3>
-        <div class="vie-l">Jour normal${seg("cap",[1,2,3,4,5,8],v.cap)}</div>
-        <div class="vie-l">Jour de travail${seg("capW",[1,2,3,4,5,8],v.capW)}</div></div>
-      <div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
+      let h=`<div class="vie-c" id="vie-suivi"><h3>${ic("cig",18)}Ce que je surveille</h3>
         <div class="svx">${[["cig","cigarette","Cigarettes"],["per","calendrier","Mes périodes"]].map(([k,i2,l])=>`<button type="button" class="svt" data-trk="${k}" aria-pressed="${!!v.track[k]}"><span class="fti">${rkSvg(i2)}</span><span>${l}</span><em>${v.track[k]?"Suivi":"Off"}</em></button>`).join("")}</div>
         ${v.track.cig?`<div class="trk-w" aria-label="Cigarettes sur 7 jours">${wk.map((k,i)=>`<span class="${i===6?"td":""}" title="${fmt(k)} : ${vals[i]}"><i style="height:${Math.round(vals[i]/mx*30)+3}px"></i><em>${WL[toD(k).getDay()]}</em></span>`).join("")}</div><small class="hint">Aujourd'hui ${g.cig[tk]||0} · hier ${g.cig[addD(tk,-1)]||0}${avg!=null?` · moyenne ${avg.toLocaleString("fr-FR",{maximumFractionDigits:1})}`:""}</small>`:""}
 </div>
-      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un rappel" title="Ajouter un rappel">${ICO("plus",24)}</button></h3><p>Les retards remontent dans tes quêtes.</p>${lastHTML(tk)}</div>
+      <div class="vie-c" id="vie-maison"><h3>${ic("demenagement",18)}La dernière fois que…<button type="button" class="btn edbtn lst-add" style="margin-left:auto" aria-label="Ajouter un rappel" title="Ajouter un rappel">${ICO("plus",24)}</button></h3>${lastHTML(tk)}</div>
 `;
       box.innerHTML=h;
       {const sm=document.getElementById("setMods");if(sm)sm.innerHTML=`<div id="vie-mods"><h3>${ic("autre",18)}Mes modules</h3><p>Ce qui est coupé disparaît.</p>
         ${MODS.map(m=>`<label class="tg"><span><b>${m[1]}</b><small>${m[2]}</small></span><input type="checkbox" class="sw" data-mod="${m[0]}"${v.off.includes(m[0])?"":" checked"}></label>`).join("")}</div>`}
       const ch=()=>{save();rt();try{render()}catch(e){}};
-      box.querySelectorAll("[data-seg]").forEach(b=>b.onclick=()=>{v[b.dataset.seg]=+b.dataset.val;ch()});
-      box.querySelectorAll("[data-wd]").forEach(b=>b.onclick=()=>{const d=+b.dataset.wd;v.wd=v.wd.includes(d)?v.wd.filter(x=>x!==d):[...v.wd,d];ch()});
-      box.querySelector("[data-wf]").onchange=e=>{v.wf=e.target.value||"09:00";save();rt()};box.querySelector("[data-wt]").onchange=e=>{v.wt=e.target.value||"17:00";save();rt()};
-      box.querySelector("[data-wake]").onchange=e=>{g.wake=+e.target.value;e.target.blur();ch()};
-      box.querySelector("[data-job]").onchange=e=>{v.job=e.target.checked;ch()};
-      if(0)box.querySelectorAll("[data-pri]").forEach(b=>b.onclick=()=>{const k=b.dataset.pri;if(v.pri.includes(k))v.pri=v.pri.filter(x=>x!==k);else{if(v.pri.length>=3){try{toast("3 priorités maximum")}catch(e){}return}v.pri=[...v.pri,k]}ch()});
       box.querySelectorAll("[data-trk]").forEach(b=>b.onclick=()=>{v.track[b.dataset.trk]=!v.track[b.dataset.trk];ch()});  // un seul réglage par suivi (2.5) : la tuile
       document.querySelectorAll("#setMods [data-mod]").forEach(b=>b.onchange=()=>{const id=b.dataset.mod;v.off=b.checked?v.off.filter(x=>x!==id):[...v.off.filter(x=>x!==id),id];vieMods();save()});
-      bindPer(box);bindLast(box,tk)};
+      bindLast(box,tk)};
     // renderVie : finitions autour de renderVieBase (le cœur), ex-retouche de correctifs.js
-    window.renderVie=function(){const r=renderVieBase.apply(this,arguments);try{vieViz();ficheMove()}catch(e){console.warn("renderVie",e)}return r};
+    window.renderVie=renderVieBase;
   })();
   

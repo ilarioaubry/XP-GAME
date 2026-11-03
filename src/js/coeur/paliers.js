@@ -55,20 +55,25 @@ function palPop(groups){if(document.querySelector(".palpop"))return;
   const close=()=>{v.remove();try{render()}catch(_){}};v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;
   document.body.appendChild(v);try{sfx("level")}catch(_){}}
 
-// ---- Moi > Ma vie : mes paliers et mes boosts
+// ---- Moi > Ma vie : mes paliers (refonte du 03/11) : une tuile par jauge (icône, niveau, barre, crans débloqués) ;
+// le détail (ce que chaque palier débloque) s'ouvre au toucher. Les boosts en réserve en tuiles au-dessus, sans texte.
 function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf(),live=boostLive(),done=PAL_CATS.reduce((a,c)=>a+palOf(c),0);
-  const rows=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),nx=palNext(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0);
-    return`<li class="palr" style="--pc:${C.c||"var(--gold)"}"><span class="palri">${rkSvg(PAL_IC[c]||"etoile")}</span><span class="palrb"><span class="palrh"><b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></span>
-      <span class="ui-barre ui-barre--grande palbar" role="progressbar" aria-label="${esc(C.label||c)} : ${si.cur} sur ${si.need} XP avant le niveau ${l+1}" aria-valuemin="0" aria-valuemax="${si.need}" aria-valuenow="${si.cur}"><i style="width:${Math.round(si.cur/si.need*100)}%"></i><span class="ui-barre__txt">${si.cur} / ${si.need} XP</span></span>
-      <span class="palpath" role="img" aria-label="Paliers atteints : ${p+1} sur 4">${PAL_LV.map((lv,k)=>`<i class="${k<=p?"on":k===p+1?"next":""}"><em>${lv}</em></i>`).join("")}</span>
-      <small class="ui-info">${nx?`Niveau ${nx.lv} : ${nx.n?`+${nx.n} quête${nx.n>1?"s":""} ${["","costaude","dure","exploit"][palOf(c)+1]}${nx.n>1?"s":""}`:nx.txt.toLowerCase()} · encore ${nx.need} XP`:"Tout est débloqué"}</small></span></li>`}).join("");
+  const tiles=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0);
+    return`<button type="button" class="ui-tuile pal-t" data-c="${c}" style="--pc:${C.c||"var(--gold)"}" aria-label="${esc(C.label||c)} : niveau ${l}, ${si.cur} sur ${si.need} XP"><span class="pal-h">${cransHTML(p)}<span class="pal-lv">${l}</span></span>${rkSvg(PAL_IC[c]||"etoile")}<span class="ui-tuile__nom">${esc(C.label||c)}</span><span class="ui-barre pal-b"><i style="width:${Math.round(si.cur/si.need*100)}%"></i></span></button>`}).join("");
   box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes paliers</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
-    <p class="ui-info palintro">Chaque jauge débloque des quêtes plus dures : niveau 3 costaudes, niveau 5 dures, niveau 10 exploits.</p>
-    <div class="palboost">${live?`<p class="palon">${rkSvg("eclair")}<span>XP ×2 sur ${esc(boostLab(live.c))} · encore ${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min</span></p>`:""}
-      ${L.length?`<div class="ui-tuiles palbt">${L.map((b,i)=>`<button type="button" class="ui-tuile" data-b="${i}" aria-label="Lancer 1 h d'XP ×2 sur ${esc(boostLab(b.c))}">${rkSvg("eclair")}<span class="ui-tuile__nom">×2 ${esc(b.c?boostLab(b.c):"Partout")}</span></button>`).join("")}</div>`:`<p class="ui-vide palvide">Aucun boost en réserve pour l'instant.</p>`}
-      <small class="ui-info">Un boost à chaque palier 3, et un tous les deux niveaux : 1 h d'XP ×2, 3 en réserve au plus.</small></div>
-    <ul class="pallist">${rows}</ul>`;
-  box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal))}
+    ${live||L.length?`<div class="pal-bst">${live?`<span class="ui-tuile pal-on" role="img" aria-label="XP ×2 sur ${esc(boostLab(live.c))}, encore ${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min">${rkSvg("eclair")}<span class="ui-tuile__nom">${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min</span></span>`:""}${L.map((b,i)=>`<button type="button" class="ui-tuile" data-b="${i}" aria-label="Lancer 1 h d'XP ×2 sur ${esc(boostLab(b.c))}">${rkSvg("eclair")}<span class="ui-tuile__nom">×2 ${esc(b.c?boostLab(b.c):"Partout")}</span></button>`).join("")}</div>`:""}
+    <div class="ui-tuiles pal-g">${tiles}</div>`;
+  box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal));
+  box.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>palOpen(b.dataset.c))}
+// détail d'une jauge : petite fenêtre, les 4 paliers et ce qu'ils débloquent
+function palOpen(c){if(document.querySelector(".palw2"))return;const l=catLv(c),p=palOf(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0),nx=palNext(c);
+  const R=[[1,"Quêtes simples"],[3,"Quêtes costaudes"],[5,"Quêtes dures"],[10,"Exploits"]];
+  const v=document.createElement("div");v.className="ui-voile palw2";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label",(C.label||c)+" : paliers");
+  v.innerHTML=`<div class="ui-fenetre" style="--pc:${C.c||"var(--gold)"}"><div class="pal-dh">${rkSvg(PAL_IC[c]||"etoile")}<b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></div>
+    <span class="ui-barre ui-barre--grande pal-b"><i style="width:${Math.round(si.cur/si.need*100)}%"></i><span class="ui-barre__txt">${si.cur} / ${si.need} XP</span></span>
+    <ul class="pal-dl">${R.map(([lv,t],k)=>`<li class="${k<=p?"on":k===p+1?"next":""}"><span class="pal-dn">${lv}</span>${cransHTML(Math.min(3,k+1))}<span>${t}</span>${k<=p?ICO("check",24):k===p+1&&nx?`<small class="ui-info">encore ${nx.need} XP</small>`:""}</li>`).join("")}</ul>
+    <button type="button" class="ui-btn ui-btn--principal palx">Fermer</button></div>`;
+  const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palx").onclick=close;document.body.appendChild(v)}
 
 // ---- journée relance (4.3) : après deux jours sans rien noter, la première action du jour compte triple, sans reproche
 function relanceOn(){const G=S.g;if(!G)return false;const tk=dayKey(Date.now());if(G.relance===tk)return false;

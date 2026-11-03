@@ -6,7 +6,7 @@ const SIT_Q={job:[["etud","Étudiant·e"],["poste","En poste"],["cherche","En re
  time:[["peu","Très peu"],["30","30 min"],["60","1 h"],["plus","Plus"]]};
 function sitOf(){const G=S.g;if(!G.sit||typeof G.sit!=="object")return null;return G.sit}
 // « Ma situation » = Ma fiche (31/10, A.4) : un seul formulaire, celui de Moi > Ma vie, ouvert en modification
-function sitSheet(){showView("c");const t=document.querySelector('[data-sub="vie"][role="tab"]');if(t)t.click();fEdit=true;renderFiche();setTimeout(()=>{const b=document.getElementById("ficheBox");if(b)b.scrollIntoView({block:"start"})},60)}
+function sitSheet(){showView("c");const t=document.querySelector('[data-sub="vie"][role="tab"]');if(t)t.click();renderFiche();setTimeout(()=>{const b=document.getElementById("ficheBox");if(b)b.scrollIntoView({block:"start"})},60)}
 
 const cap=t=>(t=String(t||"").trim())?t[0].toUpperCase()+t.slice(1):t;
 // --- modèles de quêtes : [id, texte, cat, xp, [hDébut,hFin], condition(ctx), pourquoi, {out,in,short,we,wd}]

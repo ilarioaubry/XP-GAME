@@ -1,4 +1,4 @@
-// Moi : finitions des blocs (Bilan, compétences, Ma fiche, Ce que tu deviens, Collection…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
+// Moi : finitions des blocs (Bilan, compétences, Ma fiche, Collection…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // ===== Le Bilan raconte ta semaine
 function weekStory(K){const set=new Set(K),L=(S.log||[]).filter(e=>set.has(dayKey(e.t))),out=[],g=S.g;
   const prevK=K.map(k=>{const d=new Date(k+"T12:00");d.setDate(d.getDate()-7);return dayKey(d)}),pset=new Set(prevK),PL=(S.log||[]).filter(e=>pset.has(dayKey(e.t)));
@@ -50,8 +50,8 @@ function afSkill(){const box=document.getElementById("actFind");if(!box)return;c
     const set=el.querySelector(".skset");if(set){const inp=el.querySelector("input");const ok=()=>{const t=inp.value.trim().slice(0,40);if(!t)return;if(!G.cur||typeof G.cur!=="object")G.cur={};G.cur[B.c.k]={t,n:0,s:Date.now()};save();el.remove();afSkill()};set.onclick=ok;inp.onkeydown=e=>{if(e.key==="Enter")ok()}}
     const ch=el.querySelector(".skch");if(ch)ch.onclick=()=>{delete G.cur[B.c.k];save();el.remove();afSkill()}}
   const c2=el.querySelector(".skcl");if(c2)c2.onclick=()=>{const prev=levelInfo(S.xp).l;if(!G.dm||typeof G.dm!=="object")G.dm={};G.dm[ym+B.z]=1;addBonus("Objectif du mois : "+(L?L.n:""),50);save();try{uniBurst(c2,"divert")}catch(e){}render(prev);toast(`Objectif atteint ! <span class="p">+50 XP</span>`);el.remove();afSkill()}}
-// Moi : plus de Domaines, « Ce que tu deviens » dans Ma vie
-function moiTabs(){const id=document.getElementById("idBox");if(id&&id.dataset.sub!=="vie"){id.dataset.sub="vie";try{applySub()}catch(e){}}
+// Moi : plus de Domaines
+function moiTabs(){
   ["musBox","dzBox"].forEach(x=>{const e=document.getElementById(x);if(e&&e.dataset.sub!=="off")e.dataset.sub="off"});document.querySelectorAll(".wrap>section.lzs").forEach(e=>{if(e.dataset.sub!=="off")e.dataset.sub="off"});
   const sb=document.querySelector('.subtabs button[data-sub="sons"]');if(sb){const nv=sb.parentElement;sb.remove();nv.classList.remove("four");nv.classList.add("three");try{if(subs.c==="sons"){subs.c="vie";applySub()}placeInds()}catch(e){}}}
 // ---- records perso
@@ -65,7 +65,6 @@ function recCheck(it,qty){if(!it||it.k!=="fam"||!qty)return;const key="af:"+it.f
 // 6. Skills : un interrupteur par skill
 
 // Ma fiche : modifiable directement
-let fEdit=false;
 // ---- Ma fiche, version visuelle
 try{void 0;}catch(e){}
 const JOBI={etud:"lire",poste:"chantier",cherche:"loupe",indep:"laptop",pause:"pause",autre:"autre"};
@@ -75,20 +74,16 @@ const PARENT=/^(papa|maman|p[èe]re|m[èe]re|daron|daronne|mom|dad|parents?)$/i;
 const tkF=()=>dayKey(Date.now());
 function homeOf(s){try{(S.family||[]).forEach(n=>{if(S.profiles[n]&&S.profiles[n].love)delete S.profiles[n].love})}catch(e){}const W=Array.isArray(s.with)?s.with:[];if(!W.length)return"seul";const P=S.profiles||{};if(W.some(n=>P[n]&&P[n].love))return"couple";if(W.some(n=>PARENT.test(n)||isFam(n)))return"parents";return"coloc"}
 window.homeOf=homeOf;
-function perNow(){const tk=tkF(),L=(S.g.per||[]);return L.find(p=>p.s<=tk&&p.e>=tk)||null}
 function perEnded(){const tk=tkF(),A=S.g.perAsk||{};return(S.g.per||[]).filter(p=>p.e<tk&&!A[p.id]&&(Date.parse(tk)-Date.parse(p.e))/864e5<=21).sort((a,b)=>b.e.localeCompare(a.e))[0]||null}
 const tileI=k=>{try{return rkSvg(k)}catch(e){return""}};
 function fPick(s,commit){if(document.querySelector(".fpick"))return;const p=document.createElement("div");p.className="bpop rapop fpick";p.setAttribute("role","dialog");p.setAttribute("aria-modal","true");p.setAttribute("aria-label","Qui vit avec toi ?");document.body.appendChild(p);
   const draw=()=>{const W=s.with||[];p.innerHTML=`<div class="bpc rap"><div class="raph"><h3>Qui vit avec toi ?</h3><button type="button" class="raclose" aria-label="Fermer">${ICO("close",18)}</button></div><div class="fpg">${relNames().map(n=>`<button type="button" class="fpp" data-n="${esc(n)}" aria-pressed="${W.includes(n)}">${pAv(n,"fpav")}<span class="fpn"></span></button>`).join("")}</div><button type="button" class="btn primary fpok">Terminé</button></div>`;
     p.querySelectorAll(".fpp").forEach((b,i)=>{b.querySelector(".fpn").textContent=b.dataset.n;b.onclick=()=>{const n=b.dataset.n,a=(s.with||[]).slice(),j=a.indexOf(n);if(j>=0)a.splice(j,1);else a.push(n);s.with=a;s.home=homeOf(s);commit();draw()}});
     const cl=()=>{p.remove();renderFiche()};p.querySelector(".raclose").onclick=cl;p.querySelector(".fpok").onclick=cl;p.onclick=e=>{if(e.target===p)cl()}};draw()}
-function ficheMove(){const slot=document.querySelector("#ficheBox .fposte");const vb=document.getElementById("vieBox");if(!vb)return;
-  ["vie-per"].forEach(id=>{const inV=vb.querySelector("#"+id);if(!slot){if(inV)inV.hidden=true;return}
-    const old=slot.querySelector("#"+id);if(inV){if(old&&old.contains(document.activeElement)){inV.remove();return}if(old)old.remove();inV.hidden=false;slot.appendChild(inV)}})}
 function autoTime(){const s=sitOf();if(!s)return;let wd=false;try{wd=vieCap()<3}catch(e){}const t=["poste","etud","indep"].includes(s.job)&&wd?"30":"plus";if(s.time!==t){s.time=t;save()}}
 function perAskCard(){const P=perEnded();const s=sitOf();if(!P||!s||s.job!=="poste")return"";const xp=P.t==="contrat"&&typeof contratClosed==="function"&&!contratClosed(P);return`<div class="fask" data-pid="${P.id}"><b>« ${esc(P.name||"Ta période")} » est terminé</b><small>${xp?"Bravo, +50 XP Travail. ":""}Ta situation a changé ?</small><div class="fjobs mini">${[["poste","Toujours en poste"],["cherche","En recherche"],["pause","En pause"],["etud","Étudiant·e"]].map(([v,l])=>`<button type="button" data-ask="${v}"><span class="fti">${tileI(JOBI[v])}</span><span>${l}</span></button>`).join("")}</div></div>`}
 function bindAsk(root){root.querySelectorAll(".fask [data-ask]").forEach(b=>b.onclick=ev=>{const c=b.closest(".fask"),G=S.g;try{const P=(G.per||[]).find(x=>x.id===c.dataset.pid);if(P&&typeof contratClose==="function")contratClose(P,b,ev)}catch(e){}if(!G.perAsk||typeof G.perAsk!=="object")G.perAsk={};G.perAsk[c.dataset.pid]=1;const cur=sitOf()||{};G.sit={...cur,job:b.dataset.ask,t:Date.now()};if(G.fq)G.fq.d="";save();
-    if(b.dataset.ask==="poste"){fEdit=true;try{showView("c");cGoSub("c","vie")}catch(e){}setTimeout(()=>{const x=document.getElementById("ficheBox");if(x)x.scrollIntoView({behavior:"smooth"})},200);try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
+    if(b.dataset.ask==="poste"){try{calOpen()}catch(e){}try{toast("Ajoute ta nouvelle période")}catch(e){}}else{try{toast("Situation mise à jour")}catch(e){}}
     try{render()}catch(e){}renderFiche();const t=document.getElementById("evToday");if(t)t.querySelectorAll(".fask").forEach(x=>x.remove())})}
 function askToday(){const b=document.getElementById("evToday");if(!b)return;const h=perAskCard();let c=b.querySelector(".fask");if(!h){if(c)c.remove();return}if(c)return;b.insertAdjacentHTML("afterbegin",h);bindAsk(b)}
 // renderFiche : finitions autour de renderFicheBase (le cœur), ex-retouche de correctifs.js
@@ -98,63 +93,85 @@ const MO_C=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.",
 function cplWho(){const P=S.profiles||{};return Object.keys(P).find(n=>P[n]&&P[n].love&&!isFam(n))||""}
 function dateTxt(o){return o&&o.d&&o.m?o.d+" "+MO_C[o.m-1]+(o.y?" "+o.y:""):""}
 function dateFields(k,o){o=o||{};return`<div class="fdate" data-dk="${k}"><label>Jour<input type="text" maxlength="2" inputmode="numeric" autocomplete="off" placeholder="12" data-dp="d" value="${o.d||""}"></label><label>Mois<select data-dp="m"><option value="">—</option>${MO_C.map((m,i)=>`<option value="${i+1}"${o.m===i+1?" selected":""}>${m}</option>`).join("")}</select></label><label>Année<input type="text" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="1996" data-dp="y" value="${o.y||""}"></label></div>`}
-function renderFiche(){try{homeFix()}catch(e){console.warn("renderFiche",e)}const r=renderFicheBase.apply(this,arguments);try{autoTime();ficheMove()}catch(e){console.warn("renderFiche",e)}return r}
-function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;let s0=null;try{s0=sitOf()}catch(e){}
-  const s=s0?{...s0}:{goals:[],pass:[]};if(!Array.isArray(s.with))s.with=[];s.home=homeOf(s);const lab=(k,v)=>((SIT_Q[k].find(x=>x[0]===v)||[])[1])||"";const pri=(G.vie&&G.vie.pri)||[];
-  const commit=()=>{const cur=sitOf()||{};G.sit={...cur,...s,t:Date.now()};if(G.fq)G.fq.d="";save()};
-  const H=HOMEI[s.home]||HOMEI.seul,av=s.with.slice(0,4).map(n=>pAv(n,"fmini")).join("");
-  const P=perNow();let perH="";if(s.job==="poste"&&P){const a=Date.parse(P.s),e=Date.parse(P.e),t=Date.parse(tkF()),tot=Math.round((e-a)/864e5)+1,dn=Math.round((t-a)/864e5)+1;perH=`<div class="fper"><b></b><small>Jour ${dn} sur ${tot} · plus que ${tot-dn} j</small><i><em style="width:${Math.min(100,dn/tot*100)}%"></em></i></div>`}
-  if(!fEdit){const gl=(s.goals||[]).map(v=>lab("goals",v)).filter(Boolean);
-    box.innerHTML=`<div class="fcard fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn fced edbtn" aria-label="Modifier ma fiche">${ICO("edit",24)}</button></div>
-      <div class="fsum"><div class="fsq"><span class="fti">${tileI(JOBI[s.job]||"autre")}</span><small>${esc(lab("job",s.job)||"Situation ?")}</small></div>
-      <div class="fsq"><span class="fti">${tileI(H[0])}</span><small>${H[1]}</small>${av?`<span class="fav">${av}</span>`:""}</div>
-      <div class="fsq fpr">${pri.length?`<span class="fpri3">${pri.map(k=>`<span class="fti sm" title="${esc(CATS[k]?CATS[k].label:"")}">${tileI(PRII[k]||"etoile")}</span>`).join("")}</span>`:`<span class="fti">${tileI("etoile")}</span>`}<small>${pri.length?"Priorités":"Pas de priorité"}</small></div></div>
-      ${perH}${(()=>{const C=[],w=cplWho(),cl=(CPL_Q.find(x=>x[0]===s.cpl)||[])[1];if(s.bd&&s.bd.d)C.push(`<span class="fchip fhc">${tileI("cake")}<span>${esc(dateTxt(s.bd))}</span></span>`);if(cl&&s.cpl!=="celib")C.push(`<span class="fchip fhc">${tileI("coeur")}<span>${esc(cl+(w?" avec "+w:""))}${s.cpld&&s.cpld.d?" · "+esc(dateTxt({d:s.cpld.d,m:s.cpld.m})):""}</span></span>`);return C.length?`<div class="fcs fhaves fdates">${C.join("")}</div>`:""})()}${gl.length?`<div class="fcs">${gl.map(g=>`<span class="fchip">${esc(g)}</span>`).join("")}</div>`:""}${(s.have||[]).length&&typeof haveOf==="function"?`<div class="fcs fhaves">${s.have.map(k=>{const h=haveOf(k);return h?`<span class="fchip fhc">${tileI(h.ic)}<span>${esc(h.l)}</span></span>`:""}).join("")}</div>`:""}${!s0?`<span class="fnone">Touche Modifier pour la remplir</span>`:""}</div>`;
-    if(P&&box.querySelector(".fper b"))box.querySelector(".fper b").textContent=P.name||"Ma période";
-    box.querySelector(".fced").onclick=()=>{fEdit=true;renderFiche()};bindAsk(box);ficheMove();return}
-  if(!G.taste||typeof G.taste!=="object"||!Array.isArray(G.taste.art))G.taste={art:[]};const art=G.taste.art,nf=Array.isArray(G.normOff)?G.normOff:[];
-  const row=(k,title,multi,max)=>`<div class="fr2"><small>${title}${max?` · ${max} max`:""}</small><div class="fopts">${SIT_Q[k].map(([v,l])=>{const on=multi?(s[k]||[]).includes(v):s[k]===v;return`<button type="button" data-fk="${k}" data-fv="${v}" aria-pressed="${on}">${esc(l)}</button>`}).join("")}</div></div>`;
-  box.innerHTML=`<div class="fcard fedit fviz"><div class="fch"><b>Ma fiche</b><button type="button" class="btn primary fcok">Terminé</button></div>
-    <div class="fr2"><small>Ma situation</small><div class="fjobs">${SIT_Q.job.map(([v,l])=>`<button type="button" data-job="${v}" aria-pressed="${s.job===v}"><span class="fti">${tileI(JOBI[v])}</span><span>${esc(l.replace("En recherche d'emploi","En recherche"))}</span></button>`).join("")}</div>
-      ${s.job==="poste"?`<div class="fposte"></div>`:""}</div>
-    <div class="fr2"><small>Chez moi</small><div class="fhome"><div class="fsq"><span class="fti">${tileI(H[0])}</span><small>${H[1]}</small></div><div class="fwho">${s.with.map(n=>`<span class="fwp" data-n="${esc(n)}">${pAv(n,"fmini")}<b></b>${isFam(n)?"":`<button type="button" class="flove" aria-pressed="${!!((S.profiles||{})[n]||{}).love}" aria-label="En couple avec ${esc(n)}">${tileI("coeur")}</button>`}<button type="button" class="fwx2" aria-label="Retirer">${ICO("close",12)}</button></span>`).join("")}<button type="button" class="fadd">+ Ajouter quelqu'un</button></div></div><small class="fhint">Seul·e par défaut. Papa ou maman : en famille · des amis : en coloc · le cœur : en couple.</small></div>
-    <div class="fr2"><small>Mon anniversaire</small>${dateFields("bd",s.bd)}</div>
-    <div class="fr2"><small>Mon cœur</small><div class="fopts">${CPL_Q.map(([v,l])=>`<button type="button" data-fc="${v}" aria-pressed="${s.cpl===v}">${esc(l)}</button>`).join("")}</div>
-      ${s.cpl&&s.cpl!=="celib"?`<small>Avec</small><div class="fopts">${relNames().filter(n=>!isFam(n)).map(n=>`<button type="button" data-fw="${esc(n)}" aria-pressed="${cplWho()===n}"></button>`).join("")}</div><small>${s.cpl==="marie"?"Notre mariage":"Notre anniversaire"}</small>${dateFields("cpld",s.cpld)}`:""}</div>
-    ${typeof HAVE!=="undefined"?`<div class="fr2 fhave"><small>J'ai… · l'appli ajoute les actions, rituels et rappels qui vont avec</small>${HAVE_G.map(g=>{const L=HAVE.filter(h=>h.g===g);return L.length?`<small class="fhg">${g}</small><div class="fjobs">${L.map(h=>`<button type="button" data-fh="${h.k}" aria-pressed="${(s.have||[]).includes(h.k)}"><span class="fti">${tileI(h.ic)}</span><span>${esc(h.l)}</span></button>`).join("")}</div>`:""}).join("")}</div>`:""}
-    <div class="fr2"><small>Mes priorités · 3 max · ces quêtes passent en premier</small><div class="fjobs fpris">${Object.keys(PRII).filter(k=>CATS[k]).map(k=>`<button type="button" data-fp="${k}" aria-pressed="${pri.includes(k)}"><span class="fti">${tileI(PRII[k])}</span><span>${esc(CATS[k].label)}</span></button>`).join("")}</div></div>
-    ${row("goals","Ce que je veux améliorer",1,3)}${row("pass","Ce que j'aime",1)}
-    <div class="fr2"><small>Ce qui compte en ce moment</small><input class="fnote" maxlength="80" placeholder="Ex. trouver un appart à Montpellier"></div>
-    <div class="fr2"><small>Mon temps libre en semaine</small><div class="fopts">${SIT_Q.time.map(([v,l])=>`<button type="button" data-ft="${v}" aria-pressed="${s.time===v}">${esc(l)}</button>`).join("")}</div></div>
-    <div class="fr2"><small>Ce qui ne me concerne pas · ces quêtes ne sont plus proposées</small><div class="fopts">${NORMS.map(([k,l])=>`<button type="button" data-fn="${k}" aria-pressed="${nf.includes(k)}">${esc(l)}</button>`).join("")}</div></div>
-    <div class="fr2"><small>Mes artistes · pour des quêtes musique</small>${art.length?`<div class="fopts">${art.map((a,i)=>`<button type="button" class="fartx" data-ra="${i}" aria-pressed="true"><span></span>${ICO("close",12)}</button>`).join("")}</div>`:""}<form class="qcadd fartf"><input maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="btn" aria-label="Ajouter" title="Ajouter">${ICO("plus",24)}</button></form></div></div>`;
-  box.querySelectorAll(".fwp").forEach(x=>x.querySelector("b").textContent=x.dataset.n);
-  box.querySelectorAll("[data-job]").forEach(b=>b.onclick=()=>{s.job=b.dataset.job;commit();renderFiche()});
-  box.querySelectorAll("[data-fh]").forEach(b=>b.onclick=()=>{const k=b.dataset.fh,a=Array.isArray(s.have)?s.have.slice():[],i=a.indexOf(k),on=i<0;if(on)a.push(k);else a.splice(i,1);s.have=a;commit();try{haveApply(k,on);save()}catch(e){}renderFiche()});
-  box.querySelectorAll("[data-fk]").forEach(b=>b.onclick=()=>{const k=b.dataset.fk,v=b.dataset.fv;const a=(s[k]||[]).slice(),i=a.indexOf(v);if(i>=0)a.splice(i,1);else{if(k==="goals"&&a.length>=3){try{toast("3 maximum")}catch(e){}return}a.push(v)}s[k]=a;commit();renderFiche()});
-  box.querySelectorAll("[data-fp]").forEach(b=>b.onclick=()=>{if(!G.vie||typeof G.vie!=="object")G.vie={};const Q=Array.isArray(G.vie.pri)?G.vie.pri.slice():[],k=b.dataset.fp,i=Q.indexOf(k);if(i>=0)Q.splice(i,1);else{if(Q.length>=3){try{toast("3 priorités maximum")}catch(e){}return}Q.push(k)}G.vie.pri=Q;save();renderFiche()});
-  box.querySelector(".fadd").onclick=()=>fPick(s,commit);
-  box.querySelectorAll(".fwp .fwx2").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;s.with=s.with.filter(x=>x!==n);s.home=homeOf(s);commit();renderFiche()});
-  box.querySelectorAll(".fwp .flove").forEach(b=>b.onclick=()=>{const n=b.closest(".fwp").dataset.n;setRel(n,relOf(n)==="couple"?null:"couple");s.home=homeOf(s);commit();renderFiche()});
-  box.querySelectorAll("[data-fw]").forEach(b=>{b.textContent=b.dataset.fw;b.onclick=()=>{const w=b.dataset.fw;setRel(w,cplWho()===w?null:"couple");s.home=homeOf(s);commit();renderFiche()}});
-  box.querySelectorAll("[data-fc]").forEach(b=>b.onclick=()=>{s.cpl=s.cpl===b.dataset.fc?"":b.dataset.fc;commit();renderFiche()});
-  box.querySelectorAll(".fdate").forEach(f=>{const k=f.dataset.dk,upd=()=>{const g=q=>parseInt((f.querySelector(`[data-dp="${q}"]`)||{}).value,10),d=g("d"),m=g("m"),y=g("y"),o={};if(d>=1&&d<=31)o.d=d;if(m>=1&&m<=12)o.m=m;if(y>=1900&&y<=2100)o.y=y;
-    if(o.d&&o.m)s[k]=o;else if(!o.d&&!o.m)s[k]=null;else return;commit();try{renderEvents()}catch(e){}};f.querySelectorAll("[data-dp]").forEach(x=>x.onchange=upd)});
-  const n=box.querySelector(".fnote");n.value=s.note||"";n.onchange=()=>{s.note=n.value.trim().slice(0,80);commit()};
-  box.querySelectorAll(".fartx").forEach((b,i)=>{b.querySelector("span").textContent=art[i];b.setAttribute("aria-label","Retirer "+art[i]);b.onclick=()=>{G.taste={art:art.filter((_,j)=>j!==i),t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()}});
-  box.querySelector(".fartf").onsubmit=e=>{e.preventDefault();const v=e.target.querySelector("input").value.trim().slice(0,40);if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))G.taste={art:[...art,v],t:Date.now()};if(G.fq)G.fq.d="";save();renderFiche()};
-  box.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{s.time=s.time===b.dataset.ft?"":b.dataset.ft;commit();renderFiche()});
-  box.querySelectorAll("[data-fn]").forEach(b=>b.onclick=()=>{const k=b.dataset.fn,a=nf.slice(),i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);G.normOff=a;if(G.fq)G.fq.d="";save();renderFiche()});
-  box.querySelector(".fcok").onclick=()=>{if(n.value.trim()!==(s.note||"")){s.note=n.value.trim().slice(0,80);commit()}fEdit=false;renderFiche();try{render()}catch(e){}};
-  ficheMove()}
-// ---- capacité déduite + suivi en cartes
-try{void 0;}catch(e){}
-
-function vieViz(){const vb=document.getElementById("vieBox");if(!vb||!S||!S.g)return;
-  {let c=3;try{c=vieCap()}catch(e){}const e=enOf(),tk=dayKey(Date.now());let wd=false;try{wd=(S.g.vie.wd||[]).includes(new Date().getDay())&&c<=3}catch(_){}
-    const why=[];try{const s=sitOf();if(s&&["poste","etud","indep"].includes(s.job)&&wd)why.push("jour de travail")}catch(_){}if(e===1)why.push("batterie basse");if(e===3)why.push("en forme");const sl=((S.g.sleep||{})[tk]||{}).h;if(sl&&sl<6)why.push("nuit courte");
-    const k=c+"|"+why.join(",");let cv=vb.querySelector(".capviz");if(!cv||cv.dataset.k!==k||cv!==vb.firstElementChild){if(!cv){cv=document.createElement("div");cv.className="capviz"}cv.dataset.k=k;
-      cv.innerHTML=`<span class="cvi">${rkSvg("batterie")}</span><div><b>${c} quête${c>1?"s":""} aujourd'hui</b><span class="cvp">${Array.from({length:6},(_,i)=>`<i class="${i<c?"on":""}"></i>`).join("")}</span>${why.length?`<small>${why.join(" · ")}</small>`:""}</div>`;vb.prepend(cv)}}}
+// Ma fiche (refonte du 03/11) : des tuiles, sans long formulaire. Chaque tuile se touche pour changer ce qu'elle dit ;
+// « + » ajoute dans son groupe. Choix rapides = petite fenêtre ; dates, textes et horaires = plein écran.
+const GOALI={job:["loupe","Travail"],forme:["halteres","Forme"],sommeil:["lit","Sommeil"],ecrans:["tel","Écrans"],potes:["duo","Potes"],famille:["famille","Famille"],son:["micro","Musique"],argent:["piece","Finances"],apprendre:["lire","Apprendre"],chez:["maisonp","Chez moi"],moral:["soleil","Moral"],manger:["salade","Manger"]};
+const PASSI={rap:"micro",creer:"casque",cine:"clap",lecture:"lire",jeux:"manette",cuisine:"poele",sport:"ballon",dessin:"pinceau",mode:"tshirt",nature:"plante",photo:"photo",voyage:"valise"};
+const NORMI={minuit:["lune","Minuit"],soda:["soda","Soda"],vege:["legume","Végé"],ecran:["ecran","Écran au lit"],sport:["halteres","Sport"]};
+const JOBL={etud:"Étudiant·e",poste:"En poste",cherche:"En recherche",indep:"Indépendant·e",pause:"En pause",autre:"Autre"};
+const CPLI={celib:"Célibataire",couple:"En couple",fiance:"Fiancé·e",pacse:"Pacsé·e",marie:"Marié·e"};
+const MV_WDL=["D","L","M","M","J","V","S"];
+const mvT=(ic,l,at,cls,extra)=>`<button type="button" class="ui-tuile mv-t${cls?" "+cls:""}" ${at||""}>${ic}<span class="ui-tuile__nom">${l}</span>${extra||""}</button>`;
+const mvPlus=(at,l)=>`<button type="button" class="ui-tuile mv-t mv-plus" ${at} aria-label="${l}" title="${l}">${ICO("plus",24)}</button>`;
+// petite fenêtre (choix rapide) ou plein écran (saisie) ; draw(corps, refaire) remplit le corps
+function mvWin(title,full,draw,onOk,okL){const old=document.querySelector(".mvw");if(old)old.remove();let w;
+  if(full){w=document.createElement("div");w.className="ui-plein mvw";w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"></h2></div><div class="ui-plein__corps mvc"></div><div class="ui-plein__bas${onOk?"":" mv-seul"}">${onOk?`<button type="button" class="ui-btn mvno">Annuler</button>`:""}<button type="button" class="ui-btn ui-btn--principal mvok">${okL||(onOk?"Enregistrer":"Terminé")}</button></div>`}
+  else{w=document.createElement("div");w.className="ui-voile mvw";w.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre"></h2><div class="mvc"></div><button type="button" class="ui-btn ui-btn--principal mvok">Terminé</button></div>`;w.onclick=e=>{if(e.target===w)close()}}
+  w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label",title);w.querySelector("h2").textContent=title;
+  const C=w.querySelector(".mvc"),close=()=>{w.remove();renderFiche();try{render()}catch(e){}},redo=()=>draw(C,redo);
+  w.querySelector(".mvok").onclick=()=>{if(onOk&&onOk(C)===false)return;close()};const no=w.querySelector(".mvno");if(no)no.onclick=()=>{w.remove()};
+  document.body.appendChild(w);redo();return w}
+function renderFiche(){try{homeFix()}catch(e){console.warn("renderFiche",e)}const r=renderFicheBase.apply(this,arguments);try{autoTime()}catch(e){console.warn("renderFiche",e)}return r}
+function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;
+  const s=sitOf()||{};const pri=(G.vie&&G.vie.pri)||[],v=typeof vieV==="function"?vieV():(G.vie||{}),H=HOMEI[homeOf({...s,with:Array.isArray(s.with)?s.with:[]})]||HOMEI.seul,W=Array.isArray(s.with)?s.with:[];
+  const art=(G.taste&&Array.isArray(G.taste.art))?G.taste.art:[],nf=Array.isArray(G.normOff)?G.normOff:[];
+  const wds=[1,2,3,4,5,6,0].filter(d=>(v.wd||[]).includes(d)),wdTxt=wds.length===5&&!wds.includes(6)&&!wds.includes(0)?"L–V":wds.length?wds.map(d=>MV_WDL[d]).join(""):"Repos";
+  const grp=(lab,tiles)=>`<div class="mv-g">${lab?`<small class="mv-gl">${lab}</small>`:""}<div class="ui-tuiles mv-ts">${tiles}</div></div>`;
+  const cl=CPLI[s.cpl],who=cplWho();
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Ma fiche</h2></div>${perAskCard()}
+    ${grp("",mvT(tileI(JOBI[s.job]||"autre"),JOBL[s.job]||"Situation","data-f=\"job\"")
+      +mvT(tileI(H[0]),H[1],"data-f=\"home\"","",W.length?`<span class="mv-avs">${W.slice(0,3).map(n=>pAv(n,"fmini")).join("")}</span>`:"")
+      +mvT(tileI("cake"),s.bd&&s.bd.d?s.bd.d+" "+MO_C[s.bd.m-1]:"Anniv.","data-f=\"bd\"",s.bd&&s.bd.d?"":"mv-vide")
+      +mvT(tileI("coeur"),cl&&s.cpl!=="celib"&&who?esc(who):cl||"Mon cœur","data-f=\"cpl\"",cl?"":"mv-vide")
+      +mvT(tileI("soleil"),`${wakeH()} h · ${wdTxt}`,"data-f=\"rythme\"")
+      +mvT(pri.length?`<span class="mv-pri">${pri.map(k=>tileI(PRII[k]||"etoile")).join("")}</span>`:tileI("etoile"),"Priorités","data-f=\"pri\"",pri.length?"":"mv-vide")
+      +mvT(tileI("note"),"Note","data-f=\"note\"",s.note?"":"mv-vide"))}
+    ${s.note?`<p class="mv-note"></p>`:""}
+    ${grp("J'ai",(s.have||[]).map(k=>{const h=typeof haveOf==="function"&&haveOf(k);return h?mvT(tileI(h.ic),esc(h.l.replace(/^(Un|Une|Des|Du) /,"").replace(/^./,c=>c.toUpperCase())),"data-f=\"have\""):""}).join("")+mvPlus("data-f=\"have\"","Ajouter ce que j'ai"))}
+    ${grp("Je veux",(s.goals||[]).filter(k=>GOALI[k]).map(k=>mvT(tileI(GOALI[k][0]),GOALI[k][1],"data-f=\"goals\"")).join("")+((s.goals||[]).length<3?mvPlus("data-f=\"goals\"","Ce que je veux améliorer"):""))}
+    ${grp("J'aime",(s.pass||[]).filter(k=>PASSI[k]).map(k=>mvT(tileI(PASSI[k]),esc((SIT_Q.pass.find(x=>x[0]===k)||[])[1]||k),"data-f=\"pass\"")).join("")+(art.length?mvT(tileI("casque"),art.length+" artiste"+(art.length>1?"s":""),"data-f=\"pass\""):"")+mvPlus("data-f=\"pass\"","Ce que j'aime"))}
+    ${grp("Pas pour moi",nf.filter(k=>NORMI[k]).map(k=>mvT(tileI(NORMI[k][0]),NORMI[k][1],"data-f=\"norm\"","mv-non")).join("")+mvPlus("data-f=\"norm\"","Ce qui ne me concerne pas"))}`;
+  const np=box.querySelector(".mv-note");if(np)np.textContent="« "+s.note+" »";
+  box.querySelectorAll(".mv-t").forEach(b=>{const n=b.querySelector(".ui-tuile__nom");if(n&&!b.getAttribute("aria-label"))b.setAttribute("aria-label",n.textContent)});
+  box.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>ficheEdit(b.dataset.f));bindAsk(box)}
+// enregistrer la fiche (sit) : toute modification passe par là
+function sitSet(o){const G=S.g,cur=sitOf()||{goals:[],pass:[]};G.sit={...cur,...o,t:Date.now()};if(!Array.isArray(G.sit.with))G.sit.with=[];G.sit.home=homeOf(G.sit);if(G.fq)G.fq.d="";save()}
+function ficheEdit(f){const G=S.g,s=()=>sitOf()||{goals:[],pass:[]},tiles=(L,cur,attr)=>`<div class="ui-tuiles mv-ts">${L.map(([k,ic,l])=>`<button type="button" class="ui-tuile mv-t${cur(k)?" ui-tuile--active":""}" ${attr}="${k}" aria-pressed="${!!cur(k)}">${tileI(ic)}<span class="ui-tuile__nom">${esc(l)}</span></button>`).join("")}</div>`;
+  if(f==="job")return mvWin("Ma situation",false,(C,redo)=>{C.innerHTML=tiles(Object.keys(JOBL).map(k=>[k,JOBI[k],JOBL[k]]),k=>s().job===k,"data-v");
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{sitSet({job:b.dataset.v});redo()})});
+  if(f==="home"){const o={...s(),with:(s().with||[]).slice()};return fPick(o,()=>sitSet({with:o.with}))}
+  if(f==="pri")return mvWin("Mes priorités · 3",false,(C,redo)=>{const P=(G.vie&&G.vie.pri)||[];C.innerHTML=tiles(Object.keys(PRII).filter(k=>CATS[k]).map(k=>[k,PRII[k],CATS[k].label]),k=>P.includes(k),"data-v");
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{if(!G.vie||typeof G.vie!=="object")G.vie={};const Q=Array.isArray(G.vie.pri)?G.vie.pri.slice():[],k=b.dataset.v,i=Q.indexOf(k);if(i>=0)Q.splice(i,1);else{if(Q.length>=3)Q.shift();Q.push(k)}G.vie.pri=Q;save();redo()})});
+  if(f==="goals")return mvWin("Je veux · 3",false,(C,redo)=>{const g=s().goals||[];C.innerHTML=tiles(Object.keys(GOALI).map(k=>[k,GOALI[k][0],GOALI[k][1]]),k=>g.includes(k),"data-v");
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const a=(s().goals||[]).slice(),k=b.dataset.v,i=a.indexOf(k);if(i>=0)a.splice(i,1);else{if(a.length>=3)a.shift();a.push(k)}sitSet({goals:a});redo()})});
+  if(f==="norm")return mvWin("Pas pour moi",false,(C,redo)=>{const n=Array.isArray(G.normOff)?G.normOff:[];C.innerHTML=tiles(NORMS.map(([k])=>[k,(NORMI[k]||["autre"])[0],(NORMI[k]||[0,k])[1]]),k=>n.includes(k),"data-v");
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const a=(Array.isArray(G.normOff)?G.normOff:[]).slice(),k=b.dataset.v,i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);G.normOff=a;if(G.fq)G.fq.d="";save();redo()})});
+  if(f==="have")return mvWin("J'ai…",true,(C,redo)=>{const h=s().have||[];C.innerHTML=HAVE_G.map(g=>{const L=HAVE.filter(x=>x.g===g);return L.length?`<small class="mv-gl">${g}</small>`+tiles(L.map(x=>[x.k,x.ic,x.l.replace(/^(Un|Une|Des|Du) /,"").replace(/^./,c=>c.toUpperCase())]),k=>h.includes(k),"data-v"):""}).join("");
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const a=(s().have||[]).slice(),k=b.dataset.v,i=a.indexOf(k),on=i<0;if(on)a.push(k);else a.splice(i,1);sitSet({have:a});try{haveApply(k,on);save()}catch(e){}const y=C.scrollTop;redo();C.scrollTop=y})});
+  if(f==="pass")return mvWin("J'aime",true,(C,redo)=>{const p=s().pass||[],art=(G.taste&&Array.isArray(G.taste.art))?G.taste.art:[];
+    C.innerHTML=tiles(SIT_Q.pass.map(([k,l])=>[k,PASSI[k]||"etoile",l]),k=>p.includes(k),"data-v")+`<small class="mv-gl">Mes artistes</small>${art.length?`<div class="mv-arts">${art.map((a,i)=>`<button type="button" class="ui-puce" data-ra="${i}"><span></span>${ICO("close",24)}</button>`).join("")}</div>`:""}<form class="mv-row"><input class="ui-champ" maxlength="40" placeholder="Ajouter un artiste" aria-label="Ajouter un artiste"><button type="submit" class="ui-btn ui-btn--icone" aria-label="Ajouter" title="Ajouter">${ICO("plus",24)}</button></form>`;
+    C.querySelectorAll("[data-ra]").forEach(b=>{const a=art[+b.dataset.ra];b.querySelector("span").textContent=a;b.setAttribute("aria-label","Retirer "+a);b.onclick=()=>{G.taste={art:art.filter(x=>x!==a),t:Date.now()};if(G.fq)G.fq.d="";save();redo()}});
+    C.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{const a=(s().pass||[]).slice(),k=b.dataset.v,i=a.indexOf(k);if(i>=0)a.splice(i,1);else a.push(k);sitSet({pass:a});redo()});
+    C.querySelector("form").onsubmit=e=>{e.preventDefault();const v=e.target.querySelector("input").value.trim().slice(0,40);if(!v)return;if(art.length>=12){toast("12 artistes au maximum");return}if(!art.some(a=>a.toLowerCase()===v.toLowerCase()))G.taste={art:[...art,v],t:Date.now()};if(G.fq)G.fq.d="";save();redo();const i2=C.querySelector("form input");if(i2)i2.focus()}});
+  if(f==="note")return mvWin("En ce moment",true,C=>{C.innerHTML=`<input class="ui-champ mvnote" maxlength="80" placeholder="Ex. trouver un appart à Montpellier" aria-label="Ce qui compte en ce moment">`;const i=C.querySelector("input");i.value=s().note||"";setTimeout(()=>i.focus(),50)},C=>{sitSet({note:C.querySelector("input").value.trim().slice(0,80)})});
+  if(f==="bd")return mvWin("Mon anniversaire",true,C=>{C.innerHTML=dateFields("bd",s().bd)},C=>{const o=mvDate(C,"bd");if(o===false)return false;sitSet({bd:o});try{renderEvents()}catch(e){}});
+  if(f==="cpl"){let st=s().cpl||"";return mvWin("Mon cœur",true,(C,redo)=>{const who=cplWho();
+    C.innerHTML=`<div class="mv-puces">${Object.keys(CPLI).map(k=>`<button type="button" class="ui-puce" data-c="${k}" aria-pressed="${st===k}">${CPLI[k]}</button>`).join("")}</div>
+      ${st&&st!=="celib"?`<small class="mv-gl">Avec</small><div class="mv-puces">${relNames().filter(n=>!isFam(n)).map(n=>`<button type="button" class="ui-puce" data-w="${esc(n)}" aria-pressed="${who===n}"></button>`).join("")||`<span class="ui-info">Ajoute tes proches dans Proches.</span>`}</div><small class="mv-gl">${st==="marie"?"Notre mariage":"Notre anniversaire"}</small>${dateFields("cpld",s().cpld)}`:""}`;
+    C.querySelectorAll("[data-w]").forEach(b=>{b.textContent=b.dataset.w;b.onclick=()=>{const w=b.dataset.w;setRel(w,cplWho()===w?null:"couple");sitSet({});redo()}});
+    C.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{st=st===b.dataset.c?"":b.dataset.c;redo()})},C=>{const o=C.querySelector('[data-dk="cpld"]')?mvDate(C,"cpld"):null;if(o===false)return false;sitSet(st&&st!=="celib"?{cpl:st,cpld:o}:{cpl:st});try{renderEvents()}catch(e){}})}
+  if(f==="rythme"){const v=vieV(),o={wake:wakeH(),wd:(v.wd||[]).slice(),wf:v.wf,wt:v.wt,job:!!v.job};return mvWin("Mon rythme",true,(C,redo)=>{
+    C.innerHTML=`<small class="mv-gl">Réveil</small><div class="mv-puces mv-h">${[5,6,7,8,9,10,11,12].map(n=>`<button type="button" class="ui-puce" data-h="${n}" aria-pressed="${o.wake===n}">${n} h</button>`).join("")}</div>
+      <small class="mv-gl">Jours de travail</small><div class="mv-puces mv-j">${[1,2,3,4,5,6,0].map(d=>`<button type="button" class="ui-puce" data-d="${d}" aria-pressed="${o.wd.includes(d)}">${MV_WDL[d]}</button>`).join("")}</div>
+      <div class="mv-two"><label class="mv-gl">De<input class="ui-champ" type="time" data-wf value="${o.wf}"></label><label class="mv-gl">À<input class="ui-champ" type="time" data-wt value="${o.wt}"></label></div>
+      <button type="button" class="ui-puce mv-an" data-job aria-pressed="${o.job}">Toute l'année, pas seulement en contrat</button>`;
+    C.querySelectorAll("[data-h]").forEach(b=>b.onclick=()=>{o.wake=+b.dataset.h;redo()});
+    C.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{const d=+b.dataset.d;o.wd=o.wd.includes(d)?o.wd.filter(x=>x!==d):[...o.wd,d];redo()});
+    C.querySelector("[data-wf]").onchange=e=>{o.wf=e.target.value||"09:00"};C.querySelector("[data-wt]").onchange=e=>{o.wt=e.target.value||"17:00"};
+    C.querySelector("[data-job]").onclick=()=>{o.job=!o.job;redo()}},()=>{const v2=vieV();G.wake=o.wake;v2.wd=o.wd;v2.wf=o.wf;v2.wt=o.wt;v2.job=o.job;save();try{renderEvents();renderTrk()}catch(e){}})}}
+// lit Jour / Mois / Année : un objet {d,m,y}, null si vide, false si incomplet
+function mvDate(C,k){const f=C.querySelector(`[data-dk="${k}"]`);if(!f)return null;const g=q=>parseInt((f.querySelector(`[data-dp="${q}"]`)||{}).value,10),d=g("d"),m=g("m"),y=g("y"),o={};
+  if(d>=1&&d<=31)o.d=d;if(m>=1&&m<=12)o.m=m;if(y>=1900&&y<=2100)o.y=y;if(o.d&&o.m)return o;if(!o.d&&!o.m)return null;try{toast("Il manque le jour ou le mois")}catch(e){}return false}
 // ---- Équilibre en carrés, réglages d'un proche en carrés, situation recalculée
 function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.classList.remove("closed");
   const og=document.getElementById("offGo"),pz=document.getElementById("pzGo"),so=document.getElementById("softTg"),cf=document.getElementById("cfTg");
@@ -163,11 +180,7 @@ function balViz(){const bc=document.getElementById("balCard");if(!bc)return;bc.c
   const k=T.map(t=>t[3]+t[4]).join("|");let g=bc.querySelector(".balviz");if(g&&g.dataset.k===k)return;if(!g){g=document.createElement("div");g.className="balviz";bc.querySelector("h3").after(g)}g.dataset.k=k;
   g.innerHTML=T.map(([id,ic,l,sub,on])=>`<button type="button" class="svt" data-b="${id}" aria-pressed="${on?"true":"false"}"><span class="fti">${vI(ic)}</span><span>${l}</span><em>${esc(sub)}</em></button>`).join("");
   g.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const id=b.dataset.b;if(id==="off"&&og)og.click();if(id==="pz"&&pz)pz.click();if(id==="soft"&&so){so.checked=!so.checked;so.dispatchEvent(new Event("change"))}if(id==="cf"&&cf){cf.checked=!cf.checked;cf.dispatchEvent(new Event("change"))}g.dataset.k="";setTimeout(balViz,50)})}
-function homeFix(){const s=sitOf();if(!s)return;if(!Array.isArray(s.with))s.with=[];const h=homeOf(s);if(s.home!==h){s.home=h;save();try{if(!fEdit)renderFiche()}catch(e){}}}
-// ---- Ce que tu deviens : titre + barre + icône du prochain palier
-function idViz(){document.querySelectorAll("#idBox .idcard").forEach(c=>{const bar=c.querySelector(".idbar");if(!bar)return;const st=[...c.querySelectorAll(".idsteps i")],nx=st.find(i=>!i.classList.contains("on")),img=c.querySelector(".idi img");
-    const k=(nx?nx.title:"max")+"|"+(bar.querySelector("i")||{}).style?.width;if(c.dataset.vz===k)return;c.dataset.vz=k;let w=c.querySelector(".idrow");if(!w){w=document.createElement("span");w.className="idrow";bar.before(w);w.appendChild(bar)}
-    let n=w.querySelector(".idnx");if(!n){n=document.createElement("span");n.className="idnx";w.appendChild(n)}n.title=nx?"Prochain : "+nx.title:"Palier max";n.classList.toggle("max",!nx);n.innerHTML=img?`<img src="${img.src}" alt="">`:"";})}
+function homeFix(){const s=sitOf();if(!s)return;if(!Array.isArray(s.with))s.with=[];const h=homeOf(s);if(s.home!==h){s.home=h;save();}}
 // ---- ce mois-ci, en vrai
 // haut du Bilan (2.3, 02/11) : ce qui a été fait dans la période choisie (semaine, mois, année)
 function bilPer(){const now=new Date(dayKey(Date.now())+"T12:00");

@@ -76,17 +76,11 @@
     <div class="pf-bdg" id="pfBdg" role="group" aria-label="Badges affichés"></div>
     <div class="pf-pick" id="pfPick" hidden></div>
   </section>
+  <section data-v="c" data-sub="vie" class="calbox" id="calBox" aria-label="Calendrier"></section>
+  <section data-v="c" data-sub="vie" class="rit prjbox" id="prjBox2" aria-label="Mes projets"></section>
   <section data-v="c" data-sub="vie" class="palbox" id="palBox" aria-label="Mes paliers"></section>
   <section data-v="c" data-sub="vie" class="ficheb" id="ficheBox" aria-label="Ma fiche"></section>
-  <section data-v="c" data-sub="vie" class="idbox" id="idBox" aria-label="Ce que tu deviens"></section>
-  
-  <section data-v="c" data-sub="vie" class="vie" id="vieBox" aria-label="Ma vie"></section>
-  <section data-v="c" data-sub="vie" class="rit prjbox" id="prjBox2" aria-label="Mes projets"></section>
-  <section data-v="c" data-sub="vie" class="rit evt" id="evtBox" aria-label="Calendrier">
-    <div class="head"><h2>Calendrier<span class="count" id="evtCnt">0</span></h2><button type="button" class="btn edbtn" id="evtAdd" aria-expanded="false" aria-controls="evtForm" aria-label="Ajouter un événement" title="Ajouter"><svg class="ic pxic" viewBox="0 0 12 12" width="18" height="18" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="5" y="1" width="2" height="1.02"/><rect x="5" y="2" width="2" height="1.02"/><rect x="5" y="3" width="2" height="1.02"/><rect x="5" y="4" width="2" height="1.02"/><rect x="1" y="5" width="10" height="1.02"/><rect x="1" y="6" width="10" height="1.02"/><rect x="5" y="7" width="2" height="1.02"/><rect x="5" y="8" width="2" height="1.02"/><rect x="5" y="9" width="2" height="1.02"/><rect x="5" y="10" width="2" height="1.02"/></svg></button></div>
-    <form class="evtform" id="evtForm" hidden><input id="evtName" maxlength="40" placeholder="Ex. Concert de Jul, Soirée chez Lola" aria-label="Nom de l'événement" required><div class="evtrow"><input id="evtDate" type="date" aria-label="Date" required><select id="evtXp" aria-label="XP"><option value="10">+10 XP</option><option value="20" selected>+20 XP</option><option value="30">+30 XP</option><option value="50">+50 XP</option></select><button class="btn primary" type="submit">Ajouter</button></div></form>
-    <div class="evtl" id="evtList"></div>
-  </section>
+  <section data-v="c" data-sub="vie" class="vie" id="vieBox" aria-label="Mes suivis"></section>
   <section data-v="c" data-sub="vie" class="settings" id="setBox" aria-label="Réglages">
     <div class="set-top"><button type="button" class="btn back" id="setBack" hidden>←</button><h2 id="setTitle">Réglages</h2></div>
     <div class="set-card">
@@ -244,6 +238,7 @@
   @@include(js/aujourdhui/18-quetes-pour-toi-histoire.js)@@
   @@include(js/moi/19-bilan.js)@@
   @@include(js/moi/20-calendrier-fiche.js)@@
+  @@include(js/moi/calendrier.js)@@
   @@include(js/coeur/21-contenu-collection.js)@@
   @@include(js/aujourdhui/moments.js)@@
   @@include(js/coeur/22-icones-unifiees.js)@@
