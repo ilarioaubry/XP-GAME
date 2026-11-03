@@ -78,23 +78,24 @@ function lxBurst(fx,n,col,big){const C=[col,"#f2c94c","#fff6c8",col,"#ffffff"];f
 function openChest(kind){
   const G=S.g;kind=kind==="dore"||(!G.chests&&G.bchests)?"dore":"day";if(kind==="dore"){if(!G.bchests)return;G.bchests--}else{if(!G.chests)return;G.chests--}G.opened++;
   const res=rollLoot(kind),r=res.r|0;G.ol.push({t:Date.now(),k:res.k});if(G.ol.length>200)G.ol=G.ol.slice(-200);save();
-  let ov=$("lootOv");if(!ov){ov=document.createElement("div");ov.id="lootOv";document.body.appendChild(ov)}ov.className="lootov lx-ov";
+  let ov=$("lootOv");if(!ov){ov=document.createElement("div");ov.id="lootOv";document.body.appendChild(ov)}ov.className="lootov lx-ov";ov.style.setProperty("--sc",kind==="dore"?"#b06ad9":"#ffd94a");
   const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  ov.innerHTML=`<div class="lx r${r}${kind==="dore"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="dore"?"Coffre spécial":"Coffre"}" style="--lc:${res.col}">
+  ov.innerHTML=`<div class="lx r${r}${kind==="dore"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="dore"?"Coffre spécial":"Coffre"}" style="--lc:${kind==="dore"?"#d9a6ff":"#ffd94a"}">
     <div class="lx-rays"></div><div class="lx-flash"></div>
-    <div class="lx-stage"><span class="lx-kind">${kind==="dore"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="dore")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
-    <div class="lx-loot" hidden><em class="lrar">${RAR[r][0]}</em><span class="lk">${res.k==="gear"?itemImg(res.it,96):pxImg("check",6)}</span><b></b><small></small><button class="btn primary" type="button">Super !</button></div>
+    <div class="lx-beam"></div><div class="lx-ground"></div><div class="lx-stage"><span class="lx-kind">${kind==="dore"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="dore")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
+    <div class="lx-loot" hidden><em class="lrar">${RAR[r][0]}</em><span class="lx-st" role="img" aria-label="${RAR[r][0]}">${Array.from({length:4},(_,i)=>`<span class="${i<=r?"on":""}">${rkSvg("etoile")}</span>`).join("")}</span><span class="lk">${res.k==="gear"?itemImg(res.it,96):pxImg("check",6)}</span><b></b><small></small><button class="btn primary" type="button">Super !</button>${(G.chests||0)+(G.bchests||0)?`<button class="btn lx-next" type="button">Encore un coffre (${(G.chests||0)+(G.bchests||0)})</button>`:""}</div>
     <div class="lx-fx"></div></div>`;
   ov.querySelector(".lx-loot b").textContent=res.txt;ov.querySelector(".lx-loot small").textContent=res.sub;ov.hidden=false;
   const lx=ov.querySelector(".lx"),ch=ov.querySelector(".lx-chest"),fx=ov.querySelector(".lx-fx");let taps=0,done=false;
   sfx("drop");
   const reveal=()=>{if(done)return;done=true;lx.classList.add("open");sfx("open",r);if(navigator.vibrate)try{navigator.vibrate(r>=2?[30,40,60]:30)}catch(e){}
-    if(!red)lxBurst(fx,[10,18,30,48][r],res.col,r>=2);
+    if(!red)lxBurst(fx,[10,18,30,48][r],"#ffd94a",r>=2);
     setTimeout(()=>{const l=ov.querySelector(".lx-loot");l.hidden=false;lx.classList.add("shown");const b=l.querySelector("button");b.focus({preventScroll:true})},red?50:520)};
   ch.onclick=()=>{if(done)return;taps++;sfx("shake",taps);lx.style.setProperty("--k",taps);lx.classList.add("k"+taps);ch.classList.remove("hit");void ch.offsetWidth;ch.classList.add("hit");
-    ov.querySelectorAll(".lx-dots i").forEach((d,i)=>d.classList.toggle("on",i<taps));if(!red)lxBurst(fx,3+taps*2,taps>=2?res.col:"#f2c94c",false);
+    ov.querySelectorAll(".lx-dots i").forEach((d,i)=>d.classList.toggle("on",i<taps));if(!red)lxBurst(fx,3+taps*2,"#f2c94c",false);
     if(taps>=3)setTimeout(reveal,red?0:260)};
-  ov.querySelector(".lx-loot button").onclick=()=>{ov.hidden=true;ov.innerHTML="";render()};
+  ov.querySelector(".lx-loot .primary").onclick=()=>{ov.hidden=true;ov.innerHTML="";render()};
+  const nx=ov.querySelector(".lx-next");if(nx)nx.onclick=()=>{ov.hidden=true;ov.innerHTML="";openChest()};
 }
 function renderGame(){
   const box=$("gameBox");if(!box)return;const G=S.g;

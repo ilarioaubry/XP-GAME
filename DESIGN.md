@@ -111,7 +111,7 @@ Jamais de couleur pour la rareté (étoiles), jamais la couleur du ciel dans l'i
 | Toucher | l'action principale de l'élément |
 | Appui long | un raccourci seulement ; **toujours aussi dans le menu « … »** |
 | « … » | petite fenêtre centrée ; toucher à côté la ferme sans rien déclencher |
-| Valider (Fait) | petit son + petite animation (≤ 300 ms), XP affichée à ce moment-là |
+| Valider (Fait) | petit son + tampon coche pixel sur le bouton + carrés or (3, 6 ou 10 selon l'XP) qui montent vers la barre d'XP, éclat en plus dès 25 XP ; `floatXp` ; « réduire les animations » : seulement le texte +XP |
 | Supprimer | immédiat + barre « Annuler » 5 s en bas (au-dessus de la barre d'onglets) ; jamais de confirmation |
 | Saisir du texte | fenêtre plein écran (automatique dès qu'il y a un champ) |
 | Revenir | bouton secondaire « ← Écran » en haut à gauche |

@@ -73,9 +73,23 @@ function completeSpecialBase(q,el,ev){
   toast(`Quête accomplie : <span class="p">${esc(q.name)}</span> +${q.xp} XP${bondUp}`);
 }
 function swapGroup(q){const i=S.specials.findIndex(x=>x.id===q.id);const nq=groupQuest(q.grp,q.who);if(i<0)return;if(nq){nq.d=q.d||dayKey(Date.now());S.specials[i]=nq;window.__swapId=nq.id}else S.specials.splice(i,1);save();render()}
+// Fin d'action (03/11) : un tampon « coche » pixel sur le bouton, des carrés or qui montent vers la barre d'XP (3 à 12 selon l'XP,
+// un petit éclat en plus pour 25 XP et plus), la barre qui clignote à l'arrivée. « Réduire les animations » : seulement le texte +XP, sans mouvement.
 function floatXp(xp,ev,el){
-  const r=el.getBoundingClientRect();const f=document.createElement("div");f.className="float";f.textContent="+"+xp+" XP";
-  const fp=window.__tmFloat;f.style.left=(fp?fp.x:(ev&&ev.clientX)||r.left+r.width/2)-30+"px";f.style.top=(fp?fp.y:(ev&&ev.clientY)||r.top)-20+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000);
+  const r=el.getBoundingClientRect(),fp=window.__tmFloat,x=fp?fp.x:(ev&&ev.clientX)||r.left+r.width/2,y=fp?fp.y:(ev&&ev.clientY)||r.top+r.height/2;
+  const f=document.createElement("div");f.className="float";f.textContent="+"+xp+" XP";f.style.left=x-30+"px";f.style.top=y-20+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches||!xp||!document.body.animate)return;
+  const tier=xp>=25?3:xp>=10?2:1,n=[3,6,10][tier-1],sz=tier>2?8:6,B=document.body,rnd=(a,b)=>a+Math.random()*(b-a);
+  const stamp=document.createElement("div");stamp.className="xpstamp";stamp.style.left=x+"px";stamp.style.top=y+"px";stamp.innerHTML=rkSvg("check");B.appendChild(stamp);setTimeout(()=>stamp.remove(),700);
+  const tb=document.getElementById("qBar"),tr=tb&&tb.getBoundingClientRect(),ok=tr&&tr.width>0&&tr.top>=0&&tr.bottom<=innerHeight,
+    tx=ok?tr.left+Math.max(4,tr.width):x+rnd(-20,20),ty=ok?tr.top+tr.height/2:y-90;
+  let left=n;
+  for(let k=0;k<n;k++){const q=document.createElement("i");q.className="xpq"+(k%3===2?" w":"");q.style.width=q.style.height=sz+"px";B.appendChild(q);
+    const sx=x+rnd(-16,16),sy=y+rnd(-10,10),mx=(sx+tx)/2+rnd(-50,50),my=Math.min(sy,ty)-rnd(20,70);
+    const a=q.animate([{transform:`translate(${sx}px,${sy}px)`,opacity:1},{transform:`translate(${mx}px,${my}px)`,opacity:1},{transform:`translate(${tx}px,${ty}px)`,opacity:ok?1:0}],{duration:650+k*35,delay:k*40,easing:"steps(7)",fill:"both"});
+    a.onfinish=()=>{q.remove();if(--left===0&&ok){const bar=tb.parentElement;bar.classList.remove("xpup");void bar.offsetWidth;bar.classList.add("xpup");setTimeout(()=>bar.classList.remove("xpup"),500)}}}
+  if(tier>1){for(let k=0;k<8;k++){const q=document.createElement("i");q.className="xpq w";q.style.width=q.style.height="4px";B.appendChild(q);const a2=k*Math.PI/4,d=tier>2?38:26;
+    q.animate([{transform:`translate(${x}px,${y}px)`,opacity:1},{transform:`translate(${x+Math.cos(a2)*d}px,${y+Math.sin(a2)*d}px)`,opacity:0}],{duration:420,easing:"steps(5)",fill:"both"}).onfinish=()=>q.remove()}}
 }
 let toastT,tq=[],tBusy=false,tLast="";
 // Bilan de journée (28/10) : les messages « en passant » ne s'empilent plus, ils sont gardés pour le bilan du soir (S.g.dlog) ; les niveaux s'affichent aussi tout de suite

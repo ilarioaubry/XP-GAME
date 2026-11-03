@@ -625,3 +625,28 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 /* lot 4 : boost en cours dans les quêtes du jour */
 #fqBox .fqboost{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:13px;font-weight:700;color:var(--gold)}
 #fqBox .fqboost svg{width:24px;height:24px;flex:none}
+
+/* ===== Coffre en scène (03/11) : ciel en marches (or, violet pour le coffre spécial), étoiles, collines pixel sous le coffre,
+   faisceau de lumière à l'ouverture, 4 étoiles pour la rareté (jamais en couleur). ===== */
+.lx-ov{--sc:#ffd94a;background:
+  linear-gradient(180deg,#141a48 0 16%,#1b2160 16% 32%,#252a78 32% 46%,
+    color-mix(in srgb,var(--sc) 22%,#2e2a80) 46% 56%,color-mix(in srgb,var(--sc) 38%,#3a2f78) 56% 64%,color-mix(in srgb,var(--sc) 55%,#4a3470) 64%)}
+.lx-ov::before{content:"";position:absolute;inset:0;pointer-events:none;image-rendering:pixelated;opacity:.9;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 30 30' shape-rendering='crispEdges'%3E%3Cg fill='%23fff7e6'%3E%3Crect x='3' y='5' width='1' height='1' opacity='.6'/%3E%3Crect x='19' y='3' width='1' height='1' opacity='.4'/%3E%3Crect x='11' y='14' width='1' height='1' opacity='.45'/%3E%3Crect x='26' y='17' width='1' height='1' opacity='.5'/%3E%3Crect x='6' y='24' width='1' height='1' opacity='.3'/%3E%3Crect x='22' y='10' width='1' height='1' opacity='.55'/%3E%3C/g%3E%3C/svg%3E") 0 0/120px 120px repeat;
+  -webkit-mask:linear-gradient(#000 45%,transparent 70%);mask:linear-gradient(#000 45%,transparent 70%)}
+.lx-ground{position:fixed;left:0;right:0;bottom:0;height:34%;z-index:1;pointer-events:none;background:color-mix(in srgb,var(--sc) 20%,#1a1230)}
+.lx-ground::before{content:"";position:absolute;left:0;right:0;top:-63px;height:64px;background:inherit;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x}
+.lx-beam{position:absolute;left:50%;top:6%;width:72px;height:42%;margin-left:-36px;pointer-events:none;opacity:0;z-index:1;
+  background:repeating-linear-gradient(180deg,var(--lc) 0 8px,transparent 8px 16px);-webkit-mask:linear-gradient(0deg,#000,transparent);mask:linear-gradient(0deg,#000,transparent)}
+.lx.open .lx-beam{opacity:.55;animation:lxBeam .5s steps(4) infinite}
+@keyframes lxBeam{to{background-position:0 -16px}}
+.lx-st{display:flex;gap:4px}
+.lx-st span{display:grid;width:28px;height:28px;opacity:.25;filter:grayscale(1)}
+.lx-st span.on{opacity:1;filter:none;animation:lxStar .3s steps(3) both}
+.lx-st span:nth-child(2).on{animation-delay:.1s}.lx-st span:nth-child(3).on{animation-delay:.2s}.lx-st span:nth-child(4).on{animation-delay:.3s}
+.lx-st svg{width:28px;height:28px;display:block}
+@keyframes lxStar{0%{transform:scale(0)}60%{transform:scale(1.4)}100%{transform:none}}
+.lx-next{min-width:170px}
+@media (prefers-reduced-motion:reduce){.lx.open .lx-beam,.lx-st span.on{animation:none}}
+.lx-hint{text-shadow:0 2px 0 #000,0 0 6px rgba(0,0,0,.6)}
+.lx-dots i{box-shadow:0 1px 0 #000}

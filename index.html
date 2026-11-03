@@ -2208,7 +2208,7 @@ html:not(#_a):not(#_b) body .hpbar::after{content:"";position:absolute;inset:0 0
 
 
 
-.lx-ov{background:radial-gradient(circle at 50% 45%,rgba(30,20,40,.93),rgba(5,3,8,.98))!important;overflow:hidden;z-index:200!important}
+.lx-ov{overflow:hidden;z-index:200!important}
 
 /* ---- principal-10.css ---- */
 .lx{position:relative;width:min(340px,100%);min-height:420px;display:grid;place-items:center;text-align:center}
@@ -4110,7 +4110,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version a8c1c57</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 694b2b9</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -10645,23 +10645,24 @@ function lxBurst(fx,n,col,big){const C=[col,"#f2c94c","#fff6c8",col,"#ffffff"];f
 function openChest(kind){
   const G=S.g;kind=kind==="dore"||(!G.chests&&G.bchests)?"dore":"day";if(kind==="dore"){if(!G.bchests)return;G.bchests--}else{if(!G.chests)return;G.chests--}G.opened++;
   const res=rollLoot(kind),r=res.r|0;G.ol.push({t:Date.now(),k:res.k});if(G.ol.length>200)G.ol=G.ol.slice(-200);save();
-  let ov=$("lootOv");if(!ov){ov=document.createElement("div");ov.id="lootOv";document.body.appendChild(ov)}ov.className="lootov lx-ov";
+  let ov=$("lootOv");if(!ov){ov=document.createElement("div");ov.id="lootOv";document.body.appendChild(ov)}ov.className="lootov lx-ov";ov.style.setProperty("--sc",kind==="dore"?"#b06ad9":"#ffd94a");
   const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  ov.innerHTML=`<div class="lx r${r}${kind==="dore"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="dore"?"Coffre spécial":"Coffre"}" style="--lc:${res.col}">
+  ov.innerHTML=`<div class="lx r${r}${kind==="dore"?" lxb":""}" role="dialog" aria-modal="true" aria-label="${kind==="dore"?"Coffre spécial":"Coffre"}" style="--lc:${kind==="dore"?"#d9a6ff":"#ffd94a"}">
     <div class="lx-rays"></div><div class="lx-flash"></div>
-    <div class="lx-stage"><span class="lx-kind">${kind==="dore"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="dore")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
-    <div class="lx-loot" hidden><em class="lrar">${RAR[r][0]}</em><span class="lk">${res.k==="gear"?itemImg(res.it,96):pxImg("check",6)}</span><b></b><small></small><button class="btn primary" type="button">Super !</button></div>
+    <div class="lx-beam"></div><div class="lx-ground"></div><div class="lx-stage"><span class="lx-kind">${kind==="dore"?"Coffre spécial":"Coffre du jour"}</span><button type="button" class="lx-chest" aria-label="Toucher le coffre pour l'ouvrir">${CHEST2(kind==="dore")}</button><p class="lx-hint">Touche le coffre !</p><div class="lx-dots"><i></i><i></i><i></i></div></div>
+    <div class="lx-loot" hidden><em class="lrar">${RAR[r][0]}</em><span class="lx-st" role="img" aria-label="${RAR[r][0]}">${Array.from({length:4},(_,i)=>`<span class="${i<=r?"on":""}">${rkSvg("etoile")}</span>`).join("")}</span><span class="lk">${res.k==="gear"?itemImg(res.it,96):pxImg("check",6)}</span><b></b><small></small><button class="btn primary" type="button">Super !</button>${(G.chests||0)+(G.bchests||0)?`<button class="btn lx-next" type="button">Encore un coffre (${(G.chests||0)+(G.bchests||0)})</button>`:""}</div>
     <div class="lx-fx"></div></div>`;
   ov.querySelector(".lx-loot b").textContent=res.txt;ov.querySelector(".lx-loot small").textContent=res.sub;ov.hidden=false;
   const lx=ov.querySelector(".lx"),ch=ov.querySelector(".lx-chest"),fx=ov.querySelector(".lx-fx");let taps=0,done=false;
   sfx("drop");
   const reveal=()=>{if(done)return;done=true;lx.classList.add("open");sfx("open",r);if(navigator.vibrate)try{navigator.vibrate(r>=2?[30,40,60]:30)}catch(e){}
-    if(!red)lxBurst(fx,[10,18,30,48][r],res.col,r>=2);
+    if(!red)lxBurst(fx,[10,18,30,48][r],"#ffd94a",r>=2);
     setTimeout(()=>{const l=ov.querySelector(".lx-loot");l.hidden=false;lx.classList.add("shown");const b=l.querySelector("button");b.focus({preventScroll:true})},red?50:520)};
   ch.onclick=()=>{if(done)return;taps++;sfx("shake",taps);lx.style.setProperty("--k",taps);lx.classList.add("k"+taps);ch.classList.remove("hit");void ch.offsetWidth;ch.classList.add("hit");
-    ov.querySelectorAll(".lx-dots i").forEach((d,i)=>d.classList.toggle("on",i<taps));if(!red)lxBurst(fx,3+taps*2,taps>=2?res.col:"#f2c94c",false);
+    ov.querySelectorAll(".lx-dots i").forEach((d,i)=>d.classList.toggle("on",i<taps));if(!red)lxBurst(fx,3+taps*2,"#f2c94c",false);
     if(taps>=3)setTimeout(reveal,red?0:260)};
-  ov.querySelector(".lx-loot button").onclick=()=>{ov.hidden=true;ov.innerHTML="";render()};
+  ov.querySelector(".lx-loot .primary").onclick=()=>{ov.hidden=true;ov.innerHTML="";render()};
+  const nx=ov.querySelector(".lx-next");if(nx)nx.onclick=()=>{ov.hidden=true;ov.innerHTML="";openChest()};
 }
 function renderGame(){
   const box=$("gameBox");if(!box)return;const G=S.g;
@@ -13419,9 +13420,23 @@ function completeSpecialBase(q,el,ev){
   toast(`Quête accomplie : <span class="p">${esc(q.name)}</span> +${q.xp} XP${bondUp}`);
 }
 function swapGroup(q){const i=S.specials.findIndex(x=>x.id===q.id);const nq=groupQuest(q.grp,q.who);if(i<0)return;if(nq){nq.d=q.d||dayKey(Date.now());S.specials[i]=nq;window.__swapId=nq.id}else S.specials.splice(i,1);save();render()}
+// Fin d'action (03/11) : un tampon « coche » pixel sur le bouton, des carrés or qui montent vers la barre d'XP (3 à 12 selon l'XP,
+// un petit éclat en plus pour 25 XP et plus), la barre qui clignote à l'arrivée. « Réduire les animations » : seulement le texte +XP, sans mouvement.
 function floatXp(xp,ev,el){
-  const r=el.getBoundingClientRect();const f=document.createElement("div");f.className="float";f.textContent="+"+xp+" XP";
-  const fp=window.__tmFloat;f.style.left=(fp?fp.x:(ev&&ev.clientX)||r.left+r.width/2)-30+"px";f.style.top=(fp?fp.y:(ev&&ev.clientY)||r.top)-20+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000);
+  const r=el.getBoundingClientRect(),fp=window.__tmFloat,x=fp?fp.x:(ev&&ev.clientX)||r.left+r.width/2,y=fp?fp.y:(ev&&ev.clientY)||r.top+r.height/2;
+  const f=document.createElement("div");f.className="float";f.textContent="+"+xp+" XP";f.style.left=x-30+"px";f.style.top=y-20+"px";document.body.appendChild(f);setTimeout(()=>f.remove(),1000);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches||!xp||!document.body.animate)return;
+  const tier=xp>=25?3:xp>=10?2:1,n=[3,6,10][tier-1],sz=tier>2?8:6,B=document.body,rnd=(a,b)=>a+Math.random()*(b-a);
+  const stamp=document.createElement("div");stamp.className="xpstamp";stamp.style.left=x+"px";stamp.style.top=y+"px";stamp.innerHTML=rkSvg("check");B.appendChild(stamp);setTimeout(()=>stamp.remove(),700);
+  const tb=document.getElementById("qBar"),tr=tb&&tb.getBoundingClientRect(),ok=tr&&tr.width>0&&tr.top>=0&&tr.bottom<=innerHeight,
+    tx=ok?tr.left+Math.max(4,tr.width):x+rnd(-20,20),ty=ok?tr.top+tr.height/2:y-90;
+  let left=n;
+  for(let k=0;k<n;k++){const q=document.createElement("i");q.className="xpq"+(k%3===2?" w":"");q.style.width=q.style.height=sz+"px";B.appendChild(q);
+    const sx=x+rnd(-16,16),sy=y+rnd(-10,10),mx=(sx+tx)/2+rnd(-50,50),my=Math.min(sy,ty)-rnd(20,70);
+    const a=q.animate([{transform:`translate(${sx}px,${sy}px)`,opacity:1},{transform:`translate(${mx}px,${my}px)`,opacity:1},{transform:`translate(${tx}px,${ty}px)`,opacity:ok?1:0}],{duration:650+k*35,delay:k*40,easing:"steps(7)",fill:"both"});
+    a.onfinish=()=>{q.remove();if(--left===0&&ok){const bar=tb.parentElement;bar.classList.remove("xpup");void bar.offsetWidth;bar.classList.add("xpup");setTimeout(()=>bar.classList.remove("xpup"),500)}}}
+  if(tier>1){for(let k=0;k<8;k++){const q=document.createElement("i");q.className="xpq w";q.style.width=q.style.height="4px";B.appendChild(q);const a2=k*Math.PI/4,d=tier>2?38:26;
+    q.animate([{transform:`translate(${x}px,${y}px)`,opacity:1},{transform:`translate(${x+Math.cos(a2)*d}px,${y+Math.sin(a2)*d}px)`,opacity:0}],{duration:420,easing:"steps(5)",fill:"both"}).onfinish=()=>q.remove()}}
 }
 let toastT,tq=[],tBusy=false,tLast="";
 // Bilan de journée (28/10) : les messages « en passant » ne s'empilent plus, ils sont gardés pour le bilan du soir (S.g.dlog) ; les niveaux s'affichent aussi tout de suite
@@ -13808,6 +13823,15 @@ button.ui-ligne:disabled{cursor:default}
 .ui-plein__bas{padding-top:var(--ui-e3);background:linear-gradient(90deg,var(--sc) 50%,transparent 0) left top/8px 2px repeat-x}
 /* sol pixel (collines à la couleur du sujet) au-dessus des boutons du bas : remplit le vide des longues fenêtres */
 .ui-plein::after{content:"";position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);height:64px;pointer-events:none;background:color-mix(in srgb,var(--sc) 36%,var(--ui-fond-plein));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x}
+
+/* ---------- Fin d'action (03/11) : tampon coche, carrés or vers la barre d'XP (js/coeur/29-defis…, floatXp) ---------- */
+.xpstamp{position:fixed;z-index:261;width:44px;height:44px;margin:-22px 0 0 -22px;pointer-events:none;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.55));animation:xpStamp .65s steps(6) both}
+.xpstamp svg{width:44px;height:44px;display:block}
+@keyframes xpStamp{0%{transform:scale(.3);opacity:0}30%{transform:scale(1.3);opacity:1}55%{transform:scale(1)}100%{transform:translateY(-14px) scale(1);opacity:0}}
+.xpq{position:fixed;left:0;top:0;z-index:261;pointer-events:none;background:var(--ui-or);box-shadow:1px 1px 0 rgba(0,0,0,.55)}
+.xpq.w{background:var(--ui-creme)}
+.xpup{animation:xpUp .45s steps(3) 1}
+@keyframes xpUp{0%,100%{filter:none}33%{filter:brightness(1.8)}66%{filter:brightness(1.3)}}
 </style>
 <style id="z-haut">/* — depuis principal-02.css — */
 .qxp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20}
@@ -14702,6 +14726,31 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 /* lot 4 : boost en cours dans les quêtes du jour */
 #fqBox .fqboost{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-size:13px;font-weight:700;color:var(--gold)}
 #fqBox .fqboost svg{width:24px;height:24px;flex:none}
+
+/* ===== Coffre en scène (03/11) : ciel en marches (or, violet pour le coffre spécial), étoiles, collines pixel sous le coffre,
+   faisceau de lumière à l'ouverture, 4 étoiles pour la rareté (jamais en couleur). ===== */
+.lx-ov{--sc:#ffd94a;background:
+  linear-gradient(180deg,#141a48 0 16%,#1b2160 16% 32%,#252a78 32% 46%,
+    color-mix(in srgb,var(--sc) 22%,#2e2a80) 46% 56%,color-mix(in srgb,var(--sc) 38%,#3a2f78) 56% 64%,color-mix(in srgb,var(--sc) 55%,#4a3470) 64%)}
+.lx-ov::before{content:"";position:absolute;inset:0;pointer-events:none;image-rendering:pixelated;opacity:.9;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 30 30' shape-rendering='crispEdges'%3E%3Cg fill='%23fff7e6'%3E%3Crect x='3' y='5' width='1' height='1' opacity='.6'/%3E%3Crect x='19' y='3' width='1' height='1' opacity='.4'/%3E%3Crect x='11' y='14' width='1' height='1' opacity='.45'/%3E%3Crect x='26' y='17' width='1' height='1' opacity='.5'/%3E%3Crect x='6' y='24' width='1' height='1' opacity='.3'/%3E%3Crect x='22' y='10' width='1' height='1' opacity='.55'/%3E%3C/g%3E%3C/svg%3E") 0 0/120px 120px repeat;
+  -webkit-mask:linear-gradient(#000 45%,transparent 70%);mask:linear-gradient(#000 45%,transparent 70%)}
+.lx-ground{position:fixed;left:0;right:0;bottom:0;height:34%;z-index:1;pointer-events:none;background:color-mix(in srgb,var(--sc) 20%,#1a1230)}
+.lx-ground::before{content:"";position:absolute;left:0;right:0;top:-63px;height:64px;background:inherit;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x}
+.lx-beam{position:absolute;left:50%;top:6%;width:72px;height:42%;margin-left:-36px;pointer-events:none;opacity:0;z-index:1;
+  background:repeating-linear-gradient(180deg,var(--lc) 0 8px,transparent 8px 16px);-webkit-mask:linear-gradient(0deg,#000,transparent);mask:linear-gradient(0deg,#000,transparent)}
+.lx.open .lx-beam{opacity:.55;animation:lxBeam .5s steps(4) infinite}
+@keyframes lxBeam{to{background-position:0 -16px}}
+.lx-st{display:flex;gap:4px}
+.lx-st span{display:grid;width:28px;height:28px;opacity:.25;filter:grayscale(1)}
+.lx-st span.on{opacity:1;filter:none;animation:lxStar .3s steps(3) both}
+.lx-st span:nth-child(2).on{animation-delay:.1s}.lx-st span:nth-child(3).on{animation-delay:.2s}.lx-st span:nth-child(4).on{animation-delay:.3s}
+.lx-st svg{width:28px;height:28px;display:block}
+@keyframes lxStar{0%{transform:scale(0)}60%{transform:scale(1.4)}100%{transform:none}}
+.lx-next{min-width:170px}
+@media (prefers-reduced-motion:reduce){.lx.open .lx-beam,.lx-st span.on{animation:none}}
+.lx-hint{text-shadow:0 2px 0 #000,0 0 6px rgba(0,0,0,.6)}
+.lx-dots i{box-shadow:0 1px 0 #000}
 </style>
 <style id="z-proches">/* — venues de base.css et composants.css (3.7, 02/11) : règles qui ne servent qu'à Proches — */
 .motl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
