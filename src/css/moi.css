@@ -19,7 +19,7 @@
 .hmsvg .an-twk{animation:hmBlink 2.8s steps(1) infinite}
 @media (prefers-reduced-motion:reduce){.hmsvg *{animation:none!important}}
 .hmh2{display:grid;grid-template-columns:minmax(0,1fr) 40px 40px 40px;gap:6px;align-items:center}
-html:not(#_a):not(#_b):not(#_c) body .hmh2 h2{margin:0;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:clamp(13px,4vw,20px)!important;text-transform:uppercase;letter-spacing:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+html:not(#_a):not(#_b):not(#_c) body .hmh2 h2{margin:0;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:clamp(13px,4vw,20px);text-transform:uppercase;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .hmib{width:40px;height:40px;display:grid;place-items:center;padding:0;background:transparent;color:var(--text);border:2px solid rgba(255,255,255,.22);cursor:pointer;border-radius:0}
 html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}
 .hmnext svg{transform:rotate(-90deg)}
@@ -65,7 +65,7 @@ html:not(#_a):not(#_b):not(#_c) body .hmprev svg{transform:rotate(90deg)}
 .wr-sh span{font-weight:800;font-size:13px;color:var(--muted)}
 .wr-si{display:flex;gap:8px}
 .wr-mini{width:48px;height:48px;display:grid;place-items:center;border:2px solid var(--rc);background:var(--surface-2)}
-html:not(#_a):not(#_b) body .evr{grid-template-columns:58px minmax(0,1fr) auto!important;grid-template-areas:"d t s" "x x x" "g g g";align-items:center;gap:6px 12px!important;padding-right:12px!important;padding-bottom:12px!important;padding-left:12px!important;margin-top:0!important;position:relative;overflow:hidden;border:3px solid var(--ec)!important;box-shadow:4px 4px 0 var(--rpg-shadow)!important;border-radius:0!important}
+.evr{grid-template-columns:58px minmax(0,1fr) auto!important;grid-template-areas:"d t s" "x x x" "g g g";align-items:center;gap:6px 12px!important;padding-right:12px!important;padding-bottom:12px!important;padding-left:12px!important;margin-top:0!important;position:relative;overflow:hidden;border:3px solid var(--ec)!important;box-shadow:4px 4px 0 var(--rpg-shadow)!important;border-radius:0!important}
 .evr>*{position:relative;z-index:1}
 .evd{grid-area:d;display:grid;justify-items:center;width:58px;padding:0;border-radius:0;background:var(--surface);color:var(--ink);border:3px solid #1a1210;box-shadow:2px 2px 0 var(--rpg-shadow);overflow:hidden;min-width:0}
 .evd small{display:block;width:100%;text-align:center;margin:0;padding:3px 0;background:var(--ec);color:#fff;font-family:var(--f-pixel);font-size:11px;letter-spacing:.04em;border-bottom:3px solid #1a1210}
@@ -203,11 +203,11 @@ span:has(>img.pxi.ic){flex:0 0 auto;min-width:32px}
 .prbar>i{display:block;height:100%;background:var(--zc,var(--gold))}
 .prbarw small{font-size:11px;font-weight:800;color:#fff7e6}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .prm svg{width:40px;height:40px;display:block}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vide{text-align:center!important;font-size:13px!important;color:rgba(255,247,230,.6)!important;margin:10px 0!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vide{text-align:center;font-size:13px;color:rgba(255,247,230,.6);margin:10px 0}
 .prm{border-color:rgba(255,255,255,.17)}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.wr-mini){--rc:#8a8f99!important}
+:is(.wr-mini){--rc:#8a8f99!important}
 .chev{width:24px;height:24px;flex:none}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #vieBox>.vie-c.premier{border-top:0!important;padding-top:0!important;margin-top:0!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #vieBox>.vie-c.premier{border-top:0;padding-top:0;margin-top:0}
 .evch.evadd{justify-content:center;align-content:center;align-items:center}
 .evch.evadd{padding:8px}
 /* — depuis bilan-cloture.css — */
@@ -247,7 +247,7 @@ html:not([data-room="chambre"]) body section[data-sub="wr"]:not(#homeBox){displa
 @media (prefers-reduced-motion:reduce){.hmhouse *{animation:none!important}}
 /* — depuis maison-3.css — */
 #homeBox{border:0;background:none;box-shadow:none;padding:0}
-html:not(#_a):not(#_b):not(#_c) body #homeBox .hmcard{--hc:#e8873a;border:2px solid var(--hc)!important;border-color:var(--hc)!important;border-width:2px!important;border-radius:0!important;backdrop-filter:none;background:rgba(12,14,32,.62);padding:12px;display:grid;gap:12px}
+html:not(#_a):not(#_b):not(#_c) body #homeBox .hmcard{--hc:#e8873a;border:2px solid var(--hc);border-color:var(--hc);border-width:2px;border-radius:0;backdrop-filter:none;background:rgba(12,14,32,.62);padding:12px;display:grid;gap:12px}
 html:not(#_a):not(#_b):not(#_c) body #homeBox .hmover{padding:0;--hc:#a99cff}
 #homeBox .hmhouse{border:0;box-shadow:none;border-radius:0}
 #homeBox .hmscene{border:0;box-shadow:none;border-radius:0;margin:0 -12px;background:none}
@@ -488,7 +488,7 @@ html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{animation:pxChest 4s steps(1) 
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .pf-kpi .kp .ki .pxi{animation:none!important}}
 .pf-kpi .kst .ki .pxi{filter:drop-shadow(0 0 3px rgba(255,140,40,.75)) drop-shadow(0 0 7px rgba(255,90,20,.4))}
 .brow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 4px;justify-items:center;padding:4px 10px 14px}
-html:not(#_a):not(#_b) body .bdg{all:unset;position:relative;display:grid;place-items:center;width:68px;height:68px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s steps(2)}
+.bdg{all:unset;position:relative;display:grid;place-items:center;width:68px;height:68px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s steps(2)}
 html:not(#_a):not(#_b) body .bdg:active{transform:translateY(2px)}
 html:not(#_a):not(#_b) body .bdg:focus-visible{outline:2px dashed var(--gold);outline-offset:2px}
 .bdg .bpx{filter:drop-shadow(3px 3px 0 var(--rpg-shadow))}
@@ -559,7 +559,7 @@ html:not(#_a):not(#_b) body .evr.now{box-shadow:4px 4px 0 var(--rpg-shadow),0 0 
 .evch.evadd .evci{background:var(--surface-2);border-style:dashed;color:var(--gold)}
 .evch.evadd small{font-size:11px;color:var(--muted)}
 .bdgnew{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);z-index:3;padding:1px 6px;border-radius:999px;background:#e3263a;color:#fff;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--surface);white-space:nowrap;animation:bdgPulse 1.6s ease-in-out infinite}
-html:not(#_a):not(#_b) body .bdg.new{box-shadow:0 0 0 3px #e3263a,0 0 14px 2px rgba(227,38,58,.45)}
+.bdg.new{box-shadow:0 0 0 3px #e3263a,0 0 14px 2px rgba(227,38,58,.45)}
 .bfnew{display:inline-block;margin-left:6px;vertical-align:1px;letter-spacing:0;text-transform:none;padding:1px 8px;border-radius:999px;background:#e3263a;color:#fff;font-size:11px;font-weight:900;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.bdgnew{animation:none}}
 /* — depuis principal-07.css — */
@@ -594,8 +594,8 @@ html:not(#_a):not(#_b) body .bnv:not(.nx) svg{transform:rotate(90deg)}
 .bnv[disabled]{opacity:.3;cursor:default}
 .bhero{display:grid;gap:0;background:linear-gradient(180deg,color-mix(in srgb,var(--skyac,#6f8fe0) 30%,rgba(12,14,32,.7)),rgba(12,14,32,.82));border:4px solid #1a1210;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--gold) 55%,transparent),5px 5px 0 var(--rpg-shadow);overflow:hidden}
 .bsd.fut{opacity:.35}
-html:not(#_a):not(#_b) body .bsd.now .bsb{border-color:var(--gold)}
-html:not(#_a):not(#_b) body .bsd.now .bsl{color:var(--gold)}
+.bsd.now .bsb{border-color:var(--gold)}
+.bsd.now .bsl{color:var(--gold)}
 .bchap{display:grid;gap:4px;padding:14px 16px 12px;background:rgba(10,8,20,.55);border-top:3px solid #1a1210}
 /* — depuis principal-09.css — */
 .bchap>small{font-weight:800;text-transform:uppercase;font-family:var(--f-pixel);font-size:20px;color:var(--ink);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
@@ -615,12 +615,12 @@ html:not(#_a):not(#_b) body .bcl li::before{content:"▸ ";color:var(--gold)}
 .bdr i,.blg i{display:block;width:22px;height:22px;border:2px solid #1a1210}
 .c-d{background:var(--gold);box-shadow:inset -3px -3px 0 rgba(0,0,0,.2),inset 2px 2px 0 rgba(255,255,255,.35)}
 .c-m{background:color-mix(in srgb,#d1493f 45%,#2a2030)}
-html:not(#_a):not(#_b) body .c-o,html:not(#_a):not(#_b) body .c-n{background:rgba(255,255,255,.05);border-style:dashed!important;border-color:color-mix(in srgb,var(--muted) 45%,transparent)!important}
-html:not(#_a):not(#_b) body .c-t,html:not(#_a):not(#_b) body .c-f{background:transparent;border-color:color-mix(in srgb,var(--muted) 35%,transparent)!important}
-html:not(#_a):not(#_b) body .c-t{border-color:var(--gold)!important}
+html:not(#_a):not(#_b) body .c-o,html:not(#_a):not(#_b) body .c-n{background:rgba(255,255,255,.05);border-style:dashed;border-color:color-mix(in srgb,var(--muted) 45%,transparent)}
+html:not(#_a):not(#_b) body .c-t,html:not(#_a):not(#_b) body .c-f{background:transparent;border-color:color-mix(in srgb,var(--muted) 35%,transparent)}
+html:not(#_a):not(#_b) body .c-t{border-color:var(--gold)}
 .blg{display:flex;align-items:center;gap:6px;margin:0;font-size:13px;color:var(--muted)}
-html:not(#_a):not(#_b) body .blg i{width:14px;height:14px;margin-left:8px}
-html:not(#_a):not(#_b) body .blg i:first-child{margin-left:0}
+.blg i{width:14px;height:14px;margin-left:8px}
+.blg i:first-child{margin-left:0}
 .bbody{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;height:170px;align-items:end}
 .bbd{display:grid;grid-template-rows:26px minmax(0,1fr) 18px;justify-items:center;height:100%;gap:2px}
 .bbd.fut{opacity:.35}
@@ -715,7 +715,7 @@ html body #vieBox input.sw{appearance:none!important;-webkit-appearance:none!imp
 html body #vieBox input.sw:checked{background:var(--accent)!important;border-color:var(--accent)!important}
 html body #vieBox input.sw::before{display:none!important}
 /* — depuis epure-01.css — */
-html body button.xpb{font-size:0!important}
+button.xpb{font-size:0!important}
 html body button.xpb::after{content:"Fait";font-size:15px;font-weight:700}
 html body :is(#barWrap)::after{animation:none!important;opacity:0!important}
 html body :is(#barWrap.near,.evr.now .evd,.evr.now .evj){animation:none!important}
@@ -726,7 +726,7 @@ html:not(.bilopen) body #chapBox .bsec,html:not(.bilopen) body #chapBox .bdet,ht
 #setBox .set-card:has(#xpCap){display:none}
 html:not(.admin) body #testCard{display:none}
 :is(.wardrobe,.col,.wr-it){--rpg-shadow:rgba(0,0,0,.55)}
-html:not(#_a):not(#_b) body .wrap>#evtBox:not([hidden]){display:grid!important}
+html:not(#_a):not(#_b) body .wrap>#evtBox:not([hidden]){display:grid}
 .wrap>#evtBox{order:0}
 #setMods .tg{padding:8px 0}
 #ficheBox .fcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:10px}
@@ -838,7 +838,7 @@ html:not(#_a):not(#_b) body #wrCats .wcg{display:block;width:70%;height:5px;back
 #wrCats .wcg i{display:block;height:100%;background:var(--gold)}
 html:not(#_a):not(#_b) body #wrCats .wcg0{visibility:hidden}
 html:not(#_a):not(#_b) body #wrCats>button em{display:none!important}
-html:not(#_a):not(#_b):not(#_c) body :is(.svt .fti,.fsq .fti,.idi){width:48px!important;height:48px!important;min-width:48px;flex:0 0 48px;display:inline-flex;align-items:center;justify-content:center;padding:0!important}
+html:not(#_a):not(#_b):not(#_c) body :is(.svt .fti,.fsq .fti,.idi){width:48px;height:48px;min-width:48px;flex:0 0 48px;display:inline-flex;align-items:center;justify-content:center;padding:0}
 :is(.svt .fti,.fsq .fti,.idi)>:is(svg,img){width:48px;height:48px;max-width:none;display:block}
 html:not(#_a):not(#_b):not(#_c) body .sout{animation:sout .12s ease-in both!important}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b):not(#_c) body :is(.sout){animation:none!important}}
@@ -859,7 +859,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body #idBox :is(.idi,.idnx)::before,htm
 #wrCats{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 #wrCats>button{padding:6px 2px;font-size:11px;gap:4px}
 #wrCats .wci,#wrCats .wci svg{width:32px;height:32px}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body #wrCats .wcg{width:76%!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body #wrCats .wcg{width:76%}
 #wrCats>button{aspect-ratio:auto;min-height:78px;justify-content:flex-start;padding-top:8px}
 html[data-wrc="badges"] body #wrBody{display:none}
 html:not([data-wrc="badges"]) body .col:has(#bdgGrid){display:none}
@@ -872,13 +872,13 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fcard,.hmcard,.bhero,.bchap,#
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.evr.now .evd){animation:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .bpx,.pbs.on .pbi)::after{animation:none!important;opacity:0!important}
 /* — depuis assiette.css — */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid}
 /* — depuis standards.css — */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.pav.bdp,.bni,.pbs .pbi){border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after{border-radius:50%!important}
 :is(.evch){text-align:center;justify-content:center;justify-items:center}
 :is(.evch>span){justify-items:center;text-align:center}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
+:is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3){font-family:var(--f-pixel)!important;font-size:20px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.8px!important;color:#fff7e6!important;text-shadow:none!important;display:flex!important;align-items:center!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#idBox .idhead b,#ficheBox .fch b,#vieBox .vie-c>h3,#setBox .set-card>h3,#bakBox .set-card>h3)::before{content:""!important;display:inline-block!important;flex:none;width:12px!important;height:12px!important;background:var(--fc,var(--gold))!important;transform:rotate(45deg)!important;margin-right:10px!important;box-shadow:1px 1px 0 var(--rpg-shadow)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>svg,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>img{display:none!important}
 #wrBody .wr-grid{grid-auto-rows:1fr;align-items:stretch}
@@ -893,12 +893,12 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #vieBox .vie-c>h3>svg,htm
 :is(#wrBody .wr-it,.fsq,.svt){border-color:rgba(255,255,255,.17)}
 :is(#wrBody .wr-it.on,.svt[aria-pressed="true"],.svt.on){border-color:var(--gold,#ffd94a)}
 :is(.hml,.bdgnew,.bfnew){font-family:var(--f-body);font-size:11px;font-weight:800;letter-spacing:.02em;text-transform:none;line-height:1.3;color:#fff7e6;background:rgba(10,10,24,.72);border:0;box-shadow:none;padding:2px 6px;text-shadow:none}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.bdgnew,.bfnew){color:#ff7a6b!important}
+:is(.bdgnew,.bfnew){color:#ff7a6b}
 :is(.colh .count,.bfam summary>b){font-family:var(--f-pixel);font-size:15px;font-weight:700;color:var(--gold,#ffd94a);background:none;border:0;box-shadow:none;padding:0;margin-left:8px;min-width:0;height:auto;line-height:1}
 :is(.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){height:10px!important;min-height:10px!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.sb,.idbar,.stbar,.bpr,.bfbar,.wcg){height:10px;min-height:10px}
 :is(.sb,.idbar,.stbar,.bpr,.bfbar,.wcg)>i{height:100%;margin:0;top:0;box-shadow:none}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(#wrBody .wr-it){--rc:#8a8f99!important}
+:is(#wrBody .wr-it){--rc:#8a8f99!important}
 #wrBody .rst{display:inline-flex;gap:1px;color:var(--gold,#ffd94a);border:0;background:none;padding:0;box-shadow:none}
 :is(.bnv){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff7e6;box-shadow:none;min-height:44px;box-sizing:border-box}
 :is(.bnv){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
@@ -913,7 +913,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:2px solid var(
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background:var(--surface)!important}
 /* Ma fiche : barres par catégorie au même modèle que les proches (grande barre 18 px, « Nv N » centré dedans) */
 #stats .stat{display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:8px}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sb{grid-area:1/2!important;display:block!important;width:100%!important;height:18px!important;box-sizing:border-box!important;margin:0!important;border:2px solid rgba(255,247,230,.85)!important;border-radius:0!important;background:rgba(0,0,0,.35)!important;box-shadow:none!important;overflow:hidden!important;position:relative!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sb{grid-area:1/2;display:block;width:100%;height:18px;box-sizing:border-box;margin:0;border:2px solid rgba(255,247,230,.85);border-radius:0;background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden;position:relative}
 #stats .stat .sb>i{display:block;height:100%;margin:0;background:var(--cat);border-radius:0;box-shadow:none}
 #stats .stat .sl{grid-area:1/2;z-index:1;display:grid;place-items:center;height:18px;width:100%;margin:0;padding:0;font-family:var(--f-pixel);font-size:13px;line-height:1;color:#fff7e6;text-shadow:1px 1px 0 #000;background:none;pointer-events:none}
 /* ===== Ma fiche (26/10) : plus compacte et mieux structurée
@@ -921,12 +921,12 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .st
    badges en tuiles de 56 px ; avec une aura, un seul voile identique (même fond, même flou, bordure neutre) derrière chaque bloc */
 .char.pf:not(.fpf) .pf-head{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:0;min-height:0}
 .char.pf:not(.fpf) .pf-name{flex:1;min-width:0;margin:0}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charName{flex:1!important;min-width:0!important;height:auto!important;margin-top:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;border:0!important;background:none!important;box-shadow:none!important;font-family:var(--f-pixel)!important;font-size:26px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:.02em!important;text-transform:uppercase!important;color:#fff7e6!important;text-overflow:ellipsis}
+.char.pf:not(.fpf) #charName{flex:1!important;min-width:0!important;height:auto!important;margin-top:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;border:0!important;background:none!important;box-shadow:none!important;font-family:var(--f-pixel)!important;font-size:26px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:.02em!important;text-transform:uppercase!important;color:#fff7e6!important;text-overflow:ellipsis}
 .char.pf:not(.fpf) #charTitle{flex:none;margin:0;padding:0 0 0 8px;font-size:13px}
 .char.pf:not(.fpf) .pf-xp{grid-template-columns:44px minmax(0,1fr);align-items:center;gap:12px;margin:12px 0 0;min-height:0}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox{width:44px!important;height:50px!important;margin-top:0!important;margin-right:0!important;margin-left:0!important;background-size:100% 100%!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox small{top:8px!important;font-size:9px!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #lvlBox b{font-size:22px!important}
+.char.pf:not(.fpf) #lvlBox{width:44px;height:50px;margin-top:0;margin-right:0;margin-left:0;background-size:100% 100%}
+.char.pf:not(.fpf) #lvlBox small{top:8px;font-size:9px}
+.char.pf:not(.fpf) #lvlBox b{font-size:22px}
 .char.pf:not(.fpf) #barWrap{box-shadow:none;margin:0}
 .char.pf:not(.fpf) #barWrap .bt{display:grid;place-items:center}
 .char.pf:not(.fpf) #barWrap .bt em{background:none;border:0;padding:0;height:auto;font-family:var(--f-pixel);font-size:13px;line-height:1;color:#fff7e6;text-shadow:1px 1px 0 #000}
@@ -934,7 +934,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs:not(.pbt){min-height:56px!important;padding:6px 4px!important;gap:2px!important;align-content:center!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs:not(.pbt) .pbi{width:24px!important;height:24px!important;font-size:18px!important}
 /* aura : un seul voile, le même partout */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.statlist,.pf-xp){border-radius:0!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important;min-width:0!important;max-width:100%!important}
+.char.pf.aura-on:not(.fpf) :is(.pf-head,.statlist,.pf-xp){border-radius:0;margin-left:0;margin-right:0;box-sizing:border-box;min-width:0;max-width:100%}
 .char.pf.aura-on:not(.fpf) .pf-name{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;padding:0}
 /* disposition C (choisie le 26/10) : [portrait | prénom, titre, niveau / 3 badges] puis barre d'XP sur toute la largeur, sans cadre, puis les catégories sur 2 colonnes */
 .char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr) 44px;grid-template-areas:"side head lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick";column-gap:12px;row-gap:0;align-items:start}
@@ -956,12 +956,12 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 .char.pf:not(.fpf) .pf-pick{grid-area:pick}
 /* aura : même voile derrière le bloc du prénom et derrière les catégories ; la barre d'XP sans cadre */
 .char.pf:not(.fpf).aura-on :is(.pf-head,.statlist){background:rgba(12,14,32,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.17);padding:8px}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf).aura-on .pf-xp{background:none!important;border:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;padding:0!important}
+.char.pf:not(.fpf).aura-on .pf-xp{background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0}
 /* retouche 26/10 : prénom seul en haut, centré ; puis portrait | titre, niveau, badges (sans encadrés) ; puis le reste */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-areas:"name name name" "side title lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick"!important}
 .char.pf:not(.fpf) .pf-head,.char.pf:not(.fpf) .pf-name{display:contents}
 .char.pf:not(.fpf) #charName{grid-area:name;text-align:center;margin:0 0 12px}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charTitle{grid-area:title!important;align-self:start!important;justify-self:start!important;min-height:0!important;height:auto!important;padding:2px 0 0!important;line-height:1.2!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charTitle{grid-area:title;align-self:start;justify-self:start;min-height:0;height:auto;padding:2px 0 0;line-height:1.2}
 .char.pf:not(.fpf) #lvlBox{grid-area:lvl}
 .char.pf:not(.fpf) .pf-bdg{align-self:start;margin:8px 0 0}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs.pbt{border:0!important;background:none!important;box-shadow:none!important;outline-offset:0!important;min-height:0!important;padding:4px 2px!important}
@@ -971,11 +971,11 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 .char.pf:not(.fpf) #charName{padding-left:52px;padding-right:52px;min-height:50px}
 .char.pf:not(.fpf) .pf-bdg{margin:4px 0 0}
 .char.pf:not(.fpf){grid-template-rows:auto auto 1fr}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs{-webkit-backdrop-filter:none;backdrop-filter:none}
 /* aura (26/10) : tout le fond est flouté et assombri d'un seul voile ; la disposition reste celle sans aura (aucun voile par bloc) */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.pf-name,.statlist,.pf-xp,#charName){background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important;padding-top:0!important;padding-bottom:0!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) .statlist{padding:0!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf){background:linear-gradient(rgba(12,14,32,.5),rgba(12,14,32,.5)),var(--aubg)!important;background-color:var(--surface)!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.pf-name,.statlist,.pf-xp,#charName){background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;padding-top:0;padding-bottom:0}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) .statlist{padding:0}
+.char.pf.aura-on:not(.fpf){background:linear-gradient(rgba(12,14,32,.5),rgba(12,14,32,.5)),var(--aubg);background-color:var(--surface)}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::before,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::after{filter:blur(2px)!important}
 
 /* chemin vers un nouveau badge : Moi → Chez moi → Chambre → Armoire > Badges → famille → badge (28/10) */
@@ -993,14 +993,14 @@ html:not(#_u1):not(#_u2):not(#_u3) body .fhave .fjobs .fti svg{width:32px;height
 /* A.5-A.6 (31/10) : la fiche en édition ne déborde plus de son cadre ; « J'ai… » en tuiles rectangulaires, icône + nom sur une ligne */
 .fcard.fedit{grid-template-columns:minmax(0,1fr)}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fhave .fjobs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fhave .fjobs button{aspect-ratio:auto;flex-direction:row;min-height:56px;min-width:0;padding-top:6px;padding-bottom:6px;font-size:13px;line-height:1.2}
+.fhave .fjobs button{aspect-ratio:auto;flex-direction:row;min-height:56px;min-width:0;padding-top:6px;padding-bottom:6px;font-size:13px;line-height:1.2}
 .fhave .fjobs button>span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .fhave .fjobs .fti{flex:none}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .fhave .fjobs>button .fti{width:32px!important;height:32px!important;flex:none}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .fhave .fjobs>button .fti svg{width:32px!important;height:32px!important}
 .fhave .fjobs>button{padding:6px;gap:6px}
 .fedit .fjobs{grid-template-columns:repeat(3,minmax(0,1fr))}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4) body .fedit .fjobs.fpris{grid-template-columns:repeat(4,minmax(0,1fr))}
+.fedit .fjobs.fpris{grid-template-columns:repeat(4,minmax(0,1fr))}
 .fedit .fjobs>button{min-width:0}
 /* A.4 (31/10) : Ma situation fusionnée dans Ma fiche — artistes en puces avec une croix */
 #ficheBox .fartx{display:inline-flex;align-items:center;gap:6px}
