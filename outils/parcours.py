@@ -83,9 +83,11 @@ with sync_playwright() as p:
     pg.wait_for_timeout(800)
     check("Annuler rend l'XP", un is not None and xp(pg) < x1, f"{x1} → {xp(pg)}")
 
-    # 4b. Quête avec minuteur : la fenêtre s'ouvre avec « Déjà fait »
+    # 4b. Quête avec minuteur : la fenêtre guidée, ou le minuteur lancé, propose « Déjà fait »
     r = pg.evaluate("""(()=>{const b=[...document.querySelectorAll('.fqgo')].find(b=>!/^Fait/.test(b.textContent.trim()));if(!b)return 'aucune';b.click();
-      const o=[...document.querySelectorAll('.pu')].pop();const ok=!!(o&&o.querySelector('.pudone'));if(o)o.remove();return ok})()""")
+      const o=[...document.querySelectorAll('.pu')].pop();let ok=!!(o&&o.querySelector('.pudone'));if(o)o.remove();
+      const tp=document.getElementById('tmPanel');if(!ok&&tp){ok=[...tp.querySelectorAll('button')].some(x=>/Déjà fait/.test(x.textContent));S.g.tm=null;save();tp.remove();document.body.classList.remove('timing')}
+      return ok})()""")
     if r != "aucune": check("quête à minuteur : bouton « Déjà fait »", r is True, str(r))
 
     # 5. Proches : ajouter un ami et un membre de la famille

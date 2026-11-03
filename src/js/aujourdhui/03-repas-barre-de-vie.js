@@ -56,12 +56,12 @@ function lateNight(){const m=adjH()*60;return S.g&&S.g.curfew!==false&&(m>=23*60
 function dayPer(){const h=adjH();return h>=8&&h<15?"matin":h>=15||h<4?"soir":"nuit"}
 function ritPer(t){return t.when==="soir"?"soir":"matin"}
 
-const RARE={legend:["Jour légendaire","XP ×2 + 1 coffre","#f2c230"],gold:["Coffre doré","objet épique garanti","#f2c230"],x2:["Heure d'or","XP double pendant 1 h","#ff9a3d"],secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
+const RARE={secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
 // plus d'indicateurs dans les boutons (appui long, minuteur, écran) : retirés à la demande d'Ilario ; les gestes restent
 function tagVK(){document.querySelectorAll(".vk").forEach(i=>i.remove())}
 let nowRaf=0;function schedNow(){if(nowRaf)return;nowRaf=requestAnimationFrame(()=>{nowRaf=0;renderNow();tagVK()})}
 function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());let h="",set=false;
-  if(G.rare&&G.rare.d===tk&&G.rare.k&&G.rare.k!=="legend"&&G.rare.k!=="gold"&&!G.rare.seen){const R0=RARE[G.rare.k];h+=`<div class="rarec rare1" style="--rc:${R0[2]}"><b>${R0[0]}<span class="rared"> : ${R0[1]}</span></b><button type="button" class="rarex" aria-label="OK">${ICO("check",16)}</button></div>`}
+  if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.seen){const R0=RARE[G.rare.k];h+=`<div class="rarec rare1" style="--rc:${R0[2]}"><b>${R0[0]}<span class="rared"> : ${R0[1]}</span></b><button type="button" class="rarex" aria-label="OK">${ICO("check",16)}</button></div>`}
   if(lateNight()){h+=`<div class="nowc night"><span class="nowk">Il est tard</span><b>Le reste attendra demain</b><small>Pose le téléphone. Bonne nuit.</small></div>`}
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
@@ -77,7 +77,7 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
 }
   if(!set)box.innerHTML=h;
   const rx=box.querySelector(".rarex");if(rx)rx.onclick=()=>{G.rare.seen=1;save();renderNow()};
-  if(G.rare&&G.rare.d===tk&&G.rare.k&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
+  if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
 // renderBalance : finitions autour de renderBalanceBase (le cœur), ex-retouche de correctifs.js
 function renderBalance(){const r=renderBalanceBase.apply(this,arguments);try{balViz()}catch(e){console.warn("renderBalance",e)}return r}
 function renderBalanceBase(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();

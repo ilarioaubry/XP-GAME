@@ -42,8 +42,8 @@ function gameTick(){
   const tk=dayKey(now);
   {const hh=dayH();S.specials=S.specials.filter(q=>{if(q.org&&q.org!==tk){ch=true;return false}return true});
    if(hh>=15&&G.orgDone!==tk&&!S.specials.some(q=>q.org)){S.specials.push({id:"org"+tk,name:"Préparer mon repas de demain",cat:"nourriture",xp:15,org:tk,lzs:"orga"});ch=true}}
-  if(!G.rare||G.rare.d!==tk){const r=Math.random();let k="";if(r<.08)k="x2";else if(r<.16)k="secret";G.rare={d:tk,k,seen:0};if(k)G.rareN=(G.rareN||0)+1;ch=true;
-    if(k==="gold")G.bchests=(G.bchests||0)+1;if(k==="x2")G.boost=Date.now()+36e5;
+    // jour rare : seulement la quête secrète (une vraie action) ; l'Heure d'or tirée au hasard est retirée (4.1, 03/11)
+  if(!G.rare||G.rare.d!==tk){const k=Math.random()<.08?"secret":"";G.rare={d:tk,k,seen:0};if(k)G.rareN=(G.rareN||0)+1;ch=true;
     if(k==="secret"){const L=[["Ramener une viennoiserie à quelqu'un","social"],["Écrire une lettre à la main","famille"],["Ranger un tiroir oublié","maison"],["Marcher 15 min sans téléphone","sport"],["Cuisiner un plat jamais fait","nourriture"],["Apprendre 5 mots d'une langue","soi"],["Enregistrer 30 s d'impro","perso"]],q=L[Math.floor(Math.random()*L.length)];S.specials.unshift({id:"sec"+tk,name:q[0],cat:q[1],xp:45,secret:tk})}}
   S.specials=S.specials.filter(q=>{if(q.secret&&q.secret!==tk){ch=true;return false}return true});
   {S.specials=S.specials.filter(q=>{if(q.fg&&q.d!==tk){ch=true;return false}return true});const FL=fgList().filter(g=>fgMembers(g.id).length>=2);

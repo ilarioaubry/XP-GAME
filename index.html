@@ -4182,7 +4182,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version d47a5fe</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 0420c0c</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5084,12 +5084,12 @@ function lateNight(){const m=adjH()*60;return S.g&&S.g.curfew!==false&&(m>=23*60
 function dayPer(){const h=adjH();return h>=8&&h<15?"matin":h>=15||h<4?"soir":"nuit"}
 function ritPer(t){return t.when==="soir"?"soir":"matin"}
 
-const RARE={legend:["Jour légendaire","XP ×2 + 1 coffre","#f2c230"],gold:["Coffre doré","objet épique garanti","#f2c230"],x2:["Heure d'or","XP double pendant 1 h","#ff9a3d"],secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
+const RARE={secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
 // plus d'indicateurs dans les boutons (appui long, minuteur, écran) : retirés à la demande d'Ilario ; les gestes restent
 function tagVK(){document.querySelectorAll(".vk").forEach(i=>i.remove())}
 let nowRaf=0;function schedNow(){if(nowRaf)return;nowRaf=requestAnimationFrame(()=>{nowRaf=0;renderNow();tagVK()})}
 function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());let h="",set=false;
-  if(G.rare&&G.rare.d===tk&&G.rare.k&&G.rare.k!=="legend"&&G.rare.k!=="gold"&&!G.rare.seen){const R0=RARE[G.rare.k];h+=`<div class="rarec rare1" style="--rc:${R0[2]}"><b>${R0[0]}<span class="rared"> : ${R0[1]}</span></b><button type="button" class="rarex" aria-label="OK">${ICO("check",16)}</button></div>`}
+  if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.seen){const R0=RARE[G.rare.k];h+=`<div class="rarec rare1" style="--rc:${R0[2]}"><b>${R0[0]}<span class="rared"> : ${R0[1]}</span></b><button type="button" class="rarex" aria-label="OK">${ICO("check",16)}</button></div>`}
   if(lateNight()){h+=`<div class="nowc night"><span class="nowk">Il est tard</span><b>Le reste attendra demain</b><small>Pose le téléphone. Bonne nuit.</small></div>`}
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
@@ -5105,7 +5105,7 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
 }
   if(!set)box.innerHTML=h;
   const rx=box.querySelector(".rarex");if(rx)rx.onclick=()=>{G.rare.seen=1;save();renderNow()};
-  if(G.rare&&G.rare.d===tk&&G.rare.k&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
+  if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
 // renderBalance : finitions autour de renderBalanceBase (le cœur), ex-retouche de correctifs.js
 function renderBalance(){const r=renderBalanceBase.apply(this,arguments);try{balViz()}catch(e){console.warn("renderBalance",e)}return r}
 function renderBalanceBase(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();
@@ -10382,8 +10382,8 @@ function gameTick(){
   const tk=dayKey(now);
   {const hh=dayH();S.specials=S.specials.filter(q=>{if(q.org&&q.org!==tk){ch=true;return false}return true});
    if(hh>=15&&G.orgDone!==tk&&!S.specials.some(q=>q.org)){S.specials.push({id:"org"+tk,name:"Préparer mon repas de demain",cat:"nourriture",xp:15,org:tk,lzs:"orga"});ch=true}}
-  if(!G.rare||G.rare.d!==tk){const r=Math.random();let k="";if(r<.08)k="x2";else if(r<.16)k="secret";G.rare={d:tk,k,seen:0};if(k)G.rareN=(G.rareN||0)+1;ch=true;
-    if(k==="gold")G.bchests=(G.bchests||0)+1;if(k==="x2")G.boost=Date.now()+36e5;
+    // jour rare : seulement la quête secrète (une vraie action) ; l'Heure d'or tirée au hasard est retirée (4.1, 03/11)
+  if(!G.rare||G.rare.d!==tk){const k=Math.random()<.08?"secret":"";G.rare={d:tk,k,seen:0};if(k)G.rareN=(G.rareN||0)+1;ch=true;
     if(k==="secret"){const L=[["Ramener une viennoiserie à quelqu'un","social"],["Écrire une lettre à la main","famille"],["Ranger un tiroir oublié","maison"],["Marcher 15 min sans téléphone","sport"],["Cuisiner un plat jamais fait","nourriture"],["Apprendre 5 mots d'une langue","soi"],["Enregistrer 30 s d'impro","perso"]],q=L[Math.floor(Math.random()*L.length)];S.specials.unshift({id:"sec"+tk,name:q[0],cat:q[1],xp:45,secret:tk})}}
   S.specials=S.specials.filter(q=>{if(q.secret&&q.secret!==tk){ch=true;return false}return true});
   {S.specials=S.specials.filter(q=>{if(q.fg&&q.d!==tk){ch=true;return false}return true});const FL=fgList().filter(g=>fgMembers(g.id).length>=2);

@@ -2,6 +2,9 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 03/11/2026
+- Le jeu (4.1, choix B + C) : plus de hasard sans action. L'Heure d'or (XP ×2 pendant 1 h, tirée au hasard certains matins) est retirée ; un jour rare donne seulement une quête secrète, qu'il faut faire pour de vrai. Les coffres restent, et ils ne viennent que d'une action : passer un niveau, finir tous les rituels d'un moment, finir un projet. Les restes du jour légendaire et du coffre doré (plus tirés depuis longtemps) sont retirés du code. Tes coffres déjà gagnés et tes données ne changent pas.
+
 ## 02/11/2026
 - Proches (3.7) : CSS de Proches rangé. 38 règles qui ne servaient qu'à Proches quittent base.css pour proches.css ; 162 règles perdent leurs `!important` et leurs sélecteurs forcés (proches.css : 357 → 157 `!important`, 515 → 213 forçages). Rien ne change à l'écran : 0 écart de style mesuré sur 88 écrans (Aujourd'hui, Moi, Proches, fenêtres, à 13 h et 21 h 30, avec ta sauvegarde).
 - Proches (3.6) : quand vous avez fait trois fois quelque chose qui va avec un univers (rando → Nature, ciné → Cinéphile…), la fiche en lecture le propose en haut de « À savoir » (« Nature ? 3 fois ensemble ces derniers mois ») : ✓ l'ajoute, ✕ ne le propose plus. Idées cadeau : on peut en noter plusieurs (Modifier > Idées cadeau, × pour en retirer une) ; elles s'affichent sous la date d'anniversaire sur la fiche et dans la carte d'anniversaire d'Aujourd'hui (« Idées : un vinyle · un livre »). La carte postale n'est pas faite (retirée).

@@ -25,8 +25,8 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Bonne nuit | Écran calme la nuit, après le journal | — | moment |
 | Ta semaine est finie | Carte du dimanche vers le Bilan | — | moment |
 | Rattrapage | Ligne du journal : rituels des jours d'avant, « Fait » ouvre la fenêtre de rattrapage, « Non » les laisse passer | 3 par rituel | module, moment |
-| Maintenant | La chose à faire tout de suite, journée rare (« Heure d'or » XP ×2) | ×2 pendant 1 h | module, moment |
-| Coffres | Coffre à ouvrir (un objet pour l'armoire) | — | module, moment |
+| Maintenant | La chose à faire tout de suite ; jour rare = une quête secrète (l'Heure d'or tirée au hasard est retirée le 03/11) | — | module, moment |
+| Coffres | Coffre à ouvrir (un objet pour l'armoire), gagné seulement par une action : passer un niveau, finir tous les rituels d'un moment, finir un projet | — | module, moment |
 | Saison des fêtes | Hotte de cadeaux, calendrier de l'Avent, vœux, ton année, résolutions | 5–15 | module, saison |
 | Quêtes pour toi | 3 quêtes du jour choisies selon ta situation, la météo, tes proches. Les quêtes nourriture sur le contenu du repas ou la cuisine se valident en remplissant l'assiette (« Remplir l'assiette », objectif affiché, plus proposées quand les repas sont notés) | 10–30 | active |
 | Quêtes spéciales | Carrousel : amis, famille, groupes, surprise du jour, anniversaires (« Avec qui ? » au moment de Fait) | 15–30, anniversaire 30 | module |
