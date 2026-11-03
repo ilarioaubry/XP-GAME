@@ -304,12 +304,11 @@ html[data-mo="soir"] .wrap>#sqBox{order:-14}
 
 
 .pu .stdots i.cur{background:#ffd75a}
-/* — depuis principal-11.css — */
-.gfbox.open{filter:drop-shadow(0 0 12px #ffd75a)}
-.gfst li.cur i{border-color:#e0447a;color:#e0447a}
+
+
 
 .pu .stdots i.cur{background:var(--ac2);animation:stCur 1.2s steps(2) infinite}
-.gfst li.cur i{background:color-mix(in srgb,#e0447a 20%,var(--surface));border-color:#000;animation:stCur 1.2s steps(2) infinite}
+
 .actsug{display:grid;gap:6px}
 .actsug:empty{display:none}
 .sugh{margin:0;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}

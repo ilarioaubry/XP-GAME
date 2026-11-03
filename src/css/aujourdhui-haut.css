@@ -251,8 +251,10 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 #newsBox[hidden]{display:none}
 .newsl{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:6px 12px;box-sizing:border-box;background:rgba(14,17,44,.85);border:2px solid rgba(255,255,255,.17);color:var(--ink);font:700 13px var(--f-body);text-align:left;cursor:pointer}
 .newsl:disabled{cursor:default;opacity:1}
-.newsi{display:grid;place-items:center;width:24px;height:24px;flex:none}
-.newsi svg{width:24px;height:24px;display:block}
+.newsi{display:grid;place-items:center;width:32px;height:32px;flex:none}
+.newsi svg{width:32px;height:32px;display:block}
+.newsl .newst{flex:1;min-width:0}
+.newsl .newsgo{flex:none;margin-right:-6px}
 .newst{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .newsn{flex:none}
 /* bandeau du jour : mode (travail / période) à gauche, réglage « Ce que je surveille » à droite */

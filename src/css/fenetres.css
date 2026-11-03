@@ -521,3 +521,49 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 .mvw .fdate{display:grid;grid-template-columns:1fr 1.4fr 1.2fr;gap:8px}
 .mvw .fdate label{display:grid;gap:4px;font-size:13px;color:var(--ui-creme-2)}
 .mvw .fdate :is(input,select){font:inherit;font-size:16px;color:var(--ui-creme);background:var(--ui-fond);border:2px solid var(--ui-bord);border-radius:0;min-height:44px;padding:0 10px;width:100%;box-sizing:border-box}
+/* messages (03/11) : une petite icône pixel devant le texte, toasts et barre « Annuler » pareils */
+.toast.show,#undoBar{display:flex;align-items:center;gap:10px;text-align:left}
+.toast-ic{flex:none;display:grid;place-items:center;width:24px;height:24px}
+.toast-ic:empty{display:none}
+.toast-ic svg{width:24px;height:24px;display:block}
+#undoBar .toast-ic{overflow:visible}
+#undoBar .toast-t{flex:1}
+/* nouvelles du jour : fenêtre avec sa scène, chevron vers la droite */
+.newsgo{display:grid;place-items:center;transform:rotate(-90deg);color:var(--ui-or)}
+.newsw .ui-lignes{--sc:var(--ui-or)}
+/* paliers (03/11) : détail en échelle (crans, état, coche ou cadenas), boost et palier débloqué avec leur scène */
+.palf .pal-b>i{background:var(--pc)}
+.pal-ech .crans{width:11px;height:11px;margin:0;transform:scale(2.2)}
+.pal-ech .on .crans.c1 span:nth-child(1),.pal-ech .on .crans.c2 span:nth-child(-n+2),.pal-ech .on .crans.c3 span{background:var(--pc)}
+.pal-ech .pal-fin{display:grid;place-items:center;width:24px;height:24px}
+.pal-ech .pal-fin svg{width:24px;height:24px;display:block}
+.palpop .palg{gap:var(--ui-e2)}
+.palpop .palg .ui-lignes{width:100%;text-align:left}
+.palpop .palic svg{width:48px;height:48px}
+.palpop .ui-ligne__ic .crans{width:11px;height:11px;margin:0;transform:scale(2.2)}
+.palpop .crans.c1 span:nth-child(1),.palpop .crans.c2 span:nth-child(-n+2),.palpop .crans.c3 span{background:var(--sc)}
+/* cadeau (03/11) : scène à la couleur du groupe du proche, trois étapes en icônes */
+.gfc2{display:grid;align-content:start;gap:var(--ui-e4)}
+.gf-et{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);position:relative}
+.gf-et::before{content:"";position:absolute;left:16.7%;right:16.7%;top:23px;height:2px;background:linear-gradient(90deg,var(--sc) 50%,transparent 0) 0 0/4px 2px repeat-x}
+.gf-et li{position:relative;display:grid;justify-items:center;gap:6px;font-size:var(--ui-t-texte);font-weight:700;color:var(--ui-creme-2)}
+.gf-ic{position:relative;display:grid;place-items:center;width:48px;height:48px;box-sizing:border-box;border:2px solid var(--ui-bord);background:var(--ui-fond-plein)}
+.gf-ic>svg{width:32px;height:32px;display:block}
+.gf-et li:not(.ok):not(.cur) .gf-ic>svg{filter:grayscale(1);opacity:.4}
+.gf-et li.cur{color:var(--ui-creme)}
+.gf-et li.cur .gf-ic{border-color:var(--ui-or)}
+.gf-et li.ok{color:var(--ui-creme)}
+.gf-ok{position:absolute;right:-8px;bottom:-8px;width:20px;height:20px}
+.gf-ok svg{width:20px;height:20px;display:block}
+.gf-l{display:grid;gap:6px}
+.gf-m{margin:0}
+.gf-seul{grid-template-columns:1fr}
+/* calendrier plein écran (03/11) : le jour choisi en page de calendrier pixel, à côté son nom et ce qui est prévu */
+.cal-hero{display:grid;grid-template-columns:80px minmax(0,1fr);gap:var(--ui-e4);align-items:center;margin:var(--ui-e4) 0 var(--ui-e2)}
+.cal-page{position:relative;display:block;width:80px;height:88px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.4))}
+.cal-pg{position:absolute;inset:0;width:100%;height:100%}
+.cal-page small{position:absolute;left:8px;right:8px;top:14px;font-size:11px;font-weight:800;line-height:14px;text-align:center;text-transform:uppercase;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45)}
+.cal-page b{position:absolute;left:8px;right:12px;top:38px;font-family:var(--f-pixel);font-size:34px;font-weight:400;line-height:36px;text-align:center;color:#2a1606}
+.cal-hd{display:grid;gap:var(--ui-e2);min-width:0}
+.cal-hero .cal-jt{margin:0;font-family:var(--f-pixel);font-size:20px;font-weight:400}
+.palpop .palg>.ui-scene{justify-self:stretch}

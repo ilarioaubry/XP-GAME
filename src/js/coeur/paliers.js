@@ -30,7 +30,8 @@ function boostUse(i,after){const L=boostsOf(),b=L[i];if(!b)return;if(boostLive()
   toast(`XP ×2 sur ${esc(boostLab(b.c))} pendant <span class="p">1 h</span>`);render();if(after)after()}
 function boostAsk(i,after){const b=boostsOf()[i];if(!b)return;if(document.querySelector(".bstw"))return;
   const v=document.createElement("div");v.className="ui-voile bstw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Lancer un boost");
-  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Lancer le boost ?</h2><p class="ui-carte__texte bstp">XP ×2 sur ${esc(boostLab(b.c))} pendant 1 h, à partir de maintenant.</p><div class="bstb"><button type="button" class="ui-btn bstno">Plus tard</button><button type="button" class="ui-btn ui-btn--principal bstgo">Lancer</button></div></div>`;
+  const col=b.c&&CATS[b.c]?CATS[b.c].c:"var(--ui-or)",ln=(ic,t)=>`<li><div class="ui-ligne"><span class="ui-ligne__ic">${rkSvg(ic)}</span><span class="ui-ligne__t"><span>${t}</span></span><span></span></div></li>`;
+  v.innerHTML=`<div class="ui-fenetre" style="--sc:${col}">${uiScene("eclair",col,{rays:1,sub:"×2"})}<h2 class="ui-fenetre__titre">Lancer le boost ?</h2><ul class="ui-lignes">${ln(b.c?PAL_IC[b.c]||"etoile":"etoile",`XP ×2 sur ${esc(boostLab(b.c))}`)}${ln("sablier","Pendant 1 h, dès maintenant")}</ul><div class="bstb"><button type="button" class="ui-btn bstno">Plus tard</button><button type="button" class="ui-btn ui-btn--principal bstgo">Lancer</button></div></div>`;
   const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".bstno").onclick=close;v.querySelector(".bstgo").onclick=()=>{close();boostUse(i,after)};document.body.appendChild(v)}
 
 // ---- passage de palier : récompenses et petite fenêtre (appelé par gameTick)
@@ -49,8 +50,9 @@ function palCheck(){const G=S.g;if(!G)return false;
 function palPop(groups){if(document.querySelector(".palpop"))return;
   const icon=k=>k.startsWith("crans")?cransHTML(+k.slice(5)):rkSvg(k);
   const v=document.createElement("div");v.className="ui-voile palpop";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Palier débloqué");
-  v.innerHTML=`<div class="ui-fenetre palw">${groups.map(g=>`<div class="palg"><span class="palic">${rkSvg(PAL_IC[g.c]||"etoile")}</span><h2 class="ui-fenetre__titre">Palier débloqué</h2><p class="palsub">${esc((CATS[g.c]||{}).label||g.c)} · niveau ${g.lv}</p>
-    <ul class="pall">${g.it.map(x=>`<li><span class="pali">${icon(x.ic)}</span><span>${esc(x.t)}</span></li>`).join("")}</ul></div>`).join("")}
+  const col=g=>(CATS[g.c]||{}).c||"var(--ui-or)";
+  v.innerHTML=`<div class="ui-fenetre palw" style="--sc:${col(groups[0])}">${groups.map((g,i)=>`<div class="palg" style="--sc:${col(g)}">${i?`<span class="palic">${rkSvg(PAL_IC[g.c]||"etoile")}</span>`:uiScene(PAL_IC[g.c]||"etoile",col(g),{rays:1,sub:"Niv "+g.lv})}${i?"":`<h2 class="ui-fenetre__titre">Palier débloqué</h2>`}<p class="ui-sous-titre">${esc((CATS[g.c]||{}).label||g.c)} · niveau ${g.lv}</p>
+    <ul class="ui-lignes">${g.it.map(x=>`<li><div class="ui-ligne"><span class="ui-ligne__ic">${icon(x.ic)}</span><span class="ui-ligne__t"><span>${esc(x.t)}</span></span><span></span></div></li>`).join("")}</ul></div>`).join("")}
     <button type="button" class="ui-btn ui-btn--principal palok">Super</button></div>`;
   const close=()=>{v.remove();try{render()}catch(_){}};v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;
   document.body.appendChild(v);try{sfx("level")}catch(_){}}
@@ -69,9 +71,10 @@ function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf
 function palOpen(c){if(document.querySelector(".palw2"))return;const l=catLv(c),p=palOf(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0),nx=palNext(c);
   const R=[[1,"Quêtes simples"],[3,"Quêtes costaudes"],[5,"Quêtes dures"],[10,"Exploits"]];
   const v=document.createElement("div");v.className="ui-voile palw2";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label",(C.label||c)+" : paliers");
-  v.innerHTML=`<div class="ui-fenetre" style="--pc:${C.c||"var(--gold)"}"><div class="pal-dh">${rkSvg(PAL_IC[c]||"etoile")}<b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></div>
+  const col=C.c||"var(--ui-or)";
+  v.innerHTML=`<div class="ui-fenetre palf" style="--pc:${col};--sc:${col}">${uiScene(PAL_IC[c]||"etoile",col,{sub:"Niv "+l})}<h2 class="ui-fenetre__titre">${esc(C.label||c)}</h2>
     <span class="ui-barre ui-barre--grande pal-b"><i style="width:${Math.round(si.cur/si.need*100)}%"></i><span class="ui-barre__txt">${si.cur} / ${si.need} XP</span></span>
-    <ul class="pal-dl">${R.map(([lv,t],k)=>`<li class="${k<=p?"on":k===p+1?"next":""}"><span class="pal-dn">${lv}</span>${cransHTML(Math.min(3,k+1))}<span>${t}</span>${k<=p?ICO("check",24):k===p+1&&nx?`<small class="ui-info">encore ${nx.need} XP</small>`:""}</li>`).join("")}</ul>
+    <ul class="ui-lignes pal-ech">${R.map(([lv,t],k)=>`<li><div class="ui-ligne${k>p+1?" ui-ligne--off":""}${k<=p?" on":""}"><span class="ui-ligne__ic">${cransHTML(Math.min(3,k+1))}</span><span class="ui-ligne__t"><span>${t}</span><small>${k<=p?"Débloqué":k===p+1&&nx?`Niveau ${lv} · encore ${nx.need} XP`:`Niveau ${lv}`}</small></span><span class="pal-fin">${rkSvg(k<=p?"check":"cadenas")}</span></div></li>`).join("")}</ul>
     <button type="button" class="ui-btn ui-btn--principal palx">Fermer</button></div>`;
   const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palx").onclick=close;document.body.appendChild(v)}
 

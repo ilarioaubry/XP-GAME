@@ -119,6 +119,8 @@ Jamais de couleur pour la rareté (étoiles), jamais la couleur du ciel dans l'i
 
 Rien ne bouge tout seul (voir 6.12 de la feuille de route pour le décor) ; « réduire les animations » est respecté.
 
+**Fenêtre ouverte par un appui (03/11)** : elle a son univers. En haut, `uiScene(icône, couleur, {rays, sub})` (`js/coeur/scenes.js`) : décor pixel en marches de la couleur du sujet (catégorie, or, groupe du proche), halo, grande icône 64 px, ligne en pointillés en bas ; `rays` pour un moment à fêter, `sub` pour un petit compteur or en bas à droite. Puis le titre, puis les infos en `ui-lignes` / `ui-ligne` (icône pixel 32, texte, fin éventuelle), séparées par des pointillés à la couleur `--sc`. Jamais de liste de texte sans icône. Les messages (toast, barre « Annuler ») ont une icône 24 px devinée par `toastIc`.
+
 ## 9. Où placer un nouvel élément
 
 | C'est… | Ça va dans… |

@@ -88,8 +88,8 @@ function momentsTick(){const G=S.g;if(!G||!Array.isArray(S.specials))return fals
       setTimeout(()=>mmPop("etoile",yrs>1?`${yrs} ans de carnet`:"Un an de carnet",[`${K.length} jours actifs cette année`,`${xp.toLocaleString("fr-FR")} XP gagnés`,`Niveau ${levelInfo(S.xp).l} · ${relNames().length} proches`,"Un coffre pour fêter ça"]),1200)}}}
   return ch}
 function mmPop(ic,title,lines){if(document.querySelector(".mmpop"))return;const v=document.createElement("div");v.className="ui-voile mmpop palpop";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label",title);
-  v.innerHTML=`<div class="ui-fenetre palw"><div class="palg"><span class="palic">${rkSvg(ic)}</span><h2 class="ui-fenetre__titre"></h2><ul class="pall">${lines.map(l=>`<li><span class="pali">${rkSvg("etoile")}</span><span></span></li>`).join("")}</ul></div><button type="button" class="ui-btn ui-btn--principal palok">Merci</button></div>`;
-  v.querySelector("h2").textContent=title;v.querySelectorAll(".pall li span:last-child").forEach((s,i)=>s.textContent=lines[i]);
+  v.innerHTML=`<div class="ui-fenetre palw">${uiScene(ic,"var(--ui-or)",{rays:1})}<h2 class="ui-fenetre__titre"></h2><ul class="ui-lignes">${lines.map(l=>`<li><div class="ui-ligne"><span class="ui-ligne__ic">${rkSvg("etoile")}</span><span class="ui-ligne__t"><span></span></span><span></span></div></li>`).join("")}</ul><button type="button" class="ui-btn ui-btn--principal palok">Merci</button></div>`;
+  v.querySelector("h2").textContent=title;v.querySelectorAll(".ui-ligne__t>span").forEach((s,i)=>s.textContent=lines[i]);
   const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".palok").onclick=close;document.body.appendChild(v);try{sfx("level")}catch(_){}}
 
 // ---- 5.8 les nouvelles du jour : une seule ligne à l'ouverture, la plus utile d'abord ; la toucher mène à ce qu'elle annonce
@@ -104,11 +104,11 @@ function newsList(){const out=[],G=S.g;if(!G)return out;const tk=dayKey(Date.now
     if(L[0])out.push({ic:"bulle",t:`Pas de nouvelles de ${L[0].n} depuis ${L[0].d} jours`,go:()=>openProfile(L[0].n)})}catch(e){}
   return out}
 function renderNews(){const box=$("newsBox");if(!box||!S.g)return;const L=newsList(),n=L[0];box.hidden=!n;if(!n){box.innerHTML="";return}
-  box.innerHTML=`<button type="button" class="newsl"${n.go?"":" disabled"}><span class="newsi">${rkSvg(n.ic)}</span><span class="newst"></span>${L.length>1?`<span class="ui-etiquette newsn">${L.length} nouvelles</span>`:""}</button>`;
+  box.innerHTML=`<button type="button" class="newsl"${n.go||L.length>1?"":" disabled"}><span class="newsi">${rkSvg(n.ic)}</span><span class="newst"></span>${L.length>1?`<span class="ui-etiquette newsn">${L.length} nouvelles</span>`:""}${n.go||L.length>1?`<span class="newsgo">${ICO("chev",24)}</span>`:""}</button>`;
   box.querySelector(".newst").textContent=n.t;const b=box.querySelector("button");
   b.onclick=()=>{if(L.length>1&&!n.go){newsAll(L);return}if(n.go)n.go()};
   const t=box.querySelector(".ui-etiquette");if(t){t.setAttribute("role","button");t.tabIndex=0;t.setAttribute("aria-label","Voir les autres nouvelles");t.onclick=e=>{e.stopPropagation();newsAll(L)}}}
 function newsAll(L){if(document.querySelector(".newsw"))return;const v=document.createElement("div");v.className="ui-voile newsw";v.setAttribute("role","dialog");v.setAttribute("aria-modal","true");v.setAttribute("aria-label","Les nouvelles du jour");
-  v.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre">Les nouvelles du jour</h2><ul class="newsul">${L.map((x,i)=>`<li><button type="button" class="newsl" data-i="${i}"${x.go?"":" disabled"}><span class="newsi">${rkSvg(x.ic)}</span><span class="newst"></span></button></li>`).join("")}</ul><button type="button" class="ui-btn newsok">Fermer</button></div>`;
+  v.innerHTML=`<div class="ui-fenetre">${uiScene("cloche","var(--ui-or)",{sub:L.length})}<h2 class="ui-fenetre__titre">Les nouvelles du jour</h2><ul class="ui-lignes">${L.map((x,i)=>`<li><button type="button" class="ui-ligne" data-i="${i}"${x.go?"":" disabled"}><span class="ui-ligne__ic">${rkSvg(x.ic)}</span><span class="ui-ligne__t"><span class="newst"></span></span>${x.go?`<span class="newsgo">${ICO("chev",24)}</span>`:"<span></span>"}</button></li>`).join("")}</ul><button type="button" class="ui-btn newsok">Fermer</button></div>`;
   v.querySelectorAll(".newst").forEach((s,i)=>s.textContent=L[i].t);const close=()=>v.remove();v.onclick=e=>{if(e.target===v)close()};v.querySelector(".newsok").onclick=close;
   v.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{const x=L[+b.dataset.i];if(x.go){close();x.go()}});document.body.appendChild(v)}

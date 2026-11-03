@@ -212,18 +212,26 @@ function ctOpen(btn,n){const who=cbWho(n),P=S.profiles[who]=S.profiles[who]||{};
 // cadeau : idée -> acheté -> offert
 function gfKey(who){const bd=(S.profiles[who]||{}).bd,t=new Date();t.setHours(0,0,0,0);let y=t.getFullYear();if(bd&&bd.m){const d=new Date(y,bd.m-1,bd.d);if((t-d)/864e5>2)y++}return who+":"+y}
 function gfState(who){const gk=gfKey(who),G=S.g;if(!G.gfs)G.gfs={};const st=G.gfs[gk]||{};return{gk,idea:(S.profiles[who]||{}).gifts||"",bought:S.log.some(l=>l.gift===gk),given:!!st.given}}
-function gfOpen(btn,who,onBuy){const o=document.createElement("div");o.className="bpop gfpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");document.body.appendChild(o);const close=()=>o.remove();o.onclick=e=>{if(e.target===o)close()};
-  const draw=()=>{const g=gfState(who),stp=g.given?3:g.bought?2:g.idea?1:0;
-    o.innerHTML=`<div class="bpc gfc"><div class="gfbox ${stp>=2?"open":""}">${pxImg("chest",5)}</div><h3>Cadeau pour <span class="gfw"></span></h3>
-      <ol class="gfst">${["Idée","Acheté","Offert"].map((l,k)=>`<li class="${k<stp?"ok":k===stp?"cur":""}"><i>${k<stp?ICO("check",14):k+1}</i><span>${l}</span></li>`).join("")}</ol>
-      ${stp===0?`<label class="rdl">Ton idée<input id="gfI" maxlength="60" placeholder="Ex. un vinyle, un livre de photo"></label><button type="button" class="btn primary" id="gfGo">Noter l'idée · +5 XP</button>`:
-       stp===1?`<p class="gfi">Idée : <b></b></p><button type="button" class="btn primary" id="gfGo">Je l'ai acheté !</button><button type="button" class="lnk" id="gfRe">Changer d'idée</button>`:
-       stp===2?`<p class="gfi">Idée : <b></b></p><p class="hint">Il ne reste plus qu'à l'offrir le jour J.</p><button type="button" class="btn primary" id="gfGo">Je l'ai offert · +10 XP</button>`:`<p class="gfi">Offert. Bien joué !</p>`}
-      <button type="button" class="btn" id="gfX">Fermer</button></div>`;
-    o.querySelector(".gfw").textContent=who;const ib=o.querySelector(".gfi b");if(ib)ib.textContent=g.idea;o.querySelector("#gfX").onclick=close;
+// fenêtre cadeau (refonte du 03/11) : plein écran (il y a un champ texte), scène pixel à la couleur du groupe du proche,
+// trois étapes en icônes (idée, acheté, offert) reliées par une ligne en pointillés
+const GF_ET=[["ampoule","Idée"],["panier","Acheté"],["cadeau","Offert"]];
+function gfOpen(btn,who,onBuy){if(document.querySelector(".gfw"))return;const o=document.createElement("div");o.className="ui-plein gfw";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Cadeau pour "+who);document.body.appendChild(o);const close=()=>o.remove();
+  const col=(S.family||[]).includes(who)?"var(--c-famille)":"var(--c-social)";
+  const draw=()=>{const g=gfState(who),stp=g.given?3:g.bought?2:g.idea?1:0;let nb=null;try{nb=nextBirthday((S.profiles[who]||{}).bd)}catch(e){}
+    const quand=nb?nb.days===0?"Anniversaire aujourd'hui":nb.days===1?"Anniversaire demain":`Anniversaire dans ${nb.days} jours`:"";
+    const ic=stp>=3?"cadeauo":GF_ET[Math.min(stp,2)][0],go=["Noter l'idée · +5 XP","Je l'ai acheté !","Je l'ai offert · +10 XP"][stp]||"";
+    o.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Cadeau pour <span class="gfn"></span></h2><button type="button" class="ui-btn ui-btn--icone gfx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div>
+      <div class="ui-plein__corps gfc2" style="--sc:${col}">${uiScene(ic,col,{rays:stp>=3})}${quand?`<p class="ui-sous-titre gf-q">${quand}</p>`:""}
+        <ol class="gf-et">${GF_ET.map(([i2,l],k)=>`<li class="${k<stp?"ok":k===stp?"cur":""}"><span class="gf-ic">${rkSvg(i2)}${k<stp?`<span class="gf-ok">${rkSvg("check")}</span>`:""}</span><span>${l}</span></li>`).join("")}</ol>
+        ${stp===0?`<label class="ui-info gf-l">Ton idée<input class="ui-champ" id="gfI" maxlength="60" placeholder="Ex. un vinyle, un livre de photo" autocomplete="off"></label>`:
+          `<ul class="ui-lignes gf-idee"><li><div class="ui-ligne"><span class="ui-ligne__ic">${rkSvg("ampoule")}</span><span class="ui-ligne__t"><small>Ton idée</small><span class="gfi"></span></span>${stp===1?`<button type="button" class="ui-btn ui-btn--icone" id="gfRe" aria-label="Changer d'idée" title="Changer d'idée">${ICO("edit",24)}</button>`:"<span></span>"}</div></li></ul>
+          <p class="ui-vide gf-m">${stp===1?"Prochaine étape : l'acheter.":stp===2?"Il ne reste plus qu'à l'offrir le jour J.":"Offert. Bien joué !"}</p>`}
+      </div>
+      <div class="ui-plein__bas${go?"":" gf-seul"}"><button type="button" class="ui-btn gfx">Fermer</button>${go?`<button type="button" class="ui-btn ui-btn--principal" id="gfGo">${go}</button>`:""}</div>`;
+    o.querySelector(".gfn").textContent=who;const ib=o.querySelector(".gfi");if(ib)ib.textContent=g.idea;o.querySelectorAll(".gfx").forEach(b=>b.onclick=close);
     const re=o.querySelector("#gfRe");if(re)re.onclick=()=>{const P=S.profiles[who];giftsSet(P,giftsOf(P).slice(1));save();draw()};
-    const go=o.querySelector("#gfGo");if(!go)return;
-    go.onclick=ev=>{if(stp===0){const v=o.querySelector("#gfI").value.trim();if(!v){sfx("error");return}S.profiles[who]=S.profiles[who]||{};{const P=S.profiles[who],L=giftsOf(P).filter(x=>x!==v);giftsSet(P,[v,...L])}const prev=levelInfo(S.xp).l;addBonus("Idée cadeau pour "+who,5,0,"gfi");save();render(prev);sfx("coin");draw()}
+    const go2=o.querySelector("#gfGo");if(!go2)return;
+    go2.onclick=ev=>{if(stp===0){const v=o.querySelector("#gfI").value.trim();if(!v){sfx("error");o.querySelector("#gfI").focus();return}S.profiles[who]=S.profiles[who]||{};{const P=S.profiles[who],L=giftsOf(P).filter(x=>x!==v);giftsSet(P,[v,...L])}const prev=levelInfo(S.xp).l;addBonus("Idée cadeau pour "+who,5,0,"gfi");save();render(prev);sfx("coin");draw()}
       else if(stp===1){close();if(btn)qPass(btn);else if(onBuy)onBuy(ev);sfx("open",1)}
       else if(stp===2){S.g.gfs[g.gk]={given:Date.now()};const prev=levelInfo(S.xp).l;addBonus("Cadeau offert à "+who,10,0,"gfo");save();render(prev);sfx("level");close();toast(`Cadeau offert à <span class="p">${esc(who)}</span> · +10 XP`)}}};
   draw()}
