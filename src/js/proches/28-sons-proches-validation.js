@@ -490,7 +490,7 @@ function completeBase(a,el,ev,sp,extra){a=xpRules(a);
   {const P=window.__xpP;if(P&&Date.now()-P.t<4000){window.__xpP=null;if(P.ov!=null)a={...a,xp:P.ov};if(P.add)a={...a,xp:a.xp+P.add}}else window.__xpP=null}
   if(!(extra&&extra.lz)&&S.g){const _lk=LZ_LINK[a.name]||(typeof lzGuess==="function"?lzGuess(a):"");if(_lk&&a.xp>0){lzGain(_lk,a.xp);extra={...(extra||{}),lz:_lk+":link",lzx:a.xp}}}
   {const rl=a.xp>0&&!window.__dayShift&&relanceOn();if(rl){S.g.relance=dayKey(Date.now());a={...a,xp:a.xp*3};extra={...(extra||{}),x3:1};setTimeout(()=>toast(`Content de te revoir : ta première action compte <span class="p">triple</span>`),900)}
-   else if((boostOn()||boostCatOn(a.cat))&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}}
+   else if((boostOn()||boostCatOn(a.cat)||momentX2(a.cat))&&a.xp>0){a={...a,xp:a.xp*2};extra={...(extra||{}),x2:1}}}
   if(false&&S.xpCap>0&&a.xp>0){const tk=dayKey(Date.now()),done=S.log.filter(e=>dayKey(e.t)===tk&&!e.bonus).reduce((s2,e)=>s2+Math.max(0,e.xp),0),left=Math.max(0,S.xpCap-done);
     if(a.xp>left){a={...a,xp:left};extra={...(extra||{}),cap:1};setTimeout(()=>toast(left?`Plafond du jour atteint : <span class="p">+${left} XP</span> seulement`:"Plafond du jour atteint : l'XP reprend demain"),500)}}
   const prev=levelInfo(S.xp).l;

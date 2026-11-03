@@ -122,6 +122,7 @@ Inventaire établi le 25/10/2026 par recherche de `S.g.x` et `G.x` (quand `G=S.g
 |---|---|---|---|
 | `avc` | 02, 06, 13, 14, 21, 24, 25, 27 | Configuration du personnage | active |
 | `gear`, `eq` | 02, 05, 11, 21–29 | Objets obtenus, objets portés (armoire) | active |
+| `gold`, `fete`, `ecl`, `cielD`, `sky`, `myBd`, `carnetY` | moments | Lot 5 (ajout du 03/11) : heure dorée de la semaine `{w: lundi, d: jour, h: heure, c: catégorie}` ; jour de la dernière fête ajoutée ; défi éclair du jour `{d}` ; quêtes du ciel du jour `{d, k:[…]}` ; saison de la première neige et année du premier beau jour `{neige, beau}` ; jour du dernier cadeau d'anniversaire ; année du dernier anniversaire du carnet | active |
 | `leve`, `relance` | 09, 28 | Jour du dernier bonus lève-tôt ; jour de la dernière journée relance (ajout du 03/11) | active |
 | `pal`, `boosts`, `boostC` | paliers, 23, 28 | Paliers des jauges (ajout du 03/11) : `pal` = dernier palier annoncé par catégorie (0 à 3) ; `boosts` = boosts en réserve `[{c: catégorie ou "" pour partout, t, w}]`, 3 au plus ; `boostC` = boost de catégorie en cours `{c, e}` (le boost partout reste `boost`). `fq.pal` = liste du jour calculée avec les paliers | active |
 | `rt` | 02, 22, 23, 24, 27, 29, migrations | Titres obtenus | active |

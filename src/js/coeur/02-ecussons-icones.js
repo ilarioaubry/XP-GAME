@@ -158,6 +158,6 @@ function renderGroups(){
 }
 initGroups();
 
-function dqKind(q){return q.bd?"bd":q.sm?"smart":q.gift?"gift":q.fg?"fgq":q.secret?"secret":q.org?"org":q.sur?"sur":(q.bq||q.bs)?"bq":q.grp||(q.dz||q.dfi?"dz":"")}
+function dqKind(q){return q.fete?"fete":q.ecl?"ecl":q.ciel?"ciel":q.bd?"bd":q.sm?"smart":q.gift?"gift":q.fg?"fgq":q.secret?"secret":q.org?"org":q.sur?"sur":(q.bq||q.bs)?"bq":q.grp||(q.dz||q.dfi?"dz":"")}
 const DQ_ORD={gift:-1,fgq:2.7,secret:-.5,org:2.5,sur:0,bq:1,music:2,friends:3,family:4,dz:5,"":6};
 

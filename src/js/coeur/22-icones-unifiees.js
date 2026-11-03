@@ -10,7 +10,7 @@ var ICS_PX={cig:"cigarette",contrat:"chantier",vacances:"valise",malade:"sante",
 (function(){
   const cat={sport:"halteres",maison:"maisonp",soi:"coeur",nourriture:"pomme",social:"bulle",famille:"famille",travail:"laptop",perso:"etoile",eau:"eau"};
   for(const k in cat)if(RKI[cat[k]])CAT_IC[k]=rkIn(cat[k]);
-  const dq={fgq:"duo",secret:"gemme",org:"calendrier",gift:"cadeau",sur:"eclair",bq:"epee",music:"micro",friends:"tel",family:"famille",dz:"flamme","":"etoile"};
+  const dq={fete:"cadeau",ecl:"eclair",ciel:"lune",fgq:"duo",secret:"gemme",org:"calendrier",gift:"cadeau",sur:"eclair",bq:"epee",music:"micro",friends:"tel",family:"famille",dz:"flamme","":"etoile"};
   for(const k in dq)if(DQ_K[k]&&RKI[dq[k]])DQ_K[k][2]=rkIn(dq[k]);
   if(EV_IC.bd!==undefined)EV_IC.bd=rkIn("cake");if(EV_IC.ev!==undefined)EV_IC.ev=rkIn("calendrier");
   

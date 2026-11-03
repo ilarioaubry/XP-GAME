@@ -48,6 +48,9 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 |---|---|---|
 | Personnage | Ton avatar, son titre, son cadre ; en haut de Ma vie seulement (02/11) | active |
 | Mes paliers (03/11) | Chaque jauge (Sport, Créer, Amis, Famille, Maison, Soi, Travail, Nourriture) débloque des quêtes plus dures : niveau 3 costaudes, niveau 5 dures, niveau 10 exploits ; chemin de 4 paliers et ce qui manque pour le suivant ; fenêtre « Palier débloqué » (quêtes, boost, titre au 3, aura au 5, objet exclusif au 10) | active |
+| Heure dorée de la semaine (03/11) | 1 h par semaine, annoncée dans Quêtes du jour (jour, heure, domaine parmi tes jauges les plus basses) : XP ×2 sur ce domaine pendant cette heure | active |
+| Fêtes et anniversaires (03/11) | « Fête du jour » pour 10 fêtes du calendrier ; ton anniversaire (Ma fiche) : XP ×2 toute la journée et un coffre doré ; anniversaire du carnet : bilan de l'année et un coffre | moment |
+| Défi éclair et ciel du jour (03/11) | Un défi de 2 à 5 min (5 XP) à une heure différente chaque jour, visible pendant cette heure ; pleine lune, pluies d'étoiles, première neige, premier beau jour (5 XP) | moment |
 | Lève-tôt et journée relance (03/11) | Rituels du matin finis moins d'1 h 30 après ton réveil : 30 min d'XP ×2 ; après 2 jours sans rien noter, la première action du jour compte triple (« Content de te revoir ») | active |
 | Boosts en réserve (03/11) | 1 h d'XP ×2 sur une catégorie (gagné au palier 3) ou partout (tous les deux niveaux), 3 en réserve au plus, lancés quand tu veux ; le boost en cours s'affiche dans Quêtes du jour | active |
 | Assiette (01/11) | Aliments en rangées qui glissent (pain → classiques → atypiques ; viande et œuf → végétal → de la mer), dessert, où (maison, resto, fast-food, sur le pouce), type d'assiette (équilibrée or, végétarienne vert, fast-food orange) et ses badges, « Cuisiné pour qui ? » (+5 XP Ami/Famille), habitudes alimentaires qui masquent des aliments | active |

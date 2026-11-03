@@ -50,7 +50,7 @@ function gameTick(){
    if(FL.length&&G.fgDone!==tk&&!S.specials.some(q=>q.fg)&&(Date.now()-Math.max(0,...Object.values(G.fgLast||{0:0})))>4*864e5&&new Date().getDate()%3===0){const lt=x=>(G.fgLast||{})[x.id]||0,g=FL.slice().sort((a,b)=>lt(a)-lt(b))[0],T=["Écrire un message dans le groupe {g}","Proposer une sortie au groupe {g}","Partager un souvenir avec le groupe {g}","Lancer un appel vidéo avec le groupe {g}","Organiser un repas avec le groupe {g}","Prendre des nouvelles du groupe {g}"],t=T[Math.floor(Math.random()*T.length)];
      S.specials.push({id:"fg"+tk,name:t.replace("{g}",g.n),cat:"social",xp:15,fg:g.id,d:tk,col:fgCol(g)});ch=true}}
   if(G.surDone!==tk&&!S.specials.some(q=>q.sur)){const zp=lzState().on.map(lzOf).filter(Boolean).flatMap(L=>L.a.filter(a=>a[2]>=10).map(a=>[L.n+" : "+a[1],a[3],a[2],L.id]));const pool=[...(()=>{const A=SURPRISE.filter(surOk),B=A.filter(x=>questOk(x[1],x[2]));return B.length?B:A})().map(x=>x[3]==="cour"?[x[0],x[1],x[2]+8]:x),...zp].filter(x=>x[0]!==G.surLast);const[n,c,x,zid]=pool[Math.floor(Math.random()*pool.length)];G.surLast=n;S.specials.unshift({id:"su"+tk,name:n,cat:c,xp:x*2,sur:tk,...(zid?{lzs:zid}:{})});ch=true}
-  if(catRewards())ch=true;if(palCheck())ch=true;if(idCheck())ch=true;if(ritAncCheck())ch=true;if(S.g&&ritLive().length)ritCoreCheck();if(wrSetCheck())ch=true;
+  if(catRewards())ch=true;if(palCheck())ch=true;if(momentsTick())ch=true;if(idCheck())ch=true;if(ritAncCheck())ch=true;if(S.g&&ritLive().length)ritCoreCheck();if(wrSetCheck())ch=true;
   const l=levelInfo(S.xp).l;
   if(G.chestLvl==null){G.chestLvl=l;ch=true}
   if(!G.lvcFix){G.lvcFix=1;if(l>=2)G.chests=(G.chests||0)+1;ch=true}
