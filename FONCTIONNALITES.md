@@ -57,7 +57,7 @@ XP : barème (petite action 2–5, repas / rituel ~10, quête 15–30). « ? » 
 | Ce que tu deviens | Identités qui montent avec tes actions | active |
 | Ma vie | Rythme (réveil, jours et heures de travail), capacité (quêtes par jour), périodes (contrat…), Ce que je surveille, « La dernière fois que… » (rappels à rythme, créés et modifiés en plein écran), Mes modules — tous visibles depuis le 02/11 | active |
 | Mes projets | Projets en étapes, abandon avec Annuler | active |
-| Calendrier | Événements à venir | module |
+| Calendrier | Événements à venir ; 12 types (concert, soirée, entretien, examen, voyage, rendez-vous, sport, mariage, naissance, déménagement, médical, autre), chacun avec ses quêtes de préparation de J-10 à J+1 (4 types ajoutés le 03/11) | module |
 | Réglages | Rituels, sons (le choix du style Ciel / Classique est retiré le 02/11) | active |
 
 ## Moi > Chez moi

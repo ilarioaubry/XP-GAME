@@ -465,3 +465,5 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 @media (prefers-reduced-motion:no-preference){.palpop .palw{animation:palIn .25s ease-out}@keyframes palIn{from{transform:scale(.9);opacity:0}}}
 .bstw .bstp{text-align:center}
 .bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* 5.1 : types d'événements en tuiles (icône au-dessus, nom sur une ligne) */
+.calty2 .evtl{display:block;font-size:11px;margin:0 -10px;max-width:calc(100% + 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

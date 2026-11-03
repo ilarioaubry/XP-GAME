@@ -3402,7 +3402,7 @@ html:not(#_a):not(#_b) body .idqw{border:0!important;background:rgba(0,0,0,.28)!
 
 
 
-html:not(#_a):not(#_b) body :is(body) .qchip.sm:has(.evti){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 2px;min-height:60px;font-size:11px}
+html:not(#_a):not(#_b) body .qchip.sm:has(.evti){display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 2px;min-height:60px;font-size:11px}
 html:not(#_a):not(#_b) body .qchip.sm:has(.evti)[aria-pressed="true"]{background:color-mix(in srgb,var(--zc) 30%,transparent);border-color:var(--zc)}
 html:not(#_a):not(#_b) body .evti{display:block;width:32px;height:32px}html:not(#_a):not(#_b) body .evti svg{width:32px;height:32px;display:block}
 html:not(#_a):not(#_b) body :has(>.qchip.sm>.evti){display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
@@ -4183,7 +4183,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9920efc</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 5082248</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9963,10 +9963,10 @@ function plusToggle(on){on=on===undefined?!plusOpen:!!on;if(on===plusOpen)return
 
 
 // ===== Calendrier, quêtes d'événements, fiche de personnage =====
-const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["autre","Autre","#aab4bd"]];
-const evtOf=t=>EVT.find(x=>x[0]===t)||EVT[7];
+const EVT=[["concert","Concert","#ff6a8a"],["soiree","Soirée","#b48cff"],["entretien","Entretien","#6f8fe0"],["examen","Examen","#ffc94a"],["voyage","Voyage","#3cc0f0"],["rdv","Rendez-vous","#5fae4f"],["sport","Sport","#ff8a3a"],["mariage","Mariage","#ff8fb8"],["naissance","Naissance","#8fd4ff"],["demenage","Déménager","#c98a4a"],["medical","Médical","#6fd0b0"],["autre","Autre","#aab4bd"]];
+const evtOf=t=>EVT.find(x=>x[0]===t)||EVT.find(x=>x[0]==="autre");
 function evtGuess(n){n=(n||"").toLowerCase();if(/concert|festival|live\b|showcase/.test(n))return"concert";if(/entretien|recrut/.test(n))return"entretien";if(/exam|partiel|bac\b|oral|concours/.test(n))return"examen";
-  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/m[ée]decin|dentiste|rdv|rendez|docteur|kin[ée]/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
+  if(/voyage|vacances|vol\b|avion|train|week-end à|weekend à/.test(n))return"voyage";if(/soir[ée]e|anniv|f[êe]te|apéro|apero|resto/.test(n))return"soiree";if(/mariage|noces|pacs\b/.test(n))return"mariage";if(/naissance|b[ée]b[ée]|accouchement/.test(n))return"naissance";if(/d[ée]m[ée]nag|emm[ée]nag/.test(n))return"demenage";if(/m[ée]decin|dentiste|docteur|kin[ée]|h[ôo]pital|prise de sang|ophtalmo|gyn[ée]co|radio\b|psy\b/.test(n))return"medical";if(/rdv|rendez/.test(n))return"rdv";if(/match|course|marathon|comp[ée]t|tournoi/.test(n))return"sport";return"autre"}
 // [type, id, de J-a, à J-b (négatif = après), texte(e), cat, xp, pourquoi(e)]
 const EVQ=[
  ["concert","setlist",7,2,e=>`Écouter la setlist probable de ${e.a||"l'artiste"} pour connaître les sons par cœur`,"perso",15],
@@ -9994,6 +9994,26 @@ const EVQ=[
  ["rdv","papiers",1,0,e=>"Préparer les papiers nécessaires","soi",10],
  ["sport","train",7,2,e=>"Séance d'entraînement légère","sport",20],
  ["sport","repos",1,1,e=>"Repos, hydratation et coucher tôt","soi",10],
+ // 5.1 (03/11) : mariage, naissance, déménagement, rendez-vous médical
+ ["mariage","tenue",10,3,e=>"Choisir ta tenue pour le mariage","soi",15],
+ ["mariage","cadeau",10,2,e=>"Trouver le cadeau des mariés, ou participer à leur liste","social",20],
+ ["mariage","mot",3,1,e=>"Écrire un petit mot pour les mariés","social",15],
+ ["mariage","prep",1,1,e=>"Préparer ta tenue, le trajet et l'heure de la cérémonie","soi",10],
+ ["mariage","photos",-1,-1,e=>"Envoyer tes photos du mariage aux mariés","social",10],
+ ["naissance","cadeau",10,1,e=>"Trouver un petit cadeau pour le bébé","social",15],
+ ["naissance","aide",7,0,e=>"Proposer ton aide aux parents : un repas, des courses","social",15],
+ ["naissance","msg",0,-1,e=>"Envoyer un message de félicitations aux parents","social",10],
+ ["naissance","visite",-1,-1,e=>"Proposer une date pour passer voir le bébé, sans t'imposer","social",10],
+ ["demenage","cartons",10,3,e=>"Trier et mettre en cartons une pièce","maison",20],
+ ["demenage","aide",10,4,e=>"Réserver de l'aide ou un camion pour le jour J","maison",15],
+ ["demenage","adresse",7,1,e=>"Changer ton adresse : banque, assurance, travail, abonnements","maison",15],
+ ["demenage","sac",1,1,e=>"Préparer un sac pour le premier soir : draps, chargeurs, papiers","maison",10],
+ ["demenage","deball",-1,-1,e=>"Déballer et ranger une première pièce","maison",15],
+ ["demenage","merci",-1,-1,e=>"Remercier ceux qui t'ont aidé","social",10],
+ ["medical","quest",5,1,e=>"Noter tes questions et ce que tu ressens pour le rendez-vous","soi",10],
+ ["medical","papiers",1,0,e=>"Préparer ta carte Vitale, ton ordonnance et tes papiers","soi",10],
+ ["medical","heure",1,1,e=>"Vérifier l'heure et le trajet du rendez-vous","soi",5],
+ ["medical","suite",-1,-1,e=>"Noter ce qu'on t'a dit et prendre le prochain rendez-vous si besoin","soi",10],
  ["autre","prep",2,1,e=>`Préparer : ${e.n}`,"soi",10]];
 function evInD(e){const t=new Date(dayKey(Date.now())+"T12:00");return Math.round((new Date(e.d+"T12:00")-t)/864e5)}
 function evWhenS(d){return d<0?"hier":d===0?"aujourd'hui":d===1?"demain":"dans "+d+" jours"}
@@ -10020,7 +10040,7 @@ function calOpen(day){if(document.querySelector(".calsh"))return;const G=S.g;if(
       <h4>${sd.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}</h4>
       <div class="cale">${B.map(n=>`<div class="calev bdev">${pAv(n,"bdp")}<span class="bdtx"><span class="calty">Anniversaire</span><b></b></span><span class="bdck">${window.BDCAKE||""}</span></div>`).join("")}${E.map(e=>`<div class="calev" style="--ec:${evtOf(e.t||evtGuess(e.n))[2]}"><span class="calty">${evtOf(e.t||evtGuess(e.n))[1]}</span><b></b><button type="button" class="calrm" data-id="${e.id}" aria-label="Supprimer">${ICO("close",14)}</button></div>`).join("")}${!B.length&&!E.length?`<p class="hint vide">Aucun événement ce jour-là.</p>`:""}</div>
       ${calSel>=tk?`<h4>Ajouter</h4><input class="qcname calname" maxlength="40" placeholder="Ex. Concert de disiz, entretien chez…" aria-label="Nom de l'événement">
-      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres"})[k]||"autre")}</i>${l==="Rendez-vous"?"RDV":l}</button>`).join("")}</div>
+      <div class="qcdom calty2">${EVT.map(([k,l,c])=>`<button type="button" class="qchip sm" data-t="${k}" aria-pressed="${ty===k}" style="--zc:${c}"><i class="evti">${rkSvg(({concert:"micro",soiree:"cocktail",entretien:"laptop",examen:"notec",voyage:"valise",rdv:"calendrier",sport:"halteres",mariage:"bague",naissance:"enfant",demenage:"maisonp",medical:"sante"})[k]||"autre")}</i><span class="evtl">${l==="Rendez-vous"?"RDV":l}</span></button>`).join("")}</div>
       ${ty==="concert"?`<input class="qcname calart" maxlength="40" placeholder="Quel artiste ?" aria-label="Artiste" list="calArts"><datalist id="calArts">${((G.taste&&G.taste.art)||[]).map(a=>`<option value="${esc(a)}">`).join("")}</datalist>`:""}
       <button type="button" class="btn primary qcgo caladd"${fName.trim()?"":" disabled"}>Ajouter au calendrier</button>
       <p class="hint calhint">Les jours d'avant et d'après, des quêtes « Pour toi » t'aident à le préparer${ty==="concert"?" : setlist, sac, trajet, souvenirs":""}.</p>`:""}</div>`;
@@ -16556,6 +16576,8 @@ html:not(#_a):not(#_b) body #actFind .afnext[disabled]{opacity:.5}
 @media (prefers-reduced-motion:no-preference){.palpop .palw{animation:palIn .25s ease-out}@keyframes palIn{from{transform:scale(.9);opacity:0}}}
 .bstw .bstp{text-align:center}
 .bstw .bstb{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* 5.1 : types d'événements en tuiles (icône au-dessus, nom sur une ligne) */
+.calty2 .evtl{display:block;font-size:11px;margin:0 -10px;max-width:calc(100% + 20px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 <script>// Aujourd'hui : finitions des blocs (noter une action, univers visuels, quêtes intelligentes, menus, repas, nuit…). Ex-correctifs.js, à fondre dans les rendus d'origine lors de la refonte écran par écran.
 // Ancienne grosse IIFE de rustines, désormais à portée globale (phase 4)
