@@ -105,9 +105,9 @@ const mvT=(ic,l,at,cls,extra)=>`<button type="button" class="ui-tuile mv-t${cls?
 const mvPlus=(at,l)=>`<button type="button" class="ui-tuile mv-t mv-plus" ${at} aria-label="${l}" title="${l}">${ICO("plus",24)}</button>`;
 // petite fenêtre (choix rapide) ou plein écran (saisie) ; draw(corps, refaire) remplit le corps
 function mvWin(title,full,draw,onOk,okL){const old=document.querySelector(".mvw");if(old)old.remove();let w;
-  if(full){w=document.createElement("div");w.className="ui-plein mvw";w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"></h2></div><div class="ui-plein__corps mvc"></div><div class="ui-plein__bas${onOk?"":" mv-seul"}">${onOk?`<button type="button" class="ui-btn mvno">Annuler</button>`:""}<button type="button" class="ui-btn ui-btn--principal mvok">${okL||(onOk?"Enregistrer":"Terminé")}</button></div>`}
+  if(full){w=document.createElement("div");w.className="ui-plein mvw";w.style.setProperty("--sc","#6f8fe0");w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("note")}</span><span class="t"></span></h2></div><div class="ui-plein__corps mvc"></div><div class="ui-plein__bas${onOk?"":" mv-seul"}">${onOk?`<button type="button" class="ui-btn mvno">Annuler</button>`:""}<button type="button" class="ui-btn ui-btn--principal mvok">${okL||(onOk?"Enregistrer":"Terminé")}</button></div>`}
   else{w=document.createElement("div");w.className="ui-voile mvw";w.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre"></h2><div class="mvc"></div><button type="button" class="ui-btn ui-btn--principal mvok">Terminé</button></div>`;w.onclick=e=>{if(e.target===w)close()}}
-  w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label",title);w.querySelector("h2").textContent=title;
+  w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label",title);(w.querySelector("h2 .t")||w.querySelector("h2")).textContent=title;
   const C=w.querySelector(".mvc"),close=()=>{w.remove();renderFiche();try{render()}catch(e){}},redo=()=>draw(C,redo);
   w.querySelector(".mvok").onclick=()=>{if(onOk&&onOk(C)===false)return;close()};const no=w.querySelector(".mvno");if(no)no.onclick=()=>{w.remove()};
   document.body.appendChild(w);redo();return w}

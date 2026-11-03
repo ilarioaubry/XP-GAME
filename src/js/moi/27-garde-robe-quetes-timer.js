@@ -215,12 +215,12 @@ function gfState(who){const gk=gfKey(who),G=S.g;if(!G.gfs)G.gfs={};const st=G.gf
 // fenêtre cadeau (refonte du 03/11) : plein écran (il y a un champ texte), scène pixel à la couleur du groupe du proche,
 // trois étapes en icônes (idée, acheté, offert) reliées par une ligne en pointillés
 const GF_ET=[["ampoule","Idée"],["panier","Acheté"],["cadeau","Offert"]];
-function gfOpen(btn,who,onBuy){if(document.querySelector(".gfw"))return;const o=document.createElement("div");o.className="ui-plein gfw";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Cadeau pour "+who);document.body.appendChild(o);const close=()=>o.remove();
+function gfOpen(btn,who,onBuy){if(document.querySelector(".gfw"))return;const o=document.createElement("div");o.className="ui-plein gfw";o.style.setProperty("--sc",(S.family||[]).includes(who)?"var(--c-famille)":"var(--c-social)");o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Cadeau pour "+who);document.body.appendChild(o);const close=()=>o.remove();
   const col=(S.family||[]).includes(who)?"var(--c-famille)":"var(--c-social)";
   const draw=()=>{const g=gfState(who),stp=g.given?3:g.bought?2:g.idea?1:0;let nb=null;try{nb=nextBirthday((S.profiles[who]||{}).bd)}catch(e){}
     const quand=nb?nb.days===0?"Anniversaire aujourd'hui":nb.days===1?"Anniversaire demain":`Anniversaire dans ${nb.days} jours`:"";
     const ic=stp>=3?"cadeauo":GF_ET[Math.min(stp,2)][0],go=["Noter l'idée · +5 XP","Je l'ai acheté !","Je l'ai offert · +10 XP"][stp]||"";
-    o.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Cadeau pour <span class="gfn"></span></h2><button type="button" class="ui-btn ui-btn--icone gfx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div>
+    o.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("cadeau")}</span><span>Cadeau pour <span class="gfn"></span></span></h2><button type="button" class="ui-btn ui-btn--icone gfx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div>
       <div class="ui-plein__corps gfc2" style="--sc:${col}">${uiScene(ic,col,{rays:stp>=3})}${quand?`<p class="ui-sous-titre gf-q">${quand}</p>`:""}
         <ol class="gf-et">${GF_ET.map(([i2,l],k)=>`<li class="${k<stp?"ok":k===stp?"cur":""}"><span class="gf-ic">${rkSvg(i2)}${k<stp?`<span class="gf-ok">${rkSvg("check")}</span>`:""}</span><span>${l}</span></li>`).join("")}</ol>
         ${stp===0?`<label class="ui-info gf-l">Ton idée<input class="ui-champ" id="gfI" maxlength="60" placeholder="Ex. un vinyle, un livre de photo" autocomplete="off"></label>`:

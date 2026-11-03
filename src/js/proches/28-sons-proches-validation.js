@@ -271,8 +271,8 @@ function bondAction(n,A,el,ev){
 }
 // Ajouter un proche (famille ou ami) : fenêtre plein écran (règle : champ texte = plein écran), Annuler à gauche, Ajouter à droite
 function addPerson(fam){if(document.querySelector(".addfw"))return;
-  const w=document.createElement("form");w.className="ui-plein addfw";w.setAttribute("role","dialog");w.setAttribute("aria-label",fam?"Nouveau membre de la famille":"Nouvel ami");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${fam?"Famille":"Nouvel ami"}</h2></div>
+  const w=document.createElement("form");w.className="ui-plein addfw";w.style.setProperty("--sc",fam?"var(--c-famille)":"var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-label",fam?"Nouveau membre de la famille":"Nouvel ami");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg(fam?"famille":"duo")}</span>${fam?"Famille":"Nouvel ami"}</h2></div>
     <div class="ui-plein__corps"><input class="ui-champ" id="addFName" maxlength="30" placeholder="${fam?"Prénom ou surnom (Maman, Léa…)":"Prénom de l'ami"}" aria-label="Prénom" autocomplete="off"></div>
     <div class="ui-plein__bas"><button type="button" class="ui-btn addfno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">Ajouter</button></div>`;
   const close=()=>w.remove();w.querySelector(".addfno").onclick=close;
@@ -347,8 +347,8 @@ let gEdit=false; // page d'un groupe : lecture, ou modification après « Modifi
 const fgNext=id=>{const o=((S.g&&S.g.fgNext)||{})[id];return o&&o.d&&o.d>=dayKey(Date.now())?o:null};
 const dayTxt=k=>new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
 // prochaine sortie du groupe : quand + quoi (plein écran, car champ texte)
-function fgPlan(g,after){if(document.querySelector(".fgplw"))return;const old=fgNext(g.id),w=document.createElement("form");w.className="ui-plein fgplw";w.setAttribute("role","dialog");w.setAttribute("aria-label","Prochaine sortie");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Prochaine sortie</h2></div>
+function fgPlan(g,after){if(document.querySelector(".fgplw"))return;const old=fgNext(g.id),w=document.createElement("form");w.className="ui-plein fgplw";w.style.setProperty("--sc","var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-label","Prochaine sortie");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("calendrier")}</span>Prochaine sortie</h2></div>
     <div class="ui-plein__corps"><label class="fgpl"><span>Quand</span><input class="ui-champ" type="date" id="fgplD" min="${dayKey(Date.now())}" value="${old?old.d:""}" required></label>
     <label class="fgpl"><span>Quoi</span><input class="ui-champ" id="fgplT" maxlength="60" placeholder="Ex. bowling, resto, ciné" autocomplete="off"></label>
     ${old?`<button type="button" class="ui-btn ui-btn--icone fgplx" aria-label="Retirer la sortie" title="Retirer">${ICO("trash",24)}</button>`:""}</div>

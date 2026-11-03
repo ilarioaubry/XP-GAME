@@ -73,8 +73,8 @@ function calPage(col){let r="";const R=(x,y,w,h,f,o)=>r+=`<rect x="${x}" y="${y}
 let calM=null,calSel=null;
 function calOpen(day){if(document.querySelector(".calw"))return;const G=S.g;if(!Array.isArray(G.ev))G.ev=[];if(!Array.isArray(G.per))G.per=[];const tk=dayKey(Date.now());calSel=day||tk;{const d0=calD(calSel);calM=[d0.getFullYear(),d0.getMonth()]}
   let fType="",fName="",fArt="",fEnd="",pEdit=null;
-  const w=document.createElement("div");w.className="ui-plein calw";w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label","Calendrier");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Calendrier</h2><button type="button" class="ui-btn ui-btn--icone calx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div><div class="ui-plein__corps"></div><div class="ui-plein__bas"><button type="button" class="ui-btn calno">Fermer</button><button type="button" class="ui-btn ui-btn--principal calgo">Ajouter</button></div>`;
+  const w=document.createElement("div");w.className="ui-plein calw";w.style.setProperty("--sc","var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label","Calendrier");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("calendrier")}</span>Calendrier</h2><button type="button" class="ui-btn ui-btn--icone calx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div><div class="ui-plein__corps"></div><div class="ui-plein__bas"><button type="button" class="ui-btn calno">Fermer</button><button type="button" class="ui-btn ui-btn--principal calgo">Ajouter</button></div>`;
   document.body.appendChild(w);const C=w.querySelector(".ui-plein__corps"),go=w.querySelector(".calgo");
   const close=()=>{w.remove();try{render()}catch(e){}renderEvents()};w.querySelector(".calx").onclick=close;w.querySelector(".calno").onclick=close;
   const isPer=()=>CAL_PER.some(p=>p[0]===fType);

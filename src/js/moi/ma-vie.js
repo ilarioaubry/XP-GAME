@@ -53,8 +53,8 @@
       return h}
     // rappel « La dernière fois que… » : fenêtre plein écran (règle : champ texte = plein écran), 2.8
     function lOpen(x,pre){if(document.querySelector(".lstw"))return;const tk=tkNow(),L=S.g.last,p=x||pre||{name:"",n:2,u:"s",d:tk};
-      const w=document.createElement("form");w.className="ui-plein lstw";w.setAttribute("role","dialog");w.setAttribute("aria-label",x?"Modifier le rappel":"Nouveau rappel");
-      w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${x?"Modifier le rappel":"Nouveau rappel"}</h2>${x?`<button type="button" class="ui-btn ui-btn--icone lstdel" aria-label="Supprimer le rappel" title="Supprimer">${ICO("trash",24)}</button>`:""}</div>
+      const w=document.createElement("form");w.className="ui-plein lstw";w.style.setProperty("--sc","var(--c-maison)");w.setAttribute("role","dialog");w.setAttribute("aria-label",x?"Modifier le rappel":"Nouveau rappel");
+      w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("sablier")}</span>${x?"Modifier le rappel":"Nouveau rappel"}</h2>${x?`<button type="button" class="ui-btn ui-btn--icone lstdel" aria-label="Supprimer le rappel" title="Supprimer">${ICO("trash",24)}</button>`:""}</div>
         <div class="ui-plein__corps lstwc"><label>Quoi<input class="ui-champ" type="text" name="n" maxlength="50" placeholder="Ex. Coiffeur" autocomplete="off"></label>
         ${x?"":`<div class="lst-sug">${SUG.map((s2,i)=>`<button type="button" data-sg="${i}">${esc(s2[0])}</button>`).join("")}</div>`}
         <label>À refaire tous les<span class="lst-ev"><input class="ui-champ" type="number" name="ev" min="1" max="99" inputmode="numeric" value="${p.n}"><select class="ui-champ" name="u">${Object.keys(UN).map(k=>`<option value="${k}"${p.u===k?" selected":""}>${UN[k][2]}</option>`).join("")}</select></span></label>

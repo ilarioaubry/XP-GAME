@@ -3903,8 +3903,8 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
       return h}
     // rappel « La dernière fois que… » : fenêtre plein écran (règle : champ texte = plein écran), 2.8
     function lOpen(x,pre){if(document.querySelector(".lstw"))return;const tk=tkNow(),L=S.g.last,p=x||pre||{name:"",n:2,u:"s",d:tk};
-      const w=document.createElement("form");w.className="ui-plein lstw";w.setAttribute("role","dialog");w.setAttribute("aria-label",x?"Modifier le rappel":"Nouveau rappel");
-      w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${x?"Modifier le rappel":"Nouveau rappel"}</h2>${x?`<button type="button" class="ui-btn ui-btn--icone lstdel" aria-label="Supprimer le rappel" title="Supprimer">${ICO("trash",24)}</button>`:""}</div>
+      const w=document.createElement("form");w.className="ui-plein lstw";w.style.setProperty("--sc","var(--c-maison)");w.setAttribute("role","dialog");w.setAttribute("aria-label",x?"Modifier le rappel":"Nouveau rappel");
+      w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("sablier")}</span>${x?"Modifier le rappel":"Nouveau rappel"}</h2>${x?`<button type="button" class="ui-btn ui-btn--icone lstdel" aria-label="Supprimer le rappel" title="Supprimer">${ICO("trash",24)}</button>`:""}</div>
         <div class="ui-plein__corps lstwc"><label>Quoi<input class="ui-champ" type="text" name="n" maxlength="50" placeholder="Ex. Coiffeur" autocomplete="off"></label>
         ${x?"":`<div class="lst-sug">${SUG.map((s2,i)=>`<button type="button" data-sg="${i}">${esc(s2[0])}</button>`).join("")}</div>`}
         <label>À refaire tous les<span class="lst-ev"><input class="ui-champ" type="number" name="ev" min="1" max="99" inputmode="numeric" value="${p.n}"><select class="ui-champ" name="u">${Object.keys(UN).map(k=>`<option value="${k}"${p.u===k?" selected":""}>${UN[k][2]}</option>`).join("")}</select></span></label>
@@ -4110,7 +4110,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 77af1f7</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version a8c1c57</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -10035,8 +10035,8 @@ function calPage(col){let r="";const R=(x,y,w,h,f,o)=>r+=`<rect x="${x}" y="${y}
 let calM=null,calSel=null;
 function calOpen(day){if(document.querySelector(".calw"))return;const G=S.g;if(!Array.isArray(G.ev))G.ev=[];if(!Array.isArray(G.per))G.per=[];const tk=dayKey(Date.now());calSel=day||tk;{const d0=calD(calSel);calM=[d0.getFullYear(),d0.getMonth()]}
   let fType="",fName="",fArt="",fEnd="",pEdit=null;
-  const w=document.createElement("div");w.className="ui-plein calw";w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label","Calendrier");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Calendrier</h2><button type="button" class="ui-btn ui-btn--icone calx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div><div class="ui-plein__corps"></div><div class="ui-plein__bas"><button type="button" class="ui-btn calno">Fermer</button><button type="button" class="ui-btn ui-btn--principal calgo">Ajouter</button></div>`;
+  const w=document.createElement("div");w.className="ui-plein calw";w.style.setProperty("--sc","var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label","Calendrier");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("calendrier")}</span>Calendrier</h2><button type="button" class="ui-btn ui-btn--icone calx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div><div class="ui-plein__corps"></div><div class="ui-plein__bas"><button type="button" class="ui-btn calno">Fermer</button><button type="button" class="ui-btn ui-btn--principal calgo">Ajouter</button></div>`;
   document.body.appendChild(w);const C=w.querySelector(".ui-plein__corps"),go=w.querySelector(".calgo");
   const close=()=>{w.remove();try{render()}catch(e){}renderEvents()};w.querySelector(".calx").onclick=close;w.querySelector(".calno").onclick=close;
   const isPer=()=>CAL_PER.some(p=>p[0]===fType);
@@ -12713,12 +12713,12 @@ function gfState(who){const gk=gfKey(who),G=S.g;if(!G.gfs)G.gfs={};const st=G.gf
 // fenêtre cadeau (refonte du 03/11) : plein écran (il y a un champ texte), scène pixel à la couleur du groupe du proche,
 // trois étapes en icônes (idée, acheté, offert) reliées par une ligne en pointillés
 const GF_ET=[["ampoule","Idée"],["panier","Acheté"],["cadeau","Offert"]];
-function gfOpen(btn,who,onBuy){if(document.querySelector(".gfw"))return;const o=document.createElement("div");o.className="ui-plein gfw";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Cadeau pour "+who);document.body.appendChild(o);const close=()=>o.remove();
+function gfOpen(btn,who,onBuy){if(document.querySelector(".gfw"))return;const o=document.createElement("div");o.className="ui-plein gfw";o.style.setProperty("--sc",(S.family||[]).includes(who)?"var(--c-famille)":"var(--c-social)");o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Cadeau pour "+who);document.body.appendChild(o);const close=()=>o.remove();
   const col=(S.family||[]).includes(who)?"var(--c-famille)":"var(--c-social)";
   const draw=()=>{const g=gfState(who),stp=g.given?3:g.bought?2:g.idea?1:0;let nb=null;try{nb=nextBirthday((S.profiles[who]||{}).bd)}catch(e){}
     const quand=nb?nb.days===0?"Anniversaire aujourd'hui":nb.days===1?"Anniversaire demain":`Anniversaire dans ${nb.days} jours`:"";
     const ic=stp>=3?"cadeauo":GF_ET[Math.min(stp,2)][0],go=["Noter l'idée · +5 XP","Je l'ai acheté !","Je l'ai offert · +10 XP"][stp]||"";
-    o.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Cadeau pour <span class="gfn"></span></h2><button type="button" class="ui-btn ui-btn--icone gfx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div>
+    o.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("cadeau")}</span><span>Cadeau pour <span class="gfn"></span></span></h2><button type="button" class="ui-btn ui-btn--icone gfx" aria-label="Fermer" title="Fermer">${ICO("close",24)}</button></div>
       <div class="ui-plein__corps gfc2" style="--sc:${col}">${uiScene(ic,col,{rays:stp>=3})}${quand?`<p class="ui-sous-titre gf-q">${quand}</p>`:""}
         <ol class="gf-et">${GF_ET.map(([i2,l],k)=>`<li class="${k<stp?"ok":k===stp?"cur":""}"><span class="gf-ic">${rkSvg(i2)}${k<stp?`<span class="gf-ok">${rkSvg("check")}</span>`:""}</span><span>${l}</span></li>`).join("")}</ol>
         ${stp===0?`<label class="ui-info gf-l">Ton idée<input class="ui-champ" id="gfI" maxlength="60" placeholder="Ex. un vinyle, un livre de photo" autocomplete="off"></label>`:
@@ -13063,8 +13063,8 @@ function bondAction(n,A,el,ev){
 }
 // Ajouter un proche (famille ou ami) : fenêtre plein écran (règle : champ texte = plein écran), Annuler à gauche, Ajouter à droite
 function addPerson(fam){if(document.querySelector(".addfw"))return;
-  const w=document.createElement("form");w.className="ui-plein addfw";w.setAttribute("role","dialog");w.setAttribute("aria-label",fam?"Nouveau membre de la famille":"Nouvel ami");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">${fam?"Famille":"Nouvel ami"}</h2></div>
+  const w=document.createElement("form");w.className="ui-plein addfw";w.style.setProperty("--sc",fam?"var(--c-famille)":"var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-label",fam?"Nouveau membre de la famille":"Nouvel ami");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg(fam?"famille":"duo")}</span>${fam?"Famille":"Nouvel ami"}</h2></div>
     <div class="ui-plein__corps"><input class="ui-champ" id="addFName" maxlength="30" placeholder="${fam?"Prénom ou surnom (Maman, Léa…)":"Prénom de l'ami"}" aria-label="Prénom" autocomplete="off"></div>
     <div class="ui-plein__bas"><button type="button" class="ui-btn addfno">Annuler</button><button type="submit" class="ui-btn ui-btn--principal">Ajouter</button></div>`;
   const close=()=>w.remove();w.querySelector(".addfno").onclick=close;
@@ -13139,8 +13139,8 @@ let gEdit=false; // page d'un groupe : lecture, ou modification après « Modifi
 const fgNext=id=>{const o=((S.g&&S.g.fgNext)||{})[id];return o&&o.d&&o.d>=dayKey(Date.now())?o:null};
 const dayTxt=k=>new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
 // prochaine sortie du groupe : quand + quoi (plein écran, car champ texte)
-function fgPlan(g,after){if(document.querySelector(".fgplw"))return;const old=fgNext(g.id),w=document.createElement("form");w.className="ui-plein fgplw";w.setAttribute("role","dialog");w.setAttribute("aria-label","Prochaine sortie");
-  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre">Prochaine sortie</h2></div>
+function fgPlan(g,after){if(document.querySelector(".fgplw"))return;const old=fgNext(g.id),w=document.createElement("form");w.className="ui-plein fgplw";w.style.setProperty("--sc","var(--c-social)");w.setAttribute("role","dialog");w.setAttribute("aria-label","Prochaine sortie");
+  w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("calendrier")}</span>Prochaine sortie</h2></div>
     <div class="ui-plein__corps"><label class="fgpl"><span>Quand</span><input class="ui-champ" type="date" id="fgplD" min="${dayKey(Date.now())}" value="${old?old.d:""}" required></label>
     <label class="fgpl"><span>Quoi</span><input class="ui-champ" id="fgplT" maxlength="60" placeholder="Ex. bowling, resto, ciné" autocomplete="off"></label>
     ${old?`<button type="button" class="ui-btn ui-btn--icone fgplx" aria-label="Retirer la sortie" title="Retirer">${ICO("trash",24)}</button>`:""}</div>
@@ -13784,6 +13784,30 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):no
 .ui-ligne--off{opacity:.5}
 button.ui-ligne{cursor:pointer}
 button.ui-ligne:disabled{cursor:default}
+
+/* ---------- Plein écran avec son univers (03/11) : ciel en marches à la couleur du sujet (--sc), étoiles pixel fixes,
+   titre avec son icône, pointillés sous l'en-tête et au-dessus des boutons. Chaque fenêtre pose --sc (calendrier, cadeau…). ---------- */
+.ui-plein{--sc:var(--ui-or);background:
+  linear-gradient(180deg,
+    color-mix(in srgb,var(--sc) 30%,var(--ui-fond-plein)) 0 72px,
+    color-mix(in srgb,var(--sc) 21%,var(--ui-fond-plein)) 72px 136px,
+    color-mix(in srgb,var(--sc) 14%,var(--ui-fond-plein)) 136px 200px,
+    color-mix(in srgb,var(--sc) 8%,var(--ui-fond-plein)) 200px 264px,
+    color-mix(in srgb,var(--sc) 4%,var(--ui-fond-plein)) 264px 328px,
+    var(--ui-fond-plein) 328px calc(100% - 140px),
+    color-mix(in srgb,var(--sc) 6%,var(--ui-fond-plein)) calc(100% - 140px))}
+.ui-plein::before{content:"";position:absolute;inset:0 0 auto;height:380px;pointer-events:none;image-rendering:pixelated;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 30 30' shape-rendering='crispEdges'%3E%3Cg fill='%23fff7e6'%3E%3Crect x='3' y='5' width='1' height='1' opacity='.4'/%3E%3Crect x='19' y='3' width='1' height='1' opacity='.25'/%3E%3Crect x='11' y='14' width='1' height='1' opacity='.3'/%3E%3Crect x='26' y='17' width='1' height='1' opacity='.35'/%3E%3Crect x='6' y='24' width='1' height='1' opacity='.2'/%3E%3Crect x='22' y='10' width='1' height='1' opacity='.45'/%3E%3C/g%3E%3C/svg%3E") 0 0/120px 120px repeat;
+  -webkit-mask:linear-gradient(#000 40%,transparent);mask:linear-gradient(#000 40%,transparent)}
+.ui-plein>*{position:relative;z-index:1}
+.ui-plein__haut{padding-bottom:var(--ui-e3);background:linear-gradient(90deg,var(--sc) 50%,transparent 0) left bottom/8px 2px repeat-x}
+.ui-plein__titre{display:flex;align-items:center;gap:var(--ui-e2);min-width:0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.ui-plein__titre>span:not(.ui-plein__ic){min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ui-plein__ic{flex:none;display:grid;place-items:center;width:32px;height:32px;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
+.ui-plein__ic svg{width:32px;height:32px;display:block}
+.ui-plein__bas{padding-top:var(--ui-e3);background:linear-gradient(90deg,var(--sc) 50%,transparent 0) left top/8px 2px repeat-x}
+/* sol pixel (collines à la couleur du sujet) au-dessus des boutons du bas : remplit le vide des longues fenêtres */
+.ui-plein::after{content:"";position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);height:64px;pointer-events:none;background:color-mix(in srgb,var(--sc) 36%,var(--ui-fond-plein));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 16' shape-rendering='crispEdges'%3E%3Cpath d='M0 10h1v6h-1zM1 11h1v5h-1zM2 12h1v4h-1zM3 12h1v4h-1zM4 12h1v4h-1zM5 12h1v4h-1zM6 12h1v4h-1zM7 12h1v4h-1zM8 11h1v5h-1zM9 11h1v5h-1zM10 10h1v6h-1zM11 10h1v6h-1zM12 10h1v6h-1zM13 10h1v6h-1zM14 10h1v6h-1zM15 10h1v6h-1zM16 10h1v6h-1zM17 10h1v6h-1zM18 10h1v6h-1zM19 10h1v6h-1zM20 10h1v6h-1zM21 10h1v6h-1zM22 10h1v6h-1zM23 9h1v7h-1zM24 9h1v7h-1zM25 9h1v7h-1zM26 8h1v8h-1zM27 8h1v8h-1zM28 8h1v8h-1zM29 9h1v7h-1zM30 9h1v7h-1zM31 10h1v6h-1zM32 10h1v6h-1zM33 11h1v5h-1zM34 11h1v5h-1zM35 11h1v5h-1zM36 12h1v4h-1zM37 12h1v4h-1zM38 11h1v5h-1zM39 11h1v5h-1zM40 10h1v6h-1zM41 10h1v6h-1zM42 9h1v7h-1zM43 9h1v7h-1zM44 8h1v8h-1zM45 8h1v8h-1zM46 8h1v8h-1zM47 7h1v9h-1zM48 7h1v9h-1zM49 7h1v9h-1zM50 7h1v9h-1zM51 7h1v9h-1zM52 6h1v10h-1zM53 5h1v11h-1zM54 5h1v11h-1zM55 4h1v12h-1zM56 3h1v13h-1zM57 2h1v14h-1zM58 2h1v14h-1zM59 2h1v14h-1zM60 2h1v14h-1zM61 2h1v14h-1zM62 2h1v14h-1zM63 2h1v14h-1zM64 2h1v14h-1zM65 3h1v13h-1zM66 4h1v12h-1zM67 4h1v12h-1zM68 5h1v11h-1zM69 5h1v11h-1zM70 6h1v10h-1zM71 6h1v10h-1zM72 6h1v10h-1zM73 6h1v10h-1zM74 7h1v9h-1zM75 7h1v9h-1zM76 7h1v9h-1zM77 8h1v8h-1zM78 9h1v7h-1zM79 10h1v6h-1z'/%3E%3C/svg%3E") 0 100%/320px 64px repeat-x}
 </style>
 <style id="z-haut">/* — depuis principal-02.css — */
 .qxp{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20}
@@ -17141,9 +17165,9 @@ const mvT=(ic,l,at,cls,extra)=>`<button type="button" class="ui-tuile mv-t${cls?
 const mvPlus=(at,l)=>`<button type="button" class="ui-tuile mv-t mv-plus" ${at} aria-label="${l}" title="${l}">${ICO("plus",24)}</button>`;
 // petite fenêtre (choix rapide) ou plein écran (saisie) ; draw(corps, refaire) remplit le corps
 function mvWin(title,full,draw,onOk,okL){const old=document.querySelector(".mvw");if(old)old.remove();let w;
-  if(full){w=document.createElement("div");w.className="ui-plein mvw";w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"></h2></div><div class="ui-plein__corps mvc"></div><div class="ui-plein__bas${onOk?"":" mv-seul"}">${onOk?`<button type="button" class="ui-btn mvno">Annuler</button>`:""}<button type="button" class="ui-btn ui-btn--principal mvok">${okL||(onOk?"Enregistrer":"Terminé")}</button></div>`}
+  if(full){w=document.createElement("div");w.className="ui-plein mvw";w.style.setProperty("--sc","#6f8fe0");w.innerHTML=`<div class="ui-plein__haut"><h2 class="ui-plein__titre"><span class="ui-plein__ic">${rkSvg("note")}</span><span class="t"></span></h2></div><div class="ui-plein__corps mvc"></div><div class="ui-plein__bas${onOk?"":" mv-seul"}">${onOk?`<button type="button" class="ui-btn mvno">Annuler</button>`:""}<button type="button" class="ui-btn ui-btn--principal mvok">${okL||(onOk?"Enregistrer":"Terminé")}</button></div>`}
   else{w=document.createElement("div");w.className="ui-voile mvw";w.innerHTML=`<div class="ui-fenetre"><h2 class="ui-fenetre__titre"></h2><div class="mvc"></div><button type="button" class="ui-btn ui-btn--principal mvok">Terminé</button></div>`;w.onclick=e=>{if(e.target===w)close()}}
-  w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label",title);w.querySelector("h2").textContent=title;
+  w.setAttribute("role","dialog");w.setAttribute("aria-modal","true");w.setAttribute("aria-label",title);(w.querySelector("h2 .t")||w.querySelector("h2")).textContent=title;
   const C=w.querySelector(".mvc"),close=()=>{w.remove();renderFiche();try{render()}catch(e){}},redo=()=>draw(C,redo);
   w.querySelector(".mvok").onclick=()=>{if(onOk&&onOk(C)===false)return;close()};const no=w.querySelector(".mvno");if(no)no.onclick=()=>{w.remove()};
   document.body.appendChild(w);redo();return w}
