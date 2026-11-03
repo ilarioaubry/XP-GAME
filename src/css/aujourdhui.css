@@ -650,3 +650,16 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 @media (prefers-reduced-motion:reduce){.lx.open .lx-beam,.lx-st span.on{animation:none}}
 .lx-hint{text-shadow:0 2px 0 #000,0 0 6px rgba(0,0,0,.6)}
 .lx-dots i{box-shadow:0 1px 0 #000}
+
+/* Bonne nuit > « Avec qui ? » (03/11) : tout le monde, en tuiles avec avatar (comme les proches), les groupes d'abord avec leur icône */
+.clo2 .bspg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.clo2 .bsp{display:grid;justify-items:center;align-content:center;gap:4px;min-width:0;min-height:84px;padding:8px 4px;box-sizing:border-box;border:2px solid var(--ui-bord);border-radius:0;background:var(--ui-fond);color:var(--ui-creme);cursor:pointer;font:inherit}
+.clo2 .bsp[aria-pressed="true"]{border-color:var(--ui-or)}
+.clo2 .bsp-i{display:grid;place-items:center;width:44px;height:44px}
+.clo2 .bsp-i>:is(svg,img,.pav){width:44px;height:44px;display:block;image-rendering:pixelated}
+.clo2 .bsp-i .pav{display:grid;place-items:center;border:0;font-size:20px;border-radius:0}
+.clo2 .bsp-i .pav img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.clo2 .bsp-n{max-width:100%;font-size:var(--ui-t-info);font-weight:800;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.clo2 .bsp[aria-pressed="false"] .bsp-i{opacity:.85}
+.clo2 .bsp-g{grid-column:span 2;grid-template-columns:44px minmax(0,1fr);justify-items:start;align-items:center;gap:8px;padding:8px}
+.clo2 .bsp-g .bsp-n{font-size:var(--ui-t-texte)}
