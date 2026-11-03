@@ -46,7 +46,7 @@ function renderShow(){
   const B=badgeDefs(),byId=Object.fromEntries(B.map(b=>[b.id,b]));
   G.show=G.show.slice(0,3).map(id=>id&&byId[id]&&S.badges[id]?id:null);while(G.show.length<3)G.show.push(null);
   const ic=(b,px)=>bdgIconImg(b,px+4);
-  box.innerHTML=G.show.map((id,i)=>{const b=id&&byId[id];return b?`<button type="button" class="pbs on pbt${b.t===3?" gold":""}${showPick===i?" sel":""}" data-i="${i}" style="--tc:${TIERC[b.t]}" aria-label="Badge affiché : ${esc(b.name)}, changer">${badgeImg(b,false,60)}<b>${esc(b.name)}</b></button>`:`<button type="button" class="pbs${showPick===i?" sel":""}" data-i="${i}" aria-label="Emplacement vide, choisir un badge"><span class="pbi">+</span><small>Badge</small></button>`}).join("");
+  box.innerHTML=G.show.map((id,i)=>{const b=id&&byId[id];return b?`<button type="button" class="pbs on pbt${b.t===3?" gold":""}${showPick===i?" sel":""}" data-i="${i}" style="--tc:${TIERC[b.t]}" aria-label="Badge affiché : ${esc(b.name)}, changer">${badgeImg(b,false,48)}<b>${esc(b.name)}</b></button>`:`<button type="button" class="pbs${showPick===i?" sel":""}" data-i="${i}" aria-label="Emplacement vide, choisir un badge"><span class="pbi">+</span><small>Badge</small></button>`}).join("");
   box.querySelectorAll(".pbs").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;showPick=showPick===i?-1:i;renderShow()});
   const pk=$("pfPick");
   if(showPick<0){pk.hidden=true;pk.innerHTML="";return}

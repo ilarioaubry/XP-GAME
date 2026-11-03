@@ -122,18 +122,8 @@ function renderChar(l){
   {const card=document.querySelector(".char.pf");if(card){const a=S.g&&S.g.eq.aura&&S.g.gear.includes(S.g.eq.aura)?S.g.eq.aura:"";[...card.classList].forEach(c=>{if(c.startsWith("au-")||c==="aura-on")card.classList.remove(c)});if(a)card.classList.add("au-"+a,"aura-on")}}
   if(document.activeElement!==$("charName"))$("charName").value=S.name;
   $("charTitle").textContent=titleOf(l);
-  $("csSum").textContent=entries.slice().sort((a,b)=>b.xp-a.xp).slice(0,3).map(e=>CATS[e.k].label+" "+statInfo(e.xp).l).join(" · ");
-  const box=$("stats");box.innerHTML="";
-  // la Nourriture a aussi sa jauge sur le profil (2.4) ; elle ne compte pas dans la catégorie phare du portrait
-  [...entries,{k:"nourriture",xp:S.stats.nourriture||0}].forEach(e=>{
-    const si=statInfo(e.xp),c=CATS[e.k];
-    const d=document.createElement("div");d.className="stat"+(e.k===top?" top":"");d.style.setProperty("--cat",c.c);
-    d.innerHTML=`<span class="sn">${c.label}</span><span class="sb" title="${si.cur} / ${si.need} XP"><i style="width:${si.cur/si.need*100}%"></i></span><span class="sl">Nv ${si.l}</span>`;
-    box.appendChild(d);
-  });
+  // les jauges sont dans Mes paliers (M.5, 03/11) : plus sur la fiche
 }
-function toggleStats(){}
-$("csTog").onclick=toggleStats;
 [["actEdBtn","actEdCard"]].forEach(([b,c])=>{$(b).onclick=()=>{const el=$(c),open=el.hidden;el.hidden=!open;$(b).setAttribute("aria-expanded",open);$(b).innerHTML=ICO(open?"close":"edit",18);if(open)el.scrollIntoView({block:"nearest",behavior:"smooth"})}});
 $("charName").addEventListener("change",()=>{const v=$("charName").value.trim().slice(0,14);S.name=v||S.name||"Moi";save();renderChar(levelInfo(S.xp).l)});
 function initGroups(){

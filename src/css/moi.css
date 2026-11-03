@@ -259,13 +259,7 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 /* — depuis principal-01.css — */
 .sync{margin-left:auto;font-size:13px;color:var(--muted);align-self:center}
 .avatar{width:128px;max-width:100%;aspect-ratio:120/140;background:var(--surface-2);display:block}
-.statlist{display:grid;gap:10px;min-width:0}
-.stat{display:grid;grid-template-columns:76px 1fr auto;gap:10px;align-items:center;font-size:15px}
-.stat .sn{font-weight:700;min-width:0}
-.stat .sb i{display:block;height:100%;background:var(--cat);border-radius:5px;transition:width .5s}
-.stat .sl{font-family:var(--f-pixel);font-weight:700;font-variant-numeric:tabular-nums;min-width:40px;text-align:right}
 @media (max-width:560px){.avatar{width:112px}
-.stat{grid-template-columns:62px 1fr auto;gap:8px}
 .cname-in{font-size:20px}}
 .rules{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
 .rules label{display:flex;gap:6px;align-items:center}
@@ -288,13 +282,8 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .settings h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}
 .settings h2::before{content:"";display:inline-block;background:var(--gold);transform:rotate(45deg);margin-right:10px;vertical-align:2px;box-shadow:1px 1px 0 var(--rpg-shadow)}
 .bdr{border:2px solid var(--line);border-radius:8px;box-shadow:0 4px 0 var(--rpg-shadow),inset 0 0 0 2px color-mix(in srgb,var(--gold) 22%,transparent)}
-.stat .sb,.sk .sb,.stbar{border:2px solid var(--ink);border-radius:3px;background:var(--surface-2);position:relative;overflow:hidden;height:12px}
-.stat .sb::after,.sk .sb::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.28) 6px 8px);pointer-events:none}
-.stat .sb i,.sk .sb i{border-radius:0}
-.stat .sn{font-family:var(--f-pixel);text-transform:uppercase;letter-spacing:.04em;font-size:13px}
-.stat .sl{font-family:var(--f-pixel)}
+.sk .sb,.stbar{border:2px solid var(--ink);border-radius:3px;background:var(--surface-2);position:relative;overflow:hidden;height:12px}
 .avatar{border:3px solid var(--ink);border-radius:6px;box-shadow:0 0 0 3px var(--gold),0 5px 0 3px var(--rpg-shadow)}
-.stat .sn{font-family:var(--f-body);font-weight:700;text-transform:none;letter-spacing:0;opacity:1}
 /* — depuis principal-02.css — */
 .settings h2{letter-spacing:.04em;line-height:1.2}
 .settings h2{font-size:22px}
@@ -304,8 +293,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .colh h3{font-family:var(--f-pixel);text-transform:uppercase;letter-spacing:.06em;font-size:15px;margin:0}
 .colh .count{background:var(--gold);color:var(--bg);font-family:var(--f-pixel);font-weight:700;border-radius:999px;padding:0 9px;font-size:15px}
 .subtabs.vin{animation-name:vinFade}
-.stat .sn{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stat .sn::before{content:"";display:inline-block;width:6px;height:6px;margin-right:4px;background:var(--cat);vertical-align:1px}
 .subtabs button{position:relative}
 .subtabs .ndot{top:2px;right:4px}
 .set-top h2{margin:0}
@@ -313,10 +300,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .subtabs.four button{font-size:13px;padding:0 2px}
 @media (max-width:380px){.subtabs.four button{font-size:11px}}
 .avbtn{border:0;background:none;padding:0;cursor:pointer;display:block;border-radius:6px}
-.cstog{display:flex;align-items:center;gap:8px;width:100%;border:0;border-top:1px solid var(--line);background:none;padding:8px 0 0;color:var(--ink);font:inherit;font-weight:700;font-size:13px;min-height:36px;text-align:left}
-.cstog #csSum{flex:1;min-width:0;color:var(--muted);font-weight:400;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cstog .chev{transition:transform .2s}
-.cstog[aria-expanded="true"] .chev{transform:rotate(180deg)}
 .subtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px}
 .subtabs button{border:0;background:none;border-radius:5px;min-height:40px;font-weight:700;font-size:13px;white-space:nowrap;padding:0 4px;color:var(--muted)}
 .subtabs button[aria-selected="true"]{background:var(--gold);color:#2a1c0c;box-shadow:0 2px 0 var(--rpg-shadow)}
@@ -326,7 +309,6 @@ html:not(#_a):not(#_b):not(#_c) body #homeBox .hmlib .libpop{border:0;background
 .eqc.lock{border-style:dashed;color:var(--muted);display:inline-grid;place-items:center;min-width:32px}
 .col1{display:grid;gap:8px;grid-template-columns:minmax(0,1fr)}
 .fold>h3::after{content:""!important;width:16px;height:16px;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22/%3E%3C/svg%3E") center/contain no-repeat;display:inline-block}
-.cstog .chev{display:inline-grid;place-items:center}
 .bdr{border-radius:var(--rad);box-shadow:var(--csh);border-width:2px;border-style:solid;border-color:var(--line)}
 .settings h2{font-family:var(--f-pixel);font-weight:400;text-transform:uppercase;font-size:20px;letter-spacing:.04em;line-height:1.2;margin:0;color:var(--ink)}
 html body .settings h2::before{content:""!important;display:inline-block!important;width:11px!important;height:11px!important;background:var(--gold)!important;transform:rotate(45deg)!important;margin:0 10px 0 2px!important;vertical-align:2px;flex:none}
@@ -375,15 +357,9 @@ body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 
 
 .pf .cname-in{font-family:var(--f-pixel);font-size:30px;line-height:1.05;text-align:left;border:0;padding:0;background:none;color:var(--ink);text-transform:uppercase;letter-spacing:.03em;width:100%}
-.pf .statwrap{padding:0;align-self:center}
-.pf .statlist{gap:8px}
-.pf .stat{grid-template-columns:58px minmax(0,1fr) 34px;gap:6px}
-.pf .stat .sl{font-size:13px;text-align:right;white-space:nowrap}
-.pf .stat .sn{font-size:13px}
 .pf .avbtn .avatar{width:118px!important}
 @media (max-width:370px){.pf .avbtn .avatar{width:104px!important}
-.pf .cname-in{font-size:26px!important}
-.pf .stat{grid-template-columns:54px minmax(0,1fr) 32px!important}}
+.pf .cname-in{font-size:26px!important}}
 .subtabs button{position:relative;z-index:1;transition:color .25s}
 .subtabs button[aria-selected="true"]{background:transparent;box-shadow:none}
 .subtabs .stind{position:absolute;left:0;top:0;z-index:0;border-radius:5px;background:var(--gold);box-shadow:0 2px 0 var(--rpg-shadow);pointer-events:none;width:0}
@@ -402,8 +378,6 @@ body.testing .subtabs{top:calc(env(safe-area-inset-top,0px) + 36px)!important}
 .pph{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .pph b{font-size:15px}
 .ppx{border:0;background:none;color:var(--muted);width:36px;height:36px;display:grid;place-items:center;margin:-8px -6px -8px 0}
-.pf .stat{grid-template-columns:58px minmax(0,1fr) 40px}
-.pf .stat .sl{color:var(--text);text-align:left;padding-left:2px;font-weight:800}
 .pf-kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0 0}
 .pf-kpi .kp{--kc:var(--gold);display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 4px;min-height:48px;border-radius:12px;background:color-mix(in srgb,var(--kc) 14%,var(--surface));border:2px solid color-mix(in srgb,var(--kc) 55%,var(--line));box-shadow:0 3px 0 var(--rpg-shadow)}
 .pf-kpi .ki{height:28px;flex:none;display:grid;place-items:center;color:var(--kc)}
@@ -471,7 +445,6 @@ html:not(#_a):not(#_b) body #pfBdg .pbs.pbt:nth-child(3) .em::after{animation-de
 #pfBdg .pbs:nth-child(2) .bpx::after{animation-delay:.25s}
 #pfBdg .pbs:nth-child(3) .bpx::after{animation-delay:.5s}
 @media (prefers-reduced-motion:reduce){.bpx::after{display:none}}
-:is(.char.pf.aura-on) .statlist{margin:0 -8px 0 0}
 /* — depuis principal-05.css — */
 html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{transform-origin:50% 100%;animation:kChest 4s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){html:not(#_a):not(#_b) body .pf-kpi .kch .ki .pxi{animation:none!important}}
@@ -902,10 +875,6 @@ html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:2px solid var(--line)!important;border-radius:0!important;padding:12px!important;box-shadow:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background:var(--surface)!important}
 /* Ma fiche : barres par catégorie au même modèle que les proches (grande barre 18 px, « Nv N » centré dedans) */
-#stats .stat{display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:8px}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body #stats .stat .sb{grid-area:1/2;display:block;width:100%;height:18px;box-sizing:border-box;margin:0;border:2px solid rgba(255,247,230,.85);border-radius:0;background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden;position:relative}
-#stats .stat .sb>i{display:block;height:100%;margin:0;background:var(--cat);border-radius:0;box-shadow:none}
-#stats .stat .sl{grid-area:1/2;z-index:1;display:grid;place-items:center;height:18px;width:100%;margin:0;padding:0;font-family:var(--f-pixel);font-size:13px;line-height:1;color:#fff7e6;text-shadow:1px 1px 0 #000;background:none;pointer-events:none}
 /* ===== Ma fiche (26/10) : plus compacte et mieux structurée
    en-tête = prénom (chiffre décoratif 26 px) + titre sur une ligne ; niveau + barre d'XP sur une ligne de 48 px ;
    badges en tuiles de 56 px ; avec une aura, un seul voile identique (même fond, même flou, bordure neutre) derrière chaque bloc */
@@ -927,7 +896,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 .char.pf.aura-on:not(.fpf) :is(.pf-head,.statlist,.pf-xp){border-radius:0;margin-left:0;margin-right:0;box-sizing:border-box;min-width:0;max-width:100%}
 .char.pf.aura-on:not(.fpf) .pf-name{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;padding:0}
 /* disposition C (choisie le 26/10) : [portrait | prénom, titre, niveau / 3 badges] puis barre d'XP sur toute la largeur, sans cadre, puis les catégories sur 2 colonnes */
-.char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr) 44px;grid-template-areas:"side head lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick";column-gap:12px;row-gap:0;align-items:start}
+.char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr) 44px;grid-template-areas:"side head lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "pick pick pick";column-gap:12px;row-gap:0;align-items:start}
 .char.pf:not(.fpf)>*{grid-column:1/-1}
 .char.pf:not(.fpf) .pf-body,.char.pf:not(.fpf) .pf-xp{display:contents}
 .char.pf:not(.fpf) .pf-side{grid-area:side;display:block;align-self:start}
@@ -940,15 +909,12 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs:not(.pbt){min-height:52px!important}
 .char.pf:not(.fpf) #barWrap{grid-area:xp;margin:12px 0 0}
 .char.pf:not(.fpf) .pf-tpick{grid-area:tpick;margin-top:12px}
-.char.pf:not(.fpf) .statwrap{grid-area:stats;margin:12px 0 0;width:auto}
-.char.pf:not(.fpf) #stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
-.char.pf:not(.fpf) #stats .stat{grid-template-columns:78px minmax(0,1fr);margin:0}
 .char.pf:not(.fpf) .pf-pick{grid-area:pick}
 /* aura : même voile derrière le bloc du prénom et derrière les catégories ; la barre d'XP sans cadre */
 .char.pf:not(.fpf).aura-on :is(.pf-head,.statlist){background:rgba(12,14,32,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:2px solid rgba(255,255,255,.17);padding:8px}
 .char.pf:not(.fpf).aura-on .pf-xp{background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;padding:0}
 /* retouche 26/10 : prénom seul en haut, centré ; puis portrait | titre, niveau, badges (sans encadrés) ; puis le reste */
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-areas:"name name name" "side title lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "stats stats stats" "pick pick pick"!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf){grid-template-areas:"name name name" "side title lvl" "side bdg bdg" "xp xp xp" "tpick tpick tpick" "pick pick pick"!important}
 .char.pf:not(.fpf) .pf-head,.char.pf:not(.fpf) .pf-name{display:contents}
 .char.pf:not(.fpf) #charName{grid-area:name;text-align:center;margin:0 0 12px}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) #charTitle{grid-area:title;align-self:start;justify-self:start;min-height:0;height:auto;padding:2px 0 0;line-height:1.2}
@@ -956,7 +922,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 .char.pf:not(.fpf) .pf-bdg{align-self:start;margin:8px 0 0}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs.pbt{border:0!important;background:none!important;box-shadow:none!important;outline-offset:0!important;min-height:0!important;padding:4px 2px!important}
 .char.pf:not(.fpf).aura-on :is(#charName,.statlist){padding-right:8px;padding-left:8px;box-sizing:border-box}
-.char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr);grid-template-areas:"name name" "side title" "side bdg" "xp xp" "tpick tpick" "stats stats" "pick pick"}
+.char.pf:not(.fpf){grid-template-columns:auto minmax(0,1fr);grid-template-areas:"name name" "side title" "side bdg" "xp xp" "tpick tpick" "pick pick"}
 .char.pf:not(.fpf) #lvlBox{grid-area:name;justify-self:end;align-self:center;margin:0 0 12px}
 .char.pf:not(.fpf) #charName{padding-left:52px;padding-right:52px;min-height:50px}
 .char.pf:not(.fpf) .pf-bdg{margin:4px 0 0}
@@ -964,7 +930,6 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:n
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6) body .char.pf:not(.fpf) .pf-bdg .pbs{-webkit-backdrop-filter:none;backdrop-filter:none}
 /* aura (26/10) : tout le fond est flouté et assombri d'un seul voile ; la disposition reste celle sans aura (aucun voile par bloc) */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) :is(.pf-head,.pf-name,.statlist,.pf-xp,#charName){background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border:0;padding-top:0;padding-bottom:0}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf) .statlist{padding:0}
 .char.pf.aura-on:not(.fpf){background:linear-gradient(rgba(12,14,32,.5),rgba(12,14,32,.5)),var(--aubg);background-color:var(--surface)}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::before,html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .char.pf.aura-on:not(.fpf)::after{filter:blur(2px)!important}
 
@@ -1033,3 +998,8 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 #palBox .palpath i.on em{color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.5)}
 #palBox .palpath i.next{border-color:var(--gold)}
 #palBox .palpath i.next em{color:var(--gold)}
+
+/* M.5 (03/11) : jauges dans Mes paliers, badges discrets sur la fiche */
+#palBox .palbar>i{background:var(--pc)}
+#palBox .palbar .ui-barre__txt{text-shadow:1px 1px 0 #000}
+.char.pf:not(.fpf) #pfBdg .pbs.pbt>b{font-size:11px;font-weight:700;line-height:1.2;color:var(--muted)}

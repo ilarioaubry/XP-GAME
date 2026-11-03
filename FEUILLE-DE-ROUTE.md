@@ -44,7 +44,7 @@ Les éléments marqués **(décision)** demandent un choix d'Ilario avant de con
 - [ ] M.2 La salutation passe sur deux lignes (« Bon après-midi, / Ilar »)
 - [ ] M.3 Chez moi : la Bibliothèque s'affiche noire, sans compteur ; les compteurs (« 3 bocaux », « 20 drapeaux ») ne disent pas à quoi ils servent
 - [ ] M.4 Bilan : « Mon assiette · 7 jours » est un titre dans une boîte, pas au modèle des titres de section
-- [ ] M.5 Profil : titre, 3 badges, niveau, barre d'XP et 8 jauges ont la même importance, rien ne ressort
+- [ ] M.5 Profil : titre, 3 badges, niveau, barre d'XP et 8 jauges ont la même importance, rien ne ressort — fait le 03/11, à vérifier : jauges retirées de la fiche (une barre par jauge dans Mes paliers), badges à 48 px avec leur nom en petit
 - [ ] M.6 Badge « Hydraté » (Eau niveau 3) alors que l'eau n'a pas de jauge visible
 - [ ] M.7 Fiche d'un proche : rien sur ce qui se passe dans sa vie en ce moment, ses dates importantes hors anniversaire, son ou sa partenaire, ses enfants ; l'historique dit peu (« Appel · +20 XP ») ; le titre « Historique » n'est pas au modèle des titres
 - [ ] M.8 Proches presque tous au lien niveau 1 : le niveau ne dit pas grand-chose de la relation (à discuter)

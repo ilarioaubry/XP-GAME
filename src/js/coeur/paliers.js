@@ -57,8 +57,9 @@ function palPop(groups){if(document.querySelector(".palpop"))return;
 
 // ---- Moi > Ma vie : mes paliers et mes boosts
 function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf(),live=boostLive(),done=PAL_CATS.reduce((a,c)=>a+palOf(c),0);
-  const rows=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),nx=palNext(c),C=CATS[c]||{};
+  const rows=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),nx=palNext(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0);
     return`<li class="palr" style="--pc:${C.c||"var(--gold)"}"><span class="palri">${rkSvg(PAL_IC[c]||"etoile")}</span><span class="palrb"><span class="palrh"><b>${esc(C.label||c)}</b><span class="ui-compteur">Niv ${l}</span></span>
+      <span class="ui-barre ui-barre--grande palbar" role="progressbar" aria-label="${esc(C.label||c)} : ${si.cur} sur ${si.need} XP avant le niveau ${l+1}" aria-valuemin="0" aria-valuemax="${si.need}" aria-valuenow="${si.cur}"><i style="width:${Math.round(si.cur/si.need*100)}%"></i><span class="ui-barre__txt">${si.cur} / ${si.need} XP</span></span>
       <span class="palpath" role="img" aria-label="Paliers atteints : ${p+1} sur 4">${PAL_LV.map((lv,k)=>`<i class="${k<=p?"on":k===p+1?"next":""}"><em>${lv}</em></i>`).join("")}</span>
       <small class="ui-info">${nx?`Niveau ${nx.lv} : ${nx.n?`+${nx.n} quête${nx.n>1?"s":""} ${["","costaude","dure","exploit"][palOf(c)+1]}${nx.n>1?"s":""}`:nx.txt.toLowerCase()} · encore ${nx.need} XP`:"Tout est débloqué"}</small></span></li>`}).join("");
   box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes paliers</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
