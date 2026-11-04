@@ -59,12 +59,19 @@ function palPop(groups){if(document.querySelector(".palpop"))return;
 
 // ---- Moi > Ma vie : mes paliers (refonte du 03/11) : une tuile par jauge (icône, niveau, barre, crans débloqués) ;
 // le détail (ce que chaque palier débloque) s'ouvre au toucher. Les boosts en réserve en tuiles au-dessus, sans texte.
+let palAng=-1;
 function renderPal(){const box=$("palBox");if(!box||!S.g)return;const L=boostsOf(),live=boostLive(),done=PAL_CATS.reduce((a,c)=>a+palOf(c),0);
   const tiles=PAL_CATS.map(c=>{const l=catLv(c),p=palOf(c),C=CATS[c]||{},si=statInfo(((S.stats||{})[c])||0);
     return`<button type="button" class="ui-tuile pal-t" data-c="${c}" style="--pc:${C.c||"var(--gold)"}" aria-label="${esc(C.label||c)} : niveau ${l}, ${si.cur} sur ${si.need} XP"><span class="pal-h">${cransHTML(p)}<span class="pal-lv">${l}</span></span>${rkSvg(PAL_IC[c]||"etoile")}<span class="ui-tuile__nom">${esc(C.label||c)}</span><span class="ui-barre pal-b"><i style="width:${Math.round(si.cur/si.need*100)}%"></i></span></button>`}).join("");
-  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes paliers</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
+  // Cobalt (maquette E Ma vie) : 4 angles en 2×2 ; toucher un angle déplie ses jauges (et leurs paliers)
+  const st=S.stats||{},ang=ANGLES.map(([n,col,cats,ic],i)=>{const I=statInfo(cats.reduce((a,k)=>a+(st[k]||0),0)),pc=cats.filter(k=>PAL_CATS.includes(k)),pp=Math.max(0,...pc.map(palOf));
+    const nx=pc.map(k=>palNext(k)).filter(Boolean)[0];
+    return`<button type="button" class="ang-t${palAng===i?" on":""}" data-a="${i}" style="--ac:${col}" aria-expanded="${palAng===i}"><span class="ang-th">${rkSvg(ic)}<b>${n}</b><em>${I.l}</em></span><span class="ang-bar"><i style="width:${Math.round(100*I.cur/I.need)}%"></i></span><span class="ang-pips">${[0,1,2,3].map(k=>`<i class="${k<=pp?"on":""}"></i>`).join("")}</span><small>${nx?`Niv ${nx.lv} : ${esc(nx.txt||"")}`:"Tous les paliers atteints"}</small></button>`}).join("");
+  const sub=palAng>=0?PAL_CATS.filter(c=>ANGLES[palAng][2].includes(c)):[];
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mes 4 angles</h2><span class="ui-compteur">${done}/${PAL_CATS.length*3}</span></div>
     ${live||L.length?`<div class="pal-bst">${live?`<span class="ui-tuile pal-on" role="img" aria-label="XP ×2 sur ${esc(boostLab(live.c))}, encore ${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min">${rkSvg("eclair")}<span class="ui-tuile__nom">${Math.max(1,Math.ceil((live.e-Date.now())/60000))} min</span></span>`:""}${L.map((b,i)=>`<button type="button" class="ui-tuile" data-b="${i}" aria-label="Lancer 1 h d'XP ×2 sur ${esc(boostLab(b.c))}">${rkSvg("eclair")}<span class="ui-tuile__nom">×2 ${esc(b.c?boostLab(b.c):"Partout")}</span></button>`).join("")}</div>`:""}
-    <div class="ui-tuiles pal-g">${tiles}</div>`;
+    <div class="ang-g">${ang}</div>${sub.length?`<div class="ui-tuiles pal-g">${tiles.split("</button>").filter(t=>sub.some(c=>t.includes(`data-c="${c}"`))).map(t=>t+"</button>").join("")}</div>`:""}`;
+  box.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{palAng=palAng===+b.dataset.a?-1:+b.dataset.a;renderPal()});
   box.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>boostAsk(+b.dataset.b,renderPal));
   box.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>palOpen(b.dataset.c))}
 // détail d'une jauge : petite fenêtre, les 4 paliers et ce qu'ils débloquent

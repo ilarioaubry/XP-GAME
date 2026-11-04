@@ -707,9 +707,10 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch.evadd,.pbs){bor
 /* 5.11 : « Chapitre en cours » au modèle des titres de section (losange à la couleur de la section) */
 html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10px;flex:none;background:var(--gold);transform:rotate(45deg)}
 
-/* Ma fiche profil garde son cadre, comme la fiche d'un proche (décision du 26/10) : bordure neutre, fond sombre, l'aura s'affiche dedans */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:2px solid var(--line)!important;border-radius:0!important;padding:12px!important;box-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background:var(--surface)!important}
+/* Cobalt (04/11, maquette E Ma vie) : la fiche devient la scène du personnage, sans cadre, sur la demi-sphère ; l'aura garde son fond */
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:0!important;border-radius:0!important;padding:16px 16px 72px!important;margin:0 -16px!important;box-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background-color:#2433d6!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff9ec7' d='M25 0h10v1h-10z M21 1h18v1h-18z M19 2h22v1h-22z M16 3h28v1h-28z M15 4h30v1h-30z M13 5h34v1h-34z M12 6h36v1h-36z M11 7h38v1h-38z M10 8h40v1h-40z M9 9h42v1h-42z M8 10h44v1h-44z M7 11h46v1h-46z M6 12h48v1h-48z M5 13h50v2h-50z M4 15h52v2h-52z M3 17h54v2h-54z M2 19h56v3h-56z M1 22h58v8h-58z'/%3E%3Cpath fill='%23ff6a2b' transform='translate(0 3)' d='M25 0h10v1h-10z M21 1h18v1h-18z M19 2h22v1h-22z M16 3h28v1h-28z M15 4h30v1h-30z M13 5h34v1h-34z M12 6h36v1h-36z M11 7h38v1h-38z M10 8h40v1h-40z M9 9h42v1h-42z M8 10h44v1h-44z M7 11h46v1h-46z M6 12h48v1h-48z M5 13h50v2h-50z M4 15h52v2h-52z M3 17h54v2h-54z M2 19h56v3h-56z M1 22h58v8h-58z'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:center bottom -120px!important;background-size:420px 210px!important}
 /* Ma fiche : barres par catégorie au même modèle que les proches (grande barre 18 px, « Nv N » centré dedans) */
 /* ===== Ma fiche (26/10) : plus compacte et mieux structurée
    en-tête = prénom (chiffre décoratif 26 px) + titre sur une ligne ; niveau + barre d'XP sur une ligne de 48 px ;
@@ -868,3 +869,18 @@ html body .wrap section:is(#calBox,#ficheBox) .ui-titre::before{background:var(-
 .mv-t{aspect-ratio:auto;min-height:84px}
 #vieBox .lst-sug{display:flex;flex-wrap:wrap;gap:8px}
 #vieBox .lst-sug button{min-height:44px;padding:0 12px;border:2px solid var(--ui-bord);border-radius:0;background:var(--ui-fond);color:var(--ui-creme);font-size:13px;font-weight:700}
+
+/* ===== Cobalt, maquette E « Ma vie » (04/11) ===== */
+/* les 4 angles en 2×2 */
+.ang-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ang-t{display:grid;gap:6px;align-content:space-between;min-height:112px;padding:10px 12px;background:#1b2275;border:0;color:var(--ui-creme);font:inherit;text-align:left}
+.ang-t.on{outline:2px solid var(--ac)}
+.ang-th{display:flex;align-items:center;gap:8px}.ang-th svg{width:24px;height:24px}.ang-th b{flex:1;font-size:13px}
+.ang-th em{font-style:normal;font-family:var(--f-pixel);font-size:24px;line-height:26px;color:var(--ac)}
+.ang-bar{height:6px;background:#2433d6}.ang-bar i{display:block;height:100%;background:var(--ac)}
+.ang-pips{display:flex;gap:3px}.ang-pips i{flex:1;height:8px;background:#2433d6}.ang-pips i.on{background:var(--ac)}
+.ang-t small{font-size:11px;line-height:13px;color:var(--ui-creme-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.palbox .pal-g{margin-top:6px}
+/* ordre de Ma vie selon la maquette : personnage, 4 angles, fiche, calendrier, projets, puis le reste */
+.wrap>#palBox{order:-19}.wrap>#ficheBox{order:-18}.wrap>#calBox{order:-17}.wrap>#prjBox2{order:-16}
+.wrap>section.pf{order:-22}.wrap>nav.subtabs{order:-21}

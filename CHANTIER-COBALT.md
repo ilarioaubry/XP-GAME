@@ -33,6 +33,11 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 - Décisions d'Ilario (04/11) : Ta semaine dernière et Fait aujourd'hui → Moi > Bilan ; coffre → ligne du haut ; rituels → seulement dans la routine ; Mes suivis → ligne compacte dans le panneau ; Mes engagements → Moi > Ma vie ; Plus tard aujourd'hui → retiré ; Quêtes spéciales → idée du moment / défi.
 - Reste sur cette page : humeur + nuit en haut du panneau, Mes suivis compacts, roulette des proches, ciel cobalt derrière la page (le ciel d'ambiance passe encore sous les marges), déplacer les blocs ci-dessus puis SUPPRIMER les anciennes sections (HTML, JS, CSS) et la règle de masquage.
 
+## Fait (lot 6, 04/11)
+- Repas en tuiles exactement comme la maquette (pris rose + coche, en cours orange large + Assiette, passé « À noter », à venir = heure). « Sauté » retiré des tuiles et de la question : il se choisit dans l'assiette (demande d'Ilario).
+- Moi > Ma vie : la fiche devient la scène (fond cobalt + demi-sphère, sans cadre ; l'aura garde son fond), onglets dessous ; « Mes paliers » → « Mes 4 angles » en 2×2 (niveau, barre, 4 crans de paliers, prochain palier) ; toucher un angle déplie ses jauges d'origine. Ordre : personnage, onglets, angles, fiche, calendrier, projets.
+- Reste pour Ma vie : personnage en pied debout sur la demi-sphère (aujourd'hui portrait dans `#avatarWrap`), plaque de titre sous le personnage, badges de la fiche → Chez moi ; puis Chez moi et Bilan selon leurs maquettes.
+
 ## Reste, dans l'ordre
 1. Couleurs encore écrites en dur (≈900 : surtout `#000`, `#fff`, rgba noirs/blancs, quelques couleurs de catégories en dur `#5fae4f`, `#e3263a`, `#ff7aa8`…) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
 2. Aujourd'hui = maquette E Focus+ : question du haut selon l'heure (matin routine, midi repas, après-midi prochaine quête, soir bilan), 4 angles sous la planète, repas en tuiles + pastille « N repas · N groupes sur 3 ».
