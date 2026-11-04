@@ -69,7 +69,7 @@ form.add label:first-child,form.add .btn{grid-column:1/-1}}
 .specials .head h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}
 .specials .head h2::before{content:"";display:inline-block;background:var(--gold);transform:rotate(45deg);margin-right:10px;vertical-align:2px;box-shadow:1px 1px 0 var(--rpg-shadow)}
 .filters button{border:2px solid var(--line);border-radius:5px;font-weight:700}
-.filters button[aria-pressed="true"]{background:var(--gold);color:#2a1c0c;border-color:color-mix(in srgb,var(--gold) 50%,#000)}
+.filters button[aria-pressed="true"]{background:var(--gold);color:var(--ui-trait);border-color:color-mix(in srgb,var(--gold) 50%,#000)}
 .sq .sqk{font-family:var(--f-body);font-weight:700;text-transform:none;letter-spacing:0;opacity:1}
 .sq .sqk{font-size:13px}
 .sq .sqk::before{content:""}
@@ -146,7 +146,7 @@ form.add label:first-child,form.add .btn{grid-column:1/-1}}
 .jrn summary::after{content:"";width:16px;height:16px;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22/%3E%3C/svg%3E") center/contain no-repeat;display:inline-block}
 .lzc,.edcard{border-radius:var(--rad);box-shadow:var(--csh);border-width:2px;border-style:solid;border-color:var(--line)}
 .edcard{border-style:dashed;box-shadow:none}
-.slrow .btn,form.add .btn.primary{background:var(--gold);color:#2a1606;border:2px solid color-mix(in srgb,var(--gold) 50%,#000);box-shadow:0 3px 0 color-mix(in srgb,var(--gold) 40%,#000);border-radius:var(--rad);font-weight:700;text-shadow:none}
+.slrow .btn,form.add .btn.primary{background:var(--gold);color:var(--ui-trait);border:2px solid color-mix(in srgb,var(--gold) 50%,#000);box-shadow:0 3px 0 color-mix(in srgb,var(--gold) 40%,#000);border-radius:var(--rad);font-weight:700;text-shadow:none}
 .aced,#seeAll{background:var(--surface);color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--rpg-shadow);border-radius:var(--rad)}
 .aced:active,.lzbtn:active:not(:disabled){transform:translateY(3px);box-shadow:none}
 .sqx{background:transparent;border:0;box-shadow:none;color:var(--muted);display:inline-grid;place-items:center}
@@ -320,7 +320,7 @@ html[data-mo="soir"] .wrap>#sqBox{order:-14}
 .lzbtn.ms .msl{display:block;font-size:11px;font-weight:800;color:var(--muted)}
 .lzbtn.ms .msl b{color:var(--zc,var(--gold))}
 .lzbtn.ms .msd{display:flex;gap:3px;justify-content:center;margin:2px 0}
-.lzbtn.ms .msd i{width:12px;height:6px;background:var(--line);border:1px solid #1a1210}
+.lzbtn.ms .msd i{width:12px;height:6px;background:var(--line);border:1px solid var(--ui-trait)}
 .lzbtn.ms .msd i.on{background:#5fae4f}
 .lzbtn.ms .msd i.cur{background:var(--gold)}
 .lzbtn.wait{opacity:.75;background:repeating-linear-gradient(135deg,transparent 0 8px,color-mix(in srgb,var(--line) 40%,transparent) 8px 16px)}
@@ -329,7 +329,7 @@ html[data-mo="soir"] .wrap>#sqBox{order:-14}
 .lzbtn.sugb{background:color-mix(in srgb,var(--zc) 12%,var(--surface))}
 .sugb em{margin:0}
 .actdots{gap:8px}
-.actdots button{min-height:0;width:12px;height:12px;padding:0;font-size:0;border:2px solid #1a1210;border-radius:0;background:color-mix(in srgb,var(--zc) 35%,var(--surface));box-shadow:none}
+.actdots button{min-height:0;width:12px;height:12px;padding:0;font-size:0;border:2px solid var(--ui-trait);border-radius:0;background:color-mix(in srgb,var(--zc) 35%,var(--surface));box-shadow:none}
 .actdots button span{display:none}
 .actdots button[aria-current="true"]{width:26px;background:var(--zc)}
 .nowbox{display:grid;gap:8px}
@@ -429,7 +429,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .slhd{display:flex;align-items:baseline;gap:8px}
 .slhd b{font-size:15px}
 .slhd small{opacity:.7;font-size:13px}
-.sltr{display:grid;grid-template-columns:8fr 9fr;height:30px;background:linear-gradient(90deg,#2b2266,#0d1236 45%,#1d2350 60%,#f08a5a 80%,#7fd4ff);border:2px solid #1a1210}
+.sltr{display:grid;grid-template-columns:8fr 9fr;height:30px;background:linear-gradient(90deg,#2b2266,#0d1236 45%,#1d2350 60%,#f08a5a 80%,#7fd4ff);border:2px solid var(--ui-trait)}
 .slh{position:relative;display:block;min-width:0}
 
 .sltr input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:100%;margin:0;background:transparent;cursor:pointer}
@@ -456,7 +456,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .sq.idq .idqr{width:auto;flex:0 0 auto}
 .jday{display:flex;gap:6px;margin:8px 0}
 .jday button{flex:1;padding:8px;font:inherit;font-size:13px;font-weight:800;background:var(--surface-2);color:var(--muted);border:2px solid var(--line);cursor:pointer}
-.jday button[aria-pressed="true"]{background:var(--gold);color:#2a1606;border-color:#2a1606}
+.jday button[aria-pressed="true"]{background:var(--gold);color:var(--ui-trait);border-color:var(--ui-trait)}
 .fqh{font-style:normal;margin-left:6px;padding:1px 6px;background:rgba(0,0,0,.3);color:#fff;font-weight:800;white-space:nowrap}
 /* — depuis epure-atelier-rituels.css — */
 .rwt.add{--kc:var(--muted);border-style:dashed;background:transparent;box-shadow:none;color:var(--muted);align-content:center}
@@ -477,7 +477,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .fqr.menu .fqno{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:215;width:min(300px,calc(100vw - 32px));display:grid;grid-template-columns:1fr;gap:8px;padding:16px;background:rgba(14,16,36,.96);box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5);margin:0}
 #fqBox .fqr .fqgo{min-height:44px}
 /* ===== Ma routine (refonte 26/10) : plein écran sombre, titre en haut, chrono en grand, liste à cocher, boutons en bas */
-.rtm.rtq{display:block;padding:0;background:#0d0f22;color:#fff3e0;overflow:hidden}
+.rtm.rtq{display:block;padding:0;background:var(--ui-trait);color:#fff3e0;overflow:hidden}
 /* le ciel du moment (même décor que la scène) en bandeau derrière le chrono, fondu vers le fond sombre */
 .rtq>.amb{position:absolute;inset:0 0 auto 0;height:240px;z-index:0;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 .rtq-in{position:relative;z-index:1;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;padding:calc(env(safe-area-inset-top,0px) + 12px) 24px calc(env(safe-area-inset-bottom,0px) + 16px)}
@@ -584,10 +584,10 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .jdbox .jdl.w .jdmini{width:100%;padding-left:62px;box-sizing:border-box}
 .jdbox .jdl.w .jdmini .btn{flex:1}
 /* journal : cases plus visuelles (30/10) — même structure ; la ligne légèrement teintée à la couleur du rituel, une vraie case à cocher pixel */
-.jdbox .jdl{background:linear-gradient(90deg,color-mix(in srgb,var(--jc) 22%,#141632) 0,#141632 55%)}
-.jdbox .jdl.ok{background:#141632}
+.jdbox .jdl{background:linear-gradient(90deg,color-mix(in srgb,var(--jc) 22%,var(--ui-trait)) 0,var(--ui-trait) 55%)}
+.jdbox .jdl.ok{background:var(--ui-trait)}
 .jdbox .jdck{border:2px solid rgba(255,247,230,.7);background:#0c0e1f;box-shadow:inset 3px 3px 0 rgba(0,0,0,.5)}
-.jdbox .jdl.ok .jdck{background:var(--gold);border-color:#1a1210;color:#1a1210;box-shadow:none}
+.jdbox .jdl.ok .jdck{background:var(--gold);border-color:var(--ui-trait);color:var(--ui-trait);box-shadow:none}
 .jdbox .jdl.ok>.jdck{opacity:1}
 .jdbox .jdl.sub{border-left:0}
 
@@ -600,7 +600,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 
 .jdbox .jdjours{display:flex;gap:3px;margin-top:6px}
 .jdbox .jdjours i{flex:1;height:10px;background:#0c0e1f;border:2px solid rgba(255,247,230,.55)}
-.jdbox .jdjours i.d{background:#6f8fe0}.jdbox .jdjours i.t{background:#ff6a2b;border-color:#1a1210}
+.jdbox .jdjours i.d{background:#6f8fe0}.jdbox .jdjours i.t{background:#ff6a2b;border-color:var(--ui-trait)}
 /* J.5 — rituel coché : glisse à droite puis se replie ; barre d'XP qui brille ; compteur qui rebondit */
 .jdbox .jdl.jdgo{animation:jdGo .38s ease-in forwards;overflow:hidden}
 @keyframes jdGo{0%{transform:none;opacity:1}55%{transform:translateX(70%);opacity:0;height:var(--h,auto)}100%{transform:translateX(70%);opacity:0;height:0;min-height:0;padding-top:0;padding-bottom:0;margin:0;border-width:0}}

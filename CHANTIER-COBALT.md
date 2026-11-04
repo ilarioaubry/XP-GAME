@@ -15,8 +15,13 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 - Couleurs de catégories regroupées par angle (sport, nourriture → Corps ; soi, créer → Esprit ; amis, famille, social, eau → Liens ; maison, planète → Foyer).
 - `parcours.py` : 0 échec.
 
+## Fait (lot 2, 04/11)
+- Nouvelle variable `--ui-trait` (#101443) : contours pixel, ombres dures, texte sur orange.
+- Bruns-noirs des contours (`#1a1210`, `#2a1c0c`, `#2a1606`, `#24182c`, `#16121c`) et bleus nuit (`#0d0f22`, `#141632`) → `var(--ui-trait)` ; or `#e0a020` → `var(--ui-or)` ; fond `rgba(12,14,32,.62)` → `var(--ui-fond)`.
+- parcours 0 échec, centrage 0.
+
 ## Reste, dans l'ordre
-1. Couleurs encore écrites en dur (≈1 100) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
+1. Couleurs encore écrites en dur (≈900 : surtout `#000`, `#fff`, rgba noirs/blancs, quelques couleurs de catégories en dur `#5fae4f`, `#e3263a`, `#ff7aa8`…) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
 2. Aujourd'hui = maquette E Focus+ : question du haut selon l'heure (matin routine, midi repas, après-midi prochaine quête, soir bilan), 4 angles sous la planète, repas en tuiles + pastille « N repas · N groupes sur 3 ».
 3. Les 8 jauges → 4 angles (données gardées dans `S.g`, regroupement à l'affichage + migration si besoin).
 4. Assiette = maquette E Assiette : rangées gardées, carré par groupe, boutons « Repas sauté » / « Noter ce repas ».

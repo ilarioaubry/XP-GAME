@@ -118,8 +118,8 @@ html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp)
 .scgift{position:absolute;left:-14px;bottom:0;line-height:0}
 .scgift img{position:static;opacity:1;width:24px;height:auto}
 .pose-sit .scgift{left:22px;bottom:-4px;z-index:2}
-.scbub{position:absolute;right:-6px;bottom:calc(100% - 4px);background:#fffaf0;color:#24182c;border:2px solid #24182c;box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:4px 8px;font:700 13px/1.25 var(--font,system-ui);white-space:nowrap;opacity:0;transform:translateY(6px) scale(.9);transform-origin:80% 100%;transition:opacity .2s,transform .2s;pointer-events:none;z-index:3}
-.scbub::after{content:"";position:absolute;right:22px;top:100%;width:8px;height:6px;background:#fffaf0;border:2px solid #24182c;border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.scbub{position:absolute;right:-6px;bottom:calc(100% - 4px);background:#fffaf0;color:var(--ui-trait);border:2px solid var(--ui-trait);box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:4px 8px;font:700 13px/1.25 var(--font,system-ui);white-space:nowrap;opacity:0;transform:translateY(6px) scale(.9);transform-origin:80% 100%;transition:opacity .2s,transform .2s;pointer-events:none;z-index:3}
+.scbub::after{content:"";position:absolute;right:22px;top:100%;width:8px;height:6px;background:#fffaf0;border:2px solid var(--ui-trait);border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
 .scbub b{color:#c2185b}
 .scvis.talk .scbub{opacity:1;transform:none}
 
@@ -137,8 +137,8 @@ html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp)
 
 
 .scn.glad.pose-walk .scav{animation-duration:20s}
-.scbk{position:absolute;left:50%;top:-34px;width:34px;height:34px;margin-left:-17px;background:#fffaf0;border:2px solid #24182c;box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:3px;box-sizing:border-box;z-index:4;animation:scBk 2.2s ease both}
-.scbk::after{content:"";position:absolute;left:12px;top:100%;width:6px;height:5px;background:#fffaf0;border:2px solid #24182c;border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.scbk{position:absolute;left:50%;top:-34px;width:34px;height:34px;margin-left:-17px;background:#fffaf0;border:2px solid var(--ui-trait);box-shadow:3px 3px 0 rgba(36,24,44,.35);padding:3px;box-sizing:border-box;z-index:4;animation:scBk 2.2s ease both}
+.scbk::after{content:"";position:absolute;left:12px;top:100%;width:6px;height:5px;background:#fffaf0;border:2px solid var(--ui-trait);border-top:0;clip-path:polygon(0 0,100% 0,0 100%)}
 .scbk svg{width:100%;height:100%;display:block}
 .scfx{position:absolute;inset:0;pointer-events:none;z-index:3}
 .scfx i{position:absolute;display:block;animation-fill-mode:both;animation-timing-function:linear}
@@ -148,7 +148,7 @@ html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp)
 .scfx .fw{width:22px;height:2px;background:rgba(255,255,255,.85);animation:fxMove 1s linear both}
 .scfx .fl{width:5px;height:4px;background:#6ccf5a;box-shadow:1px 1px 0 #2f8a3a;animation:fxMove 1.1s linear both}
 .scfx .fm{width:4px;height:6px;background:rgba(240,240,248,.9);animation:fxMove 1.2s ease-out both}
-.scfx .ff{width:7px;height:6px;background:#fff;box-shadow:0 0 0 2px #24182c;animation:fxPop 1.2s ease both}
+.scfx .ff{width:7px;height:6px;background:#fff;box-shadow:0 0 0 2px var(--ui-trait);animation:fxPop 1.2s ease both}
 .scfx .fg{top:92px;width:60px;height:14px;box-sizing:border-box;border:3px solid #4fd07a;border-radius:50%;animation:fxRing 1.3s ease-out both}
 .sccloud{position:absolute;left:8px;top:-26px;width:48px;height:24px;z-index:3;animation:scBob 2.4s ease-in-out infinite}
 .sccloud svg{width:100%;height:100%;display:block}
@@ -217,8 +217,8 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 .scn.se-ete .scnt small{color:#ffd23d}
 #trkBox .bnd-mode{border:0;background:none;padding:2px;width:100%;text-align:left;font:inherit;color:var(--muted);cursor:pointer}
 
-#sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff3e0;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
-#sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff3e0;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
+#sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff3e0;border:2px solid var(--ui-trait);border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
+#sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff3e0;border-left:2px solid var(--ui-trait);border-bottom:2px solid var(--ui-trait);transform:skewY(-30deg)}
 #sceneBox .scbub svg{width:100%;height:100%}
 /* — depuis epure-02.css — */
 #trkBox .bnd-mode{display:none}
@@ -237,7 +237,7 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 :is(.qbar){box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden}
 :is(.qbar){height:18px}
 :is(.qbar)>i{height:100%;margin:0;top:0;box-shadow:none}
-:is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff3e0;box-shadow:none;min-height:44px;box-sizing:border-box}
+:is(.scsnd,.scwx,.trk-b){background:var(--ui-fond);border:2px solid rgba(255,255,255,.17);color:#fff3e0;box-shadow:none;min-height:44px;box-sizing:border-box}
 :is(.scsnd,.trk-b){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
 /* barre d'XP d'Aujourd'hui : contenu centré dans son cadre (marges symétriques, pas de colonne vide en bout) */
 #qxpBtn{grid-template-columns:auto minmax(0,1fr) auto;padding:6px 12px;align-items:center;align-content:center}

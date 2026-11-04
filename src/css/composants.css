@@ -9,6 +9,7 @@
 /* ---------- 3.1 · Variables ---------- */
 :root{
   /* couleurs à sens unique */
+  --ui-trait:#101443;              /* contours pixel, ombres dures, texte sur orange */
   --ui-or:#ff6a2b;                 /* action principale, sélection, progression */
   --ui-or-texte:#101443;           /* texte sur fond or */
   --ui-alerte:#ff9ec7;             /* nouveau / alerte */
@@ -180,7 +181,7 @@ html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body 
 /* ---------- Règles communes à toute l'appli, sorties de aujourdhui.css (1.6, 02/11) ; leur priorité reste celle d'avant jusqu'au nettoyage de composants (3.7) ---------- */
 html body .xph{display:none}
 .wrap section:not(#fqBox) .head .count{display:none}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr){background:rgba(12,14,32,.62)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff3e0!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.btn:not(.primary):not(.enb):not(.on):not([aria-pressed="true"]),.idqr){background:var(--ui-fond)!important;border:2px solid rgba(255,255,255,.17)!important;color:#fff3e0!important;box-shadow:none!important;min-height:44px!important;box-sizing:border-box!important}
 /* crans de difficulté (lot 4) : 1 à 3 petites barres pixel, comme le réseau d'un téléphone */
 .crans{display:inline-flex;align-items:flex-end;gap:1px;width:11px;height:11px;margin-right:6px;vertical-align:-1px;flex:none}
 .crans span{display:block;width:3px;background:rgba(255,247,230,.25)}
