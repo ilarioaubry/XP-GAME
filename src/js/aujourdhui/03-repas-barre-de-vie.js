@@ -59,14 +59,14 @@ function ritPer(t){return t.when==="soir"?"soir":"matin"}
 const RARE={secret:["Quête secrète","une quête rare t'attend","#9b5de5"]};
 // plus d'indicateurs dans les boutons (appui long, minuteur, écran) : retirés à la demande d'Ilario ; les gestes restent
 function tagVK(){document.querySelectorAll(".vk").forEach(i=>i.remove())}
-let nowRaf=0;function schedNow(){if(nowRaf)return;nowRaf=requestAnimationFrame(()=>{nowRaf=0;renderNow();tagVK()})}
+let nowRaf=0;function schedNow(){if(nowRaf)return;nowRaf=requestAnimationFrame(()=>{nowRaf=0;renderNow();try{renderTodayE()}catch(e){console.warn("todayE",e)}tagVK()})}
 function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=dayKey(Date.now());let h="",set=false;
   if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.seen){const R0=RARE[G.rare.k];h+=`<div class="rarec rare1" style="--rc:${R0[2]}"><b>${R0[0]}<span class="rared"> : ${R0[1]}</span></b><button type="button" class="rarex" aria-label="OK">${ICO("check",16)}</button></div>`}
   if(lateNight()){h+=`<div class="nowc night"><span class="nowk">Il est tard</span><b>Le reste attendra demain</b><small>Pose le téléphone. Bonne nuit.</small></div>`}
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
   else{const T=[];
-    h+=focusQ()+anglesRow()+mealTiles();
+    h+=focusQ();
     const t=T[0];
     if(t){const [el,lab,col]=t,nm=(el.dataset.tmn||el.textContent||"").trim(),soft=isSoft();
       h+=`<div class="nowc" style="--nc:${col}"><span class="nowk">Maintenant · ${esc(lab)}</span><b class="nown"></b>${soft?`<small>Journée difficile : aucun malus.</small>`:""}<button type="button" class="btn nowgo" data-tm="${esc(el.dataset.tm||"")}" data-tmn="${esc(nm)}"${el.closest(".dqi")?' data-nohold="1"':""}>C'est parti</button>${durOf(nm)&&el.dataset.tm?`<button type="button" class="nowdone">Déjà fait</button>`:""}</div>`;
@@ -85,16 +85,16 @@ function focusQ(){FOCK=[];const G=S.g,tk=dayKey(Date.now()),hh=dayH(),END={pdej:
   for(const [k,per,l] of MEALS){if(hh<MEAL_H[k]||hh>=END[k])continue;if(mealState(k,per))break;const pl=MB_PLM.includes(k);
     return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
   if(momentOf()==="matin"){let n=0;try{n=rtmSteps(dayPer()).length}catch(e){}if(n>1)return card("Bien réveillé ? On lance ta routine ?",`<button type="button" class="btn primary" data-fk="${fk(()=>rtmOpen())}">Lancer la routine</button>`)}
-  if(momentOf()==="midi"||momentOf()==="soir"){const q=[...document.querySelectorAll("#fqBox .fqgo[data-tm],#sqBox .fqgo[data-tm]")].find(b=>b.offsetParent!==null);
+  if(momentOf()==="midi"||momentOf()==="soir"){const q=[...document.querySelectorAll("#fqBox .fqgo[data-tm],#sqBox .fqgo[data-tm]")].find(Boolean);
     if(q){const nm=(q.dataset.tmn||"").trim(),tm=q.dataset.tm;if(nm)return card(`${esc(nm)} ?`,`<button type="button" class="btn primary" data-fk="${fk(()=>{const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()})}">C'est parti</button>`)}}
   if(hh>=21&&!((G.jr||{})[tk]||{}).at)return card("Comment s'est passée ta journée ?",`<button type="button" class="btn primary" data-fk="${fk(()=>closeOpen())}">Faire mon bilan</button>`);
   return""}
 // repas en tuiles (maquette E) : fait = rose et coche, en cours = orange avec Assiette, à venir = l'heure
 function mealTiles(){const hh=dayH(),tk=dayKey(Date.now()),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};let pris=0;
   const T=MEALS.map(([k,per,l,ic])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),cur=!st&&hh>=MEAL_H[k],now=cur&&hh<END[k];if(st==="ok")pris++;
-    const go=fk(ev=>{if(st&&!(pl&&st==="ok")){try{mealClear(tk,per,k);save();render()}catch(e){}return}pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev)});
-    if(st)return`<button type="button" class="mt mt-ok" data-fk="${go}">${pxImg(ic,3)}<b>${l}</b><small>${st==="ok"?"Pris":"Sauté"}</small></button>`;
-    if(cur)return`<div class="mt mt-now${now?"":" mt-late"}"><span class="mtt"><b>${l}</b><small>À noter</small></span><span class="mtb"><button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${go}">${pl?"Assiette":"Pris"}</button></span></div>`;
+    const go=tdk(ev=>{if(st&&!(pl&&st==="ok")){try{mealClear(tk,per,k);save();render()}catch(e){}return}pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev)});
+    if(st)return`<button type="button" class="mt mt-ok" data-tdk="${go}">${pxImg(ic,3)}<b>${l}</b><small>${st==="ok"?"Pris":"Sauté"}</small></button>`;
+    if(cur)return`<div class="mt mt-now${now?"":" mt-late"}"><span class="mtt"><b>${l}</b><small>À noter</small></span><span class="mtb"><button type="button" class="btn" data-tdk="${tdk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-tdk="${go}">${pl?"Assiette":"Pris"}</button></span></div>`;
     return`<div class="mt mt-next">${pxImg(ic,3)}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
   let g=0;try{const t=plTot(tk);g=["f","p","l"].filter(x=>t[x]>0).length}catch(e){}
   const sq=n=>[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("");

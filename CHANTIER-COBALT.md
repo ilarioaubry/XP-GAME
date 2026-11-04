@@ -27,6 +27,12 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 - Note test : `shots.py` met l'horloge en pause, donc `renderNow` (requestAnimationFrame) ne se dessine pas dans ses captures : appeler `renderNow()` à la main.
 - À reprendre : le bouton + flottant recouvre la dernière tuile de repas ; « Quête secrète » s'affiche au-dessus de la question.
 
+## Fait (lot 5, 04/11) : page neuve Aujourd'hui
+- `#todayE` (index.src.html) + `js/aujourdhui/page-e.js` (`renderTodayE`, appelé par `schedNow`) + `css/aujourdhui-e.css` : en-tête (date, niveau, +), ligne coffre, question du moment (#nowBox / renderNow), demi-sphère + personnage, 4 angles, panneau crème (quêtes du jour + idées des quêtes spéciales, repas en tuiles, routine, bilan du soir).
+- Les anciennes sections d'Aujourd'hui sont seulement MASQUÉES (règle en tête d'aujourdhui-e.css) : leurs fonctions servent encore de moteur (quêtes `.fqgo`, coffre « Ouvrir »). `parcours.py` les remet visibles via `html.tde-off` pour les tester.
+- Décisions d'Ilario (04/11) : Ta semaine dernière et Fait aujourd'hui → Moi > Bilan ; coffre → ligne du haut ; rituels → seulement dans la routine ; Mes suivis → ligne compacte dans le panneau ; Mes engagements → Moi > Ma vie ; Plus tard aujourd'hui → retiré ; Quêtes spéciales → idée du moment / défi.
+- Reste sur cette page : humeur + nuit en haut du panneau, Mes suivis compacts, roulette des proches, ciel cobalt derrière la page (le ciel d'ambiance passe encore sous les marges), déplacer les blocs ci-dessus puis SUPPRIMER les anciennes sections (HTML, JS, CSS) et la règle de masquage.
+
 ## Reste, dans l'ordre
 1. Couleurs encore écrites en dur (≈900 : surtout `#000`, `#fff`, rgba noirs/blancs, quelques couleurs de catégories en dur `#5fae4f`, `#e3263a`, `#ff7aa8`…) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
 2. Aujourd'hui = maquette E Focus+ : question du haut selon l'heure (matin routine, midi repas, après-midi prochaine quête, soir bilan), 4 angles sous la planète, repas en tuiles + pastille « N repas · N groupes sur 3 ».

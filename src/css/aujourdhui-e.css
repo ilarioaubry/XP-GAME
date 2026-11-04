@@ -1,0 +1,50 @@
+/* Aujourd'hui, maquette E (Cobalt). Transition : les anciennes sections d'Aujourd'hui sont masquées
+   tant que leurs fonctions ne sont pas migrées ; elles seront supprimées (HTML, JS, CSS) à la fin du chantier. */
+html:not(.tde-off) .wrap>section[data-v="q"]:not(#todayE){display:none!important}
+.tde{order:-30;margin:0 -16px;background:var(--surface-2);color:var(--ui-creme);display:grid}
+.tde-bar{display:flex;align-items:center;gap:12px;padding:8px 16px}
+.tde-bar>div:first-child{flex:1;display:grid}
+.tde-date{font-family:var(--f-pixel);font-weight:400;font-size:22px;line-height:26px;text-transform:capitalize}
+.tde-bar small,.tde-chest small{font-size:13px;color:var(--ui-creme-2)}
+.tde-lv{display:grid;justify-items:end;gap:6px}.tde-lv b{font-family:var(--f-pixel);font-weight:400;font-size:16px}
+.tde-seg{display:flex;gap:2px}.tde-seg i{width:8px;height:6px;background:var(--line)}.tde-seg i.on{background:var(--c-sport)}
+.tde-seg.big i{width:9px;height:10px}.tde-seg.big i.on{background:var(--ui-or)}
+.tde-plus{width:44px;height:44px;border:0;background:var(--ui-creme);color:var(--ui-trait);display:flex;align-items:center;justify-content:center}
+.tde-chest{display:flex;align-items:center;gap:10px;padding:0 16px;min-height:44px}.tde-chest small{flex:1}
+.tde-chest .btn{min-height:44px;margin:0}
+.tde-q{margin:8px 16px 0}
+.tde-hero{position:relative;height:150px;overflow:hidden}
+.tde-dome{position:absolute;left:-15px;top:56px;width:420px;height:210px}
+.tde-av{position:absolute;left:50%;top:0;transform:translateX(-50%)}.tde-av img{display:block;image-rendering:pixelated;width:64px}
+#tdAng .angles{padding:12px 16px 16px;background:var(--surface-2)}
+.tde-panel{background:var(--ui-creme);color:var(--ui-trait);padding:0 16px 40px;display:grid;gap:4px}
+.tde-grip{width:40px;height:6px;background:var(--ui-trait);margin:8px auto}
+.tde-h{display:flex;align-items:center;gap:10px;height:32px;margin-top:10px;font-family:var(--f-pixel);font-size:20px;text-transform:uppercase}
+.tde-h .count{font-style:normal;margin-left:auto;color:var(--surface-2);font-size:15px}
+.tde-dia{width:9px;height:9px;background:var(--ui-or);transform:rotate(45deg);flex:none}
+.tde-row{display:flex;align-items:center;gap:12px;min-height:60px;padding:0 8px 0 14px;background:#f6e6c8;border:0;font:inherit;color:inherit;text-align:left;width:100%}
+.tde-rt{flex:1;min-width:0;display:grid}.tde-rt b{font-size:15px;line-height:19px}.tde-rt small{font-size:11px;line-height:13px;font-weight:700}
+.tde-row .btn{min-height:44px;margin:0;background:var(--ui-trait);color:var(--ui-creme);border:0}
+.tde-idee{background:var(--c-sport)}.tde-defi{background:var(--surface-2);color:var(--ui-creme)}.tde-defi .btn{background:var(--ui-creme);color:var(--ui-trait)}
+.tde-soft{opacity:.85}
+.tde-dots{height:2px;margin:14px 0 10px;background-image:linear-gradient(90deg,var(--line) 50%,transparent 50%);background-size:8px 2px}
+.tde-panel .vide{text-align:center;font-size:13px}
+/* repas dans le panneau crème */
+.tde-panel .mthead>span:first-child{font-size:20px}
+.tde-panel .mtpill{color:var(--surface-2)}.tde-panel .mtpill i{background:#d9c59f}
+.tde-panel .mt{background:#f6e6c8;color:var(--ui-trait)}.tde-panel .mt small{color:#4a4a6a}
+.tde-panel .mt-ok{background:var(--c-sport)}
+.tde-panel .mt-now:not(.mt-late){background:var(--ui-or)}
+.tde-panel .mt-now.mt-late .mtb .btn:not(.primary){color:var(--ui-trait);border-color:var(--ui-trait)}
+.nowbox .focq{margin:0}
+/* priorité sur les anciennes règles de section et de bouton */
+html:not(#_a):not(#_b) body .wrap>#todayE.tde{background:#2433d6;padding:0;border:0;box-shadow:none}
+html:not(#_a):not(#_b) body #tdAng .angles{background:#2433d6}
+#todayE .tde-h .count{color:#2433d6}#todayE .tde-defi{background:#2433d6}
+body:has(#todayE) #afFab{display:none!important}
+#todayE .focqt{font-family:var(--f-pixel);font-weight:400}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .btn:not(.primary){background:transparent!important;color:var(--ui-trait)!important;border:2px solid var(--ui-trait)!important;box-shadow:none!important}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .mt-late .btn.primary{background:var(--ui-or);color:var(--ui-trait)}
+#todayE .tde-panel{padding-bottom:120px}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .mt-ok .btn,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .tde-row .btn.primary{background:var(--ui-trait);color:var(--ui-creme)}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .focqb .btn.primary,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .tde-chest .btn.primary{background:var(--ui-or);color:var(--ui-trait)}

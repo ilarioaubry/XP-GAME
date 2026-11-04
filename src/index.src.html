@@ -25,6 +25,13 @@
 
 
   
+  <section data-v="q" id="todayE" class="tde" aria-label="Aujourd'hui">
+    <div class="tde-top" id="tdTop"></div>
+    <div class="tde-q nowbox" id="nowBox" aria-label="Maintenant"></div>
+    <div class="tde-hero" id="tdHero" aria-hidden="true"></div>
+    <div id="tdAng"></div>
+    <div class="tde-panel"><div class="tde-grip"></div><div id="tdQuests"></div><div id="tdMeals"></div><div id="tdEnd"></div></div>
+  </section>
   <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
   <section data-v="q" class="news" id="newsBox" aria-label="Les nouvelles du jour" hidden></section>
   <section data-v="q" class="nightb voff" id="nightBox" aria-label="Bonne nuit"></section>
@@ -42,7 +49,6 @@
   <section data-v="q" class="evmbox voff" id="evmBox" aria-label="Mode événement"></section>
   <section data-v="q" class="wksun voff" id="wkSun" aria-label="Ta semaine"></section>
   <section data-v="q" class="rit fqbox" id="fqBox" aria-label="Aujourd'hui"></section>
-  <section data-v="q" class="nowbox" id="nowBox" aria-label="Maintenant"></section>
   <section data-v="q" class="gbox" id="gameBox" aria-label="Coffres"></section>
   <section data-v="q" class="xmbox voff" id="xmBox" aria-label="Saison des fêtes"></section>
   
@@ -245,6 +251,7 @@
   @@include(js/coeur/scenes.js)@@
   @@include(js/coeur/paliers.js)@@
   @@include(js/aujourdhui/23-coffres-quetes-du-jour.js)@@
+  @@include(js/aujourdhui/page-e.js)@@
   @@include(js/moi/24-defis-skill-vie-perso.js)@@
   @@include(js/moi/25-chez-moi.js)@@
   @@include(js/moi/25a-chez-moi-pieces.js)@@
@@ -273,6 +280,9 @@
 </style>
 <style id="z-moi">
   @@include(css/moi.css)@@
+</style>
+<style id="z-aujourdhui-e">
+  @@include(css/aujourdhui-e.css)@@
 </style>
 <style id="z-fenetres">
   @@include(css/fenetres.css)@@
