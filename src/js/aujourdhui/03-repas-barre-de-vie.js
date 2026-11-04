@@ -66,8 +66,7 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
   else{const T=[];
-    
-
+    h+=focusQ()+anglesRow();
     const t=T[0];
     if(t){const [el,lab,col]=t,nm=(el.dataset.tmn||el.textContent||"").trim(),soft=isSoft();
       h+=`<div class="nowc" style="--nc:${col}"><span class="nowk">Maintenant · ${esc(lab)}</span><b class="nown"></b>${soft?`<small>Journée difficile : aucun malus.</small>`:""}<button type="button" class="btn nowgo" data-tm="${esc(el.dataset.tm||"")}" data-tmn="${esc(nm)}"${el.closest(".dqi")?' data-nohold="1"':""}>C'est parti</button>${durOf(nm)&&el.dataset.tm?`<button type="button" class="nowdone">Déjà fait</button>`:""}</div>`;
@@ -76,8 +75,21 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
       const nd=box.querySelector(".nowdone");if(nd)nd.onclick=()=>{if(tmOn()){toast("Un timer est en cours : termine-le d'abord");return}const real=document.querySelector(`[data-tm="${CSS.escape(el.dataset.tm||"")}"]:not(.nowgo)`)||el;window.__tmPass=true;try{real.click()}finally{window.__tmPass=false}}}
 }
   if(!set)box.innerHTML=h;
+  box.querySelectorAll("[data-fk]").forEach(b=>{const f=FOCK[+b.dataset.fk];if(f)b.onclick=ev=>{ev.stopPropagation();f(ev)}});
   const rx=box.querySelector(".rarex");if(rx)rx.onclick=()=>{G.rare.seen=1;save();renderNow()};
   if(G.rare&&G.rare.d===tk&&RARE[G.rare.k]&&!G.rare.played){G.rare.played=1;setTimeout(()=>sfx("level"),400)}}
+// Cobalt (04/11) : une seule question selon l'heure (repas en cours > routine du matin > bilan du soir)
+let FOCK=[];const fk=f=>(FOCK.push(f),FOCK.length-1);
+function focusQ(){FOCK=[];const G=S.g,tk=dayKey(Date.now()),hh=dayH(),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};
+  const card=(t,btns)=>`<div class="focq"><b class="focqt">${t}</b><div class="focqb">${btns}</div></div>`;
+  for(const [k,per,l] of MEALS){if(hh<MEAL_H[k]||hh>=END[k])continue;if(mealState(k,per))break;const pl=MB_PLM.includes(k);
+    return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
+  if(momentOf()==="matin"){let n=0;try{n=rtmSteps(dayPer()).length}catch(e){}if(n>1)return card("Bien réveillé ? On lance ta routine ?",`<button type="button" class="btn primary" data-fk="${fk(()=>rtmOpen())}">Lancer la routine</button>`)}
+  if(hh>=21&&!((G.jr||{})[tk]||{}).at)return card("Comment s'est passée ta journée ?",`<button type="button" class="btn primary" data-fk="${fk(()=>closeOpen())}">Faire mon bilan</button>`);
+  return""}
+// les 4 angles : regroupement à l'affichage des 8 jauges (données inchangées)
+const ANGLES=[["Corps","var(--c-sport)",["sport","nourriture","eau"],"halteres"],["Esprit","var(--c-soi)",["perso","soi","travail"],"soleil"],["Liens","var(--c-social)",["social","famille"],"duo"],["Foyer","var(--c-maison)",["maison","planete"],"maisonp"]];
+function anglesRow(){const st=(S&&S.stats)||{};return`<div class="angles" role="list">${ANGLES.map(([n,c,cats])=>{const I=statInfo(cats.reduce((a,k)=>a+(st[k]||0),0));return`<div class="ang" role="listitem" style="--ac:${c}"><span class="angn">${n}</span><b class="angl">${I.l}</b><span class="angb"><i style="width:${Math.round(100*I.cur/I.need)}%"></i></span></div>`}).join("")}</div>`}
 // renderBalance : finitions autour de renderBalanceBase (le cœur), ex-retouche de correctifs.js
 function renderBalance(){const r=renderBalanceBase.apply(this,arguments);try{balViz()}catch(e){console.warn("renderBalance",e)}return r}
 function renderBalanceBase(){const box=document.querySelector("#balCard .balrows");if(!box||!S.g)return;const G=S.g,off=isOff(),left=offLeft();

@@ -20,6 +20,11 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 - Bruns-noirs des contours (`#1a1210`, `#2a1c0c`, `#2a1606`, `#24182c`, `#16121c`) et bleus nuit (`#0d0f22`, `#141632`) → `var(--ui-trait)` ; or `#e0a020` → `var(--ui-or)` ; fond `rgba(12,14,32,.62)` → `var(--ui-fond)`.
 - parcours 0 échec, centrage 0.
 
+## Fait (lot 3, 04/11)
+- `renderNow` : carte « question du moment » (`focusQ`) : repas en cours (Sauté / Remplir l'assiette ou Pris) > routine du matin > bilan après 21 h ; rangée des 4 angles (`anglesRow`, regroupement à l'affichage des 8 jauges via `ANGLES`). CSS `.focq`, `.angles` dans `aujourdhui.css`.
+- Vérifié dans le DOM (midi : carte + angles rendus, display grid), parcours 0, centrage 0. Pas encore vu en capture : `shots.py` ne montre pas la zone ; à placer juste sous la scène (au-dessus de « Ta semaine dernière »).
+- Reste pour Aujourd'hui : après-midi = prochaine quête, tuiles de repas + pastille, retirer les doublons (Ce midi / repas du journal).
+
 ## Reste, dans l'ordre
 1. Couleurs encore écrites en dur (≈900 : surtout `#000`, `#fff`, rgba noirs/blancs, quelques couleurs de catégories en dur `#5fae4f`, `#e3263a`, `#ff7aa8`…) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
 2. Aujourd'hui = maquette E Focus+ : question du haut selon l'heure (matin routine, midi repas, après-midi prochaine quête, soir bilan), 4 angles sous la planète, repas en tuiles + pastille « N repas · N groupes sur 3 ».

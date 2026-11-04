@@ -663,3 +663,14 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .clo2 .bsp[aria-pressed="false"] .bsp-i{opacity:.85}
 .clo2 .bsp-g{grid-column:span 2;grid-template-columns:44px minmax(0,1fr);justify-items:start;align-items:center;gap:8px;padding:8px}
 .clo2 .bsp-g .bsp-n{font-size:var(--ui-t-texte)}
+
+/* Cobalt : question du moment et 4 angles (maquette E Focus+) */
+.focq{background:var(--ui-creme);color:var(--ui-trait);padding:16px;display:grid;gap:12px}
+.focqt{font-family:var(--f-pixel);font-weight:400;font-size:24px;line-height:28px}
+.focqb{display:flex;gap:8px}.focqb .btn{flex:1;min-height:44px;margin:0}
+.focqb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
+.angles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 0 4px}
+.ang{display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 6px}
+.angn{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
+.angl{font-family:var(--f-pixel);font-weight:400;font-size:18px;line-height:20px;color:var(--ac)}
+.angb{grid-column:1/-1;height:6px;background:var(--line)}.angb i{display:block;height:100%;background:var(--ac)}
