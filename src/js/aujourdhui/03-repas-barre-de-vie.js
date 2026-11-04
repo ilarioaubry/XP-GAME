@@ -83,22 +83,26 @@ let FOCK=[];const fk=f=>(FOCK.push(f),FOCK.length-1);
 function focusQ(){FOCK=[];const G=S.g,tk=dayKey(Date.now()),hh=dayH(),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};
   const card=(t,btns)=>`<div class="focq"><b class="focqt">${t}</b><div class="focqb">${btns}</div></div>`;
   for(const [k,per,l] of MEALS){if(hh<MEAL_H[k]||hh>=END[k])continue;if(mealState(k,per))break;const pl=MB_PLM.includes(k);
-    return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
+    return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
   if(momentOf()==="matin"){let n=0;try{n=rtmSteps(dayPer()).length}catch(e){}if(n>1)return card("Bien réveillé ? On lance ta routine ?",`<button type="button" class="btn primary" data-fk="${fk(()=>rtmOpen())}">Lancer la routine</button>`)}
   if(momentOf()==="midi"||momentOf()==="soir"){const q=[...document.querySelectorAll("#fqBox .fqgo[data-tm],#sqBox .fqgo[data-tm]")].find(Boolean);
     if(q){const nm=(q.dataset.tmn||"").trim(),tm=q.dataset.tm;if(nm)return card(`${esc(nm)} ?`,`<button type="button" class="btn primary" data-fk="${fk(()=>{const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()})}">C'est parti</button>`)}}
   if(hh>=21&&!((G.jr||{})[tk]||{}).at)return card("Comment s'est passée ta journée ?",`<button type="button" class="btn primary" data-fk="${fk(()=>closeOpen())}">Faire mon bilan</button>`);
   return""}
-// repas en tuiles (maquette E) : fait = rose et coche, en cours = orange avec Assiette, à venir = l'heure
+// repas en tuiles (maquette E) : pris = rose et coche ; en cours = large orange + Assiette ; passé pas noté = « À noter » ;
+// à venir = l'heure. « Sauté » se choisit dans l'assiette (dej, dîner) ; toucher une tuile notée la rouvre ou l'efface.
+const PLATE_IC=`<svg class="mtic" width="40" height="24" viewBox="0 0 10 6" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h6v1h-6z M1 1h8v1h-8z M0 2h10v2h-10z M1 4h8v1h-8z M2 5h6v1h-6z"/><path class="mtin" d="M3 2h4v2h-4z"/></svg>`;
+const CHECK_IC=`<svg width="14" height="10" viewBox="0 0 7 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M5 0h2v1h-2z M4 1h2v1h-2z M0 2h2v1h-2z M3 2h2v1h-2z M1 3h3v1h-3z M2 4h1v1h-1z"/></svg>`;
 function mealTiles(){const hh=dayH(),tk=dayKey(Date.now()),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};let pris=0;
-  const T=MEALS.map(([k,per,l,ic])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),cur=!st&&hh>=MEAL_H[k],now=cur&&hh<END[k];if(st==="ok")pris++;
-    const go=tdk(ev=>{if(st&&!(pl&&st==="ok")){try{mealClear(tk,per,k);save();render()}catch(e){}return}pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev)});
-    if(st)return`<button type="button" class="mt mt-ok" data-tdk="${go}">${pxImg(ic,3)}<b>${l}</b><small>${st==="ok"?"Pris":"Sauté"}</small></button>`;
-    if(cur)return`<div class="mt mt-now${now?"":" mt-late"}"><span class="mtt"><b>${l}</b><small>À noter</small></span><span class="mtb"><button type="button" class="btn" data-tdk="${tdk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-tdk="${go}">${pl?"Assiette":"Pris"}</button></span></div>`;
-    return`<div class="mt mt-next">${pxImg(ic,3)}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
+  const T=MEALS.map(([k,per,l])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),past=hh>=MEAL_H[k],now=!st&&past&&hh<END[k];if(st==="ok")pris++;
+    const open=ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev);
+    if(st)return`<button type="button" class="mt mt-ok" aria-label="${l} : ${st==="ok"?"pris":"sauté"}" data-tdk="${tdk(ev=>{if(pl&&st==="ok")plateOpen(per,k,ev.currentTarget);else{try{mealClear(tk,per,k);save();render()}catch(e){}}})}">${PLATE_IC}<b>${l}</b>${st==="ok"?CHECK_IC:"<small>Sauté</small>"}</button>`;
+    if(now)return`<div class="mt mt-now"><div class="mtt"><span><b>${l}</b><small>À noter</small></span>${PLATE_IC}</div><button type="button" class="btn primary" data-tdk="${tdk(open)}">${pl?"Assiette":"Pris"}</button></div>`;
+    if(past)return`<button type="button" class="mt mt-late" data-tdk="${tdk(open)}">${PLATE_IC}<b>${l}</b><small>À noter</small></button>`;
+    return`<div class="mt mt-next">${PLATE_IC}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
   let g=0;try{const t=plTot(tk);g=["f","p","l"].filter(x=>t[x]>0).length}catch(e){}
   const sq=n=>[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("");
-  return`<div class="mtiles"><div class="mthead"><span>Mes repas</span><span class="mtpill" title="Groupes couverts dans les assiettes">${sq(g)}${pris} repas · ${g} groupe${g>1?"s":""} sur 3</span></div><div class="mtrow">${T}</div></div>`}
+  return`<div class="mtiles"><div class="tde-h"><span class="tde-dia"></span><span>Mes repas</span><span class="mtpill" title="Groupes couverts dans les assiettes">${sq(g)}${pris} repas · ${g} groupe${g>1?"s":""} sur 3</span></div><div class="mtrow">${T}</div></div>`}
 // les 4 angles : regroupement à l'affichage des 8 jauges (données inchangées)
 const ANGLES=[["Corps","var(--c-sport)",["sport","nourriture","eau"],"halteres"],["Esprit","var(--c-soi)",["perso","soi","travail"],"soleil"],["Liens","var(--c-social)",["social","famille"],"duo"],["Foyer","var(--c-maison)",["maison","planete"],"maisonp"]];
 function anglesRow(){const st=(S&&S.stats)||{};return`<div class="angles" role="list">${ANGLES.map(([n,c,cats])=>{const I=statInfo(cats.reduce((a,k)=>a+(st[k]||0),0));return`<div class="ang" role="listitem" style="--ac:${c}"><span class="angn">${n}</span><b class="angl">${I.l}</b><span class="angb"><i style="width:${Math.round(100*I.cur/I.need)}%"></i></span></div>`}).join("")}</div>`}

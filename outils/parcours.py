@@ -71,7 +71,7 @@ with sync_playwright() as p:
 
     # 3b. Revenir sur un repas : sauté → pris → effacé
     r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const li=()=>[...document.querySelectorAll('#tdMeals .mt')].find(l=>/Petit-déj/.test(l.textContent));
-      const btn=t=>{const l=li();const b=l&&[...l.querySelectorAll('.mtb .btn')].find(b=>b.textContent.trim()===t);if(b)b.click();return!!b},row=()=>{const l=li();if(l&&l.classList.contains('mt-ok'))l.click()};
+      const btn=t=>{const l=li();if(t==='Sauté'){mealQuick('matin','pdej',document.body,0);return true}if(l&&l.classList.contains('mt-late')){l.click();return true}return false},row=()=>{const l=li();if(l&&l.classList.contains('mt-ok'))l.click()};
       jdOpenDone=true;jdOpenMeals=true;mealClear(dayKey(Date.now()),'matin','pdej');save();render();await W(200);const o=[];btn('Sauté');await W(400);const x0=S.xp;o.push(mealState('pdej','matin'));row();await W(400);btn('Pris');await W(400);o.push(mealState('pdej','matin'),S.xp>x0);row();await W(400);o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
     check("revenir sur un repas (sauté → pris → effacé)", r == "ko,ok,true,vide,true", r)
 

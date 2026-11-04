@@ -4102,7 +4102,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version de5928e</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 1c202e9</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -5016,22 +5016,26 @@ let FOCK=[];const fk=f=>(FOCK.push(f),FOCK.length-1);
 function focusQ(){FOCK=[];const G=S.g,tk=dayKey(Date.now()),hh=dayH(),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};
   const card=(t,btns)=>`<div class="focq"><b class="focqt">${t}</b><div class="focqb">${btns}</div></div>`;
   for(const [k,per,l] of MEALS){if(hh<MEAL_H[k]||hh>=END[k])continue;if(mealState(k,per))break;const pl=MB_PLM.includes(k);
-    return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
+    return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
   if(momentOf()==="matin"){let n=0;try{n=rtmSteps(dayPer()).length}catch(e){}if(n>1)return card("Bien réveillé ? On lance ta routine ?",`<button type="button" class="btn primary" data-fk="${fk(()=>rtmOpen())}">Lancer la routine</button>`)}
   if(momentOf()==="midi"||momentOf()==="soir"){const q=[...document.querySelectorAll("#fqBox .fqgo[data-tm],#sqBox .fqgo[data-tm]")].find(Boolean);
     if(q){const nm=(q.dataset.tmn||"").trim(),tm=q.dataset.tm;if(nm)return card(`${esc(nm)} ?`,`<button type="button" class="btn primary" data-fk="${fk(()=>{const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()})}">C'est parti</button>`)}}
   if(hh>=21&&!((G.jr||{})[tk]||{}).at)return card("Comment s'est passée ta journée ?",`<button type="button" class="btn primary" data-fk="${fk(()=>closeOpen())}">Faire mon bilan</button>`);
   return""}
-// repas en tuiles (maquette E) : fait = rose et coche, en cours = orange avec Assiette, à venir = l'heure
+// repas en tuiles (maquette E) : pris = rose et coche ; en cours = large orange + Assiette ; passé pas noté = « À noter » ;
+// à venir = l'heure. « Sauté » se choisit dans l'assiette (dej, dîner) ; toucher une tuile notée la rouvre ou l'efface.
+const PLATE_IC=`<svg class="mtic" width="40" height="24" viewBox="0 0 10 6" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h6v1h-6z M1 1h8v1h-8z M0 2h10v2h-10z M1 4h8v1h-8z M2 5h6v1h-6z"/><path class="mtin" d="M3 2h4v2h-4z"/></svg>`;
+const CHECK_IC=`<svg width="14" height="10" viewBox="0 0 7 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M5 0h2v1h-2z M4 1h2v1h-2z M0 2h2v1h-2z M3 2h2v1h-2z M1 3h3v1h-3z M2 4h1v1h-1z"/></svg>`;
 function mealTiles(){const hh=dayH(),tk=dayKey(Date.now()),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};let pris=0;
-  const T=MEALS.map(([k,per,l,ic])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),cur=!st&&hh>=MEAL_H[k],now=cur&&hh<END[k];if(st==="ok")pris++;
-    const go=tdk(ev=>{if(st&&!(pl&&st==="ok")){try{mealClear(tk,per,k);save();render()}catch(e){}return}pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev)});
-    if(st)return`<button type="button" class="mt mt-ok" data-tdk="${go}">${pxImg(ic,3)}<b>${l}</b><small>${st==="ok"?"Pris":"Sauté"}</small></button>`;
-    if(cur)return`<div class="mt mt-now${now?"":" mt-late"}"><span class="mtt"><b>${l}</b><small>À noter</small></span><span class="mtb"><button type="button" class="btn" data-tdk="${tdk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-tdk="${go}">${pl?"Assiette":"Pris"}</button></span></div>`;
-    return`<div class="mt mt-next">${pxImg(ic,3)}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
+  const T=MEALS.map(([k,per,l])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),past=hh>=MEAL_H[k],now=!st&&past&&hh<END[k];if(st==="ok")pris++;
+    const open=ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev);
+    if(st)return`<button type="button" class="mt mt-ok" aria-label="${l} : ${st==="ok"?"pris":"sauté"}" data-tdk="${tdk(ev=>{if(pl&&st==="ok")plateOpen(per,k,ev.currentTarget);else{try{mealClear(tk,per,k);save();render()}catch(e){}}})}">${PLATE_IC}<b>${l}</b>${st==="ok"?CHECK_IC:"<small>Sauté</small>"}</button>`;
+    if(now)return`<div class="mt mt-now"><div class="mtt"><span><b>${l}</b><small>À noter</small></span>${PLATE_IC}</div><button type="button" class="btn primary" data-tdk="${tdk(open)}">${pl?"Assiette":"Pris"}</button></div>`;
+    if(past)return`<button type="button" class="mt mt-late" data-tdk="${tdk(open)}">${PLATE_IC}<b>${l}</b><small>À noter</small></button>`;
+    return`<div class="mt mt-next">${PLATE_IC}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
   let g=0;try{const t=plTot(tk);g=["f","p","l"].filter(x=>t[x]>0).length}catch(e){}
   const sq=n=>[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("");
-  return`<div class="mtiles"><div class="mthead"><span>Mes repas</span><span class="mtpill" title="Groupes couverts dans les assiettes">${sq(g)}${pris} repas · ${g} groupe${g>1?"s":""} sur 3</span></div><div class="mtrow">${T}</div></div>`}
+  return`<div class="mtiles"><div class="tde-h"><span class="tde-dia"></span><span>Mes repas</span><span class="mtpill" title="Groupes couverts dans les assiettes">${sq(g)}${pris} repas · ${g} groupe${g>1?"s":""} sur 3</span></div><div class="mtrow">${T}</div></div>`}
 // les 4 angles : regroupement à l'affichage des 8 jauges (données inchangées)
 const ANGLES=[["Corps","var(--c-sport)",["sport","nourriture","eau"],"halteres"],["Esprit","var(--c-soi)",["perso","soi","travail"],"soleil"],["Liens","var(--c-social)",["social","famille"],"duo"],["Foyer","var(--c-maison)",["maison","planete"],"maisonp"]];
 function anglesRow(){const st=(S&&S.stats)||{};return`<div class="angles" role="list">${ANGLES.map(([n,c,cats])=>{const I=statInfo(cats.reduce((a,k)=>a+(st[k]||0),0));return`<div class="ang" role="listitem" style="--ac:${c}"><span class="angn">${n}</span><b class="angl">${I.l}</b><span class="angb"><i style="width:${Math.round(100*I.cur/I.need)}%"></i></span></div>`}).join("")}</div>`}
@@ -14804,32 +14808,19 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .focq{background:var(--ui-creme);color:var(--ui-trait);padding:16px;display:grid;gap:12px}
 .focqt{font-family:var(--f-pixel);font-weight:400;font-size:24px;line-height:28px}
 .focqb{display:flex;gap:8px}.focqb .btn{flex:1;min-height:44px;margin:0}
-.nowbox .focqb .btn:not(.primary),.nowbox .nowbox .mtb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
-.nowbox .mt-late .mtb .btn:not(.primary){color:var(--ui-creme);border-color:var(--line)}
+.nowbox .focqb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
 .angles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 0 4px}
 .ang{display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 6px}
 .angn{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
 .angl{font-family:var(--f-pixel);font-weight:400;font-size:18px;line-height:20px;color:var(--ac)}
 .angb{grid-column:1/-1;height:6px;background:var(--line)}.angb i{display:block;height:100%;background:var(--ac)}
 
-.mtiles{display:grid;gap:6px;padding-top:8px}
-.mthead{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.mthead>span:first-child{font-family:var(--f-pixel);font-size:20px;text-transform:uppercase}
-.mtpill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--ui-creme-2)}
-.mtpill i{width:8px;height:8px;background:var(--line)}.mtpill i.on{background:var(--c-sport)}
-.mtrow{display:flex;gap:6px}
-.mt{flex:1;min-width:0;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px;border:0;font:inherit;color:var(--ui-creme);background:var(--surface);text-align:center}
-.mt b{font-size:13px;line-height:15px}.mt small{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
-.mt-ok{background:var(--c-sport);color:var(--ui-trait)}.mt-ok small{color:var(--ui-trait)}
-.mt-next{opacity:.7}
-.mt-now{flex:2.2;background:var(--ui-or);color:var(--ui-trait);align-items:stretch;justify-content:space-between;text-align:left;padding:8px}
-.mt-now.mt-late{flex:1;background:var(--surface);color:var(--ui-creme);align-items:center;text-align:center;padding:8px 4px}
-.mt-now.mt-late .mtt b{font-family:var(--f-body);font-weight:700;font-size:13px;line-height:15px}.mt-late small{color:var(--ui-creme-2)}
-.mt-late .mtb{flex-direction:column;width:100%}.mt-late .mtb .btn.primary{background:var(--ui-or);color:var(--ui-trait)}.mt-late .mtb .btn:not(.primary){color:var(--ui-creme);border-color:var(--line)}
-.mtt{display:grid}.mt-now .mtt b{font-family:var(--f-pixel);font-weight:400;font-size:17px;line-height:22px}.mt-now small{color:var(--ui-trait)}
-.mtb{display:flex;gap:4px}.mtb .btn{flex:1;min-height:44px;margin:0;padding:0 4px;font-size:13px}
-.mtb .btn.primary{background:var(--ui-trait);color:var(--ui-creme)}
-.mtb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
+.angles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 0 4px}
+.ang{display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 6px}
+.angn{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
+.angl{font-family:var(--f-pixel);font-weight:400;font-size:18px;line-height:20px;color:var(--ac)}
+.angb{grid-column:1/-1;height:6px;background:var(--line)}.angb i{display:block;height:100%;background:var(--ac)}
+
 </style>
 <style id="z-proches">/* — venues de base.css et composants.css (3.7, 02/11) : règles qui ne servent qu'à Proches — */
 .motl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
@@ -16221,13 +16212,21 @@ html:not(.tde-off) .wrap>section[data-v="q"]:not(#todayE){display:none!important
 .tde-soft{opacity:.85}
 .tde-dots{height:2px;margin:14px 0 10px;background-image:linear-gradient(90deg,var(--line) 50%,transparent 50%);background-size:8px 2px}
 .tde-panel .vide{text-align:center;font-size:13px}
-/* repas dans le panneau crème */
-.tde-panel .mthead>span:first-child{font-size:20px}
-.tde-panel .mtpill{color:var(--surface-2)}.tde-panel .mtpill i{background:#d9c59f}
-.tde-panel .mt{background:#f6e6c8;color:var(--ui-trait)}.tde-panel .mt small{color:#4a4a6a}
-.tde-panel .mt-ok{background:var(--c-sport)}
-.tde-panel .mt-now:not(.mt-late){background:var(--ui-or)}
-.tde-panel .mt-now.mt-late .mtb .btn:not(.primary){color:var(--ui-trait);border-color:var(--ui-trait)}
+/* repas en tuiles (maquette E : 70 / 142 / 64 / 64, hauteur 124) */
+.mtiles{display:grid;gap:4px;margin-top:10px}
+.mtpill{margin-left:auto;display:flex;align-items:center;gap:6px;font-family:var(--f-body);font-size:13px;font-weight:700;text-transform:none;color:#2433d6}
+.mtpill i{width:10px;height:10px;background:#d9c59f}.mtpill i.on{background:#2433d6}
+.mtrow{display:flex;gap:6px}
+.mt{flex:64 1 0;min-width:0;height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:6px 2px;border:0;font:inherit;background:#f6e6c8;color:var(--ui-trait);text-align:center}
+.mt b{font-size:13px;line-height:15px;font-weight:700}.mt small{font-size:11px;line-height:13px;color:#4a4a6a}
+.mt .mtic{color:#c9b78f}.mt .mtin{fill:#f6e6c8}
+.mt-ok{flex-basis:70px;flex-grow:70;background:var(--c-sport)}.mt-ok .mtic{color:var(--ui-trait)}.mt-ok .mtin{fill:var(--c-sport)}
+.mt-late small{color:#c94f1c;font-weight:700}
+.mt-now{flex:142 1 0;background:var(--ui-or);align-items:stretch;justify-content:space-between;text-align:left;padding:8px 8px 8px 10px}
+.mtt{display:flex;justify-content:space-between;align-items:flex-start}.mtt>span{display:grid}
+.mt-now .mtt b{font-family:var(--f-pixel);font-weight:400;font-size:17px;line-height:22px}.mt-now small{font-size:13px;line-height:16px;color:var(--ui-trait)}
+.mt-now .mtic{color:var(--ui-trait)}.mt-now .mtin{fill:var(--ui-or)}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .mt-now .btn.primary{min-height:40px;height:40px;margin:0;background:var(--ui-trait);color:var(--ui-creme);border:0;font-size:13px;font-weight:700}
 .nowbox .focq{margin:0}
 /* priorité sur les anciennes règles de section et de bouton */
 html:not(#_a):not(#_b) body .wrap>#todayE.tde{background:#2433d6;padding:0;border:0;box-shadow:none}
@@ -16236,10 +16235,13 @@ html:not(#_a):not(#_b) body #tdAng .angles{background:#2433d6}
 body:has(#todayE) #afFab{display:none!important}
 #todayE .focqt{font-family:var(--f-pixel);font-weight:400}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .btn:not(.primary){background:transparent!important;color:var(--ui-trait)!important;border:2px solid var(--ui-trait)!important;box-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .mt-late .btn.primary{background:var(--ui-or);color:var(--ui-trait)}
 #todayE .tde-panel{padding-bottom:120px}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .mt-ok .btn,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .tde-row .btn.primary{background:var(--ui-trait);color:var(--ui-creme)}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .focqb .btn.primary,html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .tde-chest .btn.primary{background:var(--ui-or);color:var(--ui-trait)}
+/* largeurs des tuiles : priorité sur les anciennes règles de bouton */
+#todayE .mtrow>.mt{flex:64 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;height:124px!important;min-height:0!important}
+#todayE .mtrow>.mt-ok{flex-grow:70!important}
+#todayE .mtrow>.mt-now{flex-grow:142!important}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}
