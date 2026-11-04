@@ -34,9 +34,9 @@ html.sky .qxp::before{display:none}
 
 .scn{position:relative;height:150px;margin:-6px 0 -4px;overflow:hidden}
 .scnt{position:absolute;left:2px;top:4px;display:grid;gap:1px;z-index:2;max-width:calc(100% - 56px)}
-.scnt b{font-family:var(--f-pixel);font-size:20px;color:#fff8e6;text-shadow:0 2px 0 rgba(0,0,0,.5);line-height:1.1}
-.scnt small{font-size:13px;font-weight:700;color:#fff8e6;opacity:.85;text-shadow:0 1px 0 rgba(0,0,0,.55)}
-.scsnd{position:absolute;right:2px;top:4px;z-index:2;width:40px;height:40px;display:grid;place-items:center;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff8e6;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);cursor:pointer}
+.scnt b{font-family:var(--f-pixel);font-size:20px;color:#fff3e0;text-shadow:0 2px 0 rgba(0,0,0,.5);line-height:1.1}
+.scnt small{font-size:13px;font-weight:700;color:#fff3e0;opacity:.85;text-shadow:0 1px 0 rgba(0,0,0,.55)}
+.scsnd{position:absolute;right:2px;top:4px;z-index:2;width:40px;height:40px;display:grid;place-items:center;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff3e0;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);cursor:pointer}
 
 .scgr{position:absolute;left:-16px;right:-16px;bottom:0;height:26px}
 .scgr svg{width:100%;height:100%;display:block}
@@ -142,7 +142,7 @@ html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp)
 .scbk svg{width:100%;height:100%;display:block}
 .scfx{position:absolute;inset:0;pointer-events:none;z-index:3}
 .scfx i{position:absolute;display:block;animation-fill-mode:both;animation-timing-function:linear}
-.scfx .fp{width:4px;height:4px;background:#fff3a0;box-shadow:0 0 0 2px #ffd94a;animation:fxPop .8s ease both}
+.scfx .fp{width:4px;height:4px;background:#fff3a0;box-shadow:0 0 0 2px #ff6a2b;animation:fxPop .8s ease both}
 .scfx .fd{width:2px;height:7px;background:#7fd4ff;box-shadow:1px 0 0 #2f8fe0;animation:fxMove .7s linear both}
 .scfx .fs{width:4px;height:4px;background:#9ae8ff;box-shadow:0 0 0 1px #2f8fe0;animation:fxMove .8s ease-out both}
 .scfx .fw{width:22px;height:2px;background:rgba(255,255,255,.85);animation:fxMove 1s linear both}
@@ -179,14 +179,14 @@ html.nightcalm .wrap>section[data-v="q"]:not(#nightBox):not(#sceneBox):not(.qxp)
 .pose-walk .scav.groove,.pose-idle .scav.groove{filter:drop-shadow(0 0 0 transparent)}
 
 .scnt{padding-right:100px;box-sizing:border-box}
-.scwx{position:absolute;right:48px;top:4px;z-index:2;height:40px;min-width:40px;padding:0 8px 0 6px;display:flex;align-items:center;gap:5px;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff8e6;font:800 15px/1 var(--font,system-ui);cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.scwx{position:absolute;right:48px;top:4px;z-index:2;height:40px;min-width:40px;padding:0 8px 0 6px;display:flex;align-items:center;gap:5px;border:1.5px solid rgba(255,255,255,.25);border-radius:10px;background:rgba(10,12,28,.45);color:#fff3e0;font:800 15px/1 var(--font,system-ui);cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .scwx svg{width:22px;height:20px;display:block}
 .scumb{position:absolute;left:13px;top:-14px;width:42px;height:84px;z-index:3;pointer-events:none}
 .scumb svg{width:100%;height:100%;display:block}
 .pose-sit .scumb{left:13px;top:-10px;height:70px}
 /* — depuis principal-09.css — */
 html.evmode #sceneBox{box-shadow:inset 0 -6px 0 var(--evc)}
-html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;right:6%;top:6px;height:14px;pointer-events:none;background:repeating-linear-gradient(90deg,var(--evc) 0 10px,transparent 10px 14px,#ffc94a 14px 24px,transparent 24px 28px);clip-path:polygon(0 0,100% 0,100% 50%,0 50%)}
+html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;right:6%;top:6px;height:14px;pointer-events:none;background:repeating-linear-gradient(90deg,var(--evc) 0 10px,transparent 10px 14px,#ff6a2b 14px 24px,transparent 24px 28px);clip-path:polygon(0 0,100% 0,100% 50%,0 50%)}
 .qhp{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;margin-top:-4px}
 /* — depuis suivi-du-jour.css — */
 .trkbox{display:grid;gap:8px}
@@ -217,8 +217,8 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 .scn.se-ete .scnt small{color:#ffd23d}
 #trkBox .bnd-mode{border:0;background:none;padding:2px;width:100%;text-align:left;font:inherit;color:var(--muted);cursor:pointer}
 
-#sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff8e6;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
-#sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff8e6;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
+#sceneBox .scbub{position:absolute;left:calc(50% + 18px);top:34%;width:34px;height:34px;padding:4px;background:#fff3e0;border:2px solid #1a1210;border-radius:10px;z-index:4;animation:bubIn .5s ease-out both}
+#sceneBox .scbub::after{content:"";position:absolute;left:4px;bottom:-7px;width:8px;height:8px;background:#fff3e0;border-left:2px solid #1a1210;border-bottom:2px solid #1a1210;transform:skewY(-30deg)}
 #sceneBox .scbub svg{width:100%;height:100%}
 /* — depuis epure-02.css — */
 #trkBox .bnd-mode{display:none}
@@ -237,7 +237,7 @@ html.evmode #sceneBox::before{content:"";position:absolute;z-index:3;left:6%;rig
 :is(.qbar){box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);box-shadow:none;overflow:hidden}
 :is(.qbar){height:18px}
 :is(.qbar)>i{height:100%;margin:0;top:0;box-shadow:none}
-:is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff7e6;box-shadow:none;min-height:44px;box-sizing:border-box}
+:is(.scsnd,.scwx,.trk-b){background:rgba(12,14,32,.62);border:2px solid rgba(255,255,255,.17);color:#fff3e0;box-shadow:none;min-height:44px;box-sizing:border-box}
 :is(.scsnd,.trk-b){width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center}
 /* barre d'XP d'Aujourd'hui : contenu centré dans son cadre (marges symétriques, pas de colonne vide en bout) */
 #qxpBtn{grid-template-columns:auto minmax(0,1fr) auto;padding:6px 12px;align-items:center;align-content:center}

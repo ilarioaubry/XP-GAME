@@ -314,18 +314,18 @@ html:not(#_a):not(#_b) body .avc-stage canvas{width:min(48vw,200px);height:auto;
 .plo{position:fixed;inset:0;z-index:230;background:#0d0f22;overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
 .plin{max-width:440px;margin:0 auto;display:grid;gap:12px;min-height:100%;align-content:start}
 .plhd{display:flex;align-items:center;justify-content:space-between}
-.plhd h2{margin:0;font-family:var(--f-pixel);font-size:26px;letter-spacing:.02em;color:#fff7e6}
-.plcl{width:40px;height:40px;border:0;background:none;color:#fff7e6;font-size:20px}
+.plhd h2{margin:0;font-family:var(--f-pixel);font-size:26px;letter-spacing:.02em;color:#fff3e0}
+.plcl{width:40px;height:40px;border:0;background:none;color:#fff3e0;font-size:20px}
 .plate{position:relative;width:min(78vw,270px);aspect-ratio:1;margin:4px auto 0;filter:drop-shadow(4px 5px 0 rgba(0,0,0,.45))}
 .plate>svg{width:100%;height:100%;display:block}
 .plit.pop{animation:plpop .28s cubic-bezier(.2,1.6,.4,1) both}
 .plhint{margin:0;text-align:center;font-size:13px;color:rgba(255,247,230,.6)}
 .plsides{display:grid;gap:12px}
-.plside h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:15px;letter-spacing:.03em;color:#fff7e6}
+.plside h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;font-family:var(--f-pixel);font-size:15px;letter-spacing:.03em;color:#fff3e0}
 .plside h3 i{width:10px;height:10px;background:var(--pc);box-shadow:inset -2px -2px 0 rgba(0,0,0,.25)}
 .plside h3 small{font-size:15px;color:var(--pc)}
 .plfoods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.plf{display:grid;justify-items:center;gap:3px;padding:6px 2px;border:0;background:none;color:#fff7e6;cursor:pointer;border-bottom:3px solid transparent}
+.plf{display:grid;justify-items:center;gap:3px;padding:6px 2px;border:0;background:none;color:#fff3e0;cursor:pointer;border-bottom:3px solid transparent}
 .plf span{width:40px;height:40px;display:block}
 .plf span svg{width:100%;height:100%;display:block}
 .plf small{font-size:13px;line-height:1.1}
@@ -333,8 +333,8 @@ html:not(#_a):not(#_b) body .avc-stage canvas{width:min(48vw,200px);height:auto;
 .plbar{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:4px;position:sticky;bottom:0;padding-top:8px;background:linear-gradient(180deg,transparent,#0d0f22 30%)}
 @media (prefers-reduced-motion:reduce){.plit.pop{animation:none}}
 .plhd h2 small{font-size:15px;color:rgba(255,247,230,.55);font-family:var(--f-body)}
-.plhint b{color:#fff7e6}
-.plxp{margin:-4px 0 0;text-align:center;font-family:var(--f-pixel);font-size:15px;color:var(--gold,#ffd94a);min-height:1.2em}
+.plhint b{color:#fff3e0}
+.plxp{margin:-4px 0 0;text-align:center;font-family:var(--f-pixel);font-size:15px;color:var(--gold,#ff6a2b);min-height:1.2em}
 .plxp.full{animation:plglow 1s ease-in-out 2}
 .plside.need h3 em{font-style:normal;font-family:var(--f-body);font-size:13px;color:#2a1606;background:var(--pc);padding:1px 6px;margin-left:4px}
 .plside.need .plfoods{animation:plneed 1.4s ease-in-out 3}
@@ -342,14 +342,14 @@ html:not(#_a):not(#_b) body .avc-stage canvas{width:min(48vw,200px);height:auto;
 .plhd{gap:8px}
 .plhd h2{flex:1}
 .pltri{padding:6px 12px;font-size:15px;min-height:0}
-.pltri.on{background:var(--gold,#ffd94a);color:#2a1606}
+.pltri.on{background:var(--gold,#ff6a2b);color:#2a1606}
 .plrec{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0 6px;margin:0 -16px;padding-left:16px;padding-right:16px;scroll-snap-type:x proximity}
 .plrec::-webkit-scrollbar{display:none}
-.plr{flex:0 0 auto;max-width:150px;display:grid;justify-items:start;gap:4px;padding:8px 10px;border:0;border-bottom:3px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff7e6;text-align:left;cursor:pointer;scroll-snap-align:start;position:relative}
-.plr span{display:flex;gap:2px;min-height:22px;align-items:center;font-family:var(--f-pixel);font-size:20px;color:var(--gold,#ffd94a)}
+.plr{flex:0 0 auto;max-width:150px;display:grid;justify-items:start;gap:4px;padding:8px 10px;border:0;border-bottom:3px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff3e0;text-align:left;cursor:pointer;scroll-snap-align:start;position:relative}
+.plr span{display:flex;gap:2px;min-height:22px;align-items:center;font-family:var(--f-pixel);font-size:20px;color:var(--gold,#ff6a2b)}
 .plr span svg{width:22px;height:22px}
 .plr b{font-size:13px;font-weight:600;line-height:1.2}
-.plr.on{border-bottom-color:var(--gold,#ffd94a);background:rgba(255,217,74,.12)}
+.plr.on{border-bottom-color:var(--gold,#ff6a2b);background:rgba(255,217,74,.12)}
 .plr.del{border-bottom-color:#e8473a}
 .plr.del i{position:absolute;top:4px;right:6px;font-style:normal;color:#ff8a7a;font-size:13px}
 .plr.plsv{border-bottom-style:dashed}
@@ -372,7 +372,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.avc-dots i,
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body #plusSheet .ps-h::before{display:none!important}
 .bpop:has(textarea,input:not([type]),input[type=text],input[type=search]){padding:0;place-items:stretch}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .bpop:has(textarea,input:not([type]),input[type=text],input[type=search])>.bpc{width:100%;max-width:none;height:100%;overflow:auto;align-content:start;padding-top:calc(env(safe-area-inset-top,0px) + 18px);background:#0d0f22;box-shadow:none;border:0}
-html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast){top:auto;bottom:calc(72px + env(safe-area-inset-bottom,0px));left:50%;max-width:min(92vw,420px);background:rgba(14,16,36,.96);color:#fff7e6;border:2px solid var(--gold,#ffd94a);box-shadow:0 4px 0 #000;font-family:var(--f-body);font-size:13px;font-weight:700;letter-spacing:0;padding:10px 14px;z-index:260}
+html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast){top:auto;bottom:calc(72px + env(safe-area-inset-bottom,0px));left:50%;max-width:min(92vw,420px);background:rgba(14,16,36,.96);color:#fff3e0;border:2px solid var(--gold,#ff6a2b);box-shadow:0 4px 0 #000;font-family:var(--f-body);font-size:13px;font-weight:700;letter-spacing:0;padding:10px 14px;z-index:260}
 .toast{transform:translate(-50%,40%)}  /* messages en bas, juste au-dessus de la barre d'onglets (28/10) */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .toast.show{transform:translate(-50%,0)!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast.show{transform:translate(-50%,-76px)!important}
@@ -380,11 +380,11 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:has(#undoBar.show) .toast
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body:is(.rtmon,:has(.plo)) :is(.toast,#undoBar),html.plusopen:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.toast,#undoBar){bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 /* assiette : objectif de la quête reliée (27/10) — icône + texte, l'objectif en gras, la quête en petite info dessous ; coche or quand c'est bon */
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq{display:grid!important;grid-template-columns:24px minmax(0,1fr)!important;align-items:center!important;gap:12px!important;margin:0 0 12px!important;padding:12px!important;background:rgba(255,255,255,.04)!important;border:2px solid rgba(255,255,255,.17)!important;text-align:left!important;font-size:13px!important;color:rgba(255,247,230,.75)!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok{border-color:#ffd94a!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok{border-color:#ff6a2b!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:first-child{display:grid!important;place-items:center!important;color:rgba(255,247,230,.6)}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok>span:first-child{color:#ffd94a}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq.ok>span:first-child{color:#ff6a2b}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq>span:last-child{display:grid!important;gap:2px!important}
-html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq b{color:#fff7e6!important;font-size:13px!important;font-weight:700!important}
+html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq b{color:#fff3e0!important;font-size:13px!important;font-weight:700!important}
 html:not(#_u1):not(#_u2):not(#_u3):not(#_u4):not(#_u5):not(#_u6):not(#_u7) body .plo .plq small{display:block!important;font-size:11px!important;color:rgba(255,247,230,.6)!important}
 
 /* Ta journée (bilan de fin de Bonne nuit) */

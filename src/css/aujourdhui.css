@@ -274,7 +274,7 @@ html[data-mo="soir"] .wrap>#sqBox{order:-14}
 /* — depuis principal-09.css — */
 .wksc{display:grid;gap:6px;padding:14px 14px 12px;background:var(--surface)}
 .wksk{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
-.wkst{font-family:var(--f-pixel);font-size:22px;line-height:1.1;color:#fff8e6}
+.wkst{font-family:var(--f-pixel);font-size:22px;line-height:1.1;color:#fff3e0}
 .wksc .bstrip{margin:2px -4px 0;background:rgba(0,0,0,.2);border:0}
 .wksb{display:flex;align-items:center;gap:16px;margin-top:4px}
 .wksb .btn{flex:1;min-height:46px}
@@ -303,7 +303,7 @@ html[data-mo="soir"] .wrap>#sqBox{order:-14}
 
 
 
-.pu .stdots i.cur{background:#ffd75a}
+.pu .stdots i.cur{background:#ff6a2b}
 
 
 
@@ -472,21 +472,21 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 #fqBox .fqr .fqgo{width:84px;min-width:84px;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding-left:4px;padding-right:4px;box-sizing:border-box}
 :is(.fqr .fqt,.sq .sqk,.sq .sqn){justify-content:center;text-align:left;justify-items:start}
 .sq .sqr{justify-content:center;gap:12px}
-:is(.fqh){font-family:var(--f-body);font-size:11px;font-weight:800;letter-spacing:.02em;text-transform:none;line-height:1.3;color:#fff7e6;background:rgba(10,10,24,.72);border:0;box-shadow:none;padding:2px 6px;text-shadow:none}
-:is(#logCnt){font-family:var(--f-pixel);font-size:15px;font-weight:700;color:var(--gold,#ffd94a);background:none;border:0;box-shadow:none;padding:0;margin-left:8px;min-width:0;height:auto;line-height:1}
+:is(.fqh){font-family:var(--f-body);font-size:11px;font-weight:800;letter-spacing:.02em;text-transform:none;line-height:1.3;color:#fff3e0;background:rgba(10,10,24,.72);border:0;box-shadow:none;padding:2px 6px;text-shadow:none}
+:is(#logCnt){font-family:var(--f-pixel);font-size:15px;font-weight:700;color:var(--gold,#ff6a2b);background:none;border:0;box-shadow:none;padding:0;margin-left:8px;min-width:0;height:auto;line-height:1}
 .fqr.menu .fqno{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:215;width:min(300px,calc(100vw - 32px));display:grid;grid-template-columns:1fr;gap:8px;padding:16px;background:rgba(14,16,36,.96);box-shadow:0 0 0 100vmax rgba(10,6,4,.6),0 18px 40px rgba(0,0,0,.5);margin:0}
 #fqBox .fqr .fqgo{min-height:44px}
 /* ===== Ma routine (refonte 26/10) : plein écran sombre, titre en haut, chrono en grand, liste à cocher, boutons en bas */
-.rtm.rtq{display:block;padding:0;background:#0d0f22;color:#fff7e6;overflow:hidden}
+.rtm.rtq{display:block;padding:0;background:#0d0f22;color:#fff3e0;overflow:hidden}
 /* le ciel du moment (même décor que la scène) en bandeau derrière le chrono, fondu vers le fond sombre */
 .rtq>.amb{position:absolute;inset:0 0 auto 0;height:240px;z-index:0;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 .rtq-in{position:relative;z-index:1;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto auto minmax(0,1fr) auto;padding:calc(env(safe-area-inset-top,0px) + 12px) 24px calc(env(safe-area-inset-bottom,0px) + 16px)}
 .rtq .rtq-titre,.rtq .rtq-clk,.rtq .rtq-rec{text-shadow:0 2px 0 rgba(0,0,0,.6)}
-.rtq .rtq-rec{color:#fff7e6}
+.rtq .rtq-rec{color:#fff3e0}
 .rtq-haut{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .rtq-haut .rtq-titre{margin:0}
 .rtq-chrono{display:grid;justify-items:center;gap:4px;margin:16px 0 12px}
-.rtq .rtq-clk{font-size:56px;letter-spacing:.02em;color:#fff7e6}
+.rtq .rtq-clk{font-size:56px;letter-spacing:.02em;color:#fff3e0}
 .rtq .rtq-rec{font-size:13px;text-align:center}
 .rtq-prog{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;margin:0 0 16px}
 .rtq-prog .ui-barre{display:block}
@@ -497,8 +497,8 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .rtq-et .rtq-tx{display:grid;gap:2px;min-width:0}
 .rtq-et .rtq-tx b{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rtq-et .rtq-tx small:empty{display:none}
-.rtq-et .rtq-etat{color:#ffd94a;display:grid;place-items:center}
-.rtq-et.cur{border-color:#ffd94a;background:rgba(255,217,74,.08)}
+.rtq-et .rtq-etat{color:#ff6a2b;display:grid;place-items:center}
+.rtq-et.cur{border-color:#ff6a2b;background:rgba(255,217,74,.08)}
 .rtq-et.ok{opacity:.55}
 .rtq-et.skip{opacity:.4}
 .rtq-et.skip .rtq-tx b{text-decoration:line-through}
@@ -522,7 +522,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 /* assiette : en rangée, l'alignement prime — icônes alignées en haut, nom dessous (sur 1 ou 2 lignes) ; sauce choisie = bordure or */
 .plo .plfoods .plf{align-content:start;justify-content:center;align-items:center;justify-items:center;text-align:center}
 .plo .plsauce .plf{border:2px solid transparent}
-.plo .plsauce .plf.on{border-color:#ffd94a;background:rgba(255,217,74,.1)}
+.plo .plsauce .plf.on{border-color:#ff6a2b;background:rgba(255,217,74,.1)}
 /* bouton d'une quête : prend la largeur de son texte (« Remplir l'assiette ») */
 #fqBox .fqr .fqgo{width:auto;min-width:84px;padding:0 16px;white-space:nowrap;flex:none}
 
@@ -557,7 +557,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .wrap>#jdLater{order:-22}
 .wrap>:is(#engBox){display:none}
 .jdbox .jdlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.jdbox .jdl{display:flex;align-items:center;gap:14px;min-height:68px;padding:8px 12px;background:rgba(14,16,36,.82);border:1px solid rgba(255,255,255,.17);color:#fff7e6}
+.jdbox .jdl{display:flex;align-items:center;gap:14px;min-height:68px;padding:8px 12px;background:rgba(14,16,36,.82);border:1px solid rgba(255,255,255,.17);color:#fff3e0}
 .jdbox .jdl.sub{margin-left:40px;min-height:56px}
 .jdbox .jdl.ok>*{opacity:.55}  /* le fond reste plein : sur iPhone, une ligne entière semi-transparente laissait voir une bande */
 .jdbox .jdi,.jdbox .jdi :is(svg,img){width:48px;height:48px;flex:none;display:block}
@@ -574,7 +574,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .jdbox .jdrtm{width:100%;margin-top:10px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px}
 .jdbox .jdgo{min-height:44px;padding:0 12px;flex:none}
 .jdbox .jdmore{min-height:0;padding:0;background:none;border:0}
-.jdbox .jdfold{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;background:none;border:1px dashed rgba(255,255,255,.25);color:#fff7e6;font:inherit;font-size:13px}
+.jdbox .jdfold{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;background:none;border:1px dashed rgba(255,255,255,.25);color:#fff3e0;font:inherit;font-size:13px}
 .jdbox .jdchev{display:inline-grid;transform:rotate(-90deg)}
 .jdbox .jdchev.up{transform:none}
 .jdbox .jdnuit #ritLife{margin:4px 0 0;padding-top:0;padding-bottom:0;background:none;border:0}
@@ -600,7 +600,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 
 .jdbox .jdjours{display:flex;gap:3px;margin-top:6px}
 .jdbox .jdjours i{flex:1;height:10px;background:#0c0e1f;border:2px solid rgba(255,247,230,.55)}
-.jdbox .jdjours i.d{background:#6f8fe0}.jdbox .jdjours i.t{background:#ffd94a;border-color:#1a1210}
+.jdbox .jdjours i.d{background:#6f8fe0}.jdbox .jdjours i.t{background:#ff6a2b;border-color:#1a1210}
 /* J.5 — rituel coché : glisse à droite puis se replie ; barre d'XP qui brille ; compteur qui rebondit */
 .jdbox .jdl.jdgo{animation:jdGo .38s ease-in forwards;overflow:hidden}
 @keyframes jdGo{0%{transform:none;opacity:1}55%{transform:translateX(70%);opacity:0;height:var(--h,auto)}100%{transform:translateX(70%);opacity:0;height:0;min-height:0;padding-top:0;padding-bottom:0;margin:0;border-width:0}}
@@ -628,7 +628,7 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 
 /* ===== Coffre en scène (03/11) : ciel en marches (or, violet pour le coffre spécial), étoiles, collines pixel sous le coffre,
    faisceau de lumière à l'ouverture, 4 étoiles pour la rareté (jamais en couleur). ===== */
-.lx-ov{--sc:#ffd94a;background:
+.lx-ov{--sc:#ff6a2b;background:
   linear-gradient(180deg,#141a48 0 16%,#1b2160 16% 32%,#252a78 32% 46%,
     color-mix(in srgb,var(--sc) 22%,#2e2a80) 46% 56%,color-mix(in srgb,var(--sc) 38%,#3a2f78) 56% 64%,color-mix(in srgb,var(--sc) 55%,#4a3470) 64%)}
 .lx-ov::before{content:"";position:absolute;inset:0;pointer-events:none;image-rendering:pixelated;opacity:.9;
