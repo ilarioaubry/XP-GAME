@@ -118,8 +118,8 @@ function renderChar(l){
   const entries=STAT_KEYS.map(k=>({k,xp:S.stats[k]||0}));
   const topXp=Math.max(...entries.map(e=>e.xp));
   const top=topXp>0?entries.find(e=>e.xp===topXp).k:null;
-  $("avatarWrap").innerHTML=avatarSvg(l,top);
-  {const card=document.querySelector(".char.pf");if(card){const a=S.g&&S.g.eq.aura&&S.g.gear.includes(S.g.eq.aura)?S.g.eq.aura:"";[...card.classList].forEach(c=>{if(c.startsWith("au-")||c==="aura-on")card.classList.remove(c)});if(a)card.classList.add("au-"+a,"aura-on")}}
+  {let im="";try{im=`<img class="mes-body" src="${sceneBody().i0}" alt="Avatar de ${esc(S.name)}, niveau ${l}">`}catch(e){im=avatarSvg(l,top)}$("avatarWrap").innerHTML=im}
+  {const dm=$("meDome");if(dm)dm.innerHTML=`<svg viewBox="0 0 60 30" shape-rendering="crispEdges"><path fill="var(--c-sport)" d="${TDE_DOME}"/><path fill="var(--ui-or)" transform="translate(0 3)" d="${TDE_DOME}"/><path fill="var(--ui-trait)" transform="translate(0 12)" d="${TDE_DOME}"/></svg>`;const ml=$("meLvl");if(ml)ml.textContent="Niveau "+l}
   if(document.activeElement!==$("charName"))$("charName").value=S.name;
   $("charTitle").textContent=titleOf(l);
   // les jauges sont dans Mes paliers (M.5, 03/11) : plus sur la fiche

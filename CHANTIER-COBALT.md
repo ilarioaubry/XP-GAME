@@ -47,3 +47,7 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 6. Avatar Pixel Clair : contour `#101443`, vêtements dans la palette, une seule ombre ; aura couleur de l'angle dominant ; fonds → ciels.
 7. Pixels d'icônes en JS (jaunes `#ffd94a` etc. dans `src/js`) : recolorer.
 8. Puis : repas sauté, coffres (jauge visible), Proches, liens plus lents, déblocages progressifs.
+
+## Fait (lot 7, 04/11) : Ma vie, scène comme la maquette
+- Nouvelle scène `#meScene` (ciel en bandes, soleil, aura, personnage en pied `sceneBody().i0`, demi-sphère, plaque de titre `#charTitle`, nom + niveau, réglages). L'ancienne fiche `.char.pf` reste masquée (moteur : XP, séries, badges `#pfBdg`, pv) : à supprimer quand les badges seront dans Chez moi.
+- Reste : badges → Chez moi, aura équipée en fond de scène, fiche en tuiles, puis Chez moi et Bilan.

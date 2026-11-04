@@ -708,9 +708,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body :is(.evch.evadd,.pbs){bor
 html:not(#_a):not(#_b) body .bchap>small::before{content:"";width:10px;height:10px;flex:none;background:var(--gold);transform:rotate(45deg)}
 
 /* Cobalt (04/11, maquette E Ma vie) : la fiche devient la scène du personnage, sans cadre, sur la demi-sphère ; l'aura garde son fond */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{border:0!important;border-radius:0!important;padding:16px 16px 72px!important;margin:0 -16px!important;box-shadow:none!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf:not(.aura-on){background-color:#2433d6!important}
-html:not(#_a):not(#_b):not(#_c):not(#_d) body .char.cmp.pf{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff9ec7' d='M25 0h10v1h-10z M21 1h18v1h-18z M19 2h22v1h-22z M16 3h28v1h-28z M15 4h30v1h-30z M13 5h34v1h-34z M12 6h36v1h-36z M11 7h38v1h-38z M10 8h40v1h-40z M9 9h42v1h-42z M8 10h44v1h-44z M7 11h46v1h-46z M6 12h48v1h-48z M5 13h50v2h-50z M4 15h52v2h-52z M3 17h54v2h-54z M2 19h56v3h-56z M1 22h58v8h-58z'/%3E%3Cpath fill='%23ff6a2b' transform='translate(0 3)' d='M25 0h10v1h-10z M21 1h18v1h-18z M19 2h22v1h-22z M16 3h28v1h-28z M15 4h30v1h-30z M13 5h34v1h-34z M12 6h36v1h-36z M11 7h38v1h-38z M10 8h40v1h-40z M9 9h42v1h-42z M8 10h44v1h-44z M7 11h46v1h-46z M6 12h48v1h-48z M5 13h50v2h-50z M4 15h52v2h-52z M3 17h54v2h-54z M2 19h56v3h-56z M1 22h58v8h-58z'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:center bottom -120px!important;background-size:420px 210px!important}
 /* Ma fiche : barres par catégorie au même modèle que les proches (grande barre 18 px, « Nv N » centré dedans) */
 /* ===== Ma fiche (26/10) : plus compacte et mieux structurée
    en-tête = prénom (chiffre décoratif 26 px) + titre sur une ligne ; niveau + barre d'XP sur une ligne de 48 px ;
@@ -884,3 +881,28 @@ html body .wrap section:is(#calBox,#ficheBox) .ui-titre::before{background:var(-
 /* ordre de Ma vie selon la maquette : personnage, 4 angles, fiche, calendrier, projets, puis le reste */
 .wrap>#palBox{order:-19}.wrap>#ficheBox{order:-18}.wrap>#calBox{order:-17}.wrap>#prjBox2{order:-16}
 .wrap>section.pf{order:-22}.wrap>nav.subtabs{order:-21}
+
+/* Cobalt (maquette E Ma vie) : scène du personnage, 250 px, ciel en bandes, demi-sphère, plaque de titre */
+.char.cmp.pf{display:none!important}
+.mes{position:relative;height:250px;margin:0 -16px;overflow:hidden;background:#2433d6}
+.mes>i{position:absolute;left:0;right:0}
+.mes-s1{top:40px;height:50px;background:#3040de}.mes-s2{top:90px;height:50px;background:var(--line)}.mes-s3{top:140px;height:50px;background:var(--c-social)}.mes-s4{top:190px;height:60px;background:var(--muted)}
+#meDome{position:absolute;left:-15px;top:130px;width:420px;height:210px}#meDome svg{display:block;width:100%;height:100%}
+.mes-sun{position:absolute;left:322px;top:70px;width:32px;height:32px}
+.mes-aura{position:absolute;left:50%;top:20px;width:160px;height:160px;margin-left:-80px;opacity:.55}
+.mes .avbtn{position:absolute;left:50%;top:62px;transform:translateX(-50%);z-index:2;width:48px;height:78px;border-radius:0}
+.mes .avbtn::after{display:none}
+.mes .mes-body{display:block;width:48px;image-rendering:pixelated}
+.mes-id{position:absolute;left:16px;top:12px;z-index:3;display:grid;gap:2px}
+.mes .cname-in{font-family:var(--f-pixel);font-size:22px;line-height:26px;text-transform:none;letter-spacing:0;color:var(--ink);background:none;border:0;padding:0;width:200px}
+.mes-id small{font-size:13px;line-height:16px;color:var(--muted)}
+.mes .me-set{position:absolute;right:16px;top:12px;width:44px;height:44px;z-index:3;background:var(--ui-trait);border:0;border-radius:0;box-shadow:none;color:var(--ink)}
+.mes .ctitle{position:absolute;left:70px;top:198px;width:250px;height:40px;z-index:3;display:flex;align-items:center;justify-content:center;background:var(--ui-trait);color:var(--ui-creme-2);border:0;padding:0;font-family:var(--f-pixel);font-size:17px;line-height:20px;text-transform:none;letter-spacing:0;min-height:40px;max-width:none;justify-self:auto}
+.mes .ctitle::after{display:none}
+.mes-tp{margin:0}.mes-tp .pf-tpick{margin:8px 0}
+.mes .ctitle::before{content:"";width:18px;height:18px;margin-right:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' shape-rendering='crispEdges'%3E%3Cpath fill='%23f6e6c8' d='M2 0h2v2h-2z M0 2h6v2h-6z M2 4h2v2h-2z'/%3E%3C/svg%3E") center/contain no-repeat}
+.wrap>section.mes{order:-24;margin-top:calc(-1*(env(safe-area-inset-top,0px) + 14px))}.wrap>section.mes-tp{order:-23}
+html:not(#_a):not(#_b) body .mes .cname-in{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;height:26px;color:var(--ink)}
+html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px -16px 0!important;width:auto!important;max-width:none!important}
+html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px 0 0 calc(50% - 50vw)!important;width:100vw!important;justify-self:start!important;box-sizing:border-box}
+.mes .ctitle::after{display:block;content:"";width:28px;height:1px;flex:none;-webkit-mask:none;mask:none;background:none;position:static;transform:none}
