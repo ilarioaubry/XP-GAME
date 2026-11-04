@@ -47,10 +47,8 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée ; quand le repas suivant a commencé, un repas pas noté se replie dans « Repas à noter » (1.2)
-  const MEAL_END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99},lateM=[];
-  MEALS.forEach(([k,per,l,ic])=>{if(h<MEAL_H[k])return;const s=mealState(k,per),pl=typeof plateOpen==="function"&&MB_PLM.includes(k);
-    if(s)done.push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:s==="ok"?"Pris":"Sauté",ok:1,k:reg(()=>{if(pl&&s==="ok")plateOpen(per,k,document.body);else{try{mealClear(dayKey(Date.now()),per,k);save();render()}catch(e){}}})}));
-    else (h>=MEAL_END[k]?lateM:now).push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:pl?"Remplir l'assiette":"Pris ou sauté",r:`<span class="jdmini">${pl?"":`<button type="button" class="btn" data-k="${reg(ev=>mealQuick(per,k,jdEl(ev),0,ev))}">Sauté</button>`}<button type="button" class="btn ${pl?"primary":""}" data-k="${reg(ev=>pl?plateOpen(per,k,jdEl(ev)):mealQuick(per,k,jdEl(ev),1,ev))}">${pl?"Assiette":"Pris"}</button></span>`}))});
+  // Cobalt (04/11) : les repas vivent dans les tuiles sous les 4 angles (renderNow), plus dans le journal
+  const lateM=[];
   // le soir avant 20 h : ce qui reste du matin, replié
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
     if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}

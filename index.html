@@ -4096,7 +4096,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 9344224</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version d61ec12</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -4993,7 +4993,7 @@ function renderNow(){const box=$("nowBox");if(!box||!S.g)return;const G=S.g,tk=d
   else if(pzActive()){const P=pzActive();h+=`<div class="nowc off"><span class="nowk">En pause · ${P.k==="malade"?"malade":"vacances"}</span><b>${P.k==="malade"?"Soigne-toi":"Profite"}</b><small>Série gelée jusqu'au ${new Date(P.to+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}.</small></div>`}
   else if(isOff()){h+=`<div class="nowc off"><span class="nowk">Jour off</span><b>Repose-toi</b><small>Série protégée, aucun malus.</small></div>`}
   else{const T=[];
-    h+=focusQ()+anglesRow();
+    h+=focusQ()+anglesRow()+mealTiles();
     const t=T[0];
     if(t){const [el,lab,col]=t,nm=(el.dataset.tmn||el.textContent||"").trim(),soft=isSoft();
       h+=`<div class="nowc" style="--nc:${col}"><span class="nowk">Maintenant · ${esc(lab)}</span><b class="nown"></b>${soft?`<small>Journée difficile : aucun malus.</small>`:""}<button type="button" class="btn nowgo" data-tm="${esc(el.dataset.tm||"")}" data-tmn="${esc(nm)}"${el.closest(".dqi")?' data-nohold="1"':""}>C'est parti</button>${durOf(nm)&&el.dataset.tm?`<button type="button" class="nowdone">Déjà fait</button>`:""}</div>`;
@@ -5012,8 +5012,20 @@ function focusQ(){FOCK=[];const G=S.g,tk=dayKey(Date.now()),hh=dayH(),END={pdej:
   for(const [k,per,l] of MEALS){if(hh<MEAL_H[k]||hh>=END[k])continue;if(mealState(k,per))break;const pl=MB_PLM.includes(k);
     return card(`C'est l'heure du ${l.toLowerCase()}. Tu as mangé ?`,`<button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${fk(ev=>pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev))}">${pl?"Remplir l'assiette":"Pris"}</button>`)}
   if(momentOf()==="matin"){let n=0;try{n=rtmSteps(dayPer()).length}catch(e){}if(n>1)return card("Bien réveillé ? On lance ta routine ?",`<button type="button" class="btn primary" data-fk="${fk(()=>rtmOpen())}">Lancer la routine</button>`)}
+  if(momentOf()==="midi"||momentOf()==="soir"){const q=[...document.querySelectorAll("#fqBox .fqgo[data-tm],#sqBox .fqgo[data-tm]")].find(b=>b.offsetParent!==null);
+    if(q){const nm=(q.dataset.tmn||"").trim(),tm=q.dataset.tm;if(nm)return card(`${esc(nm)} ?`,`<button type="button" class="btn primary" data-fk="${fk(()=>{const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()})}">C'est parti</button>`)}}
   if(hh>=21&&!((G.jr||{})[tk]||{}).at)return card("Comment s'est passée ta journée ?",`<button type="button" class="btn primary" data-fk="${fk(()=>closeOpen())}">Faire mon bilan</button>`);
   return""}
+// repas en tuiles (maquette E) : fait = rose et coche, en cours = orange avec Assiette, à venir = l'heure
+function mealTiles(){const hh=dayH(),tk=dayKey(Date.now()),END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99};let pris=0;
+  const T=MEALS.map(([k,per,l,ic])=>{const st=mealState(k,per),pl=MB_PLM.includes(k),cur=!st&&hh>=MEAL_H[k],now=cur&&hh<END[k];if(st==="ok")pris++;
+    const go=fk(ev=>{if(st&&!(pl&&st==="ok")){try{mealClear(tk,per,k);save();render()}catch(e){}return}pl?plateOpen(per,k,ev.currentTarget):mealQuick(per,k,ev.currentTarget,1,ev)});
+    if(st)return`<button type="button" class="mt mt-ok" data-fk="${go}">${pxImg(ic,3)}<b>${l}</b><small>${st==="ok"?"Pris":"Sauté"}</small></button>`;
+    if(cur)return`<div class="mt mt-now${now?"":" mt-late"}"><span class="mtt"><b>${l}</b><small>À noter</small></span><span class="mtb"><button type="button" class="btn" data-fk="${fk(ev=>mealQuick(per,k,ev.currentTarget,0,ev))}">Sauté</button><button type="button" class="btn primary" data-fk="${go}">${pl?"Assiette":"Pris"}</button></span></div>`;
+    return`<div class="mt mt-next">${pxImg(ic,3)}<b>${l}</b><small>${MEAL_H[k]} h</small></div>`}).join("");
+  let g=0;try{const t=plTot(tk);g=["f","p","l"].filter(x=>t[x]>0).length}catch(e){}
+  const sq=n=>[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("");
+  return`<div class="mtiles"><div class="mthead"><span>Mes repas</span><span class="mtpill" title="Groupes couverts dans les assiettes">${sq(g)}${pris} repas · ${g} groupe${g>1?"s":""} sur 3</span></div><div class="mtrow">${T}</div></div>`}
 // les 4 angles : regroupement à l'affichage des 8 jauges (données inchangées)
 const ANGLES=[["Corps","var(--c-sport)",["sport","nourriture","eau"],"halteres"],["Esprit","var(--c-soi)",["perso","soi","travail"],"soleil"],["Liens","var(--c-social)",["social","famille"],"duo"],["Foyer","var(--c-maison)",["maison","planete"],"maisonp"]];
 function anglesRow(){const st=(S&&S.stats)||{};return`<div class="angles" role="list">${ANGLES.map(([n,c,cats])=>{const I=statInfo(cats.reduce((a,k)=>a+(st[k]||0),0));return`<div class="ang" role="listitem" style="--ac:${c}"><span class="angn">${n}</span><b class="angl">${I.l}</b><span class="angb"><i style="width:${Math.round(100*I.cur/I.need)}%"></i></span></div>`}).join("")}</div>`}
@@ -14446,7 +14458,8 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .xmqgo{min-width:64px;min-height:40px;padding:0 10px}
 .xmdoor.open{background:#efe6d2;color:#2a1608}
 /* — depuis epure-01.css — */
-.wrap>:is(#nowBox,#evmBox,#wkSun,#gameBox,#xmBox){order:-26}
+.wrap>:is(#evmBox,#wkSun,#gameBox,#xmBox){order:-26}
+.wrap>#nowBox{order:-28}
 .wrap>section.evhide{display:none}
 #fqBox .fqctx{display:none}
 :is(#dzBox,#musBox) .fdt{color:var(--ink);text-transform:none;letter-spacing:0;font-size:15px}
@@ -14754,12 +14767,32 @@ section[data-v="q"]:not(.nowbox)>.head h2,section[data-v="q"]>.head.fdh h2{font-
 .focq{background:var(--ui-creme);color:var(--ui-trait);padding:16px;display:grid;gap:12px}
 .focqt{font-family:var(--f-pixel);font-weight:400;font-size:24px;line-height:28px}
 .focqb{display:flex;gap:8px}.focqb .btn{flex:1;min-height:44px;margin:0}
-.focqb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
+.nowbox .focqb .btn:not(.primary),.nowbox .nowbox .mtb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
+.nowbox .mt-late .mtb .btn:not(.primary){color:var(--ui-creme);border-color:var(--line)}
 .angles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:12px 0 4px}
 .ang{display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 6px}
 .angn{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
 .angl{font-family:var(--f-pixel);font-weight:400;font-size:18px;line-height:20px;color:var(--ac)}
 .angb{grid-column:1/-1;height:6px;background:var(--line)}.angb i{display:block;height:100%;background:var(--ac)}
+
+.mtiles{display:grid;gap:6px;padding-top:8px}
+.mthead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mthead>span:first-child{font-family:var(--f-pixel);font-size:20px;text-transform:uppercase}
+.mtpill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--ui-creme-2)}
+.mtpill i{width:8px;height:8px;background:var(--line)}.mtpill i.on{background:var(--c-sport)}
+.mtrow{display:flex;gap:6px}
+.mt{flex:1;min-width:0;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px;border:0;font:inherit;color:var(--ui-creme);background:var(--surface);text-align:center}
+.mt b{font-size:13px;line-height:15px}.mt small{font-size:11px;line-height:13px;color:var(--ui-creme-2)}
+.mt-ok{background:var(--c-sport);color:var(--ui-trait)}.mt-ok small{color:var(--ui-trait)}
+.mt-next{opacity:.7}
+.mt-now{flex:2.2;background:var(--ui-or);color:var(--ui-trait);align-items:stretch;justify-content:space-between;text-align:left;padding:8px}
+.mt-now.mt-late{flex:1;background:var(--surface);color:var(--ui-creme);align-items:center;text-align:center;padding:8px 4px}
+.mt-now.mt-late .mtt b{font-family:var(--f-body);font-weight:700;font-size:13px;line-height:15px}.mt-late small{color:var(--ui-creme-2)}
+.mt-late .mtb{flex-direction:column;width:100%}.mt-late .mtb .btn.primary{background:var(--ui-or);color:var(--ui-trait)}.mt-late .mtb .btn:not(.primary){color:var(--ui-creme);border-color:var(--line)}
+.mtt{display:grid}.mt-now .mtt b{font-family:var(--f-pixel);font-weight:400;font-size:17px;line-height:22px}.mt-now small{color:var(--ui-trait)}
+.mtb{display:flex;gap:4px}.mtb .btn{flex:1;min-height:44px;margin:0;padding:0 4px;font-size:13px}
+.mtb .btn.primary{background:var(--ui-trait);color:var(--ui-creme)}
+.mtb .btn:not(.primary){background:transparent;color:var(--ui-trait);border:2px solid var(--ui-trait)}
 </style>
 <style id="z-proches">/* — venues de base.css et composants.css (3.7, 02/11) : règles qui ne servent qu'à Proches — */
 .motl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
@@ -17735,10 +17768,8 @@ function renderJdb(){const A=document.getElementById("jdNow"),B=document.getElem
   // l'eau : une ligne avec son compteur
   {const w=ritTasks().find(t=>t.bar==="eau");if(w&&PER){const c=S.daily.c[w.id]||0;(c>=w.n?done:now).push(jdRow({c:"#2f8fe0",ic:rkSvg("eau"),n:"Verres d'eau",s:c+" / "+w.n,ok:c>=w.n,r:c>=w.n?"":`<button type="button" class="btn jdck" aria-label="Un verre d'eau" title="Un verre" data-k="${reg(ev=>ritTap(w,jdEl(ev),ev))}">${ICO("plus",24)}</button>`}))}}
   // repas dont l'heure est passée ; quand le repas suivant a commencé, un repas pas noté se replie dans « Repas à noter » (1.2)
-  const MEAL_END={pdej:MEAL_H.dej,dej:MEAL_H.gouter,gouter:MEAL_H.diner,diner:99},lateM=[];
-  MEALS.forEach(([k,per,l,ic])=>{if(h<MEAL_H[k])return;const s=mealState(k,per),pl=typeof plateOpen==="function"&&MB_PLM.includes(k);
-    if(s)done.push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:s==="ok"?"Pris":"Sauté",ok:1,k:reg(()=>{if(pl&&s==="ok")plateOpen(per,k,document.body);else{try{mealClear(dayKey(Date.now()),per,k);save();render()}catch(e){}}})}));
-    else (h>=MEAL_END[k]?lateM:now).push(jdRow({x:"jx-repas jx-r-"+k,c:"var(--c-food)",ic:pxImg(ic,3),n:l,s:pl?"Remplir l'assiette":"Pris ou sauté",r:`<span class="jdmini">${pl?"":`<button type="button" class="btn" data-k="${reg(ev=>mealQuick(per,k,jdEl(ev),0,ev))}">Sauté</button>`}<button type="button" class="btn ${pl?"primary":""}" data-k="${reg(ev=>pl?plateOpen(per,k,jdEl(ev)):mealQuick(per,k,jdEl(ev),1,ev))}">${pl?"Assiette":"Pris"}</button></span>`}))});
+  // Cobalt (04/11) : les repas vivent dans les tuiles sous les 4 angles (renderNow), plus dans le journal
+  const lateM=[];
   // le soir avant 20 h : ce qui reste du matin, replié
   let morn="";if(PER==="soir"){const RM=ritTasks().filter(t=>!t.bar&&!t.auto&&!t.pz&&ritPer(t)==="matin"&&ritDue(t)&&(S.daily.c[t.id]||0)<t.n);
     if(RM.length)morn=`<li class="jdl jdmore"><button type="button" class="jdfold" data-k="${reg(()=>{jdOpenMorn=!jdOpenMorn;renderJdb()})}"><span>Encore possible du matin</span><span class="count">${RM.length}</span><span class="jdchev${jdOpenMorn?" up":""}">${ICO("chev",18)}</span></button></li>`+(jdOpenMorn?RM.map(t=>jdRow({ic:(()=>{try{const k=ritKind(t);return rkSvg(k.k,k.c)}catch(e){return""}})(),n:t.name,k:reg(ev=>jdRit(t,ev))})).join(""):"")}

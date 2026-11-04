@@ -43,7 +43,7 @@ with sync_playwright() as p:
     check("rituel validé (+XP)", xp(pg) > x0, f"{x0} → {xp(pg)}")
 
     # 3. Assiette du déjeuner
-    x0 = xp(pg); pg.click("#jdNow li:has-text('Déjeuner') .jdmini .btn"); pg.wait_for_timeout(400)
+    x0 = xp(pg); pg.click("#nowBox .mt:has-text('Déjeuner') .btn.primary"); pg.wait_for_timeout(400)
     check("l'assiette s'ouvre", pg.is_visible(".plo")); trait(pg, "assiette")
     for f in ("Pâtes", "Poulet", "Salade"): pg.evaluate("f=>[...document.querySelectorAll('.plo .plf')].find(b=>b.textContent.trim()===f).click()", f); pg.wait_for_timeout(150)
     pg.evaluate("document.querySelector('.plo [data-sauce=pesto]').click()"); pg.wait_for_timeout(150)
@@ -68,8 +68,8 @@ with sync_playwright() as p:
     check("routine : départ, étapes, fin", okr and not pg.is_visible(".rtq"))
 
     # 3b. Revenir sur un repas : sauté → pris → effacé
-    r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const li=()=>[...document.querySelectorAll('#jdNow .jdl')].find(l=>/Petit-déj/.test(l.textContent));
-      const btn=t=>{const l=li();const b=l&&[...l.querySelectorAll('.jdmini .btn')].find(b=>b.textContent.trim()===t);if(b)b.click();return!!b},row=()=>{const l=li();const b=l&&l.querySelector('.jdck');if(b)b.click()};
+    r = pg.evaluate("""(async()=>{const W=ms=>new Promise(r=>setTimeout(r,ms));const li=()=>[...document.querySelectorAll('#nowBox .mt')].find(l=>/Petit-déj/.test(l.textContent));
+      const btn=t=>{const l=li();const b=l&&[...l.querySelectorAll('.mtb .btn')].find(b=>b.textContent.trim()===t);if(b)b.click();return!!b},row=()=>{const l=li();if(l&&l.classList.contains('mt-ok'))l.click()};
       jdOpenDone=true;jdOpenMeals=true;mealClear(dayKey(Date.now()),'matin','pdej');save();render();await W(200);const o=[];btn('Sauté');await W(400);const x0=S.xp;o.push(mealState('pdej','matin'));row();await W(400);btn('Pris');await W(400);o.push(mealState('pdej','matin'),S.xp>x0);row();await W(400);o.push(mealState('pdej','matin')||'vide',S.xp===x0);return o.join(',')})()""")
     check("revenir sur un repas (sauté → pris → effacé)", r == "ko,ok,true,vide,true", r)
 

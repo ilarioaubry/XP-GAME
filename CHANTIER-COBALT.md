@@ -23,7 +23,9 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 ## Fait (lot 3, 04/11)
 - `renderNow` : carte « question du moment » (`focusQ`) : repas en cours (Sauté / Remplir l'assiette ou Pris) > routine du matin > bilan après 21 h ; rangée des 4 angles (`anglesRow`, regroupement à l'affichage des 8 jauges via `ANGLES`). CSS `.focq`, `.angles` dans `aujourdhui.css`.
 - Vérifié dans le DOM (midi : carte + angles rendus, display grid), parcours 0, centrage 0. Pas encore vu en capture : `shots.py` ne montre pas la zone ; à placer juste sous la scène (au-dessus de « Ta semaine dernière »).
-- Reste pour Aujourd'hui : après-midi = prochaine quête, tuiles de repas + pastille, retirer les doublons (Ce midi / repas du journal).
+- Lot 4 : `#nowBox` remonté sous la barre de niveau (order -28) ; après-midi/soir = prochaine quête du jour (`.fqgo` visible) ; repas en tuiles `mealTiles` (fait = rose, toucher pour effacer ou rouvrir l'assiette ; en cours = orange large avec Sauté / Assiette ; en retard = tuile étroite Sauté / Pris ; à venir = heure) + pastille « N repas · N groupes sur 3 » ; repas retirés du journal (`journal-de-bord.js`) ; `parcours.py` adapté aux tuiles.
+- Note test : `shots.py` met l'horloge en pause, donc `renderNow` (requestAnimationFrame) ne se dessine pas dans ses captures : appeler `renderNow()` à la main.
+- À reprendre : le bouton + flottant recouvre la dernière tuile de repas ; « Quête secrète » s'affiche au-dessus de la question.
 
 ## Reste, dans l'ordre
 1. Couleurs encore écrites en dur (≈900 : surtout `#000`, `#fff`, rgba noirs/blancs, quelques couleurs de catégories en dur `#5fae4f`, `#e3263a`, `#ff7aa8`…) : les remplacer par les variables, feuille par feuille, en supprimant l'ancien (jamais de couche par-dessus).
