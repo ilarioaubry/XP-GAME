@@ -913,3 +913,4 @@ html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px 0 0 calc(50% - 50vw)!
 .fi-t small{font-size:11px;line-height:13px;color:var(--muted);font-weight:400}
 .fi-t b{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .fi-t.fi-vide b{color:var(--muted);font-weight:400}
+.wrap>section.mes-tp:not(:has(.pf-tpick:not([hidden]))){display:none}

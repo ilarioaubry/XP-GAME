@@ -54,3 +54,7 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 
 ## Fait (lot 8, 05/11) : Ma fiche en tuiles texte
 - `fiT` (moi-finitions.js) : 8 tuiles 2 colonnes (Situation, Travail, Anniversaire, Cœur, Rythme, Priorités, J'aime, En ce moment) libellé + valeur, « À remplir » si vide ; en-tête « Toucher pour changer ». Les groupes J'ai / Je veux / Pas pour moi restent dessous (à restyler). `.fi-t` exempté de centrage.py (carte à texte, alignée à gauche).
+
+## Fait (lot 9, 05/11) : Chez moi
+- Décision d'Ilario : Chez moi reste comme avant (maison en pixel art, pièces), seulement adapté au style. La scène du personnage (`#meScene`) est maintenant au-dessus des 3 onglets (Ma vie / Chez moi / Bilan). Pas de tuiles de pièces.
+- Reste : badges (anciennes cases de la fiche masquée) à placer dans Chez moi ; recolorer la maison si besoin (ciel, toit).
