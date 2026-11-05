@@ -839,7 +839,7 @@ html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c=
 .mv-t>svg{width:48px;height:48px}
 .mv-vide>svg,.mv-vide .mv-pri{opacity:.4}
 .mv-vide .ui-tuile__nom{color:var(--ui-creme-2)}
-.mv-plus{border-style:dashed;background:none;color:var(--ui-or)}
+.mv-plus{border-style:dashed;border-color:var(--ui-piste);background:none;color:var(--ui-or)}
 .mv-non>svg{filter:grayscale(1);opacity:.55}
 .mv-pri{display:grid;grid-template-columns:repeat(2,24px);gap:2px;justify-content:center}
 .mv-pri svg{width:24px;height:24px;image-rendering:pixelated}

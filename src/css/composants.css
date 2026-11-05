@@ -78,7 +78,7 @@
 
 /* Tuile (court : icône + mot) : contenu centré, même taille pour toute une rangée */
 .ui-tuiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:var(--ui-e2)}
-.ui-tuile{display:grid;justify-items:center;align-content:center;gap:var(--ui-e1);aspect-ratio:1;padding:var(--ui-e2);box-sizing:border-box;border:2px solid var(--ui-bord);border-radius:0;background:var(--ui-fond);color:var(--ui-creme);text-align:center;cursor:pointer;min-width:0}
+.ui-tuile{display:grid;justify-items:center;align-content:center;gap:var(--ui-e1);aspect-ratio:1;padding:var(--ui-e2);box-sizing:border-box;border:2px solid var(--ui-carte);border-radius:0;background:var(--ui-carte);color:var(--ui-creme);text-align:center;cursor:pointer;min-width:0}
 .ui-tuile--active{border-color:var(--ui-or)}
 .ui-tuile--faite{opacity:.5}
 .ui-tuile__nom{max-width:100%;font-size:var(--ui-t-info);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
