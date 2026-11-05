@@ -8,6 +8,17 @@ function tdeBind(el){el.querySelectorAll("[data-tdk]").forEach(b=>{const f=TDK[+
 const tdeH=t=>`<div class="tde-h"><span class="tde-dia"></span><span>${t}</span></div>`;
 function tdeQuests(sel){return[...document.querySelectorAll(sel+" .fqgo[data-tm]")].map(b=>({nm:(b.dataset.tmn||"").trim(),xp:((b.querySelector(".xph")||{}).textContent||"").trim(),tm:b.dataset.tm})).filter(q=>q.nm)}
 function tdeGo(tm){const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()}
+// humeur (5 visages pixel) + nuit, en haut du panneau
+const TDE_MD=["M2 4h3v1h-3z M1 5h1v1h-1z M5 5h1v1h-1z","M3 4h1v1h-1z M2 5h3v1h-3z","M2 4h3v1h-3z","M1 4h1v1h-1z M5 4h1v1h-1z M2 5h3v1h-3z","M1 3h1v1h-1z M5 3h1v1h-1z M2 4h3v2h-3z"];
+function tdeMood(){const G=S.g,tk=dayKey(Date.now()),md=(G.mood||{})[tk]|0,sl=(G.sleep||{})[tk];
+  const face=(i,on)=>`<svg viewBox="0 0 7 7" width="28" height="28" shape-rendering="crispEdges" aria-hidden="true"><path fill="${on?"var(--ui-carte-2)":"var(--ui-sable)"}" d="M2 0h3v1h-3z M1 1h5v1h-5z M0 2h7v3h-7z M1 5h5v1h-5z M2 6h3v1h-3z"/><path fill="var(--ink)" d="M2 2h1v1h-1z M4 2h1v1h-1z ${TDE_MD[i]}"/></svg>`;
+  const pick=n=>()=>{if(!G.mood)G.mood={};if(md===n)delete G.mood[tk];else G.mood[tk]=n;save();try{renderLife();renderSpecials()}catch(e){}renderTodayE()};
+  return`<div class="tde-md"><div class="tde-mf" role="group" aria-label="Humeur du jour">${MOODS.map((m,i)=>`<button type="button" class="tde-mb" data-tdk="${tdk(pick(i+1))}" aria-pressed="${md===i+1}" aria-label="${m[1]}" title="${m[1]}">${face(i,md===i+1)}</button>`).join("")}</div>
+    <button type="button" class="tde-sl" data-tdk="${tdk(sleepWin)}" aria-label="${sl&&sl.h?"Nuit de "+fmtH(sl.h)+", modifier":"Noter ma nuit"}"><svg viewBox="0 0 6 8" width="12" height="16" shape-rendering="crispEdges" aria-hidden="true"><path fill="var(--ui-carte-2)" d="M3 0h3v1h-3z M2 1h2v1h-2z M1 2h2v4h-2z M2 6h2v1h-2z M3 7h3v1h-3z"/></svg><span>${sl&&sl.h?fmtH(sl.h):"Ma nuit"}</span></button></div>`}
+// fenêtre plein écran pour noter la nuit (champs → plein écran)
+function sleepWin(){const sl=(S.g.sleep||{})[dayKey(Date.now())];
+  mvWin("Ma nuit",true,C=>{C.innerHTML=`<div class="mv-two"><label class="mv-gl">Coucher<input class="ui-champ" type="time" data-sc value="${sl?sl.c:bedTime()||"23:30"}"></label><label class="mv-gl">Réveil<input class="ui-champ" type="time" data-sr value="${sl?sl.r:"07:30"}"></label></div>`},
+    C=>{const c=C.querySelector("[data-sc]").value,r=C.querySelector("[data-sr]").value;if(!c||!r)return false;sleepSave(c,r,document.getElementById("tdMood"),null);try{renderLife()}catch(e){}renderTodayE()})}
 function renderTodayE(){const root=document.getElementById("todayE");if(!root||!S||!S.g)return;TDK=[];
   const G=S.g,L=levelInfo(S.xp||0),d=new Date(),hh=dayH();
   const hello=hh<12?"Bonjour":hh<18?"Bon après-midi":"Bonsoir";
@@ -20,6 +31,7 @@ function renderTodayE(){const root=document.getElementById("todayE");if(!root||!
   let av="";try{av=`<img src="${sceneBody().i0}" alt="">`}catch(e){}
   document.getElementById("tdHero").innerHTML=`<svg class="tde-dome" viewBox="0 0 60 30" shape-rendering="crispEdges"><path fill="var(--c-sport)" d="${TDE_DOME}"/><path fill="var(--ui-or)" transform="translate(0 3)" d="${TDE_DOME}"/></svg><span class="tde-av">${av}</span>`;
   document.getElementById("tdAng").innerHTML=anglesRow();
+  document.getElementById("tdMood").innerHTML=tdeMood();
   // quêtes du jour, puis idées (quêtes spéciales)
   const Q=tdeQuests("#fqBox"),SP=tdeQuests("#sqBox"),cnt=((document.querySelector("#fqBox .count")||{}).textContent||"").trim();
   const row=(q,cls,k)=>`<div class="tde-row ${cls}"><div class="tde-rt">${k?`<small>${k}</small>`:""}<b>${esc(q.nm)}</b></div><button type="button" class="btn primary" data-tdk="${tdk(()=>tdeGo(q.tm))}">${q.xp?esc(q.xp)+" XP":"Go"}</button></div>`;

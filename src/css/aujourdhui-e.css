@@ -59,3 +59,10 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .focqb .
 #todayE .mtrow>.mt{flex:64 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;height:124px!important;min-height:0!important}
 #todayE .mtrow>.mt-ok{flex-grow:70!important}
 #todayE .mtrow>.mt-now{flex-grow:142!important}
+
+/* humeur + nuit en haut du panneau (maquette E Focus+) */
+.tde-md{display:flex;align-items:center;justify-content:space-between;height:48px}
+.tde-mf{display:flex;align-items:center;gap:0}
+.tde-mb{display:grid;place-items:center;width:36px;height:44px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;cursor:pointer}
+.tde-mb svg{display:block}
+.tde-sl{display:flex;align-items:center;gap:8px;height:44px;padding:0 4px;border:0;border-radius:0;background:none;box-shadow:none;color:var(--ui-trait);font:inherit;font-size:13px;font-weight:700;cursor:pointer}

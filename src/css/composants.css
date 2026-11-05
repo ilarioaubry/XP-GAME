@@ -20,7 +20,8 @@
   --ui-fond-plein:#101443;
   --ui-carte:#1b2275;              /* carte pleine (tuiles Cobalt) */
   --ui-carte-2:#2433d6;
-  --ui-piste:#4a58e8;              /* piste, barres au repos */         /* fenêtre plein écran */
+  --ui-piste:#4a58e8;
+  --ui-sable:#e8d6b4;              /* crème foncé sur le panneau clair */              /* piste, barres au repos */         /* fenêtre plein écran */
   --ui-voile:rgba(10,14,51,.7);      /* fond assombri derrière une petite fenêtre */
   --ui-etiquette:rgba(10,10,24,.72);
   --ui-barre-bord:rgba(255,247,230,.85);

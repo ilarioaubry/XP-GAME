@@ -58,3 +58,11 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 ## Fait (lot 9, 05/11) : Chez moi
 - Décision d'Ilario : Chez moi reste comme avant (maison en pixel art, pièces), seulement adapté au style. La scène du personnage (`#meScene`) est maintenant au-dessus des 3 onglets (Ma vie / Chez moi / Bilan). Pas de tuiles de pièces.
 - Reste : badges (anciennes cases de la fiche masquée) à placer dans Chez moi ; recolorer la maison si besoin (ciel, toit).
+
+## Fait (lot 10, 05/11) : Bilan, Ma fiche, humeur
+- Retiré de `base.css` l'ancien thème sombre brun/vert (`prefers-color-scheme: dark` et `data-theme="dark"`) qui restait : un iPhone en mode sombre l'aurait affiché.
+- Nouvelles variables : `--ui-carte` (#1b2275), `--ui-carte-2` (#2433d6), `--ui-piste` (#4a58e8), `--ui-sable` (#e8d6b4). Brique `ui-tuile` pleine (`--ui-carte`, bordure de la même couleur ; orange = sélection).
+- Bilan, Semaine = maquette : onglets crème, carte chapitre crème (« Toucher pour renommer »), « Cette semaine, en vrai » 3 colonnes (grand chiffre coloré + libellé, `realRecap`), « XP par jour » (barres, aujourd'hui orange), « Mon assiette · 7 derniers jours » (`renderPlateWeek` : rose = 3 groupes, bleu clair = 2, piste = 1 ; `#plWeek` est maintenant DANS `#chapBox`), lignes dépliables Rituels (jours sans oubli / 7), Tes quêtes principales, Corps et tête, Moments forts, Ce que tu as gagné, Le prochain chapitre, et « Données et sauvegarde » (déplie `#bakBox`, classe `html.bakopen`). Mois et Année gardent leur contenu (bhero + « Voir le détail »).
+- Ma fiche : groupe « J'aime » retiré (doublon de la tuile, qui compte aussi les artistes).
+- Aujourd'hui : humeur (5 visages pixel, toucher à nouveau = effacer) + nuit (« Ma nuit » → plein écran Coucher / Réveil, `sleepWin` ; enregistrement partagé `sleepSave` dans 24-defis) en haut du panneau.
+- Reste dans Bilan : « Ta semaine dernière » et « Fait aujourd'hui » à y ranger.

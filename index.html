@@ -3828,7 +3828,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
     <div class="tde-q nowbox" id="nowBox" aria-label="Maintenant"></div>
     <div class="tde-hero" id="tdHero" aria-hidden="true"></div>
     <div id="tdAng"></div>
-    <div class="tde-panel"><div class="tde-grip"></div><div id="tdQuests"></div><div id="tdMeals"></div><div id="tdEnd"></div></div>
+    <div class="tde-panel"><div class="tde-grip"></div><div id="tdMood"></div><div id="tdQuests"></div><div id="tdMeals"></div><div id="tdEnd"></div></div>
   </section>
   <section data-v="q" class="scene" id="sceneBox" aria-label="Ta scène"></section>
   <section data-v="q" class="news" id="newsBox" aria-label="Les nouvelles du jour" hidden></section>
@@ -4103,7 +4103,7 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   <section data-v="c" data-sub="bilan" class="chapbox" id="chapBox" aria-label="Mon bilan"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 00845a9</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 456a5ae</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -10715,6 +10715,17 @@ function tdeBind(el){el.querySelectorAll("[data-tdk]").forEach(b=>{const f=TDK[+
 const tdeH=t=>`<div class="tde-h"><span class="tde-dia"></span><span>${t}</span></div>`;
 function tdeQuests(sel){return[...document.querySelectorAll(sel+" .fqgo[data-tm]")].map(b=>({nm:(b.dataset.tmn||"").trim(),xp:((b.querySelector(".xph")||{}).textContent||"").trim(),tm:b.dataset.tm})).filter(q=>q.nm)}
 function tdeGo(tm){const r=document.querySelector(`.fqgo[data-tm="${CSS.escape(tm)}"]`);if(r)r.click()}
+// humeur (5 visages pixel) + nuit, en haut du panneau
+const TDE_MD=["M2 4h3v1h-3z M1 5h1v1h-1z M5 5h1v1h-1z","M3 4h1v1h-1z M2 5h3v1h-3z","M2 4h3v1h-3z","M1 4h1v1h-1z M5 4h1v1h-1z M2 5h3v1h-3z","M1 3h1v1h-1z M5 3h1v1h-1z M2 4h3v2h-3z"];
+function tdeMood(){const G=S.g,tk=dayKey(Date.now()),md=(G.mood||{})[tk]|0,sl=(G.sleep||{})[tk];
+  const face=(i,on)=>`<svg viewBox="0 0 7 7" width="28" height="28" shape-rendering="crispEdges" aria-hidden="true"><path fill="${on?"var(--ui-carte-2)":"var(--ui-sable)"}" d="M2 0h3v1h-3z M1 1h5v1h-5z M0 2h7v3h-7z M1 5h5v1h-5z M2 6h3v1h-3z"/><path fill="var(--ink)" d="M2 2h1v1h-1z M4 2h1v1h-1z ${TDE_MD[i]}"/></svg>`;
+  const pick=n=>()=>{if(!G.mood)G.mood={};if(md===n)delete G.mood[tk];else G.mood[tk]=n;save();try{renderLife();renderSpecials()}catch(e){}renderTodayE()};
+  return`<div class="tde-md"><div class="tde-mf" role="group" aria-label="Humeur du jour">${MOODS.map((m,i)=>`<button type="button" class="tde-mb" data-tdk="${tdk(pick(i+1))}" aria-pressed="${md===i+1}" aria-label="${m[1]}" title="${m[1]}">${face(i,md===i+1)}</button>`).join("")}</div>
+    <button type="button" class="tde-sl" data-tdk="${tdk(sleepWin)}" aria-label="${sl&&sl.h?"Nuit de "+fmtH(sl.h)+", modifier":"Noter ma nuit"}"><svg viewBox="0 0 6 8" width="12" height="16" shape-rendering="crispEdges" aria-hidden="true"><path fill="var(--ui-carte-2)" d="M3 0h3v1h-3z M2 1h2v1h-2z M1 2h2v4h-2z M2 6h2v1h-2z M3 7h3v1h-3z"/></svg><span>${sl&&sl.h?fmtH(sl.h):"Ma nuit"}</span></button></div>`}
+// fenêtre plein écran pour noter la nuit (champs → plein écran)
+function sleepWin(){const sl=(S.g.sleep||{})[dayKey(Date.now())];
+  mvWin("Ma nuit",true,C=>{C.innerHTML=`<div class="mv-two"><label class="mv-gl">Coucher<input class="ui-champ" type="time" data-sc value="${sl?sl.c:bedTime()||"23:30"}"></label><label class="mv-gl">Réveil<input class="ui-champ" type="time" data-sr value="${sl?sl.r:"07:30"}"></label></div>`},
+    C=>{const c=C.querySelector("[data-sc]").value,r=C.querySelector("[data-sr]").value;if(!c||!r)return false;sleepSave(c,r,document.getElementById("tdMood"),null);try{renderLife()}catch(e){}renderTodayE()})}
 function renderTodayE(){const root=document.getElementById("todayE");if(!root||!S||!S.g)return;TDK=[];
   const G=S.g,L=levelInfo(S.xp||0),d=new Date(),hh=dayH();
   const hello=hh<12?"Bonjour":hh<18?"Bon après-midi":"Bonsoir";
@@ -10727,6 +10738,7 @@ function renderTodayE(){const root=document.getElementById("todayE");if(!root||!
   let av="";try{av=`<img src="${sceneBody().i0}" alt="">`}catch(e){}
   document.getElementById("tdHero").innerHTML=`<svg class="tde-dome" viewBox="0 0 60 30" shape-rendering="crispEdges"><path fill="var(--c-sport)" d="${TDE_DOME}"/><path fill="var(--ui-or)" transform="translate(0 3)" d="${TDE_DOME}"/></svg><span class="tde-av">${av}</span>`;
   document.getElementById("tdAng").innerHTML=anglesRow();
+  document.getElementById("tdMood").innerHTML=tdeMood();
   // quêtes du jour, puis idées (quêtes spéciales)
   const Q=tdeQuests("#fqBox"),SP=tdeQuests("#sqBox"),cnt=((document.querySelector("#fqBox .count")||{}).textContent||"").trim();
   const row=(q,cls,k)=>`<div class="tde-row ${cls}"><div class="tde-rt">${k?`<small>${k}</small>`:""}<b>${esc(q.nm)}</b></div><button type="button" class="btn primary" data-tdk="${tdk(()=>tdeGo(q.tm))}">${q.xp?esc(q.xp)+" XP":"Go"}</button></div>`;
@@ -10812,6 +10824,11 @@ function moodFace(n,px,flat){n=Math.max(1,Math.min(5,n|0));const base=(S.g&&S.g.
     __mf[k]=cv.toDataURL("image/png")}
   return`<img class="mface" src="${__mf[k]}" width="${px}" height="${px}" alt="" style="image-rendering:pixelated">`}
 // renderLife : version complète (ex-réécriture de correctifs.js), renderLifeBase = le cœur d'origine
+// enregistre la nuit d'aujourd'hui (coucher c, réveil r au format "HH:MM") ; el, e = source du toucher
+function sleepSave(c,r,el,e){const G=S.g,tk=dayKey(Date.now());if(!G.sleep)G.sleep={};
+    const[ch,cm]=c.split(":").map(Number),[rh,rm]=r.split(":").map(Number);const mins=((rh*60+rm)-(ch*60+cm)+1440)%1440,hh=Math.round(mins/60*100)/100;
+    const old=G.sleep[tk];G.sleep[tk]={c,r,h:hh,x:old?old.x||0:0,bm:old?old.bm||0:0};if(!G.sleep[tk].bm&&ch>=18){G.sleep[tk].bm=1;addBonus("Couché avant minuit",10,0,"bm");setTimeout(()=>toast(`Couché avant minuit : <span class="p">+10 XP</span>`),1200)}sleepEdit=false;const xp=sleepXp(hh);
+    if(!G.sleep[tk].x&&xp){G.sleep[tk].x=boostOn()?xp*2:xp;complete({id:"sleep",cat:"soi",name:"Nuit de "+fmtH(hh),xp},el,e,false,{sleep:tk})}else{save();render();toast("Nuit enregistrée : "+fmtH(hh))}}
 function renderLife(){const r=renderLifeBase.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}
 function renderLifeBase(){
   const box=$("ritLife");if(!box)return;if(box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT")return;
@@ -10827,12 +10844,9 @@ function renderLifeBase(){
   }
   box.innerHTML=h;
   if($("slMod"))$("slMod").onclick=()=>{sleepEdit=true;renderLife();const c=$("slC");if(c)c.focus()};
-  if($("slForm"))$("slForm").addEventListener("submit",e=>{e.preventDefault();const c=$("slC").value,r=$("slR").value;if(!c||!r)return;document.activeElement.blur();
-    const[ch,cm]=c.split(":").map(Number),[rh,rm]=r.split(":").map(Number);const mins=((rh*60+rm)-(ch*60+cm)+1440)%1440,hh=Math.round(mins/60*100)/100;
-    const old=G.sleep[tk];G.sleep[tk]={c,r,h:hh,x:old?old.x||0:0,bm:old?old.bm||0:0};if(!G.sleep[tk].bm&&ch>=18){G.sleep[tk].bm=1;addBonus("Couché avant minuit",10,0,"bm");setTimeout(()=>toast(`Couché avant minuit : <span class="p">+10 XP</span>`),1200)}sleepEdit=false;const xp=sleepXp(hh);
-    if(!G.sleep[tk].x&&xp){G.sleep[tk].x=boostOn()?xp*2:xp;complete({id:"sleep",cat:"soi",name:"Nuit de "+fmtH(hh),xp},e.submitter||$("slForm"),e,false,{sleep:tk})}else{save();render();toast("Nuit enregistrée : "+fmtH(hh))}});
+  if($("slForm"))$("slForm").addEventListener("submit",e=>{e.preventDefault();const c=$("slC").value,r=$("slR").value;if(!c||!r)return;document.activeElement.blur();sleepSave(c,r,e.submitter||$("slForm"),e)});
   if($("mdMod"))$("mdMod").onclick=()=>{moodEdit=true;renderLife()};
-  box.querySelectorAll(".mrow button").forEach(b=>b.onclick=()=>{const n=+b.dataset.m;G.mood[tk]=n;moodEdit=false;save();renderLife();renderSpecials();renderMoodYear()});
+  box.querySelectorAll(".mrow button").forEach(b=>b.onclick=()=>{const n=+b.dataset.m;G.mood[tk]=n;moodEdit=false;save();renderLife();renderSpecials()});
 }
 function moodPick(k){if(document.querySelector(".mdpop"))return;const G=S.g,o=document.createElement("div");o.className="bpop mdpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Humeur");document.body.appendChild(o);
   const dt=new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});o.onclick=e=>{if(e.target===o)o.remove()};
@@ -13660,7 +13674,8 @@ try{$("sync").textContent="Enregistré sur ce téléphone"}catch(e){}
   --ui-fond-plein:#101443;
   --ui-carte:#1b2275;              /* carte pleine (tuiles Cobalt) */
   --ui-carte-2:#2433d6;
-  --ui-piste:#4a58e8;              /* piste, barres au repos */         /* fenêtre plein écran */
+  --ui-piste:#4a58e8;
+  --ui-sable:#e8d6b4;              /* crème foncé sur le panneau clair */              /* piste, barres au repos */         /* fenêtre plein écran */
   --ui-voile:rgba(10,14,51,.7);      /* fond assombri derrière une petite fenêtre */
   --ui-etiquette:rgba(10,10,24,.72);
   --ui-barre-bord:rgba(255,247,230,.85);
@@ -16331,6 +16346,13 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body #todayE .focqb .
 #todayE .mtrow>.mt{flex:64 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;height:124px!important;min-height:0!important}
 #todayE .mtrow>.mt-ok{flex-grow:70!important}
 #todayE .mtrow>.mt-now{flex-grow:142!important}
+
+/* humeur + nuit en haut du panneau (maquette E Focus+) */
+.tde-md{display:flex;align-items:center;justify-content:space-between;height:48px}
+.tde-mf{display:flex;align-items:center;gap:0}
+.tde-mb{display:grid;place-items:center;width:36px;height:44px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;cursor:pointer}
+.tde-mb svg{display:block}
+.tde-sl{display:flex;align-items:center;gap:8px;height:44px;padding:0 4px;border:0;border-radius:0;background:none;box-shadow:none;color:var(--ui-trait);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 </style>
 <style id="z-fenetres">/* — depuis bilan-cloture.css — */
 html body .clo2 .qwbody{align-content:start}

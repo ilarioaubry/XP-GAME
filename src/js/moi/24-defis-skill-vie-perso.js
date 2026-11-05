@@ -74,6 +74,11 @@ function moodFace(n,px,flat){n=Math.max(1,Math.min(5,n|0));const base=(S.g&&S.g.
     __mf[k]=cv.toDataURL("image/png")}
   return`<img class="mface" src="${__mf[k]}" width="${px}" height="${px}" alt="" style="image-rendering:pixelated">`}
 // renderLife : version complète (ex-réécriture de correctifs.js), renderLifeBase = le cœur d'origine
+// enregistre la nuit d'aujourd'hui (coucher c, réveil r au format "HH:MM") ; el, e = source du toucher
+function sleepSave(c,r,el,e){const G=S.g,tk=dayKey(Date.now());if(!G.sleep)G.sleep={};
+    const[ch,cm]=c.split(":").map(Number),[rh,rm]=r.split(":").map(Number);const mins=((rh*60+rm)-(ch*60+cm)+1440)%1440,hh=Math.round(mins/60*100)/100;
+    const old=G.sleep[tk];G.sleep[tk]={c,r,h:hh,x:old?old.x||0:0,bm:old?old.bm||0:0};if(!G.sleep[tk].bm&&ch>=18){G.sleep[tk].bm=1;addBonus("Couché avant minuit",10,0,"bm");setTimeout(()=>toast(`Couché avant minuit : <span class="p">+10 XP</span>`),1200)}sleepEdit=false;const xp=sleepXp(hh);
+    if(!G.sleep[tk].x&&xp){G.sleep[tk].x=boostOn()?xp*2:xp;complete({id:"sleep",cat:"soi",name:"Nuit de "+fmtH(hh),xp},el,e,false,{sleep:tk})}else{save();render();toast("Nuit enregistrée : "+fmtH(hh))}}
 function renderLife(){const r=renderLifeBase.apply(this,arguments);try{sleepViz()}catch(e){console.warn("sl",e)}return r}
 function renderLifeBase(){
   const box=$("ritLife");if(!box)return;if(box.contains(document.activeElement)&&document.activeElement.tagName==="INPUT")return;
@@ -89,12 +94,9 @@ function renderLifeBase(){
   }
   box.innerHTML=h;
   if($("slMod"))$("slMod").onclick=()=>{sleepEdit=true;renderLife();const c=$("slC");if(c)c.focus()};
-  if($("slForm"))$("slForm").addEventListener("submit",e=>{e.preventDefault();const c=$("slC").value,r=$("slR").value;if(!c||!r)return;document.activeElement.blur();
-    const[ch,cm]=c.split(":").map(Number),[rh,rm]=r.split(":").map(Number);const mins=((rh*60+rm)-(ch*60+cm)+1440)%1440,hh=Math.round(mins/60*100)/100;
-    const old=G.sleep[tk];G.sleep[tk]={c,r,h:hh,x:old?old.x||0:0,bm:old?old.bm||0:0};if(!G.sleep[tk].bm&&ch>=18){G.sleep[tk].bm=1;addBonus("Couché avant minuit",10,0,"bm");setTimeout(()=>toast(`Couché avant minuit : <span class="p">+10 XP</span>`),1200)}sleepEdit=false;const xp=sleepXp(hh);
-    if(!G.sleep[tk].x&&xp){G.sleep[tk].x=boostOn()?xp*2:xp;complete({id:"sleep",cat:"soi",name:"Nuit de "+fmtH(hh),xp},e.submitter||$("slForm"),e,false,{sleep:tk})}else{save();render();toast("Nuit enregistrée : "+fmtH(hh))}});
+  if($("slForm"))$("slForm").addEventListener("submit",e=>{e.preventDefault();const c=$("slC").value,r=$("slR").value;if(!c||!r)return;document.activeElement.blur();sleepSave(c,r,e.submitter||$("slForm"),e)});
   if($("mdMod"))$("mdMod").onclick=()=>{moodEdit=true;renderLife()};
-  box.querySelectorAll(".mrow button").forEach(b=>b.onclick=()=>{const n=+b.dataset.m;G.mood[tk]=n;moodEdit=false;save();renderLife();renderSpecials();renderMoodYear()});
+  box.querySelectorAll(".mrow button").forEach(b=>b.onclick=()=>{const n=+b.dataset.m;G.mood[tk]=n;moodEdit=false;save();renderLife();renderSpecials()});
 }
 function moodPick(k){if(document.querySelector(".mdpop"))return;const G=S.g,o=document.createElement("div");o.className="bpop mdpop";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","Humeur");document.body.appendChild(o);
   const dt=new Date(k+"T12:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});o.onclick=e=>{if(e.target===o)o.remove()};
