@@ -51,3 +51,6 @@ Refonte visuelle d'après les maquettes « E » (canevas Design « XP — Aujour
 ## Fait (lot 7, 04/11) : Ma vie, scène comme la maquette
 - Nouvelle scène `#meScene` (ciel en bandes, soleil, aura, personnage en pied `sceneBody().i0`, demi-sphère, plaque de titre `#charTitle`, nom + niveau, réglages). L'ancienne fiche `.char.pf` reste masquée (moteur : XP, séries, badges `#pfBdg`, pv) : à supprimer quand les badges seront dans Chez moi.
 - Reste : badges → Chez moi, aura équipée en fond de scène, fiche en tuiles, puis Chez moi et Bilan.
+
+## Fait (lot 8, 05/11) : Ma fiche en tuiles texte
+- `fiT` (moi-finitions.js) : 8 tuiles 2 colonnes (Situation, Travail, Anniversaire, Cœur, Rythme, Priorités, J'aime, En ce moment) libellé + valeur, « À remplir » si vide ; en-tête « Toucher pour changer ». Les groupes J'ai / Je veux / Pas pour moi restent dessous (à restyler). `.fi-t` exempté de centrage.py (carte à texte, alignée à gauche).

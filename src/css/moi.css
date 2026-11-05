@@ -859,7 +859,6 @@ html.anb:not(#_u1):not(#_u2) body :is(.hmslot[data-r="chambre"],#wrCats [data-c=
 .mv-pri svg{width:24px;height:24px;image-rendering:pixelated}
 .mv-avs{position:absolute;top:4px;right:4px;display:flex}
 .mv-avs .pav+.pav{margin-left:-6px}
-.mv-note{margin:8px 0 0;font-size:13px;font-style:italic;color:var(--ui-creme-2)}
 #ficheBox .fask{margin-bottom:12px}
 /* titres de Ma vie : le losange prend la couleur de sa section (l'ancienne règle les met tous en or) */
 html body .wrap section:is(#calBox,#ficheBox) .ui-titre::before{background:var(--ui-sec)!important}
@@ -906,3 +905,11 @@ html:not(#_a):not(#_b) body .mes .cname-in{background:none!important;border:0!im
 html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px -16px 0!important;width:auto!important;max-width:none!important}
 html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px 0 0 calc(50% - 50vw)!important;width:100vw!important;justify-self:start!important;box-sizing:border-box}
 .mes .ctitle::after{display:block;content:"";width:28px;height:1px;flex:none;-webkit-mask:none;mask:none;background:none;position:static;transform:none}
+/* Cobalt (maquette E Ma vie) : Ma fiche en tuiles texte, 2 colonnes */
+#ficheBox .ui-entete{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fi-hint{font-size:13px;color:var(--muted);white-space:nowrap}
+.fi-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:6px}
+.fi-t{display:flex;flex-direction:column;justify-content:center;gap:2px;height:60px;padding:8px 12px;box-sizing:border-box;border:0;border-radius:0;background:var(--surface);color:var(--ink);text-align:left;box-shadow:none;min-width:0}
+.fi-t small{font-size:11px;line-height:13px;color:var(--muted);font-weight:400}
+.fi-t b{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.fi-t.fi-vide b{color:var(--muted);font-weight:400}

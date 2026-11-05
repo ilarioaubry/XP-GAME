@@ -112,26 +112,19 @@ function mvWin(title,full,draw,onOk,okL){const old=document.querySelector(".mvw"
   w.querySelector(".mvok").onclick=()=>{if(onOk&&onOk(C)===false)return;close()};const no=w.querySelector(".mvno");if(no)no.onclick=()=>{w.remove()};
   document.body.appendChild(w);redo();return w}
 function renderFiche(){try{homeFix()}catch(e){console.warn("renderFiche",e)}const r=renderFicheBase.apply(this,arguments);try{autoTime()}catch(e){console.warn("renderFiche",e)}return r}
+const fiT=(l,v,f)=>`<button type="button" class="fi-t${v?"":" fi-vide"}" data-f="${f}"><small>${l}</small><b>${v?esc(String(v)):"À remplir"}</b></button>`;
 function renderFicheBase(){const box=document.getElementById("ficheBox");if(!box||!S||!S.g)return;const G=S.g;
   const s=sitOf()||{};const pri=(G.vie&&G.vie.pri)||[],v=typeof vieV==="function"?vieV():(G.vie||{}),H=HOMEI[homeOf({...s,with:Array.isArray(s.with)?s.with:[]})]||HOMEI.seul,W=Array.isArray(s.with)?s.with:[];
   const art=(G.taste&&Array.isArray(G.taste.art))?G.taste.art:[],nf=Array.isArray(G.normOff)?G.normOff:[];
   const wds=[1,2,3,4,5,6,0].filter(d=>(v.wd||[]).includes(d)),wdTxt=wds.length===5&&!wds.includes(6)&&!wds.includes(0)?"L–V":wds.length?wds.map(d=>MV_WDL[d]).join(""):"Repos";
   const grp=(lab,tiles)=>`<div class="mv-g">${lab?`<small class="mv-gl">${lab}</small>`:""}<div class="ui-tuiles mv-ts">${tiles}</div></div>`;
   const cl=CPLI[s.cpl],who=cplWho();
-  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Ma fiche</h2></div>${perAskCard()}
-    ${grp("",mvT(tileI(JOBI[s.job]||"autre"),JOBL[s.job]||"Situation","data-f=\"job\"")
-      +mvT(tileI(H[0]),H[1],"data-f=\"home\"","",W.length?`<span class="mv-avs">${W.slice(0,3).map(n=>pAv(n,"fmini")).join("")}</span>`:"")
-      +mvT(tileI("cake"),s.bd&&s.bd.d?s.bd.d+" "+MO_C[s.bd.m-1]:"Anniv.","data-f=\"bd\"",s.bd&&s.bd.d?"":"mv-vide")
-      +mvT(tileI("coeur"),cl&&s.cpl!=="celib"&&who?esc(who):cl||"Mon cœur","data-f=\"cpl\"",cl?"":"mv-vide")
-      +mvT(tileI("soleil"),`${wakeH()} h · ${wdTxt}`,"data-f=\"rythme\"")
-      +mvT(pri.length?`<span class="mv-pri">${pri.map(k=>tileI(PRII[k]||"etoile")).join("")}</span>`:tileI("etoile"),"Priorités","data-f=\"pri\"",pri.length?"":"mv-vide")
-      +mvT(tileI("note"),"Note","data-f=\"note\"",s.note?"":"mv-vide"))}
-    ${s.note?`<p class="mv-note"></p>`:""}
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Ma fiche</h2><span class="fi-hint">Toucher pour changer</span></div>${perAskCard()}
+    <div class="fi-g">${fiT("Situation",H[1],"home")}${fiT("Travail",JOBL[s.job],"job")}${fiT("Anniversaire",s.bd&&s.bd.d?s.bd.d+" "+MO_C[s.bd.m-1]:"","bd")}${fiT("Cœur",cl&&s.cpl!=="celib"&&who?who:cl,"cpl")}${fiT("Rythme",`Réveil ${wakeH()} h · ${wdTxt}`,"rythme")}${fiT("Priorités",pri.map(k=>(CATS[k]||{}).label||k).join(", "),"pri")}${fiT("J'aime",(s.pass||[]).map(k=>((SIT_Q.pass.find(x=>x[0]===k)||[])[1]||k)).join(", "),"pass")}${fiT("En ce moment",s.note,"note")}</div>
     ${grp("J'ai",(s.have||[]).map(k=>{const h=typeof haveOf==="function"&&haveOf(k);return h?mvT(tileI(h.ic),esc(h.l.replace(/^(Un|Une|Des|Du) /,"").replace(/^./,c=>c.toUpperCase())),"data-f=\"have\""):""}).join("")+mvPlus("data-f=\"have\"","Ajouter ce que j'ai"))}
     ${grp("Je veux",(s.goals||[]).filter(k=>GOALI[k]).map(k=>mvT(tileI(GOALI[k][0]),GOALI[k][1],"data-f=\"goals\"")).join("")+((s.goals||[]).length<3?mvPlus("data-f=\"goals\"","Ce que je veux améliorer"):""))}
     ${grp("J'aime",(s.pass||[]).filter(k=>PASSI[k]).map(k=>mvT(tileI(PASSI[k]),esc((SIT_Q.pass.find(x=>x[0]===k)||[])[1]||k),"data-f=\"pass\"")).join("")+(art.length?mvT(tileI("casque"),art.length+" artiste"+(art.length>1?"s":""),"data-f=\"pass\""):"")+mvPlus("data-f=\"pass\"","Ce que j'aime"))}
     ${grp("Pas pour moi",nf.filter(k=>NORMI[k]).map(k=>mvT(tileI(NORMI[k][0]),NORMI[k][1],"data-f=\"norm\"","mv-non")).join("")+mvPlus("data-f=\"norm\"","Ce qui ne me concerne pas"))}`;
-  const np=box.querySelector(".mv-note");if(np)np.textContent="« "+s.note+" »";
   box.querySelectorAll(".mv-t").forEach(b=>{const n=b.querySelector(".ui-tuile__nom");if(n&&!b.getAttribute("aria-label"))b.setAttribute("aria-label",n.textContent)});
   box.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>ficheEdit(b.dataset.f));bindAsk(box)}
 // enregistrer la fiche (sit) : toute modification passe par là
