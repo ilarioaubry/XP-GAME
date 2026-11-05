@@ -1,5 +1,5 @@
 // ===== Nouveau Bilan : ta semaine comme un chapitre
-let bilTab="w",bilOff=0,bilDet=false,bilEdit=false;
+let bilTab="w",bilOff=0,bilDet=false,bilEdit=false,bilOpen={};
 const GOAL_CAT={job:["travail"],forme:["sport"],potes:["social"],famille:["famille"],son:["perso"],apprendre:["perso"],chez:["maison"],manger:["nourriture"],argent:["maison","travail"],ecrans:["soi"],moral:["soi"],sommeil:[]};
 const GOAL_INT={job:"Envoyer 5 candidatures",forme:"3 séances de sport",sommeil:"Au lit avant minuit, 5 soirs",ecrans:"Pas d'écran au lit",potes:"Voir un pote en vrai",famille:"Appeler un proche 3 fois",son:"3 séances de son",argent:"Noter chaque dépense",apprendre:"20 min d'apprentissage par jour",chez:"Ranger une zone par jour",moral:"Un moment rien que pour toi chaque jour",manger:"Un vrai repas maison chaque soir"};
 const CHAP_CAT={sport:"La semaine du sport",social:"La semaine des potes",famille:"La semaine en famille",maison:"La semaine du grand rangement",soi:"La semaine pour toi",perso:"La semaine du son",travail:"La semaine au travail",nourriture:"La semaine aux fourneaux"};
@@ -52,7 +52,7 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
 // renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
-function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{if(bilTab!=="w"){bilMore();bilViz()}realRecap();renderPlateWeek()}catch(e){console.warn("renderChap",e)}return r}
 function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;
@@ -60,21 +60,27 @@ function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();co
   if(bilTab==="w"){const K=bWeek(bilOff),wk=K[0],auto=bChapAuto(K),ch=G.chap[wk]||{},title=ch.t||auto.t,lines=ch.l&&ch.l.length?ch.l:auto.l,cur=K.includes(tk);
     const R=bRit(K),gl=bGoals(K,1),mo=bMoments(K),gn=bGains(K);
     h+=`<div class="bnav"><button type="button" class="bnv" data-d="1" aria-label="Semaine précédente">${ICO("chev",18)}</button><span>${(()=>{const a=new Date(K[0]+"T12:00"),b=new Date(K[K.length-1]+"T12:00"),m=d=>d.toLocaleDateString("fr-FR",{month:"short"});return a.getMonth()===b.getMonth()?a.getDate()+"–"+b.getDate()+" "+m(b):a.getDate()+" "+m(a)+" – "+b.getDate()+" "+m(b)})()}</span><button type="button" class="bnv nx" data-d="-1" aria-label="Semaine suivante" ${bilOff<=0?"disabled":""}>${ICO("chev",18)}</button></div>`;
-    h+=`<div class="bhero">${bStrip(K)}<div class="bchap"><small>${cur&&wdOf(tk)<6?"Chapitre en cours":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small>${bilEdit?`<form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form>`:`<h3 class="bct"></h3>`}<ul class="bcl">${lines.map(()=>"<li></li>").join("")}</ul>
-      <div class="bcb">${bilEdit?"":`<button type="button" class="lnk bced1">Renommer</button>`}${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div></div></div>`;
-    h+=bSec("Tes quêtes principales",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`);
-    h+=bSec(`Tes rituels<span class="bh3r">${R.due?R.pct+" %":""}${ritStreak()&&cur?` · essentiels ${ritStreak()} j`:""}</span>`,R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint vide">Aucun rituel suivi cette semaine.</p>`);
-    h+=bSec("Corps et tête",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`);
-    if(mo)h+=bSec("Moments forts",`<div class="bmo">${mo}</div>`);
-    if(gn)h+=bSec("Ce que tu as gagné",`<div class="bgns">${gn}</div>`);
-    
-    if(cur)h+=bSec("Le prochain chapitre",bNext());
+    h+=`<div class="bce-w">${bilEdit?`<div class="bce"><small>Chapitre de la semaine</small><form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form></div>`:`<button type="button" class="bce bced1"><small>${cur?"Chapitre de la semaine":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small><b class="bct"></b><span>Toucher pour renommer</span></button>`}${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div>`;
+    {const xs=K.map(bXp),mx=Math.max(1,...xs);h+=`<div class="bxe"><div class="ui-entete"><h2 class="ui-titre">XP par jour</h2><span class="bxe-t">${xs.reduce((x,y)=>x+y,0)} XP</span></div><div class="bxp">${K.map((k,i)=>`<span class="${k===tk?"now":""}"><i style="height:${k>tk?0:Math.max(xs[i]?6:3,Math.round(xs[i]/mx*100))}%"></i><em>${"LMMJVSD"[i]}</em></span>`).join("")}</div></div>`}
+    h+=`<div id="plWeek" class="bpw"></div>`;
+    {const past=K.map((k,i)=>[k,i]).filter(([k])=>k<=tk),rd=R.rows.length?past.filter(([k,i])=>R.rows.every(r=>r.c[i]!=="m"&&r.c[i]!=="t")).length:0;
+     const row=(k,l,v,body)=>`<div class="brg${bilOpen[k]?" on":""}"><button type="button" class="bln" data-bo="${k}" aria-expanded="${!!bilOpen[k]}"><span>${l}</span>${v?`<b>${v}</b>`:`<i class="brc">${ICO("chev",18)}</i>`}</button>${bilOpen[k]?`<div class="brb">${body}</div>`:""}</div>`;
+     h+=`<div class="brows">`
+      +row("rit","Rituels",R.rows.length?`${rd} / 7`:"",R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint vide">Aucun rituel suivi cette semaine.</p>`)
+      +row("gl","Tes quêtes principales","",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`)
+      +row("ct","Corps et tête","",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`)
+      +(mo?row("mo","Moments forts","",`<div class="bmo">${mo}</div>`):"")
+      +(gn?row("gn","Ce que tu as gagné","",`<div class="bgns">${gn}</div>`):"")
+      +(cur?row("nx","Le prochain chapitre","",bNext()):"")
+      +`<div class="brg${document.documentElement.classList.contains("bakopen")?" on":""}"><button type="button" class="bln bbak" aria-expanded="${document.documentElement.classList.contains("bakopen")}"><span>Données et sauvegarde</span><i class="brc">${ICO("chev",18)}</i></button></div></div>`}
     box.innerHTML=tabs+h;
     {const t=box.querySelector(".bct");if(t)t.textContent=title;box.querySelectorAll(".bcl li").forEach((li,i)=>li.textContent=lines[i]);
      const R2=bRit(K);box.querySelectorAll(".bdr .bdn").forEach((e,i)=>{if(R2.rows[i])e.textContent=R2.rows[i].t.name});
      const f=box.querySelector(".bced");if(f){const i=f.querySelector("input");i.value=title;setTimeout(()=>i.focus(),30);f.onsubmit=e=>{e.preventDefault();const v=i.value.trim();G.chap[wk]={...(G.chap[wk]||{}),t:v||undefined};if(!v)delete G.chap[wk].t;bilEdit=false;save();renderChap()}}
      const e1=box.querySelector(".bced1");if(e1)e1.onclick=()=>{bilEdit=true;renderChap()};
      const rs=box.querySelector(".bcrs");if(rs)rs.onclick=()=>{delete G.chap[wk];save();renderChap()};
+     box.querySelectorAll("[data-bo]").forEach(b=>b.onclick=()=>{const k=b.dataset.bo;bilOpen[k]=!bilOpen[k];renderChap()});
+     const bk=box.querySelector(".bbak");if(bk)bk.onclick=()=>{const on=document.documentElement.classList.toggle("bakopen");bk.setAttribute("aria-expanded",on);bk.parentElement.classList.toggle("on",on);if(on){const x=$("bakBox");if(x)x.scrollIntoView({behavior:"smooth",block:"start"})}};
      
      const sb=box.querySelector(".bsit");if(sb)sb.onclick=()=>sitSheet();
      box.querySelectorAll("[data-int]").forEach(b=>b.onclick=()=>{if(!G.intn||typeof G.intn!=="object")G.intn={};const nk=bWeek(-1)[0];G.intn[nk]=G.intn[nk]===b.dataset.int?"":b.dataset.int;save();renderChap();if(G.intn[nk])toast("Intention notée pour lundi")})}}

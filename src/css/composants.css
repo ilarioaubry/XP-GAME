@@ -17,7 +17,10 @@
   --ui-creme-2:#c9d0ff;  /* texte secondaire */
   --ui-bord:rgba(255,255,255,.17); /* bordure neutre */
   --ui-fond:rgba(16,20,67,.72);    /* fond sombre (boutons secondaires, champs) */
-  --ui-fond-plein:#101443;         /* fenêtre plein écran */
+  --ui-fond-plein:#101443;
+  --ui-carte:#1b2275;              /* carte pleine (tuiles Cobalt) */
+  --ui-carte-2:#2433d6;
+  --ui-piste:#4a58e8;              /* piste, barres au repos */         /* fenêtre plein écran */
   --ui-voile:rgba(10,14,51,.7);      /* fond assombri derrière une petite fenêtre */
   --ui-etiquette:rgba(10,10,24,.72);
   --ui-barre-bord:rgba(255,247,230,.85);

@@ -197,11 +197,7 @@ function plTot(d){const D=plDay(d),t={f:0,p:0,l:0,x:{yaourt:0,fromage:0,eau:0},n
 
 // Aujourd'hui : petite assiette du jour sous les repas (dès qu'un repas est rempli)
 function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||!S.g)return;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,plTot(dayKey(d))])}
-  const done=days.filter(x=>x[1].n);box.classList.toggle("gempty",!done.length);if(!done.length){box.innerHTML="";return}
-  const cnt=s=>done.filter(x=>x[1][s]).length,xs=id=>done.reduce((a,x)=>a+x[1].x[id],0);
-  const weak=PL_SIDES.map(([s,l])=>[l,cnt(s)]).sort((a,b)=>a[1]-b[1])[0];
-  box.innerHTML=`<div class="gcard col1"><h3>Mon assiette · 7 jours</h3><div class="plwk">${days.map(([d,t])=>`<span class="${t.n?"":"none"}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}">${t.n?plSvg(t):'<i class="plz"></i>'}<em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div>
-    <div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${cnt(s)}/${done.length} j</span>`).join("")}</div>
-    <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
+  const g=t=>t.n?PL_SIDES.filter(([s])=>t[s]).length:-1;
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mon assiette</h2><span class="bxe-t">7 derniers jours</span></div><div class="bpl7">${days.map(([d,t])=>`<span class="g${g(t)}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}"><i></i><em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div><p class="bpl-lg">Rose : 3 groupes couverts. Bleu clair : un groupe manquait.</p>`}
 
 // shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026

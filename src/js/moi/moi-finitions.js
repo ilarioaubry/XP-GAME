@@ -180,17 +180,20 @@ function bilPer(){const now=new Date(dayKey(Date.now())+"T12:00");
   if(bilTab==="m"){const d=new Date(now);d.setDate(1);d.setMonth(d.getMonth()-bilOff);const ym=ymOf(d.getTime());return{in:t=>ymOf(t)===ym,t:bilOff?"En "+MOIS_C[d.getMonth()]+", en vrai":"Ce mois-ci, en vrai"}}
   if(bilTab==="y"){const y=now.getFullYear()-bilOff;return{in:t=>+dayKey(t).slice(0,4)===y,t:bilOff?"En "+y+", en vrai":"Cette année, en vrai"}}
   const K=new Set(bWeek(bilOff));return{in:t=>K.has(dayKey(t)),t:bilOff?"Cette semaine-là, en vrai":"Cette semaine, en vrai"}}
-function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0),T=[];
-  const ppl={};L.forEach(e=>{const W=new Set(e.withp||[]);(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))W.add(n)});W.forEach(n=>ppl[n]=(ppl[n]||0)+1)});
-  Object.entries(ppl).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(([n,c])=>T.push([pAv(n,"fmini rrav"),n,c>1?"×"+c:"1 fois"]));
-  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e));if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
-  const cnt=re=>L.filter(e=>re.test(e.a||"")).length,film=cnt(/^af:regarder:Film/);if(film)T.push([vI("clap"),film+" film"+(film>1?"s":""),"vus"]);
+function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0);
+  const ppl=new Set();L.forEach(e=>{(e.withp||[]).forEach(n=>ppl.add(n));(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))ppl.add(n)})});
+  const pl=(n,a,b)=>n>1?b:a,cnt=re=>L.filter(e=>re.test(e.a||"")).length,T=[],add=(n,l,c)=>{if(n)T.push([n,l,c])};
+  add(ppl.size,pl(ppl.size,"proche vu","proches vus"),"var(--c-social)");
+  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e)).length;add(fin,pl(fin,"livre","livres"),"var(--c-soi)");
+  const film=cnt(/^af:regarder:Film/);add(film,pl(film,"film","films"),"var(--ink)");
+  const sp=L.filter(e=>e.cat==="sport").length;add(sp,pl(sp,"séance","séances"),"var(--c-sport)");
+  const so=L.filter(e=>e.idq).length;add(so,pl(so,"sortie","sorties"),"var(--ui-or)");
+  const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;add(rm,pl(rm,"pièce rangée","pièces rangées"),"var(--ink)");
   const sums={};L.forEach(e=>{const r=String(e.name||"").match(QRX);if(!r)return;const u=r[2];sums[u]=(sums[u]||0)+parseFloat(r[1].replace(",","."))});
-  if(sums["rép."])T.push([vI("halteres"),Math.round(sums["rép."])+" rép.","de renfo"]);if(sums.km)T.push([vI("pas"),Math.round(sums.km*10)/10+" km","parcourus"]);if(sums.pages)T.push([vI("lire"),Math.round(sums.pages)+" pages","lues"]);
-  const so=L.filter(e=>e.idq).length;if(so)T.push([vI("ticket"),so+" sortie"+(so>1?"s":""),"découvertes"]);const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;if(rm)T.push([vI("balai"),rm+" pièce"+(rm>1?"s":""),"rangées"]);
-  const k=PR.t+"|"+T.map(t=>t[1]+t[2]).join("|"),anc=b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
+  if(sums.km)add(Math.round(sums.km*10)/10,"km parcourus","var(--c-sport)");if(sums.pages)add(Math.round(sums.pages),"pages lues","var(--c-soi)");if(sums["rép."])add(Math.round(sums["rép."]),"rép. de renfo","var(--c-sport)");
+  const k=PR.t+"|"+T.map(t=>t[0]+t[1]).join("|"),anc=b.querySelector(".bce-w")||b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
   if(!c){c=document.createElement("div");c.className="realrc"}if(anc)anc.after(c);else b.prepend(c);c.dataset.k=k;
-  c.innerHTML=`<h3 class="bh3">${PR.t}</h3>${T.length?`<div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
+  c.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">${PR.t}</h2></div>${T.length?`<div class="rrg">${T.slice(0,6).map(([n,l,col])=>`<div class="rrt"><b style="color:${col}">${n}</b><small>${esc(l)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
 
 // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
 function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;

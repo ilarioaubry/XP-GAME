@@ -385,11 +385,6 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 *{animation:none!important;transition:none!important}
 }
 :root{--bg:#101443;--surface:#1b2275;--surface-2:#2433d6;--line:#4a58e8;--ink:#fff3e0;--muted:#c9d0ff;--accent:#ff6a2b;--accent-ink:#101443;--gold:#ff6a2b;--gold-soft:#2433d6;--f-display:"Lilita One","Arial Rounded MT Bold",ui-rounded,system-ui,sans-serif;--rpg-shadow:#0a0e33}
-@media (prefers-color-scheme: dark){
-:root:not([data-theme="light"]){--bg:#14120d;--surface:#252015;--surface-2:#362e1c;--line:#9a7a3a;--ink:#fff3dc;--muted:#cdb88f;--accent:#3fe08f;--accent-ink:#06251a;--gold:#ffc02e;--gold-soft:#4a3712;--rpg-shadow:#050403}
-}
-:root[data-theme="dark"]{--bg:#14120d;--surface:#252015;--surface-2:#362e1c;--line:#9a7a3a;--ink:#fff3dc;--muted:#cdb88f;--accent:#3fe08f;--accent-ink:#06251a;--gold:#ffc02e;--gold-soft:#4a3712;--rpg-shadow:#050403;color-scheme:dark}
-:root[data-theme="light"]{color-scheme:light}
 body{background-color:var(--bg);background-image:radial-gradient(color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.5px);background-size:14px 14px}
 h1,h2,.set-card h3,.rem h3{font-family:var(--f-pixel);letter-spacing:.02em}
 .week summary,section>.head h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}

@@ -403,11 +403,6 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 *{animation:none!important;transition:none!important}
 }
 :root{--bg:#101443;--surface:#1b2275;--surface-2:#2433d6;--line:#4a58e8;--ink:#fff3e0;--muted:#c9d0ff;--accent:#ff6a2b;--accent-ink:#101443;--gold:#ff6a2b;--gold-soft:#2433d6;--f-display:"Lilita One","Arial Rounded MT Bold",ui-rounded,system-ui,sans-serif;--rpg-shadow:#0a0e33}
-@media (prefers-color-scheme: dark){
-:root:not([data-theme="light"]){--bg:#14120d;--surface:#252015;--surface-2:#362e1c;--line:#9a7a3a;--ink:#fff3dc;--muted:#cdb88f;--accent:#3fe08f;--accent-ink:#06251a;--gold:#ffc02e;--gold-soft:#4a3712;--rpg-shadow:#050403}
-}
-:root[data-theme="dark"]{--bg:#14120d;--surface:#252015;--surface-2:#362e1c;--line:#9a7a3a;--ink:#fff3dc;--muted:#cdb88f;--accent:#3fe08f;--accent-ink:#06251a;--gold:#ffc02e;--gold-soft:#4a3712;--rpg-shadow:#050403;color-scheme:dark}
-:root[data-theme="light"]{color-scheme:light}
 body{background-color:var(--bg);background-image:radial-gradient(color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.5px);background-size:14px 14px}
 h1,h2,.set-card h3,.rem h3{font-family:var(--f-pixel);letter-spacing:.02em}
 .week summary,section>.head h2{font-family:var(--f-pixel);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:20px}
@@ -4106,10 +4101,9 @@ html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e) body .vk{display:none!importan
   </section>
 
   <section data-v="c" data-sub="bilan" class="chapbox" id="chapBox" aria-label="Mon bilan"></section>
-  <section data-v="c" data-sub="bilan" class="gbox" id="plWeek" aria-label="Mon assiette"></section>
   <section data-v="c" data-sub="bilan" class="gbox" id="bakBox" aria-label="Sauvegarde">
     <div class="set-card"><h3>Données</h3>
-      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 4b295e1</p>
+      <p class="hint" style="margin:0 0 6px"><span class="sync" id="sync">Chargement…</span> · version 2b5c48f</p>
       <div class="stor"><span id="storTxt"></span><span class="stbar"><i id="storBar"></i></span></div>
       <p class="hint" id="storHint" style="margin:6px 0 10px"></p>
       <button type="button" class="btn primary" id="expFile" style="width:100%">Exporter en fichier</button>
@@ -9648,7 +9642,7 @@ document.addEventListener("error",e=>{const t=e.target;if(t&&t.classList&&t.clas
 document.addEventListener("load",e=>{const t=e.target;if(t&&t.classList&&t.classList.contains("spci")&&!t.naturalWidth)t.remove()},true);
 function bedTime(){const G=S.g;if(!G||!G.bed||Date.now()-G.bed>18*36e5)return"";const d=new Date(G.bed);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")}
 // ===== Nouveau Bilan : ta semaine comme un chapitre
-let bilTab="w",bilOff=0,bilDet=false,bilEdit=false;
+let bilTab="w",bilOff=0,bilDet=false,bilEdit=false,bilOpen={};
 const GOAL_CAT={job:["travail"],forme:["sport"],potes:["social"],famille:["famille"],son:["perso"],apprendre:["perso"],chez:["maison"],manger:["nourriture"],argent:["maison","travail"],ecrans:["soi"],moral:["soi"],sommeil:[]};
 const GOAL_INT={job:"Envoyer 5 candidatures",forme:"3 séances de sport",sommeil:"Au lit avant minuit, 5 soirs",ecrans:"Pas d'écran au lit",potes:"Voir un pote en vrai",famille:"Appeler un proche 3 fois",son:"3 séances de son",argent:"Noter chaque dépense",apprendre:"20 min d'apprentissage par jour",chez:"Ranger une zone par jour",moral:"Un moment rien que pour toi chaque jour",manger:"Un vrai repas maison chaque soir"};
 const CHAP_CAT={sport:"La semaine du sport",social:"La semaine des potes",famille:"La semaine en famille",maison:"La semaine du grand rangement",soi:"La semaine pour toi",perso:"La semaine du son",travail:"La semaine au travail",nourriture:"La semaine aux fourneaux"};
@@ -9701,7 +9695,7 @@ function bNext(){const G=S.g,wk=bWeek(-1)[0],s=sitOf(),cur=(G.intn||{})[wk];
 function intNow(){const G=S.g;return G&&G.intn?G.intn[bWeek(0)[0]]||"":""}
 function bSec(h,b,cls){return`<div class="bsec ${cls||""}">${h?`<h3 class="bh3">${h}</h3>`:""}${b}</div>`}
 // renderChap : finitions autour de renderChapBase (le cœur), ex-retouche de correctifs.js
-function renderChap(){const r=renderChapBase.apply(this,arguments);try{bilMore();bilViz();realRecap()}catch(e){console.warn("renderChap",e)}return r}
+function renderChap(){const r=renderChapBase.apply(this,arguments);try{if(bilTab!=="w"){bilMore();bilViz()}realRecap();renderPlateWeek()}catch(e){console.warn("renderChap",e)}return r}
 function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();const G=S.g,tk=dayKey(Date.now());if(!G.chap||typeof G.chap!=="object")G.chap={};
   document.documentElement.classList.toggle("bildet",bilDet);
   const tabs=`<div class="btabs" role="tablist">${[["w","Semaine"],["m","Mois"],["y","Année"]].map(([k,l])=>`<button type="button" role="tab" data-bt="${k}" aria-selected="${bilTab===k}">${l}</button>`).join("")}</div>`;
@@ -9709,21 +9703,27 @@ function renderChapBase(){const box=$("chapBox");if(!box||!S.g)return;wxRec();co
   if(bilTab==="w"){const K=bWeek(bilOff),wk=K[0],auto=bChapAuto(K),ch=G.chap[wk]||{},title=ch.t||auto.t,lines=ch.l&&ch.l.length?ch.l:auto.l,cur=K.includes(tk);
     const R=bRit(K),gl=bGoals(K,1),mo=bMoments(K),gn=bGains(K);
     h+=`<div class="bnav"><button type="button" class="bnv" data-d="1" aria-label="Semaine précédente">${ICO("chev",18)}</button><span>${(()=>{const a=new Date(K[0]+"T12:00"),b=new Date(K[K.length-1]+"T12:00"),m=d=>d.toLocaleDateString("fr-FR",{month:"short"});return a.getMonth()===b.getMonth()?a.getDate()+"–"+b.getDate()+" "+m(b):a.getDate()+" "+m(a)+" – "+b.getDate()+" "+m(b)})()}</span><button type="button" class="bnv nx" data-d="-1" aria-label="Semaine suivante" ${bilOff<=0?"disabled":""}>${ICO("chev",18)}</button></div>`;
-    h+=`<div class="bhero">${bStrip(K)}<div class="bchap"><small>${cur&&wdOf(tk)<6?"Chapitre en cours":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small>${bilEdit?`<form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form>`:`<h3 class="bct"></h3>`}<ul class="bcl">${lines.map(()=>"<li></li>").join("")}</ul>
-      <div class="bcb">${bilEdit?"":`<button type="button" class="lnk bced1">Renommer</button>`}${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div></div></div>`;
-    h+=bSec("Tes quêtes principales",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`);
-    h+=bSec(`Tes rituels<span class="bh3r">${R.due?R.pct+" %":""}${ritStreak()&&cur?` · essentiels ${ritStreak()} j`:""}</span>`,R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint vide">Aucun rituel suivi cette semaine.</p>`);
-    h+=bSec("Corps et tête",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`);
-    if(mo)h+=bSec("Moments forts",`<div class="bmo">${mo}</div>`);
-    if(gn)h+=bSec("Ce que tu as gagné",`<div class="bgns">${gn}</div>`);
-    
-    if(cur)h+=bSec("Le prochain chapitre",bNext());
+    h+=`<div class="bce-w">${bilEdit?`<div class="bce"><small>Chapitre de la semaine</small><form class="bced"><input maxlength="60" aria-label="Titre du chapitre"><button type="submit" class="btn primary">OK</button></form></div>`:`<button type="button" class="bce bced1"><small>${cur?"Chapitre de la semaine":"Chapitre"}${ch.ai?" · écrit avec Claude":""}</small><b class="bct"></b><span>Toucher pour renommer</span></button>`}${ch.t||ch.l?`<button type="button" class="lnk bcrs">Revenir au titre auto</button>`:""}</div>`;
+    {const xs=K.map(bXp),mx=Math.max(1,...xs);h+=`<div class="bxe"><div class="ui-entete"><h2 class="ui-titre">XP par jour</h2><span class="bxe-t">${xs.reduce((x,y)=>x+y,0)} XP</span></div><div class="bxp">${K.map((k,i)=>`<span class="${k===tk?"now":""}"><i style="height:${k>tk?0:Math.max(xs[i]?6:3,Math.round(xs[i]/mx*100))}%"></i><em>${"LMMJVSD"[i]}</em></span>`).join("")}</div></div>`}
+    h+=`<div id="plWeek" class="bpw"></div>`;
+    {const past=K.map((k,i)=>[k,i]).filter(([k])=>k<=tk),rd=R.rows.length?past.filter(([k,i])=>R.rows.every(r=>r.c[i]!=="m"&&r.c[i]!=="t")).length:0;
+     const row=(k,l,v,body)=>`<div class="brg${bilOpen[k]?" on":""}"><button type="button" class="bln" data-bo="${k}" aria-expanded="${!!bilOpen[k]}"><span>${l}</span>${v?`<b>${v}</b>`:`<i class="brc">${ICO("chev",18)}</i>`}</button>${bilOpen[k]?`<div class="brb">${body}</div>`:""}</div>`;
+     h+=`<div class="brows">`
+      +row("rit","Rituels",R.rows.length?`${rd} / 7`:"",R.rows.length?bCheck(R)+`<p class="blg"><i class="c-d"></i>fait<i class="c-m"></i>pas fait<i class="c-o"></i>pas prévu</p>`:`<p class="hint vide">Aucun rituel suivi cette semaine.</p>`)
+      +row("gl","Tes quêtes principales","",gl?`<div class="bgl">${gl.map(x=>{const p=Math.min(100,Math.round(x.v/Math.max(1,x.max)*100));return`<div class="bgr${p>=100?" full":""}" style="--gc:${x.cat&&CATS[x.cat]?CATS[x.cat].c:"var(--gold)"}"><span class="bgt"><b>${esc(x.lab)}</b><small>${x.v} ${x.u==="XP"?"/ "+x.max+" XP":esc(x.u)+(x.max?" · objectif "+x.max:"")}</small></span><span class="bgb"><i style="width:${p}%"></i>${[25,50,75].map(v=>`<u style="left:${v}%"></u>`).join("")}</span></div>`}).join("")}</div>`:`<button type="button" class="wkcta bsit">${ICO("spark",18)}<span><b>Dis-moi ce qui compte pour toi</b><small>Tes objectifs de la fiche deviennent des jauges ici.</small></span></button>`)
+      +row("ct","Corps et tête","",bBody(K)+`<p class="hint">Barres : tes nuits. Visages : ton humeur du jour.</p>`)
+      +(mo?row("mo","Moments forts","",`<div class="bmo">${mo}</div>`):"")
+      +(gn?row("gn","Ce que tu as gagné","",`<div class="bgns">${gn}</div>`):"")
+      +(cur?row("nx","Le prochain chapitre","",bNext()):"")
+      +`<div class="brg${document.documentElement.classList.contains("bakopen")?" on":""}"><button type="button" class="bln bbak" aria-expanded="${document.documentElement.classList.contains("bakopen")}"><span>Données et sauvegarde</span><i class="brc">${ICO("chev",18)}</i></button></div></div>`}
     box.innerHTML=tabs+h;
     {const t=box.querySelector(".bct");if(t)t.textContent=title;box.querySelectorAll(".bcl li").forEach((li,i)=>li.textContent=lines[i]);
      const R2=bRit(K);box.querySelectorAll(".bdr .bdn").forEach((e,i)=>{if(R2.rows[i])e.textContent=R2.rows[i].t.name});
      const f=box.querySelector(".bced");if(f){const i=f.querySelector("input");i.value=title;setTimeout(()=>i.focus(),30);f.onsubmit=e=>{e.preventDefault();const v=i.value.trim();G.chap[wk]={...(G.chap[wk]||{}),t:v||undefined};if(!v)delete G.chap[wk].t;bilEdit=false;save();renderChap()}}
      const e1=box.querySelector(".bced1");if(e1)e1.onclick=()=>{bilEdit=true;renderChap()};
      const rs=box.querySelector(".bcrs");if(rs)rs.onclick=()=>{delete G.chap[wk];save();renderChap()};
+     box.querySelectorAll("[data-bo]").forEach(b=>b.onclick=()=>{const k=b.dataset.bo;bilOpen[k]=!bilOpen[k];renderChap()});
+     const bk=box.querySelector(".bbak");if(bk)bk.onclick=()=>{const on=document.documentElement.classList.toggle("bakopen");bk.setAttribute("aria-expanded",on);bk.parentElement.classList.toggle("on",on);if(on){const x=$("bakBox");if(x)x.scrollIntoView({behavior:"smooth",block:"start"})}};
      
      const sb=box.querySelector(".bsit");if(sb)sb.onclick=()=>sitSheet();
      box.querySelectorAll("[data-int]").forEach(b=>b.onclick=()=>{if(!G.intn||typeof G.intn!=="object")G.intn={};const nk=bWeek(-1)[0];G.intn[nk]=G.intn[nk]===b.dataset.int?"":b.dataset.int;save();renderChap();if(G.intn[nk])toast("Intention notée pour lundi")})}}
@@ -13657,7 +13657,10 @@ try{$("sync").textContent="Enregistré sur ce téléphone"}catch(e){}
   --ui-creme-2:#c9d0ff;  /* texte secondaire */
   --ui-bord:rgba(255,255,255,.17); /* bordure neutre */
   --ui-fond:rgba(16,20,67,.72);    /* fond sombre (boutons secondaires, champs) */
-  --ui-fond-plein:#101443;         /* fenêtre plein écran */
+  --ui-fond-plein:#101443;
+  --ui-carte:#1b2275;              /* carte pleine (tuiles Cobalt) */
+  --ui-carte-2:#2433d6;
+  --ui-piste:#4a58e8;              /* piste, barres au repos */         /* fenêtre plein écran */
   --ui-voile:rgba(10,14,51,.7);      /* fond assombri derrière une petite fenêtre */
   --ui-etiquette:rgba(10,10,24,.72);
   --ui-barre-bord:rgba(255,247,230,.85);
@@ -15444,18 +15447,10 @@ html:not(#_a):not(#_b) body .bgl.lv,html:not(#_a):not(#_b) body .bgl{}
 .pav.fmini img{width:100%;height:100%;object-fit:cover}
 :is(.pav.fmini,.pav.fpav){color:#fff;line-height:1;text-indent:0}
 .pav.fmini{font-size:13px}
-.kwask .pav.fmini,.idqw .pav.fmini,.rrt .pav.fmini{display:block;width:34px;height:34px;font-size:15px;border-radius:4px;overflow:hidden;background:var(--h);color:#fff;font-weight:800;text-align:center;line-height:34px}
-:is(.kwask,.idqw,.rrt) .pav.fmini img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
-.realrc{margin:12px 0}
-.rrg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.rrt{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:10px 4px;border-radius:12px;background:var(--surface);border:1px solid var(--line);min-width:0}
-.rri{width:34px;height:34px;display:grid;place-items:center}
-html:not(#_a):not(#_b) body .rri svg{width:100%;height:100%;display:block}
-.rrt b{font-size:13px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rrt small{font-size:11px;opacity:.7}
-:is(.kwask,.idqw,.rrt) .pav.fmini img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 18%;position:static}
-:is(.kwask,.idqw,.rrt) .pav.fmini{padding:0;box-sizing:border-box;border:2px solid var(--ui-trait)}
-.realrc{padding:0 14px 14px}
+.kwask .pav.fmini,.idqw .pav.fmini{display:block;width:34px;height:34px;font-size:15px;border-radius:4px;overflow:hidden;background:var(--h);color:#fff;font-weight:800;text-align:center;line-height:34px}
+:is(.kwask,.idqw) .pav.fmini img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+:is(.kwask,.idqw) .pav.fmini img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 18%;position:static}
+:is(.kwask,.idqw) .pav.fmini{padding:0;box-sizing:border-box;border:2px solid var(--ui-trait)}
 img.pxi.ic{width:32px;height:32px;min-width:32px;max-width:none;flex:0 0 32px}
 span:has(>img.pxi.ic){flex:0 0 auto;min-width:32px}
 .bcd.md{background:var(--mc);padding:0;overflow:hidden;display:grid;place-items:end center}
@@ -15471,10 +15466,6 @@ span:has(>img.pxi.ic){flex:0 0 auto;min-width:32px}
 .pldl i{width:10px;height:10px;background:var(--pc);box-shadow:inset -2px -2px 0 rgba(0,0,0,.25)}
 .pldl{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:rgba(255,247,230,.8)}
 .pldl span{display:inline-flex;align-items:center;gap:5px}
-.plwk{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:4px 0 8px}
-.plwk span{display:grid;justify-items:center;gap:3px}
-.plwk .plz{width:70%;max-width:30px;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,255,255,.22);margin:15% 0}
-.plwk em{font-style:normal;font-size:11px;color:rgba(255,247,230,.6)}
 .prbarw{display:flex;align-items:center;gap:8px;margin-top:4px}
 .prbar{flex:1;display:block;height:10px;box-sizing:border-box;border:2px solid rgba(255,247,230,.85);background:rgba(0,0,0,.35);overflow:hidden}
 .prbar>i{display:block;height:100%;background:var(--zc,var(--gold))}
@@ -15949,7 +15940,6 @@ html:not(#_a):not(#_b) body #balCard h3::after{display:none!important}
 .balviz .svt[data-b="off"][aria-pressed="true"] .fti,.balviz .svt[data-b="pz"] .fti{filter:none;opacity:1}
 .balviz :is([data-b="off"],[data-b="pz"]) .fti{filter:none;opacity:1}
 /* — depuis epure-03.css — */
-.realrc .bh3{margin:4px 0 10px}
 section.char #meSet{display:none}
 html:not(#_a):not(#_b) body section.char #charTitle svg{display:none!important}
 #prjBox2 .prgo{display:none}
@@ -15999,7 +15989,6 @@ html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.fcard,.hmcard,.bhero,.bchap,#
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdgnew,.evr.now .evd){animation:none!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d) body :is(.bdg:not(.lock) .bpx,#pfBdg .bpx,.pbs.on .pbi)::after{animation:none!important;opacity:0!important}
 /* — depuis assiette.css — */
-html:not(#_a):not(#_b):not(#_c):not(#_d) body #plWeek:not([hidden]):not(.gempty){display:grid}
 /* — depuis standards.css — */
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body :is(.pav.bdp,.pav.cal-av,.bni,.pbs .pbi){border-radius:50%!important}
 html:not(#_a):not(#_b):not(#_c):not(#_d):not(#_e):not(#_f) body .pf .avbtn::after{border-radius:50%!important}
@@ -16235,11 +16224,51 @@ html:not(#_a):not(#_b) body .wrap>section.mes{margin:-14px 0 0 calc(50% - 50vw)!
 #ficheBox .ui-entete{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .fi-hint{font-size:13px;color:var(--muted);white-space:nowrap}
 .fi-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:6px}
-.fi-t{display:flex;flex-direction:column;justify-content:center;gap:2px;height:60px;padding:8px 12px;box-sizing:border-box;border:0;border-radius:0;background:var(--surface);color:var(--ink);text-align:left;box-shadow:none;min-width:0}
+.fi-t{display:flex;flex-direction:column;justify-content:center;gap:2px;height:60px;padding:8px 12px;box-sizing:border-box;border:0;border-radius:0;background:var(--ui-carte);color:var(--ink);text-align:left;box-shadow:none;min-width:0}
 .fi-t small{font-size:11px;line-height:13px;color:var(--muted);font-weight:400}
 .fi-t b{font-size:15px;line-height:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .fi-t.fi-vide b{color:var(--muted);font-weight:400}
 .wrap>section.mes-tp:not(:has(.pf-tpick:not([hidden]))){display:none}
+
+/* Cobalt (maquette E Bilan) */
+html:not(#_a):not(#_b) body .btabs{gap:6px;padding:0;background:none;border:0}
+html:not(#_a):not(#_b) body .btabs button{min-height:44px;font-size:15px;font-weight:700;color:var(--ink);background:var(--ui-carte);box-shadow:none;border:0;border-radius:0}
+html:not(#_a):not(#_b) body .btabs button[aria-selected="true"]{color:var(--ui-trait);background:var(--ui-creme)}
+.bce-w{display:grid;gap:6px;margin-top:14px}
+.bce{display:grid;gap:2px;width:100%;padding:14px 16px;box-sizing:border-box;background:var(--ui-creme);color:var(--ui-trait);border:0;border-radius:0;text-align:left;font:inherit;cursor:pointer}
+.bce small{font-size:11px;line-height:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.bce b{font-size:22px;line-height:28px;font-weight:400}
+.bce span{font-size:13px;line-height:16px;opacity:.75}
+.bce .bced{display:flex;gap:8px;margin-top:4px}.bce .bced input{flex:1;min-width:0;font-size:16px}
+.bce-w .bcrs{justify-self:start}
+.realrc{margin-top:22px}
+.rrg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.rrt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:72px;padding:0 4px;background:var(--ui-carte);min-width:0;text-align:center}
+.rrt b{font-family:var(--f-body);font-size:28px;line-height:32px;font-weight:400}
+.rrt small{font-size:11px;line-height:14px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bxe,#chapBox #plWeek{margin-top:22px}
+.bxe-t{font-size:13px;color:var(--muted)}
+.bxp{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:144px;padding:14px 12px 10px;background:var(--ui-carte);box-sizing:border-box}
+.bxp span{display:grid;grid-template-rows:1fr 18px;align-items:end;justify-items:stretch;min-height:0}
+.bxp i{display:block;background:var(--ui-piste);min-height:0}
+.bxp .now i{background:var(--ui-or)}
+.bxp em{font-style:normal;font-size:11px;line-height:18px;text-align:center;color:var(--muted)}
+.bpl7{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.bpl7 span{display:grid;gap:4px}
+.bpl7 i{display:block;height:36px;background:var(--ui-carte-2)}
+.bpl7 .g3 i{background:var(--c-sport)}.bpl7 .g2 i{background:var(--c-social)}.bpl7 .g1 i{background:var(--ui-piste)}
+.bpl7 em{font-style:normal;font-size:11px;line-height:14px;text-align:center;color:var(--muted)}
+.bpl-lg{margin:8px 0 0;font-size:13px;line-height:18px;color:var(--ink)}
+.brows{display:grid;gap:6px;margin-top:22px}
+.bln{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:60px;padding:0 16px;box-sizing:border-box;background:var(--ui-carte);color:var(--ink);border:0;border-radius:0;font:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer}
+.bln b{font-family:var(--f-pixel);font-size:20px;font-weight:400;color:var(--ui-or)}
+.bln .brc{display:grid;place-items:center;color:var(--ink)}
+.brg.on .bln .brc{transform:rotate(90deg)}
+.brb{padding:12px 0 6px}
+html:not(.bakopen) body #bakBox{display:none!important}
+html:not(#_a):not(#_b) body .bce .bct{font-family:var(--f-body);font-size:22px;line-height:28px;color:var(--ui-trait)}
+#chapBox .ui-entete,#plWeek .ui-entete{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.bln .brc svg{transform:rotate(-90deg)}.brg.on .bln .brc svg{transform:none}.brg.on .bln .brc{transform:none}
 </style>
 <style id="z-aujourdhui-e">/* Aujourd'hui, maquette E (Cobalt). Transition : les anciennes sections d'Aujourd'hui sont masquées
    tant que leurs fonctions ne sont pas migrées ; elles seront supprimées (HTML, JS, CSS) à la fin du chantier. */
@@ -17481,17 +17510,20 @@ function bilPer(){const now=new Date(dayKey(Date.now())+"T12:00");
   if(bilTab==="m"){const d=new Date(now);d.setDate(1);d.setMonth(d.getMonth()-bilOff);const ym=ymOf(d.getTime());return{in:t=>ymOf(t)===ym,t:bilOff?"En "+MOIS_C[d.getMonth()]+", en vrai":"Ce mois-ci, en vrai"}}
   if(bilTab==="y"){const y=now.getFullYear()-bilOff;return{in:t=>+dayKey(t).slice(0,4)===y,t:bilOff?"En "+y+", en vrai":"Cette année, en vrai"}}
   const K=new Set(bWeek(bilOff));return{in:t=>K.has(dayKey(t)),t:bilOff?"Cette semaine-là, en vrai":"Cette semaine, en vrai"}}
-function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0),T=[];
-  const ppl={};L.forEach(e=>{const W=new Set(e.withp||[]);(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))W.add(n)});W.forEach(n=>ppl[n]=(ppl[n]||0)+1)});
-  Object.entries(ppl).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(([n,c])=>T.push([pAv(n,"fmini rrav"),n,c>1?"×"+c:"1 fois"]));
-  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e));if(fin.length)T.push([vI("lire"),fin.length>1?fin.length+" livres":fin[0].t,"terminé"]);
-  const cnt=re=>L.filter(e=>re.test(e.a||"")).length,film=cnt(/^af:regarder:Film/);if(film)T.push([vI("clap"),film+" film"+(film>1?"s":""),"vus"]);
+function realRecap(){const b=document.getElementById("chapBox");if(!b||!S||!S.g)return;const PR=bilPer(),L=(S.log||[]).filter(e=>PR.in(e.t)&&e.xp>=0);
+  const ppl=new Set();L.forEach(e=>{(e.withp||[]).forEach(n=>ppl.add(n));(S.friends||[]).concat(S.family||[]).forEach(n=>{if(new RegExp("\\b"+n.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\b").test(e.name||""))ppl.add(n)})});
+  const pl=(n,a,b)=>n>1?b:a,cnt=re=>L.filter(e=>re.test(e.a||"")).length,T=[],add=(n,l,c)=>{if(n)T.push([n,l,c])};
+  add(ppl.size,pl(ppl.size,"proche vu","proches vus"),"var(--c-social)");
+  const fin=((S.g.fini||{}).book||[]).filter(x=>x.e&&PR.in(x.e)).length;add(fin,pl(fin,"livre","livres"),"var(--c-soi)");
+  const film=cnt(/^af:regarder:Film/);add(film,pl(film,"film","films"),"var(--ink)");
+  const sp=L.filter(e=>e.cat==="sport").length;add(sp,pl(sp,"séance","séances"),"var(--c-sport)");
+  const so=L.filter(e=>e.idq).length;add(so,pl(so,"sortie","sorties"),"var(--ui-or)");
+  const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;add(rm,pl(rm,"pièce rangée","pièces rangées"),"var(--ink)");
   const sums={};L.forEach(e=>{const r=String(e.name||"").match(QRX);if(!r)return;const u=r[2];sums[u]=(sums[u]||0)+parseFloat(r[1].replace(",","."))});
-  if(sums["rép."])T.push([vI("halteres"),Math.round(sums["rép."])+" rép.","de renfo"]);if(sums.km)T.push([vI("pas"),Math.round(sums.km*10)/10+" km","parcourus"]);if(sums.pages)T.push([vI("lire"),Math.round(sums.pages)+" pages","lues"]);
-  const so=L.filter(e=>e.idq).length;if(so)T.push([vI("ticket"),so+" sortie"+(so>1?"s":""),"découvertes"]);const rm=new Set(L.filter(e=>/^af:ranger:/.test(e.a||"")).map(e=>e.a)).size;if(rm)T.push([vI("balai"),rm+" pièce"+(rm>1?"s":""),"rangées"]);
-  const k=PR.t+"|"+T.map(t=>t[1]+t[2]).join("|"),anc=b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
+  if(sums.km)add(Math.round(sums.km*10)/10,"km parcourus","var(--c-sport)");if(sums.pages)add(Math.round(sums.pages),"pages lues","var(--c-soi)");if(sums["rép."])add(Math.round(sums["rép."]),"rép. de renfo","var(--c-sport)");
+  const k=PR.t+"|"+T.map(t=>t[0]+t[1]).join("|"),anc=b.querySelector(".bce-w")||b.querySelector(".bnav")||b.querySelector(".btabs");let c=b.querySelector(".realrc");if(c&&c.dataset.k===k&&anc&&c.previousElementSibling===anc)return;
   if(!c){c=document.createElement("div");c.className="realrc"}if(anc)anc.after(c);else b.prepend(c);c.dataset.k=k;
-  c.innerHTML=`<h3 class="bh3">${PR.t}</h3>${T.length?`<div class="rrg">${T.slice(0,6).map(([ic,a,s2])=>`<div class="rrt"><span class="rri">${ic}</span><b>${esc(a)}</b><small>${esc(s2)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
+  c.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">${PR.t}</h2></div>${T.length?`<div class="rrg">${T.slice(0,6).map(([n,l,col])=>`<div class="rrt"><b style="color:${col}">${n}</b><small>${esc(l)}</small></div>`).join("")}</div>`:`<p class="vide">Rien de noté pour l'instant.</p>`}`}
 
 // ---- une seule porte par fonction : la carte perso renvoie vers Collection au lieu d'ouvrir ses propres sélecteurs
 function charLinks(){const c=document.querySelector('section.char');if(!c||c.dataset.lk)return;c.dataset.lk=1;
@@ -17803,12 +17835,8 @@ function plTot(d){const D=plDay(d),t={f:0,p:0,l:0,x:{yaourt:0,fromage:0,eau:0},n
 
 // Aujourd'hui : petite assiette du jour sous les repas (dès qu'un repas est rempli)
 function renderPlateWeek(){const box=document.getElementById("plWeek");if(!box||!S.g)return;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push([d,plTot(dayKey(d))])}
-  const done=days.filter(x=>x[1].n);box.classList.toggle("gempty",!done.length);if(!done.length){box.innerHTML="";return}
-  const cnt=s=>done.filter(x=>x[1][s]).length,xs=id=>done.reduce((a,x)=>a+x[1].x[id],0);
-  const weak=PL_SIDES.map(([s,l])=>[l,cnt(s)]).sort((a,b)=>a[1]-b[1])[0];
-  box.innerHTML=`<div class="gcard col1"><h3>Mon assiette · 7 jours</h3><div class="plwk">${days.map(([d,t])=>`<span class="${t.n?"":"none"}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}">${t.n?plSvg(t):'<i class="plz"></i>'}<em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div>
-    <div class="pldl">${PL_SIDES.map(([s,l,c1,c2])=>`<span style="--pc:${c2}"><i></i>${l} ${cnt(s)}/${done.length} j</span>`).join("")}</div>
-    <p class="hint" style="margin:6px 0 0">${weak[1]<done.length?`Le côté qui manque le plus : ${weak[0].toLowerCase()}.`:"Les trois côtés tous les jours, bravo."} Yaourt ${xs("yaourt")} · fromage ${xs("fromage")} · eau ${xs("eau")}.</p></div>`}
+  const g=t=>t.n?PL_SIDES.filter(([s])=>t[s]).length:-1;
+  box.innerHTML=`<div class="ui-entete"><h2 class="ui-titre">Mon assiette</h2><span class="bxe-t">7 derniers jours</span></div><div class="bpl7">${days.map(([d,t])=>`<span class="g${g(t)}" title="${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric"})}"><i></i><em>${"LMMJVSD"[(d.getDay()+6)%7]}</em></span>`).join("")}</div><p class="bpl-lg">Rose : 3 groupes couverts. Bleu clair : un groupe manquait.</p>`}
 
 // shortcut: réparation unique des repas notés entre 3 h et 4 h la nuit du 25 oct. 2026 (rangés à tort au 25), à supprimer après novembre 2026
 // À faire (28/10) : liste du jour remplie depuis le panneau Actions (Aujourd'hui / Demain) ou en tâche libre.
