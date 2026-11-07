@@ -1,0 +1,63 @@
+/* Écran Aujourd'hui. Ne lit que tokens.css et composants.css ; aucune couleur en dur sauf l'ombre de la scène (propre à l'illustration). */
+
+.aujourdhui { display: grid; gap: var(--e4); align-content: start; }
+.aujourdhui > .ui-section { margin-top: var(--e2); }
+
+/* ---- Scène : demi-sphère de ciel, colline, avatar, aura au premier plan */
+.scene { display: grid; justify-items: center; gap: var(--e3); }
+.scene__date { font: 700 var(--t-carte) / 1.2 var(--f-texte); text-transform: capitalize; text-align: center; }
+.scene__meteo { color: var(--texte-2); font-weight: 400; }
+.scene__sphere {
+  position: relative; width: 240px; height: 240px; border-radius: 50%; overflow: hidden;
+  background: var(--ciel); border: 3px solid var(--barre-bord);
+}
+.scene__colline { position: absolute; left: -20%; right: -20%; bottom: -38%; height: 62%; border-radius: 50%; background: linear-gradient(var(--col1), var(--col2)); }
+.scene__perso { position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%); }
+.scene__aura { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.scene__aura svg { width: 100%; height: 100%; }
+.scene__niveau { width: 100%; display: grid; gap: var(--e2); }
+.scene__rang { display: flex; justify-content: space-between; align-items: baseline; }
+
+/* ---- Coffre : 5 crans */
+.coffre { display: flex; align-items: center; gap: var(--e3); }
+.coffre__crans { flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--e1); }
+.coffre__crans i { display: block; height: var(--barre-grande); border: 2px solid var(--barre-bord); background: rgba(0, 0, 0, .35); }
+.coffre__crans i.rempli { background: var(--action); }
+
+/* ---- 4 Angles */
+.angles { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--e3); }
+.angle { display: grid; gap: var(--e1); }
+.angle__nom { display: flex; align-items: center; gap: var(--e1); color: var(--ac); font-weight: 700; }
+.angle .ui-barre > i { background: var(--ac); }
+
+/* ---- Repas, routine, habitudes */
+.assiette-hub { width: 100%; margin-bottom: var(--e2); }
+.pastilles, .routines, .habitudes, .humeurs { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.routines .bouton { flex: 1 1 140px; }
+.habitudes .bouton { flex: 1 1 140px; justify-content: space-between; }
+
+/* ---- Quêtes */
+.quete { display: flex; align-items: center; justify-content: space-between; gap: var(--e3); margin-bottom: var(--e2); }
+.quete--faite { opacity: .55; }
+.quete__texte { min-width: 0; flex: 1; }
+.quete__actions { display: flex; gap: var(--e2); flex: none; }
+.evenement { margin-bottom: var(--e2); border-color: var(--action); }
+
+/* ---- Bonne nuit */
+.sommeil { display: flex; gap: var(--e3); margin: var(--e3) 0; }
+.champ { display: grid; gap: var(--e1); flex: 1; }
+.champ input, .champ__texte {
+  width: 100%; min-height: var(--h-bouton); padding: var(--e2) var(--e3);
+  background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; font-size: var(--t-champ);
+}
+.champ__texte { display: block; margin-bottom: var(--e3); resize: none; }
+
+/* ---- Suivis repliés */
+.suivis { border-top: 2px dotted var(--bord); padding-top: var(--e3); }
+.suivis summary { min-height: var(--h-bouton); display: flex; align-items: center; cursor: pointer; }
+.suivis__corps { display: grid; gap: var(--e2); }
+
+/* Mise en grille : 5 humeurs sur une ligne, repas par 2 */
+.humeurs { display: grid; grid-template-columns: repeat(5, 1fr); }
+.humeurs .bouton { padding: 0; }
+.pastilles { display: grid; grid-template-columns: repeat(2, 1fr); }

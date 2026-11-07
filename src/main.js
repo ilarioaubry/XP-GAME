@@ -10,6 +10,8 @@ import { installer as installerSons } from "./core/sons.js";
 import { niveau, rang, cleJour } from "./core/temps.js";
 import { h, $, $$, monter } from "./ui/dom.js";
 import { pxUi, pxRk } from "./ui/pixel.js";
+import { installerMessages } from "./ui/messages.js";
+import { monterAujourdhui } from "./ecrans/aujourdhui.js";
 
 installerJournal();
 
@@ -83,8 +85,9 @@ function demarrer() {
   charger();
   installerSons();
   monterOnglets();
-  monter($("#e-aujourdhui"), controleSocle());
-  monter($("#e-moi"), h("div", { class: "page" }, h("p", { class: "vide" }, "Moi arrive aux briques 3 et 4.")));
+  installerMessages();
+  monterAujourdhui($("#e-aujourdhui"));
+  monter($("#e-moi"), h("div", { class: "page" }, controleSocle(), h("p", { class: "vide" }, "Moi arrive aux briques 3 et 4.")));
   monter($("#e-proches"), h("div", { class: "page" }, h("p", { class: "vide" }, "Proches arrive à la brique 4.")));
   on("etat:modifie", () => { /* le rendu des écrans s'abonnera ici */ });
   aller("aujourdhui");

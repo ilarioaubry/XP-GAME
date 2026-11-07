@@ -14,7 +14,7 @@ export function h(tag, attrs, ...enfants) {
     else if (k === "html") el.innerHTML = v;
     else el.setAttribute(k, v === true ? "" : v);
   }
-  for (const e of enfants.flat()) {
+  for (const e of enfants.flat(Infinity)) {
     if (e == null || e === false) continue;
     el.append(e instanceof Node ? e : document.createTextNode(String(e)));
   }
@@ -23,5 +23,5 @@ export function h(tag, attrs, ...enfants) {
 
 /** Remplace le contenu d'un élément. */
 export function monter(racine, ...enfants) {
-  racine.replaceChildren(...enfants.flat().filter(e => e != null && e !== false));
+  racine.replaceChildren(...enfants.flat(Infinity).filter(e => e != null && e !== false));
 }
