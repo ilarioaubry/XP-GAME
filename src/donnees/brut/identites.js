@@ -1,0 +1,4 @@
+// GÉNÉRÉ par outils/extraire.py depuis _legacy/src/js/moi/04-identites.js — ne pas modifier.
+// Valeurs finales de l'ancienne version. Les catalogues propres de la V2 se construisent à partir d'ici.
+export const IDM = {"pages":{"__fn__":"pages"},"books":{"__fn__":"books"},"sport":{"__fn__":"sport"},"km":{"__fn__":"km"},"son":{"__fn__":"son"},"rel":{"__fn__":"rel"},"lien":{"__fn__":"lien"},"days":{"__fn__":"days"},"zen":{"__fn__":"zen"},"maison":{"__fn__":"maison"},"travail":{"__fn__":"travail"},"repas":{"__fn__":"repas"}};
+export const IDU = {"pages":"pages","books":"livres finis","sport":"XP de Sport","km":"km courus","son":"XP de musique","rel":"sons sortis","lien":"XP de relations","days":"jours actifs","zen":"min de méditation","maison":"XP de Maison","travail":"XP de Travail","repas":"bilans repas"};

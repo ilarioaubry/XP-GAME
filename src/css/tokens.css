@@ -1,0 +1,79 @@
+/* Design tokens de la V2 (Cobalt) : la SEULE source des couleurs, tailles et espacements.
+   Règle : aucune autre feuille n'écrit de couleur, de taille de texte ni d'espacement en dur.
+   Valeurs reprises de DESIGN.md (mesures) et de la branche Cobalt (palette), voir CHANTIER-COBALT. */
+
+:root {
+  color-scheme: dark;
+
+  /* Palette Cobalt */
+  --c-nuit: #101443;        /* fond de page, contours pixel, texte sur orange */
+  --c-carte: #1b2275;       /* cartes, tuiles */
+  --c-carte-2: #2433d6;     /* carte relevée, sélection douce */
+  --c-piste: #4a58e8;       /* pistes de barres, traits */
+  --c-ciel: #7d8cf0;        /* ciel clair */
+  --c-ciel-2: #c9d0ff;      /* texte secondaire */
+  --c-creme: #fff3e0;       /* texte principal */
+  --c-sable: #e8d6b4;       /* crème foncé sur panneau clair */
+  --c-panneau: #f6e6c8;     /* panneau crème */
+  --c-orange: #ff6a2b;      /* action principale, sélection, progression */
+  --c-rose: #ff9ec7;        /* nouveau / alerte douce */
+
+  /* Les 4 angles de vie (fusion des 8 anciennes jauges) */
+  --angle-corps: #ff9ec7;
+  --angle-esprit: #c8a2ff;
+  --angle-liens: #7d8cf0;
+  --angle-foyer: #f6e6c8;
+
+  /* Rôles (ce que les composants lisent) */
+  --fond: var(--c-nuit);
+  --texte: var(--c-creme);
+  --texte-2: var(--c-ciel-2);
+  --action: var(--c-orange);
+  --action-texte: var(--c-nuit);
+  --alerte: var(--c-rose);
+  --trait: var(--c-nuit);
+  --bord: rgba(255, 255, 255, .17);
+  --voile: rgba(10, 14, 51, .7);
+  --fond-champ: rgba(16, 20, 67, .72);
+  --piste: var(--c-piste);
+  --barre-bord: rgba(255, 243, 224, .85);
+  --ombre: 0 3px 0 rgba(10, 14, 51, 1);
+
+  /* Polices */
+  --f-pixel: "Lilita One", "Arial Rounded MT Bold", ui-rounded, system-ui, sans-serif;
+  --f-texte: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+
+  /* Échelle de texte à 4 niveaux (+ chiffres décoratifs et champs) */
+  --t-section: 20px;
+  --t-carte: 15px;
+  --t-texte: 13px;
+  --t-info: 11px;
+  --t-champ: 16px;
+  --t-chiffre: 26px;
+
+  /* Espacements : multiples de 4 */
+  --e1: 4px;
+  --e2: 8px;
+  --e3: 12px;
+  --e4: 16px;
+  --e6: 24px;
+  --e8: 32px;
+
+  /* Dimensions */
+  --h-bouton: 44px;
+  --marge: 24px;
+  --barre-grande: 18px;
+  --barre-petite: 10px;
+  --ic-s: 16px;
+  --ic-m: 32px;
+  --ic-l: 48px;
+  --h-onglets: 64px;
+  --largeur-max: 560px;
+
+  /* Mouvement */
+  --duree: .18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duree: 0s; }
+}

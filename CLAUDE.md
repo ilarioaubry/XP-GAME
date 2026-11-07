@@ -1,5 +1,13 @@
 # Carnet de Quêtes
 
+> **V2 en cours (branche `v2`)** : reconstruction propre, voir `V2.md`. L'ancien code est dans `_legacy/` en **lecture seule** (ne jamais le modifier). Règles de la V2, qui remplacent celles de « Règles de travail » ci-dessous :
+> - Code dans `src/` : `core/` (état, événements, journal, sauvegarde, sons), `ui/`, `css/` (variables de `tokens.css` seulement), `donnees/`. Modules ES natifs, **pas de build**, pas de fonction globale, pas de `window.__`.
+> - **Zéro `!important`**, zéro `catch(e){}` vide (passer par `journal.erreur`), zéro passe « finitions » après rendu.
+> - Les données d'`src/donnees/brut/` sont générées par `outils/extraire.py` : ne pas les modifier à la main.
+> - Sauvegarde : même clé `carnet-quetes`, même format (`v` 28), clés de `S.g` jamais renommées ; migration = une entrée de plus à la fin de `V2` dans `src/core/migrations.js`.
+> - Avant de livrer : `python3 outils/test_socle.py` (0 échec) et capture à 393 px.
+> - Accent Cobalt : orange `#ff6a2b` (l'ancien « or `#ffd94a` » des standards est périmé) ; les autres standards d'Ilario restent valables.
+
 Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone en appli installée depuis GitHub Pages. Répondre en français, de façon concise.
 
 ## Règles de travail

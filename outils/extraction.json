@@ -1,0 +1,1920 @@
+{
+ "catalogues": {
+  "RKI": {
+   "fichier": "js/donnees/icones.js",
+   "type": "objet",
+   "n": 162,
+   "octets": 53754
+  },
+  "PXUI": {
+   "fichier": "js/donnees/icones.js",
+   "type": "objet",
+   "n": 26,
+   "octets": 5273
+  },
+  "PXSP": {
+   "fichier": "js/donnees/icones.js",
+   "type": "objet",
+   "n": 24,
+   "octets": 7275
+  },
+  "PXI": {
+   "fichier": "js/donnees/icones.js",
+   "type": "objet",
+   "n": 16,
+   "octets": 2417
+  },
+  "BPX_M": {
+   "fichier": "js/donnees/icones.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 2265
+  },
+  "GEAR": {
+   "fichier": "js/donnees/equipement.js",
+   "type": "liste",
+   "n": 117,
+   "octets": 21555
+  },
+  "AV_OPT": {
+   "fichier": "js/donnees/equipement.js",
+   "type": "objet",
+   "n": 22,
+   "octets": 4298
+  },
+  "AV_MAIN": {
+   "fichier": "js/donnees/equipement.js",
+   "type": "objet",
+   "n": 63,
+   "octets": 10213
+  },
+  "FAM": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "liste",
+   "n": 51,
+   "octets": 9179
+  },
+  "IDQ": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "liste",
+   "n": 31,
+   "octets": 2488
+  },
+  "IDI": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 2483
+  },
+  "FIC": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "objet",
+   "n": 52,
+   "octets": 2542
+  },
+  "QC_TPL": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 2507
+  },
+  "FIG_CAT": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 4657
+  },
+  "DQ_K": {
+   "fichier": "js/donnees/quetes.js",
+   "type": "objet",
+   "n": 16,
+   "octets": 125204
+  },
+  "IDS": {
+   "fichier": "js/donnees/contenu.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 4951
+  },
+  "FILMS": {
+   "fichier": "js/donnees/contenu.js",
+   "type": "liste",
+   "n": 83,
+   "octets": 2174
+  },
+  "RIT_G": {
+   "fichier": "js/donnees/contenu.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 1893
+  },
+  "FIG2": {
+   "fichier": "js/donnees/contenu.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 5481
+  },
+  "HAVE": {
+   "fichier": "js/donnees/vie-faits.js",
+   "type": "liste",
+   "n": 19,
+   "octets": 4000
+  },
+  "HAVE_G": {
+   "fichier": "js/donnees/vie-faits.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 82
+  },
+  "CATS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 472
+  },
+  "BARS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 147
+  },
+  "STAT_KEYS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 67
+  },
+  "REMAP": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 41
+  },
+  "PERSO": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 2,
+   "octets": 153
+  },
+  "RANKS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 140
+  },
+  "MICRO": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 393
+  },
+  "STARTER_REST": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 11,
+   "octets": 772
+  },
+  "NOURRITURE": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 230
+  },
+  "SPORT_IDS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 30
+  },
+  "FRIENDS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 20,
+   "octets": 175
+  },
+  "FAMILY": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 66
+  },
+  "MUSIC": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 172
+  },
+  "GROUPS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 432
+  },
+  "HYGIENE": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 1,
+   "octets": 69
+  },
+  "PLATE_DUP": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 131
+  },
+  "ACT_RETIRE": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 102
+  },
+  "STARTER": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 22,
+   "octets": 1595
+  },
+  "STARTER_WISHES": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 214
+  },
+  "PICS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "objet",
+   "n": 0,
+   "octets": 2
+  },
+  "REL_ACTIONS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 236
+  },
+  "LV_COL": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 88
+  },
+  "PXL": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 225
+  },
+  "PXSPC": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 1727
+  },
+  "viewDirty": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 67
+  },
+  "VIEW_R": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 110
+  },
+  "DQ_ORD": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "type": "objet",
+   "n": 16,
+   "octets": 192
+  },
+  "MB": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 180
+  },
+  "MB_PL": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 81
+  },
+  "MB_EX": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 117
+  },
+  "MB_V": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 149
+  },
+  "MEAL_H": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 49
+  },
+  "HP_MEAL": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 50
+  },
+  "RARE": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 67
+  },
+  "ANGLES": {
+   "fichier": "js/aujourdhui/03-repas-barre-de-vie.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 264
+  },
+  "IDM": {
+   "fichier": "js/moi/04-identites.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 344
+  },
+  "IDU": {
+   "fichier": "js/moi/04-identites.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 290
+  },
+  "XM_ST": {
+   "fichier": "js/aujourdhui/05-fetes.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 39
+  },
+  "XM_ADV": {
+   "fichier": "js/aujourdhui/05-fetes.js",
+   "type": "liste",
+   "n": 24,
+   "octets": 1400
+  },
+  "XM_RES": {
+   "fichier": "js/aujourdhui/05-fetes.js",
+   "type": "objet",
+   "n": 10,
+   "octets": 430
+  },
+  "OB_MUSIC": {
+   "fichier": "js/coeur/06-creation-profil.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 145
+  },
+  "OB_FAM": {
+   "fichier": "js/coeur/06-creation-profil.js",
+   "type": "liste",
+   "n": 2,
+   "octets": 17
+  },
+  "RK": {
+   "fichier": "js/aujourdhui/07-rituels-tuiles.js",
+   "type": "liste",
+   "n": 14,
+   "octets": 1063
+  },
+  "RKP": {
+   "fichier": "js/aujourdhui/07-rituels-tuiles.js",
+   "type": "objet",
+   "n": 25,
+   "octets": 400
+  },
+  "AMB_SKY": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 381
+  },
+  "AMB_HILL": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 162
+  },
+  "SKY_K": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 810
+  },
+  "SEA": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 389
+  },
+  "NIGHT_HILL": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "liste",
+   "n": 2,
+   "octets": 22
+  },
+  "ACTS": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "objet",
+   "n": 15,
+   "octets": 797
+  },
+  "FIRE": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 112
+  },
+  "MQ": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 529
+  },
+  "RKA": {
+   "fichier": "js/aujourdhui/08-ambiance-scene.js",
+   "type": "objet",
+   "n": 16,
+   "octets": 513
+  },
+  "EV_IC": {
+   "fichier": "js/aujourdhui/10-evenements.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 26538
+  },
+  "AV_DEF": {
+   "fichier": "js/moi/11-createur-personnage.js",
+   "type": "objet",
+   "n": 23,
+   "octets": 257
+  },
+  "BG_H": {
+   "fichier": "js/moi/11-createur-personnage.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 39
+  },
+  "AVC_TABS": {
+   "fichier": "js/moi/11-createur-personnage.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 745
+  },
+  "HAIR_GRP": {
+   "fichier": "js/moi/11-createur-personnage.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 138
+  },
+  "CH": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 35
+  },
+  "CH_BOT": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 63
+  },
+  "CH_BOTC": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 110
+  },
+  "CH_SHOE": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 47
+  },
+  "CH_SHOEC": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 66
+  },
+  "CH_DEF": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 44
+  },
+  "CH_HAIR": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 27,
+   "octets": 1284
+  },
+  "CH_SIZE": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 17
+  },
+  "CH_HAT_COVER": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 62
+  },
+  "MOUTH": {
+   "fichier": "js/coeur/12e-pixel-clair-tete.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 187
+  },
+  "FIG_FIX": {
+   "fichier": "js/coeur/13-figurines-expressions.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 144
+  },
+  "BODY_MOOD": {
+   "fichier": "js/coeur/13-figurines-expressions.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 40
+  },
+  "AVC_BODYK": {
+   "fichier": "js/coeur/14-pixel-clair-integration.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 72
+  },
+  "AVS": {
+   "fichier": "js/coeur/14-pixel-clair-integration.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 837
+  },
+  "AVK": {
+   "fichier": "js/coeur/14-pixel-clair-integration.js",
+   "type": "objet",
+   "n": 22,
+   "octets": 311
+  },
+  "SQ": {
+   "fichier": "js/moi/15-reglages-rituels.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 173
+  },
+  "RIT_DEFAULT": {
+   "fichier": "js/moi/15-reglages-rituels.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 353
+  },
+  "RIT_BRICKS": {
+   "fichier": "js/moi/15-reglages-rituels.js",
+   "type": "liste",
+   "n": 20,
+   "octets": 903
+  },
+  "RIT_DC": {
+   "fichier": "js/moi/15-reglages-rituels.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 193
+  },
+  "WDL": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 35
+  },
+  "DIFF": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 70
+  },
+  "QC_DOM": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 173
+  },
+  "RIC_KEYS": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "liste",
+   "n": 16,
+   "octets": 140
+  },
+  "QC_GOALDOM": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 228
+  },
+  "QC_CATRE": {
+   "fichier": "js/aujourdhui/16-quetes.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 1002
+  },
+  "WX": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 64
+  },
+  "WX_L": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 165
+  },
+  "WX_MSG": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 196
+  },
+  "WXI": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 1230
+  },
+  "WXP": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 80
+  },
+  "WX_UMB": {
+   "fichier": "js/aujourdhui/17-meteo.js",
+   "type": "liste",
+   "n": 28,
+   "octets": 504
+  },
+  "SIT_Q": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 958
+  },
+  "FQ": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 91,
+   "octets": 12652
+  },
+  "CLAR": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 15,
+   "octets": 1453
+  },
+  "NORMS": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 484
+  },
+  "FREE_ALT": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 531
+  },
+  "REL_IDEAS": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 280
+  },
+  "COMFORT": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 288
+  },
+  "TRG": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 213
+  },
+  "EVM_T": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 63
+  },
+  "GOAL_CAT": {
+   "fichier": "js/moi/19-bilan.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 258
+  },
+  "GOAL_INT": {
+   "fichier": "js/moi/19-bilan.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 454
+  },
+  "CHAP_CAT": {
+   "fichier": "js/moi/19-bilan.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 283
+  },
+  "JOURS": {
+   "fichier": "js/moi/19-bilan.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 73
+  },
+  "FEED_SP": {
+   "fichier": "js/moi/19-bilan.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 48
+  },
+  "EVT": {
+   "fichier": "js/moi/20-calendrier-fiche.js",
+   "type": "liste",
+   "n": 13,
+   "octets": 451
+  },
+  "EVQ": {
+   "fichier": "js/moi/20-calendrier-fiche.js",
+   "type": "liste",
+   "n": 50,
+   "octets": 3227
+  },
+  "CAL_MOIS": {
+   "fichier": "js/moi/calendrier.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 121
+  },
+  "CAL_MC": {
+   "fichier": "js/moi/calendrier.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 99
+  },
+  "CAL_EVI": {
+   "fichier": "js/moi/calendrier.js",
+   "type": "objet",
+   "n": 13,
+   "octets": 267
+  },
+  "CAL_PER": {
+   "fichier": "js/moi/calendrier.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 276
+  },
+  "CAL_JS": {
+   "fichier": "js/moi/calendrier.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 35
+  },
+  "RD_REN": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 192
+  },
+  "XP_NEW": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 25,
+   "octets": 689
+  },
+  "XP_TABLE": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 19,
+   "octets": 498
+  },
+  "FIG_FIX_TXT": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 289
+  },
+  "MOMENTS": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 59
+  },
+  "BI": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 11,
+   "octets": 1148
+  },
+  "ICP": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 13,
+   "octets": 1064
+  },
+  "CAT_IC": {
+   "fichier": "js/coeur/21-contenu-collection.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 84159
+  },
+  "MM_JOURS": {
+   "fichier": "js/aujourdhui/moments.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 73
+  },
+  "MM_STARS": {
+   "fichier": "js/aujourdhui/moments.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 112
+  },
+  "ECL": {
+   "fichier": "js/aujourdhui/moments.js",
+   "type": "liste",
+   "n": 20,
+   "octets": 907
+  },
+  "CAT_ORDER": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 60
+  },
+  "CAT_RW": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 353
+  },
+  "SUG_T": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 208
+  },
+  "Q_AURA": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 133
+  },
+  "LZ": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 1592
+  },
+  "LZ_LINK": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 120
+  },
+  "SON_ACTS": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 73
+  },
+  "ACT_HIDE": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 301
+  },
+  "ACT_MOVE": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 0,
+   "octets": 2
+  },
+  "MS": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 333
+  },
+  "RAR": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 94
+  },
+  "WR_SETS": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 182
+  },
+  "WR_CATS": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 207
+  },
+  "STREAK_IT": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 50
+  },
+  "RARE_TITLES": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 163
+  },
+  "SURPRISE": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "liste",
+   "n": 20,
+   "octets": 1091
+  },
+  "SPRITES": {
+   "fichier": "js/coeur/22-icones-unifiees.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 985
+  },
+  "SC_DOTS": {
+   "fichier": "js/coeur/scenes.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 73
+  },
+  "TOAST_IC": {
+   "fichier": "js/coeur/scenes.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 410
+  },
+  "PAL_LV": {
+   "fichier": "js/coeur/paliers.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 13
+  },
+  "PAL_CATS": {
+   "fichier": "js/coeur/paliers.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 81
+  },
+  "PAL_IC": {
+   "fichier": "js/coeur/paliers.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 176
+  },
+  "CRAN_N": {
+   "fichier": "js/coeur/paliers.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 32
+  },
+  "PAL_TXT": {
+   "fichier": "js/coeur/paliers.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 84
+  },
+  "CB_LIST": {
+   "fichier": "js/aujourdhui/23-coffres-quetes-du-jour.js",
+   "type": "liste",
+   "n": 21,
+   "octets": 6331
+  },
+  "FIGI": {
+   "fichier": "js/aujourdhui/23-coffres-quetes-du-jour.js",
+   "type": "objet",
+   "n": 43,
+   "octets": 23865
+  },
+  "TDE_MD": {
+   "fichier": "js/aujourdhui/page-e.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 171
+  },
+  "WRIC": {
+   "fichier": "js/moi/24-defis-skill-vie-perso.js",
+   "type": "objet",
+   "n": 0,
+   "octets": 2
+  },
+  "AUI": {
+   "fichier": "js/moi/24-defis-skill-vie-perso.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 1349
+  },
+  "MOIS": {
+   "fichier": "js/moi/24-defis-skill-vie-perso.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 121
+  },
+  "MOODS": {
+   "fichier": "js/moi/24-defis-skill-vie-perso.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 130
+  },
+  "HM_ROOMS": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 172
+  },
+  "HM_DIST": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 601
+  },
+  "HMV_K": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 122
+  },
+  "HMS_EQ": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 256
+  },
+  "HMSP_MS": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 202
+  },
+  "PXF": {
+   "fichier": "js/moi/25-chez-moi.js",
+   "type": "objet",
+   "n": 47,
+   "octets": 1128
+  },
+  "HMM2": {
+   "fichier": "js/moi/25a-chez-moi-pieces.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 130
+  },
+  "HMC_FILL": {
+   "fichier": "js/moi/25a-chez-moi-pieces.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 194
+  },
+  "HMH_SLOT": {
+   "fichier": "js/moi/25a-chez-moi-pieces.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 119
+  },
+  "HM_COL": {
+   "fichier": "js/moi/25b-chez-moi-affichage.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 146
+  },
+  "HM_NAME": {
+   "fichier": "js/moi/25b-chez-moi-affichage.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 150
+  },
+  "LIB_PAL": {
+   "fichier": "js/moi/26-bibliotheque-badges.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 350
+  },
+  "TIERC": {
+   "fichier": "js/moi/26-bibliotheque-badges.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 48
+  },
+  "BFAM": {
+   "fichier": "js/moi/26-bibliotheque-badges.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 185
+  },
+  "AURA_PI": {
+   "fichier": "js/moi/26-bibliotheque-badges.js",
+   "type": "objet",
+   "n": 8,
+   "octets": 154
+  },
+  "QHEX": {
+   "fichier": "js/moi/26-bibliotheque-badges.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 187
+  },
+  "BSHAPE": {
+   "fichier": "js/moi/26b-collection-navigation.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 100
+  },
+  "VORD": {
+   "fichier": "js/moi/26b-collection-navigation.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 60
+  },
+  "FOLD": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 46
+  },
+  "HOLD": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 32
+  },
+  "STRETCH": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 430
+  },
+  "GF_ET": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 65
+  },
+  "PU_CALL": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 94
+  },
+  "REPK": {
+   "fichier": "js/moi/27-garde-robe-quetes-timer.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 242
+  },
+  "MONTHS": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 121
+  },
+  "TYPES": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 109
+  },
+  "REL_FAM": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 286
+  },
+  "REL_FR": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 136
+  },
+  "TGI": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 17,
+   "octets": 790
+  },
+  "TAGX": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 10,
+   "octets": 972
+  },
+  "TALENTS_UI": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 91
+  },
+  "FP_BG": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 66
+  },
+  "FG_COL": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 8,
+   "octets": 88
+  },
+  "FG_ACT": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 242
+  },
+  "GRP_ICO": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 47
+  },
+  "XP_EXPLOIT": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 126
+  },
+  "STREAK_MS": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 27
+  },
+  "TOAST_DIFF": {
+   "fichier": "js/coeur/29-defis-semaine-test-sauvegarde.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 230
+  },
+  "EV": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 49
+  },
+  "XPRE": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 45
+  },
+  "LZ_KW": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 725
+  },
+  "IC": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 938
+  },
+  "DOMS": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 9,
+   "octets": 505
+  },
+  "DUR": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 90
+  },
+  "QTY": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 216
+  },
+  "AF_OFF": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 21
+  },
+  "DUNI": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 686
+  },
+  "AF_OVR": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 32,
+   "octets": 1943
+  },
+  "JRS": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 73
+  },
+  "GOALQ": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 10,
+   "octets": 604
+  },
+  "METEOR": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 185
+  },
+  "SOL": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 366
+  },
+  "PROD": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 13,
+   "octets": 570
+  },
+  "MOIS1": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 13,
+   "octets": 125
+  },
+  "NATM": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 13,
+   "octets": 475
+  },
+  "NATV": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 1468
+  },
+  "BDBG": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 3975
+  },
+  "IDW": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 531
+  },
+  "MEALS": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 155
+  },
+  "SOC": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 153
+  },
+  "SKB": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 1089
+  },
+  "QRX": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 68
+  },
+  "JOBI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 112
+  },
+  "HOMEI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 4,
+   "octets": 136
+  },
+  "PRII": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 7,
+   "octets": 138
+  },
+  "PARENT": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 85
+  },
+  "CPL_Q": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 119
+  },
+  "MO_C": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 99
+  },
+  "GOALI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 376
+  },
+  "PASSI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 12,
+   "octets": 225
+  },
+  "NORMI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 152
+  },
+  "JOBL": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 6,
+   "octets": 135
+  },
+  "CPLI": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 109
+  },
+  "MV_WDL": {
+   "fichier": "js/moi/moi-finitions.js",
+   "type": "liste",
+   "n": 7,
+   "octets": 35
+  },
+  "RF": {
+   "fichier": "js/proches/proches-finitions.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 74
+  },
+  "TAGI": {
+   "fichier": "js/proches/proches-finitions.js",
+   "type": "liste",
+   "n": 15,
+   "octets": 743
+  },
+  "PL_SAUCE": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 12,
+   "octets": 301
+  },
+  "PL_SIDES": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 961
+  },
+  "PL_GRP": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 143
+  },
+  "PL_DES": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 128
+  },
+  "PL_OU": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 4,
+   "octets": 139
+  },
+  "PL_TY": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 204
+  },
+  "PL_DIET": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 5,
+   "octets": 370
+  },
+  "PL_X": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 3,
+   "octets": 100
+  },
+  "PL_C": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 2,
+   "octets": 81
+  },
+  "PL_A": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 3,
+   "octets": 29
+  },
+  "PL_IMG": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 0,
+   "octets": 2
+  },
+  "PL_ICONS": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 40,
+   "octets": 413
+  },
+  "PL_REC0": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "liste",
+   "n": 5,
+   "octets": 470
+  },
+  "PL_MEAT": {
+   "fichier": "js/aujourdhui/assiette.js",
+   "type": "objet",
+   "n": 2,
+   "octets": 145
+  },
+  "ENG_DEF": {
+   "fichier": "js/aujourdhui/engagements.js",
+   "type": "liste",
+   "n": 6,
+   "octets": 234
+  },
+  "JD_CHAIN": {
+   "fichier": "js/aujourdhui/journal-de-bord.js",
+   "type": "objet",
+   "n": 1,
+   "octets": 21
+  },
+  "SQ_IC": {
+   "fichier": "js/coeur/standards.js",
+   "type": "objet",
+   "n": 9,
+   "octets": 175
+  },
+  "BADGES": {
+   "fichier": "construit",
+   "type": "liste",
+   "n": 72,
+   "octets": 9273
+  }
+ },
+ "logique": {
+  "REL_ACTIONS": {
+   "fichier": "js/coeur/01-donnees-base.js",
+   "fonctions": 3,
+   "exemples": [
+    "REL_ACTIONS[0].verb",
+    "REL_ACTIONS[1].verb",
+    "REL_ACTIONS[2].verb"
+   ]
+  },
+  "VIEW_R": {
+   "fichier": "js/coeur/02-ecussons-icones.js",
+   "fonctions": 5,
+   "exemples": [
+    "VIEW_R.q",
+    "VIEW_R.c",
+    "VIEW_R.r"
+   ]
+  },
+  "IDM": {
+   "fichier": "js/moi/04-identites.js",
+   "fonctions": 12,
+   "exemples": [
+    "IDM.pages",
+    "IDM.books",
+    "IDM.sport"
+   ]
+  },
+  "CH_HAIR": {
+   "fichier": "js/coeur/12-pixel-clair-moteur.js",
+   "fonctions": 42,
+   "exemples": [
+    "CH_HAIR[0].front",
+    "CH_HAIR[1].front",
+    "CH_HAIR[2].front"
+   ]
+  },
+  "FQ": {
+   "fichier": "js/aujourdhui/18-quetes-pour-toi-histoire.js",
+   "fonctions": 191,
+   "exemples": [
+    "FQ[0][1]",
+    "FQ[0][5]",
+    "FQ[0][6]"
+   ]
+  },
+  "EVQ": {
+   "fichier": "js/moi/20-calendrier-fiche.js",
+   "fonctions": 51,
+   "exemples": [
+    "EVQ[0][4]",
+    "EVQ[1][4]",
+    "EVQ[1][7]"
+   ]
+  },
+  "FG_ACT": {
+   "fichier": "js/proches/28-sons-proches-validation.js",
+   "fonctions": 3,
+   "exemples": [
+    "FG_ACT[0].verb",
+    "FG_ACT[1].verb",
+    "FG_ACT[2].verb"
+   ]
+  },
+  "QTY": {
+   "fichier": "js/aujourdhui/aujourdhui-finitions.js",
+   "fonctions": 3,
+   "exemples": [
+    "QTY.reps.x",
+    "QTY.km.x",
+    "QTY.pages.x"
+   ]
+  },
+  "BADGES": {
+   "fichier": "construit",
+   "fonctions": 72,
+   "exemples": [
+    "BADGES[0].ok",
+    "BADGES[1].ok",
+    "BADGES[2].ok"
+   ]
+  }
+ },
+ "ignores": {
+  "SCR": "object",
+  "needFor": "function",
+  "rankOf": "function",
+  "dayKey": "function",
+  "statNeed": "function",
+  "bondNeed": "function",
+  "bondTitle": "function",
+  "catOf": "function",
+  "$": "function",
+  "frameOf": "function",
+  "titleOf": "function",
+  "PZ_MAX": "number",
+  "PLATE_IC": "string",
+  "CHECK_IC": "string",
+  "xpToday": "function",
+  "idOf": "function",
+  "AMB_CLOUD": "string",
+  "hx3": "function",
+  "R_": "function",
+  "RIT_SOIR_H": "number",
+  "EV_DAYS": "number",
+  "GIFT_IC": "string",
+  "AVW": "number",
+  "chCall": "function",
+  "OX": "ReferenceError: OX is not defined",
+  "mirX": "ReferenceError: mirX is not defined",
+  "fadeC": "ReferenceError: fadeC is not defined",
+  "H": "ReferenceError: H is not defined",
+  "WAVE": "ReferenceError: WAVE is not defined",
+  "B": "ReferenceError: B is not defined",
+  "E": "ReferenceError: E is not defined",
+  "M": "ReferenceError: M is not defined",
+  "K": "ReferenceError: K is not defined",
+  "lum": "ReferenceError: lum is not defined",
+  "mix": "ReferenceError: mix is not defined",
+  "GREEN": "ReferenceError: GREEN is not defined",
+  "tb": "ReferenceError: tb is not defined",
+  "legBot": "ReferenceError: legBot is not defined",
+  "isSkin": "ReferenceError: isSkin is not defined",
+  "TOP": "ReferenceError: TOP is not defined",
+  "DIG": "ReferenceError: DIG is not defined",
+  "RED": "ReferenceError: RED is not defined",
+  "BOT": "ReferenceError: BOT is not defined",
+  "SHOE": "ReferenceError: SHOE is not defined",
+  "feet": "ReferenceError: feet is not defined",
+  "STRAW": "ReferenceError: STRAW is not defined",
+  "LEAF": "ReferenceError: LEAF is not defined",
+  "XRED": "ReferenceError: XRED is not defined",
+  "G": "ReferenceError: G is not defined",
+  "C": "ReferenceError: C is not defined",
+  "CANE": "ReferenceError: CANE is not defined",
+  "OL": "ReferenceError: OL is not defined",
+  "D": "ReferenceError: D is not defined",
+  "GOLD": "ReferenceError: GOLD is not defined",
+  "ICON": "ReferenceError: ICON is not defined",
+  "FIG_KINDS": "ReferenceError: FIG_KINDS is not defined",
+  "FIG_MINI": "ReferenceError: FIG_MINI is not defined",
+  "FIG_ICON": "ReferenceError: FIG_ICON is not defined",
+  "W": "ReferenceError: W is not defined",
+  "HEAD": "ReferenceError: HEAD is not defined",
+  "EYES": "ReferenceError: EYES is not defined",
+  "MARK": "ReferenceError: MARK is not defined",
+  "BEARD": "ReferenceError: BEARD is not defined",
+  "HAIR": "ReferenceError: HAIR is not defined",
+  "HOLE": "ReferenceError: HOLE is not defined",
+  "HAT": "ReferenceError: HAT is not defined",
+  "GLS": "ReferenceError: GLS is not defined",
+  "earR": "ReferenceError: earR is not defined",
+  "chain": "ReferenceError: chain is not defined",
+  "BIJOU": "ReferenceError: BIJOU is not defined",
+  "MOODX": "ReferenceError: MOODX is not defined",
+  "chFront": "function",
+  "chFace": "function",
+  "avcLast": "function",
+  "SK_NEED": "function",
+  "PZ_IC": "string",
+  "evLab": "function",
+  "STAR_SVG": "string",
+  "rwFam": "function",
+  "rwIcons": "function",
+  "rwSheet": "function",
+  "wdOf": "function",
+  "rhOn": "function",
+  "wxLL": "function",
+  "cap": "function",
+  "MAP_N": "number",
+  "bXp": "function",
+  "evtOf": "function",
+  "RIT_XP": "number",
+  "calPer": "function",
+  "calK": "function",
+  "calD": "function",
+  "calAdd": "function",
+  "calDiff": "function",
+  "XPE": "function",
+  "mmRnd": "function",
+  "dKey": "function",
+  "actXp": "function",
+  "actMul": "function",
+  "LZ_MAX": "number",
+  "lzOf": "function",
+  "cranOf": "function",
+  "reqOf": "function",
+  "catLv": "function",
+  "palOf": "function",
+  "cranMax": "function",
+  "BOOST_MAX": "number",
+  "boostLab": "function",
+  "gearOf": "function",
+  "boostOn": "function",
+  "CHEST_SVG": "string",
+  "CHEST2": "function",
+  "TDE_DOME": "string",
+  "tdeH": "function",
+  "filmT": "function",
+  "pick": "function",
+  "ymOf": "function",
+  "sleepXp": "function",
+  "fmtH": "function",
+  "hmFd": "function",
+  "hmEv": "function",
+  "hmDur": "function",
+  "hmWho": "function",
+  "OUT": "string",
+  "hx": "function",
+  "lt": "function",
+  "R": "function",
+  "ptw": "function",
+  "libHash": "function",
+  "libW": "function",
+  "libDay": "function",
+  "BPX_N": "number",
+  "bShape": "function",
+  "rarStars": "function",
+  "tmOn": "function",
+  "qName": "function",
+  "isRead": "function",
+  "isBookEnd": "function",
+  "isPush": "function",
+  "isPlank": "function",
+  "isStretch": "function",
+  "isRun": "function",
+  "isMed": "function",
+  "isGift": "function",
+  "rdXp": "function",
+  "seq": "function",
+  "agoTxt": "function",
+  "daysAgo": "function",
+  "picOf": "function",
+  "relNames": "function",
+  "isFam": "function",
+  "tgIc": "function",
+  "BD_ICON": "string",
+  "fgCol": "function",
+  "fgNext": "function",
+  "dayTxt": "function",
+  "relNorm": "function",
+  "esc": "function",
+  "JOK_MAX": "number",
+  "mondayOf": "function",
+  "BD_XP": "number",
+  "norm": "function",
+  "durXp": "function",
+  "AF_MAX": "number",
+  "qKind": "function",
+  "nextStep": "function",
+  "afNeedWho": "function",
+  "afQuick": "function",
+  "afFirst": "function",
+  "afThen": "function",
+  "afTodoOf": "function",
+  "strip": "function",
+  "domOfCat": "function",
+  "famVis": "function",
+  "afKey": "function",
+  "uIc": "function",
+  "domOf": "function",
+  "catDom": "function",
+  "ROOT": "function",
+  "hm": "function",
+  "STARS": "string",
+  "idSvg": "function",
+  "BDCAKE0": "string",
+  "BDCAKE": "string",
+  "famOfQ": "function",
+  "famCool": "function",
+  "skMonth": "function",
+  "tkF": "function",
+  "tileI": "function",
+  "mvT": "function",
+  "mvPlus": "function",
+  "fiT": "function",
+  "vI": "function",
+  "tagIc": "function",
+  "plDay": "function",
+  "plN": "function",
+  "plDone": "function",
+  "plXp": "function",
+  "plCus": "function",
+  "plHid": "function",
+  "plAll": "function",
+  "plIc": "function",
+  "plFoods": "function",
+  "plRec": "function",
+  "plNorm": "function",
+  "TODO_XP": "number",
+  "ENG_XP": "number",
+  "jdEl": "function",
+  "haveL": "function",
+  "haveOn": "function",
+  "haveOf": "function"
+ },
+ "regex_sur_noms": {
+  "aujourdhui/08-ambiance-scene.js": 3,
+  "aujourdhui/16-quetes.js": 1,
+  "aujourdhui/18-quetes-pour-toi-histoire.js": 8,
+  "aujourdhui/assiette.js": 8,
+  "aujourdhui/aujourdhui-finitions.js": 9,
+  "aujourdhui/page-e.js": 1,
+  "coeur/06-creation-profil.js": 1,
+  "coeur/21-contenu-collection.js": 6,
+  "moi/15-reglages-rituels.js": 3,
+  "moi/19-bilan.js": 1,
+  "moi/20-calendrier-fiche.js": 14,
+  "moi/25-chez-moi.js": 7,
+  "moi/25b-chez-moi-affichage.js": 1,
+  "moi/27-garde-robe-quetes-timer.js": 21,
+  "proches/28-sons-proches-validation.js": 17,
+  "proches/proches-finitions.js": 6
+ }
+}

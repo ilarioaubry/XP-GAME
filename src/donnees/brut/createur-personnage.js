@@ -1,0 +1,6 @@
+// GÉNÉRÉ par outils/extraire.py depuis _legacy/src/js/moi/11-createur-personnage.js — ne pas modifier.
+// Valeurs finales de l'ancienne version. Les catalogues propres de la V2 se construisent à partir d'ici.
+export const AV_DEF = {"faceW":0,"size":0,"skin":1,"hairC":3,"eyeC":0,"topC":3,"accC":0,"bgC":0,"bgP":0,"hair":0,"beard":1,"top":0,"hat":0,"glasses":0,"bijou":0,"mouth":0,"eyes":0,"mark":0,"main":0,"bot":0,"botC":0,"shoe":0,"shoeC":0};
+export const BG_H = [13,18,11,20,15,9,17,12,19,14];
+export const AVC_TABS = [["face","Visage",[["skin","Teint","sw"],["size","Taille","th"],["eyes","Regard","th"],["eyeC","Couleur des yeux","sw"],["mouth","Bouche","th"],["mark","Détails","th"]]],["hair","Cheveux",[["hair","Coupe","th"],["hairC","Couleur","sw"],["beard","Barbe","th"]]],["top","Tenue",[["top","Haut","th"],["topC","Couleur du haut","sw"],["bot","Bas","th"],["botC","Couleur du bas","sw"],["shoe","Chaussures","th"],["shoeC","Couleur des chaussures","sw"]]],["acc","Accessoires",[["hat","Tête","th"],["glasses","Yeux","th"],["bijou","Bijoux","th"],["main","Objet en main","th"],["accC","Couleur des accessoires","sw"]]],["bg","Fond",[["bgP","Motif","th"],["bgC","Couleur","sw"]]]];
+export const HAIR_GRP = [["Court",[0,17,16,13,2,12,18,19,7,1,9]],["Mi-long",[20,21,23,22,4,8,14,6]],["Long",[3,24,26,15,25,5,10,11]]];
