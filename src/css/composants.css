@@ -36,6 +36,7 @@
 .ui-titre { display: inline-flex; align-items: center; gap: var(--e2); font: 400 var(--t-section) / 1.2 var(--f-pixel); text-transform: uppercase; letter-spacing: .04em; }
 .ui-titre::before { content: ""; width: 10px; height: 10px; background: var(--sc); transform: rotate(45deg); flex: none; }
 .ui-entete .bouton--icone { margin-left: auto; }
+.ui-entete__droite { margin-left: auto; font: 400 15px / 1 var(--f-pixel); color: var(--texte-2); }
 
 /* ---- Étiquette (11 px gras, fond sombre, sans bordure) et compteur (police pixel, orange, sans fond) */
 .ui-etiquette { display: inline-block; padding: 2px var(--e2); background: rgba(10, 10, 24, .72); font: 700 var(--t-info) / 1.4 var(--f-texte); }

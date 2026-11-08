@@ -15,7 +15,7 @@ export const OBJETS = Object.values(GEAR);
 
 // ---- Événements : S.g.ev = [{ id, n, d: "AAAA-MM-JJ" }]
 export const evenements = (S = etat()) => (S.g.ev || []).slice().sort((a, b) => a.d.localeCompare(b.d));
-export function ajouterEvenement(n, d) { const e = { id: nouvelId(), n, d }; modifier("evenement", S => { (S.g.ev ||= []).push(e); }); emit("evenement:ajoute", e); return e; }
+export function ajouterEvenement(n, d, t = "autre") { const e = { id: nouvelId(), n, d, t }; modifier("evenement", S => { (S.g.ev ||= []).push(e); }); emit("evenement:ajoute", e); return e; }
 export function retirerEvenement(id) {
   let sauve, pos;
   modifier("evenement-retire", S => { pos = (S.g.ev || []).findIndex(e => e.id === id); if (pos >= 0) [sauve] = S.g.ev.splice(pos, 1); });

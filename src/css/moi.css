@@ -1,13 +1,36 @@
 /* Écran Moi : sous-onglets, Ma vie, Chez moi. Tokens seulement. */
 .moi { display: grid; gap: var(--e4); align-content: start; }
-.sous-onglets { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 2px dotted var(--bord); }
-.sous-onglet { min-height: var(--h-bouton); background: none; border: 0; border-bottom: 3px solid transparent; color: var(--texte-2); font: 700 var(--t-carte) var(--f-texte); cursor: pointer; }
-.sous-onglet[aria-selected="true"] { color: var(--action); border-bottom-color: var(--action); }
+/* ---- Moi : scène commune (réutilise .hero de aujourdhui.css), puis onglets et contenu */
+.moi { max-width: var(--largeur-max); margin: 0 auto; }
+.moi__corps { padding: var(--e4); display: grid; gap: var(--e4); align-content: start; }
+.hero__entete { position: absolute; left: var(--e4); top: var(--e3); z-index: 2; }
+.hero__nom { font: 400 22px / 1.2 var(--f-pixel); }
+.hero__niveau { font-size: var(--t-texte); color: var(--texte-2); font-weight: 700; }
+.hero__reglage { position: absolute; right: var(--e4); top: var(--e3); z-index: 2; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 0; background: var(--c-nuit); color: var(--c-creme); display: flex; align-items: center; justify-content: center; }
+.hero__plaque { position: absolute; left: 50%; bottom: var(--e3); z-index: 2; transform: translateX(-50%); min-width: 220px; height: 40px; padding: 0 var(--e4); display: flex; align-items: center; justify-content: center; gap: var(--e2); background: var(--c-nuit); color: var(--c-panneau); font: 400 17px / 1 var(--f-pixel); white-space: nowrap; }
+.sous-onglets { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--e2); }
+.sous-onglet { min-height: var(--h-bouton); background: var(--c-carte); border: 0; border-radius: 0; color: var(--texte-2); font: 700 14px var(--f-texte); cursor: pointer; }
+.sous-onglet[aria-selected="true"] { background: var(--action); color: var(--action-texte); font: 400 16px var(--f-pixel); }
 
-.profil { display: flex; gap: var(--e4); align-items: center; }
-.profil__avatar { width: 64px; height: 104px; overflow: hidden; display: grid; place-items: center; }
-.profil__avatar svg { width: 64px; height: auto; display: block; }
-.profil__texte { display: grid; gap: var(--e1); min-width: 0; }
+/* ---- Ma vie : 4 angles en cartes, fiche en tuiles */
+.cartes-angles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.cangle { background: var(--c-carte); padding: var(--e3); display: grid; gap: var(--e2); align-content: start; }
+.cangle__haut { display: flex; align-items: center; gap: var(--e2); }
+.cangle__nom { flex: 1; font: 700 var(--t-carte) / 1.2 var(--f-texte); }
+.cangle__niv { font: 400 22px / 1 var(--f-pixel); color: var(--ac); }
+.cangle__ico svg { width: 24px; height: 24px; }
+.cangle__barre { height: 6px; background: var(--c-piste); }
+.cangle__barre > i { display: block; height: 100%; width: var(--p, 0%); background: var(--ac); }
+.cangle__crans { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--e1); }
+.cangle__crans i { height: 8px; background: var(--c-piste); }
+.cangle__crans i.on { background: var(--ac); }
+.cangle__txt { font-size: var(--t-info); color: var(--texte-2); }
+.fiches { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.fi { text-align: left; min-height: 64px; padding: var(--e3); display: grid; gap: var(--e1); align-content: center; border: 0; border-radius: 0; background: var(--c-carte); color: var(--texte); }
+.fi small { font-size: var(--t-info); color: var(--texte-2); }
+.fi b { font: 700 var(--t-carte) / 1.2 var(--f-texte); overflow: hidden; text-overflow: ellipsis; }
+.fi--vide b { color: var(--texte-2); font-weight: 400; }
+
 .ma-vie, .chez-moi { display: grid; gap: var(--e4); align-content: start; }
 .ligne-carte { display: flex; align-items: center; gap: var(--e2); margin-bottom: var(--e2); }
 .ligne-carte__texte { flex: 1; min-width: 0; }
@@ -45,3 +68,34 @@
 .perso__apercu svg { height: 208px; width: auto; }
 .perso__options { display: flex; flex-wrap: wrap; gap: var(--e2); }
 .perso__opt--couleur { width: var(--h-bouton); padding: 0; background: var(--c); }
+
+/* ---- Chez moi : pièces, titres */
+.pieces { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.piece { background: var(--c-carte); min-height: 96px; padding: var(--e3); display: flex; flex-direction: column; justify-content: space-between; }
+.piece svg { width: 32px; height: 32px; }
+.piece__nom { font: 700 var(--t-carte) / 1.2 var(--f-texte); }
+.plaques { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.plaque { min-height: 44px; padding: 0 var(--e4); border: 2px solid transparent; border-radius: 0; background: var(--c-carte); color: var(--c-panneau); font: 400 15px / 1 var(--f-pixel); }
+.plaque[aria-pressed="true"] { border-color: var(--action); }
+
+/* ---- Bilan : périodes, chapitre, en vrai, XP par jour, assiette */
+.periodes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--e2); }
+.periode { min-height: var(--h-bouton); border: 0; border-radius: 0; background: var(--c-carte); color: var(--texte); font: 700 14px var(--f-texte); }
+.periode[aria-selected="true"] { background: var(--c-panneau); color: var(--c-nuit); }
+.chapitre { display: grid; gap: var(--e1); padding: var(--e4); text-align: left; border: 0; border-radius: 0; background: var(--c-panneau); color: var(--c-nuit); }
+.chapitre__quand { font: 700 var(--t-info) / 1.2 var(--f-texte); letter-spacing: .06em; }
+.chapitre__nom { font: 400 22px / 1.2 var(--f-pixel); }
+.chapitre__aide { font-size: var(--t-texte); color: var(--c-encre-2); }
+.envrai { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--e2); }
+.envrai__case { background: var(--c-carte); min-height: 72px; padding: var(--e2); display: grid; justify-items: center; align-content: center; gap: var(--e1); text-align: center; }
+.envrai__case b { font: 400 26px / 1 var(--f-pixel); color: var(--c); }
+.envrai__case span { font-size: var(--t-info); color: var(--texte-2); }
+.xpj { display: flex; gap: var(--e1); height: 112px; align-items: stretch; }
+.xpj__col { flex: 1; display: flex; flex-direction: column; gap: var(--e1); align-items: center; font-size: var(--t-info); color: var(--texte-2); }
+.xpj__piste { flex: 1; width: 100%; background: var(--c-carte); display: flex; align-items: flex-end; }
+.xpj__piste i { display: block; width: 100%; height: var(--v); min-height: 2px; background: var(--c-ciel); }
+.xpj__col--auj .xpj__piste i { background: var(--action); }
+.assiette-sem { display: flex; gap: var(--e2); }
+.assiette-sem__j { flex: 1; display: grid; justify-items: center; gap: var(--e1); font-size: var(--t-info); color: var(--texte-2); }
+.assiette-sem__j i { display: block; width: 100%; aspect-ratio: 1; background: var(--c-carte); }
+.assiette-sem__j i.g1 { background: var(--c-piste); } .assiette-sem__j i.g2 { background: var(--c-ciel); } .assiette-sem__j i.g3 { background: var(--c-rose); }

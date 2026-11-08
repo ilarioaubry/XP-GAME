@@ -25,7 +25,7 @@ ok("couleurs en dur seulement dans tokens.css", not [p.name for p in css if p.na
 ok("coins carrés (pas de border-radius hors ronds)", not [p.name for p in css if any(not re.match(r"(0|50%)(\s|$)", v.strip()) for v in re.findall(r"border-radius:([^;]+);", code(p)))])
 r = subprocess.run([sys.executable, str(ROOT / "outils" / "extraire.py"), "--check"], capture_output=True, text=True)
 ok("données extraites à jour", r.returncode == 0, r.stdout[-200:] + r.stderr[-200:])
-for t in ("test_socle", "test_brique2", "test_brique3", "test_brique4", "test_badges"):
+for t in ("test_socle", "test_brique2", "test_brique3", "test_brique4", "test_quetes", "test_badges"):
     r = subprocess.run([sys.executable, str(ROOT / "outils" / (t + ".py"))], capture_output=True, text=True)
     ok(t, r.returncode == 0, "\n".join(l for l in r.stdout.splitlines() if l.startswith("ÉCHEC"))[:300])
 print("\n" + ("TOUT EST BON" if not echecs else f"{len(echecs)} échec(s) : {echecs}"))

@@ -17,6 +17,8 @@
   --c-panneau: #f6e6c8;     /* panneau crème */
   --c-orange: #ff6a2b;      /* action principale, sélection, progression */
   --c-rose: #ff9ec7;        /* nouveau / alerte douce */
+  --c-encre-2: #4a4a6a;     /* texte discret sur panneau crème */
+  --c-creme-ombre: #d9c59f; /* repères éteints sur panneau crème */
 
   /* Les 4 angles de vie (fusion des 8 anciennes jauges) */
   --angle-corps: #ff9ec7;

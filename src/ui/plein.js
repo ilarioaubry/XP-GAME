@@ -16,14 +16,18 @@ export function ouvrirPlein(titre, contenu, { auFermer } = {}) {
 
 /** Saisie plein écran (tout ce qui contient un champ texte). champs = [{ id, etiquette, type, defaut }] ; auValider(valeurs) */
 export function saisir(titre, champs, auValider, libelle = "Ajouter") {
-  const entrees = champs.map(c => h("label", { class: "champ" }, h("span", { class: "t-info" }, c.etiquette),
+  const choisi = {};
+  const entrees = champs.map(c => c.type === "choix" ? h("div", { class: "champ", role: "group", "aria-label": c.etiquette }, h("span", { class: "t-info" }, c.etiquette),
+    h("div", { class: "perso__options" }, c.options.map(([v, n]) => { const b = h("button", { class: "bouton", "aria-pressed": String(v === c.defaut), onclick: () => {
+      choisi[c.id] = v; b.parentNode.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); } }, n); if (v === c.defaut) choisi[c.id] = v; return b; })))
+    : h("label", { class: "champ" }, h("span", { class: "t-info" }, c.etiquette),
     h("input", { id: "champ-" + c.id, type: c.type || "text", value: c.defaut || "", maxlength: "80", autocomplete: "off" })));
   const fin = ouvrirPlein(titre, h("div", { class: "saisie" }, entrees,
     h("button", { class: "bouton bouton--principal", onclick: () => {
-      const v = {}; for (const c of champs) v[c.id] = document.getElementById("champ-" + c.id).value.trim();
+      const v = {}; for (const c of champs) v[c.id] = c.type === "choix" ? choisi[c.id] : document.getElementById("champ-" + c.id).value.trim();
       if (!v[champs[0].id]) return;
       auValider(v); fin.fermer();
     } }, libelle)));
-  setTimeout(() => entrees[0].querySelector("input").focus(), 50);
+  setTimeout(() => { const i = entrees[0].querySelector("input"); if (i) i.focus(); }, 50);
   return fin;
 }

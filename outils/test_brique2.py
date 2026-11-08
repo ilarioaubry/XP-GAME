@@ -26,14 +26,14 @@ def main():
         pg.add_init_script("if(!sessionStorage.getItem('init')){sessionStorage.setItem('init','1');localStorage.setItem('carnet-quetes'," + json.dumps(raw) + ")}")
         pg.goto(url); pg.wait_for_selector("html[data-prete]", timeout=8000); pg.wait_for_timeout(400)
         pg.screenshot(path=str(T.ROOT / "outils" / "aujourdhui-393.png"), full_page=True)
-        check("l'écran Aujourd'hui s'affiche", pg.locator(".scene").count() == 1 and pg.locator(".coffre__crans i").count() == 5)
+        check("l'écran Aujourd'hui s'affiche", pg.locator("#e-aujourdhui .hero").count() == 1 and pg.locator("#e-aujourdhui .segs--coffre i").count() == 5)
         check("pas de défilement horizontal", pg.evaluate("document.documentElement.scrollWidth <= innerWidth"))
         check("4 Angles", pg.locator("#e-aujourdhui .angle").count() == 4)
         save = lambda: (pg.evaluate("import('/src/core/state.js').then(s=>import('/src/core/sauvegarde.js').then(m=>m.ecrireMaintenant(s.etat())))"), pg.wait_for_timeout(150), json.loads(pg.evaluate("localStorage.getItem('carnet-quetes')")))[2]
 
         # repas : goûter (hors assiette) puis assiette du déjeuner
         pg.get_by_role("button", name="Goûter").click(); pg.wait_for_timeout(150)
-        pg.get_by_role("button", name="Mon assiette").click(); pg.wait_for_selector(".assiette")
+        pg.get_by_role("button", name="Remplir l'assiette").click(); pg.wait_for_selector(".assiette")
         for nom in ("Riz", "Poulet", "Salade"):
             pg.locator(".assiette__puce", has_text=nom).first.click()
         check("pastille d'assiette complète", "Bien rempli" in pg.inner_text(".assiette__pastille"))
@@ -46,7 +46,7 @@ def main():
         check("l'ancienne donnée de l'assiette d'hier est intacte", d["g"]["plt"]["2026-11-01"] == d0["g"]["plt"]["2026-11-01"])
 
         # routine du matin : tout faire
-        pg.get_by_role("button", name="Routine du matin").click(); pg.wait_for_selector(".routine")
+        pg.locator(".la", has_text="Routine du matin").locator(".la__bouton").click(); pg.wait_for_selector(".routine")
         n = pg.evaluate("document.querySelector('.routine__compte').textContent")
         total = int(n.split("sur")[1].split()[0])
         for _ in range(total):
@@ -56,9 +56,9 @@ def main():
         check("routine écrite (rh, rtb) + cran", j in d["g"]["rh"] and "matin" in d["g"]["rtb"] and d["g"]["coffre"]["n"] == 3, d["g"].get("coffre"))
 
         # quête spéciale + habitudes + bonne nuit
-        pg.locator(".quete").nth(3).get_by_role("button", name="Fait").click(); pg.wait_for_timeout(120)
-        pg.locator(".habitudes .bouton").first.click(); pg.wait_for_timeout(120)
-        pg.get_by_role("button", name="Bien").click(); pg.wait_for_timeout(120)
+        pg.locator(".la", has_text="DÉFI").locator(".la__bouton").click(); pg.wait_for_timeout(120)
+        pg.locator(".habitudes .hab").first.click(); pg.wait_for_timeout(120)
+        pg.locator(".nuitpuce").click(); pg.wait_for_selector(".bilan-soir"); pg.locator(".bilan-soir .bouton", has_text="Bien").click()
         pg.fill("#h-coucher", "23:30"); pg.fill("#h-lever", "07:30")
         pg.fill(".champ__texte", "Bonne journée"); pg.get_by_role("button", name="Noter ma journée").click(); pg.wait_for_timeout(200)
         d = save()

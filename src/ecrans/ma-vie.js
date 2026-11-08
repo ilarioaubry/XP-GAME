@@ -1,32 +1,21 @@
 // Moi > Ma vie : profil, événements, projets, « la dernière fois que… », paliers et équilibre sur les 4 Angles.
 
 import { h } from "../ui/dom.js";
-import { pxUi } from "../ui/pixel.js";
+import { pxUi, pxRk } from "../ui/pixel.js";
+import { PAL_LV, PAL_TXT } from "../donnees/brut/paliers.js";
 import { saisir } from "../ui/plein.js";
 import { dire } from "../ui/messages.js";
 import { jouer } from "../core/sons.js";
-import { etat } from "../core/state.js";
-import { niveau, rang, cleJour } from "../core/temps.js";
-import { avatar } from "./scene.js";
+import { etat, modifier } from "../core/state.js";
+import { cleJour, heureReveil } from "../core/temps.js";
 import * as M from "../regles/moi.js";
-import { ouvrirPersonnage } from "./personnage.js";
+import { TYPES_EVENEMENT } from "../donnees/quetes-pour-toi.js";
+const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 const section = (titre, couleur, ...contenu) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null },
   h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre)), contenu);
 const iconeBtn = (nom, etiquette, fn) => h("button", { class: "bouton bouton--icone", "aria-label": etiquette, title: etiquette, html: pxUi(nom, 24), onclick: fn });
 const ajout = (texte, fn) => h("button", { class: "bouton bouton--ajout", onclick: fn }, texte);
-
-function profil(S) {
-  const nv = niveau(S.xp || 0), t = M.titrePorte(S);
-  return h("div", { class: "profil ui-carte" },
-    h("div", { class: "profil__avatar", html: avatar(S) }),
-    h("div", { class: "profil__texte" },
-      h("p", { class: "ui-carte__titre" }, S.name || "Moi"),
-      h("p", { class: "ui-carte__texte" }, `Niveau ${nv.l} · ${rang(nv.l)}`),
-      t ? h("p", { class: "ui-carte__texte" }, t) : null,
-      h("p", { class: "ui-carte__texte" }, `${S.xp || 0} XP · ${S.days.length} jours actifs`),
-      h("button", { class: "bouton", onclick: ouvrirPersonnage }, "Mon personnage")));
-}
 
 const dateFr = d => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
 
@@ -36,7 +25,7 @@ function evenements(S) {
     liste.length ? liste.map(e => h("div", { class: "ui-carte ligne-carte" },
       h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, e.n), h("p", { class: "ui-carte__texte" }, dateFr(e.d))),
       iconeBtn("trash", "Supprimer", () => { const annuler = M.retirerEvenement(e.id); dire("Événement supprimé", annuler); }))) : h("p", { class: "vide" }, "Aucun événement pour l'instant."),
-    ajout("Ajouter un événement", () => saisir("Nouvel événement", [{ id: "n", etiquette: "Nom" }, { id: "d", etiquette: "Date", type: "date", defaut: cleJour(S) }], v => { if (v.d) M.ajouterEvenement(v.n, v.d); })));
+    ajout("Ajouter un événement", () => saisir("Nouvel événement", [{ id: "n", etiquette: "Nom" }, { id: "d", etiquette: "Date", type: "date", defaut: cleJour(S) }, { id: "t", etiquette: "Type", type: "choix", options: TYPES_EVENEMENT, defaut: "autre" }], v => { if (v.d) M.ajouterEvenement(v.n, v.d, v.t); })));
 }
 
 function projets(S) {
@@ -68,16 +57,30 @@ function derniereFois(S) {
 
 function paliers(S) {
   const p = M.paliers(S);
-  const plus = p.reduce((a, b) => (b.part > a.part ? b : a)), moins = p.reduce((a, b) => (b.part < a.part ? b : a));
-  return section("Paliers et équilibre", "var(--angle-corps)",
-    h("div", { class: "angles angles--paliers" }, p.map(a => h("div", { class: "angle", style: `--ac:${a.couleur}` },
-      h("span", { class: "angle__nom t-info" }, a.nom, h("span", { class: "ui-compteur" }, "Palier " + a.palier)),
-      h("div", { class: "ui-barre" }, h("i", { style: `--p:${Math.round(100 * a.cur / a.need)}%` })),
-      h("span", { class: "t-info" }, `${a.cur} / ${a.need} XP · ${a.part} % de ton énergie`)))),
-    h("p", { class: "t-texte" }, plus === moins ? "Tout reste à construire." : `${plus.nom} est ton Angle le plus nourri. ${moins.nom} aimerait un peu d'attention.`));
+  return section("Mes 4 angles", "var(--c-orange)",
+    h("div", { class: "cartes-angles" }, p.map(a => {
+      const coches = PAL_LV.filter(l => l <= a.palier).length, suivant = PAL_LV.findIndex(l => l > a.palier);
+      return h("div", { class: "cangle", style: `--ac:var(--angle-${a.id})` },
+        h("div", { class: "cangle__haut" }, h("span", { class: "cangle__ico", html: pxRk(a.icone, 24) || "" }), h("span", { class: "cangle__nom" }, a.nom), h("span", { class: "cangle__niv" }, String(a.palier))),
+        h("div", { class: "cangle__barre" }, h("i", { style: `--p:${Math.round(100 * a.cur / a.need)}%` })),
+        h("div", { class: "cangle__crans" }, PAL_LV.map((_, k) => h("i", { class: k < coches ? "on" : "" }))),
+        h("p", { class: "cangle__txt" }, suivant < 0 ? "Tout est débloqué" : `Palier ${PAL_LV[suivant]} : ${PAL_TXT[suivant].replace(" débloquées", "").replace(" débloqués", "").toLowerCase()}`));
+    })));
+}
+
+function fiche(S) {
+  const tuile = (l, v, fn) => h("button", { class: "fi" + (v ? "" : " fi--vide"), onclick: fn }, h("small", {}, l), h("b", {}, v || "À remplir"));
+  const j = S.bd && S.bd.d ? `${S.bd.d} ${MOIS[(S.bd.m || 1) - 1] || ""}` : "";
+  return section("Ma fiche", "var(--c-orange)",
+    h("div", { class: "fiches" },
+      tuile("Rythme", `Réveil ${Math.floor(heureReveil(S))} h`, null),
+      tuile("Anniversaire", j, null),
+      tuile("Jours actifs", String(S.days.length), null),
+      tuile("XP", String(S.xp || 0), null),
+      tuile("En ce moment", S.note || "", () => saisir("En ce moment", [{ id: "n", etiquette: "Un mot sur ta période", defaut: S.note || "" }], v => modifier("fiche-note", s => { s.note = v.n; })))));
 }
 
 export function maVie() {
   const S = etat();
-  return h("div", { class: "ma-vie" }, profil(S), paliers(S), evenements(S), projets(S), derniereFois(S));
+  return h("div", { class: "ma-vie" }, paliers(S), fiche(S), evenements(S), projets(S), derniereFois(S));
 }
