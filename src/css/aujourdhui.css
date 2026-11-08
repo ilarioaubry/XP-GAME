@@ -12,7 +12,8 @@
   background: var(--ciel); border: 3px solid var(--barre-bord);
 }
 .scene__colline { position: absolute; left: -20%; right: -20%; bottom: -38%; height: 62%; border-radius: 50%; background: linear-gradient(var(--col1), var(--col2)); }
-.scene__perso { position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%); }
+.scene__perso { position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%); }
+.scene__perso svg { display: block; width: 100px; height: auto; }
 .scene__aura { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .scene__aura svg { width: 100%; height: 100%; }
 .scene__niveau { width: 100%; display: grid; gap: var(--e2); }

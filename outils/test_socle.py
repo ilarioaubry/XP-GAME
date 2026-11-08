@@ -21,6 +21,11 @@ def check(nom, ok, info=""):
         fails.append(nom)
 
 
+def sans_badges(d):
+    """Les badges sont attribués au démarrage (V2 comme ancienne version) : on compare sans eux, ils ont leur propre test (test_badges.py)."""
+    d = copy.deepcopy(d); d.pop("badges", None); d.pop("badgesInit", None); (d.get("g") or {}).pop("nb", None); return d
+
+
 def diff(a, b, chemin="S", out=None, lim=12):
     """Écarts profonds entre deux valeurs JSON (le premier niveau d'une liste compte comme un tout si les tailles diffèrent)."""
     out = [] if out is None else out
@@ -137,7 +142,7 @@ def main():
             # A. aller-retour : la V2 lit, migre si besoin, réécrit
             ecrit, avant, errs, pg = v2(b, url, raw)
             d1 = json.loads(ecrit)
-            ecarts = diff(d0, d1, lim=200)
+            ecarts = diff(sans_badges(d0), sans_badges(d1), lim=200)
             check("A. la V2 réécrit exactement la sauvegarde d'origine (rien de perdu, rien de changé)", not ecarts, " ; ".join(ecarts[:6]))
             check("A. XP, journal, jours, proches, repas identiques",
                   all(d0[k] == d1[k] for k in ("xp", "log", "days", "friends", "family", "profiles", "bonds")) and d0["g"].get("mb") == d1["g"].get("mb") and d0["g"].get("plt") == d1["g"].get("plt"))
@@ -167,7 +172,7 @@ def main():
             raw4 = json.dumps(d4)
             e4, _, errs4, _ = v2(b, url, raw4)
             r4 = json.loads(legacy_charge(b, raw4))
-            ec4 = diff(r4, json.loads(e4))
+            ec4 = diff(sans_badges(r4), sans_badges(json.loads(e4)))
             check("D. migrations 1 à 5 : même résultat que load() de l'ancienne version", not ec4, " ; ".join(ec4))
             check("D. S.g.ver = 5", json.loads(e4)["g"]["ver"] == 5)
 

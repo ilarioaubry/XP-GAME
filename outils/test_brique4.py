@@ -40,13 +40,14 @@ def main():
         check("« C'est fait » : lien, dernier contact, XP, journal", d["bonds"].get(r2, 0) > d0["bonds"].get(r2, 0) and d["bondsLast"][r2] and d["xp"] == xp0 + 10 and d["log"][-1].get("who") == r2, d["log"][-1])
         pg.screenshot(path=str(T.ROOT / "outils" / "proches-393.png"), full_page=True)
         # fiche + ajout + retrait avec Annuler
+        avant_tom = save()["bonds"].get("Tom", 0)
         pg.locator(".proche", has_text="Tom").click(); pg.wait_for_selector(".fiche")
         pg.get_by_role("button", name="Vu en vrai").click(); pg.wait_for_timeout(200)
         d = save()
-        check("Vu en vrai : +40 de lien, +30 XP", d["bonds"]["Tom"] == d0["bonds"].get("Tom", 0) + 40 and d["log"][-1]["xp"] == 30, d["bonds"].get("Tom"))
+        check("Vu en vrai : +40 de lien, +30 XP", d["bonds"]["Tom"] == avant_tom + 40 and d["log"][-1]["xp"] == 30, d["bonds"].get("Tom"))
         pg.get_by_role("button", name="Retirer").click(); pg.get_by_role("button", name="Annuler").click(); pg.wait_for_timeout(200)
         d = save()
-        check("Annuler rend le proche et son lien", "Tom" in d["friends"] and d["bonds"]["Tom"] == d0["bonds"].get("Tom", 0) + 40)
+        check("Annuler rend le proche et son lien", "Tom" in d["friends"] and d["bonds"]["Tom"] == avant_tom + 40)
         pg.get_by_role("button", name="Ajouter un proche").click(); pg.fill("#champ-n", "Sam"); pg.get_by_role("button", name="Ajouter comme ami").click(); pg.wait_for_timeout(200)
         check("nouveau proche écrit", "Sam" in save()["friends"])
         # Bilan

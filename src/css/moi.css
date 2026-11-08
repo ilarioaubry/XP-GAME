@@ -5,7 +5,8 @@
 .sous-onglet[aria-selected="true"] { color: var(--action); border-bottom-color: var(--action); }
 
 .profil { display: flex; gap: var(--e4); align-items: center; }
-.profil__avatar svg { width: 64px; height: 96px; display: block; }
+.profil__avatar { width: 64px; height: 104px; overflow: hidden; display: grid; place-items: center; }
+.profil__avatar svg { width: 64px; height: auto; display: block; }
 .profil__texte { display: grid; gap: var(--e1); min-width: 0; }
 .ma-vie, .chez-moi { display: grid; gap: var(--e4); align-content: start; }
 .ligne-carte { display: flex; align-items: center; gap: var(--e2); margin-bottom: var(--e2); }

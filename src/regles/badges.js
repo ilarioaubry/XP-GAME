@@ -5,6 +5,7 @@
 
 import { modifier, etat } from "../core/state.js";
 import { emit } from "../core/events.js";
+import { erreur } from "../core/journal.js";
 import { cleJour, niveau } from "../core/temps.js";
 import { BADGES } from "../donnees/brut/badges.js";
 import { RANKS, STAT_KEYS } from "../donnees/brut/donnees-base.js";
@@ -133,7 +134,8 @@ export const sansCondition = () => BADGES.filter(b => !CONDITIONS[b.id]).map(b =
 /** Quels badges sont remplis maintenant ? (ids) */
 export function remplis(S = etat(), maintenant = Date.now()) {
   const r = [];
-  for (const b of BADGES) { const f = CONDITIONS[b.id]; try { if (f && f(S, maintenant)) r.push(b.id); } catch (e) { /* une condition qui échoue ne bloque pas les autres */ } }
+  // une condition qui échoue ne bloque pas les autres
+  for (const b of BADGES) { const f = CONDITIONS[b.id]; try { if (f && f(S, maintenant)) r.push(b.id); } catch (e) { erreur("badge:" + b.id, e); } }
   return r;
 }
 

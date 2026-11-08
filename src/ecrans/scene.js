@@ -1,5 +1,5 @@
 // Scène du haut d'Aujourd'hui : demi-sphère de ciel (selon l'heure), colline, avatar, Aura au premier plan, date, météo, barre d'XP.
-// L'avatar est dessiné ici de façon simple (teint, cheveux, haut, bas) ; le moteur complet (42 coiffures, accessoires) arrive en brique 3.
+// L'avatar vient du moteur Pixel Clair (src/avatar) : coiffures, vêtements, accessoires, objets équipés.
 
 import { h } from "../ui/dom.js";
 import { etat } from "../core/state.js";
@@ -7,11 +7,7 @@ import { niveau, rang, heureJournee } from "../core/temps.js";
 import { AMB_SKY, AMB_HILL } from "../donnees/brut/ambiance-scene.js";
 import { GEAR } from "../donnees/brut/equipement.js";
 import { WX_L } from "../donnees/brut/meteo.js";
-
-const TEINTS = ["#ffe0c7", "#f5c6a0", "#e0a979", "#b9794d", "#8a5a3a", "#5e3b26"];
-const CHEVEUX = ["#2a1c10", "#5a3a1e", "#a8743a", "#d9a441", "#c9c9c9", "#c0392b", "#6a3fb5", "#2f6fd6"];
-const HAUTS = ["#ff6a2b", "#2433d6", "#2f9a5a", "#ff9ec7", "#f0b62e", "#c8a2ff", "#f2f0ea", "#d63b3b"];
-const BAS = ["#3b5a8c", "#2c2c34", "#8a6a4a", "#d63b3b", "#2f6fd6", "#6d7680"];
+import { avatarSvg } from "../avatar/rendu.js";
 
 /** Moment de la journée → clé de ciel du catalogue d'origine. */
 export function momentCiel(S) {
@@ -19,19 +15,7 @@ export function momentCiel(S) {
   return t < 5 ? "nuit" : t < 8 ? "aube" : t < 12 ? "matin" : t < 17.5 ? "aprem" : t < 20.5 ? "crep" : "nuit";
 }
 
-export function avatar(S) {
-  const c = (S.g && S.g.avc) || {};
-  const p = (liste, i, d) => liste[Number.isInteger(c[i]) ? c[i] % liste.length : d];
-  const peau = p(TEINTS, "skin", 1), cheveux = p(CHEVEUX, "hairC", 1), haut = p(HAUTS, "topC", 1), bas = p(BAS, "botC", 0);
-  const r = (x, y, w, hh, f) => `<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${f}"/>`;
-  const svg = [
-    r(5, 1, 6, 2, cheveux), r(4, 2, 8, 2, cheveux), r(4, 4, 8, 5, peau), r(3, 3, 1, 3, cheveux), r(12, 3, 1, 3, cheveux),
-    r(6, 6, 1, 1, "#24182c"), r(9, 6, 1, 1, "#24182c"), r(7, 8, 2, 1, "#24182c"),
-    r(3, 10, 10, 7, haut), r(2, 11, 1, 5, peau), r(13, 11, 1, 5, peau),
-    r(4, 17, 8, 6, bas), r(4, 23, 3, 1, "#24182c"), r(9, 23, 3, 1, "#24182c"),
-  ].join("");
-  return `<svg class="px scene__avatar" viewBox="0 0 16 24" width="96" height="144" shape-rendering="crispEdges" aria-hidden="true">${svg}</svg>`;
-}
+export const avatar = S => avatarSvg(S, 4);
 
 function aura(S) {
   const id = S.g && S.g.eq && S.g.eq.aura;
