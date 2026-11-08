@@ -1,8 +1,7 @@
 /* Écran Moi : sous-onglets, Ma vie, Chez moi. Tokens seulement. */
-.moi { display: grid; gap: var(--e4); align-content: start; }
 /* ---- Moi : scène commune (réutilise .hero de aujourdhui.css), puis onglets et contenu */
-.moi { max-width: var(--largeur-max); margin: 0 auto; }
-.moi__corps { padding: var(--e4); display: grid; gap: var(--e4); align-content: start; }
+.moi { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; max-width: var(--largeur-max); margin: 0 auto; }
+.moi__corps { padding: var(--e4); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e4); align-content: start; }
 .hero__entete { position: absolute; left: var(--e4); top: var(--e3); z-index: 2; }
 .hero__nom { font: 400 22px / 1.2 var(--f-pixel); }
 .hero__niveau { font-size: var(--t-texte); color: var(--texte-2); font-weight: 700; }
@@ -13,7 +12,7 @@
 .sous-onglet[aria-selected="true"] { background: var(--action); color: var(--action-texte); font: 400 16px var(--f-pixel); }
 
 /* ---- Ma vie : 4 angles en cartes, fiche en tuiles */
-.cartes-angles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.cartes-angles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
 .cangle { background: var(--c-carte); padding: var(--e3); display: grid; gap: var(--e2); align-content: start; }
 .cangle__haut { display: flex; align-items: center; gap: var(--e2); }
 .cangle__nom { flex: 1; font: 700 var(--t-carte) / 1.2 var(--f-texte); }
@@ -25,17 +24,17 @@
 .cangle__crans i { height: 8px; background: var(--c-piste); }
 .cangle__crans i.on { background: var(--ac); }
 .cangle__txt { font-size: var(--t-info); color: var(--texte-2); }
-.fiches { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.fiches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
 .fi { text-align: left; min-height: 64px; padding: var(--e3); display: grid; gap: var(--e1); align-content: center; border: 0; border-radius: 0; background: var(--c-carte); color: var(--texte); }
 .fi small { font-size: var(--t-info); color: var(--texte-2); }
-.fi b { font: 700 var(--t-carte) / 1.2 var(--f-texte); overflow: hidden; text-overflow: ellipsis; }
+.fi b { font: 700 var(--t-carte) / 1.2 var(--f-texte); overflow: hidden; text-overflow: ellipsis; overflow-wrap: anywhere; }
 .fi--vide b { color: var(--texte-2); font-weight: 400; }
 
-.ma-vie, .chez-moi { display: grid; gap: var(--e4); align-content: start; }
+.ma-vie, .chez-moi { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e4); align-content: start; }
 .ligne-carte { display: flex; align-items: center; gap: var(--e2); margin-bottom: var(--e2); }
-.ligne-carte__texte { flex: 1; min-width: 0; }
+.ligne-carte__texte { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .projet { display: grid; gap: var(--e2); margin-bottom: var(--e2); }
-.etape { width: 100%; justify-content: flex-start; }
+.etape { width: 100%; justify-content: flex-start; padding-block: var(--e2); white-space: normal; text-align: left; overflow-wrap: anywhere; }
 .angles--paliers { grid-template-columns: 1fr; }
 .angles--paliers .angle__nom { display: flex; justify-content: space-between; }
 
@@ -48,16 +47,23 @@
 .saisie { display: grid; gap: var(--e4); }
 
 /* ---- Proches */
-.proches { display: grid; gap: var(--e4); align-content: start; }
+.proches { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e4); align-content: start; }
 .proche { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--e3); margin-bottom: var(--e2); text-align: left; cursor: pointer; font-family: inherit; color: inherit; }
-.proche__texte { display: grid; gap: var(--e1); min-width: 0; }
+.proche__texte { flex: 1; display: grid; gap: var(--e1); min-width: 0; text-align: left; }
 .recherche { width: 100%; min-height: var(--h-bouton); padding: var(--e2) var(--e3); margin-bottom: var(--e2); background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; font-size: var(--t-champ); }
 .fiche, .roulette { display: grid; gap: var(--e3); }
 .fiche__actions { display: grid; gap: var(--e2); }
-.du-mois { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--e2); }
+.du-mois { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
+.du-mois__carte { display: grid; justify-items: start; gap: var(--e2); }
+.roulette__qui { display: flex; align-items: center; gap: var(--e3); }
+.fiche__tete { display: flex; align-items: center; gap: var(--e3); }
+/* Avatar d'un proche : sa tête, sa photo ou son initiale sur sa couleur */
+.pav { flex: none; width: 44px; height: 44px; display: grid; place-items: center; overflow: hidden; background: var(--h, var(--c-piste)); color: var(--c-nuit); font: 400 var(--t-section) / 1 var(--f-pixel); }
+.pav--grand { width: 72px; height: 72px; font-size: var(--t-chiffre); }
+.pav img, .pav__tete, .pav__tete svg { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---- Bilan */
-.bilan { display: grid; gap: var(--e4); align-content: start; }
+.bilan { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e4); align-content: start; }
 .histo { display: flex; align-items: flex-end; gap: 2px; height: 64px; }
 .histo i { flex: 1; height: var(--v); min-height: 2px; background: var(--angle-esprit); }
 .histo i.vide-jour { background: var(--bord); }
@@ -70,7 +76,7 @@
 .perso__opt--couleur { width: var(--h-bouton); padding: 0; background: var(--c); }
 
 /* ---- Chez moi : pièces, titres */
-.pieces { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2); }
+.pieces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
 .piece { background: var(--c-carte); min-height: 96px; padding: var(--e3); display: flex; flex-direction: column; justify-content: space-between; }
 .piece svg { width: 32px; height: 32px; }
 .piece__nom { font: 700 var(--t-carte) / 1.2 var(--f-texte); }
@@ -99,3 +105,6 @@
 .assiette-sem__j { flex: 1; display: grid; justify-items: center; gap: var(--e1); font-size: var(--t-info); color: var(--texte-2); }
 .assiette-sem__j i { display: block; width: 100%; aspect-ratio: 1; background: var(--c-carte); }
 .assiette-sem__j i.g1 { background: var(--c-piste); } .assiette-sem__j i.g2 { background: var(--c-ciel); } .assiette-sem__j i.g3 { background: var(--c-rose); }
+
+/* ---- Badges : le dessin pixel de l'ancienne version, nom sur une ligne */
+.ui-tuile--badge .tuile__nom { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -2781,4 +2781,4 @@ PIECES.CH_HEAD_N={hair:HAIR.length,hat:HAT.length,glasses:GLS.length,beard:BEARD
 
 })();
 
-export { chDraw, CH, CH_BOTC, CH_HAIR, PIECES };
+export { chDraw, chAnchors, CH, CH_BOTC, CH_HAIR, PIECES };

@@ -28,13 +28,13 @@ def main():
         pg.goto(url); pg.wait_for_selector("html[data-prete]", timeout=8000); pg.wait_for_timeout(300)
         textes = pg.locator(".cq__nom").all_inner_texts()
         raisons = " ".join(pg.locator(".cq__why").all_inner_texts())
-        check("3 quêtes du jour", len(textes) == 3, textes)
+        check("3 quêtes du jour au plus (le compteur dit vrai)", len(textes) == 3 and pg.locator(".pt__droite").first.inner_text().endswith("/3"), textes)
         check("au moins une quête « pour toi » (avec sa raison)", len(raisons) > 0, raisons)
         check("aucun [crochet] ni {accolade} laissé dans les textes", not any("{" in t or "[" in t for t in textes + [raisons]), textes)
-        ev = pg.locator(".la", has_text="CONCERT")
-        check("une quête d'événement apparaît (concert dans 3 jours)", ev.count() >= 1, pg.locator(".la").all_inner_texts()[:5])
+        ev = pg.locator(".cq", has_text="Concert")
+        check("une quête d'événement apparaît (concert dans 3 jours)", ev.count() >= 1, pg.locator(".cq").all_inner_texts()[:5])
         if ev.count():
-            ev.first.locator(".la__bouton").click(); pg.wait_for_timeout(200)
+            ev.first.locator(".cq__fait").click(); pg.wait_for_timeout(200)
             s = (pg.evaluate("import('/src/core/state.js').then(s=>import('/src/core/sauvegarde.js').then(m=>m.ecrireMaintenant(s.etat())))"), pg.wait_for_timeout(150), json.loads(pg.evaluate("localStorage.getItem('carnet-quetes')")))[2]
             check("la quête d'événement est mémorisée (g.evq)", len(s["g"]["evq"].get("e1", [])) == 1, s["g"].get("evq"))
         check("aucune erreur JavaScript", not errs, errs[:3])

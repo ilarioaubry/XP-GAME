@@ -183,16 +183,3 @@ export function ecarter(id) {
 export function rappeler(id) {
   modifier("quete-rappel", S => { const t = (S.g.qNo || {})[cleJour(S)]; if (t) t.splice(t.indexOf(id) >>> 0, 1); });
 }
-
-// ---- Habitudes libres (1 ou 2) : S.g.hab = [{ id, n, cat, xp }]
-export const HABITUDES_DEFAUT = [
-  { id: "h1", n: "Boire un verre d'eau", cat: "eau", xp: 2 },
-  { id: "h2", n: "10 pompes", cat: "sport", xp: 5 },
-];
-export const habitudes = (S = etat()) => (S.g.hab && S.g.hab.length ? S.g.hab : HABITUDES_DEFAUT).slice(0, 2);
-export function faireHabitude(h) {
-  if (faitAujourdhui("hab:" + h.id)) return false;
-  gagner({ id: "hab:" + h.id, nom: h.n, cat: h.cat, xp: h.xp });
-  emit("habitude:faite", { id: h.id });
-  return true;
-}

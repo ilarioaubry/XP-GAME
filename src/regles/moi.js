@@ -1,11 +1,10 @@
-// Règles de Moi : projets, événements, « la dernière fois que », paliers par Angle, objets, titres, panoplies, badges.
+// Règles de Moi : projets, événements, « la dernière fois que », paliers par Angle, objets, titres, badges.
 // Clés d'origine lues telles quelles : prj, ev, gear, eq, rt, S.badges. Nouvelles clés : S.g.last, S.g.titre.
 
 import { modifier, etat } from "../core/state.js";
 import { emit } from "../core/events.js";
 import { cleJour, niveau, xpPourNiveau } from "../core/temps.js";
 import { GEAR } from "../donnees/brut/equipement.js";
-import { WR_SETS } from "../donnees/brut/icones-unifiees.js";
 import { RANKS } from "../donnees/brut/donnees-base.js";
 import { BADGES } from "../donnees/brut/badges.js";
 import { LES_ANGLES, gagner } from "./xp.js";
@@ -77,16 +76,6 @@ export function titres(S = etat()) {
 }
 export const titrePorte = (S = etat()) => S.g.titre || "";
 export function porterTitre(n) { modifier("titre", S => { if (S.g.titre === n) delete S.g.titre; else S.g.titre = n; }); emit("equipement:change", { slot: "titre", id: n }); }
-
-// ---- Panoplies : un ensemble est complet quand toutes ses pièces sont obtenues (champ explicite `set` de chaque objet)
-export function panoplies(S = etat()) {
-  const a = obtenus(S);
-  return WR_SETS.map(([k, nom, titre]) => {
-    const pieces = OBJETS.filter(o => o.set === k);
-    const n = pieces.filter(o => a.has(o.id)).length;
-    return { k, nom, titre, n, total: pieces.length, complet: pieces.length > 0 && n === pieces.length };
-  });
-}
 
 // ---- Badges : obtenus = S.badges { id: date }. L'attribution (72 conditions) est portée à part (voir V2.md).
 export const badges = (S = etat()) => BADGES.map(b => ({ ...b, a: !!(S.badges || {})[b.id] }));

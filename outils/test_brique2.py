@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """test_brique2.py : Aujourd'hui (V2) sur une sauvegarde de l'ancienne version, à 393 px.
-Vérifie : aucun plantage · pas de défilement horizontal · repas, quête, habitude, routine, bonne nuit écrivent dans la sauvegarde ·
+Vérifie : aucun plantage · pas de défilement horizontal · repas, quête, routine, bonne nuit écrivent dans la sauvegarde ·
 coffre à 5 crans · l'assiette se construit · rien n'est supprimé de la sauvegarde d'origine."""
 import datetime, json, os, pathlib, sys
 from playwright.sync_api import sync_playwright
@@ -55,10 +55,9 @@ def main():
         d = save()
         check("routine écrite (rh, rtb) + cran", j in d["g"]["rh"] and "matin" in d["g"]["rtb"] and d["g"]["coffre"]["n"] == 3, d["g"].get("coffre"))
 
-        # quête spéciale + habitudes + bonne nuit
+        # quête spéciale + bonne nuit
         pg.locator(".la", has_text="DÉFI").locator(".la__bouton").click(); pg.wait_for_timeout(120)
-        pg.locator(".habitudes .hab").first.click(); pg.wait_for_timeout(120)
-        pg.locator(".nuitpuce").click(); pg.wait_for_selector(".bilan-soir"); pg.locator(".bilan-soir .bouton", has_text="Bien").click()
+        pg.locator(".nuitpuce").click(); pg.wait_for_selector(".bilan-soir"); pg.locator(".bilan-soir").get_by_role("button", name="Bien").click()
         pg.fill("#h-coucher", "23:30"); pg.fill("#h-lever", "07:30")
         pg.fill(".champ__texte", "Bonne journée"); pg.get_by_role("button", name="Noter ma journée").click(); pg.wait_for_timeout(200)
         d = save()

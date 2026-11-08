@@ -7,12 +7,21 @@ import { dire } from "../ui/messages.js";
 import { jouer } from "../core/sons.js";
 import { on } from "../core/events.js";
 import { etat } from "../core/state.js";
+import { teteSvg } from "../avatar/rendu.js";
 import * as P from "../regles/proches.js";
 
 let recherche = "", filtre = "";
 
 const section = (titre, couleur, ...contenu) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null },
   h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre)), contenu);
+/** Avatar d'un proche : sa tête (profil S.profiles[nom].avc), sinon sa photo, sinon son initiale sur une couleur à lui. */
+const teinte = n => { let t = 0; for (const c of n) t = (t * 31 + c.charCodeAt(0)) % 360; return t; };
+function avatarProche(n, grand = false) {
+  const P = etat().profiles[n] || {}, taille = grand ? 72 : 44;
+  const contenu = P.avc ? h("span", { class: "pav__tete", html: teteSvg(P.avc, taille) })
+    : P.pic ? h("img", { src: P.pic, alt: "" }) : (n[0] || "?").toUpperCase();
+  return h("span", { class: "pav" + (grand ? " pav--grand" : ""), style: `--h:hsl(${teinte(n)} 55% 50%)`, "aria-hidden": "true" }, contenu);
+}
 const depuis = n => { const j = P.joursSans(n); return j == null ? "Pas encore de nouvelles" : j === 0 ? "Aujourd'hui" : j === 1 ? "Hier" : `Il y a ${j} jours`; };
 
 function fiche(n) {
@@ -20,7 +29,8 @@ function fiche(n) {
   const dessiner = () => {
     const S = etat(), li = P.niveauLien(S.bonds[n] || 0);
     corps.replaceChildren(
-      h("p", { class: "ui-carte__texte" }, `${P.typeDe(n, S) === "famille" ? "Famille" : "Ami"} · ${P.titreLien(li.l)} · niveau ${li.l}`),
+      h("div", { class: "fiche__tete" }, avatarProche(n, true),
+        h("p", { class: "ui-carte__texte" }, `${P.typeDe(n, S) === "famille" ? "Famille" : "Ami"} · ${P.titreLien(li.l)} · niveau ${li.l}`)),
       h("div", { class: "ui-barre ui-barre--grande" }, h("i", { style: `--p:${Math.round(100 * li.cur / li.need)}%` })),
       h("p", { class: "t-info" }, `${li.cur} / ${li.need} · ${depuis(n)}`),
       h("div", { class: "fiche__actions" }, P.ACTIONS.map(a => h("button", { class: "bouton" + (a.k === "news" ? " bouton--principal" : ""),
@@ -34,7 +44,8 @@ function roulette() {
   const S = etat(), n = P.tirageActuel(S);
   const tirer = () => { const c = P.tirer(); if (c) jouer("blip"); else dire("Ajoute d'abord des proches"); };
   return section("Roulette des proches", "var(--angle-liens)",
-    n ? h("div", { class: "ui-carte roulette" }, h("p", { class: "ui-carte__titre" }, `Et si tu écrivais à ${n} ?`), h("p", { class: "ui-carte__texte" }, depuis(n)),
+    n ? h("div", { class: "ui-carte roulette" },
+      h("div", { class: "roulette__qui" }, avatarProche(n), h("div", {}, h("p", { class: "ui-carte__titre" }, `Et si tu écrivais à ${n} ?`), h("p", { class: "ui-carte__texte" }, depuis(n)))),
       h("div", { class: "fiche__actions" },
         h("button", { class: "bouton bouton--principal", onclick: () => { P.contacter(n, "news"); jouer("coin"); dire("Nouvelles · +10 XP"); } }, "C'est fait"),
         h("button", { class: "bouton", onclick: tirer }, "Quelqu'un d'autre")))
@@ -45,7 +56,8 @@ function duMois() {
   const a = P.duMois("ami"), f = P.duMois("famille");
   if (!a && !f) return null;
   return section("Du mois", "var(--angle-foyer)", h("div", { class: "du-mois" }, [[a, "Ami du mois"], [f, "Famille du mois"]].filter(x => x[0]).map(([x, t]) =>
-    h("div", { class: "ui-carte" }, h("p", { class: "ui-carte__texte" }, t), h("p", { class: "ui-carte__titre" }, x.n), h("p", { class: "ui-carte__texte" }, `${x.fois} contact${x.fois > 1 ? "s" : ""}`)))));
+    h("div", { class: "ui-carte du-mois__carte" }, avatarProche(x.n), h("div", { class: "du-mois__texte" },
+      h("p", { class: "ui-carte__texte" }, t), h("p", { class: "ui-carte__titre" }, x.n), h("p", { class: "ui-carte__texte" }, `${x.fois} contact${x.fois > 1 ? "s" : ""}`))))));
 }
 
 function groupes() {
@@ -62,6 +74,7 @@ function liste() {
     h("div", { class: "puces" }, [["", "Tous"], ["famille", "Famille"], ["ami", "Amis"]].map(([v, t]) => h("button", { class: "bouton puce", "aria-pressed": String(filtre === v), onclick: () => { filtre = v; document.dispatchEvent(new CustomEvent("proches:filtre")); } }, t))),
     L.length ? L.map(x => { const li = P.niveauLien(etat().bonds[x.n] || 0);
       return h("button", { class: "ui-carte proche", onclick: () => fiche(x.n) },
+        avatarProche(x.n),
         h("span", { class: "proche__texte" }, h("span", { class: "ui-carte__titre" }, x.n), h("span", { class: "ui-carte__texte" }, `${depuis(x.n)} · ${P.titreLien(li.l)}`)),
         h("span", { class: "ui-compteur" }, "Niv. " + li.l)); })
       : h("p", { class: "vide" }, "Aucun proche trouvé."),

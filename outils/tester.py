@@ -5,7 +5,7 @@
 import pathlib, re, subprocess, sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-VENDU = {"src/avatar/moteur.js"}  # recopié de l'ancienne version (patrimoine pixel art) : exempt des contrôles de style
+VENDU = {"src/avatar/moteur.js", "src/avatar/badges-pixel.js"}  # recopié de l'ancienne version (patrimoine pixel art) : exempt des contrôles de style
 echecs = []
 
 def ok(nom, bon, info=""):

@@ -1,4 +1,4 @@
-// Moi > Chez moi, d'après la maquette : Ma maison, Armoire, Titres, Badges, puis Auras, Fonds et Panoplies.
+// Moi > Chez moi, d'après la maquette : Ma maison, Armoire, Titres, Badges, puis Auras. (Fonds et panoplies : retirés.)
 // Règle des collections : on montre ce qui est obtenu, puis UNE tuile « +N » pour le reste (jamais la liste du verrouillé).
 
 import { h } from "../ui/dom.js";
@@ -6,6 +6,7 @@ import { pxUi, pxRk } from "../ui/pixel.js";
 import { jouer } from "../core/sons.js";
 import { etat } from "../core/state.js";
 import { HM_ROOMS } from "../donnees/brut/chez-moi.js";
+import { badgeSvg } from "../avatar/rendu.js";
 import * as M from "../regles/moi.js";
 
 const PORTES = ["tete", "haut", "yeux", "bijou", "main"];
@@ -46,8 +47,8 @@ function titresVue(S) {
 function badgesVue(S) {
   const liste = M.badges(S), a = liste.filter(b => b.a);
   return section("Badges", `${a.length} sur ${liste.length}`,
-    h("div", { class: "ui-tuiles" }, a.map(b => h("div", { class: "ui-tuile", title: b.desc },
-      h("span", { html: pxUi(b.ic, 24) || pxRk(b.ic, 48) || pxUi("star", 24) }), h("span", { class: "t-info" }, b.name), etoiles(Math.max(0, (b.t || 1) - 1)))), plus(liste.length - a.length)),
+    h("div", { class: "ui-tuiles" }, a.map(b => h("div", { class: "ui-tuile ui-tuile--badge", title: b.desc },
+      h("span", { html: badgeSvg(b, false, 48) }), h("span", { class: "t-info tuile__nom" }, b.name))), plus(liste.length - a.length)),
     a.length ? null : h("p", { class: "vide" }, "Aucun badge pour l'instant."));
 }
 
@@ -56,15 +57,7 @@ function collection(slot, titre, S) {
   return section(titre, `${tuiles.length} sur ${tuiles.length + reste}`, h("div", { class: "ui-tuiles" }, tuiles, plus(reste)), tuiles.length ? null : h("p", { class: "vide" }, "Rien d'obtenu ici pour l'instant."));
 }
 
-function panopliesVue(S) {
-  const p = M.panoplies(S), a = p.filter(x => x.n > 0);
-  return section("Panoplies", `${a.length} sur ${p.length}`,
-    h("div", { class: "ui-tuiles" }, a.map(x => h("div", { class: "ui-tuile", "aria-pressed": String(x.complet) },
-      h("span", { class: "t-carte" }, x.nom), h("span", { class: "ui-compteur" }, `${x.n}/${x.total}`), h("span", { class: "t-info" }, x.complet ? `Titre : ${x.titre}` : "En cours"))), plus(p.length - a.length)),
-    a.length ? null : h("p", { class: "vide" }, "Aucune panoplie commencée."));
-}
-
 export function chezMoi() {
   const S = etat();
-  return h("div", { class: "chez-moi" }, maison(), armoire(S), titresVue(S), badgesVue(S), collection("aura", "Auras", S), collection("fond", "Fonds", S), panopliesVue(S));
+  return h("div", { class: "chez-moi" }, maison(), armoire(S), titresVue(S), badgesVue(S), collection("aura", "Auras", S));
 }
