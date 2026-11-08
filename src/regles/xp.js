@@ -14,13 +14,13 @@ export const LES_ANGLES = ANGLES.map(([nom, couleur, cats, icone]) => ({
 export const angleDe = cat => (LES_ANGLES.find(a => a.cats.includes(cat)) || LES_ANGLES[1]).id;
 
 /** Ajoute de l'XP. Renvoie le niveau atteint si on vient de monter, sinon 0. */
-export function gagner({ id, nom, cat, xp }) {
+export function gagner({ id, nom, cat, xp, extra }) {
   let monte = 0;
   modifier("xp:" + id, S => {
     const avant = niveau(S.xp || 0).l;
     S.xp = (S.xp || 0) + xp;
     S.stats[cat] = (+S.stats[cat] || 0) + xp;
-    S.log.push({ t: Date.now(), a: id, name: nom, cat, xp });
+    S.log.push({ t: Date.now(), a: id, name: nom, cat, xp, ...(extra || {}) });
     const j = cleJour(S);
     if (!S.days.includes(j)) S.days.push(j);
     const apres = niveau(S.xp).l;

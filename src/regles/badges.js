@@ -16,7 +16,9 @@ import { VIANDE } from "../donnees/aliments.js";
 // ---- niveaux : coûts d'origine
 const niveauDe = (xp, besoin) => { let l = 1, r = xp || 0; while (r >= besoin(l)) { r -= besoin(l); l++; } return l; };
 const niveauStat = xp => niveauDe(xp, l => 30 + 20 * l);
-const niveauLien = xp => niveauDe(xp, l => 15 * (l + 1));
+// Les liens suivent la courbe ralentie de Proches (COEF_LIEN) : les badges de lien demandent donc plus de temps qu'avant.
+import { niveauLien as lien } from "./proches.js";
+const niveauLien = xp => lien(xp).l;
 const niveauComp = xp => niveauDe(xp, l => 20 + 10 * l);
 const CATS_PALIER = ["sport", "perso", "social", "famille", "maison", "soi", "travail", "nourriture"];
 const palier = (S, c) => { const l = niveauStat((S.stats || {})[c]); return l >= 10 ? 3 : l >= 5 ? 2 : l >= 3 ? 1 : 0; };

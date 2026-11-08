@@ -22,3 +22,18 @@
 .tuile__apercu svg { display: block; }
 .etoiles { display: inline-flex; gap: 2px; color: var(--action); }
 .saisie { display: grid; gap: var(--e4); }
+
+/* ---- Proches */
+.proches { display: grid; gap: var(--e4); align-content: start; }
+.proche { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--e3); margin-bottom: var(--e2); text-align: left; cursor: pointer; font-family: inherit; color: inherit; }
+.proche__texte { display: grid; gap: var(--e1); min-width: 0; }
+.recherche { width: 100%; min-height: var(--h-bouton); padding: var(--e2) var(--e3); margin-bottom: var(--e2); background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; font-size: var(--t-champ); }
+.fiche, .roulette { display: grid; gap: var(--e3); }
+.fiche__actions { display: grid; gap: var(--e2); }
+.du-mois { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--e2); }
+
+/* ---- Bilan */
+.bilan { display: grid; gap: var(--e4); align-content: start; }
+.histo { display: flex; align-items: flex-end; gap: 2px; height: 64px; }
+.histo i { flex: 1; height: var(--v); min-height: 2px; background: var(--angle-esprit); }
+.histo i.vide-jour { background: var(--bord); }
