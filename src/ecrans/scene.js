@@ -8,6 +8,7 @@ import { AMB_SKY, AMB_HILL } from "../donnees/brut/ambiance-scene.js";
 import { GEAR } from "../donnees/brut/equipement.js";
 import { WX_L } from "../donnees/brut/meteo.js";
 import { avatarSvg } from "../avatar/rendu.js";
+import { ouvrirPersonnage } from "./personnage.js";
 
 /** Moment de la journée → clé de ciel du catalogue d'origine. */
 export function momentCiel(S) {
@@ -59,6 +60,6 @@ export function decor(S, ...dessus) {
   return h("div", { class: "hero", "aria-label": "Mon personnage" },
     h("div", { class: "hero__colline", html: colline }),
     aura(S),
-    h("div", { class: "hero__perso", html: avatar(S) }),
+    h("button", { class: "hero__perso", "aria-label": "Modifier mon personnage", title: "Modifier mon personnage", html: avatar(S), onclick: () => ouvrirPersonnage() }),
     dessus);
 }

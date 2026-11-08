@@ -12,7 +12,7 @@ Statut : validé par Ilario le 26/10/2026.
 |---|---|---|
 | Largeur de référence | 393 px (iPhone) | — |
 | Marge gauche / droite du contenu | **24 px** | (marge de `.wrap`) |
-| Espace entre deux sections | **24 px**, plus la ligne en pointillés de la section | `--ui-e6`, `.ui-sep` |
+| Espace entre deux sections | **24 px** | `--ui-e6`, `.ui-sep` |
 | Titre de section → son contenu | **12 px** | `--ui-e3` |
 | Entre deux cartes ou deux rangées de tuiles | **8 px** | `--ui-e2` |
 | Intérieur d'une carte | **12 px** | `--ui-e3` |
@@ -75,7 +75,7 @@ Composant : `.ui-entete` (titre + compteur + action).
 
 ## 5. Cadres, cartes et tuiles
 
-- **Section** : jamais de cadre. Séparation = espace + ligne en pointillés à la couleur de la section.
+- **Section** : jamais de cadre. Séparation = espace seulement (pas de ligne en pointillés).
 - **Carte** (un élément qu'on lit et sur lequel on agit) : fond sombre `--ui-fond`, bordure **2 px neutre**, coins carrés, padding 12 px, contenu aligné à gauche.
 - **Tuile** (un élément court : icône + mot) : carrée, même fond et même bordure, contenu centré, nom sur une ligne.
 - **Fiche d'un proche** et **ma fiche profil** : seules exceptions de grand cadre, bordure neutre 2 px ; l'aura équipée remplit le fond de ma fiche.

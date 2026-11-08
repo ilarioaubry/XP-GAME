@@ -30,9 +30,9 @@
 }
 .ui-tuile[aria-pressed="true"], .ui-tuile.actif { border-color: var(--action); }
 
-/* ---- En-tête de section : titre à gauche, une seule action à droite ; pas de cadre, une ligne en pointillés dessous */
+/* ---- En-tête de section : titre à gauche, une seule action à droite */
 .ui-section { --sc: var(--action); margin-top: var(--e6); }
-.ui-entete { display: flex; align-items: center; gap: var(--e2); padding-bottom: var(--e3); margin-bottom: var(--e3); border-bottom: 2px dotted var(--sc); }
+.ui-entete { display: flex; align-items: center; gap: var(--e2); padding-bottom: var(--e3); margin-bottom: var(--e3); }
 .ui-titre { display: inline-flex; align-items: center; gap: var(--e2); font: 400 var(--t-section) / 1.2 var(--f-pixel); text-transform: uppercase; letter-spacing: .04em; }
 .ui-titre::before { content: ""; width: 10px; height: 10px; background: var(--sc); transform: rotate(45deg); flex: none; }
 .ui-entete .bouton--icone { margin-left: auto; }
@@ -70,7 +70,7 @@
 
 /* ---- Lignes clé/valeur (écran de contrôle du socle) */
 .ui-lignes { display: grid; gap: var(--e1); margin: 0; }
-.ui-ligne { display: flex; justify-content: space-between; gap: var(--e4); padding: var(--e1) 0; border-bottom: 1px dotted var(--bord); }
+.ui-ligne { display: flex; justify-content: space-between; gap: var(--e4); padding: var(--e1) 0; }
 .ui-ligne dt { color: var(--texte-2); }
 .ui-ligne dd { margin: 0; font-weight: 700; text-align: right; }
 .ui-ligne--ok dd { color: var(--angle-liens); }

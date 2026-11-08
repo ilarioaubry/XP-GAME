@@ -7,18 +7,19 @@ import { modifier, etat } from "../core/state.js";
 import { emit } from "../core/events.js";
 import { AV_OPT } from "../donnees/brut/equipement.js";
 import { AV_DEF, AVC_TABS } from "../donnees/brut/createur-personnage.js";
-import { avatarSvg } from "../avatar/rendu.js";
+import { avatarSvg, avatarDepuis } from "../avatar/rendu.js";
 import "../avatar/moteur.js"; // complète AV_OPT (bas, chaussures) avant l'ouverture
 
 let onglet = "face";
 
-export function ouvrirPersonnage() {
+/** Créateur d'avatar : le mien (S.g.avc) ou celui d'un proche (S.profiles[nom].avc). */
+export function ouvrirPersonnage(proche) {
   const corps = h("div", { class: "perso" });
-  const choisir = (cle, i) => { modifier("avatar", S => { (S.g.avc ||= {})[cle] = i; }); emit("equipement:change", { slot: "avatar", id: cle }); jouer("blip"); dessiner(); };
+  const choisir = (cle, i) => { modifier("avatar", S => { const o = proche ? ((S.profiles[proche] ||= {}).avc ||= {}) : (S.g.avc ||= {}); o[cle] = i; }); emit("equipement:change", { slot: "avatar", id: cle }); jouer("blip"); dessiner(); };
   const dessiner = () => {
-    const S = etat(), cfg = { ...AV_DEF, ...(S.g.avc || {}) }, tab = AVC_TABS.find(t => t[0] === onglet) || AVC_TABS[0];
+    const S = etat(), cfg = { ...AV_DEF, ...(proche ? (S.profiles[proche] || {}).avc : S.g.avc) }, tab = AVC_TABS.find(t => t[0] === onglet) || AVC_TABS[0];
     corps.replaceChildren(...[
-      h("div", { class: "perso__apercu", html: avatarSvg(S, 4) }),
+      h("div", { class: "perso__apercu", html: proche ? avatarDepuis(cfg, 4) : avatarSvg(S, 4) }),
       h("div", { class: "puces", role: "tablist" }, AVC_TABS.map(t => h("button", { class: "bouton puce", role: "tab", "aria-selected": String(t[0] === tab[0]), onclick: () => { onglet = t[0]; dessiner(); } }, t[1]))),
       tab[2].map(([cle, nom, genre]) => {
         const opts = AV_OPT[cle] || [];
@@ -31,5 +32,5 @@ export function ouvrirPersonnage() {
       }),
     ].flat());
   };
-  ouvrirPlein("Mon personnage", corps); dessiner();
+  ouvrirPlein(proche ? "Avatar de " + proche : "Mon personnage", corps); dessiner();
 }

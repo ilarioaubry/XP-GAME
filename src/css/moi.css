@@ -51,15 +51,12 @@
 .proche { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--e3); margin-bottom: var(--e2); text-align: left; cursor: pointer; font-family: inherit; color: inherit; }
 .proche__texte { flex: 1; display: grid; gap: var(--e1); min-width: 0; text-align: left; }
 .recherche { width: 100%; min-height: var(--h-bouton); padding: var(--e2) var(--e3); margin-bottom: var(--e2); background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; font-size: var(--t-champ); }
-.fiche, .roulette { display: grid; gap: var(--e3); }
+.fiche { display: grid; gap: var(--e3); }
 .fiche__actions { display: grid; gap: var(--e2); }
 .du-mois { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
 .du-mois__carte { display: grid; justify-items: start; gap: var(--e2); }
-.roulette__qui { display: flex; align-items: center; gap: var(--e3); }
 .fiche__tete { display: flex; align-items: center; gap: var(--e3); }
 /* Avatar d'un proche : sa tête, sa photo ou son initiale sur sa couleur */
-.pav { flex: none; width: 44px; height: 44px; display: grid; place-items: center; overflow: hidden; background: var(--h, var(--c-piste)); color: var(--c-nuit); font: 400 var(--t-section) / 1 var(--f-pixel); }
-.pav--grand { width: 72px; height: 72px; font-size: var(--t-chiffre); }
 .pav img, .pav__tete, .pav__tete svg { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---- Bilan */
@@ -108,3 +105,42 @@
 
 /* ---- Badges : le dessin pixel de l'ancienne version, nom sur une ligne */
 .ui-tuile--badge .tuile__nom { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- Calendrier (Bilan) */
+.cal__nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--e2); }
+.cal__mois { font: 400 18px / 1 var(--f-pixel); }
+.cal__prec svg { transform: rotate(90deg); }
+.cal__suiv svg { transform: rotate(-90deg); }
+.cal__grille { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--e1); }
+.cal__lettre { text-align: center; font: 700 var(--t-info) / 24px var(--f-texte); color: var(--texte-2); }
+.cal__jour { min-height: 44px; padding: 0; border: 2px solid transparent; border-radius: 0; background: var(--c-carte); color: var(--texte); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--e1); }
+.cal__jour--auj .cal__num { color: var(--action); font-weight: 700; }
+.cal__jour--choisi { border-color: var(--action); }
+.cal__num { font: 700 var(--t-texte) / 1 var(--f-texte); }
+.cal__points { display: flex; gap: 2px; height: 4px; }
+.cal__points i { width: 4px; height: 4px; }
+.cal__points i.xp { background: var(--action); }
+.cal__points i.hu { background: var(--angle-esprit); }
+.cal__points i.ev { background: var(--angle-liens); }
+.cal__detail { display: grid; gap: var(--e2); margin-top: var(--e3); }
+.cal__fait { display: flex; justify-content: space-between; gap: var(--e3); margin: 0; }
+
+/* ---- Proches : avatar carré, cartes à 2 colonnes, fiche */
+.pav { flex: none; width: var(--t, 44px); height: var(--t, 44px); display: grid; place-items: center; overflow: hidden; background: var(--h, var(--c-piste)); color: var(--c-nuit); font: 400 var(--t-section) / 1 var(--f-pixel); }
+.pav--vide { background: var(--c-piste); }
+.pav img, .pav__tete, .pav__tete svg { width: 100%; height: 100%; object-fit: cover; }
+.proches__grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e2); }
+.proche-carte { display: grid; justify-items: center; gap: var(--e2); padding: var(--e3); background: var(--c-carte); border: 1px solid var(--bord); border-radius: 0; color: var(--texte); font-family: inherit; cursor: pointer; }
+.proche-carte__nom { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 var(--t-carte) / 1.2 var(--f-texte); }
+.proche-carte__niv { display: flex; align-items: center; gap: var(--e2); width: 100%; }
+.proche-carte__niv .ui-barre { flex: 1; }
+.du-mois__carte { justify-items: center; text-align: center; padding: var(--e4) var(--e3); color: var(--texte); font-family: inherit; }
+.du-mois__carte:disabled { opacity: 1; }
+.etiquette { display: inline-block; padding: 2px var(--e2); background: rgba(10, 10, 24, .72); font: 700 var(--t-info) / 1.4 var(--f-texte); }
+.fiche__carte { position: relative; display: grid; justify-items: center; gap: var(--e2); padding-top: var(--e4); }
+.fiche__crayon { position: absolute; top: var(--e2); right: var(--e2); }
+.fiche__avatar { display: grid; place-items: center; padding: var(--e2); }
+.fiche__avatar svg { max-width: 100%; height: auto; }
+.fiche__nom { font: 400 var(--t-section) / 1.2 var(--f-pixel); }
+.fiche__lien { display: flex; align-items: center; gap: var(--e2); }
+.fiche__carte .ui-barre { width: 100%; }

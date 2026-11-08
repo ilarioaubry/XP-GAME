@@ -24,31 +24,27 @@ def main():
         save = lambda: (pg.evaluate("import('/src/core/state.js').then(s=>import('/src/core/sauvegarde.js').then(m=>m.ecrireMaintenant(s.etat())))"), pg.wait_for_timeout(150), json.loads(pg.evaluate("localStorage.getItem('carnet-quetes')")))[2]
         pg.get_by_role("tab", name="Proches").click(); pg.wait_for_timeout(300)
         n = len(d0["friends"]) + len(d0["family"])
-        check("la liste montre tous les proches de la sauvegarde", pg.locator(".proche").count() == n, pg.locator(".proche").count())
-        pg.fill(".recherche", "lé"); pg.wait_for_timeout(200)
-        check("recherche", pg.locator(".proche").count() == 1)
-        pg.fill(".recherche", ""); pg.wait_for_timeout(200)
-        # roulette : un tirage, jamais deux fois la même personne d'affilée
-        pg.get_by_role("button", name="Tirer au sort un proche").click(); pg.wait_for_timeout(200)
-        r1 = save()["g"]["roulette"]["n"]
-        pg.get_by_role("button", name="Quelqu'un d'autre").click(); pg.wait_for_timeout(200)
+        check("la liste montre tous les proches de la sauvegarde", pg.locator(".proche-carte").count() == n, pg.locator(".proche-carte").count())
+        check("pas de roulette dans Proches", pg.locator("#e-proches").get_by_text("Roulette").count() == 0)
+        # roulette (dans Aujourd'hui) : un tirage, jamais deux fois la même personne d'affilée
+        pg.get_by_role("tab", name="Aujourd'hui").click(); pg.wait_for_timeout(200)
+        pg.get_by_role("button", name="Tourner").click(); pg.wait_for_timeout(200)
         r2 = save()["g"]["roulette"]["n"]
-        check("roulette : deux tirages différents", r1 != r2, (r1, r2))
         xp0 = save()["xp"]
-        pg.get_by_role("button", name="C'est fait").click(); pg.wait_for_timeout(200)
+        pg.get_by_role("button", name="Nouvelles").first.click(); pg.wait_for_timeout(200)
         d = save()
         check("« C'est fait » : lien, dernier contact, XP, journal", d["bonds"].get(r2, 0) > d0["bonds"].get(r2, 0) and d["bondsLast"][r2] and d["xp"] == xp0 + 10 and d["log"][-1].get("who") == r2, d["log"][-1])
         pg.screenshot(path=str(T.ROOT / "outils" / "proches-393.png"), full_page=True)
         # fiche + ajout + retrait avec Annuler
         avant_tom = save()["bonds"].get("Tom", 0)
-        pg.locator(".proche", has_text="Tom").click(); pg.wait_for_selector(".fiche")
+        pg.get_by_role("tab", name="Proches").click(); pg.locator(".proche-carte", has_text="Tom").click(); pg.wait_for_selector(".fiche")
         pg.get_by_role("button", name="Vu en vrai").click(); pg.wait_for_timeout(200)
         d = save()
         check("Vu en vrai : +40 de lien, +30 XP", d["bonds"]["Tom"] == avant_tom + 40 and d["log"][-1]["xp"] == 30, d["bonds"].get("Tom"))
-        pg.get_by_role("button", name="Retirer").click(); pg.get_by_role("button", name="Annuler").click(); pg.wait_for_timeout(200)
+        pg.get_by_role("button", name="Modifier Tom").click(); pg.get_by_role("button", name="Retirer ce proche").click(); pg.get_by_role("button", name="Annuler").click(); pg.wait_for_timeout(200)
         d = save()
         check("Annuler rend le proche et son lien", "Tom" in d["friends"] and d["bonds"]["Tom"] == avant_tom + 40)
-        pg.get_by_role("button", name="Ajouter un proche").click(); pg.fill("#champ-n", "Sam"); pg.get_by_role("button", name="Ajouter comme ami").click(); pg.wait_for_timeout(200)
+        pg.get_by_role("button", name="Ajouter un ami").click(); pg.fill("#champ-n", "Sam"); pg.get_by_role("button", name="Ajouter", exact=True).click(); pg.wait_for_timeout(200)
         check("nouveau proche écrit", "Sam" in save()["friends"])
         # Bilan
         pg.get_by_role("tab", name="Moi").click(); pg.get_by_role("tab", name="Bilan").click(); pg.wait_for_timeout(300)

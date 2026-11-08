@@ -20,6 +20,10 @@ export function etapes(moment, S = etat()) {
   return liste.map(e => ({ n: e.n, s: e.s || 60, ic: e.ic || (BRIQUES.find(b => b.n === e.n) || {}).ic || "etoile" }));
 }
 
+/** Enregistre la liste d'étapes d'un moment (S.g.rout[moment]) ; liste vide = retour au réglage d'origine. */
+export function enregistrer(moment, liste) { modifier("routine-reglage", S => { (S.g.rout ||= {})[moment] = liste.map(e => ({ n: e.n, s: e.s, ic: e.ic })); }); }
+export const proposees = moment => BRIQUES.filter(b => b.m === moment || b.m === "both").map(b => ({ n: b.n, s: sec(b), ic: b.ic }));
+
 /** Quel moment proposer d'abord ? Le soir à partir de 17 h. */
 export const momentActuel = S => (heureJournee(S) >= 17 ? "soir" : "matin");
 

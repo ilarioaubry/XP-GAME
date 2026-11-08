@@ -19,7 +19,7 @@ function sceneMoi() {
   return decor(S,
     h("div", { class: "hero__entete" }, h("p", { class: "hero__nom" }, S.name || "Moi"),
       h("p", { class: "hero__niveau" }, `Niveau ${nv.l}` + (aura ? ` · ${(M.objetsDe("aura", S).find(o => o.id === aura) || {}).n || "Aura"}` : ""))),
-    h("button", { class: "hero__reglage", "aria-label": "Mon personnage", title: "Mon personnage", html: pxUi("edit", 24), onclick: ouvrirPersonnage }),
+    h("button", { class: "hero__reglage", "aria-label": "Mon personnage", title: "Mon personnage", html: pxUi("edit", 24), onclick: () => ouvrirPersonnage() }),
     h("div", { class: "hero__plaque" }, h("span", { html: pxRk("etoile", 16) || "" }), h("span", {}, titre)));
 }
 

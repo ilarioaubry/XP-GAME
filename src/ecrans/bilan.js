@@ -3,6 +3,10 @@
 
 import { h } from "../ui/dom.js";
 import { saisir } from "../ui/plein.js";
+import { pxUi } from "../ui/pixel.js";
+import { dire } from "../ui/messages.js";
+import * as M from "../regles/moi.js";
+import { TYPES_EVENEMENT } from "../donnees/quetes-pour-toi.js";
 import { etat, modifier } from "../core/state.js";
 import { cleJour } from "../core/temps.js";
 import { LES_ANGLES, angleDe } from "../regles/xp.js";
@@ -95,11 +99,57 @@ function assietteSemaine(S, b) {
     h("p", { class: "t-info" }, "Rose : 3 groupes couverts. Bleu clair : un groupe manquait."));
 }
 
+// ---- Calendrier : un mois, avec ce qui s'est passé (XP, humeur) et les événements ; un jour touché s'ouvre dessous.
+let moisVu = null, jourVu = null;
+const JOURS = ["L", "M", "M", "J", "V", "S", "D"];
+const cle = (a, m, j) => a + "-" + String(m + 1).padStart(2, "0") + "-" + String(j).padStart(2, "0");
+const bouge = () => document.dispatchEvent(new CustomEvent("moi:rubrique"));
+
+function calendrier(S) {
+  const auj = cleJour(S);
+  if (!moisVu) moisVu = auj.slice(0, 7);
+  if (!jourVu) jourVu = auj;
+  const [an, mo] = moisVu.split("-").map(Number), m0 = mo - 1;
+  const nbJours = new Date(an, m0 + 1, 0).getDate(), decal = (new Date(an, m0, 1).getDay() + 6) % 7;
+  const evs = M.evenements(S), xpJour = {};
+  for (const e of S.log) if (e.xp > 0) { const k = cleJour(S, e.t); xpJour[k] = (xpJour[k] || 0) + e.xp; }
+  const titreMois = new Date(an, m0, 1).toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
+  const aller = n => { const d = new Date(an, m0 + n, 1); moisVu = cle(d.getFullYear(), d.getMonth(), 1).slice(0, 7); bouge(); };
+  const cases = [...Array(decal).fill(null), ...Array.from({ length: nbJours }, (_, i) => i + 1)].map(j => {
+    if (!j) return h("span", { class: "cal__vide" });
+    const k = cle(an, m0, j), ev = evs.some(e => e.d === k), hu = (S.g.mood || {})[k];
+    return h("button", { class: "cal__jour" + (k === auj ? " cal__jour--auj" : "") + (k === jourVu ? " cal__jour--choisi" : ""), "aria-label": `${j} ${titreMois}`, "aria-pressed": String(k === jourVu),
+      onclick: () => { jourVu = k; bouge(); } },
+      h("span", { class: "cal__num" }, String(j)),
+      h("span", { class: "cal__points" }, h("i", { class: xpJour[k] ? "xp" : "" }), h("i", { class: hu ? "hu" : "" }), h("i", { class: ev ? "ev" : "" })));
+  });
+  // détail du jour choisi
+  const logJour = S.log.filter(l => cleJour(S, l.t) === jourVu && l.xp > 0);
+  const evJour = evs.filter(e => e.d === jourVu), hu = (S.g.mood || {})[jourVu];
+  const dateLongue = new Date(jourVu + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  const detail = h("div", { class: "cal__detail" },
+    h("p", { class: "ui-carte__titre" }, dateLongue.charAt(0).toUpperCase() + dateLongue.slice(1)),
+    h("p", { class: "ui-carte__texte" }, [xpJour[jourVu] ? `${xpJour[jourVu]} XP` : "Pas d'XP", hu ? "humeur " + NOMS_HUMEUR[hu].toLowerCase() : null].filter(Boolean).join(" · ")),
+    evJour.map(e => h("div", { class: "ligne-carte ui-carte" }, h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, e.n), h("p", { class: "ui-carte__texte" }, (TYPES_EVENEMENT.find(t => t[0] === e.t) || [, "Événement"])[1])),
+      h("button", { class: "bouton bouton--icone", "aria-label": "Supprimer", title: "Supprimer", html: pxUi("trash", 24), onclick: () => dire("Événement supprimé", M.retirerEvenement(e.id)) }))),
+    logJour.slice(-6).reverse().map(l => h("p", { class: "t-texte cal__fait" }, h("span", {}, l.name || l.a), h("b", {}, "+" + l.xp))));
+  return h("section", { class: "ui-section", style: "--sc:var(--angle-liens)" },
+    h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, "Calendrier"),
+      h("button", { class: "bouton bouton--icone", "aria-label": "Ajouter un événement", title: "Ajouter un événement", html: pxUi("plus", 24),
+        onclick: () => saisir("Nouvel événement", [{ id: "n", etiquette: "Nom" }, { id: "d", etiquette: "Date", type: "date", defaut: jourVu }, { id: "t", etiquette: "Type", type: "choix", options: TYPES_EVENEMENT, defaut: "autre" }], v => { if (v.d) M.ajouterEvenement(v.n, v.d, v.t); }) })),
+    h("div", { class: "cal__nav" },
+      h("button", { class: "bouton bouton--icone cal__prec", "aria-label": "Mois précédent", html: pxUi("chev", 24), onclick: () => aller(-1) }),
+      h("p", { class: "cal__mois" }, titreMois.charAt(0).toUpperCase() + titreMois.slice(1)),
+      h("button", { class: "bouton bouton--icone cal__suiv", "aria-label": "Mois suivant", html: pxUi("chev", 24), onclick: () => aller(1) })),
+    h("div", { class: "cal__grille" }, JOURS.map(j => h("span", { class: "cal__lettre" }, j)), cases),
+    detail);
+}
+
 export function bilan(donnees) {
   const S = etat(), [, jours] = PERIODES[periode], b = calculer(S, jours);
   return h("div", { class: "bilan" },
     h("div", { class: "periodes", role: "tablist" }, Object.entries(PERIODES).map(([id, [n]]) => h("button", { class: "periode", role: "tab", "aria-selected": String(id === periode), onclick: () => { periode = id; document.dispatchEvent(new CustomEvent("moi:rubrique")); } }, n))),
-    chapitre(S, b),
+    chapitre(S, b), calendrier(S),
     section("Cette " + { semaine: "semaine", mois: "période", annee: "année" }[periode] + " en vrai", "var(--c-orange)",
       h("div", { class: "envrai" }, envrai(S, b, jours).map(([v, l, c]) => h("div", { class: "envrai__case", style: `--c:${c}` }, h("b", {}, String(v)), h("span", {}, l))))),
     xpParJour(S, b, jours), assietteSemaine(S, b),

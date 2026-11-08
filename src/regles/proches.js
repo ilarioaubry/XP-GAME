@@ -81,3 +81,40 @@ export function tirer(hasard = Math.random) {
   return choix;
 }
 export const tirageActuel = (S = etat()) => (S.g.roulette && Date.now() - S.g.roulette.t < 864e5 ? S.g.roulette.n : null);
+
+// ---- Modifier un proche
+/** Renomme un proche partout (listes, lien, fiche, journal). */
+export function renommer(n, nouveau) {
+  if (!nouveau || nouveau === n || tous().some(x => x.n === nouveau)) return false;
+  modifier("proche-renomme", S => {
+    for (const k of ["friends", "family"]) S[k] = (S[k] || []).map(x => (x === n ? nouveau : x));
+    for (const k of ["bonds", "bondsLast", "profiles"]) if (n in S[k]) { S[k][nouveau] = S[k][n]; delete S[k][n]; }
+    for (const l of S.log) if (l.who === n) l.who = nouveau;
+    if (S.g.roulette && S.g.roulette.n === n) S.g.roulette.n = nouveau;
+  });
+  emit("proche:modifie", { n: nouveau });
+  return true;
+}
+/** Passe un proche de la famille aux amis (ou l'inverse). */
+export function changerType(n, type) {
+  if (typeDe(n) === type) return;
+  modifier("proche-type", S => {
+    for (const k of ["friends", "family"]) S[k] = (S[k] || []).filter(x => x !== n);
+    (type === "famille" ? (S.family ||= []) : (S.friends ||= [])).push(n);
+  });
+  emit("proche:modifie", { n });
+}
+export function ajouterGroupe(nom) {
+  modifier("groupe-ajoute", S => { (S.g.fgr ||= []).push({ id: "g" + Date.now().toString(36), n: nom }); });
+  emit("proche:modifie", {});
+}
+export function retirerGroupe(id) {
+  let c;
+  modifier("groupe-retire", S => { c = (S.g.fgr || []).find(g => g.id === id); S.g.fgr = (S.g.fgr || []).filter(g => g.id !== id); });
+  emit("proche:modifie", {});
+  return () => modifier("groupe-rendu", S => { (S.g.fgr ||= []).push(c); });
+}
+export function basculerGroupe(n, id) {
+  modifier("groupe-membre", S => { const p = (S.profiles[n] ||= {}); const g = (p.grp ||= []); const i = g.indexOf(id); if (i < 0) g.push(id); else g.splice(i, 1); });
+  emit("proche:modifie", { n });
+}

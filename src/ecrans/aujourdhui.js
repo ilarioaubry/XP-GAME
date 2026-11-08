@@ -12,7 +12,7 @@ import { etat } from "../core/state.js";
 import { cleJour, heureJournee, niveau } from "../core/temps.js";
 import { decor } from "./scene.js";
 import { ouvrirAssiette } from "./assiette.js";
-import { ouvrirRoutine } from "./routine.js";
+import { ouvrirRoutine, ouvrirReglageRoutine } from "./routine.js";
 import { LES_ANGLES, faitAujourdhui } from "../regles/xp.js";
 import { paliers } from "../regles/moi.js";
 import { visageHumeur } from "../avatar/rendu.js";
@@ -100,7 +100,7 @@ function question() {
   const S = etat(), hr = heureJournee(S) % 24;
   const aFaire = id => !repasFait(id) && !repasSaute(id);
   let texte, bouton, action;
-  if (hr >= 21 && !nuitFaite()) { texte = ["C'est la fin de journée.", "On fait le point ?"]; bouton = "Bilan du soir"; action = ouvrirBilan; }
+  if (hr >= 20.5 && !nuitFaite()) { texte = ["C'est la fin de journée.", "On fait le point ?"]; bouton = "Bilan du soir"; action = ouvrirBilan; }
   else if (hr >= 11.5 && hr < 16 && aFaire("dej")) { texte = ["Midi passé.", "Tu as mangé ?"]; bouton = "Remplir l'assiette"; action = () => ouvrirAssiette("dej"); }
   else if (hr >= 18 && hr < 23 && aFaire("diner")) { texte = ["C'est l'heure du dîner.", "Tu as mangé ?"]; bouton = "Remplir l'assiette"; action = () => ouvrirAssiette("diner"); }
   else if (hr < 11.5 && !routineFaite("matin")) { texte = ["Bon matin.", "Une routine pour démarrer ?"]; bouton = "Routine du matin"; action = () => ouvrirRoutine("matin"); }
@@ -132,19 +132,20 @@ function humeurNuit() {
 }
 
 function carteQuete(q) {
-  const fait = faitAujourdhui(q.id), pts = q.xp <= 10 ? 1 : q.xp <= 20 ? 2 : 3;
-  return h("div", { class: "cq" + (fait ? " cq--faite" : "") },
+  const pts = q.xp <= 10 ? 1 : q.xp <= 20 ? 2 : 3;
+  return h("div", { class: "cq" },
     h("span", { class: "cq__ico", html: pxRk(LES_ANGLES.find(a => a.id === (q.angle || "esprit"))?.icone || "etoile", 24) || "" }),
     h("div", { class: "cq__texte" }, h("p", { class: "cq__nom" }, q.nom), q.why ? h("p", { class: "cq__why" }, q.why) : null,
       h("span", { class: "segs segs--petit", "aria-label": `+${q.xp} XP` }, [0, 1, 2].map(i => h("i", { class: i < pts ? "on" : "" })))),
-    fait ? h("span", { class: "cq__ok" }, "✓") : boutonsQuete(q));
+    boutonsQuete(q));
 }
 
-function ligneAction(icone, etiquette, texte, bouton, onclick, fait) {
-  return h("div", { class: "la" + (fait ? " la--faite" : "") },
+function ligneAction(icone, etiquette, texte, bouton, onclick, modifier) {
+  return h("div", { class: "la" },
     h("span", { class: "la__ico", html: pxRk(icone, 24) || "" }),
     h("div", { class: "la__texte" }, h("p", { class: "la__etiquette" }, etiquette), h("p", { class: "la__nom" }, texte)),
-    fait ? h("span", { class: "cq__ok" }, "✓") : h("button", { class: "la__bouton", onclick }, bouton));
+    modifier ? h("button", { class: "bouton bouton--icone la__reglage", "aria-label": "Modifier", title: "Modifier", html: pxUi("edit", 24), onclick: modifier }) : null,
+    h("button", { class: "la__bouton", onclick }, bouton));
 }
 
 function quetes() {
@@ -155,16 +156,17 @@ function quetes() {
   const fairePuis = q => () => { if (faire(q)) { jouer("coin"); dire(`+${q.xp} XP`); } };
   return [
     titre("Quêtes du jour", `${faites}/${liste.length}`),
-    liste.length ? liste.map(carteQuete) : h("p", { class: "vide" }, "Rien à faire pour l'instant."),
-    idee ? ligneAction("ampoule", "IDÉE DU MOMENT", idee.nom, "Go", fairePuis(idee), faitAujourdhui(idee.id)) : null,
-    defi ? ligneAction("eclair", "DÉFI", defi.nom, "Fait", fairePuis(defi), faitAujourdhui(defi.id)) : null,
+    liste.length && faites === liste.length ? h("p", { class: "vide" }, "Tout est fait. Bravo !") : liste.filter(q => !faitAujourdhui(q.id)).map(carteQuete),
+    idee && !faitAujourdhui(idee.id) ? ligneAction("ampoule", "IDÉE DU MOMENT", idee.nom, "Go", fairePuis(idee)) : null,
+    defi && !faitAujourdhui(defi.id) ? ligneAction("eclair", "DÉFI", defi.nom, "Fait", fairePuis(defi)) : null,
   ];
 }
 
 function roulette() {
   const n = tirageActuel();
+  if (n && faitAujourdhui("rel:news:" + n)) return null;
   if (n) return ligneAction("coeur", "ROULETTE DES PROCHES", `Prends des nouvelles de ${n}`, "Nouvelles",
-    () => { contacter(n, "news"); jouer("coin"); dire(`Nouvelles de ${n} · lien +`); }, faitAujourdhui("rel:news:" + n));
+    () => { contacter(n, "news"); jouer("coin"); dire(`Nouvelles de ${n} · lien +`); });
   return ligneAction("coeur", "ROULETTE DES PROCHES", "Qui prendre des nouvelles ?", "Tourner", () => {
     const c = tirer(); if (!c) dire("Ajoute d'abord des proches"); else jouer("blip");
   });
@@ -193,12 +195,23 @@ function repas() {
 }
 
 function rituels() {
-  const S = etat(), premier = momentActuel(S), ordre = [premier, premier === "matin" ? "soir" : "matin"];
-  const libelle = id => (routineFaite(id) ? "Faite" : id === "soir" ? "Dès 19 h" : "Le matin");
+  const S = etat(), hr = heureJournee(S) % 24;
+  const visible = id => !routineFaite(id) && (id === "matin" ? hr < 12 : hr >= 19);
   return [
-    ...ordre.map(id => { const m = MOMENTS.find(x => x.id === id); return ligneAction(m.icone, "ROUTINE", `${m.nom} · ${libelle(id)}`, "Lancer", () => ouvrirRoutine(id), routineFaite(id)); }),
-    ligneAction("lune", "BILAN DU SOIR", "Humeur, nuit, ta journée · dès 21 h", nuitFaite() ? "Modifier" : "Ouvrir", ouvrirBilan),
+    ...MOMENTS.filter(m => visible(m.id)).map(m => ligneAction(m.icone, "ROUTINE", m.nom, "Lancer", () => ouvrirRoutine(m.id), () => ouvrirReglageRoutine(m.id))),
+    hr >= 20.5 && !nuitFaite() ? ligneAction("lune", "BILAN DU SOIR", "Humeur, nuit, ta journée", "Ouvrir", ouvrirBilan) : null,
   ];
+}
+
+/** Journal du jour : ce qui a été validé aujourd'hui, le plus récent en haut. */
+function journalDuJour() {
+  const S = etat(), j = cleJour(S);
+  const L = S.log.filter(l => cleJour(S, l.t) === j && l.xp > 0).reverse();
+  const heure = t => new Date(t).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }).replace(":", " h ");
+  return [titre("Journal", L.length ? `${L.reduce((s, l) => s + l.xp, 0)} XP` : null),
+    L.length ? h("ul", { class: "journal" }, L.map(l => h("li", { class: "journal__ligne" },
+      h("span", { class: "journal__heure" }, heure(l.t)), h("span", { class: "journal__nom" }, l.name || l.a), h("b", { class: "journal__xp" }, "+" + l.xp))))
+      : h("p", { class: "vide" }, "Rien noté pour l'instant.")];
 }
 
 export function monterAujourdhui(racine) {
@@ -207,7 +220,7 @@ export function monterAujourdhui(racine) {
     racine.replaceChildren(h("div", { class: "aujourdhui" },
       entete(), barre(),
       h("div", { class: "ah" }, ...question(), hero(), angles()),
-      h("div", { class: "panneau" }, h("span", { class: "panneau__poignee" }), humeurNuit(), ...quetes(), roulette(), ...repas(), ...rituels())));
+      h("div", { class: "panneau" }, h("span", { class: "panneau__poignee" }), ...repas(), humeurNuit(), ...quetes(), roulette(), ...rituels(), ...journalDuJour())));
     scrollTo(0, y);
   };
   let attente = 0;

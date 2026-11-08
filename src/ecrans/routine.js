@@ -6,7 +6,8 @@ import { pxRk } from "../ui/pixel.js";
 import { ouvrirPlein } from "../ui/plein.js";
 import { dire } from "../ui/messages.js";
 import { jouer } from "../core/sons.js";
-import { etapes, terminer, lancee, MOMENTS, record } from "../regles/routine.js";
+import { pxUi } from "../ui/pixel.js";
+import { etapes, terminer, lancee, MOMENTS, record, enregistrer, proposees } from "../regles/routine.js";
 
 const mmss = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
 
@@ -52,11 +53,40 @@ export function ouvrirRoutine(moment) {
         h("button", { class: "bouton bouton--principal", onclick: () => suivante(true) }, i === liste.length - 1 ? "Fait, terminer" : "Fait"),
         h("button", { class: "bouton", onclick: () => suivante(false) }, "Passer"),
         h("button", { class: "bouton", "aria-pressed": String(pause), onclick: () => { pause = !pause; dessiner(); } }, pause ? "Reprendre" : "Pause")),
-      h("button", { class: "bouton bouton--ajout", onclick: () => { sortir(); fenetre.fermer(); } }, "Arrêter ici"));
+      h("button", { class: "bouton bouton--ajout", onclick: () => { sortir(); fenetre.fermer(); } }, "Arrêter ici"),
+      h("button", { class: "bouton", onclick: () => { sortir(); fenetre.fermer(); ouvrirReglageRoutine(moment); } }, "Modifier la routine"));
   }
 
   fenetre = ouvrirPlein(nom, corps, { auFermer: () => { clearInterval(tic); if (!fini) { fini = true; bilan(); } } });
   lancee(moment);
   jouer("start");
   dessiner();
+}
+
+/** Réglage d'une routine : ordre, durée, étapes en plus ou en moins. Enregistré à chaque geste. */
+export function ouvrirReglageRoutine(moment) {
+  const nom = MOMENTS.find(m => m.id === moment).nom;
+  let liste = etapes(moment);
+  const corps = h("div", { class: "reglage" });
+  const ok = () => { enregistrer(moment, liste); dessiner(); };
+  const btn = (icone, etiquette, fn, classe = "") => h("button", { class: "bouton bouton--icone " + classe, "aria-label": etiquette, title: etiquette, html: pxUi(icone, 24), onclick: fn });
+  const dessiner = () => {
+    const autres = proposees(moment).filter(b => !liste.some(e => e.n === b.n));
+    corps.replaceChildren(
+      h("div", { class: "reglage__liste" }, liste.map((e, i) => h("div", { class: "ui-carte reglage__ligne" },
+        h("span", { class: "reglage__ico", html: pxRk(e.ic, 24) || "" }),
+        h("div", { class: "reglage__texte" }, h("p", { class: "ui-carte__titre" }, e.n),
+          h("div", { class: "reglage__duree" },
+            h("button", { class: "bouton reglage__pas", "aria-label": "Moins de temps", onclick: () => { liste[i].s = Math.max(15, e.s - 15); ok(); } }, "−"),
+            h("span", { class: "t-texte" }, mmss(e.s)),
+            h("button", { class: "bouton reglage__pas", "aria-label": "Plus de temps", onclick: () => { liste[i].s = e.s + 15; ok(); } }, "+"))),
+        h("div", { class: "reglage__gestes" },
+          btn("chev", "Monter", () => { if (i) { [liste[i - 1], liste[i]] = [liste[i], liste[i - 1]]; ok(); } }, "reglage__haut"),
+          btn("chev", "Descendre", () => { if (i < liste.length - 1) { [liste[i + 1], liste[i]] = [liste[i], liste[i + 1]]; ok(); } }),
+          btn("trash", "Retirer", () => { if (liste.length > 1) { const avant = liste.slice(); liste = liste.filter((_, k) => k !== i); enregistrer(moment, liste); dessiner(); dire("Étape retirée", () => { liste = avant; enregistrer(moment, liste); dessiner(); }); } else dire("Garde au moins une étape"); }))))),
+      h("h3", { class: "ui-titre reglage__sous" }, "Ajouter une étape"),
+      autres.length ? h("div", { class: "reglage__ajouts" }, autres.map(b => h("button", { class: "bouton bouton--ajout", onclick: () => { liste.push(b); ok(); } }, b.n))) : h("p", { class: "vide" }, "Tout est déjà dans ta routine."),
+      h("button", { class: "bouton", onclick: () => { liste = proposees(moment).slice(0, moment === "matin" ? 5 : 4); ok(); } }, "Revenir au réglage d'origine"));
+  };
+  ouvrirPlein(nom, corps); dessiner();
 }

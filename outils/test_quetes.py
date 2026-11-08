@@ -28,7 +28,7 @@ def main():
         pg.goto(url); pg.wait_for_selector("html[data-prete]", timeout=8000); pg.wait_for_timeout(300)
         textes = pg.locator(".cq__nom").all_inner_texts()
         raisons = " ".join(pg.locator(".cq__why").all_inner_texts())
-        check("3 quêtes du jour au plus (le compteur dit vrai)", len(textes) == 3 and pg.locator(".pt__droite").first.inner_text().endswith("/3"), textes)
+        check("3 quêtes du jour au plus (le compteur dit vrai)", len(textes) == 3 and pg.locator(".pt", has_text="Quêtes du jour").locator(".pt__droite").inner_text().endswith("/3"), textes)
         check("au moins une quête « pour toi » (avec sa raison)", len(raisons) > 0, raisons)
         check("aucun [crochet] ni {accolade} laissé dans les textes", not any("{" in t or "[" in t for t in textes + [raisons]), textes)
         ev = pg.locator(".cq", has_text="Concert")

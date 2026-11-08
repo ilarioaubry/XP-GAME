@@ -9,7 +9,8 @@ import { jouer } from "../core/sons.js";
 import { etat, modifier } from "../core/state.js";
 import { cleJour, heureReveil } from "../core/temps.js";
 import * as M from "../regles/moi.js";
-import { TYPES_EVENEMENT } from "../donnees/quetes-pour-toi.js";
+import { MOMENTS, etapes } from "../regles/routine.js";
+import { ouvrirReglageRoutine } from "./routine.js";
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 const section = (titre, couleur, ...contenu) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null },
@@ -17,15 +18,11 @@ const section = (titre, couleur, ...contenu) => h("section", { class: "ui-sectio
 const iconeBtn = (nom, etiquette, fn) => h("button", { class: "bouton bouton--icone", "aria-label": etiquette, title: etiquette, html: pxUi(nom, 24), onclick: fn });
 const ajout = (texte, fn) => h("button", { class: "bouton bouton--ajout", onclick: fn }, texte);
 
-const dateFr = d => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
 
-function evenements(S) {
-  const liste = M.evenements(S).filter(e => e.d >= cleJour(S));
-  return section("Calendrier", "var(--angle-liens)",
-    liste.length ? liste.map(e => h("div", { class: "ui-carte ligne-carte" },
-      h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, e.n), h("p", { class: "ui-carte__texte" }, dateFr(e.d))),
-      iconeBtn("trash", "Supprimer", () => { const annuler = M.retirerEvenement(e.id); dire("Événement supprimé", annuler); }))) : h("p", { class: "vide" }, "Aucun événement pour l'instant."),
-    ajout("Ajouter un événement", () => saisir("Nouvel événement", [{ id: "n", etiquette: "Nom" }, { id: "d", etiquette: "Date", type: "date", defaut: cleJour(S) }, { id: "t", etiquette: "Type", type: "choix", options: TYPES_EVENEMENT, defaut: "autre" }], v => { if (v.d) M.ajouterEvenement(v.n, v.d, v.t); })));
+function routines() {
+  return section("Mes routines", "var(--angle-esprit)", MOMENTS.map(m => h("div", { class: "ui-carte ligne-carte" },
+    h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, m.nom), h("p", { class: "ui-carte__texte" }, `${etapes(m.id).length} étapes`)),
+    iconeBtn("edit", "Modifier la routine", () => ouvrirReglageRoutine(m.id)))));
 }
 
 function projets(S) {
@@ -82,5 +79,5 @@ function fiche(S) {
 
 export function maVie() {
   const S = etat();
-  return h("div", { class: "ma-vie" }, paliers(S), fiche(S), evenements(S), projets(S), derniereFois(S));
+  return h("div", { class: "ma-vie" }, paliers(S), fiche(S), routines(), projets(S), derniereFois(S));
 }

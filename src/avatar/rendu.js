@@ -38,6 +38,15 @@ const garder = (cle, fabrique) => {
   return cache.get(cle);
 };
 
+/** Avatar en pied d'une configuration quelconque (un proche), de face, sans objets équipés. */
+export function avatarDepuis(avc, echelle = 4) {
+  const cfg = { ...AV_DEF, ...(avc || {}) };
+  return garder("depuis" + JSON.stringify(cfg) + echelle, () => {
+    const px = chDraw(cfg, "idle", 0);
+    return `<svg class="px scene__avatar" viewBox="0 0 ${CH.W} ${CH.H}" width="${CH.W * echelle}" height="${CH.H * echelle}" shape-rendering="crispEdges" aria-hidden="true">${rectangles(px, CH.W, CH.H)}</svg>`;
+  });
+}
+
 /** SVG de l'avatar en pied (grille 32×52), pose « idle ». `echelle` = taille d'un pixel de la grille. */
 export function avatarSvg(S, echelle = 4, pose = "idle") {
   const cfg = configAvatar(S);

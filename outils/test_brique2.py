@@ -45,7 +45,10 @@ def main():
         check("XP augmentée", d["xp"] > d0["xp"])
         check("l'ancienne donnée de l'assiette d'hier est intacte", d["g"]["plt"]["2026-11-01"] == d0["g"]["plt"]["2026-11-01"])
 
-        # routine du matin : tout faire
+        # routine du matin : visible seulement le matin, on passe à 10 h
+        check("routine du matin cachée l'après-midi", pg.locator(".la", has_text="Routine du matin").count() == 0)
+        pg.clock.set_system_time(datetime.datetime.fromisoformat("2026-11-02T10:00:00+01:00"))
+        pg.evaluate("import('/src/core/events.js').then(e=>e.emit('etat:modifie'))"); pg.wait_for_timeout(200)
         pg.locator(".la", has_text="Routine du matin").locator(".la__bouton").click(); pg.wait_for_selector(".routine")
         n = pg.evaluate("document.querySelector('.routine__compte').textContent")
         total = int(n.split("sur")[1].split()[0])
