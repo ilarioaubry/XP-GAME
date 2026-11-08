@@ -55,12 +55,12 @@ function projets(S) {
 
 function derniereFois(S) {
   const liste = M.dernieresFois(S);
-  const texte = l => { const j = M.joursDepuis(l.d, S); return j <= 0 ? "Aujourd'hui" : j === 1 ? "Hier" : `Il y a ${j} jours`; };
+  const texte = l => { const j = l.d ? M.joursDepuis(l.d, S) : null; return (j == null ? "Pas encore noté" : j <= 0 ? "Aujourd'hui" : j === 1 ? "Hier" : `Il y a ${j} jours`) + (M.enRetard(l, S) ? " · ce serait le moment" : ""); };
   return section("La dernière fois que…", "var(--angle-foyer)",
     liste.length ? liste.map(l => h("div", { class: "ui-carte ligne-carte" },
-      h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, l.n), h("p", { class: "ui-carte__texte" }, texte(l))),
-      h("button", { class: "bouton", onclick: () => { M.dernierFaitAujourdhui(l.id); jouer("blip"); } }, "Fait"),
-      iconeBtn("trash", "Supprimer", () => dire("Supprimé", M.retirerDerniere(l.id))))) : h("p", { class: "vide" }, "Rien de suivi pour l'instant. Ex. : appeler Mamie."),
+      h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, l.name), h("p", { class: "ui-carte__texte" }, texte(l))),
+      h("button", { class: "bouton", onclick: () => { M.dernierFaitAujourdhui(l.name); jouer("blip"); } }, "Fait"),
+      iconeBtn("trash", "Supprimer", () => dire("Supprimé", M.retirerDerniere(l.name))))) : h("p", { class: "vide" }, "Rien de suivi pour l'instant. Ex. : appeler Mamie."),
     ajout("Suivre une chose", () => saisir("La dernière fois que…", [{ id: "n", etiquette: "Ex. : j'ai appelé Mamie" }], v => M.ajouterDerniere(v.n))));
 }
 

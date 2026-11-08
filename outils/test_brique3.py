@@ -33,7 +33,7 @@ def main():
         pg.get_by_role("button", name="Ajouter une étape").first.click(); pg.fill("#champ-t", "Mixage"); pg.get_by_role("button", name="Ajouter", exact=True).click()
         pg.get_by_role("button", name="Mixage").click(); pg.wait_for_timeout(150)
         d = save()
-        check("événement, dernière fois, étape écrits", any(e["n"] == "Dentiste" for e in d["g"]["ev"]) and d["g"]["last"][0]["n"] == "J'ai appelé Mamie" and d["g"]["prj"][0]["steps"][-1] == {"t": "Mixage", "done": True}, d["g"].get("last"))
+        check("événement, dernière fois, étape écrits", any(e["n"] == "Dentiste" for e in d["g"]["ev"]) and any(x.get("name") == "J'ai appelé Mamie" and x.get("u") == "m" for x in d["g"]["last"]) and d["g"]["prj"][0]["steps"][-1] == {"t": "Mixage", "done": True}, d["g"].get("last"))
         check("ancien événement conservé", any(e["n"] == "Concert" for e in d["g"]["ev"]))
         # suppression avec Annuler
         pg.get_by_role("button", name="Supprimer").first.click(); pg.get_by_role("button", name="Annuler").click(); pg.wait_for_timeout(150)

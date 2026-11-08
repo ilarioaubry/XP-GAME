@@ -28,7 +28,7 @@ export function ajouterProjet(n) { modifier("projet", S => { (S.g.prj ||= []).pu
 export function ajouterEtape(id, t) { modifier("projet-etape", S => { const p = (S.g.prj || []).find(x => x.id === id); if (p) p.steps.push({ t, done: false }); }); emit("projet:modifie", {}); }
 export function basculerEtape(id, i) {
   let fait = false;
-  modifier("projet-etape-faite", S => { const e = ((S.g.prj || []).find(x => x.id === id) || { steps: [] }).steps[i]; if (e) { e.done = !e.done; fait = e.done; } });
+  modifier("projet-etape-faite", S => { const e = ((S.g.prj || []).find(x => x.id === id) || { steps: [] }).steps[i]; if (e) { e.done = !e.done; fait = e.done; const p = S.g.prj.find(x => x.id === id); if (p.steps.length && p.steps.every(x => x.done)) p.won = true; else delete p.won; } });
   if (fait) gagner({ id: `prj:${id}:${i}`, nom: "Étape de projet", cat: "travail", xp: 3 });
   emit("projet:modifie", {});
 }
@@ -38,15 +38,18 @@ export function retirerProjet(id) {
   return () => modifier("projet-rendu", S => { if (sauve) S.g.prj.splice(Math.min(pos, S.g.prj.length), 0, sauve); });
 }
 
-// ---- « La dernière fois que… » : S.g.last = [{ id, n, d }]
-export const dernieresFois = (S = etat()) => S.g.last || [];
-export function ajouterDerniere(n) { modifier("derniere", S => { (S.g.last ||= []).push({ id: nouvelId(), n, d: cleJour(S) }); }); }
-export function dernierFaitAujourdhui(id) { modifier("derniere-maj", S => { const x = (S.g.last || []).find(l => l.id === id); if (x) x.d = cleJour(S); }); }
-export function retirerDerniere(id) {
+// ---- « La dernière fois que… » : clé d'origine S.g.last = [{ name, d: "AAAA-MM-JJ", n, u: "j"|"s"|"m", pv }]
+// n × u = rythme souhaité (ex. 1 m = une fois par mois) ; pv = date précédente. On repère une ligne par son nom.
+export const dernieresFois = (S = etat()) => (S.g.last || []).filter(x => x && x.name);
+export function ajouterDerniere(name, n = 1, u = "m") { modifier("derniere", S => { const L = (S.g.last ||= []); if (!L.some(x => x.name === name)) L.push({ name, d: cleJour(S), n, u }); }); }
+export function dernierFaitAujourdhui(name) { modifier("derniere-maj", S => { const x = (S.g.last || []).find(l => l.name === name); const j = cleJour(S); if (x && x.d !== j) { x.pv = x.d; x.d = j; } }); }
+export function retirerDerniere(name) {
   let sauve, pos;
-  modifier("derniere-retiree", S => { pos = (S.g.last || []).findIndex(l => l.id === id); if (pos >= 0) [sauve] = S.g.last.splice(pos, 1); });
+  modifier("derniere-retiree", S => { pos = (S.g.last || []).findIndex(l => l.name === name); if (pos >= 0) [sauve] = S.g.last.splice(pos, 1); });
   return () => modifier("derniere-rendue", S => { if (sauve) S.g.last.splice(Math.min(pos, S.g.last.length), 0, sauve); });
 }
+export const RYTHME = { j: 1, s: 7, m: 30 };
+export const enRetard = (x, S = etat()) => x.d && joursDepuis(x.d, S) >= (x.n || 1) * (RYTHME[x.u] || 30);
 export function joursDepuis(d, S = etat()) { return Math.round((new Date(cleJour(S) + "T12:00:00") - new Date(d + "T12:00:00")) / 864e5); }
 
 // ---- Paliers par Angle : on regroupe l'XP par catégorie (S.stats) en 4 Angles ; un palier = un niveau de cet Angle.

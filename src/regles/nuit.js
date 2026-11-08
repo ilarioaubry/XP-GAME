@@ -15,7 +15,7 @@ export function noterHumeur(v) {
 }
 /** coucher et lever en heures décimales (23.5 = 23 h 30). */
 export function noterSommeil(coucher, lever) {
-  modifier("sommeil", S => { (S.g.sleep ||= {})[cleJour(S)] = { bed: coucher, wake: lever }; });
+  modifier("sommeil", S => { (S.g.sleep ||= {})[cleJour(S)] = { bed: coucher, wake: lever, h: Math.round((((lever - coucher) + 24) % 24) * 10) / 10 }; });
   emit("sommeil:note", { coucher, lever });
 }
 export function bonneNuit(texte) {

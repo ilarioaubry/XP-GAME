@@ -13,6 +13,9 @@ import { pxUi, pxRk } from "./ui/pixel.js";
 import { installerMessages } from "./ui/messages.js";
 import { monterAujourdhui } from "./ecrans/aujourdhui.js";
 import { monterMoi } from "./ecrans/moi.js";
+import { verifier as verifierBadges } from "./regles/badges.js";
+import { BADGES } from "./donnees/brut/badges.js";
+import { dire } from "./ui/messages.js";
 
 installerJournal();
 
@@ -82,6 +85,8 @@ function controleSocle() {
       h("button", { class: "bouton bouton--principal", onclick: () => import("./core/sons.js").then(m => m.jouer("coin")) }, "Tester un son")));
 }
 
+const erreurSure = f => { try { f(); } catch (e) { erreur("badges", e); } };
+
 function demarrer() {
   charger();
   installerSons();
@@ -90,7 +95,11 @@ function demarrer() {
   monterAujourdhui($("#e-aujourdhui"));
   monterMoi($("#e-moi"), () => h("div", {}, controleSocle(), h("p", { class: "vide" }, "Le bilan (humeur, sommeil, semaine, mois, année) arrive à la brique 4.")));
   monter($("#e-proches"), h("div", { class: "page" }, h("p", { class: "vide" }, "Proches arrive à la brique 4.")));
-  on("etat:modifie", () => { /* le rendu des écrans s'abonnera ici */ });
+  // Badges : on revérifie quand l'état change (ne réécrit que s'il y a du nouveau, donc pas de boucle).
+  let revue = 0;
+  on("etat:modifie", () => { cancelAnimationFrame(revue); revue = requestAnimationFrame(() => erreurSure(verifierBadges)); });
+  on("badge:obtenu", ({ id }) => { const b = BADGES.find(x => x.id === id); dire("Badge : " + (b ? b.name : id)); });
+  erreurSure(verifierBadges);
   aller("aujourdhui");
   emit("app:prete");
   if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
