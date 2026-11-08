@@ -12,6 +12,7 @@ import { h, $, $$, monter } from "./ui/dom.js";
 import { pxUi, pxRk } from "./ui/pixel.js";
 import { installerMessages } from "./ui/messages.js";
 import { monterAujourdhui } from "./ecrans/aujourdhui.js";
+import { monterMoi } from "./ecrans/moi.js";
 
 installerJournal();
 
@@ -87,7 +88,7 @@ function demarrer() {
   monterOnglets();
   installerMessages();
   monterAujourdhui($("#e-aujourdhui"));
-  monter($("#e-moi"), h("div", { class: "page" }, controleSocle(), h("p", { class: "vide" }, "Moi arrive aux briques 3 et 4.")));
+  monterMoi($("#e-moi"), () => h("div", {}, controleSocle(), h("p", { class: "vide" }, "Le bilan (humeur, sommeil, semaine, mois, année) arrive à la brique 4.")));
   monter($("#e-proches"), h("div", { class: "page" }, h("p", { class: "vide" }, "Proches arrive à la brique 4.")));
   on("etat:modifie", () => { /* le rendu des écrans s'abonnera ici */ });
   aller("aujourdhui");

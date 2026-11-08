@@ -19,7 +19,7 @@ export function momentCiel(S) {
   return t < 5 ? "nuit" : t < 8 ? "aube" : t < 12 ? "matin" : t < 17.5 ? "aprem" : t < 20.5 ? "crep" : "nuit";
 }
 
-function avatar(S) {
+export function avatar(S) {
   const c = (S.g && S.g.avc) || {};
   const p = (liste, i, d) => liste[Number.isInteger(c[i]) ? c[i] % liste.length : d];
   const peau = p(TEINTS, "skin", 1), cheveux = p(CHEVEUX, "hairC", 1), haut = p(HAUTS, "topC", 1), bas = p(BAS, "botC", 0);

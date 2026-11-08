@@ -1,0 +1,24 @@
+/* Écran Moi : sous-onglets, Ma vie, Chez moi. Tokens seulement. */
+.moi { display: grid; gap: var(--e4); align-content: start; }
+.sous-onglets { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 2px dotted var(--bord); }
+.sous-onglet { min-height: var(--h-bouton); background: none; border: 0; border-bottom: 3px solid transparent; color: var(--texte-2); font: 700 var(--t-carte) var(--f-texte); cursor: pointer; }
+.sous-onglet[aria-selected="true"] { color: var(--action); border-bottom-color: var(--action); }
+
+.profil { display: flex; gap: var(--e4); align-items: center; }
+.profil__avatar svg { width: 64px; height: 96px; display: block; }
+.profil__texte { display: grid; gap: var(--e1); min-width: 0; }
+.ma-vie, .chez-moi { display: grid; gap: var(--e4); align-content: start; }
+.ligne-carte { display: flex; align-items: center; gap: var(--e2); margin-bottom: var(--e2); }
+.ligne-carte__texte { flex: 1; min-width: 0; }
+.projet { display: grid; gap: var(--e2); margin-bottom: var(--e2); }
+.etape { width: 100%; justify-content: flex-start; }
+.angles--paliers { grid-template-columns: 1fr; }
+.angles--paliers .angle__nom { display: flex; justify-content: space-between; }
+
+.puces { display: flex; gap: var(--e2); overflow-x: auto; padding-bottom: var(--e2); }
+.puce { flex: none; }
+.puce[aria-selected="true"] { border-color: var(--action); }
+.ui-tuile--plus { color: var(--texte-2); }
+.tuile__apercu svg { display: block; }
+.etoiles { display: inline-flex; gap: 2px; color: var(--action); }
+.saisie { display: grid; gap: var(--e4); }
