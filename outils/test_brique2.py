@@ -28,7 +28,7 @@ def main():
         pg.screenshot(path=str(T.ROOT / "outils" / "aujourdhui-393.png"), full_page=True)
         check("l'écran Aujourd'hui s'affiche", pg.locator(".scene").count() == 1 and pg.locator(".coffre__crans i").count() == 5)
         check("pas de défilement horizontal", pg.evaluate("document.documentElement.scrollWidth <= innerWidth"))
-        check("4 Angles", pg.locator(".angle").count() == 4)
+        check("4 Angles", pg.locator("#e-aujourdhui .angle").count() == 4)
         save = lambda: (pg.evaluate("import('/src/core/state.js').then(s=>import('/src/core/sauvegarde.js').then(m=>m.ecrireMaintenant(s.etat())))"), pg.wait_for_timeout(150), json.loads(pg.evaluate("localStorage.getItem('carnet-quetes')")))[2]
 
         # repas : goûter (hors assiette) puis assiette du déjeuner
@@ -62,7 +62,7 @@ def main():
         pg.fill("#h-coucher", "23:30"); pg.fill("#h-lever", "07:30")
         pg.fill(".champ__texte", "Bonne journée"); pg.get_by_role("button", name="Noter ma journée").click(); pg.wait_for_timeout(200)
         d = save()
-        check("humeur, sommeil, mot du soir", d["g"]["mood"][j] == 4 and d["g"]["sleep"][j] == {"bed": 23.5, "wake": 7.5} and d["g"]["jr"][j] == "Bonne journée", d["g"]["sleep"].get(j))
+        check("humeur, sommeil, mot du soir", d["g"]["mood"][j] == 4 and d["g"]["sleep"][j] == {"bed": 23.5, "wake": 7.5, "h": 8.0} and d["g"]["jr"][j] == "Bonne journée", d["g"]["sleep"].get(j))
         check("coffre à 4 crans (repas ×2, routine, quête spéciale)", d["g"]["coffre"]["n"] == 4, d["g"]["coffre"])
         # 5e cran : dîner sauté ne compte pas, dîner noté oui
         pg.get_by_role("button", name="Dîner").first.click(); pg.wait_for_selector(".assiette"); pg.get_by_role("button", name="Valider le repas").click(); pg.wait_for_timeout(200)
