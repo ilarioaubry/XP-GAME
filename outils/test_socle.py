@@ -82,7 +82,7 @@ def sauvegarde_ancienne(b):
       G.mood={'2026-11-01':4,'2026-10-31':2};G.sleep={'2026-11-01':{bed:23.5,wake:7.5}};G.bed={'2026-10-31':23.5};
       G.rh={'2026-11-01':{matin:[1,2]}};G.rcore=['2026-10-30'];G.rtb={matin:312};G.jr={'2026-10-31':'Bonne journée'};
       G.eng={lib:[{id:'e1',n:'Boire de l\\'eau'}],d:{},skip:''};G.todo=[{id:'t1',d:'2026-11-02',n:'Appeler le médecin'}];
-      G.prj=[{id:'p1',n:'Album',steps:[{t:'Maquette',done:true}]}];G.ev=[{id:'v1',n:'Concert',d:'2026-11-14'}];
+      G.prj=[{id:'p1',n:'Album',st:[{t:'Maquette',d:1792146149135}]}];G.ev=[{id:'v1',n:'Concert',d:'2026-11-14'}];
       G.gear=['beret','phones'];G.eq={tete:'beret'};G.rt=['Novice','Régulier'];G.badgesInit=1;
       G.chests=2;G.hist={'2026-W44':{xp:410,cats:{soi:200}}};G.sit={have:['chien'],bd:{d:3,m:5,y:1995}};
       G.wake=7;G.mute=false;G.ambS=true;G.pal={soi:1};G.boosts=[{c:'',t:1,w:'2026-W44'}];

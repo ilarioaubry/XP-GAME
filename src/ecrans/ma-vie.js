@@ -32,13 +32,13 @@ function projets(S) {
   const liste = M.projets(S);
   return section("Projets", "var(--angle-esprit)",
     liste.length ? liste.map(p => {
-      const faites = p.steps.filter(s => s.done).length;
+      const etapes = p.st || [], faites = etapes.filter(s => s.d).length;
       return h("div", { class: "ui-carte projet" },
         h("div", { class: "ligne-carte" },
-          h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, p.n), h("p", { class: "ui-carte__texte" }, `${faites} / ${p.steps.length} étapes`)),
+          h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, p.n), h("p", { class: "ui-carte__texte" }, `${faites} / ${etapes.length} étapes`)),
           iconeBtn("trash", "Supprimer le projet", () => dire("Projet supprimé", M.retirerProjet(p.id)))),
-        p.steps.length ? h("div", { class: "ui-barre ui-barre" }, h("i", { style: `--p:${Math.round(100 * faites / p.steps.length)}%` })) : null,
-        p.steps.map((s, i) => h("button", { class: "bouton etape", "aria-pressed": String(!!s.done), onclick: () => { M.basculerEtape(p.id, i); if (!s.done) jouer("blip"); } }, s.t, s.done ? " ✓" : "")),
+        etapes.length ? h("div", { class: "ui-barre ui-barre" }, h("i", { style: `--p:${Math.round(100 * faites / etapes.length)}%` })) : null,
+        etapes.map((s, i) => h("button", { class: "bouton etape", "aria-pressed": String(!!s.d), onclick: () => { M.basculerEtape(p.id, i); if (!s.d) jouer("blip"); } }, s.t, s.d ? " ✓" : "")),
         ajout("Ajouter une étape", () => saisir("Nouvelle étape", [{ id: "t", etiquette: "Étape" }], v => M.ajouterEtape(p.id, v.t))));
     }) : h("p", { class: "vide" }, "Aucun projet pour l'instant."),
     ajout("Nouveau projet", () => saisir("Nouveau projet", [{ id: "n", etiquette: "Nom du projet" }], v => M.ajouterProjet(v.n))));

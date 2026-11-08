@@ -22,13 +22,13 @@ export function retirerEvenement(id) {
   return () => modifier("evenement-rendu", S => { if (sauve) S.g.ev.splice(Math.min(pos, S.g.ev.length), 0, sauve); });
 }
 
-// ---- Projets : S.g.prj = [{ id, n, steps: [{ t, done }] }]
+// ---- Projets : S.g.prj = [{ id, n, st: [{ t, d? }] }] ; une étape est faite quand elle porte une date `d` (format d'origine)
 export const projets = (S = etat()) => S.g.prj || [];
-export function ajouterProjet(n) { modifier("projet", S => { (S.g.prj ||= []).push({ id: nouvelId(), n, steps: [] }); }); emit("projet:modifie", {}); }
-export function ajouterEtape(id, t) { modifier("projet-etape", S => { const p = (S.g.prj || []).find(x => x.id === id); if (p) p.steps.push({ t, done: false }); }); emit("projet:modifie", {}); }
+export function ajouterProjet(n) { modifier("projet", S => { (S.g.prj ||= []).push({ id: nouvelId(), n, st: [] }); }); emit("projet:modifie", {}); }
+export function ajouterEtape(id, t) { modifier("projet-etape", S => { const p = (S.g.prj || []).find(x => x.id === id); if (p) (p.st ||= []).push({ t }); }); emit("projet:modifie", {}); }
 export function basculerEtape(id, i) {
   let fait = false;
-  modifier("projet-etape-faite", S => { const e = ((S.g.prj || []).find(x => x.id === id) || { steps: [] }).steps[i]; if (e) { e.done = !e.done; fait = e.done; const p = S.g.prj.find(x => x.id === id); if (p.steps.length && p.steps.every(x => x.done)) p.won = true; else delete p.won; } });
+  modifier("projet-etape-faite", S => { const p = (S.g.prj || []).find(x => x.id === id), e = p && (p.st || [])[i]; if (e) { if (e.d) { delete e.d; fait = false; } else { e.d = Date.now(); fait = true; } if (p.st.length && p.st.every(x => x.d)) p.won = true; else delete p.won; } });
   if (fait) gagner({ id: `prj:${id}:${i}`, nom: "Étape de projet", cat: "travail", xp: 3 });
   emit("projet:modifie", {});
 }
