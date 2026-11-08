@@ -5,7 +5,7 @@
 > - **Zéro `!important`**, zéro `catch(e){}` vide (passer par `journal.erreur`), zéro passe « finitions » après rendu.
 > - Les données d'`src/donnees/brut/` sont générées par `outils/extraire.py` : ne pas les modifier à la main.
 > - Sauvegarde : même clé `carnet-quetes`, même format (`v` 28), clés de `S.g` jamais renommées ; migration = une entrée de plus à la fin de `V2` dans `src/core/migrations.js`.
-> - Avant de livrer : `python3 outils/test_socle.py` (0 échec) et capture à 393 px.
+> - Avant de livrer : `python3 outils/tester.py` (0 échec) et capture à 393 px.
 > - Accent Cobalt : orange `#ff6a2b` (l'ancien « or `#ffd94a` » des standards est périmé) ; les autres standards d'Ilario restent valables.
 
 Appli perso en français (quêtes, XP, rituels, relations), utilisée sur iPhone en appli installée depuis GitHub Pages. Répondre en français, de façon concise.

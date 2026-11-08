@@ -9,6 +9,7 @@ import { etat } from "../core/state.js";
 import { niveau, rang, cleJour } from "../core/temps.js";
 import { avatar } from "./scene.js";
 import * as M from "../regles/moi.js";
+import { ouvrirPersonnage } from "./personnage.js";
 
 const section = (titre, couleur, ...contenu) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null },
   h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre)), contenu);
@@ -23,7 +24,8 @@ function profil(S) {
       h("p", { class: "ui-carte__titre" }, S.name || "Moi"),
       h("p", { class: "ui-carte__texte" }, `Niveau ${nv.l} · ${rang(nv.l)}`),
       t ? h("p", { class: "ui-carte__texte" }, t) : null,
-      h("p", { class: "ui-carte__texte" }, `${S.xp || 0} XP · ${S.days.length} jours actifs`)));
+      h("p", { class: "ui-carte__texte" }, `${S.xp || 0} XP · ${S.days.length} jours actifs`),
+      h("button", { class: "bouton", onclick: ouvrirPersonnage }, "Mon personnage")));
 }
 
 const dateFr = d => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });

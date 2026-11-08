@@ -27,6 +27,9 @@ def main():
         check("projet de la sauvegarde visible", "Album" in pg.inner_text(".ma-vie"))
         pg.screenshot(path=str(T.ROOT / "outils" / "ma-vie-393.png"), full_page=True)
         save = lambda: (pg.evaluate("import('/src/core/state.js').then(s=>import('/src/core/sauvegarde.js').then(m=>m.ecrireMaintenant(s.etat())))"), pg.wait_for_timeout(150), json.loads(pg.evaluate("localStorage.getItem('carnet-quetes')")))[2]
+        pg.get_by_role("button", name="Mon personnage").click(); pg.wait_for_selector(".perso")
+        pg.get_by_role("tab", name="Cheveux").click(); pg.locator(".perso__opt", has_text="Court").first.click(); pg.wait_for_timeout(150)
+        pg.get_by_role("button", name="Retour").click(); pg.wait_for_timeout(150)
         # ajouter un événement, une dernière fois, une étape
         pg.get_by_role("button", name="Ajouter un événement").click(); pg.fill("#champ-n", "Dentiste"); pg.fill("#champ-d", "2026-11-20"); pg.get_by_role("button", name="Ajouter", exact=True).click()
         pg.get_by_role("button", name="Suivre une chose").click(); pg.fill("#champ-n", "J'ai appelé Mamie"); pg.get_by_role("button", name="Ajouter", exact=True).click()
@@ -34,6 +37,7 @@ def main():
         pg.get_by_role("button", name="Mixage").click(); pg.wait_for_timeout(150)
         d = save()
         check("événement, dernière fois, étape écrits", any(e["n"] == "Dentiste" for e in d["g"]["ev"]) and any(x.get("name") == "J'ai appelé Mamie" and x.get("u") == "m" for x in d["g"]["last"]) and d["g"]["prj"][0]["steps"][-1] == {"t": "Mixage", "done": True}, d["g"].get("last"))
+        check("personnage : coupe écrite (avc.hair)", "hair" in (d["g"].get("avc") or {}))
         check("ancien événement conservé", any(e["n"] == "Concert" for e in d["g"]["ev"]))
         # suppression avec Annuler
         pg.get_by_role("button", name="Supprimer").first.click(); pg.get_by_role("button", name="Annuler").click(); pg.wait_for_timeout(150)
