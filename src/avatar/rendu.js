@@ -99,3 +99,36 @@ export function badgeSvg(b, verrouille = false, taille = 48) {
     return svgPixels(rectangles(g.px, g.W, g.H), g.W, g.H, taille, "px badge-svg");
   });
 }
+
+/** Icône d'un objet de la garde-robe (comme itemIconNew de l'ancienne version) : on dessine un avatar neutre avec et sans
+ *  l'objet, on garde les pixels qui changent, recadrés au carré. Objet tenu en main : son icône 16×16 d'inventaire. */
+export function objetSvg(it, taille = 48) {
+  if (!it || it.s === "fond") return "";
+  if (it.s === "aura") return it.svg ? `<svg viewBox="0 0 120 140" width="${taille}" height="${Math.round(taille * 140 / 120)}" aria-hidden="true">${it.svg}</svg>` : "";
+  return garder("objet:" + it.id + ":" + taille, () => {
+    if (it.k === "main" && PIECES.chItemIcon) {
+      const I = PIECES.chItemIcon(it.o);
+      if (I) {
+        const px = []; I.rows.forEach(r => [...r].forEach(ch => px.push(I.pal[ch] || null)));
+        return svgPixels(rectangles(px, 16, 16), 16, 16, taille);
+      }
+    }
+    const base = { ...AV_DEF, skin: 1, hairC: 0, hair: 9, top: 0, topC: 7, beard: 0, bot: 1, botC: 1 };
+    const a = chDraw(base, "idle", 0), b = chDraw({ ...base, [it.k]: it.o }, "idle", 0), A = chAnchors(base, "idle", 0);
+    let x0, y0, x1, y1;
+    if (it.k === "top") { x0 = 4; x1 = 27; y0 = A.t + 13; y1 = A.t + 32; }
+    else {
+      x0 = 99; y0 = 99; x1 = -1; y1 = -1;
+      for (let y = 0; y < CH.H; y++) for (let x = 0; x < CH.W; x++) if (a[y * CH.W + x] !== b[y * CH.W + x]) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+      if (x1 < 0) return "";
+      x0 = Math.max(0, x0 - 1); y0 = Math.max(0, y0 - 1); x1 = Math.min(CH.W - 1, x1 + 1); y1 = Math.min(CH.H - 1, y1 + 1);
+    }
+    const w = x1 - x0 + 1, hh = y1 - y0 + 1, sz = Math.max(w, hh), ox = Math.floor((sz - w) / 2), oy = Math.floor((sz - hh) / 2);
+    const px = new Array(sz * sz).fill(null);
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const k = y * CH.W + x, c = it.k === "top" ? b[k] : (a[k] !== b[k] ? b[k] : null);
+      if (c) px[(oy + y - y0) * sz + ox + x - x0] = c;
+    }
+    return svgPixels(rectangles(px, sz, sz), sz, sz, taille);
+  });
+}

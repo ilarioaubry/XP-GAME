@@ -20,6 +20,18 @@
   --c-encre-2: #4a4a6a;     /* texte discret sur panneau crème */
   --c-creme-ombre: #d9c59f; /* repères éteints sur panneau crème */
 
+  /* Ciel de la scène selon le moment (4 bandes, de haut en bas) : seul le décor change avec l'heure */
+  --ciel-aube-1: #2433d6; --ciel-aube-2: #5a4fd6; --ciel-aube-3: #c98ad8; --ciel-aube-4: #ffc9a8;
+  --ciel-crep-1: #2433d6; --ciel-crep-2: #5b3cc4; --ciel-crep-3: #c45aa8; --ciel-crep-4: #ff9a6a;
+  --ciel-nuit-1: #141a5c; --ciel-nuit-2: #1b2275; --ciel-nuit-3: #222c8a; --ciel-nuit-4: #2d3aa6;
+  --astre-soleil: #ffd94a; --astre-soleil-clair: #fff6b0; --astre-chaud: #ff8a3a; --astre-chaud-clair: #ffc07a;
+  --astre-lune: #f4f0d0; --astre-lune-clair: #fffbe6; --astre-lune-ombre: #262b6a;
+  --nuage: #ffffff; --nuage-ombre: #d8e0ff; --etoile: #fff6c8;
+  --saison-feuille: #e0782a; --saison-neige: #ffffff; --saison-petale: #ffb0d0;
+
+  /* Coffre pixel */
+  --coffre-bois: #8a5a2b; --coffre-bois-ombre: #5a3a18; --coffre-bois-clair: #a8703a; --coffre-bois-reflet: #c48a4a; --coffre-ferrure: #e0b030; --coffre-serrure: #2a1c0c;
+
   /* Les 4 angles de vie (fusion des 8 anciennes jauges) */
   --angle-corps: #ff9ec7;
   --angle-esprit: #c8a2ff;
@@ -36,6 +48,7 @@
   --trait: var(--c-nuit);
   --bord: rgba(255, 255, 255, .17);
   --voile: rgba(10, 14, 51, .7);
+  --voile-fort: rgba(10, 14, 51, .94);
   --fond-champ: rgba(16, 20, 67, .72);
   --piste: var(--c-piste);
   --barre-bord: rgba(255, 243, 224, .85);

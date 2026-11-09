@@ -6,7 +6,9 @@ import { pxUi, pxRk } from "../ui/pixel.js";
 import { jouer } from "../core/sons.js";
 import { etat } from "../core/state.js";
 import { HM_ROOMS } from "../donnees/brut/chez-moi.js";
-import { badgeSvg } from "../avatar/rendu.js";
+import { monterMaison } from "../maison/maison-v1.js";
+import { erreur } from "../core/journal.js";
+import { badgeSvg, objetSvg } from "../avatar/rendu.js";
 import * as M from "../regles/moi.js";
 
 const PORTES = ["tete", "haut", "yeux", "bijou", "main"];
@@ -15,16 +17,18 @@ const plus = n => n > 0 ? h("div", { class: "ui-tuile ui-tuile--plus", "aria-lab
 const tuile = (contenu, nom, actif, fn, extra) => h("button", { class: "ui-tuile", "aria-pressed": String(!!actif), onclick: fn }, contenu, h("span", { class: "t-info" }, nom), extra);
 const section = (titre, droite, ...c) => h("section", { class: "ui-section", style: "--sc:var(--c-orange)" },
   h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre), droite ? h("span", { class: "ui-entete__droite" }, droite) : null), c);
-const apercu = o => o.svg ? h("span", { class: "tuile__apercu", html: `<svg viewBox="0 0 120 140" width="48" height="56" aria-hidden="true">${o.svg}</svg>` }) : h("span", { html: pxRk("etoile", 48) || "" });
+const apercu = o => h("span", { class: "tuile__apercu", html: objetSvg(o, 48) || pxRk("etoile", 48) || "" });
 
 function objets(slot, S) {
   const liste = M.objetsDe(slot, S), a = liste.filter(o => o.a), eq = M.equipe(slot, S);
   return [a.map(o => tuile(apercu(o), o.n, eq === o.id, () => { M.equiper(slot, o.id); jouer("blip"); }, etoiles(o.r || 0))), liste.length - a.length];
 }
 
+// La maison en coupe de l'ancienne version (pièces qui se remplissent avec ce que tu fais, touchables) : src/maison/maison-v1.js
 function maison() {
-  return section("Ma maison", `${HM_ROOMS.length} pièces`,
-    h("div", { class: "pieces" }, HM_ROOMS.map(([id, nom]) => h("div", { class: "piece" }, h("span", { html: pxRk(id, 32) || pxRk("maisonp", 32) || "" }), h("span", { class: "piece__nom" }, nom)))));
+  const boite = h("div", { class: "maison" });
+  try { monterMaison(boite); } catch (e) { erreur("maison", e); boite.append(h("p", { class: "vide" }, "La maison n'a pas pu s'afficher.")); }
+  return section("Ma maison", `${HM_ROOMS.length} pièces`, boite);
 }
 
 function armoire(S) {

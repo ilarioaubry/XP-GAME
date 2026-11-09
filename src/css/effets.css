@@ -1,0 +1,64 @@
+/* Animations sobres de fin d'action (voir src/ui/effets.js). Tokens seulement ; « réduire les animations » coupe tout mouvement. */
+
+.fx-texte { position: fixed; z-index: 60; transform: translate(-50%, -100%); pointer-events: none; font: 400 18px / 1 var(--f-pixel); color: var(--action); text-shadow: 2px 2px 0 var(--c-nuit); animation: fx-monte .9s steps(6) both; }
+.fx-tampon { position: fixed; z-index: 61; width: 44px; height: 44px; margin: -22px 0 0 -22px; pointer-events: none; filter: drop-shadow(2px 2px 0 var(--c-nuit)); animation: fx-tampon .65s steps(6) both; }
+.fx-tampon svg { width: 44px; height: 44px; }
+.fx-carre { position: fixed; left: 0; top: 0; z-index: 60; width: 6px; height: 6px; margin: -3px 0 0 -3px; pointer-events: none; background: var(--action); box-shadow: 1px 1px 0 var(--c-nuit); }
+.fx-carre--clair { background: var(--c-creme); }
+
+.xp--flash .segs i.on { animation: fx-flash .5s steps(3) both; }
+.hero__perso--saut { animation: fx-saut .45s steps(4) both; }
+.fx-pop { animation: fx-pop .3s steps(3) both; }
+.fx-sortie { animation: fx-sortie .22s steps(4) both; pointer-events: none; }
+
+@keyframes fx-monte { 0% { opacity: 0; } 15% { opacity: 1; } 70% { opacity: 1; } 100% { transform: translate(-50%, -100%) translateY(-36px); opacity: 0; } }
+@keyframes fx-tampon { 0% { transform: scale(.3); opacity: 0; } 30% { transform: scale(1.3); opacity: 1; } 55% { transform: scale(1); } 100% { transform: translateY(-14px); opacity: 0; } }
+@keyframes fx-flash { 0%, 100% { filter: none; } 40% { filter: brightness(1.8); } }
+@keyframes fx-saut { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-14px); } }
+@keyframes fx-pop { 50% { transform: scale(1.25); } }
+@keyframes fx-sortie { to { transform: translateX(24px); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-texte { animation: fx-fondu .9s steps(3) both; }
+  .xp--flash .segs i.on, .hero__perso--saut, .fx-pop, .fx-sortie { animation: none; }
+}
+@keyframes fx-fondu { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---- Ouverture d'un coffre (src/ecrans/coffre.js) : fond sombre plein écran, coffre pixel au centre */
+.coffre-vue { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; background: var(--voile-fort); padding: var(--e6) var(--marge) calc(var(--e6) + env(safe-area-inset-bottom, 0px)); }
+.coffre-vue__scene { position: relative; width: 100%; max-width: 360px; display: grid; justify-items: center; gap: var(--e3); text-align: center; }
+.coffre-vue__genre { font: 400 var(--t-section) / 1.2 var(--f-pixel); text-transform: uppercase; letter-spacing: .04em; }
+.coffre-vue__coffre { width: 176px; height: 165px; padding: 0; border: 0; border-radius: 0; background: none; animation: coffre-tombe .5s steps(6) both; }
+.coffre-vue__svg { width: 160px; height: 150px; margin: 0 auto; }
+.coffre-vue__coffre--secoue { animation: coffre-secoue .3s steps(4) both; }
+.coffre-vue__lueur { opacity: 0; }
+.coffre-vue--ouvert .coffre-vue__lueur { opacity: 1; }
+.coffre-vue--ouvert .coffre-vue__couvercle { transform: translateY(-5px) rotate(-12deg); transform-origin: 2px 13px; transition: transform .25s steps(3); }
+.coffre-vue--ouvert .coffre-vue__coffre { animation: none; }
+.coffre-vue__indice { color: var(--texte-2); }
+.coffre-vue__points { display: flex; gap: var(--e2); }
+.coffre-vue__points i { width: 10px; height: 10px; background: var(--c-piste); }
+.coffre-vue__points i.on { background: var(--action); }
+.coffre-vue--ouvert .coffre-vue__points { display: none; }
+.coffre-vue [hidden] { display: none; }
+.coffre-vue__resultat { display: grid; justify-items: center; gap: var(--e2); }
+.coffre-vue__rarete { font: 700 var(--t-texte) / 1.2 var(--f-texte); color: var(--texte-2); text-transform: uppercase; letter-spacing: .06em; }
+.coffre-vue__etoiles { display: flex; gap: var(--e1); }
+.coffre-vue__etoiles span { opacity: .25; }
+.coffre-vue__etoiles span.on { opacity: 1; }
+.coffre-vue__objet svg { width: 96px; height: auto; }
+.coffre-vue__nom { font: 400 22px / 1.2 var(--f-pixel); }
+.coffre-vue__sous { color: var(--texte-2); }
+.coffre-vue__boutons { display: grid; gap: var(--e2); width: 100%; }
+.coffre-vue__eclats { position: absolute; left: 50%; top: 40%; width: 0; height: 0; pointer-events: none; }
+.coffre-vue__eclat { position: absolute; width: 6px; height: 6px; background: var(--action); }
+.coffre-vue__eclat--clair { background: var(--c-creme); }
+.k-bois { fill: var(--coffre-bois); } .k-bois-ombre { fill: var(--coffre-bois-ombre); } .k-bois-clair { fill: var(--coffre-bois-clair); } .k-bois-reflet { fill: var(--coffre-bois-reflet); }
+.k-ferrure { fill: var(--coffre-ferrure); } .k-serrure { fill: var(--coffre-serrure); } .k-lueur { fill: var(--action); }
+.coffre-vue--special .k-ferrure { fill: var(--angle-esprit); }
+@keyframes coffre-tombe { 0% { transform: translateY(-120px); opacity: 0; } 70% { transform: translateY(6px); opacity: 1; } 100% { transform: none; } }
+@keyframes coffre-secoue { 25% { transform: rotate(-6deg); } 75% { transform: rotate(6deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .coffre-vue__coffre, .coffre-vue__coffre--secoue { animation: none; }
+  .coffre-vue--ouvert .coffre-vue__couvercle { transition: none; }
+}

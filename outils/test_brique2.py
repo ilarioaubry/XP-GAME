@@ -35,9 +35,12 @@ def main():
         pg.get_by_role("button", name="Goûter").click(); pg.wait_for_timeout(150)
         pg.get_by_role("button", name="Remplir l'assiette").click(); pg.wait_for_selector(".assiette")
         for nom in ("Riz", "Poulet", "Salade"):
-            pg.locator(".assiette__puce", has_text=nom).first.click()
-        check("pastille d'assiette complète", "Bien rempli" in pg.inner_text(".assiette__pastille"))
-        pg.get_by_role("button", name="Valider le repas").click(); pg.wait_for_timeout(200)
+            pg.locator(".aliment", has_text=nom).first.click()
+        check("assiette pixel : 3 aliments posés, côtés pleins", pg.locator(".plat__aliment").count() == 3 and "complète" in pg.inner_text(".assiette__xp"))
+        pg.locator(".plat__aliment").first.click()
+        check("toucher un aliment posé le retire", pg.locator(".plat__aliment").count() == 2)
+        pg.locator(".aliment", has_text="Riz").first.click()
+        pg.get_by_role("button", name="Suite").click(); pg.get_by_role("button", name="Valider").click(); pg.wait_for_timeout(200)
         d = save()
         j = "2026-11-02"
         check("repas écrits (mb, mbd, plt)", f"{j}:soir" in d["g"]["mb"] and f"{j}:matin" in d["g"]["mb"] and d["g"]["plt"][j]["dej"]["f"] == ["riz"], list(d["g"]["plt"].get(j, {}).items())[:2])
@@ -67,7 +70,7 @@ def main():
         check("humeur, sommeil, mot du soir", d["g"]["mood"][j] == 4 and d["g"]["sleep"][j] == {"bed": 23.5, "wake": 7.5, "h": 8.0} and d["g"]["jr"][j] == "Bonne journée", d["g"]["sleep"].get(j))
         check("coffre à 4 crans (repas ×2, routine, quête spéciale)", d["g"]["coffre"]["n"] == 4, d["g"]["coffre"])
         # 5e cran : dîner sauté ne compte pas, dîner noté oui
-        pg.get_by_role("button", name="Dîner").first.click(); pg.wait_for_selector(".assiette"); pg.get_by_role("button", name="Valider le repas").click(); pg.wait_for_timeout(200)
+        pg.get_by_role("button", name="Dîner").first.click(); pg.wait_for_selector(".assiette"); pg.get_by_role("button", name="Suite").click(); pg.get_by_role("button", name="Valider").click(); pg.wait_for_timeout(200)
         d = save()
         check("5/5 : coffre donné (+1 coffre à ouvrir)", d["g"]["coffre"]["n"] == 5 and d["g"]["coffre"]["ok"] and d["g"]["chests"] == d0["g"].get("chests", 0) + 1, (d["g"]["coffre"], d["g"].get("chests")))
         # aucune clé perdue

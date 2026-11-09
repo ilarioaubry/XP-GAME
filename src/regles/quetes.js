@@ -31,7 +31,7 @@ function contexte(S) {
   const G = S.g, sit = (G.sit && typeof G.sit === "object") ? G.sit : {}, j = cleJour(S), jour = new Date();
   const w = G.wx && G.wx.c && G.wx.c.t != null ? G.wx.c : null;
   const objectifs = new Set(sit.goals || []), gouts = new Set(sit.pass || []);
-  const hr = heureJournee(S) % 24, sm = (G.sleep || {})[j], md = (G.mood || {})[j] | 0;
+  const hr = heureJournee(S), sm = (G.sleep || {})[j], md = (G.mood || {})[j] | 0;
   return {
     h: hr, job: sit.job || "", home: sit.home || "", temps: sit.time || "", note: (sit.note || "").trim(), avec: (Array.isArray(sit.with) && sit.with[0]) || "",
     objectifs, gouts, artistes: ((G.taste && G.taste.art) || []).slice(), weekend: [0, 6].includes(jour.getDay()), mois: jour.getMonth(), jourDuMois: jour.getDate(),

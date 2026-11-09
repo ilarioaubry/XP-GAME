@@ -6,17 +6,20 @@
 import { h } from "../ui/dom.js";
 import { pxUi, pxRk } from "../ui/pixel.js";
 import { dire } from "../ui/messages.js";
+import { sortir } from "../ui/effets.js";
 import { jouer } from "../core/sons.js";
 import { on } from "../core/events.js";
 import { etat } from "../core/state.js";
 import { cleJour, heureJournee, niveau } from "../core/temps.js";
-import { decor } from "./scene.js";
+import { decor, momentCiel } from "./scene.js";
 import { ouvrirAssiette } from "./assiette.js";
 import { ouvrirRoutine, ouvrirReglageRoutine } from "./routine.js";
 import { LES_ANGLES, faitAujourdhui } from "../regles/xp.js";
 import { paliers } from "../regles/moi.js";
 import { visageHumeur } from "../avatar/rendu.js";
-import { crans, CRANS } from "../regles/coffre.js";
+import { crans, CRANS, coffresAOuvrir } from "../regles/coffre.js";
+import { ouvrirCoffre } from "./coffre.js";
+import { ouvrirActions } from "./actions.js";
 import { REPAS, repasFait, repasSaute, noter } from "../regles/repas.js";
 import { quetesDuJour, quetesSpeciales, quetesEvenement, faire, ecarter, rappeler } from "../regles/quetes.js";
 import { MOMENTS, momentActuel, routineFaite } from "../regles/routine.js";
@@ -32,22 +35,25 @@ const titre = (texte, droite) => h("div", { class: "pt" }, h("h2", { class: "pt_
 
 // ---- Haut : date et salut, puis la barre qui suit au défilement (coffre du jour + XP)
 function entete() {
-  const S = etat(), hr = heureJournee(S) % 24;
+  const S = etat(), hr = heureJournee(S);
   const brut = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "short" });
   const date = brut.charAt(0).toUpperCase() + brut.slice(1);
-  const salut = hr < 5 ? "Bonne nuit" : hr < 12 ? "Bon matin" : hr < 18 ? "Bon après-midi" : "Bonsoir";
+  const salut = hr < 5 || hr >= 23 ? "Bonne nuit" : hr < 12 ? "Bon matin" : hr < 18 ? "Bon après-midi" : "Bonsoir";
   return h("div", { class: "ah__haut" }, h("p", { class: "ah__date" }, date), h("p", { class: "ah__salut" }, salut));
 }
 
 function barre() {
-  const S = etat(), nv = niveau(S.xp || 0), n = crans(), SEG = 8, plein = Math.round(SEG * nv.cur / nv.need);
+  const S = etat(), nv = niveau(S.xp || 0), n = crans(), SEG = 8, plein = Math.round(SEG * nv.cur / nv.need), aOuvrir = coffresAOuvrir(S);
   return h("div", { class: "barre" },
-    h("div", { class: "coffre", role: "img", "aria-label": n >= CRANS ? "Coffre du jour gagné" : `Coffre du jour : ${n} cran${n > 1 ? "s" : ""} sur ${CRANS}` },
-      h("span", { class: "coffre__icone", html: pxRk("coffre", 32) || "" }),
+    h("div", { class: "coffre", role: aOuvrir ? "group" : "img", "aria-label": n >= CRANS ? "Coffre du jour gagné" : `Coffre du jour : ${n} cran${n > 1 ? "s" : ""} sur ${CRANS}` },
+      aOuvrir ? h("button", { class: "coffre__icone coffre__icone--pret", "aria-label": `Ouvrir un coffre (${aOuvrir} à ouvrir)`, title: "Ouvrir un coffre", onclick: ouvrirCoffre },
+        h("span", { html: pxRk("coffre", 32) || "" }), h("b", { class: "coffre__nb" }, String(aOuvrir)))
+        : h("span", { class: "coffre__icone", html: pxRk("coffre", 32) || "" }),
       h("span", { class: "segs segs--coffre" }, Array.from({ length: CRANS }, (_, i) => h("i", { class: i < n ? "on" : "" })))),
     h("div", { class: "xp", role: "progressbar", "aria-valuenow": nv.cur, "aria-valuemax": nv.need, "aria-label": "Expérience" },
       h("span", { class: "xp__niv" }, "Niv " + nv.l),
-      h("span", { class: "segs" }, Array.from({ length: SEG }, (_, i) => h("i", { class: i < plein ? "on" : "" })))));
+      h("span", { class: "segs" }, Array.from({ length: SEG }, (_, i) => h("i", { class: i < plein ? "on" : "" })))),
+    h("button", { class: "barre__plus", "aria-label": "Noter une action", title: "Noter une action", html: pxUi("plus", 24), onclick: ouvrirActions }));
 }
 
 // ---- La question du moment : une seule, selon l'heure
@@ -84,7 +90,7 @@ function boutonsQuete(q) {
     h("button", { class: "cq__x", "aria-label": "Écarter cette quête", title: "Écarter", html: pxUi("close", 24),
       onclick: () => { ecarter(q.id); dire("Quête écartée", () => rappeler(q.id)); } }),
     h("button", { class: "cq__fait", "aria-label": "Fait", title: "Fait", html: pxUi("check", 24),
-      onclick: () => { if (faire(q)) { jouer("coin"); dire(`+${q.xp} XP`); } } }));
+      onclick: e => sortir(e.currentTarget.closest(".cq, .bulle"), () => { if (faire(q)) { jouer("coin"); dire("Fait : " + q.nom); } }) }));
 }
 
 /** Petite bulle du personnage : une quête à la fois, qu'on peut écarter. */
@@ -97,7 +103,7 @@ function bulle(q) {
 }
 
 function question() {
-  const S = etat(), hr = heureJournee(S) % 24;
+  const S = etat(), hr = heureJournee(S);
   const aFaire = id => !repasFait(id) && !repasSaute(id);
   let texte, bouton, action;
   if (hr >= 20.5 && !nuitFaite()) { texte = ["C'est la fin de journée.", "On fait le point ?"]; bouton = "Bilan du soir"; action = ouvrirBilan; }
@@ -153,7 +159,7 @@ function quetes() {
   const liste = [...quetesEvenement(), ...quetesDuJour()].slice(0, 3);
   const faites = liste.filter(q => faitAujourdhui(q.id)).length;
   const [idee, defi] = quetesSpeciales();
-  const fairePuis = q => () => { if (faire(q)) { jouer("coin"); dire(`+${q.xp} XP`); } };
+  const fairePuis = q => e => sortir(e.currentTarget.closest(".la"), () => { if (faire(q)) { jouer("coin"); dire("Fait : " + q.nom); } });
   return [
     titre("Quêtes du jour", `${faites}/${liste.length}`),
     liste.length && faites === liste.length ? h("p", { class: "vide" }, "Tout est fait. Bravo !") : liste.filter(q => !faitAujourdhui(q.id)).map(carteQuete),
@@ -166,14 +172,14 @@ function roulette() {
   const n = tirageActuel();
   if (n && faitAujourdhui("rel:news:" + n)) return null;
   if (n) return ligneAction("coeur", "ROULETTE DES PROCHES", `Prends des nouvelles de ${n}`, "Nouvelles",
-    () => { contacter(n, "news"); jouer("coin"); dire(`Nouvelles de ${n} · lien +`); });
+    e => sortir(e.currentTarget.closest(".la"), () => { contacter(n, "news"); jouer("coin"); dire(`Nouvelles de ${n} · lien +`); }));
   return ligneAction("coeur", "ROULETTE DES PROCHES", "Qui prendre des nouvelles ?", "Tourner", () => {
     const c = tirer(); if (!c) dire("Ajoute d'abord des proches"); else jouer("blip");
   });
 }
 
 function repas() {
-  const S = etat(), hr = heureJournee(S) % 24;
+  const S = etat(), hr = heureJournee(S);
   const faits = REPAS.filter(r => repasFait(r.id)).length;
   const plt = (S.g.plt || {})[cleJour(S)] || {};
   const groupes = new Set(); for (const k of ["dej", "diner"]) { const a = plt[k]; if (a) { if ((a.f || []).length) groupes.add("f"); if ((a.p || []).length) groupes.add("p"); if ((a.l || []).length) groupes.add("l"); } }
@@ -195,7 +201,7 @@ function repas() {
 }
 
 function rituels() {
-  const S = etat(), hr = heureJournee(S) % 24;
+  const S = etat(), hr = heureJournee(S);
   const visible = id => !routineFaite(id) && (id === "matin" ? hr < 12 : hr >= 19);
   return [
     ...MOMENTS.filter(m => visible(m.id)).map(m => ligneAction(m.icone, "ROUTINE", m.nom, "Lancer", () => ouvrirRoutine(m.id), () => ouvrirReglageRoutine(m.id))),
@@ -217,7 +223,7 @@ function journalDuJour() {
 export function monterAujourdhui(racine) {
   const dessiner = () => {
     const y = scrollY;
-    racine.replaceChildren(h("div", { class: "aujourdhui" },
+    racine.replaceChildren(h("div", { class: "aujourdhui", "data-moment": momentCiel(etat()) },
       entete(), barre(),
       h("div", { class: "ah" }, ...question(), hero(), angles()),
       h("div", { class: "panneau" }, h("span", { class: "panneau__poignee" }), ...repas(), humeurNuit(), ...quetes(), roulette(), ...rituels(), ...journalDuJour())));

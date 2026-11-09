@@ -2,16 +2,18 @@
 import { h } from "./dom.js";
 import { pxUi } from "./pixel.js";
 
-export function ouvrirPlein(titre, contenu, { auFermer } = {}) {
+/** bas : true → une barre de boutons collée en bas (renvoyée dans « bas », à remplir par l'écran). */
+export function ouvrirPlein(titre, contenu, { auFermer, bas } = {}) {
   const fermer = () => { vue.remove(); document.body.classList.remove("plein-ouvert"); if (auFermer) auFermer(); };
   const vue = h("div", { class: "plein", role: "dialog", "aria-label": titre },
     h("div", { class: "plein__haut" },
       h("button", { class: "bouton bouton--icone", "aria-label": "Retour", onclick: fermer, html: pxUi("back", 24) }),
       h("h2", { class: "ui-titre" }, titre)),
-    h("div", { class: "plein__corps" }, contenu));
+    h("div", { class: "plein__corps" }, contenu),
+    bas ? h("div", { class: "plein__bas" }) : null);
   document.body.append(vue);
   document.body.classList.add("plein-ouvert");
-  return { fermer, vue };
+  return { fermer, vue, bas: vue.querySelector(".plein__bas") };
 }
 
 /** Saisie plein écran (tout ce qui contient un champ texte). champs = [{ id, etiquette, type, defaut }] ; auValider(valeurs) */

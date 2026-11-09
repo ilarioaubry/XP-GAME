@@ -2,6 +2,14 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 09/11/2026 (V2, lot 5 : ce qui revient de l'ancienne version)
+- Assiette refaite : vraie assiette pixel 64×64 qui se remplit côté par côté, aliments posés dessus (un toucher pour retirer), recettes en un toucher et « Enregistrer cette assiette », aliments rangés par groupe et triés par usage, « Trier » pour masquer, « Ajouter » un aliment avec son icône, type d'assiette (équilibrée, végétarienne, fast-food), « À midi il manquait… », XP d'assiette (2 par côté, +4 si complète), étape 2 Dessert / Avec / Où / En cuisine.
+- Ciel de la scène selon l'heure (aube, jour, crépuscule, nuit) : soleil qui suit la journée, vraie phase de lune la nuit, étoiles, nuages, touche de saison ; toucher l'astre dit le moment. Le haut d'Aujourd'hui prend la couleur du ciel. Correction : après minuit, l'appli se croyait le matin (« Une routine pour démarrer ? » à 23 h).
+- Animations de fin d'action : « +N XP » qui monte, tampon coche, carrés vers la barre d'XP qui clignote, petit saut du personnage, cran du coffre qui « pop », quête faite qui glisse avant de disparaître. « Réduire les animations » : seulement le texte.
+- Coffres : le coffre de la barre s'ouvre (pastille = nombre à ouvrir) ; on le touche 3 fois, il s'ouvre, l'objet ou le titre apparaît avec sa rareté. Un coffre par niveau gagné, comme avant.
+- Bouton « + » dans la barre : noter n'importe quelle action (chercher, domaines, familles), durée, « Avec qui ? », « Fait · +N XP ».
+- Chez moi : la maison en coupe de l'ancienne version revient (pièces qui se remplissent avec ce que tu fais, chambre, bibliothèque, studio, vidéoclub, cuisine et ses recettes, salle de sport, sorties) ; décor fixe. Les objets de l'armoire sont dessinés (ils étaient remplacés par une étoile).
+
 ## 03/11/2026
 - Quêtes de contact (« Prendre des nouvelles de X », « Écrire à… », « Appeler… ») : la page avec Numéro, Instagram et « C'est fait ! » est retirée (code et styles). Un seul toucher sur « Fait » valide la quête, comme les autres. Les numéros déjà saisis restent dans la sauvegarde.
 - Bonne nuit > « Un peu de détail » > « Avec qui ? » : tout le monde est proposé (avant : 10 personnes au plus) et chaque personne a son avatar, en tuiles de 4 par ligne comme dans Proches ; les groupes viennent d'abord avec leur icône.

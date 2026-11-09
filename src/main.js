@@ -11,6 +11,8 @@ import { niveau, rang, cleJour } from "./core/temps.js";
 import { h, $, $$, monter } from "./ui/dom.js";
 import { pxUi, pxRk } from "./ui/pixel.js";
 import { installerMessages } from "./ui/messages.js";
+import { installerEffets } from "./ui/effets.js";
+import { coffresDeNiveau } from "./regles/coffre.js";
 import { monterAujourdhui } from "./ecrans/aujourdhui.js";
 import { monterMoi } from "./ecrans/moi.js";
 import { monterProches } from "./ecrans/proches.js";
@@ -94,6 +96,7 @@ function demarrer() {
   installerSons();
   monterOnglets();
   installerMessages();
+  installerEffets();
   monterAujourdhui($("#e-aujourdhui"));
   monterMoi($("#e-moi"), () => bilan(controleSocle));
   monterProches($("#e-proches"));
@@ -102,6 +105,8 @@ function demarrer() {
   on("etat:modifie", () => { cancelAnimationFrame(revue); revue = requestAnimationFrame(() => erreurSure(verifierBadges)); });
   on("badge:obtenu", ({ id }) => { const b = BADGES.find(x => x.id === id); dire("Badge : " + (b ? b.name : id)); });
   erreurSure(verifierBadges);
+  // Niveau : un coffre par niveau gagné (comme l'ancienne version), dit tout de suite.
+  on("niveau:monte", ({ niveau: l }) => { if (coffresDeNiveau(l)) dire(`Niveau ${l} : un coffre t'attend`); });
   aller("aujourdhui");
   emit("app:prete");
   if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {

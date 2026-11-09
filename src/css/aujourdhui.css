@@ -9,14 +9,17 @@
 .aujourdhui button { font-family: inherit; }
 
 /* ---- Haut : date, puis la barre collante (coffre + XP) */
-.ah__haut { position: relative; z-index: 6; padding: var(--e2) var(--e4) 0; background: var(--c-carte-2); }
+.ah__haut { position: relative; z-index: 6; padding: var(--e2) var(--e4) 0; background: var(--b1); }
 .ah__date { font: 400 22px / 26px var(--f-pixel); }
 .ah__salut { color: var(--texte-2); font-size: var(--t-texte); line-height: 16px; }
-.barre { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: var(--e3); min-height: 48px; padding: 0 var(--e4); background: var(--c-carte-2); }
-.barre::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: env(safe-area-inset-top, 0px); background: var(--c-carte-2); } /* comble la bande de l'heure quand la barre colle */
+.barre { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: var(--e3); min-height: 48px; padding: 0 var(--e4); background: var(--b1); }
+.barre::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: env(safe-area-inset-top, 0px); background: var(--b1); } /* comble la bande de l'heure quand la barre colle */
 .coffre { display: flex; align-items: center; gap: var(--e3); }
 .coffre__icone svg { width: 32px; height: 32px; }
-.xp { display: flex; align-items: center; gap: var(--e2); }
+.coffre__icone--pret { position: relative; width: 44px; height: 44px; margin: 0 -6px; padding: 6px; border: 0; border-radius: 0; background: none; color: inherit; }
+.coffre__nb { position: absolute; right: -2px; top: 0; min-width: 18px; height: 18px; padding: 0 3px; background: var(--alerte); color: var(--c-nuit); font: 400 13px / 18px var(--f-pixel); text-align: center; }
+.xp { display: flex; align-items: center; gap: var(--e2); margin-left: auto; }
+.barre__plus { flex: none; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; background: var(--c-creme); color: var(--c-nuit); border: 0; border-radius: 0; box-shadow: var(--ombre); }
 .xp__niv { font: 400 15px / 1 var(--f-pixel); }
 .segs { display: flex; gap: 3px; }
 .segs i { display: block; width: 10px; height: 10px; background: var(--c-piste); }
@@ -27,7 +30,7 @@
 .segs--petit i.on { background: var(--c-nuit); }
 
 /* ---- Question du moment : la grande carte (selon l'heure) et la petite bulle (une quête à la fois) */
-.ah { display: flow-root; background: var(--c-carte-2); }
+.ah { display: flow-root; background: var(--b1); }
 .question { margin: var(--e2) var(--e4) 0; padding: var(--e4); background: var(--c-creme); color: var(--c-nuit); }
 .question__texte { font: 400 var(--t-chiffre) / 30px var(--f-pixel); }
 .question__bouton { width: 100%; min-height: 48px; margin-top: var(--e3); font: 700 var(--t-carte) / 1 var(--f-texte); }
@@ -38,8 +41,28 @@
 .pointe { display: block; width: 12px; height: 8px; margin-left: calc(50% - 6px); color: var(--c-creme); }
 
 /* ---- Scène */
+.hero, .aujourdhui { --b1: var(--c-carte-2); --b2: var(--c-piste); --b3: var(--c-ciel); --b4: var(--c-ciel-2); }
 .hero { position: relative; height: var(--hero-h, 250px); overflow: hidden;
-  background: linear-gradient(var(--c-carte-2) 0 36%, var(--c-piste) 36% 56%, var(--c-ciel) 56% 76%, var(--c-ciel-2) 76%); }
+  background: linear-gradient(var(--b1) 0 36%, var(--b2) 36% 56%, var(--b3) 56% 76%, var(--b4) 76%); }
+[data-moment="aube"] { --b1: var(--ciel-aube-1); --b2: var(--ciel-aube-2); --b3: var(--ciel-aube-3); --b4: var(--ciel-aube-4); }
+[data-moment="crep"] { --b1: var(--ciel-crep-1); --b2: var(--ciel-crep-2); --b3: var(--ciel-crep-3); --b4: var(--ciel-crep-4); }
+[data-moment="nuit"] { --b1: var(--ciel-nuit-1); --b2: var(--ciel-nuit-2); --b3: var(--ciel-nuit-3); --b4: var(--ciel-nuit-4); }
+[data-moment="nuit"] .hero__colline { filter: brightness(.72) saturate(.85); }
+/* ciel : étoiles, nuages, astre, touche de saison (fixes : rien ne bouge tout seul) */
+.ciel__etoiles i { position: absolute; width: 2px; height: 2px; background: var(--etoile); }
+.ciel__etoiles i:nth-child(3n) { width: 3px; height: 3px; }
+.ciel__nuage { position: absolute; width: 64px; opacity: .9; }
+.ciel__nuage--petit { width: 40px; opacity: .7; }
+.ciel__astre { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 8px; border: 0; border-radius: 0; background: none; cursor: pointer; }
+.ciel__astre svg { width: 28px; height: 28px; }
+.ciel__saison i { position: absolute; width: 3px; height: 3px; }
+.ciel__feuille { background: var(--saison-feuille); }
+.ciel__neige { background: var(--saison-neige); }
+.ciel__petale { background: var(--saison-petale); }
+.k-soleil { fill: var(--astre-soleil); } .k-soleil-clair { fill: var(--astre-soleil-clair); }
+.k-chaud { fill: var(--astre-chaud); } .k-chaud-clair { fill: var(--astre-chaud-clair); }
+.k-lune { fill: var(--astre-lune); } .k-lune-clair { fill: var(--astre-lune-clair); } .k-lune-ombre { fill: var(--astre-lune-ombre); }
+.k-nuage { fill: var(--nuage); } .k-nuage-ombre { fill: var(--nuage-ombre); }
 .hero__colline { position: absolute; left: -15px; top: var(--colline-haut, 130px); width: 420px; height: 210px; }
 .hero__colline svg { width: 100%; height: 100%; }
 .c-rose { fill: var(--c-rose); } .c-orange { fill: var(--c-orange); } .c-nuit { fill: var(--c-nuit); }

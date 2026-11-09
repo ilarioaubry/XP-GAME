@@ -1,0 +1,65 @@
+/* Moi > Chez moi : la maison en coupe de l'ancienne version (src/maison/maison-v1.js), habillée en Cobalt.
+   Le décor reste fixe : les petites animations d'origine (fumée, néons, télé) sont coupées (« rien ne bouge tout seul »). */
+
+.maison { display: grid; gap: var(--e3); }
+.maison .hmcard { display: grid; gap: var(--e3); }
+.maison .hmhouse { position: relative; line-height: 0; overflow: hidden; background: var(--c-nuit); }
+.maison .hmhsvg, .maison .hmsvg, .maison .libsvg { width: 100%; height: auto; display: block; }
+.maison [class^="an-"], .maison [class*=" an-"] { animation: none; }
+
+/* étiquettes des pièces posées sur la coupe */
+.maison .hmslot { position: absolute; padding: 0; margin: 0; border: 0; border-radius: 0; background: transparent; color: var(--texte); line-height: 1.1; }
+.maison .hmslot:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+@media (hover: hover) { .maison .hmslot:hover { outline: 2px solid var(--action); outline-offset: -2px; } }
+.maison .hml { position: absolute; left: 3px; bottom: 3px; display: grid; gap: 1px; max-width: calc(100% - 6px); padding: 2px var(--e2); background: rgba(10, 10, 24, .72); text-align: left; font: 700 var(--t-info) / 1.3 var(--f-texte); }
+.maison .hml b { font-size: var(--t-info); color: var(--c-creme); }
+.maison .hml small { font-size: var(--t-info); color: var(--action); }
+.maison .hmslot.off .hml small { color: var(--texte-2); }
+.maison .hmstreet .hml { left: auto; right: 6px; bottom: 6px; }
+.maison .hmme { position: absolute; right: 3px; top: 3px; width: 22px; height: 24px; image-rendering: pixelated; background: var(--c-nuit); }
+
+/* une pièce ouverte : titre, maison, précédente, suivante */
+.maison .hmh2 { display: grid; grid-template-columns: minmax(0, 1fr) 44px 44px 44px; gap: var(--e1); align-items: center; }
+.maison .hmh2 h2 { display: flex; align-items: center; gap: var(--e2); min-width: 0; font: 400 var(--t-section) / 1.2 var(--f-pixel); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.maison .hmh2 h2::before { content: ""; flex: none; width: 10px; height: 10px; background: var(--hc, var(--action)); transform: rotate(45deg); }
+.maison .hmib { width: 44px; height: 44px; display: grid; place-items: center; padding: 0; background: var(--fond-champ); color: var(--texte); border: 2px solid var(--bord); border-radius: 0; }
+.maison .hmprev svg { transform: rotate(90deg); }
+.maison .hmnext svg { transform: rotate(-90deg); }
+.maison .hmscene { line-height: 0; overflow: hidden; background: var(--c-nuit); margin: 0 calc(-1 * var(--marge)); }
+.maison .hmscene.hmlib { margin: 0; line-height: normal; overflow: visible; background: none; }
+.maison .hmsvg .hmo { cursor: pointer; outline: none; }
+.maison .hmsvg .hmo.sel { filter: brightness(1.35); }
+@media (hover: hover) { .maison .hmsvg .hmo:hover { filter: brightness(1.25); } }
+.maison .hminfo:empty { display: none; }
+.maison .hmpop h4, .maison .libpop h4 { margin: 0 0 var(--e2); font: 400 var(--t-section) / 1.2 var(--f-pixel); overflow-wrap: anywhere; }
+.maison .hmpop small, .maison .libpop small { font: 700 var(--t-info) / 1.2 var(--f-texte); color: var(--texte-2); text-transform: uppercase; letter-spacing: .06em; }
+.maison .hmpop ul, .maison .libpop ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--e1); }
+.maison .hmpop li, .maison .libpop li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: var(--e2); align-items: center; font-size: var(--t-texte); }
+.maison .hmpop li i, .maison .libpop li i { display: grid; width: 24px; height: 24px; }
+.maison .hmpop li i svg, .maison .libpop li i svg { width: 100%; height: 100%; }
+.maison .hmname { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--e2); margin-top: var(--e2); }
+.maison input, .maison textarea { min-width: 0; min-height: var(--h-bouton); padding: var(--e2) var(--e3); background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; font-size: var(--t-champ); }
+.maison .btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--h-bouton); padding: 0 var(--e4); background: var(--fond-champ); border: 2px solid var(--bord); border-radius: 0; color: var(--texte); font: 700 var(--t-texte) / 1 var(--f-texte); }
+.maison .btn.primary { background: var(--action); border-color: var(--action); color: var(--action-texte); }
+.maison .lnk { padding: 0; background: none; border: 0; color: var(--action); font: 700 var(--t-texte) / 1.3 var(--f-texte); text-decoration: underline; }
+.maison .hint { color: var(--texte-2); font-size: var(--t-texte); }
+
+/* bibliothèque */
+.maison .libshelf { overflow: hidden; line-height: 0; background: var(--coffre-serrure); }
+.maison .libsvg .bk { cursor: pointer; outline: none; }
+.maison .libinfo { margin-top: var(--e3); min-height: 44px; }
+.maison .hmlib .libc > .bh2, .maison .hmlib .libinfo > .hint { display: none; }
+
+/* recettes de la cuisine */
+.maison .rcp { display: grid; gap: var(--e2); }
+.maison .rcph2 { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: center; }
+.maison .rcph2 h3 { font: 400 var(--t-carte) / 1.2 var(--f-pixel); }
+.maison .rcpf { display: grid; gap: var(--e2); }
+.maison .rcpb { display: grid; grid-template-columns: 1fr 2fr; gap: var(--e2); }
+.maison .rcpl { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--e2); }
+.maison .rcpl > li { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: var(--e2); align-items: center; padding: var(--e2) 0; }
+.maison .rcph { display: grid; gap: 2px; min-width: 0; padding: 0; background: none; border: 0; text-align: left; }
+.maison .rcph b { font-size: var(--t-carte); overflow-wrap: anywhere; }
+.maison .rcph small { font-size: var(--t-texte); color: var(--texte-2); }
+.maison .rcpd { grid-column: 1 / -1; display: grid; gap: var(--e1); font-size: var(--t-texte); }
+.maison .rcpd ul, .maison .rcpd ol { margin: 0; padding-left: 20px; }
