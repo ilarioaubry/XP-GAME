@@ -2,6 +2,12 @@
 
 Le numéro de version affiché dans Moi > Bilan > Données est une empreinte du contenu : il change à chaque mise en ligne.
 
+## 09/11/2026 (V2, lot 6 : plus illustré, moins fade)
+- Plus de barre façon iPhone au-dessus du panneau crème (la « poignée » est retirée, pour de bon).
+- Images à la place des mots : chaque fenêtre plein écran s'ouvre sur un bandeau pixel illustré (marches de couleur, halo, grande icône, étincelles, repris de l'ancienne version) ; messages avec leur icône ; états vides illustrés ; quêtes, idée, défi et roulette avec leur icône sur un carré de couleur ; journal avec l'icône de chaque action ; « Mes repas » montre les 3 groupes d'aliments en icônes et l'assiette notée en miniature dans sa tuile ; proches sans avatar : un visage pixel à eux au lieu d'une initiale.
+- Bilan illustré : chiffres avec leur icône, assiette de chaque jour en miniature (fini la légende en mots), humeurs en visages, sommeil et repas en images, points forts avec l'icône de chaque angle.
+- Animations sobres, toujours après un geste : fenêtre qui monte, message qui glisse, écran qui apparaît au changement d'onglet, icône d'onglet qui saute, tout ce qui se touche s'enfonce de 2 px ; ombres plates sous les cartes. « Réduire les animations » coupe tout.
+
 ## 09/11/2026 (V2, lot 5 : ce qui revient de l'ancienne version)
 - Assiette refaite : vraie assiette pixel 64×64 qui se remplit côté par côté, aliments posés dessus (un toucher pour retirer), recettes en un toucher et « Enregistrer cette assiette », aliments rangés par groupe et triés par usage, « Trier » pour masquer, « Ajouter » un aliment avec son icône, type d'assiette (équilibrée, végétarienne, fast-food), « À midi il manquait… », XP d'assiette (2 par côté, +4 si complète), étape 2 Dessert / Avec / Où / En cuisine.
 - Ciel de la scène selon l'heure (aube, jour, crépuscule, nuit) : soleil qui suit la journée, vraie phase de lune la nuit, étoiles, nuages, touche de saison ; toucher l'astre dit le moment. Le haut d'Aujourd'hui prend la couleur du ciel. Correction : après minuit, l'appli se croyait le matin (« Une routine pour démarrer ? » à 23 h).

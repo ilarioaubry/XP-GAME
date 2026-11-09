@@ -2,6 +2,7 @@
 // ensuite la durée et, si ça se fait à plusieurs, « Avec qui ? », sur un seul écran, et « Fait · +N XP » en bas.
 
 import { h } from "../ui/dom.js";
+import { vide } from "../ui/illustrations.js";
 import { pxRk, pxUi } from "../ui/pixel.js";
 import { ouvrirPlein } from "../ui/plein.js";
 import { dire } from "../ui/messages.js";
@@ -43,7 +44,7 @@ export function ouvrirActions() {
     let contenu;
     if (q.trim()) {
       const L = A.chercher(q);
-      contenu = L.length ? h("div", { class: "actions__puces" }, L.map(puce)) : h("p", { class: "vide" }, "Aucune action trouvée.");
+      contenu = L.length ? h("div", { class: "actions__puces" }, L.map(puce)) : vide("Aucune action trouvée.", "loupe");
     } else if (dom) {
       contenu = A.familles(dom).map(F => h("section", { class: "famille" },
         h("h3", { class: "famille__titre" }, h("span", { html: pxRk(F.icone, 24) || "" }), F.nom),
@@ -68,7 +69,7 @@ export function ouvrirActions() {
         P.length ? h("div", { class: "actions__puces" }, montres.map(p => h("button", { class: "personne", "aria-pressed": String(avec.includes(p)),
           onclick: () => { avec = avec.includes(p) ? avec.filter(x => x !== p) : [...avec, p]; dessiner(); } }, p)),
           !tous && P.length > 10 ? h("button", { class: "personne", onclick: () => { tous = true; dessiner(); } }, "+ " + (P.length - 10)) : null)
-          : h("p", { class: "vide" }, "Ajoute tes proches dans l'onglet Proches.")) : null,
+          : vide("Ajoute tes proches dans l'onglet Proches.", "duo")) : null,
     ];
   }
 

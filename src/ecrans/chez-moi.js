@@ -2,6 +2,7 @@
 // Règle des collections : on montre ce qui est obtenu, puis UNE tuile « +N » pour le reste (jamais la liste du verrouillé).
 
 import { h } from "../ui/dom.js";
+import { vide } from "../ui/illustrations.js";
 import { pxUi, pxRk } from "../ui/pixel.js";
 import { jouer } from "../core/sons.js";
 import { etat } from "../core/state.js";
@@ -39,7 +40,7 @@ function armoire(S) {
     obtenus = obtenus.concat(a.map(o => tuile(apercu(o), o.n, eq === o.id, () => { M.equiper(slot, o.id); jouer("blip"); }, etoiles(o.r || 0))));
   }
   return section("Armoire", `${total - reste} sur ${total}`,
-    h("div", { class: "ui-tuiles" }, obtenus, plus(reste)), obtenus.length ? null : h("p", { class: "vide" }, "Rien d'obtenu ici pour l'instant."));
+    h("div", { class: "ui-tuiles" }, obtenus, plus(reste)), obtenus.length ? null : vide("Rien d'obtenu ici pour l'instant.", "cintre"));
 }
 
 function titresVue(S) {
@@ -53,12 +54,12 @@ function badgesVue(S) {
   return section("Badges", `${a.length} sur ${liste.length}`,
     h("div", { class: "ui-tuiles" }, a.map(b => h("div", { class: "ui-tuile ui-tuile--badge", title: b.desc },
       h("span", { html: badgeSvg(b, false, 48) }), h("span", { class: "t-info tuile__nom" }, b.name))), plus(liste.length - a.length)),
-    a.length ? null : h("p", { class: "vide" }, "Aucun badge pour l'instant."));
+    a.length ? null : vide("Aucun badge pour l'instant.", "medaille"));
 }
 
 function collection(slot, titre, S) {
   const [tuiles, reste] = objets(slot, S);
-  return section(titre, `${tuiles.length} sur ${tuiles.length + reste}`, h("div", { class: "ui-tuiles" }, tuiles, plus(reste)), tuiles.length ? null : h("p", { class: "vide" }, "Rien d'obtenu ici pour l'instant."));
+  return section(titre, `${tuiles.length} sur ${tuiles.length + reste}`, h("div", { class: "ui-tuiles" }, tuiles, plus(reste)), tuiles.length ? null : vide("Rien d'obtenu ici pour l'instant.", "cintre"));
 }
 
 export function chezMoi() {

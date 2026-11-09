@@ -55,7 +55,7 @@ def main():
         pg.locator(".domaine", has_text="Maison").click(); pg.locator(".act", has_text="Chambre").first.click()
         pg.locator(".duree", has_text="30 min").click()
         check("« Fait · +12 XP » pour 30 min", "+12 XP" in pg.inner_text(".plein__bas .bouton--principal"))
-        pg.locator(".plein__bas .bouton--principal").click(); pg.wait_for_timeout(60)
+        pg.locator(".plein__bas .bouton--principal").click(); pg.wait_for_timeout(160)
         check("animation de fin d'action : +XP qui monte et carrés vers la barre", pg.locator(".fx-texte").count() == 1 and pg.locator(".fx-carre").count() > 0)
         s = sauve(pg)
         check("action notée dans le journal (clé de l'ancienne version)", any(l.get("a") == "af:ranger:Chambre" and l.get("xp") == 12 for l in s["log"]))

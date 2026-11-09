@@ -100,8 +100,7 @@
 .xpj__col--auj .xpj__piste i { background: var(--action); }
 .assiette-sem { display: flex; gap: var(--e2); }
 .assiette-sem__j { flex: 1; display: grid; justify-items: center; gap: var(--e1); font-size: var(--t-info); color: var(--texte-2); }
-.assiette-sem__j i { display: block; width: 100%; aspect-ratio: 1; background: var(--c-carte); }
-.assiette-sem__j i.g1 { background: var(--c-piste); } .assiette-sem__j i.g2 { background: var(--c-ciel); } .assiette-sem__j i.g3 { background: var(--c-rose); }
+.assiette-sem__j img { display: block; width: 100%; max-width: 48px; height: auto; image-rendering: pixelated; }
 
 /* ---- Badges : le dessin pixel de l'ancienne version, nom sur une ligne */
 .ui-tuile--badge .tuile__nom { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -144,3 +143,23 @@
 .fiche__nom { font: 400 var(--t-section) / 1.2 var(--f-pixel); }
 .fiche__lien { display: flex; align-items: center; gap: var(--e2); }
 .fiche__carte .ui-barre { width: 100%; }
+
+/* ---- Bilan illustré (lot 6) : chiffres en images, humeurs en visages, points forts avec leur icône */
+.envrai__ic svg { width: 32px; height: 32px; }
+.chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: var(--e2); margin-top: var(--e3); }
+.chiffre { display: grid; justify-items: center; gap: var(--e1); padding: var(--e3) var(--e2); background: var(--c-carte); text-align: center; box-shadow: inset 0 -4px 0 rgba(16, 20, 67, .45); }
+.chiffre__img svg, .chiffre__img img { width: 48px; height: 48px; image-rendering: pixelated; }
+.chiffre b { font: 400 22px / 1 var(--f-pixel); }
+.chiffre > span:last-child { font-size: var(--t-info); color: var(--texte-2); }
+.visages-sem { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--e1); }
+.visages-sem__j { display: grid; justify-items: center; gap: var(--e1); }
+.visages-sem__j svg { width: 40px; height: auto; }
+.visages-sem__rien { width: 40px; height: 40px; background: var(--c-carte); }
+.forts { display: grid; gap: var(--e2); }
+.fort { display: grid; grid-template-columns: 48px 72px minmax(0, 1fr) auto; align-items: center; gap: var(--e2); padding: var(--e2); background: var(--c-carte); }
+.fort__ic { display: grid; place-items: center; }
+.fort__ic svg { width: 32px; height: 32px; }
+.fort--premier .fort__ic svg { width: 48px; height: 48px; }
+.fort__nom { font: 700 var(--t-texte) / 1.2 var(--f-texte); }
+.fort .ui-barre > i { background: var(--ac); }
+.envrai__case, .ui-carte { box-shadow: inset 0 -4px 0 rgba(16, 20, 67, .45); }

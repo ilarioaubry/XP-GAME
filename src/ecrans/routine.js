@@ -88,5 +88,5 @@ export function ouvrirReglageRoutine(moment) {
       autres.length ? h("div", { class: "reglage__ajouts" }, autres.map(b => h("button", { class: "bouton bouton--ajout", onclick: () => { liste.push(b); ok(); } }, b.n))) : h("p", { class: "vide" }, "Tout est déjà dans ta routine."),
       h("button", { class: "bouton", onclick: () => { liste = proposees(moment).slice(0, moment === "matin" ? 5 : 4); ok(); } }, "Revenir au réglage d'origine"));
   };
-  ouvrirPlein(nom, corps); dessiner();
+  ouvrirPlein(nom, corps, { icone: MOMENTS.find(m => m.id === moment).icone, couleur: "var(--angle-esprit)" }); dessiner();
 }

@@ -49,6 +49,10 @@ function place(k, n) {
   return P.slice(0, n).map(([r, da]) => { const t = (a + da) * Math.PI / 180; return [(15.5 + r * Math.cos(t)) / 32 * 100, (15.5 + r * Math.sin(t)) / 32 * 100]; });
 }
 
+/** Petite image de l'assiette notée (pour la tuile du repas) : le résultat se voit sans mots. */
+export const imageAssiette = (niveaux, type = "") => assietteImg(niveaux, type);
+export function assietteMini(slot) { const a = R.assietteDe(slot); return assietteImg({ f: R.nbCote(a, "f"), p: R.nbCote(a, "p"), l: R.nbCote(a, "l") }, R.typeAssiette(a)); }
+
 const NOM_COTE = Object.fromEntries(PL_SIDES.map(([k, n]) => [k, n]));
 
 export function ouvrirAssiette(slot, options = {}) {

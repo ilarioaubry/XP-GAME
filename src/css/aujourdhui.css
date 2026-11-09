@@ -84,7 +84,6 @@
 
 /* ---- Panneau crème */
 .panneau { background: var(--c-creme); color: var(--c-nuit); padding: var(--e2) var(--e4) var(--e8); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e2); align-content: start; }
-.panneau__poignee { width: 40px; height: 6px; background: var(--c-nuit); margin: 0 auto var(--e2); }
 .panneau button { border-radius: 0; }
 
 .humnuit { display: flex; align-items: center; justify-content: space-between; padding: var(--e1) 0; }
@@ -105,7 +104,6 @@
 
 /* Carte de quête */
 .cq { display: flex; align-items: center; gap: var(--e3); min-height: 64px; padding: 0 var(--e2) 0 var(--e4); background: var(--c-panneau); }
-.cq__ico svg { width: 24px; height: 24px; }
 .cq__texte { flex: 1; min-width: 0; display: grid; gap: var(--e1); padding: var(--e2) 0; }
 .cq__nom { font: 700 var(--t-carte) / 1.25 var(--f-texte); }
 .cq__why { font-size: var(--t-info); color: var(--c-encre-2); }
@@ -117,7 +115,6 @@
 
 /* Ligne d'action : idée, défi, roulette, routine, bilan */
 .la { display: flex; align-items: center; gap: var(--e3); min-height: 64px; padding: 0 var(--e2) 0 var(--e4); background: var(--c-panneau); }
-.la__ico svg { width: 24px; height: 24px; }
 .la__texte { flex: 1; min-width: 0; padding: var(--e2) 0; }
 .la__etiquette { font-size: var(--t-info); font-weight: 700; color: var(--c-encre-2); letter-spacing: .04em; }
 .la__nom { font: 700 var(--t-carte) / 1.25 var(--f-texte); }
@@ -151,8 +148,20 @@
 
 /* ---- Journal du jour */
 .journal { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--e1); }
-.journal__ligne { display: flex; gap: var(--e3); align-items: baseline; min-height: 32px; padding: var(--e1) var(--e4); background: var(--c-panneau); font-size: var(--t-texte); }
+.journal__ligne { display: flex; gap: var(--e3); align-items: center; min-height: 32px; padding: var(--e1) var(--e4); background: var(--c-panneau); font-size: var(--t-texte); }
 .journal__heure { color: var(--c-encre-2); font-size: var(--t-info); min-width: 56px; }
 .journal__nom { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .journal__xp { color: var(--c-orange); }
 .la__reglage { flex: none; }
+
+/* ---- Illustré (lot 6) : groupes d'aliments en images, assiette notée en miniature, coche pixel */
+.groupes { display: flex; align-items: center; gap: var(--e1); }
+.groupes__g svg { width: 24px; height: 24px; }
+.groupes__g { opacity: .28; filter: grayscale(1); }
+.groupes__g.on { opacity: 1; filter: none; }
+.groupes .ui-compteur { margin-left: var(--e1); }
+.tuile__assiette { width: 48px; height: 48px; image-rendering: pixelated; }
+.tuile__ok svg { width: 16px; height: 16px; }
+.journal__ic svg { width: 24px; height: 24px; }
+.cq .tuile-ic, .la .tuile-ic { --tt: 32px; }
+.cq, .la, .tuile, .journal__ligne { box-shadow: 0 3px 0 var(--c-creme-ombre); }

@@ -7,12 +7,13 @@ import { h } from "../ui/dom.js";
 import { pxUi, pxRk } from "../ui/pixel.js";
 import { dire } from "../ui/messages.js";
 import { sortir } from "../ui/effets.js";
+import { vide, tuileIcone, iconeCat, couleurCat } from "../ui/illustrations.js";
+import { ouvrirAssiette, assietteMini } from "./assiette.js";
 import { jouer } from "../core/sons.js";
 import { on } from "../core/events.js";
 import { etat } from "../core/state.js";
 import { cleJour, heureJournee, niveau } from "../core/temps.js";
 import { decor, momentCiel } from "./scene.js";
-import { ouvrirAssiette } from "./assiette.js";
 import { ouvrirRoutine, ouvrirReglageRoutine } from "./routine.js";
 import { LES_ANGLES, faitAujourdhui } from "../regles/xp.js";
 import { paliers } from "../regles/moi.js";
@@ -78,7 +79,7 @@ function ouvrirBilan() {
       bonneNuit(note.value.trim());
       jouer("moment"); dire(nuitFaite() ? "Bonne nuit, c'est noté" : "Bonne nuit");
       fin.fermer();
-    } }, nuitFaite() ? "Mettre à jour" : "Noter ma journée")));
+    } }, nuitFaite() ? "Mettre à jour" : "Noter ma journée")), { icone: "lune", couleur: "var(--angle-esprit)" });
 }
 
 const POINTE = '<svg viewBox="0 0 3 2" width="12" height="8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h3v1h-3z M1 1h1v1h-1z"/></svg>';
@@ -140,7 +141,7 @@ function humeurNuit() {
 function carteQuete(q) {
   const pts = q.xp <= 10 ? 1 : q.xp <= 20 ? 2 : 3;
   return h("div", { class: "cq" },
-    h("span", { class: "cq__ico", html: pxRk(LES_ANGLES.find(a => a.id === (q.angle || "esprit"))?.icone || "etoile", 24) || "" }),
+    tuileIcone(q.icone && pxRk(q.icone, 32) ? q.icone : iconeCat(q.cat), couleurCat(q.cat), 32),
     h("div", { class: "cq__texte" }, h("p", { class: "cq__nom" }, q.nom), q.why ? h("p", { class: "cq__why" }, q.why) : null,
       h("span", { class: "segs segs--petit", "aria-label": `+${q.xp} XP` }, [0, 1, 2].map(i => h("i", { class: i < pts ? "on" : "" })))),
     boutonsQuete(q));
@@ -148,7 +149,7 @@ function carteQuete(q) {
 
 function ligneAction(icone, etiquette, texte, bouton, onclick, modifier) {
   return h("div", { class: "la" },
-    h("span", { class: "la__ico", html: pxRk(icone, 24) || "" }),
+    tuileIcone(icone, "var(--action)", 32),
     h("div", { class: "la__texte" }, h("p", { class: "la__etiquette" }, etiquette), h("p", { class: "la__nom" }, texte)),
     modifier ? h("button", { class: "bouton bouton--icone la__reglage", "aria-label": "Modifier", title: "Modifier", html: pxUi("edit", 24), onclick: modifier }) : null,
     h("button", { class: "la__bouton", onclick }, bouton));
@@ -162,7 +163,7 @@ function quetes() {
   const fairePuis = q => e => sortir(e.currentTarget.closest(".la"), () => { if (faire(q)) { jouer("coin"); dire("Fait : " + q.nom); } });
   return [
     titre("Quêtes du jour", `${faites}/${liste.length}`),
-    liste.length && faites === liste.length ? h("p", { class: "vide" }, "Tout est fait. Bravo !") : liste.filter(q => !faitAujourdhui(q.id)).map(carteQuete),
+    liste.length && faites === liste.length ? vide("Tout est fait. Bravo !", "medaille") : liste.filter(q => !faitAujourdhui(q.id)).map(carteQuete),
     idee && !faitAujourdhui(idee.id) ? ligneAction("ampoule", "IDÉE DU MOMENT", idee.nom, "Go", fairePuis(idee)) : null,
     defi && !faitAujourdhui(defi.id) ? ligneAction("eclair", "DÉFI", defi.nom, "Fait", fairePuis(defi)) : null,
   ];
@@ -187,15 +188,18 @@ function repas() {
   const tuile = r => {
     const fait = repasFait(r.id), saute = repasSaute(r.id), cours = enCours && enCours.id === r.id, assiette = r.id === "dej" || r.id === "diner";
     const ouvre = () => assiette ? ouvrirAssiette(r.id) : (noter(r.id) && (jouer("coin"), dire(`${r.nom} noté`)));
-    const icone = h("span", { class: "tuile__ico", html: pxRk(r.icone, cours ? 32 : 24) || pxRk("assiette", cours ? 32 : 24) || "" });
+    const mini = fait && assiette ? assietteMini(r.id) : null;
+    const icone = mini ? h("img", { class: "tuile__assiette px", src: mini, alt: "" }) : h("span", { class: "tuile__ico", html: pxRk(r.icone, cours ? 48 : 32) || pxRk("assiette", cours ? 48 : 32) || "" });
     if (cours) return h("div", { class: "tuile tuile--cours" },
       h("div", { class: "tuile__haut" }, h("div", {}, h("p", { class: "tuile__titre" }, r.nom), h("p", { class: "tuile__etat" }, "À noter")), icone),
       h("button", { class: "tuile__bouton", onclick: ouvre }, assiette ? "Assiette" : "Noter"));
     return h("button", { class: "tuile" + (fait ? " tuile--pris" : ""), "aria-label": r.nom, onclick: () => { if (!fait && !saute) ouvre(); } },
-      icone, h("span", { class: "tuile__nom" }, COURT[r.id] || r.nom), h("span", { class: "tuile__etat" }, fait ? "✓" : saute ? "sauté" : (HEURE_REPAS[r.id] || "")));
+      icone, h("span", { class: "tuile__nom" }, COURT[r.id] || r.nom), fait ? h("span", { class: "tuile__ok", html: pxRk("check", 16) || "" }) : h("span", { class: "tuile__etat" }, saute ? "sauté" : (HEURE_REPAS[r.id] || "")));
   };
   return [
-    titre("Mes repas", h("span", { class: "pastille" }, `${faits} repas · ${groupes.size} groupe${groupes.size > 1 ? "s" : ""} sur 3`)),
+    titre("Mes repas", h("span", { class: "groupes", role: "img", "aria-label": `${faits} repas notés, ${groupes.size} groupe${groupes.size > 1 ? "s" : ""} sur 3 aujourd'hui` },
+      [["f", "riz"], ["p", "viande"], ["l", "legume"]].map(([k, ic]) => h("span", { class: "groupes__g" + (groupes.has(k) ? " on" : ""), html: pxRk(ic, 24) || "" })),
+      h("span", { class: "ui-compteur" }, `${faits}/4`))),
     h("div", { class: "tuiles" }, REPAS.map(tuile)),
   ];
 }
@@ -216,8 +220,8 @@ function journalDuJour() {
   const heure = t => new Date(t).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }).replace(":", " h ");
   return [titre("Journal", L.length ? `${L.reduce((s, l) => s + l.xp, 0)} XP` : null),
     L.length ? h("ul", { class: "journal" }, L.map(l => h("li", { class: "journal__ligne" },
-      h("span", { class: "journal__heure" }, heure(l.t)), h("span", { class: "journal__nom" }, l.name || l.a), h("b", { class: "journal__xp" }, "+" + l.xp))))
-      : h("p", { class: "vide" }, "Rien noté pour l'instant.")];
+      h("span", { class: "journal__ic", html: pxRk(iconeCat(l.cat), 24) || "" }), h("span", { class: "journal__heure" }, heure(l.t)), h("span", { class: "journal__nom" }, l.name || l.a), h("b", { class: "journal__xp" }, "+" + l.xp))))
+      : vide("Rien noté pour l'instant. Touche + pour noter une action.", "note")];
 }
 
 export function monterAujourdhui(racine) {
@@ -226,7 +230,7 @@ export function monterAujourdhui(racine) {
     racine.replaceChildren(h("div", { class: "aujourdhui", "data-moment": momentCiel(etat()) },
       entete(), barre(),
       h("div", { class: "ah" }, ...question(), hero(), angles()),
-      h("div", { class: "panneau" }, h("span", { class: "panneau__poignee" }), ...repas(), humeurNuit(), ...quetes(), roulette(), ...rituels(), ...journalDuJour())));
+      h("div", { class: "panneau" }, ...repas(), humeurNuit(), ...quetes(), roulette(), ...rituels(), ...journalDuJour())));
     scrollTo(0, y);
   };
   let attente = 0;

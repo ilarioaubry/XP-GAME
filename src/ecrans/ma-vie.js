@@ -1,6 +1,7 @@
 // Moi > Ma vie : profil, événements, projets, « la dernière fois que… », paliers et équilibre sur les 4 Angles.
 
 import { h } from "../ui/dom.js";
+import { vide, tuileIcone } from "../ui/illustrations.js";
 import { pxUi, pxRk } from "../ui/pixel.js";
 import { PAL_LV, PAL_TXT } from "../donnees/brut/paliers.js";
 import { saisir } from "../ui/plein.js";
@@ -21,6 +22,7 @@ const ajout = (texte, fn) => h("button", { class: "bouton bouton--ajout", onclic
 
 function routines() {
   return section("Mes routines", "var(--angle-esprit)", MOMENTS.map(m => h("div", { class: "ui-carte ligne-carte" },
+    tuileIcone(m.icone, "var(--angle-esprit)", 32),
     h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, m.nom), h("p", { class: "ui-carte__texte" }, `${etapes(m.id).length} étapes`)),
     iconeBtn("edit", "Modifier la routine", () => ouvrirReglageRoutine(m.id)))));
 }
@@ -36,9 +38,9 @@ function projets(S) {
           iconeBtn("trash", "Supprimer le projet", () => dire("Projet supprimé", M.retirerProjet(p.id)))),
         etapes.length ? h("div", { class: "ui-barre ui-barre" }, h("i", { style: `--p:${Math.round(100 * faites / etapes.length)}%` })) : null,
         etapes.map((s, i) => h("button", { class: "bouton etape", "aria-pressed": String(!!s.d), onclick: () => { M.basculerEtape(p.id, i); if (!s.d) jouer("blip"); } }, s.t, s.d ? " ✓" : "")),
-        ajout("Ajouter une étape", () => saisir("Nouvelle étape", [{ id: "t", etiquette: "Étape" }], v => M.ajouterEtape(p.id, v.t))));
-    }) : h("p", { class: "vide" }, "Aucun projet pour l'instant."),
-    ajout("Nouveau projet", () => saisir("Nouveau projet", [{ id: "n", etiquette: "Nom du projet" }], v => M.ajouterProjet(v.n))));
+        ajout("Ajouter une étape", () => saisir("Nouvelle étape", [{ id: "t", etiquette: "Étape" }], v => M.ajouterEtape(p.id, v.t), "Ajouter", "check", "var(--angle-esprit)")));
+    }) : vide("Aucun projet pour l'instant.", "dossier"),
+    ajout("Nouveau projet", () => saisir("Nouveau projet", [{ id: "n", etiquette: "Nom du projet" }], v => M.ajouterProjet(v.n), "Créer", "dossier", "var(--angle-esprit)")));
 }
 
 function derniereFois(S) {
@@ -48,8 +50,8 @@ function derniereFois(S) {
     liste.length ? liste.map(l => h("div", { class: "ui-carte ligne-carte" },
       h("div", { class: "ligne-carte__texte" }, h("p", { class: "ui-carte__titre" }, l.name), h("p", { class: "ui-carte__texte" }, texte(l))),
       h("button", { class: "bouton", onclick: () => { M.dernierFaitAujourdhui(l.name); jouer("blip"); } }, "Fait"),
-      iconeBtn("trash", "Supprimer", () => dire("Supprimé", M.retirerDerniere(l.name))))) : h("p", { class: "vide" }, "Rien de suivi pour l'instant. Ex. : appeler Mamie."),
-    ajout("Suivre une chose", () => saisir("La dernière fois que…", [{ id: "n", etiquette: "Ex. : j'ai appelé Mamie" }], v => M.ajouterDerniere(v.n))));
+      iconeBtn("trash", "Supprimer", () => dire("Supprimé", M.retirerDerniere(l.name))))) : vide("Rien de suivi pour l'instant. Ex. : appeler Mamie.", "sablier"),
+    ajout("Suivre une chose", () => saisir("La dernière fois que…", [{ id: "n", etiquette: "Ex. : j'ai appelé Mamie" }], v => M.ajouterDerniere(v.n), "Suivre", "sablier", "var(--angle-foyer)")));
 }
 
 function paliers(S) {

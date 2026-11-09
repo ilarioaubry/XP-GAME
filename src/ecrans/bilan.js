@@ -3,7 +3,10 @@
 
 import { h } from "../ui/dom.js";
 import { saisir } from "../ui/plein.js";
-import { pxUi } from "../ui/pixel.js";
+import { pxUi, pxRk } from "../ui/pixel.js";
+import { imageAssiette } from "./assiette.js";
+import { visageHumeur } from "../avatar/rendu.js";
+import { vide } from "../ui/illustrations.js";
 import { dire } from "../ui/messages.js";
 import * as M from "../regles/moi.js";
 import { TYPES_EVENEMENT } from "../donnees/quetes-pour-toi.js";
@@ -20,7 +23,6 @@ const moy = l => (l.length ? l.reduce((a, b) => a + b, 0) / l.length : null);
 const NOMS_HUMEUR = ["", "Dur", "Bof", "Moyen", "Bien", "Super"];
 const section = (titre, couleur, ...c) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null }, h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre)), c);
 const sectionD = (titre, couleur, droite, ...c) => h("section", { class: "ui-section", style: couleur ? `--sc:${couleur}` : null }, h("div", { class: "ui-entete" }, h("h2", { class: "ui-titre" }, titre), h("span", { class: "ui-entete__droite" }, droite)), c);
-const ligne = (k, v) => h("div", { class: "ui-ligne" }, h("span", {}, k), h("b", {}, v));
 
 /** Tout ce qui sert au bilan, calculé sur les N derniers jours (fenêtre glissante). */
 export function calculer(S, jours) {
@@ -41,25 +43,38 @@ export function calculer(S, jours) {
     actifs: cles.filter(k => S.days.includes(k)).length, xp: log.reduce((s, e) => s + e.xp, 0), actions: log.length, xpAngle, vus, reperes };
 }
 
+/** Un chiffre illustré : l'image, le nombre, deux mots. */
+const chiffre = (image, n, mots) => h("div", { class: "chiffre" }, h("span", { class: "chiffre__img" }, image), h("b", {}, String(n)), h("span", {}, mots));
+
 function mange(b, jours) {
   const sur = b.repasNotes / Math.max(1, jours * 3);
   const msg = b.repasNotes === 0 ? "Pas de repas noté sur la période : note-les pour que ce point serve." : sur >= 0.8 ? "Oui, tu manges régulièrement." : sur >= 0.5 ? "Presque : il manque quelques repas dans la période." : "Il manque des repas notés : un petit-déj ou un dîner de plus aiderait.";
   return section("Est-ce que je mange assez ?", "var(--angle-corps)",
-    h("p", { class: "t-texte" }, msg), ligne("Repas notés", `${b.repasNotes}`), ligne("Assiettes", `${b.assiettes}`), ligne("Avec féculent, protéine et légume", `${b.completes}`));
+    h("p", { class: "t-texte" }, msg),
+    h("div", { class: "chiffres" },
+      chiffre(h("span", { html: pxRk("repas", 48) || "" }), b.repasNotes, "repas notés"),
+      chiffre(h("img", { class: "px", src: imageAssiette({ f: 1, p: 1, l: 0 }), alt: "" }), b.assiettes, "assiettes"),
+      chiffre(h("img", { class: "px", src: imageAssiette({ f: 3, p: 3, l: 3 }, "equi"), alt: "" }), b.completes, "complètes")));
 }
 
 function humeurs(b) {
   return section("Humeur et sommeil", "var(--angle-esprit)",
-    h("div", { class: "histo", role: "img", "aria-label": "Humeur jour par jour" }, b.humeurs.slice(-31).map(v => h("i", { style: `--v:${v * 20}%`, class: v ? "" : "vide-jour" }))),
-    ligne("Humeur moyenne", b.humeurMoy == null ? "pas notée" : NOMS_HUMEUR[Math.round(b.humeurMoy)]),
-    ligne("Sommeil moyen", b.sommeilMoy == null ? "pas noté" : b.sommeilMoy.toFixed(1).replace(".", ",") + " h"));
+    b.humeurs.length <= 7
+      ? h("div", { class: "visages-sem", role: "img", "aria-label": "Humeur jour par jour" }, b.humeurs.map((v, i) => h("div", { class: "visages-sem__j" },
+        v ? h("span", { html: visageHumeur(etat(), v, 40) }) : h("span", { class: "visages-sem__rien" }), h("span", { class: "t-info" }, lettre(b.cles.at(i))))))
+      : h("div", { class: "histo", role: "img", "aria-label": "Humeur jour par jour" }, b.humeurs.slice(-31).map(v => h("i", { style: `--v:${v * 20}%`, class: v ? "" : "vide-jour" }))),
+    h("div", { class: "chiffres" },
+      chiffre(b.humeurMoy == null ? h("span", { html: pxRk("bulle", 48) || "" }) : h("span", { html: visageHumeur(etat(), Math.round(b.humeurMoy), 48) }), b.humeurMoy == null ? "—" : NOMS_HUMEUR[Math.round(b.humeurMoy)], "humeur moyenne"),
+      chiffre(h("span", { html: pxRk("lit", 48) || "" }), b.sommeilMoy == null ? "—" : b.sommeilMoy.toFixed(1).replace(".", ",") + " h", "de sommeil")));
 }
 
 function forts(b) {
   const tri = LES_ANGLES.map(a => ({ ...a, xp: b.xpAngle[a.id] })).sort((x, y) => y.xp - x.xp);
   return section("Points forts", "var(--angle-liens)",
-    b.xp ? h("p", { class: "t-texte" }, `${tri[0].nom} a porté ta période (${tri[0].xp} XP).`) : h("p", { class: "vide" }, "Rien à raconter encore sur cette période."),
-    h("div", { class: "angles" }, tri.map(a => h("div", { class: "angle", style: `--ac:var(--angle-${a.id})` }, h("span", { class: "angle__nom t-info" }, a.nom), h("div", { class: "ui-barre" }, h("i", { style: `--p:${b.xp ? Math.round(100 * a.xp / b.xp) : 0}%` })), h("span", { class: "t-info" }, a.xp + " XP")))));
+    b.xp ? null : vide("Rien à raconter encore sur cette période.", "lire"),
+    h("div", { class: "forts" }, tri.map((a, i) => h("div", { class: "fort" + (i === 0 && b.xp ? " fort--premier" : ""), style: `--ac:var(--angle-${a.id})` },
+      h("span", { class: "fort__ic", html: pxRk(a.icone, i === 0 && b.xp ? 48 : 32) || "" }), h("span", { class: "fort__nom" }, a.nom),
+      h("div", { class: "ui-barre" }, h("i", { style: `--p:${b.xp ? Math.round(100 * a.xp / b.xp) : 0}%` })), h("span", { class: "ui-compteur" }, a.xp + " XP")))));
 }
 
 const LETTRES = ["D", "L", "M", "M", "J", "V", "S"];
@@ -69,8 +84,8 @@ const lettre = k => LETTRES[new Date(k + "T12:00:00").getDay()];
 function envrai(S, b, jours) {
   const dans = new Set(b.cles), log = S.log.filter(e => dans.has(cleJour(S, e.t)) && e.xp > 0);
   const n = f => log.filter(f).length, id = e => String(e.a || "");
-  return [[b.vus.length, "proches vus", "var(--angle-liens)"], [n(e => e.cat === "sport"), "séances", "var(--angle-corps)"], [n(e => id(e).startsWith("hab:")), "habitudes", "var(--c-orange)"],
-    [n(e => id(e).startsWith("rt:")), "routines", "var(--angle-esprit)"], [b.repasNotes, "repas notés", "var(--angle-corps)"], [b.actifs, "jours actifs", "var(--angle-foyer)"]];
+  return [[b.vus.length, "proches vus", "var(--angle-liens)", "duo"], [n(e => e.cat === "sport"), "séances", "var(--angle-corps)", "halteres"], [n(e => id(e).startsWith("af:")), "actions", "var(--c-orange)", "etoile"],
+    [n(e => id(e).startsWith("rt:")), "routines", "var(--angle-esprit)", "soleil"], [b.repasNotes, "repas notés", "var(--angle-corps)", "repas"], [b.actifs, "jours actifs", "var(--angle-foyer)", "calendrier"]];
 }
 
 function chapitre(S, b) {
@@ -93,10 +108,11 @@ function xpParJour(S, b, jours) {
 
 function assietteSemaine(S, b) {
   const cles = b.cles.slice(-7);
-  const couvert = k => { const q = new Set(); for (const m of Object.values((S.g.plt || {})[k] || {})) for (const f of ["f", "p", "l"]) if ((m[f] || []).length) q.add(f); return q.size; };
+  // l'assiette du jour en image : chaque côté se remplit avec ce qui a été mangé midi et soir (3 portions = plein)
+  const niveaux = k => { const n = { f: 0, p: 0, l: 0 }; for (const m of Object.values((S.g.plt || {})[k] || {})) for (const f of ["f", "p", "l"]) n[f] = Math.min(3, n[f] + (m[f] || []).length); return n; };
   return sectionD("Mon assiette", "var(--angle-corps)", "7 derniers jours",
-    h("div", { class: "assiette-sem" }, cles.map(k => { const n = couvert(k); return h("div", { class: "assiette-sem__j" }, h("i", { class: "g" + n, "aria-label": `${n} groupe${n > 1 ? "s" : ""}` }), h("span", {}, lettre(k))); })),
-    h("p", { class: "t-info" }, "Rose : 3 groupes couverts. Bleu clair : un groupe manquait."));
+    h("div", { class: "assiette-sem" }, cles.map(k => { const n = niveaux(k), g = ["f", "p", "l"].filter(f => n[f]).length;
+      return h("div", { class: "assiette-sem__j" }, h("img", { class: "px", src: imageAssiette(n, g === 3 ? "equi" : ""), alt: `${g} groupe${g > 1 ? "s" : ""} sur 3` }), h("span", {}, lettre(k))); })));
 }
 
 // ---- Calendrier : un mois, avec ce qui s'est passé (XP, humeur) et les événements ; un jour touché s'ouvre dessous.
@@ -151,7 +167,7 @@ export function bilan(donnees) {
     h("div", { class: "periodes", role: "tablist" }, Object.entries(PERIODES).map(([id, [n]]) => h("button", { class: "periode", role: "tab", "aria-selected": String(id === periode), onclick: () => { periode = id; document.dispatchEvent(new CustomEvent("moi:rubrique")); } }, n))),
     chapitre(S, b), calendrier(S),
     section("Cette " + { semaine: "semaine", mois: "période", annee: "année" }[periode] + " en vrai", "var(--c-orange)",
-      h("div", { class: "envrai" }, envrai(S, b, jours).map(([v, l, c]) => h("div", { class: "envrai__case", style: `--c:${c}` }, h("b", {}, String(v)), h("span", {}, l))))),
+      h("div", { class: "envrai" }, envrai(S, b, jours).map(([v, l, c, ic]) => h("div", { class: "envrai__case", style: `--c:${c}` }, h("span", { class: "envrai__ic", html: pxRk(ic, 32) || "" }), h("b", {}, String(v)), h("span", {}, l))))),
     xpParJour(S, b, jours), assietteSemaine(S, b),
     humeurs(b), mange(b, jours), forts(b),
     h("details", { class: "suivis" }, h("summary", { class: "t-carte" }, "Données et sauvegarde"), donnees()));

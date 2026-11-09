@@ -38,7 +38,8 @@ function monterOnglets() {
 }
 
 function aller(id) {
-  $$(".ecran").forEach(el => el.classList.toggle("actif", el.id === "e-" + id));
+  $$(".ecran").forEach(el => { el.classList.toggle("actif", el.id === "e-" + id); el.classList.remove("entre"); });
+  const e = $("#e-" + id); if (e) { void e.offsetWidth; e.classList.add("entre"); setTimeout(() => e.classList.remove("entre"), 400); }
   $$(".onglet").forEach(el => el.setAttribute("aria-selected", String(el.dataset.ecran === id)));
   emit("onglet:change", { id });
   scrollTo(0, 0);

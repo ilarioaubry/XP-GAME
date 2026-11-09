@@ -1,0 +1,39 @@
+/* Illustrations partagées (src/ui/illustrations.js) et mouvements d'entrée sobres, déclenchés par un geste
+   (ouvrir une fenêtre, changer d'onglet, recevoir un message). « Réduire les animations » : tout est coupé. */
+
+/* ---- Bandeau illustré en tête des fenêtres plein écran */
+.scene-pixel { --sc: var(--action); position: relative; height: 132px; margin: calc(-1 * var(--e4)) calc(-1 * var(--marge)) var(--e4); overflow: hidden; display: grid; place-items: center; }
+.scene-pixel__fond, .scene-pixel__fond svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scene-pixel .sp-c { fill: var(--sc); }
+.scene-pixel .sp-e { fill: var(--c-creme); }
+.scene-pixel .sp-o { fill: var(--c-nuit); }
+.scene-pixel__ic { position: relative; width: 72px; height: 72px; filter: drop-shadow(3px 3px 0 rgba(16, 20, 67, .55)); }
+.scene-pixel__ic svg { width: 72px; height: 72px; }
+.scene-pixel__sous { position: absolute; right: calc(50% - 64px); top: 18px; padding: 2px var(--e2); background: var(--c-nuit); color: var(--c-creme); font: 400 15px / 1 var(--f-pixel); }
+
+/* ---- État vide illustré */
+.vide--illustre { display: grid; justify-items: center; gap: var(--e2); }
+.vide__ic svg { width: 48px; height: 48px; opacity: .9; }
+
+/* ---- Icône sur carré plat */
+.tuile-ic { --tc: var(--action); --tt: 32px; flex: none; display: grid; place-items: center; width: calc(var(--tt) + 16px); height: calc(var(--tt) + 16px); background: color-mix(in srgb, var(--tc) 30%, transparent); box-shadow: inset 0 -4px 0 color-mix(in srgb, var(--tc) 45%, transparent); }
+.tuile-ic svg { width: var(--tt); height: var(--tt); }
+
+/* ---- Message avec son icône */
+.message { display: flex; align-items: center; gap: var(--e2); box-shadow: var(--ombre); animation: entre-bas .28s steps(4) both; }
+.message__ic svg { width: 24px; height: 24px; }
+
+/* ---- Entrées : fenêtre plein écran, écran choisi (au changement d'onglet seulement) */
+.plein { animation: entre-bas .26s steps(5) both; }
+.ecran.entre > * { animation: entre-fondu .22s steps(4) both; }
+.onglet[aria-selected="true"] svg { animation: onglet-saut .32s steps(4) both; }
+@keyframes entre-bas { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes entre-fondu { from { opacity: 0; } to { opacity: 1; } }
+@keyframes onglet-saut { 50% { transform: translateY(-5px); } }
+
+/* ---- Toucher : tout ce qui se touche s'enfonce d'un pixel ou deux (plat, comme une touche) */
+.tuile:active, .cq__fait:active, .la__bouton:active, .act:active, .aliment:active, .proche-carte:active, .hmslot:active { transform: translateY(2px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .message, .plein, .ecran.entre > *, .onglet[aria-selected="true"] svg { animation: none; }
+}

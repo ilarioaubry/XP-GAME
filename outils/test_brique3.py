@@ -34,7 +34,7 @@ def main():
         pg.get_by_role("tab", name="Bilan").click(); pg.wait_for_timeout(150)
         pg.get_by_role("button", name="Ajouter un événement").click(); pg.fill("#champ-n", "Dentiste"); pg.fill("#champ-d", "2026-11-20"); pg.get_by_role("button", name="Ajouter", exact=True).click()
         pg.get_by_role("tab", name="Ma vie").click(); pg.wait_for_timeout(150)
-        pg.get_by_role("button", name="Suivre une chose").click(); pg.fill("#champ-n", "J'ai appelé Mamie"); pg.get_by_role("button", name="Ajouter", exact=True).click()
+        pg.get_by_role("button", name="Suivre une chose").click(); pg.fill("#champ-n", "J'ai appelé Mamie"); pg.get_by_role("button", name="Suivre", exact=True).click()
         pg.get_by_role("button", name="Ajouter une étape").first.click(); pg.fill("#champ-t", "Mixage"); pg.get_by_role("button", name="Ajouter", exact=True).click()
         pg.get_by_role("button", name="Mixage").click(); pg.wait_for_timeout(150)
         d = save()

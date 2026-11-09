@@ -51,7 +51,7 @@ def main():
         for per in ("Mois", "Année", "Semaine"):
             pg.get_by_role("tab", name=per).click(); pg.wait_for_timeout(150)
         txt = pg.inner_text(".bilan").lower()
-        check("Bilan : humeur, sommeil, manger assez, points forts", all(t in txt for t in ("humeur moyenne", "sommeil moyen", "est-ce que je mange assez", "points forts")))
+        check("Bilan : humeur, sommeil, manger assez, points forts", all(t in txt for t in ("humeur moyenne", "de sommeil", "est-ce que je mange assez", "points forts")))
         pg.screenshot(path=str(T.ROOT / "outils" / "bilan-393.png"), full_page=True)
         d = save(); perdues = [k for k in d0["g"] if k not in d["g"]] + [k for k in d0 if k not in d]
         check("aucune clé perdue", not perdues, perdues)
